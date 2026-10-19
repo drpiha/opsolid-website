@@ -19,8 +19,8 @@
   --v4-cu: #c27940;
   --v4-cu-hi: #8f4f1e;
   --v4-on-cu: #12110f;
-  --v4-display: var(--font-archivo), var(--font-archivo-ext), "Arial Narrow", system-ui, sans-serif;
-  --v4-mono: var(--font-plex-mono), var(--font-plex-mono-ext), ui-monospace, Menlo, monospace;
+  --v4-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  --v4-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
   --v4-gutter: max(18px, env(safe-area-inset-left, 0px));
   --v4-gutter-r: max(18px, env(safe-area-inset-right, 0px));
   --v4-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -40,8 +40,8 @@ html[data-v4][data-theme] {
   --v4-cu: #c27940;
   --v4-cu-hi: #e0a070;
   --v4-on-cu: #12110f;
-  --v4-display: var(--font-archivo), var(--font-archivo-ext), "Arial Narrow", system-ui, sans-serif;
-  --v4-mono: var(--font-plex-mono), var(--font-plex-mono-ext), ui-monospace, Menlo, monospace;
+  --v4-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  --v4-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
   --v4-gutter: max(18px, env(safe-area-inset-left, 0px));
   --v4-gutter-r: max(18px, env(safe-area-inset-right, 0px));
 
@@ -79,7 +79,13 @@ html[data-v4] body {
 html[data-v4] body.grain::before { display: none; }
 html[data-v4] ::selection { background: var(--v4-cu); color: var(--v4-on-cu); }
 html[data-v4] a { text-underline-offset: 3px; }
-html[data-v4] :focus-visible { outline: 2px solid var(--v4-cu-hi); outline-offset: 3px; }
+/* Focus rings are square like the rest of the hairline system (the legacy rule in opsolid-tokens.css rounds
+   them to 4px); elements with their own 2px corner keep it. */
+html[data-v4] :focus-visible { outline: 2px solid var(--v4-cu-hi); outline-offset: 3px; border-radius: 0; }
+html[data-v4] :is(.v4-btn, .v4-topic, .btn, .v4-field input, .v4-field textarea, .v4-field select):focus-visible { border-radius: 2px; }
+/* The fixed header (68px + safe area) never covers a focused element or an #anchor target: focus scrolling
+   and anchor jumps stop below it. */
+html[data-v4] { scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px)); scroll-padding-bottom: 16px; }
 
 /* Drafting grid: a 72 px minor and 288 px major lattice. Masked off the text side so it never sits behind
    copy; it lives over the stage column, where the object stands on the sheet. Single fixed composite layer.
@@ -142,9 +148,13 @@ html[data-dim="2"] .v4-stage.is-on canvas { opacity: 0.1; }
   transition: opacity 0.6s ease;
 }
 .v4-poster svg { width: 100%; height: auto; display: block; }
-.v4-poster .p-front { fill: var(--sf); }
-.v4-poster .p-top { fill: var(--st); }
-.v4-poster .p-side { fill: var(--ss); }
+/* Poster plates in the stage's material: dark faces, copper hairline edges, the stage's labels. */
+.v4-poster .p-front { fill: #1d1b18; }
+.v4-poster .p-top { fill: #25231f; }
+.v4-poster .p-side { fill: #171513; }
+.v4-poster .p-front, .v4-poster .p-top, .v4-poster .p-side { stroke: #c27940; stroke-opacity: 0.8; stroke-width: 1px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.v4-poster .p-n { font-family: var(--v4-display); font-weight: 800; font-size: 13px; fill: #c27940; }
+.v4-poster .p-t { font-family: var(--v4-mono); font-weight: 500; font-size: 6.5px; letter-spacing: 0.06em; fill: #8a8378; }
 html[data-stage] .v4-poster { opacity: 0; }
 html:not([data-v4]) .v4-poster, html:not([data-v4]) .v4-stage { display: none; }
 
@@ -236,11 +246,15 @@ html[data-v4] .v4-header::after {
 .v4-header-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
 .v4-lang { display: none; }
 .v4-lang-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 44px;
   min-width: 36px;
   padding: 0 6px;
   background: none;
   border: 0;
+  text-decoration: none;
   color: var(--v4-ink3);
   font-family: var(--v4-mono);
   font-size: 0.75rem;
@@ -272,19 +286,29 @@ html[data-v4] .v4-header::after {
 }
 .v4-menu-btn:hover { border-color: var(--v4-cu); }
 
-.v4-sheet-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(8, 7, 6, 0.7); }
+/* Mobile sheet: a native modal <dialog> (top layer), reset from the UA dialog box to a full-screen sheet. */
 .v4-sheet {
   position: fixed;
   inset: 0;
   z-index: 61;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
   background: var(--v4-bg);
   color: var(--v4-ink);
-  display: flex;
   flex-direction: column;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
+.v4-sheet[open] { display: flex; }
+.v4-sheet:not([open]) { display: none; }
+.v4-sheet::backdrop { background: rgba(8, 7, 6, 0.7); }
+/* The page behind the open sheet does not scroll. */
+html:has(.v4-sheet[open]) { overflow: hidden; }
 .v4-sheet-bar {
   display: flex;
   align-items: center;
@@ -323,6 +347,7 @@ html[data-v4] .v4-header::after {
 .v4-sheet-plain { font-size: 1.1rem; font-weight: 500; color: var(--v4-ink2); }
 .v4-sheet-foot { margin-top: auto; padding-top: 28px; display: flex; flex-direction: column; gap: 16px; }
 .v4-lang-sheet { display: flex; gap: 4px; }
+.v4-lang-sheet .v4-lang-chip { min-width: 44px; }
 
 @media (min-width: 1180px) {
   .v4-nav { display: flex; }
@@ -372,7 +397,7 @@ html[data-v4] .v4-header::after {
 .v4-btn-ghost { box-shadow: inset 0 0 0 1px var(--v4-ink3); }
 .v4-btn-ghost:hover { background: var(--v4-bg2); box-shadow: inset 0 0 0 1px var(--v4-cu); color: var(--v4-ink); }
 .v4-btn-lg { min-height: 56px; font-size: 1.05rem; }
-.v4-btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+.v4-btn[disabled], .v4-btn[aria-disabled="true"] { opacity: 0.6; cursor: not-allowed; }
 .v4-btn-arr { display: inline-block; line-height: 1; font-weight: 700; }
 .v4-btn:is(:hover, :focus-visible) .v4-btn-arr { transform: translateX(4px); }
 @media (prefers-reduced-motion: no-preference) {
@@ -407,7 +432,8 @@ html[data-v4] .v4-header::after {
   align-items: flex-start;
   min-height: 82vh;
   padding-block: clamp(96px, 14vh, 168px) clamp(40px, 7vh, 88px);
-  scroll-margin-top: 80px;
+  /* Adds to the root scroll-padding-top (72px): section anchors still land 80px below the top. */
+  scroll-margin-top: 8px;
 }
 .v4-sec.is-hero { align-items: center; min-height: 100vh; padding-top: clamp(112px, 18vh, 200px); padding-bottom: clamp(72px, 12vh, 140px); }
 .v4-sec.is-flow { min-height: 0; }
@@ -502,12 +528,18 @@ html[data-v4] .v4-header::after {
 .v4-crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--v4-line2); }
 .v4-crumbs a { color: var(--v4-ink3); text-decoration: none; display: inline-block; min-height: 24px; line-height: 24px; }
 .v4-crumbs a:hover { color: var(--v4-cu-hi); }
+/* Touch: 44px targets that reach into the surrounding space (negative margins), so the trail keeps its height. */
+@media (pointer: coarse) {
+  .v4-crumbs a { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; margin-block: -10px; }
+}
 
 /* spec list (drafting-sheet key/value) */
 .v4-spec { display: grid; grid-template-columns: 7.5rem 1fr; margin: 0 0 8px; border-top: 1px solid var(--v4-line2); }
 .v4-spec dt, .v4-spec dd { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--v4-line); }
 .v4-spec dt { padding-top: 15px; font-family: var(--v4-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v4-ink3); }
 .v4-spec dd { color: var(--v4-ink); }
+/* Links in a spec cell (contact page): a 44px target that uses the cell padding, so the row keeps its height. */
+.v4-spec dd a.v4-link { display: inline-flex; align-items: center; min-height: 44px; margin-block: -10px; background-position: 0 calc(100% - 12px); }
 
 /* index rows */
 .v4-rows { list-style: none; margin: 22px 0 0; padding: 0; border-top: 1px solid var(--v4-line2); }
@@ -525,7 +557,15 @@ a.v4-row-in::after { content: ""; position: absolute; left: 0; right: 0; bottom:
 a.v4-row-in:is(:hover, :focus-visible) .v4-row-h { color: var(--v4-cu-hi); }
 a.v4-row-in:is(:hover, :focus-visible) .v4-row-go { color: var(--v4-cu-hi); transform: translateX(6px); }
 a.v4-row-in:is(:hover, :focus-visible)::after { transform: scaleX(1); }
+/* The ring clears the row counter and the arrow's 6px nudge. */
+a.v4-row-in:focus-visible { outline-offset: 8px; }
+/* Real screenshot of our own work under the row text (rows item `shot`): a hairline sheet, no shadow. */
+.v4-shot { margin: 14px 0 0; border: 1px solid var(--v4-line2); border-radius: 0; background: var(--v4-bg2); overflow: hidden; }
+.v4-shot img { display: block; width: 100%; height: auto; }
+.v4-rows-n .v4-shot { grid-column: 2; }
+a.v4-row-in:is(:hover, :focus-visible) .v4-shot { border-color: var(--v4-cu); }
 @media (prefers-reduced-motion: no-preference) {
+  a.v4-row-in .v4-shot { transition: border-color 0.2s; }
   a.v4-row-in .v4-row-h { transition: color 0.2s; }
   a.v4-row-in .v4-row-go { transition: transform 0.35s var(--v4-ease), color 0.2s; }
   a.v4-row-in::after { transition: transform 0.45s var(--v4-ease); }
@@ -549,6 +589,7 @@ a.v4-row-in:is(:hover, :focus-visible)::after { transform: scaleX(1); }
   .is-ledger .v4-row-h { flex-direction: column; align-items: flex-start; gap: 6px; margin: 0; padding-right: 32px; }
   .is-ledger .v4-row-h > span { margin-left: 0; white-space: normal; }
   .is-ledger .v4-row-p { grid-column: 3; grid-row: 1; }
+  .is-ledger .v4-rows-n .v4-shot { grid-column: 2 / -1; }
 }
 
 /* Counters use the alt-text form of `content` (empty alt), so screen readers do not announce "01".
@@ -637,6 +678,8 @@ a.v4-row-in:is(:hover, :focus-visible)::after { transform: scaleX(1); }
     linear-gradient(var(--v4-cu-hi) 0 0) center / 1.5px 100% no-repeat;
 }
 .v4-faq summary:hover { color: var(--v4-cu-hi); }
+/* The ring clears the question counter and the plus. */
+.v4-faq summary:focus-visible { outline-offset: 8px; }
 .v4-faq details[open] summary::after { transform: rotate(45deg); }
 .v4-faq details p { margin: 0 0 22px; padding-left: 2.75rem; max-width: 40rem; color: var(--v4-ink2); text-wrap: pretty; }
 @media (prefers-reduced-motion: no-preference) {
@@ -702,9 +745,16 @@ a.v4-row-in:is(:hover, :focus-visible)::after { transform: scaleX(1); }
 }
 .v4-field textarea { min-height: 140px; resize: vertical; }
 .v4-field input:focus, .v4-field textarea:focus, .v4-field select:focus { outline: 2px solid var(--v4-cu-hi); outline-offset: 1px; border-color: var(--v4-cu); }
+/* Field errors: the message under the field, the field framed in the same colour (text carries the meaning). */
+.v4-field [aria-invalid="true"] { border-color: #f2a79b; }
+.v4-field-err { margin: 0; font-family: var(--v4-mono); font-size: 0.78rem; line-height: 1.5; letter-spacing: 0.02em; color: #f2a79b; }
+/* Submit button and its live regions share one grid cell, so the result appears right under the button. */
+.v4-form-send { display: grid; }
 .v4-form-msg { margin: 0; font-size: 0.95rem; }
+.v4-form-msg:not(:empty) { margin-top: 12px; }
 .v4-form-msg.is-ok { color: var(--v4-cu-hi); }
 .v4-form-msg.is-err { color: #f2a79b; }
+.v4-form-msg.is-err:not(:empty) { padding: 12px 14px; border: 1px solid #f2a79b; }
 .v4-contact-lines a, .v4-contact-lines span { display: block; font-size: 1.3rem; min-height: 40px; }
 .v4-contact-lines a { color: var(--v4-cu-hi); font-weight: 600; text-decoration: none; }
 
@@ -760,7 +810,7 @@ a.v4-row-in:is(:hover, :focus-visible)::after { transform: scaleX(1); }
 }
 .v4-footer-col a:is(:hover, :focus-visible) { color: var(--v4-cu-hi); background-size: 100% 1px; }
 @media (pointer: coarse) {
-  .v4-footer-col a { min-height: 44px; }
+  .v4-footer-col a { min-width: 44px; min-height: 44px; }
 }
 /* Title block (Schriftfeld): one cell per fact, hairline grid, the 3D switch in the last cell. */
 /* No text-transform here: TR uppercase would print the brand as "OPSOLİD". */
@@ -838,28 +888,11 @@ html[data-v4] .wrap { max-width: 1360px; }
 html[data-v4] .os-footer, html[data-v4] .os-header { display: none; }
 html[data-v4] main { position: relative; z-index: 2; }
 
-/* consent banner → compact bar */
-html[data-v4] [aria-labelledby="consent-title"] {
-  left: auto !important;
-  right: 12px !important;
-  bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-  width: min(24rem, calc(100vw - 24px));
-  max-width: none;
-  margin-left: 0 !important;
-  font-size: 0.85rem;
-  border-radius: 2px !important;
-  background: var(--v4-bg2) !important;
-  border: 1px solid var(--v4-line2) !important;
-  padding: 16px !important;
-  backdrop-filter: none !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-}
-html[data-v4] [aria-labelledby="consent-title"] h2 { font-family: var(--v4-display) !important; font-weight: 700; color: var(--v4-ink); }
-html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !important; }
-
 /* ---------------------------------------------------------- responsive */
 @media (max-width: 759px) {
-  .v4-poster { right: auto; left: 50%; top: 15vh; transform: translateX(-50%); width: min(58vw, 250px); }
+  /* Poster in the hero's figure window, like the live object: below the header (+8) and above the
+     FIG label (44vh − 30 px, −8); the drawing is about as tall as it is wide. */
+  .v4-poster { right: auto; left: 50%; top: 76px; transform: translateX(-50%); width: min(58vw, 250px, calc((44vh - 114px) * 0.95)); }
   html[data-v4] body::after { opacity: 0.3; -webkit-mask-image: linear-gradient(180deg, #000 0, #000 30vh, transparent 45vh); mask-image: linear-gradient(180deg, #000 0, #000 30vh, transparent 45vh); }
   .v4-sec { display: block; min-height: 0; padding-block: 28px; }
   .v4-sec.is-hero { padding-top: 44vh; padding-bottom: 28px; min-height: 0; }
@@ -881,9 +914,10 @@ html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !imp
   .v4-sec.is-flow .v4-col, .v4-sec.is-faq .v4-col, .v4-col + .v4-col { border-top: 1px solid var(--v4-line); }
   /* contact page: its two stacked columns carry an inline 48px gap; join them like the other sheets */
   .v4-sec > .v4-in[style] { gap: 0 !important; }
-  /* Scene windows are numbered like figures on a drawing sheet (decorative, empty alt text). */
+  /* Scene windows are numbered like figures on a drawing sheet (decorative, empty alt text). Every
+     chapter counts, so FIG. n sits above chapter n; flow chapters without a window skip a number. */
   .v4-page { counter-reset: fig; }
-  .v4-sec.is-hero, .v4-sec.has-scene { counter-increment: fig; }
+  .v4-page .v4-sec { counter-increment: fig; }
   .v4-sec.is-hero::before, .v4-sec.has-scene::before {
     content: "FIG. " counter(fig, decimal-leading-zero) / "";
     position: absolute;
@@ -915,15 +949,6 @@ html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !imp
 .v4-topic { min-height: 44px; padding: 0 14px; background: transparent; border: 1px solid var(--v4-line2); color: var(--v4-ink); font-family: var(--v4-mono); font-size: 0.78rem; letter-spacing: 0.02em; cursor: pointer; border-radius: 2px; }
 .v4-topic:hover { border-color: var(--v4-cu); }
 .v4-topic[aria-pressed="true"] { background: var(--v4-cu); border-color: var(--v4-cu); color: var(--v4-on-cu); }
-
-@media (max-width: 759px) {
-  html[data-v4] [aria-labelledby="consent-title"] { left: 12px !important; width: auto; padding: 14px !important; }
-  html[data-v4] [aria-labelledby="consent-title"] p { margin-top: 6px !important; }
-}
-html[data-v4] [aria-labelledby="consent-title"] > div:last-child { flex-direction: row !important; justify-content: flex-end; margin-top: 12px !important; }
-/* Accept and reject carry identical visual weight (German DPAs treat a faded reject as a dark pattern). */
-html[data-v4] [aria-labelledby="consent-title"] button { min-height: 44px; padding: 0 18px !important; background: transparent !important; background-image: none !important; color: var(--v4-ink) !important; font-weight: 700; box-shadow: inset 0 0 0 1px var(--v4-ink); }
-html[data-v4] [aria-labelledby="consent-title"] button:hover { box-shadow: inset 0 0 0 1px var(--v4-cu-hi); color: var(--v4-cu-hi) !important; }
 
 /* article prose */
 .v4-prose { max-width: 44rem; font-size: 1.08rem; line-height: 1.75; color: var(--v4-ink2); }

@@ -7,6 +7,7 @@
 // to auto-open the cancel modal.
 // =============================================================================
 
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -19,6 +20,9 @@ import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+// Token-bearing owner page: never indexed.
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 interface PageProps {
   params: { locale: string; orderId: string };

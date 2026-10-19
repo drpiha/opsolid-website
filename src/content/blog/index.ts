@@ -33,7 +33,7 @@ const articles: Record<string, Record<string, string>> = {
 <h2>Real-World Patterns</h2>
 <p>Here is how these fundamentals show up in production automations:</p>
 <ul>
-<li><strong>E-commerce order processing:</strong> Automatically sync orders from Shopify, generate shipping labels, update inventory, and send customer notifications — all triggered by a single webhook, with dead-letter retries when the fulfillment system is down.</li>
+<li><strong>E-commerce order processing:</strong> Automatically sync orders from Shopify, generate shipping labels, update inventory, and send customer notifications — all triggered by a single webhook, with dead-letter retries when the fulfilment system is down.</li>
 <li><strong>Lead qualification:</strong> When a form submission arrives, enrich the lead, score it against custom criteria, update the CRM, and route qualified leads via Slack or email — with the full scoring trace logged for later review.</li>
 <li><strong>Document processing:</strong> Extract data from incoming invoices using AI, validate against existing records, and push approved entries into accounting — with a human-in-the-loop step before anything over a configurable threshold.</li>
 <li><strong>WhatsApp customer support:</strong> Route incoming WhatsApp messages through AI classification, auto-respond to common questions, and escalate complex issues to human agents — with conversation state persisted so no customer gets a blank reply.</li>
@@ -114,7 +114,7 @@ const articles: Record<string, Record<string, string>> = {
     en: `<p>Most businesses don't wake up one morning and decide they need automation. Instead, the need builds gradually — through missed deadlines, growing error rates, and teams that are busy all day but somehow still falling behind. Here are five clear signals that your operations have outgrown manual processes.</p>
 
 <h2>1. Your Team Spends More Time on Process Than on Work</h2>
-<p>When employees spend more time moving data between systems, sending follow-up emails, and updating spreadsheets than doing the actual work that creates value — that's a sign. If your operations manager spends Monday mornings compiling reports instead of analyzing them, automation should be handling the compilation.</p>
+<p>When employees spend more time moving data between systems, sending follow-up emails, and updating spreadsheets than doing the actual work that creates value — that's a sign. If your operations manager spends Monday mornings compiling reports instead of analysing them, automation should be handling the compilation.</p>
 <p><strong>The benchmark:</strong> If more than 30% of any team member's week is spent on tasks that follow a predictable pattern, those tasks are automation candidates.</p>
 
 <h2>2. Errors Are Increasing as You Scale</h2>
@@ -131,7 +131,7 @@ const articles: Record<string, Record<string, string>> = {
 
 <h2>5. You're Hiring to Handle Volume, Not Complexity</h2>
 <p>There's a difference between hiring because your work is getting more complex and hiring because you simply have more of the same work. If your next hire would spend 80% of their time on tasks that are identical to what your current team does, automation is the better investment.</p>
-<p>A well-designed automation system can often handle 3-5x the volume that would require hiring additional staff. The math is straightforward: one-time automation investment vs. recurring salary costs.</p>
+<p>A well-designed automation can absorb growing volume without a matching increase in headcount.</p>
 
 <h2>What to Do Next</h2>
 <p>If two or more of these signals resonate, your business is ready for process automation. The key is to start small and focused:</p>
@@ -159,7 +159,7 @@ const articles: Record<string, Record<string, string>> = {
 <p>Wenn Ihr erfahrenster Mitarbeiter Urlaub nimmt, sinkt die Qualität? Wenn jemand das Unternehmen verlässt, geht institutionelles Wissen verloren? Automatisierte Workflows überführen Best Practices in Systeme.</p>
 
 <h2>5. Sie stellen für Volumen ein, nicht für Komplexität</h2>
-<p>Wenn Ihre nächste Einstellung zu 80% dieselben Aufgaben wie das aktuelle Team erledigen würde, ist Automatisierung die bessere Investition. Ein gut gestaltetes Automatisierungssystem kann oft das 3-5-fache Volumen bewältigen.</p>
+<p>Wenn Ihre nächste Einstellung zu 80% dieselben Aufgaben wie das aktuelle Team erledigen würde, ist Automatisierung die bessere Investition. Eine gut gestaltete Automatisierung kann wachsendes Volumen auffangen, ohne dass das Team im gleichen Maß wachsen muss.</p>
 
 <h2>Nächste Schritte</h2>
 <p>Wenn zwei oder mehr dieser Signale zutreffen, ist Ihr Unternehmen bereit für Prozessautomatisierung. Der Schlüssel ist, klein und fokussiert zu starten.</p>`,
@@ -180,158 +180,158 @@ const articles: Record<string, Record<string, string>> = {
 <p>En deneyimli çalışanınız tatile çıktığında kalite düşüyor mu? Birisi ayrıldığında kurumsal bilgi de mi gidiyor? Otomatik iş akışları, en iyi uygulamaları sistemlere kodlar.</p>
 
 <h2>5. Karmaşıklık İçin Değil, Hacim İçin İşe Alıyorsunuz</h2>
-<p>Bir sonraki işe alımınız zamanının %80'ini mevcut ekibinizin yaptığı görevlerle geçirecekse, otomasyon daha iyi bir yatırımdır. İyi tasarlanmış bir otomasyon sistemi genellikle ek personel gerektiren hacmin 3-5 katını yönetebilir.</p>
+<p>Bir sonraki işe alımınız zamanının %80'ini mevcut ekibinizin yaptığı görevlerle geçirecekse, otomasyon daha iyi bir yatırımdır. İyi tasarlanmış bir otomasyon, ekibin aynı oranda büyümesini gerektirmeden artan iş hacmini karşılayabilir.</p>
 
 <h2>Sonraki Adımlar</h2>
 <p>Bu sinyallerden iki veya daha fazlası size uyuyorsa, işletmeniz süreç otomasyonuna hazırdır. Anahtar, küçük ve odaklı başlamaktır.</p>`,
   },
 
   "eu-ai-act-august-2026-omnibus-compliance": {
-    en: `<figure><img src="/blog/eu-ai-act-august-2026-omnibus-compliance.jpg" alt="Artificial intelligence technology concept" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Photo: Wendelin Jacober (CC0) via Openverse</figcaption></figure>
+    en: `<p><em>As of 7 July 2026. Dates and details may have changed since; the text published in the Official Journal of the EU is authoritative.</em></p>
 
-<p>The EU AI Act reaches full application on 2 August 2026 - weeks away. On 29 June 2026, the Council of the EU gave its final approval to the "Digital AI Omnibus" (Omnibus VII), a package of amendments that extends several key deadlines and simplifies compliance for smaller businesses. But one category of obligations did not move: Article 50 transparency rules apply on 2 August 2026 regardless of size or sector, and they affect every business operating a customer-facing AI system in the EU.</p>
+<p>The EU AI Act has been in force since 1 August 2024 and largely applies from 2 August 2026 – weeks away. On 29 June 2026, the Council of the EU gave its final approval to the "Digital AI Omnibus" (Omnibus VII), a package of amendments that extends several key deadlines and simplifies compliance for smaller businesses. But one category of obligations did not move: Article 50 transparency rules apply on 2 August 2026 regardless of size or sector, and they affect every business operating a customer-facing AI system in the EU.</p>
 
 <h2>Three Key Facts for the Week of 2 August 2026</h2>
-<p>First: any chatbot, AI assistant, or automated system interacting with users must disclose it is AI by 2 August 2026 - no extension, no SME exceptions. Second: the compliance deadline for most high-risk AI applications - recruitment screening, credit scoring, education systems, biometric identification - was extended by 16 months to 2 December 2027. Third: companies with up to 750 employees and annual revenue under 150 million euros now qualify for expanded SME protections under the AI Act.</p>
+<p>First: any chatbot, AI assistant, or automated system interacting with users must disclose it is AI by 2 August 2026 – no extension, no SME exceptions. Second: the compliance deadline for most high-risk AI applications – recruitment screening, credit scoring, education systems, biometric identification – was extended by 16 months to 2 December 2027. Third: companies with up to 750 employees and annual revenue under 150 million euros now qualify for expanded SME protections under the AI Act.</p>
 
 <h2>What the Omnibus VII Package Changed</h2>
 <p>The EU reached political agreement on the Omnibus amendments on 7 May 2026. The European Parliament formally endorsed them on 16 June, and the Council gave final approval on 29 June. The changes entered into force three days after publication in the Official Journal of the EU, ahead of the 2 August deadline.</p>
 
-<p>The most significant deadline extension applies to Annex III high-risk AI systems - those used in employment and HR screening, educational institutions, essential services, creditworthiness assessment, and public administration. These systems now face a compliance deadline of 2 December 2027, pushed back 16 months from the original date of 2 August 2026. AI systems embedded as safety components in regulated products face an even longer runway: their deadline moves to 2 August 2028.</p>
+<p>The most significant deadline extension applies to Annex III high-risk AI systems – those used in employment and HR screening, educational institutions, essential services, creditworthiness assessment, and public administration. These systems now face a compliance deadline of 2 December 2027, pushed back 16 months from the original date of 2 August 2026. AI systems embedded as safety components in regulated products face an even longer runway: their deadline moves to 2 August 2028.</p>
 
 <p>For generative AI systems already deployed before 2 August 2026, a four-month grace period applies for synthetic media watermarking obligations. New deployments after 2 August 2026 must comply immediately with watermarking requirements when publishing AI-generated content.</p>
 
 <h2>What Did Not Change: August 2 Transparency Is Still Live</h2>
 <p>The Omnibus extended many timelines, but it left Article 50 untouched. From 2 August 2026:</p>
 <ul>
-<li>Any AI system designed for direct interaction with humans - chatbots, virtual assistants, automated email responders - must inform users they are communicating with an AI.</li>
-<li>Emotion recognition systems and biometric categorization systems must notify the people they analyze.</li>
-<li>Deepfakes and AI-generated audio or video content must be labeled as artificially created using watermarks, metadata, or visible disclosure.</li>
+<li>Any AI system designed for direct interaction with humans – chatbots, virtual assistants, automated email responders – must inform users they are communicating with an AI.</li>
+<li>Emotion recognition systems and biometric categorisation systems must notify the people they analyse.</li>
+<li>Deepfakes and AI-generated audio or video content must be labelled as artificially created using watermarks, metadata, or visible disclosure.</li>
 </ul>
-<p>These requirements apply to both providers (companies that build AI systems) and deployers (companies that put them in front of customers). A business running a third-party AI chatbot on its website is a deployer - and the disclosure obligation falls on both parties.</p>
+<p>These requirements apply to both providers (companies that build AI systems) and deployers (companies that put them in front of customers). A business running a third-party AI chatbot on its website is a deployer – and the disclosure obligation falls on both parties.</p>
 
 <h2>Expanded SME Protections</h2>
-<p>Under the original AI Act, reduced compliance burdens applied only to small and medium-sized enterprises as defined by EU rules - up to 250 employees and 50 million euros in revenue. The Omnibus extends these protections to "small mid-cap" companies: up to 750 employees and 150 million euros in annual revenue. This matters for the German Mittelstand. Many family-owned manufacturing and technology companies in the 250-750 employee range now qualify for simplified conformity assessment pathways, lower documentation requirements, and priority access to regulatory sandboxes.</p>
+<p>Under the original AI Act, reduced compliance burdens applied only to small and medium-sized enterprises as defined by EU rules – up to 250 employees and 50 million euros in revenue. The Omnibus extends these protections to "small mid-cap" companies: up to 750 employees and 150 million euros in annual revenue. This matters for the German Mittelstand. Many family-owned manufacturing and technology companies in the 250-750 employee range now qualify for simplified conformity assessment pathways, lower documentation requirements, and priority access to regulatory sandboxes.</p>
 
 <h2>New Prohibition: Non-Consensual Intimate Imagery</h2>
-<p>The Omnibus introduced one new prohibition absent from the original AI Act. AI systems that generate or manipulate non-consensual intimate imagery - so-called nudifier applications - are banned from 2 December 2026. Providers face liability when such output is an intended or foreseeable outcome of the system. This closes a gap that earlier drafts of the AI Act left open.</p>
+<p>The Omnibus introduced one new prohibition absent from the original AI Act. AI systems that generate or manipulate non-consensual intimate imagery – so-called nudifier applications – are banned from 2 December 2026. Providers face liability when such output is an intended or foreseeable outcome of the system. This closes a gap that earlier drafts of the AI Act left open.</p>
 
 <h2>Industrial AI Exemption</h2>
 <p>AI systems used exclusively under the EU Machinery Regulation are now exempt from the AI Act's classification requirements. This is relevant for German manufacturers using AI for production line monitoring, predictive maintenance, or automated quality control. If those systems fall under the Machinery Regulation, they do not require AI Act conformity procedures.</p>
 
 <h2>Penalties Remain Severe</h2>
-<p>Nothing in the Omnibus reduced the penalty framework. Maximum fines for violations of prohibited AI practices remain at 35 million euros or 7% of total annual worldwide turnover - whichever is higher. This exceeds GDPR's maximum of 4% of global turnover. For violations of information-sharing obligations between providers and deployers in the supply chain, the fine is up to 3% of global turnover.</p>
+<p>Nothing in the Omnibus reduced the penalty framework. Maximum fines for violations of prohibited AI practices remain at 35 million euros or 7% of total annual worldwide turnover – whichever is higher. This exceeds GDPR's maximum of 4% of global turnover. For violations of information-sharing obligations between providers and deployers in the supply chain, the fine is up to 3% of global turnover.</p>
 
 <h2>What This Means for DACH Businesses</h2>
-<p>Any German or EU business running a customer-facing AI system - an automated support bot, a lead qualification assistant, an AI-powered scheduling tool - must have transparent disclosure mechanisms live by 2 August 2026. That is the non-negotiable part of the August deadline.</p>
-<p>High-risk applications - AI used to screen job applicants, assess creditworthiness, or make decisions about access to essential services - have until December 2027 to reach full compliance. But the risk management frameworks, technical documentation, and human oversight mechanisms the AI Act requires are substantial. Starting those assessments in mid-2027 leaves too little runway. Now is the right moment to begin.</p>
-<p>For Mittelstand companies in the newly expanded SME category, the Omnibus provides meaningful regulatory breathing room - but not an exemption. The core obligations apply; the pathways to demonstrate compliance are simplified.</p>
-<p>OpSolid designs and builds automation and AI systems for mid-market businesses in Germany and the EU. When integrating AI into business workflows - whether customer-facing or internal - compliance with the AI Act's disclosure requirements and risk classification framework is part of the architecture from the start, not an afterthought.</p>
+<p>Any German or EU business running a customer-facing AI system – an automated support bot, a lead qualification assistant, an AI-powered scheduling tool – must have transparent disclosure mechanisms live by 2 August 2026. That is the non-negotiable part of the August deadline.</p>
+<p>High-risk applications – AI used to screen job applicants, assess creditworthiness, or make decisions about access to essential services – have until December 2027 to reach full compliance. But the risk management frameworks, technical documentation, and human oversight mechanisms the AI Act requires are substantial. Starting those assessments in mid-2027 leaves too little runway. Now is the right moment to begin.</p>
+<p>For Mittelstand companies in the newly expanded SME category, the Omnibus provides meaningful regulatory breathing room – but not an exemption. The core obligations apply; the pathways to demonstrate compliance are simplified.</p>
+<p>OpSolid designs and builds automation and AI systems for mid-market businesses in Germany and the EU. When integrating AI into business workflows – whether customer-facing or internal – compliance with the AI Act's disclosure requirements and risk classification framework is part of the architecture from the start, not an afterthought.</p>
 
 <h2>Sources</h2>
 <ul>
 <li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">EU Council: Final approval of AI Act simplification, 29 June 2026</a></li>
-<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: EU AI Act Update - EU Resolves to Change Rules and Extend Deadlines</a></li>
-<li><a href="https://www.insideglobaltech.com/2026/05/28/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions/">Inside Global Tech: EU AI Act Update - Timeline Relief, Targeted Simplification, and New Prohibitions</a></li>
-<li><a href="https://techjacksolutions.com/ai-brief/eu-ai-act-omnibus-vii-council-adoption-deadlines/">TechJack Solutions: EU AI Act Deadlines Are Now Law - What the Council's June 29 Adoption Changes</a></li>
+<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: EU AI Act Update – EU Resolves to Change Rules and Extend Deadlines</a></li>
+<li><a href="https://www.insideglobaltech.com/2026/05/28/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions/">Inside Global Tech: EU AI Act Update – Timeline Relief, Targeted Simplification, and New Prohibitions</a></li>
+<li><a href="https://techjacksolutions.com/ai-brief/eu-ai-act-omnibus-vii-council-adoption-deadlines/">TechJack Solutions: EU AI Act Deadlines Are Now Law – What the Council's June 29 Adoption Changes</a></li>
 </ul>`,
 
-    de: `<figure><img src="/blog/eu-ai-act-august-2026-omnibus-compliance.jpg" alt="Künstliche Intelligenz - Technologie und Regulierung" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Foto: Wendelin Jacober (CC0) via Openverse</figcaption></figure>
+    de: `<p><em>Stand: 7. Juli 2026. Fristen und Details können sich seitdem geändert haben; maßgeblich ist der im Amtsblatt der EU veröffentlichte Text.</em></p>
 
-<p>Am 2. August 2026 wird die EU-KI-Verordnung vollständig anwendbar - bis dahin sind es nur noch wenige Wochen. Am 29. Juni 2026 erteilte der Rat der EU seine endgültige Zustimmung zum "Digital AI Omnibus" (Omnibus VII), einem Änderungspaket, das mehrere wichtige Fristen verlängert und die Compliance-Anforderungen für kleinere Unternehmen vereinfacht. Eine Kategorie von Pflichten wurde jedoch nicht verschoben: Die Transparenzvorschriften nach Artikel 50 gelten ab dem 2. August 2026 - unabhängig von Unternehmensgröße oder Branche - und sie betreffen jedes Unternehmen, das in der EU ein kundengerichtetes KI-System betreibt.</p>
+<p>Die EU-KI-Verordnung ist seit dem 1. August 2024 in Kraft; am 2. August 2026 wird sie weitgehend anwendbar – bis dahin sind es nur noch wenige Wochen. Am 29. Juni 2026 erteilte der Rat der EU seine endgültige Zustimmung zum "Digital AI Omnibus" (Omnibus VII), einem Änderungspaket, das mehrere wichtige Fristen verlängert und die Compliance-Anforderungen für kleinere Unternehmen vereinfacht. Eine Kategorie von Pflichten wurde jedoch nicht verschoben: Die Transparenzvorschriften nach Artikel 50 gelten ab dem 2. August 2026 – unabhängig von Unternehmensgröße oder Branche – und sie betreffen jedes Unternehmen, das in der EU ein kundengerichtetes KI-System betreibt.</p>
 
 <h2>Drei wichtige Fakten zur Woche des 2. August 2026</h2>
-<p>Erstens: Jeder Chatbot, KI-Assistent oder jedes automatisierte System, das mit Nutzern interagiert, muss bis zum 2. August 2026 offenlegen, dass es sich um KI handelt - keine Fristverlängerung, keine Ausnahmen für KMU. Zweitens: Die Compliance-Frist für die meisten Hochrisiko-KI-Anwendungen - Personalauswahl, Kreditscoring, Bildungssysteme, biometrische Identifikation - wurde um 16 Monate auf den 2. Dezember 2027 verlängert. Drittens: Unternehmen mit bis zu 750 Mitarbeitern und einem Jahresumsatz unter 150 Millionen Euro kommen nun in den Genuss erweiterter KMU-Schutzbestimmungen der KI-Verordnung.</p>
+<p>Erstens: Jeder Chatbot, KI-Assistent oder jedes automatisierte System, das mit Nutzern interagiert, muss bis zum 2. August 2026 offenlegen, dass es sich um KI handelt – keine Fristverlängerung, keine Ausnahmen für KMU. Zweitens: Die Compliance-Frist für die meisten Hochrisiko-KI-Anwendungen – Personalauswahl, Kreditscoring, Bildungssysteme, biometrische Identifikation – wurde um 16 Monate auf den 2. Dezember 2027 verlängert. Drittens: Unternehmen mit bis zu 750 Mitarbeitern und einem Jahresumsatz unter 150 Millionen Euro kommen nun in den Genuss erweiterter KMU-Schutzbestimmungen der KI-Verordnung.</p>
 
 <h2>Was das Omnibus-VII-Paket geändert hat</h2>
-<p>Die politische Einigung über die Omnibus-Änderungen wurde am 7. Mai 2026 erzielt. Das Europäische Parlament stimmte formal am 16. Juni zu, der Rat erteilte seine endgültige Zustimmung am 29. Juni. Die Änderungen traten drei Tage nach Veröffentlichung im Amtsblatt der EU in Kraft - noch vor dem 2. August.</p>
+<p>Die politische Einigung über die Omnibus-Änderungen wurde am 7. Mai 2026 erzielt. Das Europäische Parlament stimmte formal am 16. Juni zu, der Rat erteilte seine endgültige Zustimmung am 29. Juni. Die Änderungen traten drei Tage nach Veröffentlichung im Amtsblatt der EU in Kraft – noch vor dem 2. August.</p>
 
-<p>Die bedeutendste Fristverlängerung betrifft Hochrisiko-KI-Systeme nach Anhang III: Systeme, die in der Personalauswahl, in Bildungseinrichtungen, bei wesentlichen Dienstleistungen, zur Kreditwürdigkeitsbewertung und in der öffentlichen Verwaltung eingesetzt werden. Die Compliance-Frist für diese Systeme wurde auf den 2. Dezember 2027 verschoben - 16 Monate später als ursprünglich. KI-Systeme, die als Sicherheitskomponenten in regulierten Produkten verbaut sind, erhalten noch mehr Zeit: ihre Frist wurde auf den 2. August 2028 verlegt.</p>
+<p>Die bedeutendste Fristverlängerung betrifft Hochrisiko-KI-Systeme nach Anhang III: Systeme, die in der Personalauswahl, in Bildungseinrichtungen, bei wesentlichen Dienstleistungen, zur Kreditwürdigkeitsbewertung und in der öffentlichen Verwaltung eingesetzt werden. Die Compliance-Frist für diese Systeme wurde auf den 2. Dezember 2027 verschoben – 16 Monate später als ursprünglich. KI-Systeme, die als Sicherheitskomponenten in regulierten Produkten verbaut sind, erhalten noch mehr Zeit: ihre Frist wurde auf den 2. August 2028 verlegt.</p>
 
 <p>Für generative KI-Systeme, die bereits vor dem 2. August 2026 eingesetzt wurden, gilt eine viermonatige Übergangsfrist für die Pflichten zur Kennzeichnung synthetischer Medien. Neue Systeme, die nach dem 2. August in Betrieb genommen werden, müssen sofort die Kennzeichnungsvorschriften für KI-generierte Inhalte einhalten.</p>
 
 <h2>Was sich nicht geändert hat: Transparenz ab 2. August</h2>
 <p>Der Omnibus hat viele Fristen verlängert, Artikel 50 jedoch unverändert gelassen. Ab dem 2. August 2026 gilt:</p>
 <ul>
-<li>Jedes KI-System, das zur direkten Interaktion mit Menschen ausgelegt ist - Chatbots, virtuelle Assistenten, automatisierte E-Mail-Beantworter - muss Nutzern mitteilen, dass sie mit einer KI kommunizieren.</li>
+<li>Jedes KI-System, das zur direkten Interaktion mit Menschen ausgelegt ist – Chatbots, virtuelle Assistenten, automatisierte E-Mail-Beantworter – muss Nutzern mitteilen, dass sie mit einer KI kommunizieren.</li>
 <li>Systeme zur Emotionserkennung und biometrischen Kategorisierung müssen die betroffenen Personen darüber informieren.</li>
-<li>Deepfakes sowie KI-generierte Audio- oder Videoinhalte müssen als künstlich erstellt gekennzeichnet werden - durch Wasserzeichen, Metadaten oder sichtbare Hinweise.</li>
+<li>Deepfakes sowie KI-generierte Audio- oder Videoinhalte müssen als künstlich erstellt gekennzeichnet werden – durch Wasserzeichen, Metadaten oder sichtbare Hinweise.</li>
 </ul>
-<p>Diese Anforderungen gelten sowohl für Anbieter (Unternehmen, die KI-Systeme entwickeln) als auch für Betreiber (Unternehmen, die sie gegenüber Kunden einsetzen). Ein Unternehmen, das einen Drittanbieter-Chatbot auf seiner Website betreibt, ist Betreiber - und die Offenlegungspflicht trifft beide Parteien.</p>
+<p>Diese Anforderungen gelten sowohl für Anbieter (Unternehmen, die KI-Systeme entwickeln) als auch für Betreiber (Unternehmen, die sie gegenüber Kunden einsetzen). Ein Unternehmen, das einen Drittanbieter-Chatbot auf seiner Website betreibt, ist Betreiber – und die Offenlegungspflicht trifft beide Parteien.</p>
 
 <h2>Erweiterte KMU-Schutzbestimmungen</h2>
-<p>Im ursprünglichen KI-Gesetz galten reduzierte Compliance-Anforderungen nur für kleine und mittlere Unternehmen im EU-Sinne - bis zu 250 Mitarbeitern und 50 Millionen Euro Umsatz. Der Omnibus erweitert diese Erleichterungen auf "kleine mittelgroße Unternehmen": bis zu 750 Mitarbeitern und 150 Millionen Euro Jahresumsatz. Das ist eine bedeutende Änderung für den deutschen Mittelstand. Viele familiengeführte Hersteller und Technologieunternehmen mit 250 bis 750 Beschäftigten kommen jetzt in den Genuss vereinfachter Konformitätsbewertungsverfahren, geringerer Dokumentationspflichten und bevorzugtem Zugang zu Regulierungs-Sandboxen.</p>
+<p>Im ursprünglichen KI-Gesetz galten reduzierte Compliance-Anforderungen nur für kleine und mittlere Unternehmen im EU-Sinne – bis zu 250 Mitarbeitern und 50 Millionen Euro Umsatz. Der Omnibus erweitert diese Erleichterungen auf "kleine mittelgroße Unternehmen": bis zu 750 Mitarbeitern und 150 Millionen Euro Jahresumsatz. Das ist eine bedeutende Änderung für den deutschen Mittelstand. Viele familiengeführte Hersteller und Technologieunternehmen mit 250 bis 750 Beschäftigten kommen jetzt in den Genuss vereinfachter Konformitätsbewertungsverfahren, geringerer Dokumentationspflichten und bevorzugtem Zugang zu Regulierungs-Sandboxen.</p>
 
 <h2>Neues Verbot: Nicht einvernehmliche intime Abbildungen</h2>
-<p>Der Omnibus führt ein neues Verbot ein, das im ursprünglichen KI-Gesetz nicht enthalten war. KI-Systeme, die nicht einvernehmliche intime Aufnahmen erzeugen oder manipulieren - sogenannte Nudifier-Anwendungen - sind ab dem 2. Dezember 2026 verboten. Anbieter haften, wenn solche Ausgaben ein beabsichtigtes oder vorhersehbares Ergebnis des Systems sind. Damit wird eine Lücke geschlossen, die frühere Entwürfe des KI-Gesetzes offen gelassen hatten.</p>
+<p>Der Omnibus führt ein neues Verbot ein, das im ursprünglichen KI-Gesetz nicht enthalten war. KI-Systeme, die nicht einvernehmliche intime Aufnahmen erzeugen oder manipulieren – sogenannte Nudifier-Anwendungen – sind ab dem 2. Dezember 2026 verboten. Anbieter haften, wenn solche Ausgaben ein beabsichtigtes oder vorhersehbares Ergebnis des Systems sind. Damit wird eine Lücke geschlossen, die frühere Entwürfe des KI-Gesetzes offen gelassen hatten.</p>
 
 <h2>Ausnahme für Industrie-KI</h2>
 <p>KI-Systeme, die ausschließlich im Rahmen der EU-Maschinenverordnung eingesetzt werden, sind nun von den Klassifizierungsanforderungen des KI-Gesetzes ausgenommen. Das ist relevant für deutsche Hersteller, die KI zur Produktionsüberwachung, vorausschauenden Wartung oder automatisierten Qualitätskontrolle nutzen. Sofern diese Systeme unter die Maschinenverordnung fallen, benötigen sie keine KI-Konformitätsprüfung.</p>
 
 <h2>Strafen bleiben hoch</h2>
-<p>Der Omnibus hat nichts am Bußgeldrahmen geändert. Verstöße gegen verbotene KI-Praktiken können mit bis zu 35 Millionen Euro oder 7% des weltweiten Jahresumsatzes geahndet werden - je nachdem, welcher Betrag höher ist. Das übersteigt die DSGVO-Obergrenze von 4% des globalen Umsatzes. Für Verstöße gegen Informationspflichten im Rahmen von Lieferketten zwischen Anbietern und Betreibern drohen Bußgelder von bis zu 3% des weltweiten Umsatzes.</p>
+<p>Der Omnibus hat nichts am Bußgeldrahmen geändert. Verstöße gegen verbotene KI-Praktiken können mit bis zu 35 Millionen Euro oder 7% des weltweiten Jahresumsatzes geahndet werden – je nachdem, welcher Betrag höher ist. Das übersteigt die DSGVO-Obergrenze von 4% des globalen Umsatzes. Für Verstöße gegen Informationspflichten im Rahmen von Lieferketten zwischen Anbietern und Betreibern drohen Bußgelder von bis zu 3% des weltweiten Umsatzes.</p>
 
 <h2>Was das für DACH-Unternehmen bedeutet</h2>
-<p>Jedes deutsche oder europäische Unternehmen, das ein kundengerichtetes KI-System betreibt - einen automatisierten Support-Bot, einen Lead-Qualifizierungsassistenten oder ein KI-gestütztes Buchungssystem - muss bis zum 2. August 2026 transparente Offenlegungsmechanismen implementiert haben. Das ist der nicht verhandelbare Teil der August-Frist.</p>
-<p>Hochrisiko-Anwendungen - KI zur Vorauswahl von Stellenbewerbern, zur Kreditwürdigkeitsbewertung oder für Entscheidungen über den Zugang zu wesentlichen Dienstleistungen - haben bis Dezember 2027 Zeit für die vollständige Compliance. Aber die vom KI-Gesetz geforderten Risikomanagementsysteme, technischen Dokumentationen und Mechanismen zur menschlichen Aufsicht sind umfangreich. Wer erst Mitte 2027 anfängt, wird den Zeitplan kaum einhalten. Jetzt ist der richtige Zeitpunkt, diese Bewertungen zu beginnen.</p>
-<p>Für Mittelstandsunternehmen in der neu erweiterten KMU-Kategorie bietet der Omnibus echte regulatorische Erleichterungen - aber keine Befreiung. Die grundlegenden Pflichten gelten weiterhin; die Wege zum Nachweis der Konformität sind vereinfacht.</p>
-<p>OpSolid entwickelt Automatisierungs- und KI-Systeme für mittelständische Unternehmen in Deutschland und der EU. Bei der Integration von KI-Komponenten in Geschäftsprozesse - ob kundengerichtet oder intern - ist die Einhaltung der Offenlegungsanforderungen und des Risikoklassifizierungsrahmens der KI-Verordnung von Anfang an Teil des Designs.</p>
+<p>Jedes deutsche oder europäische Unternehmen, das ein kundengerichtetes KI-System betreibt – einen automatisierten Support-Bot, einen Lead-Qualifizierungsassistenten oder ein KI-gestütztes Buchungssystem – muss bis zum 2. August 2026 transparente Offenlegungsmechanismen implementiert haben. Das ist der nicht verhandelbare Teil der August-Frist.</p>
+<p>Hochrisiko-Anwendungen – KI zur Vorauswahl von Stellenbewerbern, zur Kreditwürdigkeitsbewertung oder für Entscheidungen über den Zugang zu wesentlichen Dienstleistungen – haben bis Dezember 2027 Zeit für die vollständige Compliance. Aber die vom KI-Gesetz geforderten Risikomanagementsysteme, technischen Dokumentationen und Mechanismen zur menschlichen Aufsicht sind umfangreich. Wer erst Mitte 2027 anfängt, wird den Zeitplan kaum einhalten. Jetzt ist der richtige Zeitpunkt, diese Bewertungen zu beginnen.</p>
+<p>Für Mittelstandsunternehmen in der neu erweiterten KMU-Kategorie bietet der Omnibus echte regulatorische Erleichterungen – aber keine Befreiung. Die grundlegenden Pflichten gelten weiterhin; die Wege zum Nachweis der Konformität sind vereinfacht.</p>
+<p>OpSolid entwickelt Automatisierungs- und KI-Systeme für mittelständische Unternehmen in Deutschland und der EU. Bei der Integration von KI-Komponenten in Geschäftsprozesse – ob kundengerichtet oder intern – ist die Einhaltung der Offenlegungsanforderungen und des Risikoklassifizierungsrahmens der KI-Verordnung von Anfang an Teil des Designs.</p>
 
 <h2>Quellen</h2>
 <ul>
 <li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">EU-Rat: Endgültige Zustimmung zur KI-Vereinfachung, 29. Juni 2026</a></li>
-<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: EU AI Act Update - Regeländerungen und Fristen</a></li>
-<li><a href="https://www.insideglobaltech.com/2026/05/28/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions/">Inside Global Tech: EU AI Act - Fristverlängerungen, Vereinfachungen und neue Verbote</a></li>
-<li><a href="https://techjacksolutions.com/ai-brief/eu-ai-act-omnibus-vii-council-adoption-deadlines/">TechJack Solutions: EU AI Act - Omnibus VII Ratsbeschluss und Fristen</a></li>
+<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: EU AI Act Update – Regeländerungen und Fristen</a></li>
+<li><a href="https://www.insideglobaltech.com/2026/05/28/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions/">Inside Global Tech: EU AI Act – Fristverlängerungen, Vereinfachungen und neue Verbote</a></li>
+<li><a href="https://techjacksolutions.com/ai-brief/eu-ai-act-omnibus-vii-council-adoption-deadlines/">TechJack Solutions: EU AI Act – Omnibus VII Ratsbeschluss und Fristen</a></li>
 </ul>`,
 
-    tr: `<figure><img src="/blog/eu-ai-act-august-2026-omnibus-compliance.jpg" alt="Yapay zeka teknolojisi konsepti" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Fotoğraf: Wendelin Jacober (CC0) via Openverse</figcaption></figure>
+    tr: `<p><em>7 Temmuz 2026 itibarıyla. Tarihler ve ayrıntılar o günden bu yana değişmiş olabilir; esas olan, AB Resmî Gazetesi'nde yayımlanan metindir.</em></p>
 
-<p>AB Yapay Zeka Yasası, 2 Ağustos 2026'da tam olarak uygulamaya giriyor - bu tarihten sadece birkaç hafta kaldı. 29 Haziran 2026'da AB Konseyi, "Dijital Yapay Zeka Omnibus" (Omnibus VII) paketine nihai onayını verdi. Bu değişiklik paketi bazı önemli son tarihleri uzatıyor ve küçük işletmeler için uyum gerekliliklerini basitleştiriyor. Ancak bir kategori ertelenmedi: Madde 50 şeffaflık yükümlülükleri 2 Ağustos 2026'dan itibaren geçerli - işletme büyüklüğünden veya sektörden bağımsız olarak, AB'de müşteriye yönelik bir yapay zeka sistemi işleten her işletmeyi kapsıyor.</p>
+<p>1 Ağustos 2024'ten beri yürürlükte olan AB Yapay Zeka Yasası, 2 Ağustos 2026'dan itibaren büyük ölçüde uygulanıyor – bu tarihten sadece birkaç hafta kaldı. 29 Haziran 2026'da AB Konseyi, "Dijital Yapay Zeka Omnibus" (Omnibus VII) paketine nihai onayını verdi. Bu değişiklik paketi bazı önemli son tarihleri uzatıyor ve küçük işletmeler için uyum gerekliliklerini basitleştiriyor. Ancak bir kategori ertelenmedi: Madde 50 şeffaflık yükümlülükleri 2 Ağustos 2026'dan itibaren geçerli – işletme büyüklüğünden veya sektörden bağımsız olarak, AB'de müşteriye yönelik bir yapay zeka sistemi işleten her işletmeyi kapsıyor.</p>
 
 <h2>2 Ağustos 2026 Haftası İçin Üç Temel Gerçek</h2>
-<p>Birincisi: Kullanıcılarla doğrudan etkileşim kuran herhangi bir chatbot, yapay zeka asistanı veya otomatik sistem, 2 Ağustos 2026'ya kadar bunun bir yapay zeka olduğunu açıklamak zorunda - süre uzatması yok, KOBİ'ler için istisna yok. İkincisi: Çoğu yüksek riskli yapay zeka uygulamasının uyum son tarihi - işe alım taraması, kredi skorlama, eğitim sistemleri, biyometrik kimlik tespiti - 16 ay ertelenerek 2 Aralık 2027'ye taşındı. Üçüncüsü: 750 çalışana ve 150 milyon euro yıllık ciroye kadar olan şirketler, Yapay Zeka Yasası kapsamında genişletilmiş KOBİ korumalarından yararlanmaya başlayacak.</p>
+<p>Birincisi: Kullanıcılarla doğrudan etkileşim kuran herhangi bir chatbot, yapay zeka asistanı veya otomatik sistem, 2 Ağustos 2026'ya kadar bunun bir yapay zeka olduğunu açıklamak zorunda – süre uzatması yok, KOBİ'ler için istisna yok. İkincisi: Çoğu yüksek riskli yapay zeka uygulamasının uyum son tarihi – işe alım taraması, kredi skorlama, eğitim sistemleri, biyometrik kimlik tespiti – 16 ay ertelenerek 2 Aralık 2027'ye taşındı. Üçüncüsü: 750 çalışana ve 150 milyon euro yıllık ciroye kadar olan şirketler, Yapay Zeka Yasası kapsamında genişletilmiş KOBİ korumalarından yararlanmaya başlayacak.</p>
 
 <h2>Omnibus VII Paketi Neler Değiştirdi</h2>
-<p>Omnibus değişikliklerine ilişkin siyasi mutabakat 7 Mayıs 2026'da sağlandı. Avrupa Parlamentosu resmi olarak 16 Haziran'da onayladı; Konsey nihai onayını 29 Haziran'da verdi. Değişiklikler, AB Resmi Gazetesi'nde yayımlanmasından üç gün sonra yürürlüğe girdi - 2 Ağustos son tarihinin öncesinde.</p>
+<p>Omnibus değişikliklerine ilişkin siyasi mutabakat 7 Mayıs 2026'da sağlandı. Avrupa Parlamentosu resmi olarak 16 Haziran'da onayladı; Konsey nihai onayını 29 Haziran'da verdi. Değişiklikler, AB Resmi Gazetesi'nde yayımlanmasından üç gün sonra yürürlüğe girdi – 2 Ağustos son tarihinin öncesinde.</p>
 
-<p>En önemli süre uzatması Ek III yüksek riskli yapay zeka sistemlerini kapsıyor: insan kaynakları taramasında, eğitim kurumlarında, temel hizmetlerde, kredi değerlendirmesinde ve kamu yönetiminde kullanılan sistemler. Bu sistemlerin uyum son tarihi, 2 Ağustos 2026'dan 2 Aralık 2027'ye - 16 ay - ertelendi. Düzenlenmiş ürünlere güvenlik bileşeni olarak entegre edilen yapay zeka sistemlerinin son tarihi ise 2 Ağustos 2028'e taşındı.</p>
+<p>En önemli süre uzatması Ek III yüksek riskli yapay zeka sistemlerini kapsıyor: insan kaynakları taramasında, eğitim kurumlarında, temel hizmetlerde, kredi değerlendirmesinde ve kamu yönetiminde kullanılan sistemler. Bu sistemlerin uyum son tarihi, 2 Ağustos 2026'dan 2 Aralık 2027'ye – 16 ay – ertelendi. Düzenlenmiş ürünlere güvenlik bileşeni olarak entegre edilen yapay zeka sistemlerinin son tarihi ise 2 Ağustos 2028'e taşındı.</p>
 
 <p>2 Ağustos 2026 öncesinde kullanıma alınmış üretken yapay zeka sistemleri için, sentetik medya filigranlama yükümlülüklerinde dört aylık geçiş süresi uygulanıyor. 2 Ağustos 2026 sonrasında devreye alınan yeni sistemler, yapay zeka üretimi içerik yayımlarken anında filigran gerekliliklerini karşılamak zorunda.</p>
 
 <h2>Değişmeyen: 2 Ağustos Şeffaflık Zorunluluğu</h2>
 <p>Omnibus pek çok süreyi uzattı; ancak Madde 50'ye dokunmadı. 2 Ağustos 2026'dan itibaren:</p>
 <ul>
-<li>İnsanlarla doğrudan etkileşim kurmak üzere tasarlanmış herhangi bir yapay zeka sistemi - chatbotlar, sanal asistanlar, otomatik e-posta yanıtlayıcılar - kullanıcılara bir yapay zeka ile iletişim kurduklarını bildirmek zorunda.</li>
+<li>İnsanlarla doğrudan etkileşim kurmak üzere tasarlanmış herhangi bir yapay zeka sistemi – chatbotlar, sanal asistanlar, otomatik e-posta yanıtlayıcılar – kullanıcılara bir yapay zeka ile iletişim kurduklarını bildirmek zorunda.</li>
 <li>Duygu tanıma sistemleri ve biyometrik kategorizasyon sistemleri, analiz ettikleri kişileri bilgilendirmek zorunda.</li>
 <li>Deepfake'ler ile yapay zeka üretimi ses ya da video içerikler, filigranlar, meta veriler veya görünür açıklamalar aracılığıyla yapay olarak üretildiği belirtilerek etiketlenmek zorunda.</li>
 </ul>
-<p>Bu gereklilikler hem sağlayıcılar (yapay zeka sistemi geliştiren şirketler) hem de konuşlandırıcılar (müşterilerine sunan şirketler) için geçerli. Web sitesinde üçüncü taraf yapay zeka chatbotu çalıştıran bir işletme konuşlandırıcı konumundadır - ve açıklama yükümlülüğü her iki tarafı da bağlar.</p>
+<p>Bu gereklilikler hem sağlayıcılar (yapay zeka sistemi geliştiren şirketler) hem de konuşlandırıcılar (müşterilerine sunan şirketler) için geçerli. Web sitesinde üçüncü taraf yapay zeka chatbotu çalıştıran bir işletme konuşlandırıcı konumundadır – ve açıklama yükümlülüğü her iki tarafı da bağlar.</p>
 
 <h2>Genişletilmiş KOBİ Korumaları</h2>
-<p>Orijinal Yapay Zeka Yasası'nda azaltılmış uyum yükümlülükleri yalnızca AB tanımına göre küçük ve orta ölçekli işletmeler için geçerliydi - 250 çalışana ve 50 milyon euro ciroye kadar. Omnibus bu korumaları, 750 çalışana ve 150 milyon euro yıllık ciroye kadar olan "küçük orta büyüklükteki" şirketlere genişletiyor. Alman Mittelstand için bu önemli bir değişiklik. 250 ila 750 çalışanı olan pek çok aile şirketi ve teknoloji firması artık basitleştirilmiş uygunluk değerlendirme yollarından, daha az belgeleme zorunluluklarından ve düzenleyici sanal ortamlara öncelikli erişimden yararlanabilecek.</p>
+<p>Orijinal Yapay Zeka Yasası'nda azaltılmış uyum yükümlülükleri yalnızca AB tanımına göre küçük ve orta ölçekli işletmeler için geçerliydi – 250 çalışana ve 50 milyon euro ciroye kadar. Omnibus bu korumaları, 750 çalışana ve 150 milyon euro yıllık ciroye kadar olan "küçük orta büyüklükteki" şirketlere genişletiyor. Alman Mittelstand için bu önemli bir değişiklik. 250 ila 750 çalışanı olan pek çok aile şirketi ve teknoloji firması artık basitleştirilmiş uygunluk değerlendirme yollarından, daha az belgeleme zorunluluklarından ve düzenleyici sanal ortamlara öncelikli erişimden yararlanabilecek.</p>
 
 <h2>Yeni Yasak: Rızasız Mahrem Görüntüler</h2>
-<p>Omnibus, orijinal Yapay Zeka Yasası'nda yer almayan yeni bir yasak getirdi. Rızasız mahrem görüntüler üreten veya manipüle eden yapay zeka sistemleri - nudifier uygulamaları olarak bilinen - 2 Aralık 2026'dan itibaren yasaklanıyor. Sağlayıcılar, sistemin bu tür çıktılar üretmesi amaçlandığında veya öngörülebilir bir sonuç olduğunda sorumluluk taşıyor. Bu, önceki taslak versiyonlarındaki bir boşluğu kapatıyor.</p>
+<p>Omnibus, orijinal Yapay Zeka Yasası'nda yer almayan yeni bir yasak getirdi. Rızasız mahrem görüntüler üreten veya manipüle eden yapay zeka sistemleri – nudifier uygulamaları olarak bilinen – 2 Aralık 2026'dan itibaren yasaklanıyor. Sağlayıcılar, sistemin bu tür çıktılar üretmesi amaçlandığında veya öngörülebilir bir sonuç olduğunda sorumluluk taşıyor. Bu, önceki taslak versiyonlarındaki bir boşluğu kapatıyor.</p>
 
 <h2>Endüstriyel Yapay Zeka Muafiyeti</h2>
 <p>Yalnızca AB Makina Yönetmeliği kapsamında kullanılan yapay zeka sistemleri, artık Yapay Zeka Yasası'nın sınıflandırma gerekliliklerinden muaf tutuluyor. Bu, üretim hattı izleme, tahmin bakımı veya otomatik kalite kontrolü için yapay zeka kullanan Alman üreticiler açısından önem taşıyor. Bu sistemler Makina Yönetmeliği kapsamına giriyorsa, Yapay Zeka Yasası uygunluk prosedürlerine tabi olmayacaklar.</p>
 
 <h2>Cezalar Yüksek Kalmaya Devam Ediyor</h2>
-<p>Omnibus ceza çerçevesinde hiçbir şeyi değiştirmedi. Yasak yapay zeka uygulamalarına ilişkin ihlaller için azami ceza 35 milyon euro veya küresel yıllık cironun yüzde yedisi - hangisi daha yüksekse. Bu, GDPR'ın küresel cironun maksimum yüzde dördü olan sınırını aşıyor. Tedarik zincirindeki bilgi paylaşım yükümlülüklerinin ihlali için ise küresel cironun yüzde üçüne kadar para cezası öngörülüyor.</p>
+<p>Omnibus ceza çerçevesinde hiçbir şeyi değiştirmedi. Yasak yapay zeka uygulamalarına ilişkin ihlaller için azami ceza 35 milyon euro veya küresel yıllık cironun yüzde yedisi – hangisi daha yüksekse. Bu, GDPR'ın küresel cironun maksimum yüzde dördü olan sınırını aşıyor. Tedarik zincirindeki bilgi paylaşım yükümlülüklerinin ihlali için ise küresel cironun yüzde üçüne kadar para cezası öngörülüyor.</p>
 
 <h2>DACH İşletmeleri İçin Ne Anlama Geliyor</h2>
-<p>Müşteriye yönelik bir yapay zeka sistemi işleten herhangi bir Alman veya Avrupalı işletme - otomatik destek botu, müşteri adayı nitelendirme asistanı veya yapay zeka destekli randevu aracı - 2 Ağustos 2026'ya kadar şeffaf açıklama mekanizmaları hayata geçirmek zorunda. Ağustos son tarihinin pazarlık konusu olmayan kısmı bu.</p>
-<p>Yüksek riskli uygulamalar - iş başvurularını taramak, kredi değerlendirmesi yapmak veya temel hizmetlere erişim kararı vermek için kullanılan yapay zeka - tam uyum için Aralık 2027'ye kadar süreye sahip. Ancak Yapay Zeka Yasası'nın gerektirdiği risk yönetimi çerçeveleri, teknik belgeler ve insan denetim mekanizmaları kapsamlıdır. 2027 ortasında başlamak yeterli zaman bırakmaz. Bu değerlendirmelere şimdi başlamak doğru adım.</p>
-<p>Yeni genişletilmiş KOBİ kategorisindeki Mittelstand şirketleri için Omnibus gerçek bir düzenleyici nefes alanı sunuyor - ancak muafiyet değil. Temel yükümlülükler geçerliliğini koruyor; uyumu göstermek için izlenen yollar basitleşiyor.</p>
-<p>OpSolid, Almanya ve AB'deki orta ölçekli işletmeler için otomasyon ve yapay zeka sistemleri geliştiriyor. Yapay zeka bileşenlerini iş süreçlerine entegre ederken - ister müşteriye yönelik isterse dahili olsun - Yapay Zeka Yasası'nın açıklama gereklilikleri ve risk sınıflandırma çerçevesine uyum, tasarımın başından beri ayrılmaz bir parçasıdır.</p>
+<p>Müşteriye yönelik bir yapay zeka sistemi işleten herhangi bir Alman veya Avrupalı işletme – otomatik destek botu, müşteri adayı nitelendirme asistanı veya yapay zeka destekli randevu aracı – 2 Ağustos 2026'ya kadar şeffaf açıklama mekanizmaları hayata geçirmek zorunda. Ağustos son tarihinin pazarlık konusu olmayan kısmı bu.</p>
+<p>Yüksek riskli uygulamalar – iş başvurularını taramak, kredi değerlendirmesi yapmak veya temel hizmetlere erişim kararı vermek için kullanılan yapay zeka – tam uyum için Aralık 2027'ye kadar süreye sahip. Ancak Yapay Zeka Yasası'nın gerektirdiği risk yönetimi çerçeveleri, teknik belgeler ve insan denetim mekanizmaları kapsamlıdır. 2027 ortasında başlamak yeterli zaman bırakmaz. Bu değerlendirmelere şimdi başlamak doğru adım.</p>
+<p>Yeni genişletilmiş KOBİ kategorisindeki Mittelstand şirketleri için Omnibus gerçek bir düzenleyici nefes alanı sunuyor – ancak muafiyet değil. Temel yükümlülükler geçerliliğini koruyor; uyumu göstermek için izlenen yollar basitleşiyor.</p>
+<p>OpSolid, Almanya ve AB'deki orta ölçekli işletmeler için otomasyon ve yapay zeka sistemleri geliştiriyor. Yapay zeka bileşenlerini iş süreçlerine entegre ederken – ister müşteriye yönelik isterse dahili olsun – Yapay Zeka Yasası'nın açıklama gereklilikleri ve risk sınıflandırma çerçevesine uyum, tasarımın başından beri ayrılmaz bir parçasıdır.</p>
 
 <h2>Kaynaklar</h2>
 <ul>
 <li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">AB Konseyi: Yapay Zeka Yasası basitleştirme nihai onayı, 29 Haziran 2026</a></li>
-<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: AB Yapay Zeka Yasası Güncellemesi - Kurallar ve Tarihler</a></li>
-<li><a href="https://www.insideglobaltech.com/2026/05/28/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions/">Inside Global Tech: AB Yapay Zeka Yasası - Süre Uzatmaları ve Yeni Yasaklar</a></li>
-<li><a href="https://techjacksolutions.com/ai-brief/eu-ai-act-omnibus-vii-council-adoption-deadlines/">TechJack Solutions: AB Yapay Zeka Yasası - Omnibus VII Konsey Kararı ve Son Tarihler</a></li>
+<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: AB Yapay Zeka Yasası Güncellemesi – Kurallar ve Tarihler</a></li>
+<li><a href="https://www.insideglobaltech.com/2026/05/28/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions/">Inside Global Tech: AB Yapay Zeka Yasası – Süre Uzatmaları ve Yeni Yasaklar</a></li>
+<li><a href="https://techjacksolutions.com/ai-brief/eu-ai-act-omnibus-vii-council-adoption-deadlines/">TechJack Solutions: AB Yapay Zeka Yasası – Omnibus VII Konsey Kararı ve Son Tarihler</a></li>
 </ul>`,
   },
 };
@@ -341,7 +341,7 @@ const shortArticles: Record<string, Record<string, string>> = {
   "connecting-crm-erp-the-integration-playbook": {
     en: `<p>CRM and ERP systems are the backbone of most businesses — but when they don't talk to each other, your teams operate on different versions of reality. Sales sees one picture, operations sees another, and finance pieces it together manually. Here's how to fix that.</p>
 <h2>The Real Cost of Disconnected Systems</h2>
-<p>When your CRM and ERP aren't integrated, the consequences compound: duplicate data entry, conflicting customer records, delayed order processing, and reporting that requires manual consolidation. A study by Forrester found that poor data quality costs organizations an average of $12.9 million annually.</p>
+<p>When your CRM and ERP aren't integrated, the consequences compound: duplicate data entry, conflicting customer records, delayed order processing, and reporting that requires manual consolidation.</p>
 <h2>Integration Architecture Options</h2>
 <h3>Point-to-Point</h3>
 <p>Direct connection between CRM and ERP. Simple to set up, but becomes a maintenance burden as you add more systems. Best for small businesses with just two systems to connect.</p>
@@ -355,23 +355,23 @@ const shortArticles: Record<string, Record<string, string>> = {
 <li><strong>Handle errors gracefully</strong> — What happens when a sync fails? Build retry logic, alerting, and manual override capabilities.</li>
 <li><strong>Start with critical data</strong> — Don't try to sync everything on day one. Start with customer records and order data, then expand.</li></ol>
 <h2>Expected Outcomes</h2>
-<p>Businesses that properly integrate CRM and ERP typically see: 40-60% reduction in manual data entry, near-zero data discrepancies, real-time reporting without manual consolidation, and faster order-to-cash cycles.</p>`,
+<p>Typical effects: less double entry, fewer conflicting records and reporting without manual consolidation.</p>`,
     de: `<p>CRM- und ERP-Systeme sind das Rückgrat der meisten Unternehmen — aber wenn sie nicht miteinander kommunizieren, arbeiten Ihre Teams mit unterschiedlichen Versionen der Realität.</p>
 <h2>Die tatsächlichen Kosten unverbundener Systeme</h2>
-<p>Wenn CRM und ERP nicht integriert sind, summieren sich die Konsequenzen: doppelte Dateneingabe, widersprüchliche Kundendatensätze und verzögerte Bestellverarbeitung. Laut Forrester kostet schlechte Datenqualität Unternehmen durchschnittlich 12,9 Millionen Dollar jährlich.</p>
+<p>Wenn CRM und ERP nicht integriert sind, summieren sich die Konsequenzen: doppelte Dateneingabe, widersprüchliche Kundendatensätze und verzögerte Bestellverarbeitung.</p>
 <h2>Integrationsarchitektur-Optionen</h2>
 <h3>Punkt-zu-Punkt</h3><p>Direkte Verbindung zwischen CRM und ERP. Einfach einzurichten, wird aber zur Wartungslast.</p>
 <h3>Middleware / iPaaS</h3><p>Eine dedizierte Orchestrierungsschicht sitzt zwischen Ihren Systemen und übernimmt Datentransformation, Routing und Fehlerbehandlung.</p>
 <h2>Erwartete Ergebnisse</h2>
-<p>Unternehmen mit ordnungsgemäßer CRM-ERP-Integration sehen typischerweise: 40-60% weniger manuelle Dateneingabe, nahezu null Datendiskrepanzen und schnellere Order-to-Cash-Zyklen.</p>`,
+<p>Typische Effekte: weniger Doppelerfassung, weniger widersprüchliche Datensätze und Auswertungen ohne manuelles Zusammenführen.</p>`,
     tr: `<p>CRM ve ERP sistemleri çoğu işletmenin omurgasıdır — ancak birbirleriyle konuşmadıklarında, ekipleriniz gerçekliğin farklı versiyonlarıyla çalışır.</p>
 <h2>Bağlantısız Sistemlerin Gerçek Maliyeti</h2>
-<p>CRM ve ERP entegre edilmediğinde, sonuçlar birikirler: çift veri girişi, çelişen müşteri kayıtları ve geciken sipariş işleme. Forrester'a göre düşük veri kalitesi organizasyonlara yıllık ortalama 12,9 milyon dolara mal oluyor.</p>
+<p>CRM ve ERP entegre edilmediğinde, sonuçlar birikirler: çift veri girişi, çelişen müşteri kayıtları ve geciken sipariş işleme.</p>
 <h2>Entegrasyon Mimarisi Seçenekleri</h2>
 <h3>Noktadan Noktaya</h3><p>CRM ve ERP arasında doğrudan bağlantı. Kurulumu basit ama bakım yükü oluşturur.</p>
 <h3>Middleware / iPaaS</h3><p>Özel bir orkestrasyon katmanı sistemleriniz arasında oturur ve veri dönüşümü, yönlendirme ve hata yönetimini üstlenir.</p>
 <h2>Beklenen Sonuçlar</h2>
-<p>CRM-ERP entegrasyonunu düzgün yapan işletmeler tipik olarak görür: manuel veri girişinde %40-60 azalma, sıfıra yakın veri tutarsızlığı ve daha hızlı sipariş-ödeme döngüleri.</p>`,
+<p>Tipik etkiler: daha az çift veri girişi, daha az çelişen kayıt ve elle birleştirme gerektirmeyen raporlama.</p>`,
   },
 
   "ai-chatbots-vs-rule-based-bots": {
@@ -412,11 +412,11 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h2>The Three Architectural Patterns</h2>
 <p>Every automation deployment collapses into one of three patterns. Matching your operation to the right pattern matters far more than picking a specific tool.</p>
 <h3>1. Point-to-Point Integrations</h3>
-<p><strong>Strengths:</strong> Quickest setup for simple connections between two systems, minimal upfront infrastructure, easy to understand. <strong>Weaknesses:</strong> Becomes a maintenance nightmare past four or five systems; no centralized error handling; every new integration is a new snowflake. <strong>Best for:</strong> Small teams with fewer than five connected systems and simple, well-defined data flows.</p>
+<p><strong>Strengths:</strong> Quickest setup for simple connections between two systems, minimal upfront infrastructure, easy to understand. <strong>Weaknesses:</strong> Becomes a maintenance nightmare past four or five systems; no centralised error handling; every new integration is a new snowflake. <strong>Best for:</strong> Small teams with fewer than five connected systems and simple, well-defined data flows.</p>
 <h3>2. Central Orchestration Layer</h3>
 <p><strong>Strengths:</strong> One place for routing logic, error handling, and retries; reusable transformations; consistent observability. <strong>Weaknesses:</strong> Requires upfront investment in the orchestration layer; introduces a single point of coordination that must be well-engineered. <strong>Best for:</strong> Mid-sized businesses with multiple integrated systems, complex workflows, and compliance requirements.</p>
 <h3>3. Hybrid Architecture</h3>
-<p><strong>Strengths:</strong> Uses point-to-point for trivial paths, central orchestration for complex ones; minimizes both infrastructure cost and maintenance burden. <strong>Weaknesses:</strong> Requires clear governance on which pattern applies to which flow. <strong>Best for:</strong> Organizations that have outgrown pure point-to-point but don't need every integration behind a central layer.</p>
+<p><strong>Strengths:</strong> Uses point-to-point for trivial paths, central orchestration for complex ones; minimises both infrastructure cost and maintenance burden. <strong>Weaknesses:</strong> Requires clear governance on which pattern applies to which flow. <strong>Best for:</strong> Organisations that have outgrown pure point-to-point but don't need every integration behind a central layer.</p>
 <h2>The Decision Framework</h2>
 <p>Three questions drive the architectural choice, in this order:</p>
 <ol>
@@ -461,7 +461,7 @@ const shortArticles: Record<string, Record<string, string>> = {
 <p>To access the API, you need a Business Solution Provider (BSP) like Twilio, 360dialog, or the official WhatsApp Cloud API.</p>
 <h2>What You Can Automate</h2>
 <h3>Transactional Messages</h3>
-<p>Order confirmations, shipping updates, appointment reminders, payment receipts. These are template-based messages that WhatsApp pre-approves. They have the highest open rates (98%+) of any messaging channel.</p>
+<p>Order confirmations, shipping updates, appointment reminders, payment receipts. These are template-based messages that WhatsApp pre-approves.</p>
 <h3>Customer Support</h3>
 <p>Route incoming messages through a bot that handles FAQs, checks order status, and escalates complex issues to human agents. With a custom orchestration layer, you can connect WhatsApp to your CRM and ticketing system for full context.</p>
 <h3>Lead Qualification</h3>
@@ -481,7 +481,7 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h2>WhatsApp Business API vs. WhatsApp Business App</h2>
 <p>Die <strong>WhatsApp Business App</strong> ist kostenlos, aber begrenzt. Die <strong>WhatsApp Business API</strong> ist das, was Sie für Automatisierung brauchen: Multi-Agent-Support, programmierbare Nachrichten und Webhook-Integrationen.</p>
 <h2>Was Sie automatisieren können</h2>
-<h3>Transaktionsnachrichten</h3><p>Bestellbestätigungen, Versandupdates, Terminbestätigungen. Template-basierte Nachrichten mit 98%+ Öffnungsrate.</p>
+<h3>Transaktionsnachrichten</h3><p>Bestellbestätigungen, Versandupdates, Terminbestätigungen. Template-basierte Nachrichten, die WhatsApp vorab freigibt.</p>
 <h3>Kundensupport</h3><p>Eingehende Nachrichten durch einen Bot leiten, der FAQs bearbeitet, Bestellstatus prüft und komplexe Anfragen an menschliche Agenten eskaliert.</p>
 <h2>DSGVO-Compliance</h2>
 <p>Stellen Sie sicher, dass Sie eine ordnungsgemäße Einwilligung zur Speicherung von Gesprächsdaten haben und Ihr BSP Daten gemäß EU-Vorschriften verarbeitet.</p>`,
@@ -489,7 +489,7 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h2>WhatsApp Business API vs. WhatsApp Business Uygulaması</h2>
 <p><strong>WhatsApp Business Uygulaması</strong> ücretsiz ama sınırlı. <strong>WhatsApp Business API</strong> otomasyon için ihtiyacınız olan şey: çoklu temsilci desteği, programlanabilir mesajlaşma ve webhook entegrasyonları.</p>
 <h2>Neler Otomatize Edebilirsiniz</h2>
-<h3>İşlem Mesajları</h3><p>Sipariş onayları, kargo güncellemeleri, randevu hatırlatmaları. %98+ açılma oranıyla şablon tabanlı mesajlar.</p>
+<h3>İşlem Mesajları</h3><p>Sipariş onayları, kargo güncellemeleri, randevu hatırlatmaları. WhatsApp'ın önceden onayladığı şablon tabanlı mesajlar.</p>
 <h3>Müşteri Desteği</h3><p>Gelen mesajları SSS'leri yanıtlayan, sipariş durumunu kontrol eden ve karmaşık sorunları insan temsilcilere yönlendiren bir bot üzerinden yönlendirin.</p>
 <h2>GDPR Uyumluluğu</h2>
 <p>Sohbet verilerini saklamak için uygun onay aldığınızdan ve BSP'nizin verileri AB düzenlemelerine uygun şekilde işlediğinden emin olun.</p>`,
@@ -505,4 +505,10 @@ export function getPostContent(slug: string, locale: string = "en"): string {
     return `<p>This article is coming soon. Check back later for the full content.</p>`;
   }
   return post[locale] || post["en"] || `<p>Content not available in this language yet.</p>`;
+}
+
+/** Reading time in minutes, counted from the body in that locale at 200 words per minute. */
+export function getReadMinutes(slug: string, locale: string = "en"): number {
+  const words = getPostContent(slug, locale).replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
 }

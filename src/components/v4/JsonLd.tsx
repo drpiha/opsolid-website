@@ -6,9 +6,9 @@ const PERSON = `${SITE_CONFIG.url}/#person`;
 const SITE = `${SITE_CONFIG.url}/#website`;
 
 const ORG_DESC: Record<L3, string> = {
-  de: "OpSolid entwickelt für Unternehmen KI-Agents, Websites, Prozessautomatisierung, Microsoft-365-Automatisierung und interne Tools. Dazu kommen KI-Beratung und KI-Schulungen. Sitz in Arnsberg, Deutschland.",
+  de: "OpSolid entwickelt für Unternehmen KI-Agenten, Websites, Prozessautomatisierung, Microsoft-365-Automatisierung und interne Tools. Dazu kommen KI-Beratung und KI-Schulungen. Sitz in Arnsberg, Deutschland.",
   en: "OpSolid builds AI agents, websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany.",
-  tr: "OpSolid, işletmeler için YZ agent'ları, web siteleri, süreç otomasyonu, Microsoft 365 otomasyonu ve dahili araçlar geliştirir; ayrıca YZ danışmanlığı ve YZ eğitimleri sunar. Merkezi Almanya'nın Arnsberg şehrindedir.",
+  tr: "OpSolid, işletmeler için YZ asistanları, web siteleri, süreç otomasyonu, Microsoft 365 otomasyonu ve şirket içi araçlar geliştirir; ayrıca YZ danışmanlığı ve YZ eğitimleri sunar. Merkezi Almanya'nın Arnsberg şehrindedir.",
 };
 const DISAMBIG = "OpSolid is an AI and automation service provider based in Arnsberg, Germany. It is not TopSolid (CAD/CAM software) and has no connection to it.";
 const JOB: Record<L3, string> = {
@@ -16,6 +16,9 @@ const JOB: Record<L3, string> = {
   en: "Founder of OpSolid, automation specialist and AI consultant",
   tr: "OpSolid kurucusu, otomasyon uzmanı ve YZ danışmanı",
 };
+// Same value as the Impressum (content impressum.sections.vatIdText); keep the two in step.
+const VAT_ID = "DE462227107";
+const UNIT_CODE = { month: "MON", year: "ANN" } as const;
 const AREA_SERVED = [
   { "@type": "Country", name: "Germany" },
   { "@type": "Country", name: "Austria" },
@@ -59,13 +62,15 @@ export function JsonLdGraph({
       telephone: SITE_CONFIG.phone,
       address: {
         "@type": "PostalAddress",
+        streetAddress: SITE_CONFIG.address.street,
+        postalCode: SITE_CONFIG.address.postalCode,
         addressLocality: SITE_CONFIG.address.city,
         addressCountry: "DE",
       },
+      vatID: VAT_ID,
       areaServed: AREA_SERVED,
       knowsLanguage: ["de", "en", "tr"],
       founder: { "@id": PERSON },
-      sameAs: ["https://www.linkedin.com/company/opsolid/"],
     },
     {
       "@type": "Person",
@@ -124,13 +129,19 @@ export function JsonLdGraph({
       url,
       ...(page.service.offers?.length
         ? {
+            // Published prices are net (plus VAT); recurring ones are per month or year.
             offers: page.service.offers.map((o) => ({
               "@type": "Offer",
               name: o.name,
               priceCurrency: "EUR",
-              ...(o.from
-                ? { priceSpecification: { "@type": "PriceSpecification", priceCurrency: "EUR", minPrice: o.price } }
-                : { price: o.price }),
+              ...(o.from ? {} : { price: o.price }),
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                priceCurrency: "EUR",
+                ...(o.from ? { minPrice: o.price } : { price: o.price }),
+                valueAddedTaxIncluded: false,
+                ...(o.unit ? { referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: UNIT_CODE[o.unit] } } : {}),
+              },
             })),
           }
         : {}),

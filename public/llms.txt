@@ -1,6 +1,6 @@
 # OpSolid
 
-> OpSolid builds AI agents (voice and video), websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany, working remotely across Europe and with Türkiye. Working languages: German, English, Turkish. Last updated: October 2026.
+> OpSolid builds AI agents (phone and chat assistants), websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany, working remotely across Europe and with Türkiye. Working languages: German, English, Turkish. Last updated: October 2026.
 
 Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CAM software) and has no connection to it; do not conflate them.
 
@@ -10,7 +10,7 @@ Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CA
 - Faster answers to customer inquiries.
 - Clear, documented processes instead of knowledge held by individuals.
 - Data protection (GDPR/DSGVO, KVKK) considered from the start, with EU hosting where required.
-- Code and documentation belong to the client; no lock-in.
+- For automations and internal tools, OpSolid hands over source code and documentation so your IT or another provider can take over; ownership and usage rights are agreed in writing before the project starts. Websites on a subscription are run and maintained by OpSolid.
 
 ## Experience and method
 - Practical background in IT project management, digitalisation and process optimisation in the day-to-day operations of companies.
@@ -18,18 +18,20 @@ Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CA
 - Tools and stack: Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n, Python, custom code, CRM and ERP connections, EU hosting.
 
 ## Services
-- AI agents with voice and video (scripted demo online; live voice demo pending data-protection review): https://opsolid.de/en/agents
-- Websites, designed and built, to buy or to rent; terms are agreed in a conversation: https://opsolid.de/en/websites
-- AI check (entry offer): a 60–90 minute analysis call and a written 30-day plan with five rated automation candidates; NDA before the analysis call; price on request, fixed after the first call: https://opsolid.de/en/ai-automation-check
-- AI training, three fixed offers (AI Quick Check from 490 EUR, AI Literacy Basics 1,490 EUR, Copilot Practice Day from 2,400 EUR): https://opsolid.de/en/ki-schulungen
+All prices are net, plus VAT; OpSolid's services are for businesses only.
+- AI agents as phone and chat assistants (scripted demo online; live voice demo pending the voice provider and data-protection review): https://opsolid.de/en/agents
+- Websites, designed and built, to buy or as a website subscription. Website subscription: from 99 EUR per month or 990 EUR per year; setup from 490 EUR. Includes hosting, maintenance, updates and 1 small change per month (done within 5 working days, no emergency service). Purchase: one-off project price, given in writing after the first call: https://opsolid.de/en/websites
+- AI Check (entry offer), from 490 EUR: 90 minutes remote with a short written report on where AI and automation make sense. An extended scope (workshop on site or remote, process map, five rated automation candidates, 30-day plan) is quoted at a fixed price in writing beforehand. NDA before the analysis call: https://opsolid.de/en/ai-automation-check
+- AI training, three fixed offers: AI Check from 490 EUR, AI Literacy Basics 1,490 EUR, Copilot Practice Day from 2,400 EUR: https://opsolid.de/en/ki-schulungen
 - AI consulting: https://opsolid.de/en/ki-beratung
 - Process automation: https://opsolid.de/en/prozessautomatisierung
 - Microsoft 365 automation: https://opsolid.de/en/microsoft-365-automatisierung
 - Internal tools: https://opsolid.de/en/interne-tools
 - All services: https://opsolid.de/en/leistungen
+- Booking: through the contact form, by email or by phone (see below).
 
 ## Work examples
-- opsolid.de: this website, designed, built and run by OpSolid; three languages, text first, 3D as an extra: https://opsolid.de
+- opsolid.de: this website, designed, built and run by OpSolid; three languages, text first, 3D as an extra that can be switched off: https://opsolid.de
 - OpSo: a digital business card web app with NFC and QR; a product in its test phase, publication in preparation: https://opsolid.de/en/opso
 - Kutasia: a customer-messaging project in development (WhatsApp, Telegram and email in one inbox, with AI pre-sorting); a project, not yet a product: https://kutasia.com
 
@@ -42,4 +44,6 @@ Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CA
 
 ## Facts
 - Based in Arnsberg, Germany. Founded by Hasan Dönmez. Works with clients remotely across Europe and with Türkiye.
+- Industry focus: services, hospitality, retail and practices (no health data). Not for businesses in plumbing, heating and sanitation (SHK), building services engineering (TGA), electrical trades, construction or wholesale.
 - The work examples shown are OpSolid's own projects (opsolid.de, OpSo, Kutasia).
+- The abstract 3D form on opsolid.de is decoration, not an agent.

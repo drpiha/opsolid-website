@@ -1,11 +1,11 @@
-import claraDesktop from "@/assets/opso/clara-weber-desktop.png";
-import claraMobile from "@/assets/opso/clara-weber-mobile.png";
-import jamesDesktop from "@/assets/opso/james-bennett-desktop.png";
-import jamesMobile from "@/assets/opso/james-bennett-mobile.png";
-import mayaDesktop from "@/assets/opso/maya-collins-desktop.png";
-import mayaMobile from "@/assets/opso/maya-collins-mobile.png";
-import felixDesktop from "@/assets/opso/felix-berger-desktop.png";
-import felixMobile from "@/assets/opso/felix-berger-mobile.png";
+import claraDesktop from "@/assets/opso/clara-weber-desktop.webp";
+import claraMobile from "@/assets/opso/clara-weber-mobile.webp";
+import jamesDesktop from "@/assets/opso/james-bennett-desktop.webp";
+import jamesMobile from "@/assets/opso/james-bennett-mobile.webp";
+import mayaDesktop from "@/assets/opso/maya-collins-desktop.webp";
+import mayaMobile from "@/assets/opso/maya-collins-mobile.webp";
+import felixDesktop from "@/assets/opso/felix-berger-desktop.webp";
+import felixMobile from "@/assets/opso/felix-berger-mobile.webp";
 import type { OpsoDemoAssets } from "@/app/[locale]/opso/OpsoShowcase";
 
 // Actual public-renderer captures of fictional profiles. Static imports keep

@@ -52,7 +52,7 @@ export default function OpsoShowcase({ content, profiles, locale }: { content: O
               <figure className={format === "desktop" ? styles.desktopPreview : styles.mobilePreview} key={format}>
                 <figcaption className={styles.screenLabel}>{content[format]}</figcaption>
                 <a href={asset.src} className={styles.imageLink} aria-label={`${content.fullSize}: ${item.title}, ${content[format]}`}>
-                  <Image src={asset} alt={`${item.title}: ${content.imageAlt} (${content[format]})`} sizes={format === "desktop" ? "(max-width: 700px) 100vw, 75vw" : "280px"} />
+                  <Image src={asset} alt={`${item.title}: ${content.imageAlt} (${content[format]})`} />
                 </a>
                 <a className={styles.fullSizeLink} href={asset.src} aria-label={`${content.fullSize}: ${item.title}, ${content[format]}`}>{content.fullSize}<span aria-hidden="true">↗</span></a>
               </figure>

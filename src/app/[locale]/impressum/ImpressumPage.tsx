@@ -1,145 +1,103 @@
-"use client";
-
-import { useLocale } from "@/context/LocaleContext";
+import type { ReactNode } from "react";
+import { contents } from "@/content";
+import type { L3 } from "@/content/v4/types";
 import { SITE_CONFIG } from "@/lib/constants";
+import styles from "./legal.module.css";
 
-export function ImpressumPage() {
-  const { t } = useLocale();
-  const s = t.impressum;
+// Server-rendered from the content data: no client content bundle on this route.
+const LABELS: Record<L3, { legal: string; notice: string; owner: string; email: string; phone: string; phoneTr: string }> = {
+  de: { legal: "Rechtliches", notice: "Hinweis", owner: "Inhaber, Einzelunternehmen", email: "E-Mail", phone: "Tel.", phoneTr: "Tel. (TR)" },
+  en: { legal: "Legal", notice: "Notice", owner: "owner, sole proprietorship", email: "Email", phone: "Phone", phoneTr: "Phone (TR)" },
+  tr: { legal: "Yasal", notice: "Not", owner: "sahibi, şahıs işletmesi", email: "E-posta", phone: "Tel.", phoneTr: "Tel. (TR)" },
+};
+
+export function ImpressumPage({ locale }: { locale: L3 }) {
+  const s = contents[locale].impressum;
   const sec = s.sections;
+  const L = LABELS[locale];
 
-  const items: Array<{ heading: string; body: React.ReactNode }> = [
+  const items: Array<{ heading: string; body: ReactNode }> = [
     {
       heading: sec.according,
       body: (
-        <>
-          <p>
-            OpSolid
-            <br />
-            Hasan D&ouml;nmez (Inhaber, Einzelunternehmen)
-            <br />
-            {SITE_CONFIG.address.street}
-            <br />
-            {SITE_CONFIG.address.postalCode} {SITE_CONFIG.address.city}
-            <br />
-            {SITE_CONFIG.address.country}
-          </p>
-        </>
+        <p>
+          OpSolid
+          <br />
+          Hasan D&ouml;nmez ({L.owner})
+          <br />
+          {SITE_CONFIG.address.street}
+          <br />
+          {SITE_CONFIG.address.postalCode} {SITE_CONFIG.address.city}
+          <br />
+          {SITE_CONFIG.address.country}
+        </p>
       ),
     },
     {
       heading: sec.contact,
       body: (
         <p>
-          E-Mail:{" "}
-          <a
-            href={`mailto:${SITE_CONFIG.email}`}
-            className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand break-all"
-          >
+          {L.email}:{" "}
+          <a href={`mailto:${SITE_CONFIG.email}`} className="v4-link">
             {SITE_CONFIG.email}
           </a>
           <br />
-          Tel.:{" "}
-          <a
-            href="tel:+4917631020654"
-            className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand"
-          >
+          {L.phone}:{" "}
+          <a href="tel:+4917631020654" className="v4-link">
             +49 176 31020654
           </a>
           <br />
-          Tel. (TR):{" "}
-          <a
-            href="tel:+905335717885"
-            className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand"
-          >
+          {L.phoneTr}:{" "}
+          <a href="tel:+905335717885" className="v4-link">
             +90 533 571 78 85
           </a>
         </p>
       ),
     },
-    {
-      heading: sec.register,
-      body: <p>{sec.registerText}</p>,
-    },
-    {
-      heading: sec.vatId,
-      body: <p>{sec.vatIdText}</p>,
-    },
+    { heading: sec.register, body: <p>{sec.registerText}</p> },
+    { heading: sec.vatId, body: <p>{sec.vatIdText}</p> },
     {
       heading: sec.responsibleContent,
       body: (
         <p>
           Hasan D&ouml;nmez
           <br />
-          {SITE_CONFIG.address.street}, {SITE_CONFIG.address.postalCode}{" "}
-          {SITE_CONFIG.address.city}
+          {SITE_CONFIG.address.street}, {SITE_CONFIG.address.postalCode} {SITE_CONFIG.address.city}
         </p>
       ),
     },
-    {
-      heading: sec.disputeResolution,
-      body: <p>{sec.disputeResolutionText}</p>,
-    },
-    {
-      heading: sec.liabilityContent,
-      body: <p>{sec.liabilityContentText}</p>,
-    },
-    {
-      heading: sec.liabilityLinks,
-      body: <p>{sec.liabilityLinksText}</p>,
-    },
+    { heading: sec.disputeResolution, body: <p>{sec.disputeResolutionText}</p> },
+    { heading: sec.liabilityContent, body: <p>{sec.liabilityContentText}</p> },
+    { heading: sec.liabilityLinks, body: <p>{sec.liabilityLinksText}</p> },
   ];
 
   return (
-    <>
-      {/* Hero */}
-      <section
-        aria-labelledby="impressum-title"
-        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
-      >
-        <div className="container-narrow">
-          <span className="eyebrow uppercase text-brand mb-4 block">Legal</span>
-          <h1
-            id="impressum-title"
-            className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink text-balance"
-          >
-            {s.title}
-          </h1>
-        </div>
-      </section>
+    <div className="v4-page">
+      <section className="v4-sec is-flow" aria-labelledby="impressum-title" style={{ paddingTop: "clamp(112px, 16vh, 168px)" }}>
+        <div className="v4-in">
+          <div className="v4-col is-wide">
+            <p className="v4-eyebrow">{L.legal}</p>
+            <h1 id="impressum-title" className="v4-h1" style={{ fontSize: "clamp(2rem, 4.6vw, 3.8rem)" }}>
+              {s.title}
+            </h1>
+            <div className={styles.notice} role="note" aria-label={L.notice}>
+              <p className="v4-eyebrow">{L.notice}</p>
+              <p>{s.notice}</p>
+            </div>
 
-      {/* Notice + body */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container-narrow">
-          <div className="pop-card p-5 mb-12 text-sm text-ink/80 flex items-start gap-3">
-            <span className="eyebrow uppercase text-brand shrink-0 pt-0.5">
-              Notice
-            </span>
-            <span className="leading-relaxed text-pretty">{s.notice}</span>
+            <ol className={`v4-rows v4-rows-n ${styles.list}`}>
+              {items.map((item) => (
+                <li key={item.heading} className="v4-row">
+                  <div className="v4-row-in">
+                    <h2 className="v4-row-h">{item.heading}</h2>
+                    <div className={styles.body}>{item.body}</div>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
-
-          <dl className="border-t border-neutral-200">
-            {items.map((item, i) => (
-              <div
-                key={i}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-7 md:py-8 border-b border-neutral-200"
-              >
-                <dt className="md:col-span-4">
-                  <div className="eyebrow uppercase text-ink/50 mb-1">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  <div className="text-base md:text-lg font-bold text-ink tracking-[-0.015em] leading-snug text-balance">
-                    {item.heading}
-                  </div>
-                </dt>
-                <dd className="md:col-span-8 text-ink/80 text-body leading-relaxed break-words text-pretty">
-                  {item.body}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
-    </>
+    </div>
   );
 }

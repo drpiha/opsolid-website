@@ -8,8 +8,7 @@
 // never shown here, matching the promise in the order-form opt-in.
 //
 // The page doubles as the fair growth loop: a prominent "create your card"
-// CTA deep-links to the order page with ?event=<slug> so new participants
-// land in this same directory.
+// CTA links to /opso (the web order flow with ?event=<slug> is retired).
 // =============================================================================
 
 import type { Metadata } from "next";

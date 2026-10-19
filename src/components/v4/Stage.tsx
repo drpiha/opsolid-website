@@ -35,8 +35,8 @@ type Pose = [number, number, number, number, number, number, number, number, num
 
 const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
   de: [
-    { n: "Agents", t: "Stimme · Video" },
-    { n: "Websites", t: "Kauf · Miete" },
+    { n: "KI-Agenten", t: "Telefon · Chat" },
+    { n: "Websites", t: "Kauf · Abo" },
     { n: "Prozessautomatisierung", t: "Abläufe" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Interne Tools", t: "statt Tabelle" },
@@ -44,21 +44,21 @@ const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
     { n: "KI-Schulungen", t: "Team" },
   ],
   en: [
-    { n: "Agents", t: "Voice · Video" },
-    { n: "Websites", t: "Buy · Rent" },
+    { n: "AI agents", t: "Phone · Chat" },
+    { n: "Websites", t: "Buy · Subscribe" },
     { n: "Process automation", t: "Workflows" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Internal tools", t: "not a sheet" },
-    { n: "AI consulting", t: "AI check" },
+    { n: "AI consulting", t: "AI Check" },
     { n: "AI training", t: "Team" },
   ],
   tr: [
-    { n: "Agent'lar", t: "Ses · Video" },
-    { n: "Web siteleri", t: "Satın al · Kirala" },
+    { n: "YZ asistanları", t: "Telefon · Sohbet" },
+    { n: "Web siteleri", t: "Satın al · Abone ol" },
     { n: "Süreç otomasyonu", t: "Akışlar" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
-    { n: "Dahili araçlar", t: "tablo yerine" },
-    { n: "YZ danışmanlığı", t: "YZ kontrolü" },
+    { n: "Şirket içi araçlar", t: "tablo yerine" },
+    { n: "YZ danışmanlığı", t: "YZ Kontrolü" },
     { n: "YZ eğitimleri", t: "Ekip" },
   ],
 };
@@ -117,7 +117,8 @@ function pose(scene: SceneId, i: number, t: number): Pose {
     case "websites":
       return WEB[i];
     case "flow":
-      return [c * 0.8, 0, 0, 0, 0, 0, 0.34, 0.7, 0.5];
+      // Plates stood up like the Websites panels, alternating above and below the rail: a timeline.
+      return [c * 0.52, i % 2 ? -0.58 : 0.58, 0, HP, 0, -0.2, 0.3, 0.3, 0.54];
     case "steps":
       return [c * 0.56, c * 0.3, 0, 0, -0.35, 0, 0.45, 1, 0.65];
     case "cards":
@@ -130,9 +131,9 @@ function pose(scene: SceneId, i: number, t: number): Pose {
 }
 
 /** Half width of each scene at scale 1 (world units), used to fit it into the free column. */
-const HALF_W: Record<SceneId, number> = { stack: 1.7, agents: 3.1, websites: 2.35, flow: 3.35, steps: 2.45, cards: 2.4, offset: 1.75, tight: 1.7 };
+const HALF_W: Record<SceneId, number> = { stack: 1.7, agents: 3.1, websites: 2.35, flow: 2.2, steps: 2.45, cards: 2.4, offset: 1.75, tight: 1.7 };
 /** Half height at scale 1, to keep tall scenes inside the viewport. */
-const HALF_H: Record<SceneId, number> = { stack: 2.1, agents: 2.2, websites: 2.35, flow: 1.4, steps: 2.0, cards: 2.0, offset: 2.0, tight: 2.0 };
+const HALF_H: Record<SceneId, number> = { stack: 2.1, agents: 2.2, websites: 2.35, flow: 1.2, steps: 2.0, cards: 2.0, offset: 2.0, tight: 2.0 };
 /** Camera per scene: distance, height, field of view. Scene changes are deliberate dolly / crane moves. */
 const CAM: Record<SceneId, { z: number; y: number; fov: number }> = {
   stack: { z: 9.5, y: 0.1, fov: 35 },
@@ -147,17 +148,13 @@ const CAM: Record<SceneId, { z: number; y: number; fov: number }> = {
 const GY: Record<SceneId, number> = { stack: -0.55, agents: 0, websites: 0, flow: 0, steps: -0.35, cards: 0, offset: -0.6, tight: 0.35 };
 const GX: Record<SceneId, number> = { stack: 0.12, agents: 0.35, websites: 0.02, flow: 0.12, steps: 0.12, cards: 0.02, offset: 0.1, tight: 0.1 };
 
-const POSTER_SLABS = [
-  ["#c27940", "#e0a070", "#8f4f1e"],
-  ["#25231f", "#34312b", "#1c1a17"],
-  ["#25231f", "#34312b", "#1c1a17"],
-  ["#25231f", "#34312b", "#1c1a17"],
-  ["#25231f", "#34312b", "#1c1a17"],
-  ["#25231f", "#34312b", "#1c1a17"],
-  ["#25231f", "#34312b", "#1c1a17"],
-];
-
-function Poster() {
+/**
+ * First frame (and the only one for reduced motion, the 3D switch off or no WebGL): a still of the
+ * stack in the stage's material, dark plates with copper edges and the same labels. Drawn bottom
+ * plate first, so each label face stays whole.
+ */
+function Poster({ locale }: { locale: "de" | "en" | "tr" }) {
+  const labels = LABELS[locale];
   return (
     <div className="v4-poster" aria-hidden="true">
       <svg viewBox="0 0 320 330" role="presentation" focusable="false">
@@ -168,15 +165,19 @@ function Poster() {
             <rect className="p-front" x="0" y="0" width="240" height="34" />
           </g>
         </defs>
-        {POSTER_SLABS.map((c, i) => (
-          <use
-            key={i}
-            href="#v4sl"
-            x="10"
-            y={60 + i * 38}
-            style={{ ["--sf" as string]: c[0], ["--st" as string]: c[1], ["--ss" as string]: c[2] }}
-          />
-        ))}
+        {labels
+          .map((d, i) => (
+            <g key={i} transform={`translate(10 ${60 + i * 38})`}>
+              <use href="#v4sl" />
+              <text className="p-n" x="9" y="22">
+                {d.n}
+              </text>
+              <text className="p-t" x="232" y="21" textAnchor="end">
+                {d.t.toUpperCase()}
+              </text>
+            </g>
+          ))
+          .reverse()}
       </svg>
     </div>
   );
@@ -246,10 +247,6 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
   host.appendChild(renderer.domElement);
 
   const scene = new T.Scene();
-  // The backdrop is a scene colour rather than the clear colour: EffectComposer's RenderPass clears
-  // before it binds its target, with a clear colour still in output space, which lifts the page
-  // graphite to a grey. #23221f lands on the page graphite (#12110f) after ACES + sRGB output.
-  if (full) scene.background = new T.Color(0x23221f);
   const camera = new T.PerspectiveCamera(35, 1, 0.1, 60);
   camera.position.set(0, 0, 9.5);
   scene.add(new T.AmbientLight(0xffffff, 1.3));
@@ -297,9 +294,10 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
   const egeo = track(new T.EdgesGeometry(box));
 
   const cs = getComputedStyle(document.body);
-  const stack = (a: string, b: string, fb: string) => [cs.getPropertyValue(a).trim(), cs.getPropertyValue(b).trim(), fb].filter(Boolean).join(", ");
-  const fontFamily = stack("--font-archivo", "--font-archivo-ext", "Archivo, sans-serif");
-  const monoFamily = stack("--font-plex-mono", "--font-plex-mono-ext", "monospace");
+  // One family per role (the page's own files): fonts.load() fetches the matching face of every family listed.
+  const stack = (v: string, fb: string) => [cs.getPropertyValue(v).trim(), fb].filter(Boolean).join(", ");
+  const fontFamily = stack("--font-archivo", "sans-serif");
+  const monoFamily = stack("--font-plex-mono", "monospace");
   try {
     await Promise.race([
       Promise.all([document.fonts.load(`800 62px ${fontFamily}`), document.fonts.load(`500 24px ${monoFamily}`)]),
@@ -386,7 +384,9 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
           t.colorSpace = T.SRGBColorSpace;
           t.anisotropy = 4;
           const mat = track(new T.MeshBasicMaterial({ map: t }));
-          mat.color.setRGB(0.9, 0.9, 0.9);
+          // The OpSo capture (plate 2) is a light theme: dimmer, so it sits under the copper accents.
+          const k = +idx === 2 ? 0.72 : 0.9;
+          mat.color.setRGB(k, k, k);
           slabs[+idx].shot = mat;
           track(t);
         },
@@ -427,8 +427,9 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     });
   };
 
-  const rail = new T.Mesh(track(new T.BoxGeometry(6.4, 0.05, 0.9)), track(new T.MeshStandardMaterial({ color: 0x1d1b18, metalness: 0.5, roughness: 0.5 })));
-  rail.position.y = -0.36;
+  // Flow scene: the rail runs between the two rows of standing plates.
+  const rail = new T.Mesh(track(new T.BoxGeometry(3.9, 0.05, 0.5)), track(new T.MeshStandardMaterial({ color: 0x1d1b18, metalness: 0.5, roughness: 0.5 })));
+  rail.position.y = 0;
   rail.scale.x = 0.001;
   group.add(rail);
   const railEdge = track(new T.LineBasicMaterial({ color: 0xc27940 }));
@@ -514,6 +515,11 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       composer = null;
     }
   }
+  // With bloom the backdrop is a scene colour rather than the clear colour: EffectComposer's RenderPass
+  // clears before it binds its target, with a clear colour still in output space, which lifts the page
+  // graphite to a grey. #23221f lands on the page graphite (#12110f) after ACES + sRGB output. The plain
+  // renderer (no bloom, or the frame-time guard dropped it) clears to #12110f directly, so no backdrop.
+  if (full) scene.background = composer ? new T.Color(0x23221f) : null;
 
   // ---- layout + sizing
   const mobile = () => window.innerWidth < 760;
@@ -529,7 +535,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
   window.addEventListener("resize", resize);
 
   // ---- scenes (DOM-driven)
-  type Info = { scene: SceneId; heat: number[]; textRight: number; dim: boolean };
+  type Info = { scene: SceneId; heat: number[]; textRight: number; dim: boolean; hero: boolean };
   let sceneEls: HTMLElement[] = [];
   let infos: Info[] = [];
   let triggers: InstanceType<typeof ScrollTrigger>[] = [];
@@ -561,6 +567,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       heat: (el.dataset.heat ?? "").split(",").map((s) => parseInt(s, 10)).filter((n) => !Number.isNaN(n)),
       textRight: right,
       dim: !!el.dataset.dim,
+      hero: el.classList.contains("is-hero"),
     };
   };
   const recompute = () => {
@@ -745,9 +752,16 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     let ty: number;
     let ts: number;
     if (small) {
+      // Phones: the object sits in the figure window above the opaque text panels, between the header
+      // (68 px + hairline, plus 8) and the FIG label (44vh − 30 px on the hero, 40vh − 30 px on scene
+      // windows, minus 8), centred there and scaled to fit its width and height. The camera looks at
+      // y = cy / 4, which is the screen centre.
+      const vh = window.innerHeight;
+      const top = 76;
+      const bot = lerp(iA?.hero ? 0.44 : 0.4, iB?.hero ? 0.44 : 0.4, u) * vh - 38;
       tx = 0;
-      ty = visH * 0.2;
-      ts = Math.min(1, visW / (2 * hw + 0.45));
+      ty = cur.cy * 0.25 + (0.5 - (top + bot) / 2 / vh) * visH;
+      ts = Math.min(1, visW / (2 * hw + 0.45), (((bot - top) / vh) * visH) / (2 * hh));
     } else {
       const trA = iA?.textRight ?? vw * 0.45;
       const trB = iB?.textRight ?? trA;
@@ -822,6 +836,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       if (slow > 40) {
         composer.dispose();
         composer = null;
+        scene.background = null;
       }
     } else if (slow > 0) slow--;
     last = now;
@@ -881,14 +896,19 @@ export function Stage() {
     } catch {
       /* storage unavailable */
     }
-    const gl = (() => {
+    // WebGL check only once the core is about to start (never during hydration: creating a GL context
+    // can block the main thread), and before three.js and GSAP are fetched, so a device without WebGL
+    // downloads nothing and keeps the poster. The probe context is released straight away.
+    const hasGL = () => {
       try {
         const c = document.createElement("canvas");
-        return !!(c.getContext("webgl2") || c.getContext("webgl"));
+        const g = c.getContext("webgl2") || c.getContext("webgl");
+        g?.getExtension("WEBGL_lose_context")?.loseContext();
+        return !!g;
       } catch {
         return false;
       }
-    })();
+    };
 
     const stop = () => {
       coreRef.current?.dispose();
@@ -898,7 +918,7 @@ export function Stage() {
       document.documentElement.removeAttribute("data-dim");
     };
     const start = () => {
-      if (coreRef.current || !hostRef.current) return;
+      if (coreRef.current || !hostRef.current || !hasGL()) return;
       const quality = window.innerWidth < 760 || window.matchMedia("(pointer: coarse)").matches ? "light" : "full";
       createCore(hostRef.current, quality, () => {
         if (cancelled) return;
@@ -930,7 +950,7 @@ export function Stage() {
       if (ric) ric(start, { timeout: 600 });
       else window.setTimeout(start, 50);
     };
-    if (!prefersReduced && !off && gl) {
+    if (!prefersReduced && !off) {
       INTENT.forEach((e) => window.addEventListener(e, onIntent, { passive: true, once: true }));
       idleId = window.setTimeout(onIntent, 8000);
     }
@@ -942,7 +962,7 @@ export function Stage() {
         /* ignore */
       }
       if (nowOff) stop();
-      else if (!prefersReduced && gl) start();
+      else if (!prefersReduced) start();
     };
     window.addEventListener(FX_EVENT, onFx);
     return () => {
@@ -972,7 +992,7 @@ export function Stage() {
   if (!v4) return null;
   return (
     <>
-      <Poster />
+      <Poster locale={loc} />
       <div ref={hostRef} className={`v4-stage${ready ? " is-on" : ""}`} aria-hidden="true" />
     </>
   );

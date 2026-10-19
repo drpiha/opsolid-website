@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { ClientProviders } from "@/components/ClientProviders";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { PageTransition } from "@/components/motion/PageTransition";
 import { Stage } from "@/components/v4/Stage";
 import { V4Sync } from "@/components/v4/V4Sync";
 import { ContentGate } from "@/components/v4/ContentGate";
@@ -60,7 +59,7 @@ export default function LocaleLayout({
       <Header />
       <main id="main" className="flex-1 relative z-[2]">
         <ContentGate>
-          <PageTransition>{children}</PageTransition>
+          {children}
         </ContentGate>
       </main>
       <Footer />

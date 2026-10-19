@@ -1,9 +1,7 @@
 /* Legacy surfaces (app, legal, public cards). Not loaded on v4 marketing routes. Imported by ContentProvider and the admin/voice/dev layouts. */
 @import "./opsolid-site.css";
-@import "./opsolid-backdrop.css";
 @import "./opsolid-voice-agent.css";
 @import "./opsolid-digital-card.css";
-@import "./opsolid-kutasia.css";
 @import "./opsolid-contact.css";
 @import "./opsolid-blog.css";
 @import "./opsolid-pricing.css";

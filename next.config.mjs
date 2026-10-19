@@ -1,8 +1,9 @@
 import { withSentryConfig } from "@sentry/nextjs";
 
 // C3 — Security headers applied to all responses.
-// CSP is report-only for now (no block) so a misconfigured directive doesn't
-// break live cards; upgrade to enforce once the policy is validated in prod.
+// CSP here is report-only (no block) so a misconfigured directive doesn't
+// break live cards on the app surfaces. The v4 marketing documents get an
+// enforced policy from src/middleware.ts (V4_CSP).
 const securityHeaders = [
   {
     key: "X-Frame-Options",
@@ -26,20 +27,30 @@ const securityHeaders = [
   },
   {
     // Report-only CSP — change to Content-Security-Policy to enforce.
-    // Allows YouTube embeds (youtube.com, youtube-nocookie.com) and
-    // Vercel Analytics (va.vercel-scripts.com).
+    // Allows YouTube embeds (youtube.com, youtube-nocookie.com).
     key: "Content-Security-Policy-Report-Only",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https: https://card.opsolid.de",
       "media-src 'self' https: https://card.opsolid.de",
       "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
-      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+      "connect-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "frame-ancestors 'self'",
     ].join("; "),
   },
+];
+
+// Public files without a content hash in their name: fresh for a day, then
+// served stale while revalidating for a week, so an updated screenshot or
+// icon shows up within a day. (/_next/static and next/font files are already
+// immutable for a year.)
+const publicAssetCache = [
+  { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
 ];
 
 /** @type {import('next').NextConfig} */
@@ -48,12 +59,20 @@ const nextConfig = {
   // Lean Docker image: only copies the runtime bundle, no node_modules.
   output: "standalone",
   productionBrowserSourceMaps: false,
+  // Don't advertise the framework (X-Powered-By: Next.js).
+  poweredByHeader: false,
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      { source: "/img/:path*", headers: publicAssetCache },
+      { source: "/images/:path*", headers: publicAssetCache },
+      { source: "/icons/:path*", headers: publicAssetCache },
+      // Only image files: /blog/<slug> without a locale is a page redirect.
+      { source: "/blog/:file([^/]+\\.(?:jpg|jpeg|png|webp|avif))", headers: publicAssetCache },
+      { source: "/site.webmanifest", headers: publicAssetCache },
     ];
   },
   // Locale-conventional aliases for the privacy page so direct URL hits work

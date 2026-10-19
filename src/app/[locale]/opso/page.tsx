@@ -7,34 +7,28 @@ import { getOpsoAccountCopy } from "@/content/opso-account";
 import { sessionKey } from "@/lib/opso-web/session";
 import { getOpsoPhysicalCardContent } from "@/content/opso-physical-card";
 import { OPSO_DEMO_PROFILES } from "@/content/opso-demo-assets";
-import physicalNfcCard from "@/assets/opso/physical-nfc-black-concept.png";
-import { SITE_CONFIG } from "@/lib/constants";
+import physicalNfcCard from "@/assets/opso/physical-nfc-black-concept.webp";
 import { isLocale, PUBLIC_LOCALES } from "@/lib/i18n";
+import { pageMetadata, pickLocale } from "@/lib/seo-v4";
+import { Crumbs } from "@/components/v4/PageRenderer";
+import { JsonLdGraph } from "@/components/v4/JsonLd";
+import type { L3 } from "@/content/v4/types";
 import styles from "./page.module.css";
 import OpsoShowcase from "./OpsoShowcase";
 
 type Props = { params: { locale: string } };
 const sectionIds = ["overview", "layouts", "plans", "availability"];
 export const dynamic = "force-dynamic";
+const HOME: Record<L3, string> = { de: "Start", en: "Home", tr: "Ana sayfa" };
 
+// Canonical, hreflang, og:locale and the v4 share card come from pageMetadata like every marketing page.
 export function generateMetadata({ params }: Props): Metadata {
   if (!isLocale(params.locale)) notFound();
   const { meta } = getOpsoContent(params.locale);
   const isPublic = PUBLIC_LOCALES.includes(params.locale);
-  const canonical = `${SITE_CONFIG.url}/${isPublic ? params.locale : "en"}/opso`;
   return {
-    title: meta.title,
-    description: meta.description,
-    alternates: {
-      canonical,
-      languages: {
-        ...Object.fromEntries(PUBLIC_LOCALES.map((locale) => [locale, `${SITE_CONFIG.url}/${locale}/opso`])),
-        "x-default": `${SITE_CONFIG.url}/de/opso`,
-      },
-    },
+    ...pageMetadata(params.locale, "opso", meta),
     ...(!isPublic ? { robots: { index: false, follow: true } } : {}),
-    openGraph: { title: meta.title, description: meta.description, url: canonical, type: "website" },
-    twitter: { card: "summary_large_image", title: meta.title, description: meta.description },
   };
 }
 
@@ -45,25 +39,30 @@ export default function OpsoPage({ params }: Props) {
   const accountKey = sessionKey(process.env.OPSO_WEB_SESSION_KEY);
   const clientIpKey = sessionKey(process.env.OPSO_WEB_CLIENT_IP_SECRET);
   const accountEnabled = process.env.OPSO_WEB_ENABLED === "true" && process.env.OPSO_WEB_TRUSTED_PROXY === "traefik-one-hop" && accountKey && clientIpKey && !accountKey.equals(clientIpKey);
+  const loc = pickLocale(params.locale);
+  // OpSo is in its test phase: a page and breadcrumb node, no Product or Offer (the card price is a planned one).
   return (
     <article className={styles.page}>
-      <div className="wrap">
+      <JsonLdGraph locale={loc} slug="opso" name={c.meta.title} description={c.meta.description} crumbs={[{ name: HOME[loc], path: `/${loc}` }, { name: "OpSo", path: `/${loc}/opso` }]} />
+      <div className="v4-in">
         <header className={styles.hero}>
           <div>
+            <Crumbs locale={loc} trail={[{ label: "OpSo" }]} />
             <p className={styles.eyebrow}>OpSo <span>by OpSolid</span></p>
             <p className={styles.status}>{c.status}</p>
             <h1>{c.title}</h1>
             <p className={styles.intro}>{c.intro}</p>
             <div className={styles.actions}>
-              <a className="btn btn-primary" href="#layouts">{c.explore}<span aria-hidden="true">↓</span></a>
-              <a className="btn btn-secondary" href="#availability">{c.availabilityLink}</a>
-              {accountEnabled && <Link className="btn btn-secondary" href={`/${params.locale === "de" || params.locale === "tr" ? params.locale : "en"}/opso/account`}>{getOpsoAccountCopy(params.locale === "de" || params.locale === "tr" ? params.locale : "en").signIn}</Link>}
+              <a className="v4-btn v4-btn-primary" href="#layouts">{c.explore}<span aria-hidden="true">↓</span></a>
+              <a className="v4-btn v4-btn-ghost" href="#availability">{c.availabilityLink}</a>
+              {accountEnabled && <Link className="v4-btn v4-btn-ghost" href={`/${params.locale === "de" || params.locale === "tr" ? params.locale : "en"}/opso/account`}>{getOpsoAccountCopy(params.locale === "de" || params.locale === "tr" ? params.locale : "en").signIn}</Link>}
             </div>
           </div>
           <figure className={styles.figure}>
             <div className={styles.heroCards}>
+              {/* The intro text is the LCP; only the first card is fetched early, the second loads lazily. */}
               {[0, 2].map((index) => <a className={styles.heroPreview} href="#layouts" key={OPSO_DEMO_PROFILES[index].key}>
-                <Image src={OPSO_DEMO_PROFILES[index].mobile} alt={`${c.illustration.alt}: ${c.families.items[index].title}`} priority sizes="(max-width: 1000px) 45vw, 25vw" />
+                <Image src={OPSO_DEMO_PROFILES[index].mobile} alt={`${c.illustration.alt}: ${c.families.items[index].title}`} priority={index === 0} />
               </a>)}
             </div>
             <figcaption>{c.illustration.caption}</figcaption>
@@ -100,11 +99,7 @@ export default function OpsoPage({ params }: Props) {
 
         <section className={styles.physicalCard} aria-labelledby="physical-card-heading">
           <figure className={styles.physicalCardVisual}>
-            <Image
-              src={physicalNfcCard}
-              alt={physicalCard.imageAlt}
-              sizes="(max-width: 800px) 100vw, 56vw"
-            />
+            <Image src={physicalNfcCard} alt={physicalCard.imageAlt} />
             <figcaption>{physicalCard.conceptNote}</figcaption>
           </figure>
           <div className={styles.physicalCardCopy}>
@@ -120,7 +115,7 @@ export default function OpsoPage({ params }: Props) {
               <small>{physicalCard.priceDetail}</small>
             </div>
             <p className={styles.physicalCardNote}>{physicalCard.priceNote}</p>
-            <Link className="btn btn-primary" href={`/${params.locale}/contact`}>
+            <Link className="v4-btn v4-btn-primary" href={`/${params.locale}/contact`}>
               {physicalCard.cta}<span aria-hidden="true">↗</span>
             </Link>
           </div>
@@ -130,7 +125,7 @@ export default function OpsoPage({ params }: Props) {
           <p className={styles.status}>{c.status}</p>
           <h2 id="availability-heading">{c.availability.title}</h2>
           <p>{c.availability.text}</p>
-          <Link className="btn btn-primary" href={`/${params.locale}/contact`}>{c.availability.contact}<span aria-hidden="true">↗</span></Link>
+          <Link className="v4-btn v4-btn-primary" href={`/${params.locale}/contact`}>{c.availability.contact}<span aria-hidden="true">↗</span></Link>
         </section>
 
         <section className={styles.section} aria-labelledby="faq-heading">

@@ -7,6 +7,8 @@ const meta = en.products.digitalCard.preview.meta;
 export const metadata: Metadata = {
   title: meta.title,
   description: meta.description,
+  // Demo surface with a fictional persona; /card-preview itself 301s to /opso.
+  robots: { index: false, follow: true },
   openGraph: {
     title: meta.title,
     description: meta.description,

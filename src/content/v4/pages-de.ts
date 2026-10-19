@@ -5,8 +5,30 @@ const CHECK = { label: "Mit dem KI-Check starten", href: "/ai-automation-check" 
 const CONTACT = { label: "Kontakt aufnehmen", href: "/contact" };
 /** Required under every price table: net prices are only safe when the offer is visibly limited to businesses. */
 const PRICE_NOTE = "Alle Preise netto, zzgl. MwSt. Die Angebote richten sich ausschließlich an Unternehmen.";
-/** Limited pilot phase: remove once the three free Quick-Checks are used. */
-const PILOT_NOTE = "Pilotphase: Die ersten drei KI-Quick-Checks führen wir kostenlos durch, im Austausch gegen ehrliches Feedback.";
+/** Limited pilot phase: remove once the three free KI-Checks are used. */
+const PILOT_NOTE = "Pilotphase: Die ersten drei KI-Checks im Einstiegsumfang führen wir kostenlos durch, im Austausch gegen ehrliches Feedback.";
+
+const DEMO = {
+  chip: "Demo · Szenario, ohne Ton",
+  play: "Szenario abspielen",
+  again: "Noch einmal abspielen",
+  note: "Ein gespielter Ablauf, kein Live-Gespräch. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung (DSGVO) geklärt sind.",
+  sr: "Beispielgespräch. Agent: Guten Tag, Sie sprechen mit einem KI-Agenten. Wie kann ich Ihnen helfen? Anrufer: Ich möchte einen Termin für nächste Woche vereinbaren. Agent: Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr? Anrufer: Donnerstag passt. Agent: Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.",
+  script: [
+    { who: "Agent", agent: true, text: "Guten Tag, Sie sprechen mit einem KI-Agenten. Wie kann ich Ihnen helfen?", ms: 3400 },
+    { who: "Anrufer", agent: false, text: "Ich möchte einen Termin für nächste Woche vereinbaren.", ms: 3000 },
+    { who: "Agent", agent: true, text: "Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr?", ms: 3600 },
+    { who: "Anrufer", agent: false, text: "Donnerstag passt.", ms: 1400 },
+    { who: "Agent", agent: true, text: "Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.", ms: 4200 },
+  ],
+};
+
+/** Real screenshots of our own work (public/img/v4), shown next to the project rows. */
+const SHOT = {
+  opsolid: { src: "/img/v4/shot-opsolid.webp", w: 960, h: 640, alt: "Startseite von opsolid.de: die Überschrift „Erst messen, dann bauen.“ neben einem Stapel aus sieben Platten, eine je Leistung" },
+  opso: { src: "/img/v4/shot-card.webp", w: 960, h: 640, alt: "Startseite von OpSo: „Deine Visitenkarte als Mini-Website.“ neben einem Smartphone mit einem fiktiven Demoprofil, QR-Code und Hinweisen auf NFC und Link" },
+  kutasia: { src: "/img/v4/shot-kutasia.webp", w: 960, h: 640, alt: "Startseite von Kutasia in der türkischen Fassung: Überschrift zu Kundenkommunikation und Terminen auf einem Bildschirm, daneben eine Dashboard-Ansicht mit Nachrichten und Wochenstatistik" },
+};
 
 export const de: Record<PageKey, PageDef> = {
   home: {
@@ -34,17 +56,7 @@ export const de: Record<PageKey, PageDef> = {
         eyebrow: "KI-Agenten für Telefon und Website",
         h: "Anrufe annehmen, während Ihr Team arbeitet.",
         lede: "Ein KI-Agent nimmt Anfragen an, stimmt Termine ab und gibt Auskunft zu Ihrem Betrieb. Die Stimme ist nur die Oberfläche: Dahinter arbeitet der Agent mit Ihrem Kalender, Ihrem CRM und Ihren Regeln, und sobald ein Mensch gefragt ist, übergibt er.",
-        chip: "Demo · Szenario, ohne Ton",
-        play: "Szenario abspielen",
-        again: "Noch einmal abspielen",
-        note: "Ein gespielter Ablauf, kein Live-Gespräch. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung (DSGVO) geklärt sind.",
-        sr: "Beispielgespräch. Anrufer: Guten Tag, ich möchte einen Termin für nächste Woche vereinbaren. Agent: Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr? Anrufer: Donnerstag passt. Agent: Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.",
-        script: [
-          { who: "Anrufer", agent: false, text: "Guten Tag, ich möchte einen Termin für nächste Woche vereinbaren.", ms: 3000 },
-          { who: "Agent", agent: true, text: "Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr?", ms: 3600 },
-          { who: "Anrufer", agent: false, text: "Donnerstag passt.", ms: 1400 },
-          { who: "Agent", agent: true, text: "Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.", ms: 4200 },
-        ],
+        ...DEMO,
         cta: { label: "Mehr zu KI-Agenten", href: "/agents" },
       },
       {
@@ -52,13 +64,13 @@ export const de: Record<PageKey, PageDef> = {
         id: "websites",
         scene: "websites",
         heat: [1],
-        eyebrow: "Websites zum Kauf oder zur Miete",
+        eyebrow: "Websites zum Kauf oder im Abo",
         h: "Gestaltet für Sie, nicht aus der Vorlage.",
-        lede: "Wir gestalten, bauen und betreiben Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Den Preis nennen wir nach dem ersten Gespräch schriftlich.",
+        lede: "Wir gestalten, bauen und betreiben Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Das Website-Abo gibt es ab 99 € im Monat; den Kaufpreis nennen wir nach dem ersten Gespräch schriftlich.",
         items: [
-          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben: drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten.", href: "https://opsolid.de" },
+          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben: drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten." },
           { h: "Kauf", p: "Einmaliger Projektpreis. Die fertige Website gehört Ihnen, und Sie führen sie selbst weiter." },
-          { h: "Miete", p: "Laufender Betrag statt einmaliger Investition. Betrieb und Pflege übernehmen wir." },
+          { h: "Website-Abo", p: "Fester Monats- oder Jahresbetrag statt einmaliger Investition. Hosting, Pflege und Updates übernehmen wir." },
         ],
         cta: { label: "Mehr zu Websites", href: "/websites" },
       },
@@ -98,12 +110,12 @@ export const de: Record<PageKey, PageDef> = {
         heat: [5, 6],
         eyebrow: "Der Einstieg: KI-Check",
         h: "Ein Plan, bevor Budget fließt.",
-        lede: "Der KI-Check zeigt, welche Abläufe sich bei Ihnen automatisieren lassen und welche nicht. In 60–90 Minuten gehen wir sie mit den Menschen durch, die die Arbeit machen. Danach erhalten Sie einen schriftlichen 30-Tage-Plan mit fünf bewerteten Kandidaten.",
+        lede: "Der KI-Check zeigt, welche Abläufe sich bei Ihnen automatisieren lassen und welche nicht. Der Einstieg: 90 Minuten remote mit den Menschen, die die Arbeit machen, danach ein kurzer schriftlicher Bericht. Für einen erweiterten Umfang mit Prozesskarte und 30-Tage-Plan nennen wir den Festpreis vorab schriftlich.",
         rows: [
-          ["Umfang", "60–90 Minuten, vor Ort oder remote"],
-          ["Ergebnis", "Prozesskarte, fünf bewertete Kandidaten, 30-Tage-Plan"],
+          ["Einstieg", "90 Minuten remote, kurzer schriftlicher Bericht"],
+          ["Erweitert", "Workshop, Prozesskarte, fünf bewertete Kandidaten, 30-Tage-Plan"],
           ["NDA", "Vor dem Analysegespräch"],
-          ["Preis", "Festpreis, verbindlich nach dem Vorgespräch"],
+          ["Preis", "Ab 490 € netto; erweiterter Umfang zum Festpreis, vorab schriftlich"],
         ],
         cta: { label: "Details zum KI-Check", href: "/ai-automation-check" },
       },
@@ -111,10 +123,10 @@ export const de: Record<PageKey, PageDef> = {
         t: "table",
         eyebrow: "Einstieg und Schulungen",
         h: "Feste Formate, klare Preise.",
-        caption: "KI-Quick-Check und KI-Schulungen im Überblick",
+        caption: "KI-Check und KI-Schulungen im Überblick",
         cols: ["Angebot", "Format", "Preis"],
         rows: [
-          ["KI-Quick-Check", "90 Minuten remote, kurzer schriftlicher Bericht", "ab 490 €"],
+          ["KI-Check", "90 Minuten remote, kurzer schriftlicher Bericht", "ab 490 €"],
           ["KI-Kompetenz Basis", "Halber Tag, bis 15 Personen", "1.490 €"],
           ["Copilot-Praxistag", "1 Tag, bis 12 Personen", "ab 2.400 €"],
         ],
@@ -148,7 +160,7 @@ export const de: Record<PageKey, PageDef> = {
       h: "Häufige Fragen",
       items: [
         { q: "Wer ist unsere Ansprechperson?", a: "Sie haben eine feste Ansprechperson bei OpSolid, von der Analyse bis zum Betrieb. Die Schulung KI-Kompetenz Basis leitet eine freiberufliche Fachkraft, die wir auswählen und Ihnen vorab namentlich nennen." },
-        { q: "Wie viel Zeit muss unser Team einplanen?", a: "Für den KI-Check: ein kurzes Vorgespräch, 60–90 Minuten Analyse mit den Menschen, die die Arbeit machen, und 30 Minuten Besprechung des Plans." },
+        { q: "Wie viel Zeit muss unser Team einplanen?", a: "Für den KI-Check: ein kurzes Vorgespräch und 90 Minuten Analyse mit den Menschen, die die Arbeit machen. Beim erweiterten Umfang kommen Workshop und 30 Minuten Besprechung des Plans hinzu; den Zeitbedarf nennen wir vorab im Angebot." },
         { q: "Wird vorab eine Vertraulichkeitsvereinbarung geschlossen?", a: "Ja. Vor dem Analysegespräch wird eine Standard-NDA unterzeichnet." },
         { q: "Können wir unsere bestehenden Systeme behalten?", a: "Ja. Wo Microsoft 365, Google Workspace, Ihr CRM oder ERP den Ablauf tragen, bauen wir darauf auf." },
         { q: "In welchen Sprachen arbeiten Sie?", a: "Auf Deutsch, Englisch und Türkisch. Wir arbeiten von Arnsberg aus und remote für Unternehmen in ganz Europa und in der Türkei." },
@@ -168,9 +180,9 @@ export const de: Record<PageKey, PageDef> = {
     meta: {
       title: "KI-Agenten für Telefon und Website",
       description:
-        "KI-Agenten und KI-Telefonassistenten von OpSolid nehmen Anfragen an, stimmen Termine ab und übergeben an Ihr Team. Datenschutzprüfung vor dem Live-Betrieb.",
+        "KI-Agenten von OpSolid arbeiten als Telefon- und Chat-Assistent: Sie nehmen Anfragen an, stimmen Termine ab und übergeben an Ihr Team. Mit Datenschutzprüfung.",
     },
-    crumb: "Agents",
+    crumb: "KI-Agenten",
     hero: {
       eyebrow: "KI-Agenten · Telefon und Website",
       h1: ["Das Telefon klingelt. ", "Der KI-Agent", " nimmt ab."],
@@ -180,7 +192,7 @@ export const de: Record<PageKey, PageDef> = {
       scene: "agents",
       heat: [0],
       spec: [
-        ["Formate", "Stimme am Telefon und auf der Website, Video mit 3D-Figur"],
+        ["Formate", "Telefon- und Chat-Assistent"],
         ["Aufgaben", "Anfragen, Termine, Auskünfte, Übergabe"],
         ["Status", "Szenario-Demo, Live-Demo folgt"],
       ],
@@ -192,18 +204,8 @@ export const de: Record<PageKey, PageDef> = {
         scene: "agents",
         heat: [0],
         h: "So läuft ein Anruf ab.",
-        lede: "Ein Terminwunsch vom ersten Satz bis zur Bestätigung: Der Agent schlägt Zeiten vor, trägt den Termin ein und bestätigt per E-Mail. Sobald ein Mensch gefragt ist, übergibt er an Ihr Team.",
-        chip: "Demo · Szenario, ohne Ton",
-        play: "Szenario abspielen",
-        again: "Noch einmal abspielen",
-        note: "Ein gespielter Ablauf, kein Live-Gespräch. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung (DSGVO) geklärt sind.",
-        sr: "Beispielgespräch. Anrufer: Guten Tag, ich möchte einen Termin für nächste Woche vereinbaren. Agent: Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr? Anrufer: Donnerstag passt. Agent: Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.",
-        script: [
-          { who: "Anrufer", agent: false, text: "Guten Tag, ich möchte einen Termin für nächste Woche vereinbaren.", ms: 3000 },
-          { who: "Agent", agent: true, text: "Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr?", ms: 3600 },
-          { who: "Anrufer", agent: false, text: "Donnerstag passt.", ms: 1400 },
-          { who: "Agent", agent: true, text: "Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.", ms: 4200 },
-        ],
+        lede: "Ein Terminwunsch vom ersten Satz bis zur Bestätigung: Der Agent sagt zu Beginn, dass ein KI-System spricht, schlägt Zeiten vor, trägt den Termin ein und bestätigt per E-Mail. Sobald ein Mensch gefragt ist, übergibt er an Ihr Team.",
+        ...DEMO,
       },
       {
         scene: "flow",
@@ -236,37 +238,39 @@ export const de: Record<PageKey, PageDef> = {
     faq: {
       h: "Fragen zu KI-Agenten",
       items: [
+        { q: "Was kostet ein KI-Agent?", a: "Das hängt von Aufgaben, Anbindungen und Gesprächsaufkommen ab. Den Preis nennen wir schriftlich, bevor etwas gebaut wird. Preise verstehen sich netto, zzgl. MwSt." },
         { q: "Spricht der Agent heute schon live?", a: "Derzeit zeigen wir ein gespieltes Szenario. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung geklärt sind." },
         { q: "Wer hört die Gespräche mit?", a: "Das legen wir vorab gemeinsam mit Ihnen fest: Anbieter, Speicherort, Aufbewahrung und Zugriff. Anrufer erfahren zu Beginn, dass ein KI-System spricht." },
         { q: "Ersetzt ein Agent unser Team?", a: "Nein. Er nimmt Routine ab und übergibt, sobald eine Person gefragt ist." },
-        { q: "Gibt es Agenten auch im Video-Format?", a: "Ja. Neben Agenten für die Stimme am Telefon und auf der Website bauen wir Video-Agenten mit einer 3D-Figur, zum Beispiel für die Website oder den Empfang. Die Live-Demo folgt nach der Datenschutzprüfung." },
+        { q: "Ist die 3D-Form auf dieser Website ein Agent?", a: "Nein. Die abstrakte 3D-Form ist Gestaltung; Sie können sie unten auf der Seite unter „3D-Effekte“ abschalten. Unsere KI-Agenten arbeiten als Telefon- und Chat-Assistent, ohne Figur und ohne Gesicht." },
         { q: "Wie starten wir?", a: "Mit dem KI-Check. Dort klären wir gemeinsam, ob ein Agent für Ihr Unternehmen sinnvoll ist und welche Aufgaben er übernehmen sollte." },
       ],
     },
     cta: { h: "Prüfen, ob ein Agent zu Ihnen passt.", p: "Im KI-Check klären wir Aufgaben, Grenzen und Datenschutz, bevor etwas gebaut wird.", primary: CHECK, secondary: CONTACT },
-    service: { type: "AI voice agents" },
+    service: { type: "AI phone and chat assistants" },
   },
 
   websites: {
     slug: "websites",
     meta: {
-      title: "Websites gestalten und bauen: Kauf oder Miete",
+      title: "Websites gestalten und bauen: Kauf oder Abo",
       description:
-        "OpSolid gestaltet, baut und betreibt Websites, die nach Ihrem Unternehmen aussehen: schnell, mehrsprachig und gut auffindbar. Zum Kauf oder zur Miete.",
+        "OpSolid gestaltet, baut und betreibt Websites, die nach Ihrem Unternehmen aussehen: schnell und mehrsprachig. Zum Kauf oder im Website-Abo ab 99 € im Monat, netto.",
     },
     crumb: "Websites",
     hero: {
-      eyebrow: "Websites · Kauf oder Miete",
+      eyebrow: "Websites · Kauf oder Abo",
       h1: ["Websites, die nach ", "Ihnen", " aussehen."],
-      lede: "OpSolid gestaltet und baut Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Kauf: einmaliger Projektpreis, die Seite gehört Ihnen. Miete: laufender Betrag, Betrieb und Pflege übernehmen wir. Den Preis nennen wir nach dem ersten Gespräch schriftlich.",
+      lede: "OpSolid gestaltet und baut Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Kauf: einmaliger Projektpreis, die Seite gehört Ihnen. Website-Abo: ab 99 € im Monat; Hosting, Pflege und Updates übernehmen wir.",
       primary: CONTACT,
       secondary: { label: "Arbeitsproben ansehen", href: "#referenzen" },
       scene: "websites",
       heat: [1],
       spec: [
-        ["Modelle", "Kauf oder Miete"],
-        ["Sprachen", "Deutsch, Englisch, Türkisch möglich"],
-        ["Preis", "Schriftlich nach dem ersten Gespräch"],
+        ["Modelle", "Kauf oder Website-Abo"],
+        ["Website-Abo", "Ab 99 €/Monat oder 990 €/Jahr, Einrichtung ab 490 €"],
+        ["Kauf", "Preis schriftlich nach dem ersten Gespräch"],
+        ["Preise", "Netto zzgl. MwSt., nur für Unternehmen"],
       ],
     },
     blocks: [
@@ -280,8 +284,22 @@ export const de: Record<PageKey, PageDef> = {
           { h: "Gestaltung", p: "Typografie, Farbe und Bewegung, die zu Ihrem Unternehmen passen, statt einer Vorlage mit neuem Logo." },
           { h: "Bau", p: "Text zuerst, schnelle Ladezeit, barrierearm, sauber für Suchmaschinen und KI-Suche aufgebaut." },
           { h: "Mehrsprachigkeit", p: "Jede Sprache mit eigener Adresse und sauberer Auszeichnung für die Suche, auf Wunsch Deutsch, Englisch und Türkisch." },
-          { h: "Kauf oder Miete", p: "Kauf lohnt sich, wenn Sie die Seite selbst weiterführen möchten. Miete, wenn Sie sich um nichts Technisches kümmern wollen." },
+          { h: "Kauf oder Website-Abo", p: "Kauf lohnt sich, wenn Sie die Seite selbst weiterführen möchten. Das Website-Abo, wenn Sie sich um nichts Technisches kümmern wollen." },
         ],
+      },
+      {
+        t: "table",
+        id: "preise",
+        eyebrow: "Preise",
+        h: "Was eine Website kostet.",
+        lede: "Die Preise für das Website-Abo stehen in der Tabelle. Für den Kauf nennen wir den Projektpreis nach dem ersten Gespräch schriftlich.",
+        caption: "Website-Abo und Kauf im Überblick",
+        cols: ["Modell", "Umfang", "Preis"],
+        rows: [
+          ["Website-Abo||Inklusive Hosting, Pflege, Updates und 1 kleine Änderung pro Monat (Umsetzung innerhalb von 5 Werktagen, kein Notdienst).", "Einrichtung ab 490 €; danach monatlich oder 990 € im Jahr", "ab 99 €/Monat"],
+          ["Kauf||Einmaliger Projektpreis. Die fertige Website gehört Ihnen, und Sie führen sie selbst oder mit Ihrer IT weiter.", "Projektpreis nach Umfang, schriftlich nach dem ersten Gespräch", "Auf Anfrage"],
+        ],
+        note: PRICE_NOTE,
       },
       {
         t: "rows",
@@ -290,11 +308,11 @@ export const de: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Arbeitsproben",
         h: "Selbst gestaltet, selbst gebaut.",
-        lede: "OpSolid hat diese Projekte selbst konzipiert und entwickelt, von der Gestaltung bis zur Technik. Die Links führen direkt zu den Projekten; machen Sie sich selbst ein Bild.",
+        lede: "OpSolid hat diese Projekte selbst konzipiert und entwickelt, von der Gestaltung bis zur Technik. Die Links führen zu den Projekten; machen Sie sich selbst ein Bild.",
         items: [
-          { h: "opsolid.de", tag: "Diese Website", p: "Drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten.", href: "https://opsolid.de" },
-          { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte als Web-App: Profil, QR-Code und NFC-Link. Die Veröffentlichung wird vorbereitet.", href: "https://card.opsolid.de" },
-          { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Ein Posteingang für WhatsApp, Telegram und E-Mail, mit KI-Vorsortierung.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "Diese Website", p: "Drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte als Web-App: Profil, QR-Code und NFC-Link. Die Veröffentlichung wird vorbereitet.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Ein Posteingang für WhatsApp, Telegram und E-Mail, mit KI-Vorsortierung.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
@@ -307,21 +325,28 @@ export const de: Record<PageKey, PageDef> = {
           { h: "Gespräch", p: "Ziel, Zielgruppe, Inhalte und Sprachen klären. Danach nennen wir Umfang und Preis schriftlich." },
           { h: "Entwurf", p: "Struktur und Gestaltung der wichtigsten Seiten, abgestimmt mit Ihrem Feedback." },
           { h: "Bau", p: "Umsetzung mit Texten, Bildern und Formularen, getestet auf Handy und Desktop." },
-          { h: "Start und Betrieb", p: "Veröffentlichung, Domain, Datenschutz-Bausteine und auf Wunsch laufende Pflege." },
+          { h: "Start und Betrieb", p: "Veröffentlichung, Domain und Datenschutz-Bausteine; im Website-Abo übernehmen wir danach Hosting, Pflege und Updates." },
         ],
       },
     ],
     faq: {
       h: "Fragen zu Websites",
       items: [
-        { q: "Kauf oder Miete, was ist besser?", a: "Kauf, wenn Sie die Seite selbst oder mit Ihrer IT weiterführen möchten: Sie zahlen einmal, und die Seite gehört Ihnen. Miete, wenn Sie sich nicht um Technik kümmern möchten: Sie zahlen laufend, und wir übernehmen Betrieb und Pflege." },
+        { q: "Kauf oder Website-Abo: Was passt besser?", a: "Kauf, wenn Sie die Seite selbst oder mit Ihrer IT weiterführen möchten: Sie zahlen einmal, und die Seite gehört Ihnen; den Preis nennen wir nach dem ersten Gespräch schriftlich. Das Website-Abo, wenn Sie sich nicht um Technik kümmern möchten: ab 99 € im Monat oder 990 € im Jahr, Einrichtung ab 490 €, alle Preise netto zzgl. MwSt. Enthalten sind Hosting, Pflege, Updates und eine kleine Änderung pro Monat, umgesetzt innerhalb von 5 Werktagen; einen Notdienst gibt es nicht." },
         { q: "Wie lange dauert ein Website-Projekt?", a: "Das hängt vom Umfang ab. Nach dem ersten Gespräch erhalten Sie einen konkreten Zeitplan." },
         { q: "Wem gehören Texte und Bilder?", a: "Inhalte, die Sie liefern, bleiben Ihr Eigentum. Die Nutzungsrechte an Gestaltung und Code halten wir vorab schriftlich fest." },
         { q: "Kann die Seite 3D und Bewegung enthalten?", a: "Ja, als Zugabe. Der Text steht immer zuerst, die Effekte lassen sich abschalten und respektieren die Einstellung für weniger Bewegung." },
       ],
     },
     cta: { h: "Was soll Ihre Website leisten?", p: "Schreiben Sie uns in zwei, drei Sätzen, für wen die Seite ist und was sie erreichen soll. Wir antworten in der Regel innerhalb weniger Arbeitstage.", primary: { label: "Website anfragen", href: "/contact" } },
-    service: { type: "Website design, development and rental" },
+    service: {
+      type: "Website design, development and subscription",
+      offers: [
+        { name: "Website-Abo, monatlich", price: 99, from: true, unit: "month" },
+        { name: "Website-Abo, jährlich", price: 990, unit: "year" },
+        { name: "Website-Abo, Einrichtung", price: 490, from: true },
+      ],
+    },
   },
 
   leistungen: {
@@ -348,7 +373,7 @@ export const de: Record<PageKey, PageDef> = {
         h: "Welche Leistung welches Problem löst.",
         items: [
           { h: "KI-Agenten", tag: "Telefon · Website", p: "Wenn Anrufe und Anfragen liegen bleiben: Der Agent nimmt sie an, stimmt Termine ab und übergibt an Ihr Team.", href: "/agents" },
-          { h: "Websites", tag: "Kauf · Miete", p: "Wenn die Website nicht mehr zu Ihrem Unternehmen passt: gestaltet, gebaut und auf Wunsch von uns betrieben.", href: "/websites" },
+          { h: "Websites", tag: "Kauf · Abo", p: "Wenn die Website nicht mehr zu Ihrem Unternehmen passt: gestaltet, gebaut und auf Wunsch von uns betrieben.", href: "/websites" },
           { h: "Prozessautomatisierung", p: "Wenn dieselben Daten zweimal getippt werden: Angebote, Reports und Abgleich laufen automatisch.", href: "/prozessautomatisierung" },
           { h: "Microsoft 365", p: "Wenn Lizenzen bezahlt, aber kaum genutzt werden: Freigaben, Dokumente und Postfach-Regeln automatisieren.", href: "/microsoft-365-automatisierung" },
           { h: "Interne Tools", p: "Wenn ein Tabellenblatt zum Engpass wird: ein Werkzeug mit Rechten, Verlauf und genau den Feldern, die Sie brauchen.", href: "/interne-tools" },
@@ -362,7 +387,7 @@ export const de: Record<PageKey, PageDef> = {
         eyebrow: "Vorgehen",
         h: "Ein Weg, egal wo Sie einsteigen.",
         items: [
-          { h: "Analyse", p: "Im KI-Check nehmen wir Ihre Abläufe auf und messen, was sie heute kosten." },
+          { h: "Analyse", p: "Im KI-Check sehen wir uns Ihre Abläufe an und klären, wo sich Automatisierung lohnt." },
           { h: "Pilot", p: "Ein Ablauf mit großem Hebel, mit festem Umfang und festem Zeitrahmen." },
           { h: "Einführung", p: "Was im Pilotprojekt trägt, wird breiter eingesetzt und dokumentiert." },
           { h: "Übergabe", p: "Ihr Team betreibt die Lösung selbst weiter; auf Wunsch begleiten wir mit einem kleinen Rahmen für Anpassungen." },
@@ -443,7 +468,8 @@ export const de: Record<PageKey, PageDef> = {
     faq: {
       h: "Fragen zur KI-Beratung",
       items: [
-        { q: "Was unterscheidet KI-Beratung und KI-Check?", a: "Der KI-Check sucht in Ihren Abläufen nach Kandidaten für Automatisierung, mit und ohne KI. Die KI-Beratung geht weiter: Sie bewertet konkrete KI-Anwendungen, legt eine Roadmap für 6 bis 12 Monate fest und liefert eine KI-Richtlinie für Ihr Unternehmen." },
+        { q: "Was kostet das?", a: "Das hängt vom Umfang ab. Umfang und Preis legen wir schriftlich im Angebot fest, bevor die Arbeit beginnt. Preise verstehen sich netto, zzgl. MwSt." },
+        { q: "Worin unterscheiden sich KI-Beratung und KI-Check?", a: "Der KI-Check sucht in Ihren Abläufen nach Kandidaten für Automatisierung, mit und ohne KI. Die KI-Beratung geht weiter: Sie bewertet konkrete KI-Anwendungen, legt eine Roadmap für 6 bis 12 Monate fest und liefert eine KI-Richtlinie für Ihr Unternehmen." },
         { q: "Verkaufen Sie KI-Tools?", a: "Nein. OpSolid ist unabhängig und empfiehlt, was passt. Das kann auch heißen: Nutzen Sie, was Sie haben, oder warten Sie noch." },
         { q: "Lässt sich KI datenschutzgerecht einsetzen?", a: "Der Einsatz lässt sich datenschutzgerecht gestalten: passende Modellwahl, EU-Hosting, Auftragsverarbeitung und eine schriftliche Richtlinie. Wir bereiten das mit vor; die abschließende Bewertung liegt bei Ihrem Datenschutzbeauftragten oder Ihrer Rechtsberatung." },
         { q: "Wie lange dauert eine Beratung?", a: "Für Analyse und Roadmap planen wir zwei bis vier Wochen; den genauen Rahmen legen wir im Angebot fest. Die Umsetzung ist ein eigenes Projekt." },
@@ -524,6 +550,7 @@ export const de: Record<PageKey, PageDef> = {
     faq: {
       h: "Fragen zur Prozessautomatisierung",
       items: [
+        { q: "Was kostet das?", a: "Das hängt vom Umfang ab. Umfang und Preis legen wir schriftlich im Angebot fest, bevor die Arbeit beginnt. Preise verstehen sich netto, zzgl. MwSt." },
         { q: "Was ist ein typisches erstes Projekt?", a: "Ein einzelner Ablauf mit großem Hebel, etwa Angebotserstellung, E-Mail-Sortierung oder ein Wochenreport. Fester Umfang, Zielrahmen zwei bis vier Wochen." },
         { q: "Brauchen wir dafür KI?", a: "Nein. Oft ist der erste sinnvolle Schritt eine saubere Automatisierung ganz ohne KI." },
         { q: "Was, wenn sich der Ablauf später ändert?", a: "Wir dokumentieren so, dass Ihre IT Anpassungen selbst vornehmen kann. Für größere Änderungen gibt es auf Wunsch einen kleinen monatlichen Rahmen." },
@@ -604,6 +631,7 @@ export const de: Record<PageKey, PageDef> = {
     faq: {
       h: "Fragen zu Microsoft 365",
       items: [
+        { q: "Was kostet das?", a: "Das hängt vom Umfang ab. Umfang und Preis legen wir schriftlich im Angebot fest, bevor die Arbeit beginnt. Preise verstehen sich netto, zzgl. MwSt." },
         { q: "Brauchen wir Power-Automate-Premium-Lizenzen?", a: "Manchmal. Viele sinnvolle Flows kommen mit den Standardplänen aus. Wann Premium nötig ist, sagen wir Ihnen vorher." },
         { q: "Lohnt sich Microsoft 365 Copilot?", a: "Für manche Teams ja, für andere nicht. Das klären wir, bevor Sie Lizenzen kaufen." },
         { q: "Können Sie mit unserer IT zusammenarbeiten?", a: "Ja. Wir arbeiten mit Ihrer IT oder Ihrem Microsoft-Partner zusammen; OpSolid ergänzt, ersetzt aber nicht." },
@@ -684,6 +712,7 @@ export const de: Record<PageKey, PageDef> = {
     faq: {
       h: "Fragen zu internen Tools",
       items: [
+        { q: "Was kostet das?", a: "Das hängt vom Umfang ab. Umfang und Preis legen wir schriftlich im Angebot fest, bevor die Arbeit beginnt. Preise verstehen sich netto, zzgl. MwSt." },
         { q: "Warum nicht fertige Software?", a: "Fertige Software ist oft die richtige Wahl. Wir bauen nur, wenn sie nicht passt oder für den Zweck zu teuer wäre, und sagen Ihnen das vorher." },
         { q: "Wem gehört der Code?", a: "Das halten wir vor dem Start schriftlich fest. Vorgesehen ist die Übergabe von Quellcode und Dokumentation an Sie." },
         { q: "Wo läuft das Werkzeug?", a: "In der EU, bei einem Anbieter Ihrer Wahl oder auf Ihrer eigenen Infrastruktur." },
@@ -698,7 +727,7 @@ export const de: Record<PageKey, PageDef> = {
     meta: {
       title: "KI-Schulungen: drei Formate mit klaren Preisen",
       description:
-        "KI-Quick-Check ab 490 €, KI-Kompetenz Basis 1.490 €, Copilot-Praxistag ab 2.400 €, jeweils zzgl. MwSt. An Ihren Aufgaben, auf Deutsch, Englisch, Türkisch.",
+        "KI-Check ab 490 €, KI-Kompetenz Basis 1.490 €, Copilot-Praxistag ab 2.400 €, jeweils zzgl. MwSt. An Ihren Aufgaben, auf Deutsch, Englisch, Türkisch.",
     },
     crumb: "KI-Schulungen",
     hero: {
@@ -716,10 +745,10 @@ export const de: Record<PageKey, PageDef> = {
         id: "angebote",
         eyebrow: "Formate und Preise",
         h: "Welches Format zu Ihrem Team passt.",
-        caption: "KI-Quick-Check und KI-Schulungen im Überblick",
+        caption: "KI-Check und KI-Schulungen im Überblick",
         cols: ["Angebot", "Format", "Preis"],
         rows: [
-          ["KI-Quick-Check||Der kompakte Einstieg: Gemeinsam prüfen wir, wo KI in Ihrem Arbeitsalltag sinnvoll ist und wo nicht. Durchgeführt von OpSolid, Ergebnis als kurzer schriftlicher Bericht.", "90 Minuten remote, mit Bericht", "ab 490 €"],
+          ["KI-Check||Der kompakte Einstieg: Gemeinsam prüfen wir, wo KI in Ihrem Arbeitsalltag sinnvoll ist und wo nicht. Durchgeführt von OpSolid, Ergebnis als kurzer schriftlicher Bericht. Einen erweiterten Umfang mit Prozesskarte und 30-Tage-Plan bieten wir zum Festpreis an, vorab schriftlich.", "90 Minuten remote, mit Bericht", "ab 490 €"],
           ["KI-Kompetenz Basis||Grundlagen für den sicheren Umgang mit KI im Arbeitsalltag. Geleitet von einer freiberuflichen Fachkraft, die OpSolid auswählt und Ihnen vorab namentlich nennt. Unterstützt Ihre Maßnahmen zur KI-Kompetenz nach Art. 4 der EU-KI-Verordnung.", "Halber Tag, bis 15 Personen", "1.490 €"],
           ["Copilot-Praxistag||Praktische Arbeit mit Microsoft 365 Copilot an Ihren eigenen Aufgaben. Für Unternehmen, die bereits Copilot-Lizenzen haben.", "1 Tag, bis 12 Personen", "ab 2.400 €"],
         ],
@@ -742,16 +771,16 @@ export const de: Record<PageKey, PageDef> = {
       h: "Fragen zu Schulungen",
       items: [
         { q: "Bekommen wir ein Zertifikat?", a: "Die Schulung ist kein Zertifikatskurs. Sie unterstützt Ihre Maßnahmen zur KI-Kompetenz nach Art. 4 der EU-KI-Verordnung." },
-        { q: "Wer führt die Schulung durch?", a: "Den KI-Quick-Check führt OpSolid selbst durch. KI-Kompetenz Basis leitet eine freiberufliche Fachkraft, die OpSolid auswählt und Ihnen vorab namentlich nennt." },
-        { q: "Warum steht der KI-Quick-Check bei den Schulungen?", a: "Weil er sich als Einstieg vor einer Schulung eignet: In 90 Minuten klären wir, wo KI in Ihrem Alltag sinnvoll ist. Eine vollständige Aufnahme Ihrer Abläufe mit Prozesskarte und 30-Tage-Plan bietet der KI-Check." },
-        { q: "Gibt es Online-Termine?", a: "Der KI-Quick-Check läuft remote. Für die anderen Formate stimmen wir Ort oder Remote-Durchführung mit Ihnen ab." },
+        { q: "Wer führt die Schulung durch?", a: "Den KI-Check führt OpSolid selbst durch. KI-Kompetenz Basis leitet eine freiberufliche Fachkraft, die OpSolid auswählt und Ihnen vorab namentlich nennt." },
+        { q: "Warum steht der KI-Check bei den Schulungen?", a: "Weil er sich als Einstieg vor einer Schulung eignet: In 90 Minuten klären wir, wo KI in Ihrem Alltag sinnvoll ist. Auf Wunsch erweitern wir ihn um eine Aufnahme Ihrer Abläufe mit Prozesskarte und 30-Tage-Plan; den Festpreis dafür nennen wir vorab schriftlich." },
+        { q: "Gibt es Online-Termine?", a: "Der Einstieg in den KI-Check läuft remote. Für die anderen Formate stimmen wir Ort oder Remote-Durchführung mit Ihnen ab." },
       ],
     },
     cta: { h: "Das passende Format finden.", p: "Schreiben Sie uns kurz zu Team und Ziel. Wir empfehlen ein Format und nennen den Preis.", primary: { label: "Schulung anfragen", href: "/contact" }, secondary: CHECK },
     service: {
       type: "AI training",
       offers: [
-        { name: "KI-Quick-Check", price: 490, from: true },
+        { name: "KI-Check", price: 490, from: true },
         { name: "KI-Kompetenz Basis", price: 1490 },
         { name: "Copilot-Praxistag", price: 2400, from: true },
       ],
@@ -761,24 +790,24 @@ export const de: Record<PageKey, PageDef> = {
   check: {
     slug: "ai-automation-check",
     meta: {
-      title: "KI-Check: Automatisierungspotenzial mit 30-Tage-Plan",
+      title: "KI-Check: wo sich Automatisierung wirklich lohnt",
       description:
-        "Der KI-Check von OpSolid: 60–90 Minuten Analyse Ihrer Abläufe, danach ein schriftlicher 30-Tage-Plan mit fünf bewerteten Kandidaten. Festpreis, NDA vorab.",
+        "Der KI-Check von OpSolid ab 490 € netto: 90 Minuten remote, danach ein kurzer schriftlicher Bericht. Erweitert mit Prozesskarte und 30-Tage-Plan. NDA vorab.",
     },
     crumb: "KI-Check",
     hero: {
       eyebrow: "KI-Check · der erste Schritt",
       h1: ["Wo sich Automatisierung ", "wirklich", " lohnt."],
-      lede: "Der KI-Check zeigt, welche Ihrer Abläufe sich automatisieren lassen und welche besser manuell bleiben: ein Analysegespräch von 60–90 Minuten und ein schriftlicher 30-Tage-Plan mit fünf Kandidaten, bewertet nach Aufwand, Nutzen und Risiko.",
+      lede: "Der KI-Check zeigt, welche Ihrer Abläufe sich automatisieren lassen und welche besser manuell bleiben. Der Einstieg ab 490 € netto: 90 Minuten remote und ein kurzer schriftlicher Bericht. Für einen erweiterten Umfang mit Workshop, Prozesskarte und 30-Tage-Plan nennen wir den Festpreis vorab schriftlich.",
       primary: { label: "KI-Check anfragen", href: "/contact" },
       secondary: { label: "Ablauf ansehen", href: "#ablauf" },
       scene: "steps",
       heat: [5],
       spec: [
-        ["Umfang", "60–90 Minuten, vor Ort oder remote"],
-        ["Ergebnis", "Prozesskarte, fünf bewertete Kandidaten, 30-Tage-Plan"],
+        ["Einstieg", "90 Minuten remote, kurzer schriftlicher Bericht"],
+        ["Erweitert", "Workshop, Prozesskarte, fünf bewertete Kandidaten, 30-Tage-Plan"],
         ["NDA", "Vor dem Analysegespräch"],
-        ["Preis", "Festpreis, verbindlich nach dem Vorgespräch"],
+        ["Preis", "Ab 490 € netto; erweiterter Umfang zum Festpreis, vorab schriftlich"],
       ],
     },
     blocks: [
@@ -797,17 +826,18 @@ export const de: Record<PageKey, PageDef> = {
         ],
       },
       {
-        t: "rows",
-        eyebrow: "Enthalten",
-        h: "Was im Check steckt.",
-        items: [
-          { h: "Analysegespräch, 60–90 Minuten", p: "Vor Ort oder remote, mit den Menschen, die die Arbeit machen. Wir hören zu, wie die Arbeit durch Ihr Team fließt." },
-          { h: "Aufnahme der wichtigsten Abläufe", p: "Die Abläufe werden so aufgeschrieben, dass Ihr Team mitprüfen kann." },
-          { h: "Fünf konkrete Kandidaten", p: "Aus Ihren echten Abläufen, keine allgemeine KI-Wunschliste." },
-          { h: "Bewertung nach Aufwand, Nutzen, Risiko", p: "Damit die Geschäftsführung ohne Technikwissen priorisieren kann." },
-          { h: "30-Tage-Plan", p: "Nächste Schritte, Werkzeuge, Verantwortliche und erwartetes Ergebnis." },
-          { h: "Optional: ein erster Pilot", p: "Wo es sinnvoll ist, setzen wir die erste Automatisierung um, mit festem Umfang und Zeitrahmen." },
+        t: "table",
+        id: "umfang",
+        eyebrow: "Umfang und Preis",
+        h: "Kompakt starten, bei Bedarf erweitern.",
+        lede: "Der Einstieg kostet ab 490 €. Brauchen Sie mehr, erweitern wir den Umfang; den Festpreis dafür nennen wir vorab schriftlich.",
+        caption: "KI-Check: Einstieg und erweiterter Umfang",
+        cols: ["Umfang", "Format", "Preis"],
+        rows: [
+          ["Einstieg||Durchgeführt von OpSolid, mit den Menschen, die die Arbeit machen. Ergebnis als kurzer schriftlicher Bericht: wo KI und Automatisierung in Ihrem Arbeitsalltag sinnvoll sind und wo nicht.", "90 Minuten remote, mit Bericht", "ab 490 €"],
+          ["Erweitert||Aufnahme der wichtigsten Abläufe, Prozesskarte, fünf Kandidaten bewertet nach Aufwand, Nutzen und Risiko, 30-Tage-Plan und 30 Minuten Besprechung.", "Workshop vor Ort oder remote", "Festpreis, vorab schriftlich"],
         ],
+        note: `${PRICE_NOTE} ${PILOT_NOTE}`,
       },
       {
         t: "rows",
@@ -818,6 +848,7 @@ export const de: Record<PageKey, PageDef> = {
           { h: "KI im Einsatz, aber ohne Regeln", p: "Ihr Team nutzt KI bereits, aber ohne gemeinsame Regeln und Struktur." },
           { h: "Operations-Verantwortliche", p: "Zu viele manuelle Übergaben kosten Zeit und erzeugen Fehler." },
           { h: "Vor einer Kaufentscheidung", p: "Sie bewerten Werkzeuge wie Microsoft 365, Power Automate oder Make und wollen vorher wissen, wofür." },
+          { h: "Branchenfokus", p: "Dienstleistung, Gastronomie, Handel und Praxen (ohne Gesundheitsdaten). Nicht für Betriebe aus SHK, TGA, Elektro, Bau und Großhandel." },
         ],
       },
       {
@@ -828,10 +859,10 @@ export const de: Record<PageKey, PageDef> = {
         eyebrow: "Ablauf",
         h: "Vier Schritte, ein Festpreis.",
         items: [
-          { h: "Vorgespräch", p: "Kurz Ziele und die betroffenen Abläufe klären. Danach steht der Festpreis." },
-          { h: "Analysegespräch", p: "60–90 Minuten mit den Menschen, die die Arbeit tatsächlich machen." },
-          { h: "Schriftlicher Plan", p: "Innerhalb weniger Arbeitstage erhalten Sie Prozesskarte und 30-Tage-Plan." },
-          { h: "Besprechung", p: "30 Minuten zu Umfang, Aufwand und nächsten Schritten." },
+          { h: "Vorgespräch", p: "Kurz Ziele, betroffene Abläufe und Umfang klären. Danach steht der Festpreis, ab 490 € netto." },
+          { h: "Analysegespräch", p: "90 Minuten remote mit den Menschen, die die Arbeit tatsächlich machen; im erweiterten Umfang als Workshop, auch vor Ort." },
+          { h: "Schriftliches Ergebnis", p: "Ein kurzer Bericht; im erweiterten Umfang erhalten Sie innerhalb weniger Arbeitstage Prozesskarte und 30-Tage-Plan." },
+          { h: "Besprechung", p: "Im erweiterten Umfang: 30 Minuten zu Plan, Aufwand und nächsten Schritten." },
         ],
       },
       {
@@ -839,25 +870,25 @@ export const de: Record<PageKey, PageDef> = {
         eyebrow: "Ergebnis",
         h: "Was am Ende in Ihrem Postfach liegt.",
         items: [
-          { h: "Prozesskarte", p: "Die besprochenen Abläufe, schriftlich." },
-          { h: "Fünf bewertete Kandidaten", p: "Mit Werkzeugempfehlung und grober Aufwandsschätzung." },
-          { h: "30-Tage-Plan", p: "Mit Verantwortlichen und nächsten Schritten." },
-          { h: "Notiz zum Manuellen", p: "Was bewusst manuell bleiben sollte, und warum." },
+          { h: "Kurzer schriftlicher Bericht", tag: "Einstieg", p: "Wo KI und Automatisierung in Ihrem Arbeitsalltag sinnvoll sind und wo nicht." },
+          { h: "Prozesskarte", tag: "Erweitert", p: "Die besprochenen Abläufe, schriftlich." },
+          { h: "Fünf bewertete Kandidaten", tag: "Erweitert", p: "Aus Ihren echten Abläufen, mit Werkzeugempfehlung und grober Aufwandsschätzung." },
+          { h: "30-Tage-Plan", tag: "Erweitert", p: "Mit Verantwortlichen und nächsten Schritten." },
+          { h: "Was manuell bleibt", tag: "Erweitert", p: "Welche Schritte bewusst manuell bleiben sollten, und warum." },
         ],
       },
     ],
     faq: {
       h: "Fragen zum KI-Check",
       items: [
-        { q: "Was kostet der KI-Check?", a: "Den Festpreis nennen wir nach dem Vorgespräch; er hängt von Umfang und Teamgröße ab. Alle Preise verstehen sich netto, zzgl. MwSt." },
-        { q: "Was unterscheidet KI-Check und KI-Quick-Check?", a: "Der KI-Check nimmt Ihre Abläufe auf und liefert Prozesskarte, fünf bewertete Kandidaten und einen 30-Tage-Plan, vor Ort oder remote. Der KI-Quick-Check ist ein 90-minütiges Remote-Gespräch mit kurzem schriftlichem Bericht, ab 490 € zzgl. MwSt." },
+        { q: "Was kostet der KI-Check?", a: "Der Einstieg kostet ab 490 €: 90 Minuten remote und ein kurzer schriftlicher Bericht. Für einen erweiterten Umfang mit Workshop, Prozesskarte und 30-Tage-Plan nennen wir den Festpreis nach dem Vorgespräch schriftlich, bevor die Arbeit beginnt. Alle Preise verstehen sich netto, zzgl. MwSt." },
         { q: "Wird eine Vertraulichkeitsvereinbarung geschlossen?", a: "Ja, eine Standard-NDA wird vor dem Analysegespräch unterzeichnet." },
-        { q: "Was, wenn sich nichts zu automatisieren lohnt?", a: "Dann steht genau das im Plan, mit Begründung. Auch das ist ein Ergebnis: Sie sparen sich ein Projekt, das sich nicht trägt." },
-        { q: "Was passiert nach dem Check?", a: "Drei Wege sind möglich: Sie setzen den Plan selbst um, wir setzen gemeinsam ein Pilotprojekt um, oder die Zusammenarbeit endet an dieser Stelle. Eine Bindung gehen Sie nicht ein." },
+        { q: "Was, wenn sich nichts zu automatisieren lohnt?", a: "Dann steht genau das im schriftlichen Ergebnis, mit Begründung. Auch das ist ein Ergebnis: Sie sparen sich ein Projekt, das sich nicht trägt." },
+        { q: "Was passiert nach dem Check?", a: "Drei Wege sind möglich: Sie setzen die Empfehlungen selbst um, wir setzen gemeinsam ein Pilotprojekt um, oder die Zusammenarbeit endet an dieser Stelle. Eine Bindung gehen Sie nicht ein." },
       ],
     },
-    cta: { h: "Herausfinden, was sich wirklich lohnt.", p: "Ein Gespräch, ein schriftlicher Plan, keine Bindung. Ist der Zeitpunkt noch nicht richtig, sagen wir Ihnen das.", primary: { label: "KI-Check anfragen", href: "/contact" }, secondary: { label: "Alle Leistungen", href: "/leistungen" } },
-    service: { type: "AI and automation assessment" },
+    cta: { h: "Herausfinden, was sich wirklich lohnt.", p: "Ein Gespräch, ein schriftliches Ergebnis, keine Bindung. Ist der Zeitpunkt noch nicht richtig, sagen wir Ihnen das.", primary: { label: "KI-Check anfragen", href: "/contact" }, secondary: { label: "Alle Leistungen", href: "/leistungen" } },
+    service: { type: "AI and automation assessment", offers: [{ name: "KI-Check", price: 490, from: true }] },
   },
 
   about: {
@@ -897,6 +928,12 @@ export const de: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
+        eyebrow: "Branchen",
+        h: "Für welche Betriebe wir arbeiten.",
+        paras: ["Branchenfokus: Dienstleistung, Gastronomie, Handel und Praxen (ohne Gesundheitsdaten). Nicht für Betriebe aus SHK/Heizung/Sanitär, TGA, Elektro, Bau und Großhandel."],
+      },
+      {
+        t: "text",
         eyebrow: "Gründer und Erfahrung",
         h: "Woher die Methode kommt.",
         lede: "OpSolid wurde von Hasan Dönmez gegründet. Seine Erfahrung stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen. Jeder Schritt unserer Methode kommt von dort: Ablauf aufnehmen, Ausgangslage messen, klein pilotieren, sauber übergeben.",
@@ -913,8 +950,9 @@ export const de: Record<PageKey, PageDef> = {
         eyebrow: "Eigene Projekte",
         h: "Projekte, die unsere Arbeit zeigen.",
         items: [
-          { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte mit NFC und QR, als Web-App gebaut, mit eigenem Dashboard, Onboarding und Admin-Konsole. Die Veröffentlichung wird vorbereitet.", href: "/opso" },
-          { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Kundennachrichten aus WhatsApp, Telegram und E-Mail in einem Posteingang, mit KI-Vorsortierung.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben: drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte mit NFC und QR, als Web-App gebaut, mit eigenem Dashboard, Onboarding und Admin-Konsole. Die Veröffentlichung wird vorbereitet.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Kundennachrichten aus WhatsApp, Telegram und E-Mail in einem Posteingang, mit KI-Vorsortierung.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
@@ -939,10 +977,11 @@ export const de: Record<PageKey, PageDef> = {
       eyebrow: "Kontakt",
       h1: ["Drei Sätze ", "genügen", "."],
       lede: "Schreiben Sie uns, um welchen Ablauf es geht, welche Systeme beteiligt sind und was heute stört. Per Formular, E-Mail oder Telefon; wir antworten in der Regel innerhalb weniger Arbeitstage.",
-      primary: { label: "Erst den KI-Check ansehen", href: "/ai-automation-check" },
+      primary: { label: "Nachricht schreiben", href: "#form-h" },
+      secondary: CHECK,
       scene: "tight",
     },
     blocks: [],
-    cta: { h: "Lieber erst die Abläufe prüfen lassen?", p: "Der KI-Check nimmt Ihre Abläufe auf und liefert einen schriftlichen 30-Tage-Plan mit fünf bewerteten Kandidaten.", primary: CHECK },
+    cta: { h: "Lieber erst die Abläufe prüfen lassen?", p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt: 90 Minuten remote, danach ein kurzer schriftlicher Bericht.", primary: CHECK },
   },
 };

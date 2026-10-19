@@ -6,48 +6,40 @@ import {
   JetBrains_Mono,
   Plus_Jakarta_Sans,
   Fira_Code,
-  Archivo,
   IBM_Plex_Mono,
 } from "next/font/google";
 import localFont from "next/font/local";
 import { isV4Path } from "@/lib/v4";
-import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
-import { ConsentBanner } from "@/components/shared/ConsentBanner";
 import "./globals.css";
 
 // v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
-// are the only preloaded families for the marketing site. The legacy families
-// below still serve app surfaces (cards, dashboard) but are not preloaded.
-// Latin is preloaded; latin-ext (ğ ş İ ı …) loads on demand, so first paint
-// carries one display file instead of two. Both families are stacked in CSS.
-const archivo = Archivo({
-  subsets: ["latin"],
+// serve the marketing site. The legacy families below still serve app
+// surfaces (cards, dashboard) but are not preloaded.
+// Archivo is self-hosted as one preloaded file, pre-instanced to the axis
+// ranges the v4 CSS uses (wght 400–800, wdth 100–118 %) and subset to latin
+// plus the Turkish letters (Ğ ğ İ Ş ş; ı is in latin) and the punctuation the
+// copy uses, so de, en and tr all paint from the same ~57 kB file. Built from
+// the google/fonts Archivo[wdth,wght].ttf with fontTools (varLib.instancer,
+// then subset to woff2); licence in ./fonts/archivo-OFL.txt.
+const archivo = localFont({
+  src: "./fonts/archivo-v4.woff2",
+  weight: "400 800",
+  style: "normal",
+  declarations: [{ prop: "font-stretch", value: "100% 118%" }],
   display: "swap",
+  preload: true,
   variable: "--font-archivo",
-  axes: ["wdth"],
-});
-const archivoExt = Archivo({
-  subsets: ["latin-ext"],
-  display: "swap",
-  preload: false,
-  variable: "--font-archivo-ext",
-  axes: ["wdth"],
 });
 
+// Plex Mono: one family; its latin-ext faces (Turkish capitals in the
+// uppercase mono labels) are declared by unicode-range and load on demand.
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   display: "swap",
   preload: false,
   variable: "--font-plex-mono",
-  weight: ["400", "500"],
-});
-const ibmPlexMonoExt = IBM_Plex_Mono({
-  subsets: ["latin-ext"],
-  display: "swap",
-  preload: false,
-  variable: "--font-plex-mono-ext",
   weight: ["400", "500"],
 });
 
@@ -198,9 +190,7 @@ export default function RootLayout({
 
   const fontClasses = [
     archivo.variable,
-    archivoExt.variable,
     ibmPlexMono.variable,
-    ibmPlexMonoExt.variable,
     inter.variable,
     instrumentSerif.variable,
     jetBrainsMono.variable,
@@ -237,13 +227,10 @@ export default function RootLayout({
         />
       </head>
       <body className="grain font-sans antialiased bg-bg-1 text-ink-200 min-h-[100svh] flex flex-col">
+        {/* No analytics and no consent banner: the site stores only technically
+            necessary or user-chosen settings (language cookie on an explicit
+            switch, the footer's 3D-effects switch), which need no consent. */}
         {children}
-        {/* C5 — ConsentBanner sets the localStorage flag; ConditionalAnalytics
-            (a client component) watches it and only mounts <Analytics /> after
-            the user accepts. We can't pass `beforeSend` from this server layout
-            because RSC cannot serialize functions across the boundary. */}
-        <ConsentBanner />
-        <ConditionalAnalytics />
       </body>
     </html>
   );

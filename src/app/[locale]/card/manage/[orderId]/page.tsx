@@ -12,6 +12,7 @@
 // interactive parts (link CRUD + lead status, which call /api/card/manage/*).
 // =============================================================================
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
@@ -21,6 +22,9 @@ import { CardManageClient } from "./CardManageClient";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+// Token-bearing owner page: never indexed.
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 const WINDOW_DAYS = 30;
 

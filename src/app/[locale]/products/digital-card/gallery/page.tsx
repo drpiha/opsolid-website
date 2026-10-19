@@ -5,6 +5,8 @@ export const metadata: Metadata = {
   title: "All Digital Card Designs | OpSo Smart",
   description:
     "Browse every OpSo Smart digital business card template — sorted by sector. Real Estate, Law, Restaurant, Fitness, Tech, and more.",
+  // Demo surface; the gallery URL itself 301s to /opso.
+  robots: { index: false, follow: true },
   openGraph: {
     title: "All Digital Card Designs | OpSo Smart",
     description:

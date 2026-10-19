@@ -105,14 +105,19 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_…
 
 ## First-time deploy of this branch
 
+Historical record of the original rollout; do not re-run it. `scripts/deploy.sh`
+is retired (it exits with an error), and step 4's re-seed is not part of any
+release. Code now ships only through the reviewed release path in `README.md`
+("Deployment") and `deploy/hostinger/README.md`; schema changes need their own
+reviewed database step.
+
 From a workstation with the SSH key configured:
 
 ```bash
 git checkout feature/smart-card-mvp
 git pull --ff-only
 
-# 1. Ship the code
-bash scripts/deploy.sh
+# 1. Ship the code (retired: scripts/deploy.sh, see above)
 
 # 2. Apply the Phase 3 schema migration (card_links, scan_events)
 ssh root@srv1150632.hstgr.cloud \

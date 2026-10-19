@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_CONFIG } from "@/lib/constants";
+import { LOCALES } from "@/lib/i18n";
 
 /**
  * robots.txt, generated at build time.
@@ -9,7 +10,17 @@ import { SITE_CONFIG } from "@/lib/constants";
  * training crawlers. Only private/app surfaces are disallowed. robots.txt is
  * guidance, not security: private routes are protected by auth, not by this file.
  */
-const PRIVATE_PATHS = ["/api/", "/admin/", "/dev/", "/card/edit/", "/onboarding/", "/dashboard/"];
+// App routes live under /:locale/… (e.g. /de/card/edit/<id>?t=<token>), so each
+// is listed with every locale prefix as well as bare. No trailing slash on
+// dashboard/onboarding so their index pages match too.
+const LOCALIZED_PRIVATE_PATHS = ["/card/edit/", "/card/manage/", "/onboarding", "/dashboard"];
+const PRIVATE_PATHS = [
+  "/api/",
+  "/admin/",
+  "/dev/",
+  ...LOCALIZED_PRIVATE_PATHS,
+  ...LOCALES.flatMap((locale) => LOCALIZED_PRIVATE_PATHS.map((path) => `/${locale}${path}`)),
+];
 
 const AI_BOTS = [
   "OAI-SearchBot", // ChatGPT search

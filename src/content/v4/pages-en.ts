@@ -5,21 +5,29 @@ const CHECK = { label: "Start with the AI Check", href: "/ai-automation-check" }
 const CONTACT = { label: "Get in touch", href: "/contact" };
 /** Required under every price table: net prices are only safe when the offer is visibly limited to businesses. */
 const PRICE_NOTE = "All prices are net, plus VAT. Our services are for businesses only.";
-/** Limited pilot phase: remove once the three free Quick Checks are used. */
-const PILOT_NOTE = "Pilot phase: we run the first three AI Quick Checks free of charge in exchange for honest feedback.";
+/** Limited pilot phase: remove once the three free AI Checks are used. */
+const PILOT_NOTE = "Pilot phase: we run the first three AI Checks at entry scope free of charge in exchange for honest feedback.";
 
 const DEMO = {
   chip: "Demo · scripted scenario, no sound",
   play: "Play scenario",
   again: "Play again",
   note: "A scripted run, not a live call. The live voice demo will follow once the voice provider and the data-protection review (GDPR) are settled.",
-  sr: "Sample conversation. Caller: Hello, I would like to book an appointment for next week. Agent: Certainly. Would Wednesday at 10 am or Thursday at 2 pm suit you? Caller: Thursday works. Agent: Then I will book you in for Thursday at 2 pm. You will receive a confirmation by email.",
+  sr: "Sample conversation. Agent: Hello, you are speaking with an AI agent. How can I help you? Caller: I would like to book an appointment for next week. Agent: Certainly. Would Wednesday at 10 am or Thursday at 2 pm suit you? Caller: Thursday works. Agent: Then I will book you in for Thursday at 2 pm. You will receive a confirmation by email.",
   script: [
-    { who: "Caller", agent: false, text: "Hello, I would like to book an appointment for next week.", ms: 3000 },
+    { who: "Agent", agent: true, text: "Hello, you are speaking with an AI agent. How can I help you?", ms: 3400 },
+    { who: "Caller", agent: false, text: "I would like to book an appointment for next week.", ms: 3000 },
     { who: "Agent", agent: true, text: "Certainly. Would Wednesday at 10 am or Thursday at 2 pm suit you?", ms: 3600 },
     { who: "Caller", agent: false, text: "Thursday works.", ms: 1400 },
     { who: "Agent", agent: true, text: "Then I will book you in for Thursday at 2 pm. You will receive a confirmation by email.", ms: 4200 },
   ],
+};
+
+/** Real screenshots of our own work (public/img/v4), shown next to the project rows. */
+const SHOT = {
+  opsolid: { src: "/img/v4/shot-opsolid.webp", w: 960, h: 640, alt: "The opsolid.de home page in German: the headline “Erst messen, dann bauen.” (Measure first, then build.) beside a stack of seven plates, one per service" },
+  opso: { src: "/img/v4/shot-card.webp", w: 960, h: 640, alt: "The OpSo home page in German: the headline “Deine Visitenkarte als Mini-Website.” (Your business card as a mini website.) beside a phone showing a fictional demo profile, a QR code and NFC and link labels" },
+  kutasia: { src: "/img/v4/shot-kutasia.webp", w: 960, h: 640, alt: "The Kutasia home page in Turkish: a headline about customer communication and appointments on one screen, beside a dashboard view with messages and weekly statistics" },
 };
 
 export const en: Record<PageKey, PageDef> = {
@@ -56,13 +64,13 @@ export const en: Record<PageKey, PageDef> = {
         id: "websites",
         scene: "websites",
         heat: [1],
-        eyebrow: "Websites to buy or rent",
+        eyebrow: "Websites to buy or by subscription",
         h: "Designed for you, not from a template.",
-        lede: "We design, build and run websites that load fast, read well and work in several languages. You get the price in writing after our first call.",
+        lede: "We design, build and run websites that load fast, read well and work in several languages. The website subscription starts at €99 a month; for a purchase, you get the price in writing after our first call.",
         items: [
-          { h: "opsolid.de", tag: "This site", p: "Designed, built and run by OpSolid: three languages, text first; the 3D stage loads after the text and can be switched off.", href: "https://opsolid.de" },
+          { h: "opsolid.de", tag: "This site", p: "Designed, built and run by OpSolid: three languages, text first; the 3D stage loads after the text and can be switched off." },
           { h: "Buy", p: "A one-off project price. The finished website is yours, and you take it forward yourself." },
-          { h: "Rent", p: "A recurring fee instead of an upfront investment. We run and maintain the site for you." },
+          { h: "Website subscription", p: "A fixed monthly or yearly fee instead of an upfront investment. We take care of hosting, maintenance and updates." },
         ],
         cta: { label: "More on websites", href: "/websites" },
       },
@@ -102,12 +110,12 @@ export const en: Record<PageKey, PageDef> = {
         heat: [5, 6],
         eyebrow: "The first step: the AI Check",
         h: "A plan before any budget is committed.",
-        lede: "The AI Check shows which of your workflows can be automated and which cannot. In 60–90 minutes we go through them with the people who do the work. You then receive a written 30-day plan with five rated candidates.",
+        lede: "The AI Check shows which of your workflows can be automated and which cannot. The entry scope: 90 minutes remote with the people who do the work, followed by a short written report. For an extended scope with a process map and a 30-day plan, we quote a fixed price in writing beforehand.",
         rows: [
-          ["Scope", "60–90 minutes, on site or remote"],
-          ["Result", "Process map, five rated candidates, 30-day plan"],
+          ["Entry", "90 minutes remote, short written report"],
+          ["Extended", "Workshop, process map, five rated candidates, 30-day plan"],
           ["NDA", "Before the analysis call"],
-          ["Price", "Fixed price, confirmed after the intro call"],
+          ["Price", "From €490 net; extended scope at a fixed price, quoted in writing"],
         ],
         cta: { label: "The AI Check in detail", href: "/ai-automation-check" },
       },
@@ -115,10 +123,10 @@ export const en: Record<PageKey, PageDef> = {
         t: "table",
         eyebrow: "Getting started and training",
         h: "Fixed formats, clear prices.",
-        caption: "AI Quick Check and AI training at a glance",
+        caption: "AI Check and AI training at a glance",
         cols: ["Offer", "Format", "Price"],
         rows: [
-          ["AI Quick Check", "90 minutes remote, short written report", "from €490"],
+          ["AI Check", "90 minutes remote, short written report", "from €490"],
           ["AI Literacy Basics", "Half day, up to 15 people", "€1,490"],
           ["Copilot Practice Day", "1 day, up to 12 people", "from €2,400"],
         ],
@@ -152,7 +160,7 @@ export const en: Record<PageKey, PageDef> = {
       h: "Frequently asked questions",
       items: [
         { q: "Who will be our point of contact?", a: "You have one dedicated point of contact at OpSolid, from analysis through to operation. The AI Literacy Basics training is led by a freelance specialist whom we select and name to you in advance." },
-        { q: "How much time does our team need to set aside?", a: "For the AI Check: a short intro call, a 60–90 minute analysis with the people who do the work, and 30 minutes to go through the plan." },
+        { q: "How much time does our team need to set aside?", a: "For the AI Check: a short intro call and a 90-minute analysis with the people who do the work. The extended scope adds a workshop and 30 minutes to go through the plan; we state the time required in our proposal." },
         { q: "Do you sign a confidentiality agreement first?", a: "Yes. A standard NDA is signed before the analysis call." },
         { q: "Can we keep our existing systems?", a: "Yes. Where Microsoft 365, Google Workspace, your CRM or ERP carry the workflow, we build on them." },
         { q: "Which languages do you work in?", a: "German, English and Turkish. We work from Arnsberg and remotely for businesses across Europe and in Türkiye." },
@@ -172,9 +180,9 @@ export const en: Record<PageKey, PageDef> = {
     meta: {
       title: "AI agents for phone and website",
       description:
-        "AI agents and AI phone assistants from OpSolid take inquiries, arrange appointments and hand over to your team. With a data-protection review before go-live.",
+        "OpSolid's AI agents work as phone and chat assistants: they take inquiries, arrange appointments and hand over to your team. With a data-protection review.",
     },
-    crumb: "Agents",
+    crumb: "AI agents",
     hero: {
       eyebrow: "AI agents · phone and website",
       h1: ["The phone rings. ", "Your AI agent", " answers."],
@@ -184,7 +192,7 @@ export const en: Record<PageKey, PageDef> = {
       scene: "agents",
       heat: [0],
       spec: [
-        ["Formats", "Voice on the phone and on your website, video with a 3D figure"],
+        ["Formats", "Phone and chat assistant"],
         ["Tasks", "Inquiries, appointments, information, handover"],
         ["Status", "Scripted demo, live demo to follow"],
       ],
@@ -196,7 +204,7 @@ export const en: Record<PageKey, PageDef> = {
         scene: "agents",
         heat: [0],
         h: "How a call plays out.",
-        lede: "A booking request from the first sentence to the confirmation: the agent offers slots, books the appointment and confirms by email. As soon as a person is needed, it hands over to your team.",
+        lede: "A booking request from the first sentence to the confirmation: the agent says at the start that an AI system is speaking, offers slots, books the appointment and confirms by email. As soon as a person is needed, it hands over to your team.",
         ...DEMO,
       },
       {
@@ -230,37 +238,39 @@ export const en: Record<PageKey, PageDef> = {
     faq: {
       h: "Questions about AI agents",
       items: [
+        { q: "What does an AI agent cost?", a: "That depends on the tasks, the integrations and the call volume. We give you the price in writing before anything is built. Prices are net, plus VAT." },
         { q: "Does the agent already speak live?", a: "At the moment we show a scripted scenario. The live voice demo will follow once the voice provider and the data-protection review are settled." },
         { q: "Who listens to the calls?", a: "We agree that with you in advance: provider, storage location, retention and access. Callers are told at the start that they are speaking to an AI system." },
         { q: "Will an agent replace our team?", a: "No. It takes routine work off your team and hands over as soon as a person is needed." },
-        { q: "Are agents also available as video?", a: "Yes. Besides voice agents for the phone and your website, we build video agents with a 3D figure, for example for your website or reception. The live demo follows after the data protection review." },
+        { q: "Is the 3D form on this website an agent?", a: "No. The abstract 3D form is decoration; you can switch it off under “3D effects” at the bottom of the page. Our AI agents work as phone and chat assistants, with no figure and no face." },
         { q: "How do we start?", a: "With the AI Check. Together we work out whether an agent makes sense for your business and which tasks it should take on." },
       ],
     },
     cta: { h: "Find out whether an agent suits you.", p: "In the AI Check we settle tasks, limits and data protection before anything is built.", primary: CHECK, secondary: CONTACT },
-    service: { type: "AI voice agents" },
+    service: { type: "AI phone and chat assistants" },
   },
 
   websites: {
     slug: "websites",
     meta: {
-      title: "Website design and build: buy or rent",
+      title: "Website design and build: buy or subscribe",
       description:
-        "OpSolid designs, builds and runs websites that look like your business: fast, multilingual and easy to find. To buy or to rent.",
+        "OpSolid designs, builds and runs websites that look like your business: fast and multilingual. To buy, or as a website subscription from €99 a month, net.",
     },
     crumb: "Websites",
     hero: {
-      eyebrow: "Websites · buy or rent",
+      eyebrow: "Websites · buy or subscribe",
       h1: ["Websites that look like ", "you", "."],
-      lede: "OpSolid designs and builds websites that load fast, read well and work in several languages. Buy: a one-off project price, and the site is yours. Rent: a recurring fee, and we run and maintain it. You get the price in writing after our first call.",
+      lede: "OpSolid designs and builds websites that load fast, read well and work in several languages. Buy: a one-off project price, and the site is yours. Website subscription: from €99 a month, and we take care of hosting, maintenance and updates.",
       primary: CONTACT,
       secondary: { label: "See work samples", href: "#referenzen" },
       scene: "websites",
       heat: [1],
       spec: [
-        ["Models", "Buy or rent"],
-        ["Languages", "German, English, Turkish available"],
-        ["Price", "In writing after the first call"],
+        ["Models", "Buy or website subscription"],
+        ["Subscription", "From €99/month or €990/year, setup from €490"],
+        ["Buy", "Price in writing after the first call"],
+        ["Prices", "Net, plus VAT; for businesses only"],
       ],
     },
     blocks: [
@@ -274,8 +284,22 @@ export const en: Record<PageKey, PageDef> = {
           { h: "Design", p: "Typography, colour and motion that suit your business, instead of a template with a new logo." },
           { h: "Build", p: "Text first, fast to load, accessible, and structured cleanly for search engines and AI search." },
           { h: "Multilingual", p: "Each language with its own address and clean markup for search; German, English and Turkish on request." },
-          { h: "Buy or rent", p: "Buying makes sense if you want to take the site forward yourself. Renting, if you would rather not deal with anything technical." },
+          { h: "Buy or subscribe", p: "Buying makes sense if you want to take the site forward yourself. The website subscription, if you would rather not deal with anything technical." },
         ],
+      },
+      {
+        t: "table",
+        id: "preise",
+        eyebrow: "Prices",
+        h: "What a website costs.",
+        lede: "The website subscription prices are in the table. For a purchase, we give you the project price in writing after our first call.",
+        caption: "Website subscription and purchase at a glance",
+        cols: ["Model", "Scope", "Price"],
+        rows: [
+          ["Website subscription||Includes hosting, maintenance, updates and 1 small change per month (done within 5 working days, no emergency service).", "Setup from €490; then monthly or €990 a year", "from €99/month"],
+          ["Buy||A one-off project price. The finished website is yours, and you take it forward yourself or with your IT.", "Project price by scope, in writing after the first call", "On request"],
+        ],
+        note: PRICE_NOTE,
       },
       {
         t: "rows",
@@ -284,11 +308,11 @@ export const en: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Work samples",
         h: "Designed and built in-house.",
-        lede: "OpSolid conceived and developed these projects itself, from design to engineering. The links take you straight to each project, so you can judge for yourself.",
+        lede: "OpSolid conceived and developed these projects itself, from design to engineering. The links take you to each project, so you can judge for yourself.",
         items: [
-          { h: "opsolid.de", tag: "This site", p: "Three languages, text first; the 3D stage loads after the text and can be switched off.", href: "https://opsolid.de" },
-          { h: "OpSo", tag: "Product in testing", p: "A digital business card as a web app: profile, QR code and NFC link. The launch is being prepared.", href: "https://card.opsolid.de" },
-          { h: "Kutasia", tag: "Project in development", p: "One inbox for WhatsApp, Telegram and email, with AI triage.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "This site", p: "Three languages, text first; the 3D stage loads after the text and can be switched off.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Product in testing", p: "A digital business card as a web app: profile, QR code and NFC link. The launch is being prepared.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Project in development", p: "One inbox for WhatsApp, Telegram and email, with AI triage.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
@@ -301,21 +325,28 @@ export const en: Record<PageKey, PageDef> = {
           { h: "First call", p: "Clarify goal, audience, content and languages. We then set out scope and price in writing." },
           { h: "Draft", p: "Structure and design of the key pages, refined with your feedback." },
           { h: "Build", p: "Implementation with texts, images and forms, tested on phone and desktop." },
-          { h: "Launch and operation", p: "Publishing, domain, data-protection components and, on request, ongoing maintenance." },
+          { h: "Launch and operation", p: "Publishing, domain and data-protection components; with the website subscription we then take care of hosting, maintenance and updates." },
         ],
       },
     ],
     faq: {
       h: "Questions about websites",
       items: [
-        { q: "Buy or rent: which is better?", a: "Buy if you want to run the site yourself or with your IT: you pay once, and the site is yours. Rent if you would rather not deal with the technology: you pay a recurring fee, and we run and maintain it." },
+        { q: "Buy or subscribe: which suits you better?", a: "Buy if you want to run the site yourself or with your IT: you pay once, and the site is yours; we give you the price in writing after our first call. Choose the website subscription if you would rather not deal with the technology: from €99 a month or €990 a year, setup from €490, all prices net, plus VAT. It includes hosting, maintenance, updates and one small change per month, done within 5 working days; there is no emergency service." },
         { q: "How long does a website project take?", a: "That depends on the scope. After the first call you receive a concrete schedule." },
         { q: "Who owns the texts and images?", a: "Content you supply remains yours. The usage rights for design and code are agreed in writing beforehand." },
         { q: "Can the site include 3D and motion?", a: "Yes, as an extra. The text always comes first; the effects can be switched off and respect the reduced-motion setting." },
       ],
     },
     cta: { h: "What should your website achieve?", p: "Tell us in two or three sentences who the site is for and what it should achieve. We usually reply within a few working days.", primary: { label: "Ask about a website", href: "/contact" } },
-    service: { type: "Website design, development and rental" },
+    service: {
+      type: "Website design, development and subscription",
+      offers: [
+        { name: "Website subscription, monthly", price: 99, from: true, unit: "month" },
+        { name: "Website subscription, yearly", price: 990, unit: "year" },
+        { name: "Website subscription, setup", price: 490, from: true },
+      ],
+    },
   },
 
   leistungen: {
@@ -342,7 +373,7 @@ export const en: Record<PageKey, PageDef> = {
         h: "Which service solves which problem.",
         items: [
           { h: "AI agents", tag: "Phone · website", p: "When calls and inquiries pile up: the agent takes them, arranges appointments and hands over to your team.", href: "/agents" },
-          { h: "Websites", tag: "Buy · rent", p: "When your website no longer fits your business: designed, built and, if you wish, run by us.", href: "/websites" },
+          { h: "Websites", tag: "Buy · subscribe", p: "When your website no longer fits your business: designed, built and, if you wish, run by us.", href: "/websites" },
           { h: "Process automation", p: "When the same data is typed in twice: quotes, reports and data syncs run automatically.", href: "/prozessautomatisierung" },
           { h: "Microsoft 365", p: "When you pay for licences but barely use them: automate approvals, documents and mailbox rules.", href: "/microsoft-365-automatisierung" },
           { h: "Internal tools", p: "When a spreadsheet becomes the bottleneck: a tool with permissions, a history and exactly the fields you need.", href: "/interne-tools" },
@@ -356,7 +387,7 @@ export const en: Record<PageKey, PageDef> = {
         eyebrow: "Approach",
         h: "One path, wherever you start.",
         items: [
-          { h: "Analysis", p: "In the AI Check we map your workflows and measure what they cost today." },
+          { h: "Analysis", p: "In the AI Check we look at your workflows and work out where automation pays off." },
           { h: "Pilot", p: "One workflow with real leverage, with a fixed scope and a fixed time frame." },
           { h: "Rollout", p: "What works in the pilot is used more widely and documented." },
           { h: "Handover", p: "Your team runs the solution itself; if you wish, we stay involved with a small retainer for adjustments." },
@@ -437,6 +468,7 @@ export const en: Record<PageKey, PageDef> = {
     faq: {
       h: "Questions about AI consulting",
       items: [
+        { q: "What does it cost?", a: "That depends on the scope. We set out scope and price in writing in our proposal before any work starts. Prices are net, plus VAT." },
         { q: "How does AI consulting differ from the AI Check?", a: "The AI Check looks through your workflows for automation candidates, with and without AI. AI consulting goes further: it rates specific AI applications, sets out a roadmap for 6 to 12 months and delivers an AI policy for your business." },
         { q: "Do you sell AI tools?", a: "No. OpSolid is independent and recommends what fits. That can also mean: use what you have, or wait for now." },
         { q: "Can AI be used in line with data protection law?", a: "Its use can be designed to meet data protection requirements: the right choice of model, EU hosting, a data processing agreement and a written policy. We help prepare this; the final assessment lies with your data protection officer or legal adviser." },
@@ -518,6 +550,7 @@ export const en: Record<PageKey, PageDef> = {
     faq: {
       h: "Questions about process automation",
       items: [
+        { q: "What does it cost?", a: "That depends on the scope. We set out scope and price in writing in our proposal before any work starts. Prices are net, plus VAT." },
         { q: "What is a typical first project?", a: "A single workflow with real leverage, such as preparing quotes, sorting email or a weekly report. Fixed scope, with a target of two to four weeks." },
         { q: "Do we need AI for this?", a: "No. Often the first sensible step is clean automation with no AI at all." },
         { q: "What if the workflow changes later?", a: "We document everything so that your IT can make adjustments itself. For larger changes, a small monthly retainer is available on request." },
@@ -598,6 +631,7 @@ export const en: Record<PageKey, PageDef> = {
     faq: {
       h: "Questions about Microsoft 365",
       items: [
+        { q: "What does it cost?", a: "That depends on the scope. We set out scope and price in writing in our proposal before any work starts. Prices are net, plus VAT." },
         { q: "Do we need Power Automate Premium licences?", a: "Sometimes. Many useful flows run on the standard plans. We tell you in advance when Premium is needed." },
         { q: "Is Microsoft 365 Copilot worth it?", a: "For some teams yes, for others no. We clarify that before you buy licences." },
         { q: "Can you work with our IT?", a: "Yes. We work alongside your IT or your Microsoft partner; OpSolid adds to what they do rather than replacing them." },
@@ -678,6 +712,7 @@ export const en: Record<PageKey, PageDef> = {
     faq: {
       h: "Questions about internal tools",
       items: [
+        { q: "What does it cost?", a: "That depends on the scope. We set out scope and price in writing in our proposal before any work starts. Prices are net, plus VAT." },
         { q: "Why not off-the-shelf software?", a: "Off-the-shelf software is often the right choice. We only build when it does not fit or would be too expensive for the purpose, and we tell you so beforehand." },
         { q: "Who owns the code?", a: "We put that in writing before the start. The plan is that you receive the source code and documentation." },
         { q: "Where does the tool run?", a: "In the EU, with a provider of your choice or on your own infrastructure." },
@@ -692,7 +727,7 @@ export const en: Record<PageKey, PageDef> = {
     meta: {
       title: "AI training: three formats with clear prices",
       description:
-        "AI Quick Check from €490, AI Literacy Basics €1,490, Copilot Practice Day from €2,400, all plus VAT. On your own tasks, in German, English or Turkish.",
+        "AI Check from €490, AI Literacy Basics €1,490, Copilot Practice Day from €2,400, all plus VAT. On your own tasks, in German, English or Turkish.",
     },
     crumb: "AI training",
     hero: {
@@ -710,10 +745,10 @@ export const en: Record<PageKey, PageDef> = {
         id: "angebote",
         eyebrow: "Formats and prices",
         h: "Which format suits your team.",
-        caption: "AI Quick Check and AI training at a glance",
+        caption: "AI Check and AI training at a glance",
         cols: ["Offer", "Format", "Price"],
         rows: [
-          ["AI Quick Check||The compact way in: together we look at where AI makes sense in your daily work and where it does not. Delivered by OpSolid, with the result as a short written report.", "90 minutes remote, with report", "from €490"],
+          ["AI Check||The compact way in: together we look at where AI makes sense in your daily work and where it does not. Delivered by OpSolid, with the result as a short written report. An extended scope with a process map and a 30-day plan is available at a fixed price, quoted in writing beforehand.", "90 minutes remote, with report", "from €490"],
           ["AI Literacy Basics||The fundamentals of using AI safely at work. Led by a freelance specialist whom OpSolid selects and names to you in advance. Supports your AI literacy measures under Art. 4 of the EU AI Act.", "Half day, up to 15 people", "€1,490"],
           ["Copilot Practice Day||Hands-on work with Microsoft 365 Copilot on your own tasks. For businesses that already hold Copilot licences.", "1 day, up to 12 people", "from €2,400"],
         ],
@@ -736,16 +771,16 @@ export const en: Record<PageKey, PageDef> = {
       h: "Questions about training",
       items: [
         { q: "Do we get a certificate?", a: "The training is not a certificate course. It supports your AI literacy measures under Art. 4 of the EU AI Act." },
-        { q: "Who delivers the training?", a: "OpSolid runs the AI Quick Check itself. AI Literacy Basics is led by a freelance specialist whom OpSolid selects and names to you in advance." },
-        { q: "Why is the AI Quick Check listed under training?", a: "Because it works well as a first step before training: in 90 minutes we clarify where AI makes sense in your daily work. For a full mapping of your workflows, with a process map and a 30-day plan, choose the AI Check." },
-        { q: "Are online sessions available?", a: "The AI Quick Check runs remotely. For the other formats, we agree with you whether they take place on site or remotely." },
+        { q: "Who delivers the training?", a: "OpSolid runs the AI Check itself. AI Literacy Basics is led by a freelance specialist whom OpSolid selects and names to you in advance." },
+        { q: "Why is the AI Check listed under training?", a: "Because it works well as a first step before training: in 90 minutes we clarify where AI makes sense in your daily work. If you wish, we extend it to a mapping of your workflows with a process map and a 30-day plan; we quote the fixed price for that in writing beforehand." },
+        { q: "Are online sessions available?", a: "The entry scope of the AI Check runs remotely. For the other formats, we agree with you whether they take place on site or remotely." },
       ],
     },
     cta: { h: "Find the right format.", p: "Write to us briefly about your team and goal. We recommend a format and name the price.", primary: { label: "Request training", href: "/contact" }, secondary: CHECK },
     service: {
       type: "AI training",
       offers: [
-        { name: "AI Quick Check", price: 490, from: true },
+        { name: "AI Check", price: 490, from: true },
         { name: "AI Literacy Basics", price: 1490 },
         { name: "Copilot Practice Day", price: 2400, from: true },
       ],
@@ -755,24 +790,24 @@ export const en: Record<PageKey, PageDef> = {
   check: {
     slug: "ai-automation-check",
     meta: {
-      title: "AI Check: automation potential with a 30-day plan",
+      title: "AI Check: where automation really pays off",
       description:
-        "The OpSolid AI Check: a 60–90 minute analysis of your workflows, then a written 30-day plan with five rated candidates. Fixed price, NDA in advance.",
+        "The OpSolid AI Check from €490 net: 90 minutes remote, then a short written report. Extended with a process map and a 30-day plan. NDA in advance.",
     },
     crumb: "AI Check",
     hero: {
       eyebrow: "AI Check · the first step",
       h1: ["Where automation ", "really", " pays off."],
-      lede: "The AI Check shows which of your workflows can be automated and which are better left manual: a 60–90 minute analysis call and a written 30-day plan with five candidates, rated by effort, benefit and risk.",
+      lede: "The AI Check shows which of your workflows can be automated and which are better left manual. The entry scope from €490 net: 90 minutes remote and a short written report. For an extended scope with a workshop, a process map and a 30-day plan, we quote a fixed price in writing beforehand.",
       primary: { label: "Request an AI Check", href: "/contact" },
       secondary: { label: "See how it works", href: "#ablauf" },
       scene: "steps",
       heat: [5],
       spec: [
-        ["Scope", "60–90 minutes, on site or remote"],
-        ["Result", "Process map, five rated candidates, 30-day plan"],
+        ["Entry", "90 minutes remote, short written report"],
+        ["Extended", "Workshop, process map, five rated candidates, 30-day plan"],
         ["NDA", "Before the analysis call"],
-        ["Price", "Fixed price, confirmed after the intro call"],
+        ["Price", "From €490 net; extended scope at a fixed price, quoted in writing"],
       ],
     },
     blocks: [
@@ -791,17 +826,18 @@ export const en: Record<PageKey, PageDef> = {
         ],
       },
       {
-        t: "rows",
-        eyebrow: "Included",
-        h: "What the check includes.",
-        items: [
-          { h: "Analysis call, 60–90 minutes", p: "On site or remote, with the people who do the work. We listen to how work flows through your team." },
-          { h: "Mapping of the key workflows", p: "The workflows are written down so that your team can check them too." },
-          { h: "Five concrete candidates", p: "Drawn from your real workflows, not a generic AI wish list." },
-          { h: "Rated by effort, benefit and risk", p: "So that management can set priorities without technical knowledge." },
-          { h: "30-day plan", p: "Next steps, tools, owners and expected result." },
-          { h: "Optional: a first pilot", p: "Where it makes sense, we implement the first automation, with a fixed scope and time frame." },
+        t: "table",
+        id: "umfang",
+        eyebrow: "Scope and price",
+        h: "Start compact, extend if needed.",
+        lede: "The entry scope costs from €490. If you need more, we extend the scope and quote the fixed price for it in writing beforehand.",
+        caption: "AI Check: entry and extended scope",
+        cols: ["Scope", "Format", "Price"],
+        rows: [
+          ["Entry||Delivered by OpSolid, with the people who do the work. The result is a short written report: where AI and automation make sense in your daily work, and where they do not.", "90 minutes remote, with report", "from €490"],
+          ["Extended||Mapping of the key workflows, a process map, five candidates rated by effort, benefit and risk, a 30-day plan and a 30-minute walkthrough.", "Workshop on site or remote", "Fixed price, quoted in writing"],
         ],
+        note: `${PRICE_NOTE} ${PILOT_NOTE}`,
       },
       {
         t: "rows",
@@ -812,6 +848,7 @@ export const en: Record<PageKey, PageDef> = {
           { h: "AI in use, but without rules", p: "Your team already uses AI, but without shared rules or structure." },
           { h: "Operations leads", p: "Too many manual handovers cost time and cause errors." },
           { h: "Before a purchase decision", p: "You are weighing up tools such as Microsoft 365, Power Automate or Make and want to know what they are for before you buy." },
+          { h: "Industry focus", p: "Services, hospitality, retail and practices (no health data). Not for businesses in plumbing and heating, building services, electrical, construction or wholesale." },
         ],
       },
       {
@@ -822,10 +859,10 @@ export const en: Record<PageKey, PageDef> = {
         eyebrow: "Process",
         h: "Four steps, one fixed price.",
         items: [
-          { h: "Intro call", p: "A brief look at goals and the workflows in scope. The fixed price is set afterwards." },
-          { h: "Analysis call", p: "60–90 minutes with the people who actually do the work." },
-          { h: "Written plan", p: "Within a few working days you receive the process map and the 30-day plan." },
-          { h: "Walkthrough", p: "30 minutes on scope, effort and next steps." },
+          { h: "Intro call", p: "A brief look at goals, the workflows in scope and the scope itself. The fixed price is set afterwards, from €490 net." },
+          { h: "Analysis call", p: "90 minutes remote with the people who actually do the work; for the extended scope as a workshop, on site if you prefer." },
+          { h: "Written result", p: "A short report; for the extended scope you receive the process map and the 30-day plan within a few working days." },
+          { h: "Walkthrough", p: "For the extended scope: 30 minutes on the plan, effort and next steps." },
         ],
       },
       {
@@ -833,25 +870,25 @@ export const en: Record<PageKey, PageDef> = {
         eyebrow: "Result",
         h: "What lands in your inbox at the end.",
         items: [
-          { h: "Process map", p: "The workflows discussed, in writing." },
-          { h: "Five rated candidates", p: "With a tool recommendation and a rough effort estimate." },
-          { h: "30-day plan", p: "With owners and next steps." },
-          { h: "Note on what stays manual", p: "What should deliberately stay manual, and why." },
+          { h: "Short written report", tag: "Entry", p: "Where AI and automation make sense in your daily work, and where they do not." },
+          { h: "Process map", tag: "Extended", p: "The workflows discussed, in writing." },
+          { h: "Five rated candidates", tag: "Extended", p: "Drawn from your real workflows, with a tool recommendation and a rough effort estimate." },
+          { h: "30-day plan", tag: "Extended", p: "With owners and next steps." },
+          { h: "What stays manual", tag: "Extended", p: "Which steps should deliberately stay manual, and why." },
         ],
       },
     ],
     faq: {
       h: "Questions about the AI Check",
       items: [
-        { q: "What does the AI Check cost?", a: "We name a fixed price after the intro call; it depends on scope and team size. All prices are net, plus VAT." },
-        { q: "What is the difference between the AI Check and the AI Quick Check?", a: "The AI Check maps your workflows and delivers a process map, five rated candidates and a 30-day plan, on site or remote. The AI Quick Check is a 90-minute remote session with a short written report, from €490 plus VAT." },
+        { q: "What does the AI Check cost?", a: "The entry scope costs from €490: 90 minutes remote and a short written report. For an extended scope with a workshop, a process map and a 30-day plan, we quote a fixed price in writing after the intro call, before any work starts. All prices are net, plus VAT." },
         { q: "Is a confidentiality agreement signed?", a: "Yes, a standard NDA is signed before the analysis call." },
-        { q: "What if nothing is worth automating?", a: "Then that is exactly what the plan says, with the reasons. That is a result too: you avoid a project that would not pay for itself." },
-        { q: "What happens after the check?", a: "Three paths are open: you carry out the plan yourself, we run a pilot together, or the collaboration ends there. You make no commitment." },
+        { q: "What if nothing is worth automating?", a: "Then that is exactly what the written result says, with the reasons. That is a result too: you avoid a project that would not pay for itself." },
+        { q: "What happens after the check?", a: "Three paths are open: you act on the recommendations yourself, we run a pilot together, or the collaboration ends there. You make no commitment." },
       ],
     },
-    cta: { h: "Find out what is really worth it.", p: "One conversation, a written plan, no commitment. If the timing is not right yet, we will tell you.", primary: { label: "Request an AI Check", href: "/contact" }, secondary: { label: "All services", href: "/leistungen" } },
-    service: { type: "AI and automation assessment" },
+    cta: { h: "Find out what is really worth it.", p: "One conversation, a written result, no commitment. If the timing is not right yet, we will tell you.", primary: { label: "Request an AI Check", href: "/contact" }, secondary: { label: "All services", href: "/leistungen" } },
+    service: { type: "AI and automation assessment", offers: [{ name: "AI Check", price: 490, from: true }] },
   },
 
   about: {
@@ -891,6 +928,12 @@ export const en: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
+        eyebrow: "Industries",
+        h: "Which businesses we work for.",
+        paras: ["Industry focus: services, hospitality, retail and practices (no health data). Not for businesses in plumbing, heating and sanitation (SHK), building services engineering (TGA), electrical trades, construction or wholesale."],
+      },
+      {
+        t: "text",
         eyebrow: "Founder and experience",
         h: "Where the method comes from.",
         lede: "OpSolid was founded by Hasan Dönmez. His experience comes from IT project management, digitalisation and process optimisation in the day-to-day operations of companies. Every step of our method comes from there: map the workflow, measure the baseline, pilot small, hand over cleanly.",
@@ -907,8 +950,9 @@ export const en: Record<PageKey, PageDef> = {
         eyebrow: "Our own projects",
         h: "Projects that show our work.",
         items: [
-          { h: "OpSo", tag: "Product in testing", p: "A digital business card with NFC and QR, built as a web app with its own dashboard, onboarding and admin console. The launch is being prepared.", href: "/opso" },
-          { h: "Kutasia", tag: "Project in development", p: "Customer messages from WhatsApp, Telegram and email in one inbox, with AI triage.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "This site", p: "Designed, built and run by OpSolid: three languages, text first; the 3D stage loads after the text and can be switched off.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Product in testing", p: "A digital business card with NFC and QR, built as a web app with its own dashboard, onboarding and admin console. The launch is being prepared.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Project in development", p: "Customer messages from WhatsApp, Telegram and email in one inbox, with AI triage.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
@@ -933,10 +977,11 @@ export const en: Record<PageKey, PageDef> = {
       eyebrow: "Contact",
       h1: ["Three sentences ", "are enough", "."],
       lede: "Tell us which workflow it is about, which systems are involved and what gets in the way today. By form, email or phone; we usually reply within a few working days.",
-      primary: { label: "See the AI Check first", href: "/ai-automation-check" },
+      primary: { label: "Write a message", href: "#form-h" },
+      secondary: CHECK,
       scene: "tight",
     },
     blocks: [],
-    cta: { h: "Prefer to have your workflows reviewed first?", p: "The AI Check maps your workflows and delivers a written 30-day plan with five rated candidates.", primary: CHECK },
+    cta: { h: "Prefer to have your workflows reviewed first?", p: "The AI Check shows where automation pays off for you: 90 minutes remote, followed by a short written report.", primary: CHECK },
   },
 };

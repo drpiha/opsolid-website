@@ -30,52 +30,7 @@ function merge<T>(base: T, override: DeepPartial<T>): T {
 }
 
 const overrides: DeepPartial<Content> = {
-  nav: {
-    solutions: "Servizi",
-    products: "Prodotti",
-    useCases: "Casi d'uso",
-    about: "Chi siamo",
-    contact: "Contatto",
-    cta: "Prenota una call",
-    blog: "Blog",
-    faq: "FAQ",
-  },
-  home: {
-    hero: {
-      headline: "Automazione pratica\nper le operazioni aziendali",
-      subheadline:
-        "OpSolid aiuta le aziende a sostituire il lavoro manuale e ripetitivo con sistemi automatizzati affidabili — dall'automazione dei flussi ai processi assistiti dall'IA.",
-      primaryCta: "Prenota una call di scoperta",
-      secondaryCta: "Vedi i servizi",
-      title: [
-        "Automazione che gestisce",
-        "le sue operazioni —",
-        "non il contrario.",
-      ],
-      subtitle:
-        "OpSolid progetta e costruisce sistemi pratici di automazione e IA per operazioni reali — flussi, integrazioni, strumenti interni e processi assistiti dall'IA.",
-      primaryCtaLabel: "Prenota una call",
-      secondaryCtaLabel: "Vedi i servizi",
-      consultingNote:
-        "Spediamo anche prodotti indipendenti — Kutasia, OpSo Smart (carta digitale), Digital Reception.",
-    },
-  },
-  v2: {
-    nav: {
-      home: "Home",
-      services: "Servizi",
-      automationCheck: "AI Automation Check",
-      journal: "Blog",
-      contact: "Contatto",
-      cta: "Prenota call",
-    },
-  },
-  // M7 — vCard "Save to contacts" button on the public card page.
-  card: {
-    vcard: {
-      label: "Salva nei contatti",
-    },
-  },
+  // No overrides yet: every key falls back to English. Translate card-surface keys here first.
 };
 
 export const content: Content = merge(en, overrides);

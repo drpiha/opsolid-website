@@ -10,23 +10,18 @@ Run this every time you deploy a version that includes Voice Agent changes.
 
 ## VPS deploy
 
-1. **Upload code** (existing workflow):
-   ```bash
-   tar -czf /tmp/deploy.tar.gz .
-   scp /tmp/deploy.tar.gz vps:/opt/opsolid-website/
-   ssh vps "cd /opt/opsolid-website && tar -xzf deploy.tar.gz && docker-compose up -d --build"
-   ```
+1. **Ship code** only through the reviewed release path in `README.md`
+   ("Deployment"): hosted runtime image, private receive, app-only cutover.
+   Uploading source to the VPS or `docker compose up -d --build` there is
+   retired and breaks the release and rollback chain.
 
-2. **Run Prisma migration** (required on first deploy of Voice Agent):
-   ```bash
-   ssh vps "cd /opt/opsolid-website && docker-compose exec app npx prisma db push"
-   ```
-   This creates the 14 Voice tables. Safe to re-run — idempotent.
+2. **Database schema** (the 14 Voice tables): the cutover never touches the
+   database. Creating the tables in production (`prisma db push` or a patch
+   SQL) needs its own reviewed database step with a fresh backup first; do not
+   run it from this checklist.
 
-3. **Seed billing plans** (required once):
-   ```bash
-   ssh vps "cd /opt/opsolid-website && docker-compose exec app npx prisma db seed"
-   ```
+3. **Seed billing plans** (required once): also a reviewed database step, not
+   part of a release.
 
 4. **Verify healthcheck**:
    ```bash
@@ -42,8 +37,6 @@ VOICE_ADMIN_TOKEN=<64-char hex>
 VOICE_DEFAULT_PROVIDER=retell
 RETELL_API_KEY=<from Retell dashboard>
 VOICE_PUBLIC_BASE_URL=https://opsolid.de
-VOICE_ENABLE_RECORDING=false
-VOICE_DEFAULT_RETENTION_DAYS=90
 VOICE_ANALYTICS_ENABLED=true
 VOICE_TEST_CALL_ENABLED=true
 ```
@@ -68,8 +61,7 @@ After first deploy, register the webhook URL in Retell dashboard:
 
 ## Rollback
 
-If something breaks:
-```bash
-ssh vps "cd /opt/opsolid-website && git stash && docker-compose up -d --build"
-```
+If something breaks, roll the app back with the reviewed cutover packet
+(`scripts/ops/opsolid-app-cutover.py --mode rollback --state <packet>`, dry run
+first, then `--execute`); see `deploy/hostinger/README.md`.
 The database changes (new tables) are additive — rollback does not break existing functionality.

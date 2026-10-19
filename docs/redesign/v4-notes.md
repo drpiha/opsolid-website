@@ -35,7 +35,7 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
 - The full content bundle (about 220 kB gz) no longer ships to marketing routes: `useLocale()` is split into locale-only (`useLocaleBase`) and content (`t`, via `ContentGate`).
 - Legacy stylesheets (about 26 kB gz) load only for app, legal and card surfaces.
 - Archivo latin is the only preloaded display font; latin-ext (ğ ş İ ı) loads on demand. Geist is no longer preloaded.
-- Consent copy extracted into `src/content/consent-copy.ts`; accept and reject carry the same visual weight.
+- Consent copy extracted into `src/content/consent-copy.ts`; accept and reject carry the same visual weight. (Later in 2026-10 the consent banner, `consent-copy.ts` and Vercel Analytics were removed altogether; see the comment in `src/app/layout.tsx`.)
 - `/api/auth/status` answers 200 for anonymous visitors, so there is no 401 console error on every page. `/api/auth/me` keeps its 401 contract.
 
 ## Owner questions: resolved from OpSolid's own sources (2026-10-17)
@@ -71,3 +71,5 @@ Updated in this PR: v4 art direction and tokens, Archivo + IBM Plex Mono, the co
 ## Dead code removed
 
 `src/app/[locale]/leistungen/LeistungenPage.tsx` and `src/app/[locale]/ai-automation-check/AIAutomationCheck.tsx` were no longer imported (the routes render the v4 page definitions) and are deleted. `src/components/v2/*` and `src/components/sections/*` stay: `/about`, the `products/*` pages and `ProductStubPage` still import them.
+
+Update (e1a4c33, 2026-10): that is no longer true. `src/components/v2/*`, `ProductStubPage`, the single-agent product pages and most of `src/components/sections/*` were removed; their URLs 301 via `src/lib/redirects.ts`. Only `FaqAccordion`, `FinalCTA` and `PricingTable` remain in `sections/`, for the OpSo order flow under `products/digital-card`.
