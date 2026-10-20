@@ -2,8 +2,10 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import tempfile
 from types import SimpleNamespace
@@ -451,10 +453,12 @@ class ExistingRuntimeContracts(unittest.TestCase):
                         cutover.predecessor_config(reference, current, changed)
 
     def test_legacy_script_hash_is_accepted_only_for_exact_predecessor_not_apply(self):
-        self.assertEqual(sorted(path.name for path in cutover.LEGACY_PREDECESSORS), ["app-cutover-1a6a38b57fda46b6b8c39eac", "app-cutover-1f5ed7aa270c4db798cb19ce"])
+        self.assertEqual(sorted(path.name for path in cutover.LEGACY_PREDECESSORS), ["app-cutover-1a6a38b57fda46b6b8c39eac", "app-cutover-1f5ed7aa270c4db798cb19ce", "app-cutover-d5434be240b94b7b934a886e"])
         self.assertTrue(all(path.parent == cutover.backup.BASE and re.fullmatch(r"[a-f0-9]{64}", digest) for path, digest in cutover.LEGACY_PREDECESSORS.items()))
         digests = list(cutover.LEGACY_PREDECESSORS.values())
-        for legacy, other in (digests, digests[::-1]):
+        self.assertEqual(len(set(digests)), len(digests))
+        self.assertEqual(cutover.LEGACY_PREDECESSORS[cutover.backup.BASE / "app-cutover-d5434be240b94b7b934a886e"], "bb958107c41acd80a24c0bcecb945c0798bb7a71863dce25873b35f47fa92f38")
+        for legacy, other in zip(digests, digests[1:] + digests[:1]):
             with self.subTest(legacy=legacy[:8]), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder).resolve()
                 state, _, _, _, _ = self.fixture(root)
@@ -518,6 +522,47 @@ class ExistingRuntimeContracts(unittest.TestCase):
             self.assertEqual(snapshot["forward_env"]["DATABASE_URL"], snapshot["rollback_env"]["DATABASE_URL"])
             self.assertEqual(snapshot["forward_env"], {**snapshot["rollback_env"], "GIT_COMMIT": COMMIT})
             self.assertEqual(old_hashes, {name: cutover.role.digest_file(state/name) for name in old_hashes})
+
+
+class ReadProofContract(unittest.TestCase):
+    PRELUDE = r"""
+const Module = require('module');
+const originalLoad = Module._load;
+const mode = process.env.SYNTHETIC_CASE;
+const seen = [];
+class MockPrisma {
+  async $queryRawUnsafe() {return [{current_user:'opsolid_runtime_test',session_user:'opsolid_runtime_test'}];}
+  async $disconnect() {}
+}
+Module._load = function(name, ...args) {
+  if (name==='./src/generated/prisma') return {PrismaClient:MockPrisma};
+  return originalLoad.call(this,name,...args);
+};
+global.fetch = async (url, options) => {
+  const path = new URL(url).pathname;
+  if (!url.startsWith('http://127.0.0.1:3000/') || options.redirect!=='manual') throw new Error('unsafe_request');
+  seen.push(path);
+  if (path==='/api/health') return {status:200,json:async()=>({ok:true,dbOk:true,commit:'unknown'})};
+  if (path!=='/de') throw new Error('unexpected_path');
+  const status = mode==='page_500' ? 500 : mode==='page_redirect' ? 307 : 200;
+  const type = mode==='page_json' ? 'application/json' : 'text/html; charset=utf-8';
+  return {status,headers:{get:()=>type},body:{cancel:async()=>{}}};
+};
+process.on('exit',()=>{if(mode==='good'&&!seen.includes('/de'))process.exitCode=2;});
+"""
+
+    def run_node(self, mode):
+        env = {"PATH": os.defpath, "SYNTHETIC_CASE": mode, "DATABASE_URL": "postgresql://opsolid_runtime_test:synthetic@127.0.0.1:5432/proof"}
+        return subprocess.run([shutil.which("node"), "-"], input=(self.PRELUDE + cutover.READ_PROOF).encode(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, timeout=10)
+
+    def test_marketing_page_must_be_html_200_for_the_read_proof_to_pass(self):
+        good = self.run_node("good")
+        self.assertEqual((good.returncode, good.stdout), (0, b"read_only_app_proof_ok"))
+        for mode in ("page_500", "page_redirect", "page_json"):
+            with self.subTest(mode=mode):
+                bad = self.run_node(mode)
+                self.assertEqual(bad.returncode, 1)
+                self.assertEqual(bad.stdout, b"")
 
 
 if __name__ == "__main__":

@@ -154,18 +154,18 @@ curl -sI 'https://opsolid.de/?geodebug=1' | grep -i -e '^location' -e '^x-opsoli
 curl -s https://opsolid.de/api/health                                                   # exact commit, dbOk true
 ```
 
-### Follow-up (deferred, separately reviewed ops change)
+### Follow-up (done)
 
-`scripts/ops/*` carry reviewed digests, so they are not changed in this
-release. After go-live, in one reviewed change:
+Landed after the 2108def go-live in one reviewed ops change:
 
-- `opsolid-candidate-runtime.py` `NODE_PROOF`: request `opso` and `login` per
-  locale (200), `/de/signup` as 301, and at least one v4 page per locale;
-  update `http_checks` and `scripts/tests/test_opsolid_candidate_runtime.py`
-  (it pins the current check count).
-- Optionally add a `GET /de` expecting 200 `text/html` to `READ_PROOF` in
-  `opsolid-app-cutover.py` (and its tests), so a broken marketing page cannot
-  pass as verified.
+- `opsolid-candidate-runtime.py` `NODE_PROOF` now requests `opso`, `login` and
+  the v4 `agents` page per locale (200), and `/de/signup` as a 301 to
+  `/de/opso` (14 HTTP checks).
+- `opsolid-app-cutover.py` `READ_PROOF` also requires `GET /de` to be 200
+  `text/html`, so a broken marketing page cannot pass as verified.
+- The live packet `app-cutover-d5434be240b94b7b934a886e` (written by script
+  sha256 `bb958107…`) is registered in `LEGACY_PREDECESSORS`, so the next
+  `prepare-existing` accepts it as predecessor.
 
 ## DNS checklist
 

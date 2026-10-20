@@ -87,7 +87,7 @@ def parse_node_proof(output):
         raise backup.ProofError("candidate_proof_output_invalid") from None
     keys = {"ok", "password_authentication_verified", "application_smoke_verified", "prisma_rollback_verified", "prisma_discovery_filter_verified", "http_checks"}
     require(isinstance(value, dict) and set(value) == keys, "candidate_proof_output_invalid")
-    require(all(value[key] is True for key in keys - {"http_checks"}) and type(value["http_checks"]) is int and value["http_checks"] == 13, "candidate_checks_incomplete")
+    require(all(value[key] is True for key in keys - {"http_checks"}) and type(value["http_checks"]) is int and value["http_checks"] == 14, "candidate_checks_incomplete")
     return value
 
 
@@ -142,9 +142,10 @@ const assert = value => { if (!value) throw new Error('candidate_assertion'); };
 const client = new PrismaClient({ log: [] });
 let bad;
 let stage = 'password_auth';
-async function request(path, expected, html = false, noGoogleAnchor = false) {
+async function request(path, expected, html = false, noGoogleAnchor = false, location = null) {
   const res = await fetch('http://127.0.0.1:3000' + path, { redirect: 'manual', signal: AbortSignal.timeout(5000) });
   assert(res.status === expected);
+  if (location) { const target = new URL(res.headers.get('location') || '', 'http://127.0.0.1:3000'); assert(target.pathname === location && !target.search); }
   if (html) assert((res.headers.get('content-type') || '').includes('text/html'));
   if (noGoogleAnchor) {
     const reader = res.body.getReader();
@@ -228,13 +229,14 @@ async function run() {
   }
   assert(healthy);
   stage = 'http_pages';
-  for (const locale of ['de','en','tr']) for (const page of ['opso','login','signup']) await request('/'+locale+'/'+page, 200, true, page!=='opso');
+  for (const locale of ['de','en','tr']) for (const page of ['opso','login','agents']) await request('/'+locale+'/'+page, 200, true, page==='login');
+  await request('/de/signup', 301, false, false, '/de/opso');
   stage = 'http_guards';
   await request('/api/v1/cards', 401);
   await request('/api/account/saved-cards', 401);
   stage = 'http_optimizer';
   await request('/_next/image?url=%2Ffavicon.ico&w=64&q=75', 404);
-  return { ok: true, password_authentication_verified: true, application_smoke_verified: true, prisma_rollback_verified: true, prisma_discovery_filter_verified: true, http_checks: 13 };
+  return { ok: true, password_authentication_verified: true, application_smoke_verified: true, prisma_rollback_verified: true, prisma_discovery_filter_verified: true, http_checks: 14 };
 }
 run().then(async proof => { await client.$disconnect(); process.stdout.write(JSON.stringify(proof)); })
  .catch(async () => { try { await client.$disconnect(); await bad?.$disconnect(); } catch {} process.stdout.write(JSON.stringify({ok:false,stage})); process.exitCode=1; });
@@ -307,7 +309,7 @@ def main():
     baseline = backup.production_snapshot(expected)
     validate_image(json.loads(backup.run(["image", "inspect", args.candidate_image]))[0], args.candidate_image, args.commit)
     if not args.execute:
-        print(json.dumps({"ok": True, "mode": "read_only_plan", "http_checks": 13, "password_authentication": "scram-sha-256", "isolated_prisma_rollback": True, "production_role_writes": False}))
+        print(json.dumps({"ok": True, "mode": "read_only_plan", "http_checks": 14, "password_authentication": "scram-sha-256", "isolated_prisma_rollback": True, "production_role_writes": False}))
         return
     callback = lambda container, credential: check_candidate(args.candidate_image, args.commit, expected, container, credential)
     state, result = role.validate_isolated(expected, baseline, args.backup_proof, runtime_role, callback, args.candidate_image)
