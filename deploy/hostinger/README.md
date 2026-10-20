@@ -132,6 +132,15 @@ role) depends on `scripts/ops/opsolid-candidate-runtime.py --execute`, whose
 smoke test still requires `/{de,en,tr}/signup` to answer 200. Since `/signup`
 became a 301 to `/opso` (#42), that mode fails at stage `http_pages`.
 
+`--current-state` is the packet named by the live container's
+`com.docker.compose.project.config_files` label. A host reboot restarts the
+same database container with a new start time and network endpoint;
+`prepare-existing` accepts exactly that against the predecessor's baseline, while
+identity, image, configuration, host configuration, mounts and network
+membership must still match. Between a packet's own prepare and apply the exact
+fingerprint still applies. The September 17 and 20 packets are accepted as
+predecessors only together with the executable digest that wrote each of them.
+
 The post-cutover proof (`READ_PROOF` in the cutover script) checks only
 `/api/health` (exact commit, `dbOk: true`) and the database identity. After
 `apply --execute`, check the public site by hand:

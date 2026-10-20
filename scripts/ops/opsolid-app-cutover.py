@@ -32,10 +32,15 @@ PROJECT = Path("/opt/opsolid-website")
 COMPOSE = PROJECT / "docker-compose.yml"
 ENV = PROJECT / ".env"
 FILES = ("base.json", "forward.json", "rollback.json", "snapshot.json", "empty.env")
-# Read-only predecessor compatibility for the one reviewed September17 cutover.
-# This does not authorize applying an old packet with the updated executable.
-LEGACY_STATE = backup.BASE / "app-cutover-1a6a38b57fda46b6b8c39eac"
-LEGACY_SCRIPT_SHA256 = "ba7ca4ffffe1c9edb97f2b56c14a0ba6bb51982e1c5c17fd9d7fde92d7932e67"
+# Read-only predecessor compatibility for the reviewed September17 and September20
+# cutovers, each bound to the executable that wrote it. This does not authorize
+# applying an old packet with the updated executable.
+LEGACY_PREDECESSORS = {
+    backup.BASE / "app-cutover-1a6a38b57fda46b6b8c39eac": "ba7ca4ffffe1c9edb97f2b56c14a0ba6bb51982e1c5c17fd9d7fde92d7932e67",
+    backup.BASE / "app-cutover-1f5ed7aa270c4db798cb19ce": "ed193abc71c27d17530b5d1e0b3365e35447255cb6c24569aa0436649232e72b",
+}
+# Per-start network endpoint values; a restarted container receives new ones.
+ENDPOINT_FIELDS = {"EndpointID", "IPAddress", "IPPrefixLen", "Gateway", "GlobalIPv6Address", "GlobalIPv6PrefixLen", "IPv6Gateway", "MacAddress"}
 
 
 def run(args, timeout=60):
@@ -130,10 +135,17 @@ def stable_runtime(container):
     config = {key: value for key, value in container["Config"].items() if key not in {"Env", "Image", "Hostname", "Labels"}}
     networks = {}
     for name, net in container["NetworkSettings"]["Networks"].items():
-        networks[name] = {key: value for key, value in net.items() if key not in {"EndpointID", "IPAddress", "IPPrefixLen", "Gateway", "GlobalIPv6Address", "GlobalIPv6PrefixLen", "IPv6Gateway", "MacAddress", "Aliases", "DNSNames"}}
+        networks[name] = {key: value for key, value in net.items() if key not in ENDPOINT_FIELDS | {"Aliases", "DNSNames"}}
         for key in ("Aliases", "DNSNames"):
             networks[name][key] = sorted(value for value in net.get(key) or [] if value not in (container["Id"], container["Id"][:12]))
     return normalize({"Config": config, "HostConfig": container["HostConfig"], "Mounts": backup.mounts(container), "Networks": networks})
+
+def restarted_database(container):
+    # A host reboot or daemon restart keeps the same database container but
+    # changes its start time and network endpoint; everything else must match.
+    networks = {name: {key: value for key, value in net.items() if key not in ENDPOINT_FIELDS}
+                for name, net in container["NetworkSettings"]["Networks"].items()}
+    return {**{key: container[key] for key in ("Id", "Image", "Config", "HostConfig", "Mounts")}, "Networks": networks}
 
 def verify_app(before, after, image, env, image_labels, explicit_labels):
     require(after["Name"] == "/opsolid-app" and after["Image"] == image, "app_identity_mismatch")
@@ -278,7 +290,7 @@ def load_packet(state, *, predecessor=False):
         backup.secure_path(state/filename, private=True, file=True)
     manifest = json.loads((state/"manifest.json").read_text())
     accepted_script = manifest["script_sha256"] == role.digest_file(Path(__file__))
-    accepted_script |= predecessor and state == LEGACY_STATE and manifest["script_sha256"] == LEGACY_SCRIPT_SHA256
+    accepted_script |= predecessor and LEGACY_PREDECESSORS.get(state) == manifest["script_sha256"]
     require(accepted_script and set(manifest["files"]) == set(FILES), "cutover_manifest_invalid")
     require(all(role.digest_file(state/key) == value for key, value in manifest["files"].items()), "cutover_packet_changed")
     return json.loads((state/"snapshot.json").read_text())
@@ -320,7 +332,9 @@ def predecessor_config(reference, app, database):
     previous = load_packet(state, predecessor=True)
     require(role.digest_file(state/"manifest.json") == reference["manifest_sha256"], "predecessor_manifest_changed")
     require(original_hashes() == previous["originals"], "original_compose_or_env_changed")
-    require(backup.fingerprint(database) == backup.fingerprint(previous["baseline"]["database"]), "predecessor_database_drift")
+    # The predecessor baseline may predate a host reboot. Between this packet's
+    # own prepare and apply, verify_surroundings still requires the exact fingerprint.
+    require(restarted_database(database) == restarted_database(previous["baseline"]["database"]), "predecessor_database_drift")
     labels = app["Config"].get("Labels") or {}
     directions = {f"{state}/base.json,{state}/{direction}.json": direction for direction in ("forward", "rollback")}
     direction = directions.get(labels.get("com.docker.compose.project.config_files"))

@@ -36,6 +36,10 @@ mismatch. Recompute the context hash with
 from its raw Git blob. Bound decompression and validate Docker archive contents.
 After loading, verify the image ID, platform and OCI revision again, then run
 the existing image hygiene and private `prepare-existing`/dry-run checks.
+The VPS runs Docker 29 with the containerd image store, where the loaded image's
+local ID is the OCI manifest digest from the archive's `index.json`, not the
+config digest recorded in `metadata.json`. Verify that this manifest names the
+recorded config digest, then pass the local ID as `--candidate-image`.
 Only a separately reviewed app-only cutover can activate the resulting packet.
 
 The failed VPS build evidence remains private and unchanged. This workflow does

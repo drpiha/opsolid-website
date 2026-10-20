@@ -427,18 +427,48 @@ class ExistingRuntimeContracts(unittest.TestCase):
                 with self.assertRaisesRegex(cutover.backup.ProofError, "packet_changed"):
                     cutover.predecessor_config(reference, current, database)
 
-    def test_legacy_script_hash_is_accepted_only_for_exact_predecessor_not_apply(self):
+    def test_predecessor_database_may_only_have_restarted_since_its_baseline(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder).resolve()
-            state, _, _, _, _ = self.fixture(root)
-            self.manifest(state, cutover.LEGACY_SCRIPT_SHA256)
-            with patch.object(cutover.backup, "BASE", root), patch.object(cutover.backup, "secure_path"):
-                with self.assertRaisesRegex(cutover.backup.ProofError, "manifest_invalid"):
-                    cutover.load_packet(state, predecessor=True)
-                with patch.object(cutover, "LEGACY_STATE", state):
-                    self.assertIsInstance(cutover.load_packet(state, predecessor=True), dict)
+            state, reference, current, database, config_value = self.fixture(root)
+            restarted = copy.deepcopy(database)
+            restarted["State"]["StartedAt"] = "after-host-reboot"
+            restarted["NetworkSettings"]["Networks"]["opsolid-website_internal"].update(EndpointID="new", IPAddress="192.0.2.9", MacAddress="02:42:c0:00:02:09")
+            self.assertNotEqual(cutover.backup.fingerprint(restarted), cutover.backup.fingerprint(database))
+            with patch.object(cutover.backup, "BASE", root), patch.object(cutover.backup, "secure_path"), patch.object(cutover, "original_hashes", return_value={"source": "unchanged"}), patch.object(cutover, "run", return_value=json.dumps(config_value).encode()):
+                self.assertEqual(cutover.predecessor_config(reference, current, restarted), config_value)
+                for drift in ("id", "image", "environment", "host-config", "mount", "network", "extra-network"):
+                    changed = copy.deepcopy(restarted)
+                    networks = changed["NetworkSettings"]["Networks"]
+                    if drift == "id": changed["Id"] = "9"*64
+                    elif drift == "image": changed["Image"] = NEW
+                    elif drift == "environment": changed["Config"]["Env"].append("POSTGRES_PASSWORD=changed")
+                    elif drift == "host-config": changed["HostConfig"]["Privileged"] = True
+                    elif drift == "mount": changed["Mounts"][0]["Source"] = "/var/lib/elsewhere"
+                    elif drift == "network": networks["opsolid-website_internal"]["NetworkID"] = "other"
+                    else: networks["root_default"] = {"NetworkID": "default"}
+                    with self.subTest(drift=drift), self.assertRaisesRegex(cutover.backup.ProofError, "predecessor_database_drift"):
+                        cutover.predecessor_config(reference, current, changed)
+
+    def test_legacy_script_hash_is_accepted_only_for_exact_predecessor_not_apply(self):
+        self.assertEqual(sorted(path.name for path in cutover.LEGACY_PREDECESSORS), ["app-cutover-1a6a38b57fda46b6b8c39eac", "app-cutover-1f5ed7aa270c4db798cb19ce"])
+        self.assertTrue(all(path.parent == cutover.backup.BASE and re.fullmatch(r"[a-f0-9]{64}", digest) for path, digest in cutover.LEGACY_PREDECESSORS.items()))
+        digests = list(cutover.LEGACY_PREDECESSORS.values())
+        for legacy, other in (digests, digests[::-1]):
+            with self.subTest(legacy=legacy[:8]), tempfile.TemporaryDirectory() as folder:
+                root = Path(folder).resolve()
+                state, _, _, _, _ = self.fixture(root)
+                self.manifest(state, legacy)
+                with patch.object(cutover.backup, "BASE", root), patch.object(cutover.backup, "secure_path"):
                     with self.assertRaisesRegex(cutover.backup.ProofError, "manifest_invalid"):
-                        cutover.load_packet(state)
+                        cutover.load_packet(state, predecessor=True)
+                    # Each digest is bound to the packet its executable wrote, never to another.
+                    with patch.object(cutover, "LEGACY_PREDECESSORS", {state: other}), self.assertRaisesRegex(cutover.backup.ProofError, "manifest_invalid"):
+                        cutover.load_packet(state, predecessor=True)
+                    with patch.object(cutover, "LEGACY_PREDECESSORS", {state: legacy}):
+                        self.assertIsInstance(cutover.load_packet(state, predecessor=True), dict)
+                        with self.assertRaisesRegex(cutover.backup.ProofError, "manifest_invalid"):
+                            cutover.load_packet(state)
 
     def test_prepare_existing_and_post_rollback_next_release_preserve_existing_role_and_packets(self):
         with tempfile.TemporaryDirectory() as folder:
