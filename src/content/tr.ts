@@ -31,15 +31,21 @@ export const content: Content = {
         "Katma değer vergisi kimlik numarası (§ 27a UStG uyarınca USt-IdNr.): DE462227107",
       responsibleContent:
         "§ 18 Abs. 2 MStV'ye göre içerikten sorumlu kişi (Medienstaatsvertrag, eski § 55 RStV)",
-      disputeResolution: "Çevrimiçi Uyuşmazlık Çözümü",
+      disputeResolution: "Tüketici uyuşmazlıklarının çözümü",
       disputeResolutionText:
-        "Avrupa Komisyonu, çevrimiçi uyuşmazlık çözümü (ODR) için bir platform sunmaktadır: https://ec.europa.eu/consumers/odr/. E-posta adresimizi yukarıda bulabilirsiniz. Bir tüketici hakem heyeti önünde uyuşmazlık çözümü sürecine katılmaya istekli ve zorunlu değiliz.",
+        "Bir tüketici hakem kurulu önündeki uyuşmazlık çözüm süreçlerine katılmaya istekli ya da yükümlü değiliz (§ 36 VSBG).",
       liabilityContent: "İçerik Sorumluluğu",
       liabilityContentText:
         "Hizmet sağlayıcı olarak, bu sayfalardaki kendi içeriklerimizden genel yasalar çerçevesinde § 7 Abs. 1 DDG'ye göre sorumluyuz. Ancak §§ 8-10 DDG'ye göre, iletilen veya depolanan üçüncü taraf bilgilerini izlemekle yükümlü değiliz.",
       liabilityLinks: "Bağlantı Sorumluluğu",
       liabilityLinksText:
         "Web sitemiz, içerikleri üzerinde hiçbir etkimiz olmayan harici üçüncü taraf web sitelerine bağlantılar içermektedir. Bağlantı verilen sayfaların içeriğinden her zaman ilgili sağlayıcı veya işletmeci sorumludur.",
+      copyright: "Telif hakkı",
+      copyrightText: "Bu web sitesinde tarafımızca oluşturulan içerikler ve eserler Alman telif hukukuna tabidir. Telif hukukunun sınırları dışında çoğaltma, düzenleme ve dağıtım yazılı onayımıza bağlıdır. Üçüncü kişilere ait içerikler bu şekilde işaretlenmiştir. İhlalleri lütfen info@opsolid.de adresine bildirin.",
+      trademark: "Marka notu",
+      trademarkText: "OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur.",
+      product: "OpSo ürünü",
+      productText: "Dijital kartvizit “OpSo” (card.opsolid.de, opso.cc) için https://card.opsolid.de/imprint, /privacy ve /terms adreslerindeki yasal bildirim, gizlilik politikası ve kullanım koşulları geçerlidir.",
       address: "Tam posta adresi, Gewerbeanmeldung sonrası eklenecektir.",
     },
   },
@@ -48,154 +54,50 @@ export const content: Content = {
     title: "Gizlilik Politikası",
     subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
-      "Bu, OpSolid pazarlama sitesi ve OpSo Smart (Dijital Kartvizit) ürünü için GDPR (AB) ve KVKK (Türkiye) çerçevesinde hazırlanmış bir aydınlatma metnidir. Gewerbeanmeldung sonrası avukat onaylı nihai metin bu bildirimin yerini alacaktır. Son inceleme: Hasan Dönmez.",
-    lastUpdated: "Son güncelleme: Ekim 2026",
+      "Bağlayıcı Almanca metnin çevirisidir. Bu metin, opsolid.de’yi ziyaret ettiğinizde ve formlarını ile hesap alanlarını kullandığınızda kişisel verilerinizin işlenmesi hakkında GDPR m. 13–14 ve 6698 sayılı KVKK m. 10 uyarınca bilgi verir. OpSo uygulaması ve kart sayfaları için https://card.opsolid.de/privacy adresindeki ayrı metin geçerlidir. Metinler özenle hazırlanmıştır ancak bir avukat tarafından incelenmemiştir.",
+    lastUpdated: "Son güncelleme: 21 Ekim 2026",
     sections: [
       {
-        title: "1. Veri Koruma Özeti",
-        content:
-          "Aşağıda, bu web sitesini ziyaret ettiğinizde veya OpSo Smart ürününü kullandığınızda kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veri, sizi kişisel olarak tanımlayabilecek her türlü veridir. İki düzenleme paralel olarak uygulanır: AB Genel Veri Koruma Tüzüğü (GDPR / DSGVO) ve Türk Kişisel Verilerin Korunması Kanunu (KVKK, 6698 sayılı Kanun).",
-      },
-      {
-        title: "2. Sorumlu Taraf / Veri Sorumlusu",
+        title: "1. Veri sorumlusu",
         isResponsible: "true",
+        content: "Veri koruma görevlisi atanmamıştır.",
       },
       {
-        title: "3. Veri Toplama",
-        subsections: [
-          {
-            title: "İletişim Formu",
-            content:
-              "İletişim formu aracılığıyla gönderilen veriler (ad, e-posta adresi, isteğe bağlı şirket adı, seçilen konular ve mesaj) talebin işlenmesi ve takibi amacıyla saklanır. Hukuki dayanak: Sözleşmeye ilişkin talepler için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya açık rıza için GDPR Madde 6(1)(a). KVKK dayanağı: m.5(2)(c) (sözleşmenin ifası) veya m.5(1) açık rıza.",
-          },
-          {
-            title: "Sunucu Günlük Dosyaları",
-            content:
-              "Barındırma sağlayıcısı, tarayıcı türü, işletim sistemi, yönlendiren URL, ana bilgisayar adı, IP adresi (mümkün olduğunda kısaltılmış) ve istek zamanını otomatik olarak toplar. Saklama: 14 gün güvenlik ve kötüye kullanım analizi için, ardından silinir. Hukuki dayanak: GDPR m.6(1)(f) (operasyonel güvenlikte meşru menfaat).",
-          },
-        ],
+        title: "2. Barındırma ve sunucu günlükleri",
+        content: "Web sitesi, Hostinger International Ltd.’nin Vilnius (Litvanya, AB) sunucusunda (VPS) çalışır. Sayfa çağrıldığında sunucu teknik olarak IP adresi, tarih ve saat, istenen URL, durum kodu, veri hacmi, yönlendiren sayfa ve kullanıcı aracısını işler. Amaç: sunum, güvenlik, hata analizi. Hukuki sebep: GDPR m. 6/1-f; KVKK m. 5/2-f. Saklama: genellikle 14 gün. Hostinger ile GDPR m. 28 uyarınca bir veri işleme sözleşmesi vardır.",
       },
       {
-        title: "4. Barındırma",
-        content:
-          "Pazarlama sitesi, OpSo Smart ürününün backend'i ve Postgres veritabanı, tek bir kendi yönetimimizdeki Hostinger VPS (Hostinger International Ltd., AS47583) üzerinde çalışmaktadır. Sunucu fiziksel olarak Vilnius, Litvanya (AB) konumundadır. Sunucu hostname: srv1150632.hstgr.cloud. Tüm ziyaretçi trafiği, kart içerikleri, müşteri kayıtları ve veritabanı yedekleri AB toprağında kalır. Hostinger ile DPA (GDPR m.28 kapsamında AVV) dosyalanmıştır.",
+        title: "3. İletişim formu, e-posta ve yapay zekâ kontrolü talepleri",
+        content: "Bir form veya e-posta ile bize ulaştığınızda bilgilerinizi (ör. ad, e-posta, şirket, konular, mesaj) talebinizi yanıtlamak ve ek sorular sormak için işleriz. Hukuki sebep: GDPR m. 6/1-b (sözleşme öncesi adımlar/sözleşme; KVKK m. 5/2-c), aksi hâlde f (meşru menfaat; KVKK m. 5/2-f) veya rıza verdiyseniz a (KVKK m. 5/1). Saklama: talep sonuçlanana ve yasal saklama süreleri dolana kadar; sözleşmeyle sonuçlanmayan talepler en geç 24 ay sonra silinir. Bildirimler ve yanıtlar bir e-posta gönderim hizmeti (Brevo, Sendinblue SAS, Fransa) üzerinden gönderilir.",
       },
       {
-        title: "5. Çerezler ve Analitik",
-        subsections: [
-          {
-            title: "Gerekli ve kendi seçtiğiniz ayarlar",
-            content:
-              "Yalnızca teknik olarak gerekli olanları veya kendi seçtiklerinizi saklarız. Bunlar şunlardır: yalnızca dili kendiniz değiştirdiğinizde ayarlanan bir dil çerezi; alt bilgideki \"3D efektler\" anahtarının ayarı, yalnızca kullandığınızda tarayıcınızın localStorage alanına kaydedilir; hesap ve kart alanlarında ise giriş yaptıktan sonra bir oturum çerezi ile localStorage alanında tek tek görünüm ayarları ve form taslakları. Bu bilgiler yalnızca seçiminizi uygulamak veya hizmeti sunmak için kullanılır ve üçüncü taraflarla paylaşılmaz. TDDDG § 25(2) uyarınca onaya tabi değildir; bu nedenle bu web sitesi çerez bandı göstermez.",
-          },
-          {
-            title: "Analitik yok",
-            content:
-              "Bu web sitesi herhangi bir analiz veya izleme aracı kullanmaz: sayfa görüntüleme sayımı, ziyaretçi profili veya izleme çerezi yoktur.",
-          },
-          {
-            title: "Üçüncü taraf izleme, reklam veya sosyal eklenti yok",
-            content:
-              "Reklam çerezi, üçüncü taraf izleme pikseli, sosyal ağ eklentisi veya parmak izi (fingerprint) yoktur. Yazı tipleri kendi sunucularımızda barındırılır (Google Fonts CDN çağrısı yok).",
-          },
-        ],
+        title: "4. Müşteri hesabı ve oturum açılan alanlar",
+        content: "Giriş yaparsanız hesabı sunmak için iletişim bilgilerini, erişim bilgilerini (parolalar yalnızca özet olarak) ve oturum verilerini (oturum çerezi, kötüye kullanımı önlemek için özetlenmiş IP adresi) işleriz. Hukuki sebep: GDPR m. 6/1-b ve f; KVKK m. 5/2-c ve f. Saklama: hesap silinene kadar; fatura verileri HGB § 257, AO § 147 uyarınca 10 yıl.",
       },
       {
-        title: "6. Alt İşleyiciler / Sub-Processors",
-        content:
-          "Hizmeti sunmak için aşağıdaki alt işleyicileri kullanırız. Her biri için GDPR m.28 kapsamında AVV / DPA dosyalanmıştır. Güncel liste her zaman info@opsolid.de adresinden talep edilebilir.",
-        subsections: [
-          {
-            title: "Barındırma ve altyapı",
-            content:
-              "Hostinger International Ltd. (Litvanya, AB) — pazarlama sitesi, OpSo Smart uygulaması ve Postgres veritabanını Vilnius'taki tek bir VPS üzerinde barındırır. ABD'de barındırma alt işleyicisi yoktur.",
-          },
-          {
-            title: "E-posta gönderimi",
-            content:
-              "İletişim formu bildirimleri için SMTP relay. Sağlayıcı detayları talep üzerine; değiştiğinde güncellenir.",
-          },
-          {
-            title: "Ödemeler (OpSo Smart, planlanan)",
-            content:
-              "Tek seferlik ve abonelik faturalandırması için Stripe Payments Europe Ltd. (İrlanda). Kart bilgileri Stripe tarafından tokenize edilir; OpSolid ham PAN'ı görmez. AVV Stripe Services Agreement üzerinden. Stripe ABD'ye uluslararası aktarım DPF + SCC kapsamında.",
-          },
-          {
-            title: "AI sağlayıcılar (kullanıldığında)",
-            content:
-              "OpenAI Ireland Ltd. ve Anthropic Ireland Ltd. üretim özellikleri için API üzerinden kullanılabilir. AVV ve SCC mevcut; kullanıcı içeriği model eğitimi için kullanılmaz (API tarafında opt-out aktif).",
-          },
-        ],
+        title: "5. Çerezler, yerel depolama ve cihaz erişimi (TDDDG § 25)",
+        content: "Analiz, reklam veya izleme çerezi kullanmayız. Yalnızca teknik olarak gerekli veya sizin seçtiğiniz ayarlar saklanır: dil çerezi (yalnızca dili siz değiştirirseniz), “Arka plan videosu” ayarı ve form taslakları tarayıcınızın yerel depolamasında, giriş sonrası ise bir oturum çerezi. Bu, TDDDG § 25/2 uyarınca rıza gerektirmez; bu yüzden çerez bandı yoktur. Yazı tipleri, videoları ve betikleri kendimiz sunarız; Google Fonts yüklenmez.",
       },
       {
-        title: "7. Uluslararası Veri Aktarımı",
-        content:
-          "Kişisel veriler Avrupa Ekonomik Alanı dışına aktarıldığında (örn. ABD'deki Stripe, OpenAI veya Anthropic), aktarım (a) alıcı DPF sertifikalı ise AB-ABD Veri Gizliliği Çerçevesi yeterlilik kararına, ya da (b) Standart Sözleşme Hükümleri (SCC, AB 2021/914) ile dökümante edilmiş Transfer Etki Değerlendirmesine dayanır. Türkiye'de yerleşik veri sahipleri için ek olarak KVKK m.9 yurtdışı aktarım kuralları uygulanır: aktarımlar KVKK standart sözleşmesi (10.07.2024 Yönetmeliği) kapsamında yapılır ve gerektiğinde 5 iş günü içinde Kurum'a bildirilir.",
+        title: "6. Yapay zekâ hizmetleri",
+        content: "Yapay zekâ destekli bir işlevi kullanırsanız girdiğiniz içerik ilgili API sağlayıcısına (OpenAI Ireland Ltd. veya Anthropic Ireland, Limited) iletilir. API ayarlarımıza göre kullanıcı içerikleri eğitim için kullanılmaz. Hukuki sebep: GDPR m. 6/1-b; KVKK m. 5/2-c; yurt dışı aktarımlar standart sözleşme hükümleri veya DPF’ye dayanır.",
       },
       {
-        title: "8. OpSo Smart Dijital Kartvizit Ürünü",
-        subsections: [
-          {
-            title: "Amaç ve hukuki dayanak",
-            content:
-              "OpSo Smart lead formu veya self-servis sipariş akışı üzerinden gönderdiğiniz verileri (ad, iş e-postası, şirket, ünvan, telefon (opsiyonel), mesaj, foto/logo upload, marka renkleri, sosyal linkler) hizmetin sunulması için işleriz. Hukuki dayanak: GDPR m.6(1)(b) (sözleşme ifası) ve GDPR m.6(1)(a) (kamuya yayın için açık rızanız).",
-          },
-          {
-            title: "Kartınızın kamuya yayınlanması",
-            content:
-              "Bir OpSo Smart kartını /c/{slug} altında yayınladığınızda, girdiğiniz bilgiler internette kamuya açık hale gelir. Bunun için yayın adımında ayrı, açık opt-in onayınız gereklidir. Kartı istediğiniz zaman hesabınızdan yayından kaldırabilir veya silebilirsiniz; bu durumda noindex header eklenir ve büyük arama motorlarından URL kaldırma talebi yapılır.",
-          },
-          {
-            title: "Üçüncü kişi içeriği",
-            content:
-              "Yüklediğiniz fotoğraf, logo veya diğer içeriklerin tüm haklarına sahip olduğunuzdan yalnız siz sorumlusunuz. Yükleyerek bu hakların sizde olduğunu beyan edersiniz. Notice-and-takedown talepleri info@opsolid.de adresine gönderilebilir; 7 gün içinde yanıtlarız.",
-          },
-          {
-            title: "Barındırma",
-            content:
-              "Kart ve müşteri verileri Hostinger VPS (Litvanya, AB) üzerinde saklanır. OpSo Smart kart içerikleri için ABD alt işleyici yoktur; ödeme verileri yukarıda belirtilen ayrı sub-processor şartları altında Stripe tarafından işlenir.",
-          },
-          {
-            title: "14 günlük cayma hakkı (B2C)",
-            content:
-              "OpSo Smart'ı tüketici olarak (B2C, AB/AEA) sipariş ederseniz, § 355 BGB uyarınca 14 günlük cayma hakkına sahipsiniz. Dijital hizmetin 14 gün dolmadan başlaması için, derhal ifa talep ettiğinizi ve tam ifa halinde cayma hakkınızın sona ereceğini ayrı checkbox'larla onaylamanız gerekir. Onaylarınızı ispat amacıyla loglanır. 19 Haziran 2026'dan itibaren tek tıkla cayma butonu sunulur.",
-          },
-          {
-            title: "Saklama süresi",
-            content:
-              "Aktif OpSo Smart kartları: abonelik aktif olduğu sürece saklanır. İptal / inaktif: abonelik bitiminden 90 gün sonra silinir (60. günde hatırlatma e-postası). Lead form gönderimleri (satın alma yok): 24 ay. Faturalar: § 257 HGB / Vergi Usul Kanunu uyarınca 10 yıl saklanır (yasal yükümlülük).",
-          },
-          {
-            title: "Pazarlama e-postaları (rıza / çift onay)",
-            content:
-              "Pazarlama e-postalarını (OpSo Smart hakkında ürün haberleri ve teklifler) yalnızca önceden alınmış açık rızanızla göndeririz (§ 7 UWG, GDPR m.6(1)(a)). Rıza, hesap oluşturmadan ayrı olarak önceden işaretlenmemiş bir kutucukla verilir ve bir onay e-postası aracılığıyla çift onay (double opt-in) ile doğrulanır; pazarlama e-postası yalnızca siz onayladıktan sonra gönderilir. İspat için tam rıza metnini, zaman damgasını ve hashlenmiş (asla açık metin olarak saklanmayan) bir IP adresini loglanır. Rızanızı her e-postadaki abonelikten çıkma bağlantısıyla veya info@opsolid.de adresine yazarak istediğiniz zaman ileriye dönük olarak geri çekebilirsiniz. Geri çekme, o ana kadar yapılan işlemenin hukuka uygunluğunu etkilemez.",
-          },
-          {
-            title: "Silme hakkı",
-            content:
-              "OpSo Smart kartınızı ve ilgili tüm kişisel verileri hesabınız içinden tek tıklamayla veya info@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır. Yıkıcı işlemler öncesi kimlik doğrulama (e-posta onayı + aktif ise 2FA) gereklidir.",
-          },
-        ],
+        title: "7. Alıcılar ve yurt dışına aktarım",
+        content: "Hostinger (barındırma), e-posta gönderim hizmeti ve yukarıda açıklandığı ölçüde yapay zekâ sağlayıcıları ile yasal zorunluluk hâlinde makamlar. AEA dışına aktarımlarda: yeterlilik kararı (AB-ABD Veri Gizliliği Çerçevesi), aksi hâlde AB standart sözleşme hükümleri (GDPR m. 46); KVKK m. 9 kapsamında açık rıza veya uygun güvenceler.",
       },
       {
-        title: "9. Haklarınız (GDPR)",
-        content:
-          "GDPR m.15-22 uyarınca: erişim (m.15), düzeltme (m.16), silme (m.17), kısıtlama (m.18), veri taşınabilirliği (m.20) ve işlemeye itiraz (m.21) hakkına sahipsiniz. Verdiğiniz onayı önceki işlemeyi etkilemeden istediğiniz zaman geri çekebilirsiniz. Haklarınızı kullanmak için: info@opsolid.de — bir ay içinde yanıtlarız (m.12(3)). Mutaden bulunduğunuz yer ya da iddia edilen ihlalin yerindeki denetim otoritesine de şikayette bulunabilirsiniz.",
+        title: "8. Haklarınız",
+        content: "Erişim (GDPR m. 15), düzeltme (16), silme (17), kısıtlama (18), taşınabilirlik (20), meşru menfaate dayalı işlemeye itiraz (21), rızanın ileriye dönük geri çekilmesi (7/3) ve denetim otoritesine şikâyet (77). Yetkili otorite: Kuzey Ren-Vestfalya Eyaleti Veri Koruma ve Bilgi Özgürlüğü Komiserliği, Kavalleriestraße 2–4, 40213 Düsseldorf (ldi.nrw.de). Türkiye’deki ilgili kişiler ayrıca Kişisel Verileri Koruma Kurulu’na başvurabilir.",
+        subsections: [{ title: "KVKK m. 11 haklarınız", content: "Verinin işlenip işlenmediğini öğrenme; bilgi talep etme; amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme; aktarıldığı üçüncü kişileri bilme; eksik/yanlış işlenmişse düzeltilmesini isteme; KVKK m. 7 kapsamında silinmesini veya yok edilmesini isteme ve üçüncü kişilere bildirilmesini isteme; otomatik analiz sonucu aleyhe çıkan sonuca itiraz; kanuna aykırı işleme nedeniyle zararın giderilmesini isteme. Başvuru: info@opsolid.de adresine yazılı (e-posta) olarak; en geç otuz gün içinde sonuçlandırılır." }],
       },
       {
-        title: "10. Haklarınız (KVKK Madde 11) — Türkiye'de yerleşik veri sahipleri için",
-        content:
-          "6698 sayılı KVKK m.11 uyarınca: kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işleme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içi/yurt dışında aktarıldığı üçüncü kişileri bilme, eksik/yanlış işlenmişse düzeltilmesini isteme, KVKK m.7'deki şartlarda silinmesini/yok edilmesini isteme, otomatik sistemlerle yapılan analiz sonucu aleyhinize bir sonuç çıkmasına itiraz etme, kanuna aykırı işleme nedeniyle uğradığınız zararın giderilmesini talep etme. Başvuru: info@opsolid.de. KVKK 2026/347 ilke kararı uyarınca aydınlatma metni (bu sayfa) ile açık rıza beyanı ayrı belgelerdir; rıza onayı ürün akışında ayrıca alınır.",
+        title: "9. Veri sağlama zorunluluğu, otomatik karar",
+        content: "Form bilgileri isteğe bağlıdır; ancak gerekli bilgiler olmadan talebinizi işleyemeyiz. GDPR m. 22 anlamında otomatik karar verme yapılmaz.",
       },
       {
-        title: "11. Veri İhlali Bildirimi",
-        content:
-          "Bir kişisel veri ihlali, hak ve özgürlükleriniz için risk doğurabilecekse, ihlali öğrendiğimiz andan itibaren 72 saat içinde yetkili denetim otoritesine bildiririz (GDPR m.33). Yüksek riskli ihlaller etkilenen kişilere de gecikmeksizin bildirilir (GDPR m.34). KVKK kapsamında ayrıca Kurum'a ve etkilenen kişilere mümkün olan en kısa sürede bildirim yaparız (KVKK Kurul kararları).",
-      },
-      {
-        title: "12. Bu Politikadaki Değişiklikler",
-        content:
-          "Yasal değişiklikleri veya işleme uygulamalarımızdaki değişiklikleri yansıtmak için bu politikayı güncelleyebiliriz. Önemli değişiklikler bu sayfada ve hesabınız varsa en az 30 gün önceden e-postayla duyurulur.",
+        title: "10. Değişiklikler",
+        content: "Web sitesi, hizmet sağlayıcılar veya mevzuat değiştiğinde bu metni güncelleriz; yayımlandığı andaki sürüm geçerlidir.",
       },
     ],
   },

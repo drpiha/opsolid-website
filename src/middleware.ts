@@ -24,7 +24,7 @@ function sentryOrigin(dsn: string | undefined): string {
 /**
  * Enforced CSP for the v4 marketing documents. The production string (no DSN)
  * is the policy that was tested in a browser on every marketing template with
- * 0 violations, the 3D stage included (same-origin chunks and textures only).
+ * 0 violations; the hero video, its posters and fonts are same-origin files.
  * App surfaces keep the report-only policy from next.config.mjs. `next dev`
  * also needs 'unsafe-eval' (webpack eval source maps); a Sentry DSN adds its
  * ingest origin. No nonces: inline scripts stay allowed until the Next upgrade.

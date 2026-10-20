@@ -2,7 +2,7 @@
 
 Website and app surfaces for OpSolid: speaking AI agents, websites and
 automation for small and mid-sized businesses (Arnsberg, Germany).
-Contributor rules (voice, honesty, art direction, 3D-stage guardrails) are in
+Contributor rules (voice, honesty, art direction, hero-scene guardrails) are in
 [`CLAUDE.md`](./CLAUDE.md); read it before changing marketing pages.
 
 ## Tech Stack
@@ -11,8 +11,9 @@ Contributor rules (voice, honesty, art direction, 3D-stage guardrails) are in
 - **Language:** TypeScript
 - **Styling:** `src/styles/opsolid-v4.css` (marketing, v4) and Tailwind CSS
   with `src/styles/legacy.css` (app surfaces)
-- **3D stage (marketing):** three.js + GSAP ScrollTrigger, loaded on first
-  user intent; static SVG poster before that
+- **Hero scene (marketing):** self-hosted background video (poster first,
+  video after load and idle, pausable, off under reduced motion) with a tap
+  layer; the video is rendered in-house with three.js (`scripts/hero-video/`)
 - **Animations (app surfaces):** Framer Motion; marketing uses only the small
   `Reveal` observer
 - **Icons:** Lucide React
@@ -59,9 +60,9 @@ src/
 │   ├── admin/ voice/ c/ l/      # admin, voice agent console, public cards, short links
 │   └── api/                     # contact, geo, health, auth, cards, orders, webhooks/{cal,stripe}, …
 ├── components/
-│   ├── v4/                      # marketing system: PageRenderer, Stage, AgentDemo, Reveal,
+│   ├── v4/                      # marketing system: PageRenderer, HeroScene, AgentDemo, Reveal,
 │   │                            # ContactForm4, JsonLd, make-page, FxToggle, V4Sync, ContentGate
-│   ├── layout/                  # Header (language switch, nav), Footer ("3D-Effekte" switch)
+│   ├── layout/                  # Header (language switch, nav), Footer ("Hintergrundvideo" switch)
 │   ├── shared/                  # LocaleLink, Icon
 │   ├── sections/                # FaqAccordion, FinalCTA, PricingTable (OpSo order flow only)
 │   ├── ui/                      # Button, Card, Badge, Input (CVA, app surfaces)

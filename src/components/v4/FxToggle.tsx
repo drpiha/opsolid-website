@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
-import { FX_EVENT, FX_STORAGE_KEY } from "@/components/v4/Stage";
+import { FX_EVENT, FX_STORAGE_KEY } from "@/components/v4/motion";
 
 const T = {
-  de: { label: "3D-Effekte", on: "An", off: "Aus", sys: "Aus (Systemeinstellung: weniger Bewegung)" },
-  en: { label: "3D effects", on: "On", off: "Off", sys: "Off (system setting: reduced motion)" },
-  tr: { label: "3D efektler", on: "Açık", off: "Kapalı", sys: "Kapalı (sistem ayarı: az hareket)" },
+  de: { label: "Hintergrundvideo", on: "An", off: "Aus", sys: "Aus (Systemeinstellung: weniger Bewegung)" },
+  en: { label: "Background video", on: "On", off: "Off", sys: "Off (system setting: reduced motion)" },
+  tr: { label: "Arka plan videosu", on: "Açık", off: "Kapalı", sys: "Kapalı (sistem ayarı: az hareket)" },
 } as const;
 
 export function FxToggle() {

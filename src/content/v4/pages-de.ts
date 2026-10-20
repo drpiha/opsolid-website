@@ -25,7 +25,7 @@ const DEMO = {
 
 /** Real screenshots of our own work (public/img/v4), shown next to the project rows. */
 const SHOT = {
-  opsolid: { src: "/img/v4/shot-opsolid.webp", w: 960, h: 640, alt: "Startseite von opsolid.de: die Überschrift „Erst messen, dann bauen.“ neben einem Stapel aus sieben Platten, eine je Leistung" },
+  opsolid: { src: "/img/v4/shot-opsolid.webp", w: 960, h: 640, alt: "Startseite von opsolid.de: die Überschrift „Weniger Routine. Mehr Zeit für Ihre Kunden.“ vor einer hellen Szene aus sieben Glasplatten, eine je Leistung" },
   opso: { src: "/img/v4/shot-card.webp", w: 960, h: 640, alt: "Startseite von OpSo: „Deine Visitenkarte als Mini-Website.“ neben einem Smartphone mit einem fiktiven Demoprofil, QR-Code und Hinweisen auf NFC und Link" },
   kutasia: { src: "/img/v4/shot-kutasia.webp", w: 960, h: 640, alt: "Startseite von Kutasia in der türkischen Fassung: Überschrift zu Kundenkommunikation und Terminen auf einem Bildschirm, daneben eine Dashboard-Ansicht mit Nachrichten und Wochenstatistik" },
 };
@@ -36,81 +36,87 @@ export const de: Record<PageKey, PageDef> = {
     meta: {
       title: "OpSolid | KI-Agenten, Websites und Automatisierung",
       description:
-        "KI-Agenten, Websites und Automatisierung für den Mittelstand: Erst messen, dann bauen, dann dokumentiert übergeben. Auf Deutsch, Englisch und Türkisch.",
+        "Weniger Routine, mehr Zeit für Kunden: OpSolid baut KI-Agenten für Telefon und Chat, Websites im Abo und Automatisierungen für kleine und mittlere Betriebe.",
     },
     crumb: "Start",
     hero: {
-      eyebrow: "Automatisierung und KI für den Mittelstand · Arnsberg · DE/EN/TR",
-      h1: ["Erst messen, ", "dann bauen", "."],
-      lede: "OpSolid nimmt Ihrem Team Routine ab: mit KI-Agenten am Telefon, Abläufen ohne Copy-Paste und Websites, die nach Ihnen aussehen. Vor dem Bauen messen wir, was ein Ablauf heute kostet; am Ende übergeben wir dokumentiert an Ihr Team.",
-      primary: CHECK,
-      secondary: { label: "KI-Agenten ansehen", href: "/agents" },
-      scene: "stack",
+      eyebrow: "KI-Agenten · Websites · Automatisierung",
+      h1: ["Weniger Routine. ", "Mehr Zeit", " für Ihre Kunden."],
+      lede: "KI-Agenten beantworten Anrufe und Chats, Abläufe laufen ohne Copy-Paste, und Ihre Website bringt Anfragen statt Pflegeaufwand. OpSolid baut das für kleine und mittlere Betriebe, misst vorher und nachher und übergibt dokumentiert.",
+      primary: { label: "KI-Check starten", href: "/ai-automation-check" },
+      secondary: { label: "Leistungen ansehen", href: "#leistungen" },
     },
     blocks: [
       {
+        t: "rows",
+        id: "leistungen",
+        eyebrow: "Leistungen",
+        h: "Acht Wege zu weniger Handarbeit.",
+        lede: "Jede Leistung löst ein konkretes Problem im Alltag Ihres Betriebs. Wählen Sie, was Sie heute am meisten Zeit kostet.",
+        items: [
+          { h: "KI-Agenten", p: "Anrufe und Chats beantwortet, auch wenn Ihr Team im Termin ist.", href: "/agents" },
+          { h: "Websites", p: "Schnell, klar, gepflegt. Im Abo ab 99 € im Monat.", href: "/websites" },
+          { h: "Prozessautomatisierung", p: "Daten nur noch einmal eintippen. Der Rest läuft automatisch.", href: "/prozessautomatisierung" },
+          { h: "Microsoft 365", p: "Mehr aus den Lizenzen, die Sie schon bezahlen.", href: "/microsoft-365-automatisierung" },
+          { h: "Interne Tools", p: "Aus der Excel-Liste wird ein Werkzeug mit Rechten und Verlauf.", href: "/interne-tools" },
+          { h: "KI-Check", p: "In 90 Minuten klar, was sich lohnt. Ab 490 €.", href: "/ai-automation-check" },
+          { h: "KI-Schulungen", p: "Ihr Team arbeitet sicher mit KI, geübt an echten Aufgaben.", href: "/ki-schulungen" },
+          { h: "OpSo", tag: "Testphase", p: "Die digitale Visitenkarte: ein Link, NFC und QR, immer aktuell.", href: "/opso" },
+        ],
+        cta: { label: "Alle Leistungen im Überblick", href: "/leistungen" },
+      },
+      {
         t: "demo",
         id: "agents",
-        scene: "agents",
-        heat: [0],
-        eyebrow: "KI-Agenten für Telefon und Website",
-        h: "Anrufe annehmen, während Ihr Team arbeitet.",
-        lede: "Ein KI-Agent nimmt Anfragen an, stimmt Termine ab und gibt Auskunft zu Ihrem Betrieb. Die Stimme ist nur die Oberfläche: Dahinter arbeitet der Agent mit Ihrem Kalender, Ihrem CRM und Ihren Regeln, und sobald ein Mensch gefragt ist, übergibt er.",
+        eyebrow: "KI-Agenten für Telefon und Chat",
+        h: "Kein Anruf bleibt mehr liegen.",
+        lede: "Ein KI-Agent nimmt Anfragen an, stimmt Termine ab und gibt Auskunft, auf Basis Ihrer eigenen Unterlagen. Sobald ein Mensch gefragt ist, übergibt er an Ihr Team. Anrufer erfahren zu Beginn, dass ein KI-System spricht.",
         ...DEMO,
         cta: { label: "Mehr zu KI-Agenten", href: "/agents" },
       },
       {
-        t: "rows",
+        t: "offer",
         id: "websites",
-        scene: "websites",
-        heat: [1],
-        eyebrow: "Websites zum Kauf oder im Abo",
-        h: "Gestaltet für Sie, nicht aus der Vorlage.",
-        lede: "Wir gestalten, bauen und betreiben Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Das Website-Abo gibt es ab 99 € im Monat; den Kaufpreis nennen wir nach dem ersten Gespräch schriftlich.",
-        items: [
-          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben: drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten." },
-          { h: "Kauf", p: "Einmaliger Projektpreis. Die fertige Website gehört Ihnen, und Sie führen sie selbst weiter." },
-          { h: "Website-Abo", p: "Fester Monats- oder Jahresbetrag statt einmaliger Investition. Hosting, Pflege und Updates übernehmen wir." },
-        ],
+        eyebrow: "Websites im Abo",
+        h: "Eine Website, die Anfragen bringt.",
+        lede: "Wir gestalten, bauen und betreiben Ihre Website: schnell, gut lesbar, für Ihren Betrieb entworfen statt aus der Vorlage. Hosting, Pflege und Updates übernehmen wir.",
+        label: "Website-Abo",
+        amount: "ab 99 €",
+        unit: "im Monat",
+        sub: "oder 990 € im Jahr · Einrichtung ab 490 €",
+        items: ["Hosting, Pflege und Updates inklusive", "1 kleine Änderung pro Monat, erledigt in 5 Werktagen", "Kauf der Website auf Anfrage"],
+        note: PRICE_NOTE,
+        shot: SHOT.opsolid,
         cta: { label: "Mehr zu Websites", href: "/websites" },
       },
       {
-        t: "rows",
+        t: "compare",
         id: "automatisierung",
-        scene: "flow",
-        heat: [2, 3, 4],
-        eyebrow: "Prozessautomatisierung und Microsoft 365",
-        h: "Abläufe ohne Copy-Paste.",
-        lede: "Wir automatisieren, was heute von Hand zwischen Postfach, Excel, CRM und ERP wandert. Was nur ein Mensch entscheiden kann, bleibt bei Ihrem Team.",
-        items: [
-          { h: "Prozessautomatisierung", p: "Angebote, Reports und Datenabgleich werden einmal eingerichtet und laufen danach automatisch, statt jede Woche neu von Hand.", href: "/prozessautomatisierung" },
-          { h: "Microsoft 365", p: "Freigaben in Teams, Dokumente aus SharePoint, Mails aus Outlook direkt ins richtige System, oft ohne neues Abo.", href: "/microsoft-365-automatisierung" },
-          { h: "Interne Tools", p: "Aus der Excel-Liste, die mehrere Personen pflegen, wird ein Werkzeug mit Rechten und Verlauf.", href: "/interne-tools" },
-          { h: "KI-Beratung", p: "Schriftlich bewertet: wo sich KI in Ihrem Unternehmen rechnet und wo nicht.", href: "/ki-beratung" },
-        ],
+        eyebrow: "Prozessautomatisierung · Microsoft 365 · Interne Tools",
+        h: "Daten nur noch einmal eintippen.",
+        lede: "Was heute von Hand zwischen Postfach, Excel, CRM und ERP wandert, läuft danach automatisch. Was nur ein Mensch entscheiden kann, bleibt bei Ihrem Team.",
+        before: { h: "Heute", items: ["Anfrage kommt per Mail", "Daten in die Excel-Liste kopieren", "Noch einmal ins CRM tippen", "Angebot von Hand zusammenstellen", "Stand per Rundmail erfragen"] },
+        after: { h: "Danach", items: ["Anfrage kommt per Mail", "Daten landen geprüft im CRM", "Angebotsentwurf liegt bereit", "Ihr Team prüft und gibt frei", "Jeder sieht den Stand in Teams"] },
+        cta: { label: "Mehr zur Prozessautomatisierung", href: "/prozessautomatisierung" },
       },
       {
         t: "rows",
-        eyebrow: "Warum OpSolid",
+        eyebrow: "Was sich ändert",
         h: "Was sich in Ihrem Betrieb ändert.",
-        lede: "Weniger Routine, weniger Fehler, schnellere Antworten. Damit das kein Versprechen bleibt, messen wir vor jedem Pilotprojekt, was der Ablauf heute kostet: Zeit pro Vorgang, Durchlaufzeit, Fehler. Nach dem Pilotprojekt messen wir dasselbe noch einmal.",
+        lede: "Damit das kein Versprechen bleibt, messen wir vor jedem Pilotprojekt, was der Ablauf heute kostet: Zeit pro Vorgang, Durchlaufzeit, Fehler. Danach messen wir dasselbe noch einmal.",
         items: [
-          { h: "Weniger Routinearbeit", p: "Copy-Paste, Doppelerfassung und der wöchentliche Report laufen automatisch. Ihr Team gewinnt Zeit für Kunden und Entscheidungen." },
-          { h: "Weniger Fehler", p: "Daten werden einmal erfasst und sauber weitergegeben. Jeder Ablauf hat ein Protokoll, eine Fehlerbehandlung und einen manuellen Rückfall." },
+          { h: "Weniger Routine", p: "Copy-Paste, Doppelerfassung und der wöchentliche Report laufen automatisch. Ihr Team gewinnt Zeit für Kunden." },
+          { h: "Weniger Fehler", p: "Daten werden einmal erfasst und sauber weitergegeben. Jeder Ablauf hat Protokoll, Fehlerbehandlung und manuellen Rückfall." },
           { h: "Schnellere Antworten", p: "Anfragen werden vorsortiert, beantwortet oder direkt an die zuständige Person geleitet." },
-          { h: "Prozesse, die jeder nachlesen kann", p: "Wir schreiben den Ablauf auf, bevor wir ihn automatisieren. Danach ist sichtbar, wer was wann erledigt, und das Wissen hängt nicht an einer Person." },
-          { h: "Ohne Abhängigkeit von uns", p: "Bei Automatisierungen und internen Tools übergeben wir Quellcode und Dokumentation. Ihre IT oder ein anderer Dienstleister kann jederzeit übernehmen." },
-          { h: "Auf Deutsch, Englisch und Türkisch", p: "Workshops, Dokumentation und Schulungen in der Sprache Ihres Teams, für Unternehmen in Deutschland, in Europa und in der Türkei." },
+          { h: "Keine Abhängigkeit", p: "Bei Automatisierungen und internen Tools gehören Quellcode und Dokumentation Ihnen. Ihre IT kann jederzeit übernehmen." },
         ],
       },
       {
         t: "spec",
         id: "ki-check",
-        scene: "steps",
-        heat: [5, 6],
         eyebrow: "Der Einstieg: KI-Check",
         h: "Ein Plan, bevor Budget fließt.",
-        lede: "Der KI-Check zeigt, welche Abläufe sich bei Ihnen automatisieren lassen und welche nicht. Der Einstieg: 90 Minuten remote mit den Menschen, die die Arbeit machen, danach ein kurzer schriftlicher Bericht. Für einen erweiterten Umfang mit Prozesskarte und 30-Tage-Plan nennen wir den Festpreis vorab schriftlich.",
+        lede: "Der KI-Check zeigt, welche Abläufe sich bei Ihnen automatisieren lassen und welche nicht: 90 Minuten remote mit den Menschen, die die Arbeit machen, danach ein kurzer schriftlicher Bericht.",
         rows: [
           ["Einstieg", "90 Minuten remote, kurzer schriftlicher Bericht"],
           ["Erweitert", "Workshop, Prozesskarte, fünf bewertete Kandidaten, 30-Tage-Plan"],
@@ -121,49 +127,41 @@ export const de: Record<PageKey, PageDef> = {
       },
       {
         t: "table",
-        eyebrow: "Einstieg und Schulungen",
-        h: "Feste Formate, klare Preise.",
-        caption: "KI-Check und KI-Schulungen im Überblick",
+        id: "preise",
+        eyebrow: "Feste Formate, klare Preise",
+        h: "Was der Einstieg kostet.",
+        caption: "KI-Check, KI-Schulungen und Website-Abo im Überblick",
         cols: ["Angebot", "Format", "Preis"],
         rows: [
           ["KI-Check", "90 Minuten remote, kurzer schriftlicher Bericht", "ab 490 €"],
           ["KI-Kompetenz Basis", "Halber Tag, bis 15 Personen", "1.490 €"],
           ["Copilot-Praxistag", "1 Tag, bis 12 Personen", "ab 2.400 €"],
+          ["Website-Abo", "Hosting, Pflege, Updates, 1 kleine Änderung im Monat", "ab 99 € / Monat"],
         ],
         note: `${PRICE_NOTE} ${PILOT_NOTE}`,
-        cta: { label: "Formate im Detail", href: "/ki-schulungen" },
+        cta: { label: "Schulungen im Detail", href: "/ki-schulungen" },
       },
       {
         t: "rows",
         id: "produkte",
-        scene: "cards",
         eyebrow: "Eigene Projekte",
         h: "Woran wir selbst bauen.",
-        lede: "OpSolid entwickelt auch eigene Anwendungen. Sie zeigen, wie wir arbeiten: Gestaltung, Technik und Datenschutz im selben Projekt, ohne Übergaben zwischen Dienstleistern.",
+        lede: "Eigene Anwendungen zeigen, wie wir arbeiten: Gestaltung, Technik und Datenschutz im selben Projekt.",
         items: [
-          { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte mit NFC und QR: ein Link, immer aktuell, ohne App beim Empfänger. Dashboard, Onboarding und Admin-Konsole hat OpSolid selbst entwickelt; die Veröffentlichung wird vorbereitet.", href: "/opso" },
-          { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Kundennachrichten aus WhatsApp, Telegram und E-Mail in einem Posteingang, von einer KI vorsortiert.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben. Der Text steht zuerst, das Hintergrundvideo lässt sich anhalten und abschalten.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte mit NFC und QR: ein Link, immer aktuell, ohne App beim Empfänger.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Kundennachrichten aus WhatsApp, Telegram und E-Mail in einem Posteingang, von einer KI vorsortiert.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
-      },
-      {
-        t: "text",
-        id: "ueber-uns",
-        scene: "offset",
-        eyebrow: "Über OpSolid",
-        h: "Aus IT-Projekten im laufenden Betrieb.",
-        lede: "Gegründet wurde OpSolid von Hasan Dönmez in Arnsberg. Die Erfahrung dahinter stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung in Unternehmen. Daher die feste Reihenfolge: erst der Ablauf, dann die Technik.",
-        paras: ["OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu."],
-        cta: { label: "Mehr über OpSolid", href: "/ueber-uns" },
       },
     ],
     faq: {
       h: "Häufige Fragen",
       items: [
-        { q: "Wer ist unsere Ansprechperson?", a: "Sie haben eine feste Ansprechperson bei OpSolid, von der Analyse bis zum Betrieb. Die Schulung KI-Kompetenz Basis leitet eine freiberufliche Fachkraft, die wir auswählen und Ihnen vorab namentlich nennen." },
-        { q: "Wie viel Zeit muss unser Team einplanen?", a: "Für den KI-Check: ein kurzes Vorgespräch und 90 Minuten Analyse mit den Menschen, die die Arbeit machen. Beim erweiterten Umfang kommen Workshop und 30 Minuten Besprechung des Plans hinzu; den Zeitbedarf nennen wir vorab im Angebot." },
-        { q: "Wird vorab eine Vertraulichkeitsvereinbarung geschlossen?", a: "Ja. Vor dem Analysegespräch wird eine Standard-NDA unterzeichnet." },
+        { q: "Ersetzt ein KI-Agent unser Team?", a: "Nein. Er nimmt Routine ab und übergibt, sobald eine Person gefragt ist." },
         { q: "Können wir unsere bestehenden Systeme behalten?", a: "Ja. Wo Microsoft 365, Google Workspace, Ihr CRM oder ERP den Ablauf tragen, bauen wir darauf auf." },
-        { q: "In welchen Sprachen arbeiten Sie?", a: "Auf Deutsch, Englisch und Türkisch. Wir arbeiten von Arnsberg aus und remote für Unternehmen in ganz Europa und in der Türkei." },
+        { q: "Wie viel Zeit muss unser Team einplanen?", a: "Für den KI-Check: ein kurzes Vorgespräch und 90 Minuten Analyse mit den Menschen, die die Arbeit machen. Beim erweiterten Umfang kommen Workshop und 30 Minuten Besprechung des Plans hinzu." },
+        { q: "Wird vorab eine Vertraulichkeitsvereinbarung geschlossen?", a: "Ja. Vor dem Analysegespräch wird eine Standard-NDA unterzeichnet." },
+        { q: "Wer ist unsere Ansprechperson?", a: "Sie haben eine feste Ansprechperson bei OpSolid, von der Analyse bis zum Betrieb. Die Schulung KI-Kompetenz Basis leitet eine freiberufliche Fachkraft, die wir auswählen und Ihnen vorab namentlich nennen." },
       ],
     },
     cta: {
@@ -189,8 +187,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Ein KI-Agent nimmt Anfragen an, stimmt Termine ab und beantwortet Fragen zu Ihrem Betrieb, auf Basis Ihrer eigenen Unterlagen. Was Urteilskraft braucht, übergibt er an Ihr Team. So bleiben weniger Anrufe liegen, und Ihr Team wird seltener unterbrochen.",
       primary: CHECK,
       secondary: { label: "Szenario ansehen", href: "#demo" },
-      scene: "agents",
-      heat: [0],
       spec: [
         ["Formate", "Telefon- und Chat-Assistent"],
         ["Aufgaben", "Anfragen, Termine, Auskünfte, Übergabe"],
@@ -201,15 +197,11 @@ export const de: Record<PageKey, PageDef> = {
       {
         t: "demo",
         id: "demo",
-        scene: "agents",
-        heat: [0],
         h: "So läuft ein Anruf ab.",
         lede: "Ein Terminwunsch vom ersten Satz bis zur Bestätigung: Der Agent sagt zu Beginn, dass ein KI-System spricht, schlägt Zeiten vor, trägt den Termin ein und bestätigt per E-Mail. Sobald ein Mensch gefragt ist, übergibt er an Ihr Team.",
         ...DEMO,
       },
       {
-        scene: "flow",
-        heat: [0],
         t: "rows",
         eyebrow: "Aufgaben",
         h: "Was ein Agent übernimmt und was nicht.",
@@ -222,8 +214,6 @@ export const de: Record<PageKey, PageDef> = {
         ],
       },
       {
-        scene: "steps",
-        heat: [0],
         t: "steps",
         eyebrow: "Ablauf",
         h: "In vier Schritten zum eigenen Agenten.",
@@ -242,7 +232,7 @@ export const de: Record<PageKey, PageDef> = {
         { q: "Spricht der Agent heute schon live?", a: "Derzeit zeigen wir ein gespieltes Szenario. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung geklärt sind." },
         { q: "Wer hört die Gespräche mit?", a: "Das legen wir vorab gemeinsam mit Ihnen fest: Anbieter, Speicherort, Aufbewahrung und Zugriff. Anrufer erfahren zu Beginn, dass ein KI-System spricht." },
         { q: "Ersetzt ein Agent unser Team?", a: "Nein. Er nimmt Routine ab und übergibt, sobald eine Person gefragt ist." },
-        { q: "Ist die 3D-Form auf dieser Website ein Agent?", a: "Nein. Die abstrakte 3D-Form ist Gestaltung; Sie können sie unten auf der Seite unter „3D-Effekte“ abschalten. Unsere KI-Agenten arbeiten als Telefon- und Chat-Assistent, ohne Figur und ohne Gesicht." },
+        { q: "Ist das Video auf dieser Website ein Agent?", a: "Nein. Das Hintergrundvideo mit den Glasplatten ist Gestaltung; Sie können es anhalten oder unten auf der Seite unter „Hintergrundvideo“ abschalten. Unsere KI-Agenten arbeiten als Telefon- und Chat-Assistent, ohne Figur und ohne Gesicht." },
         { q: "Wie starten wir?", a: "Mit dem KI-Check. Dort klären wir gemeinsam, ob ein Agent für Ihr Unternehmen sinnvoll ist und welche Aufgaben er übernehmen sollte." },
       ],
     },
@@ -264,8 +254,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "OpSolid gestaltet und baut Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Kauf: einmaliger Projektpreis, die Seite gehört Ihnen. Website-Abo: ab 99 € im Monat; Hosting, Pflege und Updates übernehmen wir.",
       primary: CONTACT,
       secondary: { label: "Arbeitsproben ansehen", href: "#referenzen" },
-      scene: "websites",
-      heat: [1],
       spec: [
         ["Modelle", "Kauf oder Website-Abo"],
         ["Website-Abo", "Ab 99 €/Monat oder 990 €/Jahr, Einrichtung ab 490 €"],
@@ -275,15 +263,13 @@ export const de: Record<PageKey, PageDef> = {
     },
     blocks: [
       {
-        scene: "stack",
-        heat: [1],
         t: "rows",
         eyebrow: "Leistung",
         h: "Was in jeder Website steckt.",
         items: [
           { h: "Gestaltung", p: "Typografie, Farbe und Bewegung, die zu Ihrem Unternehmen passen, statt einer Vorlage mit neuem Logo." },
           { h: "Bau", p: "Text zuerst, schnelle Ladezeit, barrierearm, sauber für Suchmaschinen und KI-Suche aufgebaut." },
-          { h: "Mehrsprachigkeit", p: "Jede Sprache mit eigener Adresse und sauberer Auszeichnung für die Suche, auf Wunsch Deutsch, Englisch und Türkisch." },
+          { h: "Mehrsprachigkeit", p: "Jede Sprache mit eigener Adresse und sauberer Auszeichnung für die Suche, in den Sprachen, die Ihre Kunden sprechen." },
           { h: "Kauf oder Website-Abo", p: "Kauf lohnt sich, wenn Sie die Seite selbst weiterführen möchten. Das Website-Abo, wenn Sie sich um nichts Technisches kümmern wollen." },
         ],
       },
@@ -304,20 +290,16 @@ export const de: Record<PageKey, PageDef> = {
       {
         t: "rows",
         id: "referenzen",
-        scene: "websites",
-        heat: [1],
         eyebrow: "Arbeitsproben",
         h: "Selbst gestaltet, selbst gebaut.",
         lede: "OpSolid hat diese Projekte selbst konzipiert und entwickelt, von der Gestaltung bis zur Technik. Die Links führen zu den Projekten; machen Sie sich selbst ein Bild.",
         items: [
-          { h: "opsolid.de", tag: "Diese Website", p: "Drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten.", shot: SHOT.opsolid },
+          { h: "opsolid.de", tag: "Diese Website", p: "Text zuerst; das Hintergrundvideo startet nach dem Text und lässt sich anhalten und abschalten.", shot: SHOT.opsolid },
           { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte als Web-App: Profil, QR-Code und NFC-Link. Die Veröffentlichung wird vorbereitet.", href: "/opso", shot: SHOT.opso },
           { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Ein Posteingang für WhatsApp, Telegram und E-Mail, mit KI-Vorsortierung.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
-        scene: "steps",
-        heat: [1],
         t: "steps",
         eyebrow: "Ablauf",
         h: "Vom ersten Gespräch zur fertigen Seite.",
@@ -335,7 +317,7 @@ export const de: Record<PageKey, PageDef> = {
         { q: "Kauf oder Website-Abo: Was passt besser?", a: "Kauf, wenn Sie die Seite selbst oder mit Ihrer IT weiterführen möchten: Sie zahlen einmal, und die Seite gehört Ihnen; den Preis nennen wir nach dem ersten Gespräch schriftlich. Das Website-Abo, wenn Sie sich nicht um Technik kümmern möchten: ab 99 € im Monat oder 990 € im Jahr, Einrichtung ab 490 €, alle Preise netto zzgl. MwSt. Enthalten sind Hosting, Pflege, Updates und eine kleine Änderung pro Monat, umgesetzt innerhalb von 5 Werktagen; einen Notdienst gibt es nicht." },
         { q: "Wie lange dauert ein Website-Projekt?", a: "Das hängt vom Umfang ab. Nach dem ersten Gespräch erhalten Sie einen konkreten Zeitplan." },
         { q: "Wem gehören Texte und Bilder?", a: "Inhalte, die Sie liefern, bleiben Ihr Eigentum. Die Nutzungsrechte an Gestaltung und Code halten wir vorab schriftlich fest." },
-        { q: "Kann die Seite 3D und Bewegung enthalten?", a: "Ja, als Zugabe. Der Text steht immer zuerst, die Effekte lassen sich abschalten und respektieren die Einstellung für weniger Bewegung." },
+        { q: "Kann die Seite Video und Bewegung enthalten?", a: "Ja, als Zugabe. Der Text steht immer zuerst; Video und Effekte lassen sich anhalten und abschalten und respektieren die Einstellung für weniger Bewegung." },
       ],
     },
     cta: { h: "Was soll Ihre Website leisten?", p: "Schreiben Sie uns in zwei, drei Sätzen, für wen die Seite ist und was sie erreichen soll. Wir antworten in der Regel innerhalb weniger Arbeitstage.", primary: { label: "Website anfragen", href: "/contact" } },
@@ -362,12 +344,9 @@ export const de: Record<PageKey, PageDef> = {
       h1: ["Sieben Wege zu ", "weniger Handarbeit", "."],
       lede: "Jede Leistung löst ein bestimmtes Problem: Anrufe, die liegen bleiben; eine Website, die nicht mehr passt; Daten, die von Hand zwischen Systemen wandern. Der KI-Check zeigt, wo sich der Einstieg lohnt.",
       primary: CHECK,
-      scene: "stack",
-      heat: [0, 1, 2, 3, 4, 5, 6],
     },
     blocks: [
       {
-        scene: "offset",
         t: "rows",
         eyebrow: "Alle Leistungen",
         h: "Welche Leistung welches Problem löst.",
@@ -382,7 +361,6 @@ export const de: Record<PageKey, PageDef> = {
         ],
       },
       {
-        scene: "steps",
         t: "steps",
         eyebrow: "Vorgehen",
         h: "Ein Weg, egal wo Sie einsteigen.",
@@ -411,8 +389,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Wir finden drei bis fünf KI-Use-Cases, die zu Ihrem Unternehmen passen, bewerten Nutzen, Aufwand und Risiko und halten das Ergebnis als schriftliche Roadmap fest. Was nicht passt, schließen wir ausdrücklich aus.",
       primary: CHECK,
       secondary: CONTACT,
-      scene: "steps",
-      heat: [5],
       spec: [
         ["Ergebnis", "Use-Case-Bewertung, Roadmap, KI-Richtlinie"],
         ["Dauer", "Zielrahmen zwei bis vier Wochen"],
@@ -421,8 +397,6 @@ export const de: Record<PageKey, PageDef> = {
     },
     blocks: [
       {
-        scene: "stack",
-        heat: [5],
         t: "rows",
         eyebrow: "Leistung",
         h: "Drei bis fünf Use Cases, schriftlich bewertet.",
@@ -453,8 +427,6 @@ export const de: Record<PageKey, PageDef> = {
         items: ["OpenAI", "Anthropic Claude", "Microsoft Copilot, Azure OpenAI", "Mistral und Open-Source-Modelle", "Retrieval-Augmented Generation", "pgvector, Qdrant", "EU-Hosting"],
       },
       {
-        scene: "flow",
-        heat: [5],
         t: "steps",
         eyebrow: "Ablauf",
         h: "Vom Gespräch zur Roadmap in drei Schritten.",
@@ -493,8 +465,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Wir automatisieren Abläufe, die heute Zeit kosten: Angebote, die einen halben Tag dauern; Reports, die jeden Montag neu entstehen; Daten, die zwischen Excel, CRM und E-Mail wandern. Zuerst nehmen wir den Ablauf auf und messen, was er kostet. Dann automatisieren wir, was sich lohnt.",
       primary: CHECK,
       secondary: CONTACT,
-      scene: "flow",
-      heat: [2],
       spec: [
         ["Start", "Ein Ablauf mit großem Hebel, fester Umfang"],
         ["Pilot", "Zielrahmen zwei bis vier Wochen"],
@@ -503,8 +473,6 @@ export const de: Record<PageKey, PageDef> = {
     },
     blocks: [
       {
-        scene: "stack",
-        heat: [2],
         t: "rows",
         eyebrow: "Vorgehen",
         h: "Vom Ist-Ablauf zum laufenden Pilotprojekt.",
@@ -535,8 +503,6 @@ export const de: Record<PageKey, PageDef> = {
         items: ["Microsoft Power Automate", "Make", "n8n, selbst gehostet", "Zapier, wo es passt", "Python", "REST-APIs und Webhooks", "PostgreSQL und Queues"],
       },
       {
-        scene: "steps",
-        heat: [2],
         t: "steps",
         eyebrow: "Ablauf",
         h: "Drei Schritte, ein fester Umfang.",
@@ -575,8 +541,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Wir richten Teams, SharePoint, Outlook und Power Automate so ein, dass Freigaben, Dokumente und Postfach-Regeln ohne Handarbeit laufen und Daten an einem Ort liegen. Vieles davon steckt schon in Ihren Lizenzen, und manches Zusatz-Abo wird überflüssig.",
       primary: CHECK,
       secondary: CONTACT,
-      scene: "flow",
-      heat: [3],
       spec: [
         ["Start", "Prüfung Ihres Tenants"],
         ["Pilot", "Erster Flow, Zielrahmen zwei Wochen"],
@@ -585,8 +549,6 @@ export const de: Record<PageKey, PageDef> = {
     },
     blocks: [
       {
-        scene: "stack",
-        heat: [3],
         t: "rows",
         eyebrow: "Leistung",
         h: "Was in Ihrem Tenant schon steckt.",
@@ -616,8 +578,6 @@ export const de: Record<PageKey, PageDef> = {
         items: ["Power Automate", "Power Apps", "SharePoint Online", "Teams, Bots, Approvals", "Outlook, Exchange", "Microsoft Graph API", "Microsoft 365 Copilot", "Entra ID"],
       },
       {
-        scene: "steps",
-        heat: [3],
         t: "steps",
         eyebrow: "Ablauf",
         h: "Vom Tenant-Check zur Einführung.",
@@ -656,8 +616,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Wo Standard-Software nicht passt, löst ein kleines, gezielt gebautes Werkzeug das Problem oft besser und schneller. Nicht jeder interne Ablauf braucht eine weitere Plattform mit Monatsabo pro Nutzer. Selbst gebaut: Für OpSo hat OpSolid Dashboard, Onboarding und Admin-Konsole entwickelt.",
       primary: CHECK,
       secondary: CONTACT,
-      scene: "cards",
-      heat: [4],
       spec: [
         ["Pilot", "Zielrahmen drei bis sechs Wochen"],
         ["Übergabe", "Quellcode und Dokumentation"],
@@ -666,8 +624,6 @@ export const de: Record<PageKey, PageDef> = {
     },
     blocks: [
       {
-        scene: "flow",
-        heat: [4],
         t: "rows",
         eyebrow: "Was wir bauen",
         h: "Klein, schnell, für genau einen Ablauf gebaut.",
@@ -697,8 +653,6 @@ export const de: Record<PageKey, PageDef> = {
         items: ["Next.js, React, TypeScript", "Node.js, Python", "PostgreSQL", "REST, GraphQL, Webhooks", "Microsoft Entra ID, SSO", "EU-Hosting", "GitHub, CI/CD, Audit-Logs"],
       },
       {
-        scene: "steps",
-        heat: [4],
         t: "steps",
         eyebrow: "Ablauf",
         h: "Von der Spezifikation zum Betrieb.",
@@ -727,7 +681,7 @@ export const de: Record<PageKey, PageDef> = {
     meta: {
       title: "KI-Schulungen: drei Formate mit klaren Preisen",
       description:
-        "KI-Check ab 490 €, KI-Kompetenz Basis 1.490 €, Copilot-Praxistag ab 2.400 €, jeweils zzgl. MwSt. An Ihren Aufgaben, auf Deutsch, Englisch, Türkisch.",
+        "KI-Check ab 490 €, KI-Kompetenz Basis 1.490 €, Copilot-Praxistag ab 2.400 €, jeweils zzgl. MwSt. Geübt wird an Ihren Aufgaben.",
     },
     crumb: "KI-Schulungen",
     hero: {
@@ -736,8 +690,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Seit dem 2. Februar 2025 müssen Unternehmen, die KI einsetzen, nach Art. 4 der EU-KI-Verordnung Maßnahmen für ausreichende KI-Kompetenz ihrer Mitarbeitenden ergreifen. Unsere drei Formate haben festen Umfang und klaren Preis; gearbeitet wird an Ihren eigenen Aufgaben statt an Folien.",
       primary: { label: "Schulung anfragen", href: "/contact" },
       secondary: CHECK,
-      scene: "steps",
-      heat: [6],
     },
     blocks: [
       {
@@ -752,11 +704,9 @@ export const de: Record<PageKey, PageDef> = {
           ["KI-Kompetenz Basis||Grundlagen für den sicheren Umgang mit KI im Arbeitsalltag. Geleitet von einer freiberuflichen Fachkraft, die OpSolid auswählt und Ihnen vorab namentlich nennt. Unterstützt Ihre Maßnahmen zur KI-Kompetenz nach Art. 4 der EU-KI-Verordnung.", "Halber Tag, bis 15 Personen", "1.490 €"],
           ["Copilot-Praxistag||Praktische Arbeit mit Microsoft 365 Copilot an Ihren eigenen Aufgaben. Für Unternehmen, die bereits Copilot-Lizenzen haben.", "1 Tag, bis 12 Personen", "ab 2.400 €"],
         ],
-        note: `${PRICE_NOTE} ${PILOT_NOTE} Sprachen: Deutsch, Englisch und Türkisch.`,
+        note: `${PRICE_NOTE} ${PILOT_NOTE}`,
       },
       {
-        scene: "stack",
-        heat: [6],
         t: "steps",
         eyebrow: "Ablauf",
         h: "Geübt wird an Ihren Aufgaben.",
@@ -801,8 +751,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Der KI-Check zeigt, welche Ihrer Abläufe sich automatisieren lassen und welche besser manuell bleiben. Der Einstieg ab 490 € netto: 90 Minuten remote und ein kurzer schriftlicher Bericht. Für einen erweiterten Umfang mit Workshop, Prozesskarte und 30-Tage-Plan nennen wir den Festpreis vorab schriftlich.",
       primary: { label: "KI-Check anfragen", href: "/contact" },
       secondary: { label: "Ablauf ansehen", href: "#ablauf" },
-      scene: "steps",
-      heat: [5],
       spec: [
         ["Einstieg", "90 Minuten remote, kurzer schriftlicher Bericht"],
         ["Erweitert", "Workshop, Prozesskarte, fünf bewertete Kandidaten, 30-Tage-Plan"],
@@ -812,8 +760,6 @@ export const de: Record<PageKey, PageDef> = {
     },
     blocks: [
       {
-        scene: "stack",
-        heat: [2, 3, 4],
         t: "rows",
         eyebrow: "Warum es den Check gibt",
         h: "Woran Automatisierung oft scheitert.",
@@ -852,8 +798,6 @@ export const de: Record<PageKey, PageDef> = {
         ],
       },
       {
-        scene: "flow",
-        heat: [5],
         t: "steps",
         id: "ablauf",
         eyebrow: "Ablauf",
@@ -894,9 +838,9 @@ export const de: Record<PageKey, PageDef> = {
   about: {
     slug: "ueber-uns",
     meta: {
-      title: "Über OpSolid: Automatisierung und KI aus Arnsberg",
+      title: "Über OpSolid: erst der Ablauf, dann die Technik",
       description:
-        "OpSolid baut KI-Agenten, Websites und Automatisierung für den Mittelstand, gegründet von Hasan Dönmez in Arnsberg. Nicht zu verwechseln mit TopSolid.",
+        "OpSolid baut KI-Agenten, Websites und Automatisierung für kleine und mittlere Betriebe: gemessen, dokumentiert, ohne Abhängigkeit. Nicht zu verwechseln mit TopSolid.",
     },
     crumb: "Über OpSolid",
     hero: {
@@ -905,17 +849,15 @@ export const de: Record<PageKey, PageDef> = {
       lede: "OpSolid baut KI-Agenten, Websites und automatisierte Abläufe für kleine und mittlere Unternehmen. Wir verstehen zuerst, wie die Arbeit heute läuft, und entscheiden dann, was Technik daran verbessert.",
       primary: CONTACT,
       secondary: CHECK,
-      scene: "offset",
       spec: [
         ["Schwerpunkt", "KI-Agenten, Websites, Automatisierung"],
         ["Methode", "Analyse, Pilot, Einführung, Übergabe"],
-        ["Sitz", "Arnsberg, Deutschland"],
-        ["Sprachen", "Deutsch, Englisch, Türkisch"],
+        ["Für", "Kleine und mittlere Betriebe"],
+        ["Übergabe", "Quellcode und Dokumentation"],
       ],
     },
     blocks: [
       {
-        scene: "stack",
         t: "rows",
         eyebrow: "Arbeitsweise",
         h: "Vier Grundsätze für jedes Projekt.",
@@ -934,23 +876,19 @@ export const de: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
-        eyebrow: "Gründer und Erfahrung",
+        eyebrow: "Erfahrung",
         h: "Woher die Methode kommt.",
-        lede: "OpSolid wurde von Hasan Dönmez gegründet. Seine Erfahrung stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen. Jeder Schritt unserer Methode kommt von dort: Ablauf aufnehmen, Ausgangslage messen, klein pilotieren, sauber übergeben.",
+        lede: "Die Erfahrung hinter OpSolid stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen. Jeder Schritt unserer Methode kommt von dort: Ablauf aufnehmen, Ausgangslage messen, klein pilotieren, sauber übergeben.",
         paras: [
           "Zum Werkzeugkasten gehören Microsoft 365 mit Outlook, Teams, SharePoint und Power Automate, außerdem Make, n8n, Python und eigener Code, Anbindungen an CRM und ERP sowie Hosting in der EU.",
-          "Wir arbeiten von Arnsberg aus und remote für Unternehmen in ganz Europa und in der Türkei, auf Deutsch, Englisch und Türkisch. Workshops und Dokumentation entstehen in der Sprache, in der Ihr Team arbeitet.",
         ],
-        cta: { label: "Hasan Dönmez auf LinkedIn", href: "https://www.linkedin.com/in/hasanhd/" },
       },
       {
-        scene: "cards",
-        heat: [1],
         t: "rows",
         eyebrow: "Eigene Projekte",
         h: "Projekte, die unsere Arbeit zeigen.",
         items: [
-          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben: drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten.", shot: SHOT.opsolid },
+          { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben. Der Text steht zuerst, das Hintergrundvideo lässt sich anhalten und abschalten.", shot: SHOT.opsolid },
           { h: "OpSo", tag: "Produkt in der Testphase", p: "Digitale Visitenkarte mit NFC und QR, als Web-App gebaut, mit eigenem Dashboard, Onboarding und Admin-Konsole. Die Veröffentlichung wird vorbereitet.", href: "/opso", shot: SHOT.opso },
           { h: "Kutasia", tag: "Projekt in Entwicklung", p: "Kundennachrichten aus WhatsApp, Telegram und E-Mail in einem Posteingang, mit KI-Vorsortierung.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
@@ -959,7 +897,7 @@ export const de: Record<PageKey, PageDef> = {
         t: "text",
         eyebrow: "Abgrenzung",
         h: "OpSolid ist nicht TopSolid.",
-        paras: ["OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu. Wer OpSolid aus Arnsberg sucht, ist hier richtig."],
+        paras: ["OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu."],
       },
     ],
     cta: { h: "Mit einem Ablauf anfangen.", p: "Wenn Ihre Abläufe zu viel Handarbeit enthalten, begleiten wir Sie von der Analyse bis zur Übergabe.", primary: CHECK, secondary: CONTACT },
@@ -979,7 +917,6 @@ export const de: Record<PageKey, PageDef> = {
       lede: "Schreiben Sie uns, um welchen Ablauf es geht, welche Systeme beteiligt sind und was heute stört. Per Formular, E-Mail oder Telefon; wir antworten in der Regel innerhalb weniger Arbeitstage.",
       primary: { label: "Nachricht schreiben", href: "#form-h" },
       secondary: CHECK,
-      scene: "tight",
     },
     blocks: [],
     cta: { h: "Lieber erst die Abläufe prüfen lassen?", p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt: 90 Minuten remote, danach ein kurzer schriftlicher Bericht.", primary: CHECK },

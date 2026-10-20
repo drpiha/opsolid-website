@@ -4,7 +4,7 @@
  * Keeps <html data-v4 / data-theme> in step with client-side navigation.
  * The root layout sets both on the first server render; layouts persist
  * across soft navigations, so this effect handles v4 ↔ app-surface changes.
- * v4 marketing pages are dark-only; app surfaces restore the stored theme.
+ * Marketing pages are light-only; app surfaces restore the stored theme.
  */
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -17,7 +17,7 @@ export function V4Sync() {
     const el = document.documentElement;
     if (isV4Path(pathname)) {
       el.setAttribute("data-v4", "1");
-      el.setAttribute("data-theme", "dark");
+      el.setAttribute("data-theme", "light");
       el.removeAttribute("data-preview");
       return;
     }

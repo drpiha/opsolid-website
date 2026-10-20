@@ -69,6 +69,9 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
     { heading: sec.disputeResolution, body: <p>{sec.disputeResolutionText}</p> },
     { heading: sec.liabilityContent, body: <p>{sec.liabilityContentText}</p> },
     { heading: sec.liabilityLinks, body: <p>{sec.liabilityLinksText}</p> },
+    { heading: sec.copyright, body: <p>{sec.copyrightText}</p> },
+    { heading: sec.trademark, body: <p>{sec.trademarkText}</p> },
+    { heading: sec.product, body: <p>{sec.productText}</p> },
   ];
 
   return (
@@ -85,7 +88,7 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
               <p>{s.notice}</p>
             </div>
 
-            <ol className={`v4-rows v4-rows-n ${styles.list}`}>
+            <ol className={`v4-rows ${styles.list}`}>
               {items.map((item) => (
                 <li key={item.heading} className="v4-row">
                   <div className="v4-row-in">

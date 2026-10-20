@@ -27,6 +27,6 @@ export function v4Page(key: PageKey) {
           ? [{ label: SERVICES_LABEL[loc], to: "/leistungen" }, { label: page.crumb }]
           : [{ label: page.crumb }];
     const kind = key === "about" ? "AboutPage" : key === "leistungen" ? "CollectionPage" : undefined;
-    return <PageRenderer page={page} locale={loc} trail={trail} kind={kind} />;
+    return <PageRenderer page={page} locale={loc} trail={trail} kind={kind} home={key === "home"} />;
   };
 }

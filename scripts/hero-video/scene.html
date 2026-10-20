@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>OpSolid hero scene · Sieben Platten aus Glas</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #ECE8E1; overflow: hidden; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "/node_modules/three/build/three.module.js",
+    "three/addons/": "/node_modules/three/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<!--
+  Deterministic offline scene for the hero background video.
+  window.renderAt(t, w, h) renders the frame at time t (seconds, loop 0..12).
+  window.capture() returns the current canvas as a PNG data URL.
+  Served by render.mjs from the repo root (module imports need http://).
+  Open http://127.0.0.1:<port>/scripts/hero-video/scene.html?t=4 to preview a frame.
+-->
+<script type="module" src="./scene.js"></script>
+</body>
+</html>

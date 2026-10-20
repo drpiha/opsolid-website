@@ -2,10 +2,10 @@
 
 /**
  * Scripted voice-agent scenario. Not a live call: it types a sample dialogue,
- * drives a wave and the abstract 3D agent form via the shared voice state.
+ * drives the wave via the shared voice state.
  */
 import { useEffect, useRef, useState } from "react";
-import { voice } from "@/lib/voice-sim";
+import { stepVoice, voice } from "@/lib/voice-sim";
 
 type Line = { who: string; agent: boolean; text: string; ms: number };
 
@@ -36,6 +36,7 @@ export function AgentDemo({ chip, play, again, note, sr, script }: { chip: strin
       raf = requestAnimationFrame(tick);
       if (!visible.current || document.hidden) return;
       const t = now / 1000;
+      stepVoice(t);
       bars.forEach((b, i) => {
         const s = 0.1 + voice.amp * (0.55 + 0.45 * Math.sin(t * 7 + i * 1.1)) * (0.6 + 0.4 * Math.sin(i * 0.37));
         b.style.transform = `scaleY(${Math.min(1, s).toFixed(3)})`;
