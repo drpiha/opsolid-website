@@ -77,11 +77,11 @@ class CandidateGuards(unittest.TestCase):
 
     def test_node_output_accepts_only_complete_finite_checks(self):
         proof = {"ok": True, "password_authentication_verified": True, "application_smoke_verified": True,
-                 "prisma_rollback_verified": True, "prisma_discovery_filter_verified": True, "http_checks": 13}
+                 "prisma_rollback_verified": True, "prisma_discovery_filter_verified": True, "http_checks": 14}
         self.assertEqual(candidate.parse_node_proof(json.dumps(proof).encode()), proof)
         invalid = [b"PRIVATE unexpected output", json.dumps({**proof, "private": "data"}).encode(),
                    json.dumps({**proof, "password_authentication_verified": 1}).encode(),
-                   json.dumps({**proof, "http_checks": 12}).encode()]
+                   json.dumps({**proof, "http_checks": 13}).encode()]
         for output in invalid:
             with self.subTest(output=output), self.assertRaises(Exception):
                 candidate.parse_node_proof(output)
@@ -128,7 +128,7 @@ class CandidateGuards(unittest.TestCase):
         calls = []
         runtime_env = {}
         proof = {"ok": True, "password_authentication_verified": True, "application_smoke_verified": True,
-                 "prisma_rollback_verified": True, "prisma_discovery_filter_verified": True, "http_checks": 13}
+                 "prisma_rollback_verified": True, "prisma_discovery_filter_verified": True, "http_checks": 14}
         def run(args, **_):
             calls.append(args)
             if args[:2] == ["image", "inspect"]:
@@ -214,8 +214,8 @@ Module._load = function(name, ...args) {
 global.fetch = async (url, options) => {
   if(!url.startsWith('http://127.0.0.1:3000/') || options.redirect!=='manual') throw new Error('unsafe_request');
   const path = new URL(url).pathname;
-  const status = path==='/_next/image' ? 404 : path.startsWith('/api/') && path!=='/api/health' ? (mode==='auth_open' ? 200 : 401) : 200;
-  return {status,headers:{get:()=> 'text/html'},body:{cancel:async()=>{},getReader:()=>{let done=false;return {
+  const status = path==='/de/signup' ? (mode==='signup_not_redirected' ? 200 : 301) : path==='/_next/image' ? 404 : path.startsWith('/api/') && path!=='/api/health' ? (mode==='auth_open' ? 200 : 401) : 200;
+  return {status,headers:{get:name=>name==='location' ? (mode==='signup_wrong_target' ? 'https://opsolid.de/de/login' : 'https://opsolid.de/de/opso') : 'text/html'},body:{cancel:async()=>{},getReader:()=>{let done=false;return {
     read:async()=>{if(done)return {done:true};done=true;return {done:false,value:Buffer.from(mode==='google_without_config' ? '<a href="/api/auth/google?locale=de">Google</a>' : '<main>Account - Google is mentioned without a link</main>')};},cancel:async()=>{}
   };}},json:async()=>({ok:true,dbOk:true,commit:process.env.GIT_COMMIT})};
 };
@@ -228,11 +228,11 @@ global.fetch = async (url, options) => {
     def test_actual_embedded_program_passes_with_synthetic_prisma_and_http_contracts(self):
         result = self.run_node("good")
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(candidate.parse_node_proof(result.stdout)["http_checks"], 13)
+        self.assertEqual(candidate.parse_node_proof(result.stdout)["http_checks"], 14)
         self.assertEqual(result.stderr, b"")
 
     def test_password_bypass_persisted_rows_and_open_auth_each_fail(self):
-        for mode, stage in (("password_bypass", "password_auth"), ("persisted", "prisma_discovery"), ("auth_open", "http_guards"), ("discovery_leak", "prisma_discovery"), ("google_without_config", "http_pages")):
+        for mode, stage in (("password_bypass", "password_auth"), ("persisted", "prisma_discovery"), ("auth_open", "http_guards"), ("discovery_leak", "prisma_discovery"), ("google_without_config", "http_pages"), ("signup_not_redirected", "http_pages"), ("signup_wrong_target", "http_pages")):
             with self.subTest(mode=mode):
                 result = self.run_node(mode)
                 self.assertEqual(result.returncode, 1)

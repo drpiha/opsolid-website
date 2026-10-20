@@ -32,12 +32,13 @@ PROJECT = Path("/opt/opsolid-website")
 COMPOSE = PROJECT / "docker-compose.yml"
 ENV = PROJECT / ".env"
 FILES = ("base.json", "forward.json", "rollback.json", "snapshot.json", "empty.env")
-# Read-only predecessor compatibility for the reviewed September17 and September20
-# cutovers, each bound to the executable that wrote it. This does not authorize
+# Read-only predecessor compatibility for the reviewed September17, September20
+# and October20 cutovers, each bound to the executable that wrote it. This does not authorize
 # applying an old packet with the updated executable.
 LEGACY_PREDECESSORS = {
     backup.BASE / "app-cutover-1a6a38b57fda46b6b8c39eac": "ba7ca4ffffe1c9edb97f2b56c14a0ba6bb51982e1c5c17fd9d7fde92d7932e67",
     backup.BASE / "app-cutover-1f5ed7aa270c4db798cb19ce": "ed193abc71c27d17530b5d1e0b3365e35447255cb6c24569aa0436649232e72b",
+    backup.BASE / "app-cutover-d5434be240b94b7b934a886e": "bb958107c41acd80a24c0bcecb945c0798bb7a71863dce25873b35f47fa92f38",
 }
 # Per-start network endpoint values; a restarted container receives new ones.
 ENDPOINT_FIELDS = {"EndpointID", "IPAddress", "IPPrefixLen", "Gateway", "GlobalIPv6Address", "GlobalIPv6PrefixLen", "IPv6Gateway", "MacAddress"}
@@ -381,6 +382,9 @@ async function run(){
  const response=await fetch('http://127.0.0.1:3000/api/health',{redirect:'manual',signal:AbortSignal.timeout(5000)});
  const body=await response.json();
  if(response.status!==200||body.ok!==true||body.dbOk!==true||body.commit!==(process.env.GIT_COMMIT||'unknown'))throw Error('health');
+ const page=await fetch('http://127.0.0.1:3000/de',{redirect:'manual',signal:AbortSignal.timeout(5000)});
+ await page.body?.cancel();
+ if(page.status!==200||!(page.headers.get('content-type')||'').includes('text/html'))throw Error('marketing_page');
  const rows=await client.$queryRawUnsafe('SELECT current_user::text AS current_user,session_user::text AS session_user');
  const expected=decodeURIComponent(new URL(process.env.DATABASE_URL).username);
  if(rows.length!==1||rows[0].current_user!==expected||rows[0].session_user!==expected)throw Error('identity');
