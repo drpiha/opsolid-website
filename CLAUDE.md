@@ -21,7 +21,7 @@ re-running it.
 
 No separate backend process — Next.js API routes (`src/app/api/`) run within the same server.
 
-`?debug` on a marketing URL exposes `window.__v4stage.bounds()` (projected screen box of the 3D object) for layout audits. It is inert without the query string. `npm run audit:stage` (needs a running server, `BASE=http://localhost:3000`) asserts per scene that the object never intersects text, buttons, tables or form controls at 1280/1440/1920/390 px; `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr. Run both after changing scenes, poses, column widths or heading copy.
+`?debug` on a marketing URL exposes `window.__v5scene` (`tap(fx, fy)`, `clear()`) on pages with a hero scene, for layout audits. It is inert without the query string. `npm run audit:stage` (needs a running server, `BASE=http://localhost:3000`) taps a 6×5 grid across every hero at 1280/1440/1920/390 px and fails when a card covers hero text, links, buttons or the scene controls, leaves the hero, or the poster does not load; `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr. Run both after changing the hero, its copy column, the card placement or heading copy.
 
 ## Architecture
 
@@ -29,7 +29,7 @@ No separate backend process — Next.js API routes (`src/app/api/`) run within t
 
 The site has two kinds of surfaces:
 
-- **Marketing routes** (`isV4Path` in `src/lib/v4.ts`): home, agents, websites, leistungen, ki-beratung, prozessautomatisierung, microsoft-365-automatisierung, interne-tools, ki-schulungen, ai-automation-check, ueber-uns, contact, blog, plus opso, impressum and privacy, which keep their own components under the v4 theme (impressum and privacy are server-rendered from `contents[locale]`, so the client never loads the content bundle there). Unknown `/de|en|tr/*` URLs render the localized v4 404 via `src/app/[locale]/[...rest]`. Dark graphite + copper art direction (v4), scroll-driven 3D stage, SSR text. Scoped to `html[data-v4]`, set server-side in the root layout from the `x-pathname` header.
+- **Marketing routes** (`isV4Path` in `src/lib/v4.ts`): home, agents, websites, leistungen, ki-beratung, prozessautomatisierung, microsoft-365-automatisierung, interne-tools, ki-schulungen, ai-automation-check, ueber-uns, contact, blog, plus opso, impressum and privacy, which keep their own components under the v4 theme (impressum and privacy are server-rendered from `contents[locale]`, so the client never loads the content bundle there). Unknown `/de|en|tr/*` URLs render the localized v4 404 via `src/app/[locale]/[...rest]`. Light "Licht & Kupfer" art direction (owner choice 2026-10-21): porcelain + ink + copper, a full-bleed hero video with a tap layer, SSR text. Scoped to `html[data-v4]`, set server-side in the root layout from the `x-pathname` header.
 - **App surfaces** (dashboard, onboarding, auth, discover, public cards `/c/*`, admin, voice, `products/*`): the older tri-theme system (light · hybrid · dark), the `src/content/{en,de,tr}.ts` bundle and `src/styles/legacy.css`.
 
 ### Localization System
@@ -43,7 +43,7 @@ Public locales are `de`, `en`, `tr`. **Language follows the visitor's COUNTRY, n
 - Website-Abo: from 99 €/month or 990 €/year; setup from 490 €. Includes hosting, care, updates and 1 small change per month (done within 5 working days, no emergency service). Buying a website outright stays price on request.
 - KI-Check (the single entry offer): from 490 €. There is no separate "Quick-Check".
 - KI-Kompetenz Basis 1,490 €; Copilot-Praxistag from 2,400 €.
-- KI-Agenten are phone and chat assistants. No video agents are offered; the 3D stage is decoration only.
+- KI-Agenten are phone and chat assistants. No video agents are offered; the hero video is decoration only.
 - Booking goes through the contact form; no Cal.com or other third-party embed.
 
 **Industry focus** (owner decision): services, hospitality, retail and practices (no health data). Not for businesses in SHK (heating, plumbing, sanitation), TGA (building services engineering), electrical trades, construction or wholesale. Never name an employer.
@@ -77,36 +77,38 @@ App routes: `page.tsx` (server, metadata) + `PageName.tsx` (client, `"use client
 
 ### Component Organization
 
-- `components/v4/` — marketing system: `PageRenderer` (blocks), `Stage` (3D), `AgentDemo`, `Reveal`, `ContactForm4`, `JsonLd`, `make-page`, `FxToggle`, `V4Sync`, `ContentGate`.
+- `components/v4/` — marketing system: `PageRenderer` (blocks), `HeroScene` (hero video + tap layer), `motion` (footer switch), `AgentDemo`, `Reveal`, `ContactForm4`, `JsonLd`, `make-page`, `FxToggle`, `V4Sync`, `ContentGate`.
 - `components/ui/` — Design system primitives (Button, Card, Badge, Input) using CVA (app surfaces)
-- `components/shared/` — Reusable pieces (`LocaleLink`, `Icon`). There is no analytics and no consent banner: nothing on the site needs consent (only the user-chosen language cookie and the 3D-Effekte switch are stored). Adding any tracking needs a consent mechanism and a privacy-text update first.
-- `components/layout/` — Header (language switcher, nav) and Footer (includes the "3D-Effekte" switch)
+- `components/shared/` — Reusable pieces (`LocaleLink`, `Icon`). There is no analytics and no consent banner: nothing on the site needs consent (only the user-chosen language cookie and the "Hintergrundvideo" switch are stored). Adding any tracking needs a consent mechanism and a privacy-text update first.
+- `components/layout/` — Header (language switcher, nav) and Footer (includes the "Hintergrundvideo" switch)
 - `components/sections/` — `FaqAccordion`, `FinalCTA`, `PricingTable`, used only by the legacy OpSo order page under `products/digital-card`, whose entry URLs currently 301 to `/opso`. The pre-v4 marketing components (`components/v2`, the old section library, the single-agent product pages) were removed in 2026-10; their URLs 301 via `src/lib/redirects.ts`. Do not reintroduce them for marketing pages.
 - `components/ClientProviders.tsx` — Wraps children with LocaleProvider (keeps layout.tsx as server component)
 
-### Art direction (marketing routes, v4)
+### Art direction (marketing routes, "Licht & Kupfer")
 
-Industrial-luxury, dark only: graphite surfaces, warm oxidized copper as the single accent, hairline rules, drafting grid. Tokens in `src/styles/opsolid-v4.css`:
+Light, calm, precise (owner decision 2026-10-21, direction A of three Claude Design explorations): porcelain surfaces, deep ink, copper as the single accent, rounded panels, generous whitespace. The emotion comes from the hero scene, the clarity from the type. Tokens in `src/styles/opsolid-v4.css` (class and token names keep the `v4-` prefix):
 
-- `--v4-bg`/`--v4-bg2` graphite (`#12110F`), `--v4-ink`/`--v4-ink2`/`--v4-ink3` text ladder, `--v4-line`/`--v4-line2` hairlines.
-- `--v4-cu` copper (`#C27940`), `--v4-cu-hi` for hover/focus, `--v4-on-cu` text on copper. Copper-ink `#8F4F1E` only for text on light surfaces (none on marketing).
+- `--v4-bg` porcelain `#F5F3EF`, `--v4-bg2` white surface, `--v4-bg3` `#EFECE6` muted tile; `--v4-ink` `#15130F`, `--v4-ink2` `#4E4943`, `--v4-ink3` `#625C54`; `--v4-line`/`--v4-line2` hairlines.
+- `--v4-cu` copper `#C27940` for shapes and graphics only; `--v4-cu-hi` copper-ink `#8F4F1E` for copper text and focus rings (6:1 on porcelain). Primary buttons are ink with porcelain text; the CTA band is the one dark panel.
+- Copy rules (owner): lead with what OpSolid delivers and the benefit; no location (Arnsberg) and no working-language list (DE/EN/TR) in the hero or marketing sections. Legal identity stays in Impressum / Datenschutz only.
 
-Typography: **Archivo** (display and body; the width axis is used for headings: `font-stretch: 118%`, weight 800) and **IBM Plex Mono** (eyebrows, labels, meta). Archivo is self-hosted as one pre-instanced subset (`src/app/fonts/archivo-v4.woff2`: wght 400–800, wdth 100–118, latin plus Ğ ğ İ Ş ş), preloaded for all three locales. Components: `.v4-sec`, `.v4-col`, `.v4-btn(-primary|-ghost|-lg)`, `.v4-rows`, `.v4-steps`, `.v4-table`, `.v4-faq`, `.v4-band`.
+Typography: **Archivo** (display and body; headings use the width axis, `font-stretch: 115%`, weight 800) and **IBM Plex Mono** (eyebrows, labels, meta). Archivo is self-hosted as one pre-instanced subset (`src/app/fonts/archivo-v4.woff2`: wght 400–800, wdth 100–118, latin plus Ğ ğ İ Ş ş), preloaded for all three locales. Block layouts follow the block type (`variant()` in `PageRenderer`): linked rows → tiles, rows with screenshots → cards, plain rows → hairline ledger, demo/spec/offer → split, compare → before/after, table → rate card.
 
-Rules: no gradient mesh, no glassmorphism (header and overlays included), no `framer-motion` for page choreography (only the small `Reveal` observer), any future accept/reject choice carries identical visual weight, minimum 44 px touch targets.
+Rules: no gradient mesh, no glassmorphism (header and overlays included; the hero scrim is a plain legibility fade), no `framer-motion` for page choreography (only the small `Reveal` observer), any future accept/reject choice carries identical visual weight, minimum 44 px touch targets.
 
 App-surface tokens (unchanged): `bg-bg-{0..5}`, `text-ink-*`, `border-line-*`, `copper-{50..900}` (DEFAULT `#C27940`), `neutral-{50..950}`, `signal-ok|warn|err`; Geist / Inter / JetBrains Mono / Instrument Serif. `amber`, `paper*`, `olive`, `steel` are removed; Tailwind silently drops classes that reference them.
 
-### 3D stage (three.js + GSAP ScrollTrigger)
+### Hero scene (video + tap layer)
 
-One persistent object (seven plates, one per offering, plus an abstract voice-reactive agent form) re-forms as the visitor scrolls. Pages mark sections with `data-scene` (`stack`, `agents`, `websites`, `flow`, `steps`, `cards`, `offset`, `tight`) and `data-heat="0,1"` (plate indices to light up); the stage reads them, so content never depends on the stage. Allowed only with these guardrails:
+Every marketing page with a `PageDef` opens with `HeroScene` (`src/components/v4/HeroScene.tsx`): a full-bleed background video ("Sieben Platten aus Glas", 12 s seamless loop, rendered in-house by `scripts/hero-video/`) behind the SSR copy, plus a tap layer where every point of the scene answers a click or tap with the next offering as a card (`src/content/v4/scene.ts`). Guardrails:
 
-1. **SSR text is the LCP.** Every word is real HTML; the stage is decoration. No text is rendered only in WebGL.
-2. **Idle / intent load.** `three` and `gsap` are dynamic imports started on first user intent (pointer, scroll, touch, key) or after 8 s, never during first paint or hydration. Until then a static SVG poster is the first frame.
-3. **Light mode on phones and touch** (width < 760 or coarse pointer): DPR ≤ 1.5, no environment map, no bloom, no edge lines, 30 fps. Desktop gets bloom, HDR copper edges, MSAA and a frame-time guard that drops bloom if frames stay slow.
-4. **Poster for reduced motion and no WebGL**, and **the footer "3D-Effekte" switch** (`opsolid-fx=off`, `FX_EVENT`) stops the stage and loads nothing. There is no other quality control in production.
-5. **The object never covers readable text.** On desktop it is fitted into the free column beside the measured text column of the scene in view (`Stage.tsx` `update()`); wide blocks (`.v4-col.is-wide`: tables, the agent demo) sit on an opaque panel. On phones the object is above the text and every `.v4-col` is an opaque panel. Verify at 1280, 1440, 1920 and 390 px (`?debug` bounds against text rectangles) after any change to scenes, poses or column widths.
+1. **SSR text is the LCP.** Every word is real HTML; the video is decoration and carries no text, people, logos or claims.
+2. **Idle load.** The `<picture>` poster (WebP/JPEG, landscape and portrait) is the first frame. The video source is set only after `load` and an idle callback; phones in portrait get the 720×1280 file, everything else the 1920×1080 one, WebM (VP9) before MP4 (H.264). Each served file stays well under 5 MB (today ≤ 1.9 MB).
+3. **User control (WCAG 2.2.2).** A visible pause/play button sits in the scene bar; the video also pauses off screen and in hidden tabs. `prefers-reduced-motion` and the footer "Hintergrundvideo" switch (`opsolid-fx=off`, `FX_EVENT`, `components/v4/motion.ts`) keep the poster and fetch no video.
+4. **Cards never cover the copy.** `placeCard()` places a card near the tap point but clear of every `[data-scene-avoid]` box (the hero copy) and of the previous card; "Szene erkunden" opens cards from the keyboard, Escape closes them, `aria-live` announces them. No layout shift: the layer is absolutely positioned. Verify with `npm run audit:stage`.
+5. **Phones:** the scene owns the top band and the copy sits below it on porcelain, never over the plates.
 6. **Agents are abstract.** No eyes, mouth, face or mascot. The voice demo is a scripted scenario labelled "Demo · Szenario, ohne Ton", with no audio and no provider; a live demo needs a provider and a data-protection review first.
-7. **Real proof only.** Window planes on the Websites / Produkte scenes show real screenshots (`public/img/v4/shot-*.webp`) of opsolid.de, OpSo (demo profile) and Kutasia. Never another user's data.
+7. **Real proof only.** Project cards show real screenshots (`public/img/v4/shot-*.webp`) of opsolid.de, OpSo (demo profile) and Kutasia. Never another user's data.
+8. **Self-hosted media.** Video, posters and fonts are same-origin files; no third-party request without consent.
 
-Gate before merging a change to the stage or its CSS: `npm run lint`, `npx tsc --noEmit`, `npm run predeploy`, redirects test, axe on every page at 1440 and 390, Lighthouse mobile on home and one inner page (LCP ≤ 2.5 s, CLS ≤ 0.1), and screenshots of every page at 1440 and 390 checked for overlap and horizontal scroll.
+Gate before merging a change to the hero scene or the marketing CSS: `npm run lint`, `npx tsc --noEmit`, `npm run predeploy`, redirects test, axe on every page at 1440 and 390, Lighthouse mobile on home and one inner page (LCP ≤ 2.5 s, CLS ≤ 0.1), and screenshots of every page at 1440 and 390 checked for overlap and horizontal scroll.

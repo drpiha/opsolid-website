@@ -38,6 +38,7 @@ export function PrivacyPage({ locale }: { locale: L3 }) {
                 <section key={section.title}>
                   <h2>{section.title}</h2>
                   {section.isResponsible ? (
+                    <>
                     <p>
                       OpSolid
                       <br />
@@ -51,6 +52,8 @@ export function PrivacyPage({ locale }: { locale: L3 }) {
                       <br />
                       {L.email}: <a href={`mailto:${SITE_CONFIG.email}`}>{SITE_CONFIG.email}</a>
                     </p>
+                    {section.content ? <p>{section.content}</p> : null}
+                    </>
                   ) : (
                     <>
                       {section.content ? <p>{section.content}</p> : null}

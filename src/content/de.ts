@@ -19,7 +19,7 @@ export const content: Content = {
     notice:
       "OpSolid ist das Einzelunternehmen von Hasan Dönmez mit Sitz in Arnsberg, Deutschland.",
     sections: {
-      according: "Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz, vormals § 5 TMG)",
+      according: "Angaben gemäß § 5 DDG",
       representedBy: "Vertreten durch",
       contact: "Kontakt",
       phone: "Telefon: Auf Anfrage",
@@ -31,15 +31,21 @@ export const content: Content = {
         "Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE462227107",
       responsibleContent:
         "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (Medienstaatsvertrag, vormals § 55 RStV)",
-      disputeResolution: "Online-Streitbeilegung",
+      disputeResolution: "Verbraucherstreitbeilegung",
       disputeResolutionText:
-        "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/. Unsere E-Mail-Adresse finden Sie oben. Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+        "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).",
       liabilityContent: "Haftung für Inhalte",
       liabilityContentText:
-        "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
+        "Als Diensteanbieter sind wir nach § 7 Abs. 1 DDG für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich. Nach den §§ 8 bis 10 DDG sind wir nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung von Informationen nach den allgemeinen Gesetzen bleiben unberührt; eine Haftung ist erst ab Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden entsprechender Rechtsverletzungen entfernen wir die Inhalte umgehend.",
       liabilityLinks: "Haftung für Links",
       liabilityLinksText:
-        "Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.",
+        "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich. Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar; bei Bekanntwerden entfernen wir solche Links umgehend.",
+      copyright: "Urheberrecht",
+      copyrightText: "Die durch uns erstellten Inhalte und Werke auf dieser Website unterliegen dem deutschen Urheberrecht. Vervielfältigung, Bearbeitung und Verbreitung außerhalb der Grenzen des Urheberrechts bedürfen unserer schriftlichen Zustimmung. Inhalte Dritter sind als solche gekennzeichnet. Rechtsverletzungen melden Sie bitte an info@opsolid.de.",
+      trademark: "Hinweis zu Marken",
+      trademarkText: "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",
+      product: "Produkt OpSo",
+      productText: "Für die digitale Visitenkarte „OpSo“ (card.opsolid.de, opso.cc) gelten das Impressum, die Datenschutzerklärung und die Nutzungsbedingungen unter https://card.opsolid.de/imprint, /privacy und /terms.",
       address: "Vollständige Postanschrift wird nach der Gewerbeanmeldung ergänzt.",
     },
   },
@@ -48,154 +54,53 @@ export const content: Content = {
     title: "Datenschutzerklärung",
     subtitle: "Privacy Policy · Aydınlatma Metni",
     notice:
-      "Diese selbst erstellte Datenschutzerklärung umfasst die DSGVO (EU) und KVKK (Türkei) für die OpSolid-Marketing-Site sowie das OpSo Smart-Produkt (Digital Business Card). Eine anwaltlich geprüfte Endfassung ersetzt diesen Hinweis nach der Gewerbeanmeldung. Letzte Durchsicht: Hasan Dönmez.",
-    lastUpdated: "Letzte Aktualisierung: Oktober 2026",
+      "Oktober 2026. Diese Erklärung informiert nach Art. 13 und 14 DSGVO über die Verarbeitung personenbezogener Daten beim Besuch von opsolid.de und bei der Nutzung der dort angebotenen Formulare und Bereiche. Für die App und die Kartenseiten „OpSo“ gilt die eigene Erklärung unter https://card.opsolid.de/privacy. Die deutsche Fassung ist verbindlich; Englisch und Türkisch sind Übersetzungen. Die Texte wurden sorgfältig erstellt, aber nicht anwaltlich geprüft.",
+    lastUpdated: "Stand: 21. Oktober 2026",
     sections: [
       {
-        title: "1. Datenschutz auf einen Blick",
-        content:
-          "Im Folgenden erhalten Sie einen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen oder das OpSo Smart-Produkt nutzen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Es gelten parallel die EU-Datenschutz-Grundverordnung (DSGVO) und das türkische Datenschutzgesetz (KVKK, Gesetz Nr. 6698).",
-      },
-      {
-        title: "2. Verantwortliche Stelle / Veri Sorumlusu",
+        title: "1. Verantwortlicher",
         isResponsible: "true",
+        content: "Einen Datenschutzbeauftragten haben wir nicht benannt.",
       },
       {
-        title: "3. Datenerhebung",
-        subsections: [
-          {
-            title: "Kontaktformular",
-            content:
-              "Über das Kontaktformular übermittelte Daten (Name, E-Mail-Adresse, optional Unternehmen, gewählte Themen und Nachricht) werden zur Bearbeitung der Anfrage und für Rückfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung. KVKK-Grundlage: Art. 5(2)(c) (Vertragserfüllung) bzw. Art. 5(1) açık rıza.",
-          },
-          {
-            title: "Server-Log-Dateien",
-            content:
-              "Der Hosting-Anbieter erfasst automatisch Browsertyp, Betriebssystem, Referrer-URL, Hostname, IP-Adresse (wo möglich gekürzt) und Zeitpunkt der Anfrage. Aufbewahrung: 14 Tage zur Sicherheits- und Missbrauchsanalyse, danach Löschung. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am Betrieb).",
-          },
-        ],
+        title: "2. Hosting und Server-Logfiles",
+        content: "Die Website läuft auf einem Server (VPS) der Hostinger International Ltd. in Vilnius, Litauen (EU). Beim Aufruf verarbeitet der Server technisch notwendig IP-Adresse, Datum und Uhrzeit, aufgerufene URL, Statuscode, Datenmenge, Referrer und User-Agent. Zweck: Auslieferung, Sicherheit, Fehleranalyse. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO. Speicherdauer: in der Regel 14 Tage. Mit Hostinger besteht ein Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO).",
       },
       {
-        title: "4. Hosting",
-        content:
-          "Die Marketing-Site, das Backend des OpSo Smart-Produkts und die Postgres-Datenbank laufen gemeinsam auf einem selbst verwalteten Hostinger VPS (Hostinger International Ltd., AS47583), physisch in Vilnius, Litauen (EU). Server-Hostname: srv1150632.hstgr.cloud. Sämtlicher Besucher-Traffic, Karteninhalte, Kundendatensätze und Datenbank-Backups verbleiben auf EU-Gebiet. Der AVV (Art. 28 DSGVO) mit Hostinger liegt vor.",
+        title: "3. Kontaktformular, E-Mail und KI-Check-Anfragen",
+        content: "Wenn Sie uns über ein Formular oder per E-Mail kontaktieren, verarbeiten wir die Angaben (z. B. Name, E-Mail-Adresse, Unternehmen, Themen, Nachricht), um Ihre Anfrage zu bearbeiten und Rückfragen zu stellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen/Vertrag), sonst lit. f (berechtigtes Interesse an der Beantwortung) bzw. lit. a, wenn Sie eingewilligt haben. Speicherdauer: bis die Anfrage erledigt ist und danach bis zum Ablauf gesetzlicher Aufbewahrungsfristen; Anfragen ohne Vertragsschluss löschen wir spätestens nach 24 Monaten. Benachrichtigungen und Antworten werden über einen E-Mail-Versanddienst (Brevo, Sendinblue SAS, Frankreich) versandt.",
       },
       {
-        title: "5. Cookies & Analyse",
-        subsections: [
-          {
-            title: "Erforderliche und selbst gewählte Einstellungen",
-            content:
-              "Wir speichern nur, was technisch erforderlich ist oder was Sie selbst wählen. Dazu gehören ein Sprach-Cookie, das nur gesetzt wird, wenn Sie die Sprache selbst umstellen; die Einstellung des Schalters „3D-Effekte“ im Seitenfuß, die nur bei Benutzung im localStorage Ihres Browsers gespeichert wird; und in Konto- und Kartenbereichen ein Sitzungs-Cookie nach der Anmeldung sowie einzelne Anzeige-Einstellungen und Formularentwürfe im localStorage. Diese Angaben dienen nur dazu, Ihre Auswahl umzusetzen oder den Dienst bereitzustellen, und werden nicht an Dritte weitergegeben. Sie sind nach § 25 Abs. 2 TDDDG einwilligungsfrei; deshalb zeigt diese Website kein Cookie-Banner.",
-          },
-          {
-            title: "Keine Analyse",
-            content:
-              "Diese Website setzt kein Analyse- oder Tracking-Tool ein: keine Zählung von Seitenaufrufen, keine Besucherprofile, keine Tracking-Cookies.",
-          },
-          {
-            title: "Kein Drittanbieter-Tracking, keine Werbung, keine Social-Plugins",
-            content:
-              "Keine Werbe-Cookies, keine Tracking-Pixel Dritter, keine Social-Network-Plugins, kein Fingerprinting. Schriftarten werden selbst gehostet (kein Google-Fonts-CDN-Aufruf).",
-          },
-        ],
+        title: "4. Kundenkonto und Bereiche nach Anmeldung",
+        content: "Soweit Sie sich anmelden, verarbeiten wir Kontaktdaten, Zugangsdaten (Passwörter nur als Hash) und Sitzungsdaten (Sitzungs-Cookie, gehashte IP-Adresse zur Missbrauchsabwehr), um das Konto bereitzustellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b und f DSGVO. Speicherdauer: bis zur Löschung des Kontos; Rechnungsdaten 10 Jahre nach § 257 HGB, § 147 AO.",
       },
       {
-        title: "6. Auftragsverarbeiter / Sub-Processors",
-        content:
-          "Wir setzen die folgenden Auftragsverarbeiter ein, um den Dienst zu erbringen. AVV / DPA gemäß Art. 28 DSGVO liegen jeweils vor. Die jeweils aktuelle Liste kann unter info@opsolid.de angefordert werden.",
-        subsections: [
-          {
-            title: "Hosting & Infrastruktur",
-            content:
-              "Hostinger International Ltd. (Litauen, EU) — ein einziger VPS in Vilnius hostet die Marketing-Site, die OpSo Smart-Anwendung und die Postgres-Datenbank. Kein US-Hosting-Auftragsverarbeiter.",
-          },
-          {
-            title: "E-Mail-Zustellung",
-            content:
-              "SMTP-Relay für Kontaktformular-Benachrichtigungen. Anbieterdetails auf Anfrage; werden bei Wechsel aktualisiert.",
-          },
-          {
-            title: "Zahlungen (OpSo Smart, geplant)",
-            content:
-              "Stripe Payments Europe Ltd. (Irland) für Einmal- und Abo-Abrechnung. Kartendaten werden von Stripe tokenisiert; OpSolid sieht keine Klartext-PAN. AVV über das Stripe Services Agreement. Internationale Übermittlung an Stripe US auf Basis DPF + SCC.",
-          },
-          {
-            title: "KI-Anbieter (sofern eingesetzt)",
-            content:
-              "OpenAI Ireland Ltd. und Anthropic Ireland Ltd. können für Produktivfunktionen über API eingesetzt werden. AVV und SCC liegen vor; Nutzerinhalte werden nicht zum Modelltraining verwendet (API-seitiger Opt-out aktiv).",
-          },
-        ],
+        title: "5. Cookies, lokaler Speicher und Endgerätezugriff (§ 25 TDDDG)",
+        content: "Wir setzen keine Analyse-, Werbe- oder Tracking-Cookies ein. Gespeichert werden nur technisch erforderliche bzw. von Ihnen selbst gewählte Einstellungen: ein Sprach-Cookie (nur wenn Sie die Sprache umstellen), die Einstellung „Hintergrundvideo“ und Formularentwürfe im lokalen Speicher Ihres Browsers sowie nach einer Anmeldung ein Sitzungs-Cookie. Das ist nach § 25 Abs. 2 TDDDG ohne Einwilligung zulässig; ein Cookie-Banner ist deshalb nicht nötig. Schriftarten, Videos und Skripte liefern wir selbst aus; es werden keine Google Fonts nachgeladen.",
       },
       {
-        title: "7. Internationale Datenübermittlung",
-        content:
-          "Soweit personenbezogene Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt werden (z. B. an Stripe, OpenAI oder Anthropic in den USA), erfolgt dies (a) auf Grundlage des Angemessenheitsbeschlusses zum EU-US Data Privacy Framework, sofern der Empfänger DPF-zertifiziert ist, oder (b) auf Grundlage der Standardvertragsklauseln (SCC, EU 2021/914) mit dokumentiertem Transfer Impact Assessment. Für betroffene Personen mit Wohnsitz in der Türkei gelten zusätzlich KVKK Art. 9 zur Yurtdışı Aktarım: Übermittlungen erfolgen unter KVKK-Standardvertragsklauseln (Yönetmelik 10.07.2024) und werden, sofern vorgesehen, dem Kurum innerhalb von 5 Werktagen gemeldet.",
+        title: "6. KI-Dienste",
+        content: "Wenn Sie eine Funktion mit KI-Unterstützung nutzen, werden die dafür eingegebenen Inhalte an den jeweiligen API-Anbieter (OpenAI Ireland Ltd. bzw. Anthropic Ireland, Limited) übermittelt. Nach unseren API-Einstellungen werden Nutzerinhalte nicht zum Training verwendet. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO; Drittlandübermittlungen auf Grundlage von Standardvertragsklauseln bzw. DPF.",
       },
       {
-        title: "8. OpSo Smart Digital Business Card Produkt",
-        subsections: [
-          {
-            title: "Zweck & Rechtsgrundlage",
-            content:
-              "Wir verarbeiten die Daten, die Sie über das OpSo Smart-Lead-Formular oder den Self-Service-Bestellfluss übermitteln (Name, geschäftliche E-Mail, Unternehmen, Position, Telefon (optional), Nachricht, Foto/Logo-Upload, Markenfarben, Social-Links), zur Erbringung des Dienstes. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) und Art. 6 Abs. 1 lit. a DSGVO (Ihre ausdrückliche Einwilligung in die öffentliche Veröffentlichung).",
-          },
-          {
-            title: "Öffentliche Veröffentlichung Ihrer Karte",
-            content:
-              "Wenn Sie eine OpSo Smart-Karte unter /c/{slug} veröffentlichen, werden die eingetragenen Informationen öffentlich im Internet zugänglich. Hierfür ist Ihre ausdrückliche, separate Opt-in-Auswahl im Veröffentlichungs-Schritt erforderlich. Sie können die Karte jederzeit aus Ihrem Konto entveröffentlichen oder löschen; wir setzen anschließend einen noindex-Header und veranlassen die URL-Entfernung bei den großen Suchmaschinen.",
-          },
-          {
-            title: "Drittinhalte",
-            content:
-              "Sie sind allein dafür verantwortlich, sämtliche Rechte an hochgeladenen Fotos, Logos und sonstigen Inhalten zu besitzen. Mit dem Upload bestätigen Sie das Vorliegen dieser Rechte. Notice-and-Takedown-Anfragen können an info@opsolid.de gerichtet werden; Antwortzeit innerhalb von 7 Tagen.",
-          },
-          {
-            title: "Hosting",
-            content:
-              "Karten- und Kundendaten werden auf dem Hostinger VPS (Litauen, EU) gespeichert. Keine US-Subauftragsverarbeiter für OpSo Smart-Karteninhalte selbst; Zahlungsdaten werden von Stripe gemäß den oben genannten Sub-Processor-Bedingungen verarbeitet.",
-          },
-          {
-            title: "14-tägiges Widerrufsrecht (B2C)",
-            content:
-              "Wenn Sie OpSo Smart als Verbraucherin oder Verbraucher (B2C, EU/EWR) bestellen, haben Sie ein 14-tägiges Widerrufsrecht nach § 355 BGB. Damit der digitale Dienst vor Ablauf der 14 Tage beginnen kann, müssen Sie ausdrücklich die sofortige Ausführung verlangen und bestätigen, dass das Widerrufsrecht mit vollständiger Vertragserfüllung erlischt — beides über separate Checkboxen im Checkout. Wir protokollieren Ihre Bestätigungen zu Beweiszwecken. Ab dem 19. Juni 2026 steht ein One-Click-Widerrufsbutton zur Verfügung.",
-          },
-          {
-            title: "Aufbewahrung",
-            content:
-              "Aktive OpSo Smart-Karten: Aufbewahrung während laufendem Abo. Gekündigt / inaktiv: Löschung 90 Tage nach Abo-Ende (Erinnerungsmail an Tag 60). Lead-Formular-Übermittlungen (ohne Kauf): 24 Monate. Rechnungen: 10 Jahre Aufbewahrung gemäß § 257 HGB / Vergi Usul Kanunu (gesetzliche Pflicht).",
-          },
-          {
-            title: "Marketing-E-Mails (Einwilligung / Double-Opt-in)",
-            content:
-              "Werbliche E-Mails (Produktneuigkeiten und Angebote zu OpSo Smart) senden wir Ihnen nur mit Ihrer vorherigen ausdrücklichen Einwilligung (§ 7 UWG, Art. 6 Abs. 1 lit. a DSGVO). Die Einwilligung wird getrennt von der Kontoerstellung über ein nicht vorausgewähltes Kontrollkästchen erteilt und im Double-Opt-in-Verfahren per Bestätigungs-E-Mail verifiziert; erst nach Ihrer Bestätigung versenden wir Marketing-E-Mails. Zum Nachweis protokollieren wir den genauen Einwilligungstext, Zeitstempel sowie eine gehashte (nicht im Klartext gespeicherte) IP-Adresse. Sie können die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen — über den Abmeldelink in jeder E-Mail oder per E-Mail an info@opsolid.de. Der Widerruf lässt die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung unberührt.",
-          },
-          {
-            title: "Recht auf Löschung",
-            content:
-              "Sie können Ihre OpSo Smart-Karte und alle zugehörigen personenbezogenen Daten mit einem Klick aus Ihrem Konto oder per E-Mail an info@opsolid.de löschen. Die Löschung wird innerhalb von 30 Tagen wirksam. Vor destruktiven Aktionen ist eine Identitätsprüfung (E-Mail-Bestätigung + 2FA, sofern aktiviert) erforderlich.",
-          },
-        ],
+        title: "7. Empfänger und Drittländer",
+        content: "Hostinger (Hosting), E-Mail-Versanddienst, KI-Anbieter (nur wie oben beschrieben) sowie Behörden, soweit gesetzlich verpflichtet. Bei Übermittlungen außerhalb des EWR gilt: Angemessenheitsbeschluss (EU-US Data Privacy Framework), sonst EU-Standardvertragsklauseln (Art. 46 DSGVO).",
       },
       {
-        title: "9. Ihre Rechte (DSGVO)",
-        content:
-          "Nach Art. 15–22 DSGVO haben Sie das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18), Datenübertragbarkeit (Art. 20) und auf Widerspruch gegen die Verarbeitung (Art. 21). Eine erteilte Einwilligung können Sie jederzeit ohne Auswirkung auf bisherige Verarbeitungen widerrufen. Zur Ausübung Ihrer Rechte: info@opsolid.de — wir antworten innerhalb eines Monats (Art. 12 Abs. 3). Sie können sich auch bei der Aufsichtsbehörde Ihres gewöhnlichen Aufenthaltsorts oder des Orts der mutmaßlichen Verletzung beschweren.",
+        title: "8. Ihre Rechte",
+        content: "Auskunft (Art. 15), Berichtigung (16), Löschung (17), Einschränkung (18), Datenübertragbarkeit (20), Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (21), Widerruf einer Einwilligung mit Wirkung für die Zukunft (7 Abs. 3) und Beschwerde bei einer Aufsichtsbehörde (77). Zuständig: Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2–4, 40213 Düsseldorf (ldi.nrw.de). Anfragen an info@opsolid.de.",
       },
       {
-        title: "10. Ihre Rechte (KVKK Madde 11) — für betroffene Personen mit Wohnsitz in der Türkei",
-        content:
-          "Gemäß § 11 des türkischen KVKK (Gesetz Nr. 6698): Auskunft über die Verarbeitung, Auskunft über Verarbeitungszweck und zweckgemäße Nutzung, Information über Empfänger im In- und Ausland, Berichtigung unvollständiger oder unrichtiger Daten, Löschung oder Vernichtung gemäß § 7 KVKK, Mitteilung von Berichtigungen/Löschungen an Empfänger, Widerspruch gegen ausschließlich automatisierte Entscheidungen und Schadensersatz bei rechtswidriger Verarbeitung. Anfragen: info@opsolid.de. Gemäß KVKK-Grundsatzentscheidung 2026/347 sind die Aydınlatma Metni (diese Seite) und die açık rıza-Erklärung getrennte Dokumente; eine Einwilligung wird im Produktfluss gesondert eingeholt.",
+        title: "9. Pflicht zur Bereitstellung, automatisierte Entscheidungen",
+        content: "Angaben in Formularen sind freiwillig, ohne die nötigen Angaben können wir Ihre Anfrage aber nicht bearbeiten. Automatisierte Entscheidungsfindung im Sinne von Art. 22 DSGVO findet nicht statt.",
       },
       {
-        title: "11. Datenpannenmeldung",
-        content:
-          "Falls eine Verletzung des Schutzes personenbezogener Daten voraussichtlich ein Risiko für Ihre Rechte und Freiheiten zur Folge hat, melden wir dies der zuständigen Aufsichtsbehörde innerhalb von 72 Stunden nach Bekanntwerden (Art. 33 DSGVO). Bei hohem Risiko benachrichtigen wir die betroffenen Personen unverzüglich (Art. 34 DSGVO). Nach KVKK informieren wir zusätzlich den Kurum und die betroffenen Personen in der kürzest möglichen Zeit (KVKK-Kurul-Beschlüsse).",
+        title: "10. Hinweis für Personen in der Türkei (KVKK)",
+        content: "Für Personen in der Türkei gilt zusätzlich das Gesetz Nr. 6698 (KVKK); die Aufklärung nach Art. 10 KVKK steht in der türkischen Fassung dieser Erklärung.",
       },
       {
-        title: "12. Änderungen dieser Erklärung",
-        content:
-          "Wir können diese Erklärung anpassen, um Änderungen der Rechtslage oder unserer Verarbeitung Rechnung zu tragen. Wesentliche Änderungen werden auf dieser Seite und, sofern Sie ein Konto besitzen, mindestens 30 Tage im Voraus per E-Mail angekündigt.",
+        title: "11. Änderungen",
+        content: "Wir passen diese Erklärung an, wenn sich Website, Dienstleister oder Rechtslage ändern; es gilt die jeweils veröffentlichte Fassung.",
       },
     ],
   },

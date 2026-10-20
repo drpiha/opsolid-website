@@ -1,11 +1,12 @@
-/* Legal pages (Impressum, Datenschutz) on the v4 sheet. The notice is a hairline
-   box, not a card: no radius, no shadow. */
-.notice { margin: 8px 0 0; padding: 16px 20px; border: 1px solid var(--v4-line2); color: var(--v4-ink2); font-size: 0.95rem; line-height: 1.6; text-wrap: pretty; }
+/* Legal pages (Impressum, Datenschutz) on the light marketing sheet. */
+.notice { margin: 24px 0 0; padding: 18px 22px; border-radius: 18px; background: var(--v4-bg2); border: 1px solid var(--v4-line); color: var(--v4-ink2); font-size: 0.95rem; line-height: 1.6; text-wrap: pretty; max-width: 52rem; }
 .notice > :first-child { margin-bottom: 8px; }
 .notice p { margin: 0; }
 .sub { margin: -8px 0 24px; font-family: var(--v4-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--v4-ink3); }
-.list { margin-top: 40px; overflow-wrap: break-word; }
-.list .body p { margin: 0; color: var(--v4-ink2); }
-.doc { margin-top: 40px; overflow-wrap: break-word; }
+.list { margin-top: 40px; max-width: 52rem; overflow-wrap: break-word; border-top: 1.5px solid var(--v4-ink); }
+.list > li { padding: 22px 0; border-bottom: 1px solid var(--v4-line); }
+.list :global(.v4-row-h) { font-size: 1.15rem; margin-bottom: 8px; }
+.list .body p { margin: 0; line-height: 1.65; color: var(--v4-ink2); }
+.doc { margin-top: 40px; max-width: 52rem; overflow-wrap: break-word; }
 .doc > section + section { margin-top: 2.4em; padding-top: 0.2em; border-top: 1px solid var(--v4-line); }
 .doc > section:first-child h2 { margin-top: 0; }

@@ -49,9 +49,9 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
 ];
 
 const TAGLINE = L(
-  "KI-Agenten, Websites und Prozessautomatisierung für Unternehmen. Sitz in Arnsberg; wir arbeiten auf Deutsch, Englisch und Türkisch.",
-  "AI agents, websites and process automation for businesses. Based in Arnsberg, Germany; we work in German, English and Turkish.",
-  "İşletmeler için YZ asistanları, web siteleri ve süreç otomasyonu. Merkezimiz Arnsberg'de; Almanca, İngilizce ve Türkçe çalışıyoruz.",
+  "KI-Agenten, Websites und Automatisierung, die kleinen und mittleren Betrieben Routinearbeit abnehmen.",
+  "AI agents, websites and automation that take routine work off small and mid-sized businesses.",
+  "Küçük ve orta ölçekli işletmelerin rutin işlerini üstlenen YZ asistanları, web siteleri ve otomasyon.",
 );
 const NOT_TOPSOLID = L(
   "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",
@@ -72,9 +72,8 @@ export function Footer() {
     <footer className="v4-footer">
       <div className="v4-footer-in">
         <div className="v4-footer-top">
-          {/* The official lockup drawn as a hairline outline: the footer is the sheet's signature, not a second logotype. */}
-          <Logo className="v4-footer-logo" />
           <div className="v4-footer-brand">
+            <Logo className="v4-footer-logo" />
             <p className="v4-footer-tag">{TAGLINE[loc]}</p>
             <p className="v4-footer-contact">
               <a className="v4-footer-mail" href={`mailto:${SITE_CONFIG.email}`}>
@@ -105,10 +104,8 @@ export function Footer() {
             ))}
           </div>
         </div>
-        {/* Drafting title block (Schriftfeld): the same facts as before, one cell each. */}
         <div className="v4-footer-base">
           <span className="v4-tb">© {year} OpSolid</span>
-          <span className="v4-tb">Arnsberg</span>
           <span className="v4-tb">
             {STAND[loc]}: {formatStand(locale)}
           </span>

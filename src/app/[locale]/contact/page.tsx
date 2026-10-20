@@ -15,9 +15,9 @@ export function generateMetadata({ params }: Params): Metadata {
 }
 
 const LABEL = {
-  de: { form: "Nachricht schreiben", direct: "Direkter Kontakt", mail: "E-Mail", phone: "Telefon", where: "Standort", note: "Arnsberg, Deutschland" },
-  en: { form: "Write a message", direct: "Reach us directly", mail: "Email", phone: "Phone", where: "Location", note: "Arnsberg, Germany" },
-  tr: { form: "Mesaj yazın", direct: "Doğrudan ulaşın", mail: "E-posta", phone: "Telefon", where: "Konum", note: "Arnsberg, Almanya" },
+  de: { form: "Nachricht schreiben", direct: "Direkter Kontakt", mail: "E-Mail", phone: "Telefon" },
+  en: { form: "Write a message", direct: "Reach us directly", mail: "Email", phone: "Phone" },
+  tr: { form: "Mesaj yazın", direct: "Doğrudan ulaşın", mail: "E-posta", phone: "Telefon" },
 } as const;
 
 export default function Page({ params }: Params) {
@@ -26,9 +26,9 @@ export default function Page({ params }: Params) {
   const L = LABEL[loc];
   return (
     <PageRenderer page={page} locale={loc} trail={[{ label: page.crumb }]} kind="ContactPage">
-      <section className="v4-sec is-flow" aria-labelledby="form-h" data-scene="tight" data-dim="1">
-        <div className="v4-in" style={{ display: "grid", gap: "48px" }}>
-          <div className="v4-col is-wide">
+      <section className="v4-sec is-contact" aria-labelledby="form-h">
+        <div className="v4-in">
+          <div className="v4-col is-form">
             <Reveal>
               <h2 className="v4-h2" id="form-h">
                 {L.form}
@@ -36,9 +36,9 @@ export default function Page({ params }: Params) {
               <ContactForm4 />
             </Reveal>
           </div>
-          <div className="v4-col">
+          <div className="v4-col is-direct">
             <Reveal>
-              <h2 className="v4-h2" style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}>
+              <h2 className="v4-h3">
                 {L.direct}
               </h2>
               <dl className="v4-spec">
@@ -54,8 +54,6 @@ export default function Page({ params }: Params) {
                     {SITE_CONFIG.phone}
                   </a>
                 </dd>
-                <dt>{L.where}</dt>
-                <dd>{L.note}</dd>
               </dl>
             </Reveal>
           </div>

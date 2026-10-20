@@ -1,20 +1,18 @@
 #!/usr/bin/env node
 /**
- * Layout guard for the v4 marketing routes. Needs a running server (`npm run start` or `npm run dev`).
+ * Layout guard for the marketing routes. Needs a running server (`npm run start` or `npm run dev`).
  *
- *   node scripts/audit-stage.mjs                       # stage overlap guard, all pages, 1280/1440/1920/390
- *   node scripts/audit-stage.mjs --headings            # headline-fit guard only (no WebGL, fast), de/en/tr
- *   node scripts/audit-stage.mjs --mid                 # also sample every scene at 78 % progress (mid-morph)
+ *   node scripts/audit-stage.mjs                       # hero-scene guard, all pages, 1280/1440/1920/390
+ *   node scripts/audit-stage.mjs --headings            # headline-fit guard only (fast), de/en/tr
  *   node scripts/audit-stage.mjs --pages home,agents --sizes 1440x900 --shots /tmp/shots
  *
- * Environment: BASE (default http://localhost:3000), PLAYWRIGHT_MODULE (path or package, default "playwright"),
- * CHROMIUM_PATH (default /opt/pw-browsers/chromium when present).
+ * Environment: BASE (default http://localhost:3000), CHROMIUM_PATH (default: the first existing of
+ * /opt/pw-browsers/chromium, the macOS Google Chrome app, /usr/bin/chromium, /usr/bin/google-chrome).
  *
- * Stage guard: for every section of the page (scene sections and the flow sections between them) the 3D object's projected screen box
- * (`window.__v4stage.bounds()`, only exposed with `?debug`) must not intersect the rectangle of any
- * visible heading, paragraph, list item, table, link, button or form control. On desktop there is no
- * exemption (an opaque panel does not excuse an intersection). On phones (< 760 px) text sits on opaque
- * panels and the object is above it, so elements with an opaque background ancestor are exempt.
+ * Scene guard: the hero tap layer (components/v4/HeroScene, `window.__v5scene`, only exposed with `?debug`)
+ * is tapped on a 6×5 grid across the hero. After every tap the open card must lie inside the hero and the
+ * viewport and must not intersect any text, link or button of the hero copy, nor the scene's control bar.
+ * The control bar itself must not intersect the copy. The poster image must have loaded.
  *
  * Headline guard: no h1/h2 may need a mid-word break (checked with `overflow-wrap: normal`, soft
  * hyphens still allowed), which is what produces "Prozessautomatisierun / g".
@@ -22,6 +20,10 @@
  * Also fails on horizontal scroll and console errors. Exit code 1 on any failure.
  */
 import fs from "node:fs";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const puppeteer = require("puppeteer-core");
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -32,7 +34,6 @@ const opt = (n, d) => {
 
 const BASE = (process.env.BASE || "http://localhost:3000").replace(/\/$/, "");
 const HEADINGS_ONLY = flag("headings");
-const MID = flag("mid");
 const SHOTS = opt("shots", "");
 const LOCALES = opt("locales", HEADINGS_ONLY ? "de,en,tr" : "de").split(",");
 const SIZES = opt("sizes", HEADINGS_ONLY ? "360x740,390x844,768x1024,1280x720,1440x900,1920x1080" : "1280x720,1440x900,1920x1080,390x844")
@@ -55,47 +56,32 @@ const PATHS = {
 };
 const PAGES = opt("pages", Object.keys(PATHS).join(",")).split(",");
 
-async function loadPlaywright() {
-  const candidates = [process.env.PLAYWRIGHT_MODULE, "playwright", "/opt/node22/lib/node_modules/playwright/index.mjs"].filter(Boolean);
-  for (const c of candidates) {
-    try {
-      return await import(c);
-    } catch {
-      /* try next */
-    }
-  }
-  throw new Error("playwright not found; set PLAYWRIGHT_MODULE");
-}
-
-const pw = await loadPlaywright();
-const chromium = pw.chromium ?? pw.default?.chromium;
-const exe = process.env.CHROMIUM_PATH || (fs.existsSync("/opt/pw-browsers/chromium") ? "/opt/pw-browsers/chromium" : undefined);
-const browser = await chromium.launch({
-  executablePath: exe,
-  args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist", "--no-sandbox"],
-});
+const exe =
+  process.env.CHROMIUM_PATH ||
+  ["/opt/pw-browsers/chromium", "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/usr/bin/chromium", "/usr/bin/google-chrome"].find((p) => fs.existsSync(p));
+if (!exe) throw new Error("no Chromium found; set CHROMIUM_PATH");
+const browser = await puppeteer.launch({ executablePath: exe, headless: true, args: ["--no-sandbox", "--autoplay-policy=no-user-gesture-required"] });
 
 const failures = [];
 const fail = (msg) => {
   failures.push(msg);
   console.log("FAIL " + msg);
 };
-
-const TEXT_SELECTOR = "h1,h2,h3,p,li,dt,dd,summary,a,button,th,td,table,label,input,textarea,.v4-eyebrow";
+const COPY_SELECTOR = ".v4-hero-copy :is(h1,p,a,button,dt,dd,li,.v4-eyebrow)";
 
 for (const loc of LOCALES) {
   for (const [w, h] of SIZES) {
     const mobile = w < 760;
-    const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: mobile, isMobile: mobile, deviceScaleFactor: 1 });
     for (const pg of PAGES) {
       const label = `${loc}/${pg} @${w}x${h}`;
-      const p = await ctx.newPage();
+      const p = await browser.newPage();
+      await p.setViewport({ width: w, height: h, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1 });
       const errs = [];
       p.on("pageerror", (e) => errs.push("pageerror: " + e.message));
       p.on("console", (m) => {
         if (m.type() === "error") errs.push("console: " + m.text().slice(0, 140));
       });
-      await p.goto(`${BASE}/${loc}${PATHS[pg]}?debug`, { waitUntil: "load" });
+      await p.goto(`${BASE}/${loc}${PATHS[pg]}?debug`, { waitUntil: "load", timeout: 90000 });
 
       // headline fit: no h1/h2 may need a mid-word break
       const tight = await p.evaluate(() =>
@@ -115,99 +101,63 @@ for (const loc of LOCALES) {
       for (const t of tight) fail(`${label}: heading needs a mid-word break: "${t}"`);
       if (await p.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) fail(`${label}: horizontal scroll`);
 
-      if (!HEADINGS_ONLY) {
-        await p.mouse.move(100, 100);
-        await p.mouse.move(200, 200);
-        // every section is sampled (scene sections and the plain flow sections between them)
-        const scenes = await p.evaluate(() => document.querySelectorAll("[data-scene]").length);
-        const sections = await p.evaluate(() => document.querySelectorAll("main section").length);
-        const started = await p
-          .waitForFunction(() => document.documentElement.dataset.stage, null, { timeout: 60000 })
+      const hasHero = await p.evaluate(() => !!document.querySelector(".v4-hero"));
+      if (!HEADINGS_ONLY && hasHero) {
+        const ready = await p
+          .waitForFunction(() => window.__v5scene && document.querySelector(".v4-scene-media img")?.complete, { timeout: 30000 })
           .then(() => true)
           .catch(() => false);
-        if (scenes > 0 && !started) fail(`${label}: stage never started`);
-        for (let i = 0; started && scenes > 0 && i < sections; i++) {
-          await p.evaluate(
-            ({ i, h, MID }) => {
-              const el = document.querySelectorAll("main section")[i];
-              const r = el.getBoundingClientRect();
-              const y = window.scrollY + r.top + (MID ? r.height * 0.78 : Math.min(r.height * 0.2, 200)) - h * 0.5 + 40;
-              window.scrollTo(0, Math.max(0, y));
-            },
-            { i, h, MID: false },
-          );
-          const passes = MID ? [false, true] : [false];
-          for (const mid of passes) {
-            if (mid) {
-              await p.evaluate(
-                ({ i, h }) => {
-                  const el = document.querySelectorAll("main section")[i];
-                  const r = el.getBoundingClientRect();
-                  window.scrollTo(0, Math.max(0, window.scrollY + r.top + r.height * 0.78 - h * 0.5 + 40));
-                },
-                { i, h },
-              );
-            }
-            const f0 = (await p.evaluate(() => window.__v4stage?.bounds()))?.frames ?? 0;
-            let prev = null;
-            let stable = 0;
-            for (let t = 0; t < 120 && stable < 2; t++) {
-              await p.waitForTimeout(400);
-              const bd = await p.evaluate(() => window.__v4stage?.bounds());
-              // at least 40 rendered frames since the scroll, then two identical reads
-              const settled = bd && bd.frames - f0 >= 40 && prev && Math.abs(bd.l - prev.l) + Math.abs(bd.r - prev.r) + Math.abs(bd.t - prev.t) + Math.abs(bd.b - prev.b) < 4;
-              stable = settled ? stable + 1 : 0;
-              prev = bd;
-            }
-            const data = await p.evaluate(
-              ({ sel, mobile }) => {
-                const bd = window.__v4stage?.bounds();
-                const rects = [];
-                document.querySelectorAll(sel).forEach((e) => {
-                  if (e.closest("header,footer,[role=dialog]")) return;
-                  const r = e.getBoundingClientRect();
-                  if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > innerHeight) return;
-                  const cs = getComputedStyle(e);
-                  if (cs.visibility === "hidden" || cs.opacity === "0") return;
-                  let panel = false;
-                  if (mobile) {
-                    for (let a = e; a && a.tagName !== "MAIN"; a = a.parentElement) {
-                      const m = getComputedStyle(a).backgroundColor.match(/rgba?\(([^)]+)\)/);
-                      if (m) {
-                        const parts = m[1].split(",").map(Number);
-                        if ((parts.length > 3 ? parts[3] : 1) >= 0.99) {
-                          panel = true;
-                          break;
-                        }
-                      }
-                    }
-                  }
-                  rects.push({ t: (e.textContent || e.tagName).trim().slice(0, 36), l: r.left, r: r.right, top: r.top, b: r.bottom, panel });
-                });
-                return { bd, rects };
+        if (!ready) fail(`${label}: scene hook or poster not ready`);
+        const poster = await p.evaluate(() => document.querySelector(".v4-scene-media img")?.naturalWidth ?? 0);
+        if (!poster) fail(`${label}: poster image did not load`);
+        const bar = await p.evaluate((sel) => {
+          const hit = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+          const copy = [...document.querySelectorAll(sel)].map((e) => e.getBoundingClientRect()).filter((r) => r.width > 2 && r.height > 2);
+          const ctrl = [...document.querySelectorAll(".v4-scene-bar .v4-scene-hint span:last-child, .v4-scene-bar button")].map((e) => e.getBoundingClientRect());
+          return ctrl.some((c) => copy.some((r) => hit(c, r)));
+        }, COPY_SELECTOR);
+        if (bar) fail(`${label}: scene control bar overlaps the hero copy`);
+        for (let gy = 0; ready && gy < 5; gy++) {
+          for (let gx = 0; gx < 6; gx++) {
+            const fx = 0.06 + gx * 0.176;
+            const fy = 0.1 + gy * 0.2;
+            const res = await p.evaluate(
+              async ({ fx, fy, sel }) => {
+                window.__v5scene.clear();
+                await new Promise((r) => requestAnimationFrame(() => r()));
+                window.__v5scene.tap(fx, fy);
+                await new Promise((r) => setTimeout(r, 520));
+                const card = document.querySelector(".v4-scene-card.is-current");
+                if (!card) return { err: "no card opened" };
+                const c = card.getBoundingClientRect();
+                const hero = document.querySelector(".v4-hero").getBoundingClientRect();
+                const hit = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 2 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 2;
+                const over = [...document.querySelectorAll(sel)]
+                  .map((e) => ({ t: (e.textContent || e.tagName).trim().slice(0, 30), r: e.getBoundingClientRect() }))
+                  .filter((e) => e.r.width > 2 && e.r.height > 2 && hit(c, e.r))
+                  .map((e) => e.t);
+                const ctrl = [...document.querySelectorAll(".v4-scene-bar button")].some((b) => hit(c, b.getBoundingClientRect()));
+                const out = c.left < hero.left - 1 || c.right > hero.right + 1 || c.top < hero.top - 1 || c.bottom > hero.bottom + 1 || c.right > innerWidth;
+                return { over, ctrl, out };
               },
-              { sel: "main " + TEXT_SELECTOR.split(",").join(",main "), mobile },
+              { fx, fy, sel: COPY_SELECTOR },
             );
-            if (!data.bd) continue;
-            const { l, r, t, b } = data.bd;
-            for (const e of data.rects) {
-              if (e.panel) continue;
-              const ox = Math.min(r, e.r) - Math.max(l, e.l);
-              const oy = Math.min(b, e.b) - Math.max(t, e.top);
-              if (ox > 2 && oy > 2) fail(`${label} section ${i}${mid ? " (mid-morph)" : ""} ${data.bd.from}→${data.bd.to}: object overlaps "${e.t}" (${Math.round(ox)}x${Math.round(oy)} px)`);
-            }
-            if (SHOTS) {
-              fs.mkdirSync(SHOTS, { recursive: true });
-              await p.screenshot({ path: `${SHOTS}/${loc}_${pg}_${w}_${i}${mid ? "m" : ""}.png` });
-            }
+            const at = `tap ${Math.round(fx * 100)}%/${Math.round(fy * 100)}%`;
+            if (res.err) fail(`${label} ${at}: ${res.err}`);
+            if (res.over?.length) fail(`${label} ${at}: card covers "${res.over[0]}"`);
+            if (res.ctrl) fail(`${label} ${at}: card covers the scene controls`);
+            if (res.out) fail(`${label} ${at}: card leaves the hero`);
           }
+        }
+        if (SHOTS) {
+          fs.mkdirSync(SHOTS, { recursive: true });
+          await p.screenshot({ path: `${SHOTS}/${loc}_${pg}_${w}.png` });
         }
       }
       for (const e of errs) fail(`${label}: ${e}`);
       console.log(`ok   ${label}`);
       await p.close();
     }
-    await ctx.close();
   }
 }
 await browser.close();

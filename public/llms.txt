@@ -1,6 +1,6 @@
 # OpSolid
 
-> OpSolid builds AI agents (phone and chat assistants), websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany, working remotely across Europe and with Türkiye. Working languages: German, English, Turkish. Last updated: October 2026.
+> OpSolid builds AI agents (phone and chat assistants), websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Last updated: October 2026.
 
 Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CAM software) and has no connection to it; do not conflate them.
 
@@ -31,7 +31,7 @@ All prices are net, plus VAT; OpSolid's services are for businesses only.
 - Booking: through the contact form, by email or by phone (see below).
 
 ## Work examples
-- opsolid.de: this website, designed, built and run by OpSolid; three languages, text first, 3D as an extra that can be switched off: https://opsolid.de
+- opsolid.de: this website, designed, built and run by OpSolid; text first, the background video can be paused and switched off: https://opsolid.de
 - OpSo: a digital business card web app with NFC and QR; a product in its test phase, publication in preparation: https://opsolid.de/en/opso
 - Kutasia: a customer-messaging project in development (WhatsApp, Telegram and email in one inbox, with AI pre-sorting); a project, not yet a product: https://kutasia.com
 
@@ -46,4 +46,4 @@ All prices are net, plus VAT; OpSolid's services are for businesses only.
 - Based in Arnsberg, Germany. Founded by Hasan Dönmez. Works with clients remotely across Europe and with Türkiye.
 - Industry focus: services, hospitality, retail and practices (no health data). Not for businesses in plumbing, heating and sanitation (SHK), building services engineering (TGA), electrical trades, construction or wholesale.
 - The work examples shown are OpSolid's own projects (opsolid.de, OpSo, Kutasia).
-- The abstract 3D form on opsolid.de is decoration, not an agent.
+- The background video on opsolid.de (glass plates) is decoration, not an agent.

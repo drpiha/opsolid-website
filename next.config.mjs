@@ -68,6 +68,8 @@ const nextConfig = {
         headers: securityHeaders,
       },
       { source: "/img/:path*", headers: publicAssetCache },
+      // Hero video and posters (src/components/v4/HeroScene.tsx).
+      { source: "/media/:path*", headers: publicAssetCache },
       { source: "/images/:path*", headers: publicAssetCache },
       { source: "/icons/:path*", headers: publicAssetCache },
       // Only image files: /blog/<slug> without a locale is a page redirect.

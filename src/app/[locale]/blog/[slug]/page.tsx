@@ -99,7 +99,7 @@ export default function Page({ params }: Props) {
           },
         ]}
       />
-      <section className="v4-sec is-hero" data-scene="stack" data-dim="1" style={{ minHeight: 0 }}>
+      <section className="v4-sec is-hero" style={{ minHeight: 0 }}>
         <div className="v4-in">
           <div className="v4-col is-wide">
             <Crumbs locale={loc} trail={[{ label: t.notes, to: "/blog" }, { label: post.title }]} />

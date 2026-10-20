@@ -18,7 +18,7 @@ export const content = {
     notice:
       "OpSolid is the sole proprietorship (Einzelunternehmen) of Hasan Dönmez, based in Arnsberg, Germany.",
     sections: {
-      according: "According to § 5 DDG (Digital Services Act, formerly § 5 TMG)",
+      according: "Information according to § 5 DDG",
       representedBy: "Represented by",
       contact: "Contact",
       phone: "Phone: On request",
@@ -30,15 +30,21 @@ export const content = {
         "VAT identification number according to § 27a German VAT Act (USt-IdNr.): DE462227107",
       responsibleContent:
         "Responsible for content according to § 18 Abs. 2 MStV (Medienstaatsvertrag, formerly § 55 RStV)",
-      disputeResolution: "Online Dispute Resolution",
+      disputeResolution: "Consumer dispute resolution",
       disputeResolutionText:
-        "The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr/. You can find our email address above. We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.",
+        "We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board (§ 36 VSBG).",
       liabilityContent: "Liability for Content",
       liabilityContentText:
-        "As a service provider, we are responsible for our own content on these pages under general laws in accordance with § 7 Para. 1 DDG. According to §§ 8 to 10 DDG, however, we are not obligated to monitor transmitted or stored third-party information.",
+        "As a service provider we are responsible for our own content under general law in accordance with § 7(1) DDG. Under §§ 8 to 10 DDG we are not obliged to monitor transmitted or stored third-party information or to look for circumstances that indicate illegal activity. Obligations to remove or block information under general law remain unaffected; liability is only possible from the time we become aware of a specific infringement. As soon as we learn of such infringements, we remove the content without delay.",
       liabilityLinks: "Liability for Links",
       liabilityLinksText:
-        "Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator is always responsible for the content of the linked pages.",
+        "Our website contains links to external third-party websites whose content we cannot influence. The respective provider is always responsible for the content of linked pages. No infringements were apparent at the time of linking; if we learn of any, we remove such links without delay.",
+      copyright: "Copyright",
+      copyrightText: "The content and works we created on this website are subject to German copyright law. Copying, editing and distribution beyond the limits of copyright law require our written consent. Third-party content is marked as such. Please report infringements to info@opsolid.de.",
+      trademark: "Trademark note",
+      trademarkText: "OpSolid is not TopSolid (CAD/CAM) and has no connection to it.",
+      product: "OpSo product",
+      productText: "For the digital business card “OpSo” (card.opsolid.de, opso.cc), the legal notice, privacy policy and terms at https://card.opsolid.de/imprint, /privacy and /terms apply.",
       address: "Full postal address will be added upon Gewerbeanmeldung.",
     },
   },
@@ -47,156 +53,56 @@ export const content = {
     title: "Privacy Policy",
     subtitle: "Datenschutzerklärung · Aydınlatma Metni",
     notice:
-      "This is a self-prepared privacy notice covering GDPR (EU) and KVKK (Türkiye) for the OpSolid marketing site and the OpSo Smart Digital Business Card product. A lawyer-reviewed final version will replace this notice after Gewerbeanmeldung. Last review by Hasan Dönmez.",
-    lastUpdated: "Last updated: October 2026",
-    sections: [
+      "Translation of the binding German text. This policy informs you under Arts. 13 and 14 GDPR about the processing of personal data when you visit opsolid.de and use its forms and account areas. The OpSo app and card pages have their own policy at https://card.opsolid.de/privacy. The texts were prepared carefully but have not been reviewed by a lawyer.",
+    lastUpdated: "Last updated: 21 October 2026",
+    // Explicit shape: not every locale uses every field (TR adds a KVKK subsection).
+    sections: ([
       {
-        title: "1. Data Protection at a Glance",
-        content:
-          "The following provides an overview of what happens to your personal data when you visit this website or use the OpSo Smart Digital Business Card product. Personal data is any data that can identify you. Two legal frameworks apply in parallel: the EU General Data Protection Regulation (GDPR / DSGVO) and the Turkish Personal Data Protection Law (KVKK, Law No. 6698).",
-      },
-      {
-        title: "2. Responsible Party / Veri Sorumlusu",
+        title: "1. Controller",
         isResponsible: "true",
+        content: "We have not appointed a data protection officer.",
       },
       {
-        title: "3. Data Collection",
-        subsections: [
-          {
-            title: "Contact Form",
-            content:
-              "Data submitted via the contact form (name, email address, company if given, selected topics and message) is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given. KVKK basis: Art. 5(2)(c) (sözleşme ifası) or Art. 5(1) açık rıza.",
-          },
-          {
-            title: "Server Log Files",
-            content:
-              "The hosting provider automatically collects browser type, OS, referrer URL, hostname, IP address (truncated where possible), and request time. Retention: 14 days for security/abuse analysis, then deleted. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in operational security).",
-          },
-        ],
+        title: "2. Hosting and server log files",
+        content: "The website runs on a server (VPS) of Hostinger International Ltd. in Vilnius, Lithuania (EU). When a page is requested the server technically needs IP address, date and time, requested URL, status code, data volume, referrer and user agent. Purpose: delivery, security, error analysis. Legal basis: Art. 6(1)(f) GDPR. Retention: usually 14 days. A data processing agreement (Art. 28 GDPR) exists with Hostinger.",
       },
       {
-        title: "4. Hosting",
-        content:
-          "The marketing site, the OpSo Smart Digital Business Card application backend, and the Postgres database all run on a single self-managed Hostinger VPS (Hostinger International Ltd., AS47583), physically located in Vilnius, Lithuania (EU). Server hostname: srv1150632.hstgr.cloud. All visitor traffic, card data, customer records and database backups remain on EU territory. The DPA (AVV under Art. 28 GDPR) with Hostinger is on file.",
+        title: "3. Contact forms, email and AI-check requests",
+        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through an email delivery service (Brevo, Sendinblue SAS, France).",
       },
       {
-        title: "5. Cookies & Analytics",
-        subsections: [
-          {
-            title: "Necessary and self-chosen settings",
-            content:
-              "We only store what is technically necessary or what you choose yourself. This includes a language cookie, set only when you switch the language yourself; the setting of the \"3D effects\" switch in the footer, saved in your browser's localStorage only when you use it; and, in the account and card areas, a session cookie after you sign in as well as individual display settings and form drafts in localStorage. This information is only used to apply your choice or to provide the service and is not passed on to third parties. It does not require consent under § 25(2) TDDDG, which is why this website shows no cookie banner.",
-          },
-          {
-            title: "No analytics",
-            content:
-              "This website uses no analytics or tracking tool: no page-view counting, no visitor profiles, no tracking cookies.",
-          },
-          {
-            title: "No third-party tracking, ads, or social plugins",
-            content:
-              "No advertising cookies, no third-party tracking pixels, no social-network plugins, no fingerprinting. Fonts are self-hosted (no Google Fonts CDN call).",
-          },
-        ],
+        title: "4. Customer account and signed-in areas",
+        content: "If you sign in we process contact data, credentials (passwords only as hashes) and session data (session cookie, hashed IP address for abuse prevention) to provide the account. Legal basis: Art. 6(1)(b) and (f) GDPR. Retention: until the account is deleted; invoice data 10 years under § 257 HGB, § 147 AO.",
       },
       {
-        title: "6. Sub-Processors",
-        content:
-          "We engage the following sub-processors to deliver the service. AVV / DPA agreements per Art. 28 GDPR are on file for each. The current list at any time can be requested via info@opsolid.de.",
-        subsections: [
-          {
-            title: "Hosting & infrastructure",
-            content:
-              "Hostinger International Ltd. (Lithuania, EU) — single VPS in Vilnius hosting the marketing site, the OpSo Smart application and the Postgres database. No US hosting sub-processor.",
-          },
-          {
-            title: "Email delivery",
-            content:
-              "SMTP relay used for contact-form notifications. Provider details are listed on request and updated when changed.",
-          },
-          {
-            title: "Payments (OpSo Smart, planned)",
-            content:
-              "Stripe Payments Europe Ltd. (Ireland) for one-time and subscription billing. Card data is tokenised by Stripe; OpSolid never sees raw PAN. DPA in place via Stripe Services Agreement. International transfer to Stripe US under DPF + SCC.",
-          },
-          {
-            title: "AI providers (where used)",
-            content:
-              "OpenAI Ireland Ltd. and Anthropic Ireland Ltd. may be engaged via API for production features. DPAs and SCCs in place; user content is not used for model training (API-side opt-out enabled).",
-          },
-        ],
+        title: "5. Cookies, local storage and device access (§ 25 TDDDG)",
+        content: "We use no analytics, advertising or tracking cookies. Only technically necessary settings or ones you choose yourself are stored: a language cookie (only if you change the language), the “Background video” setting and form drafts in your browser’s local storage, and after sign-in a session cookie. This is permitted without consent under § 25(2) TDDDG, so no cookie banner is needed. Fonts, videos and scripts are served by us; no Google Fonts are loaded.",
       },
       {
-        title: "7. International Data Transfers",
-        content:
-          "Where personal data is transferred outside the European Economic Area (e.g. to Stripe, OpenAI or Anthropic in the United States), the transfer is based on (a) the EU-US Data Privacy Framework adequacy decision where the recipient is DPF-certified, or (b) Standard Contractual Clauses (SCC, EU 2021/914) with a documented Transfer Impact Assessment. For Türkiye-resident data subjects, KVKK Art. 9 yurtdışı aktarım rules apply: transfers are made under KVKK standard contractual clauses (Yönetmelik 10.07.2024) and notified to the Kurum within 5 business days where required.",
+        title: "6. AI services",
+        content: "If you use an AI-assisted function, the content you enter is sent to the respective API provider (OpenAI Ireland Ltd. or Anthropic Ireland, Limited). Under our API settings, user content is not used for training. Legal basis: Art. 6(1)(b) GDPR; third-country transfers rely on standard contractual clauses or the DPF.",
       },
       {
-        title: "8. OpSo Smart Digital Business Card Product",
-        subsections: [
-          {
-            title: "Purpose & legal basis",
-            content:
-              "We process the contact details you submit through the OpSo Smart lead form or self-service order flow (name, work email, company, role, phone (optional), message, photo/logo upload, brand colours, social links) to provide the Digital Business Card service. Legal basis: Art. 6(1)(b) GDPR (contract performance) and Art. 6(1)(a) GDPR (your explicit consent for public publication).",
-          },
-          {
-            title: "Public publication of your card",
-            content:
-              "When you publish a OpSo Smart card at /c/{slug}, the information you have entered becomes publicly accessible on the internet. This requires your explicit, separate opt-in checkbox at publish time. You can unpublish or delete the card at any time from your account; we will then add a noindex header and request URL removal from major search engines.",
-          },
-          {
-            title: "Third-party content",
-            content:
-              "You are solely responsible for ensuring you have all rights to any photo, logo, or other content you upload. By uploading you confirm you hold the necessary rights. Notice-and-takedown requests may be sent to info@opsolid.de; we respond within 7 days.",
-          },
-          {
-            title: "Hosting",
-            content:
-              "Card data and customer records are stored on the Hostinger VPS (Lithuania, EU). No US sub-processors for OpSo Smart card content itself; payment data is processed by Stripe under separate sub-processor terms above.",
-          },
-          {
-            title: "14-day right of withdrawal (B2C)",
-            content:
-              "If you order OpSo Smart as a consumer (B2C, EU/EEA), you have a 14-day right of withdrawal under § 355 BGB. For digital services to start before the 14 days end, you must explicitly request immediate performance and acknowledge that the right of withdrawal lapses upon full performance — both via separate checkboxes at checkout. We log your acknowledgements for evidence. From 19 June 2026, a one-click withdrawal button is provided.",
-          },
-          {
-            title: "Retention",
-            content:
-              "Active OpSo Smart cards: retained while the subscription is active. Cancelled / inactive: deleted 90 days after subscription end (a reminder email is sent at day 60). Lead form submissions (no purchase): 24 months. Invoices: retained 10 years per § 257 HGB / Vergi Usul Kanunu (legal obligation).",
-          },
-          {
-            title: "Marketing emails (consent / double opt-in)",
-            content:
-              "We send marketing email (product news and offers about OpSo Smart) only with your prior express consent (§ 7 UWG, Art. 6(1)(a) GDPR). Consent is given separately from account creation via an unticked checkbox and verified by double opt-in through a confirmation email; we only send marketing email after you confirm. For proof, we log the exact consent wording, a timestamp, and a hashed (never plaintext) IP address. You can withdraw consent at any time with effect for the future — via the unsubscribe link in every email or by emailing info@opsolid.de. Withdrawal does not affect the lawfulness of processing carried out before it.",
-          },
-          {
-            title: "Right to deletion",
-            content:
-              "You may delete your OpSo Smart card and all associated personal data with one click from your account, or by emailing info@opsolid.de. Deletion is effective within 30 days. Identity verification (email confirmation + 2FA where enabled) is required before destructive actions.",
-          },
-        ],
+        title: "7. Recipients and third countries",
+        content: "Hostinger (hosting), email delivery service and, as described above, AI providers, plus authorities where legally required. For transfers outside the EEA: adequacy decision (EU-US Data Privacy Framework), otherwise EU standard contractual clauses (Art. 46 GDPR).",
       },
       {
-        title: "9. Your Rights (GDPR)",
-        content:
-          "Under Articles 15–22 GDPR you have the right to: access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction (Art. 18), data portability (Art. 20), and to object to processing (Art. 21). You may withdraw any consent at any time without affecting prior processing. To exercise rights, email info@opsolid.de — we respond within one month (Art. 12(3)). You may also lodge a complaint with the supervisory authority of your habitual residence or place of the alleged infringement.",
+        title: "8. Your rights",
+        content: "Access (Art. 15), rectification (16), erasure (17), restriction (18), portability (20), objection to processing based on legitimate interests (21), withdrawal of consent with effect for the future (7(3)) and complaint to a supervisory authority (77). Competent: State Commissioner for Data Protection and Freedom of Information of North Rhine-Westphalia, Kavalleriestraße 2–4, 40213 Düsseldorf (ldi.nrw.de). Requests to info@opsolid.de.",
       },
       {
-        title: "10. Your Rights (KVKK Madde 11) — for Türkiye-resident data subjects",
-        content:
-          "6698 sayılı KVKK m.11 uyarınca: kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işleme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içi/yurt dışında aktarıldığı üçüncü kişileri bilme, eksik/yanlış işlenmişse düzeltilmesini isteme, KVKK m.7'deki şartlarda silinmesini/yok edilmesini isteme, otomatik sistemlerle yapılan analiz sonucu aleyhinize bir sonuç çıkmasına itiraz etme, kanuna aykırı işleme nedeniyle uğradığınız zararın giderilmesini talep etme. Başvuru: info@opsolid.de. KVKK 2026/347 ilke kararı uyarınca aydınlatma metni (bu sayfa) ile açık rıza beyanı ayrı belgelerdir; rıza onayı ürün akışında ayrıca alınır.",
+        title: "9. Obligation to provide data, automated decisions",
+        content: "Form details are voluntary, but without the necessary details we cannot handle your request. There is no automated decision-making within the meaning of Art. 22 GDPR.",
       },
       {
-        title: "11. Data Breach Notification",
-        content:
-          "If a personal data breach is likely to result in a risk to your rights and freedoms, we notify the competent supervisory authority within 72 hours of becoming aware (Art. 33 GDPR). High-risk breaches are also communicated to affected individuals without undue delay (Art. 34 GDPR). Under KVKK we additionally notify the Kurum and affected persons in the shortest reasonable time (KVKK Kurul kararları).",
+        title: "10. Note for people in Türkiye (KVKK)",
+        content: "Law No. 6698 (KVKK) also applies to people in Türkiye; the Art. 10 KVKK notice is in the Turkish version of this policy.",
       },
       {
-        title: "12. Changes to this Policy",
-        content:
-          "We may update this policy to reflect changes in law or our processing. Material changes will be announced on this page and, where you have an account, by email at least 30 days in advance.",
+        title: "11. Changes",
+        content: "We update this policy when the website, providers or the law change; the version published at the time applies.",
       },
-    ],
+    ] as Array<{ title: string; content?: string; isResponsible?: string; subsections?: Array<{ title: string; content: string }> }>),
   },
 
   blog: {

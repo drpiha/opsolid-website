@@ -163,17 +163,16 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    // M9 v2 promotion: Concrete Studio teal replaces legacy copper as the
-    // primary accent across both light and dark UA chrome.
-    { media: "(prefers-color-scheme: light)", color: "#12110F" },
-    { media: "(prefers-color-scheme: dark)", color: "#12110F" },
+    // Marketing surface "Licht & Kupfer": porcelain browser chrome in both UA schemes.
+    { media: "(prefers-color-scheme: light)", color: "#F5F3EF" },
+    { media: "(prefers-color-scheme: dark)", color: "#F5F3EF" },
   ],
 };
 
 // Applied inline in <head> before hydration so the first paint already has
 // the correct palette — avoids flash-of-wrong-theme. Mirrors
 // src/context/ThemeContext.tsx (DEFAULT_THEME = "light", key = "opsolid-theme").
-const NO_FLASH_THEME_SCRIPT = `(function(){try{if(document.documentElement.hasAttribute('data-v4')){document.documentElement.setAttribute('data-theme','dark');return;}var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
+const NO_FLASH_THEME_SCRIPT = `(function(){try{if(document.documentElement.hasAttribute('data-v4')){document.documentElement.setAttribute('data-theme','light');return;}var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
 
 export default function RootLayout({
   children,
@@ -217,7 +216,7 @@ export default function RootLayout({
       className={fontClasses}
       data-preview={previewV2 && !v4 ? "v2" : undefined}
       data-v4={v4 ? "1" : undefined}
-      data-theme={v4 ? "dark" : undefined}
+      data-theme={v4 ? "light" : undefined}
       suppressHydrationWarning
     >
       <head>
@@ -229,7 +228,7 @@ export default function RootLayout({
       <body className="grain font-sans antialiased bg-bg-1 text-ink-200 min-h-[100svh] flex flex-col">
         {/* No analytics and no consent banner: the site stores only technically
             necessary or user-chosen settings (language cookie on an explicit
-            switch, the footer's 3D-effects switch), which need no consent. */}
+            switch, the footer's background-video switch), which need no consent. */}
         {children}
       </body>
     </html>

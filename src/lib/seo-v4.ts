@@ -18,8 +18,14 @@ export const OG_TAGLINE: Record<L3, string> = {
   en: "AI agents, websites and automation",
   tr: "YZ asistanları, web siteleri ve otomasyon",
 };
+/** Share-card claim: the home hero headline of each locale. */
+export const OG_CLAIM: Record<L3, string> = {
+  de: "Weniger Routine. Mehr Zeit für Ihre Kunden.",
+  en: "Less routine. More time for your customers.",
+  tr: "Daha az rutin. Müşterilere daha çok zaman.",
+};
 export function ogAlt(locale: L3): string {
-  return `OpSolid · ${OG_TAGLINE[locale]} · Arnsberg`;
+  return `OpSolid · ${OG_TAGLINE[locale]} · ${OG_CLAIM[locale]}`;
 }
 
 /** The per-locale v4 share card (src/app/[locale]/opengraph-image.tsx); metadataBase makes the URL absolute. */

@@ -4,7 +4,7 @@
 // =============================================================================
 
 /** Date of the last substantive content update; drives the visible "Stand:" line. */
-export const SITE_UPDATED_ISO = "2026-10-16";
+export const SITE_UPDATED_ISO = "2026-10-21";
 
 /** "Oktober 2026" / "October 2026" / "Ekim 2026". */
 export function formatStand(locale: string): string {

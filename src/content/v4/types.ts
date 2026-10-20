@@ -1,5 +1,3 @@
-import type { SceneId } from "@/components/v4/scenes";
-
 export type L3 = "de" | "en" | "tr";
 export type Link = { label: string; href: string };
 
@@ -14,12 +12,6 @@ type BlockBase = {
   eyebrow?: string;
   h: string;
   lede?: string;
-  /** 3D scene the stage morphs to while this section is in view. */
-  scene?: SceneId;
-  /** Plate indices (0 Agents … 6 Schulungen) to light up in the scene. */
-  heat?: number[];
-  /** Dim the 3D object behind wide content. */
-  dim?: boolean;
   cta?: Link;
 };
 
@@ -30,7 +22,11 @@ export type Block =
   | (BlockBase & { t: "table"; caption?: string; cols: string[]; rows: string[][]; note?: string })
   | (BlockBase & { t: "text"; paras: string[] })
   | (BlockBase & { t: "spec"; rows: [string, string][] })
-  | (BlockBase & { t: "demo"; note: string; play: string; again: string; chip: string; sr: string; script: { who: string; agent: boolean; text: string; ms: number }[] });
+  | (BlockBase & { t: "demo"; note: string; play: string; again: string; chip: string; sr: string; script: { who: string; agent: boolean; text: string; ms: number }[] })
+  /** Two columns side by side: how a task runs today and after the change. */
+  | (BlockBase & { t: "compare"; before: { h: string; items: string[] }; after: { h: string; items: string[] } })
+  /** One published offer as a dark card beside an optional screenshot. `amount` must be a published price. */
+  | (BlockBase & { t: "offer"; label: string; amount: string; unit?: string; sub?: string; items: string[]; note: string; shot?: Shot });
 
 export type Faq = { h: string; items: { q: string; a: string }[] };
 
@@ -44,8 +40,6 @@ export type PageDef = {
     lede: string;
     primary: Link;
     secondary?: Link;
-    scene: SceneId;
-    heat?: number[];
     spec?: [string, string][];
   };
   blocks: Block[];

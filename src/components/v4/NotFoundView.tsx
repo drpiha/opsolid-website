@@ -88,7 +88,7 @@ export function NotFoundView({ locale, standalone = false }: { locale: L3; stand
             </Link>
           </div>
           <nav aria-label={c.more}>
-            <ul className="v4-rows">
+            <ul className="v4-rows v4-links">
               {c.links.map(([to, label]) => (
                 <li key={to} className="v4-row">
                   <Link href={`/${locale}${to}`} className="v4-row-in">

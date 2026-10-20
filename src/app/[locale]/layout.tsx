@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { ClientProviders } from "@/components/ClientProviders";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Stage } from "@/components/v4/Stage";
 import { V4Sync } from "@/components/v4/V4Sync";
 import { ContentGate } from "@/components/v4/ContentGate";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
@@ -52,7 +51,6 @@ export default function LocaleLayout({
   return (
     <ClientProviders initialLocale={params.locale}>
       <V4Sync />
-      <Stage />
       <a href="#main" className="v4-skip">
         {params.locale === "de" ? "Zum Inhalt springen" : params.locale === "tr" ? "İçeriğe geç" : "Skip to content"}
       </a>

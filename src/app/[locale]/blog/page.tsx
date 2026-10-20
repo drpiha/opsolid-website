@@ -77,7 +77,7 @@ export default function Page({ params }: Params) {
           { name: t.crumb, path: `/${loc}/blog` },
         ]}
       />
-      <section className="v4-sec is-hero" data-scene="stack" data-dim="1">
+      <section className="v4-sec is-hero">
         <div className="v4-in">
           <div className="v4-col">
             <Crumbs locale={loc} trail={[{ label: t.crumb }]} />
