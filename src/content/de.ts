@@ -68,7 +68,7 @@ export const content: Content = {
       },
       {
         title: "3. Kontaktformular, E-Mail und KI-Check-Anfragen",
-        content: "Wenn Sie uns über ein Formular oder per E-Mail kontaktieren, verarbeiten wir die Angaben (z. B. Name, E-Mail-Adresse, Unternehmen, Themen, Nachricht), um Ihre Anfrage zu bearbeiten und Rückfragen zu stellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen/Vertrag), sonst lit. f (berechtigtes Interesse an der Beantwortung) bzw. lit. a, wenn Sie eingewilligt haben. Speicherdauer: bis die Anfrage erledigt ist und danach bis zum Ablauf gesetzlicher Aufbewahrungsfristen; Anfragen ohne Vertragsschluss löschen wir spätestens nach 24 Monaten. Benachrichtigungen und Antworten werden über einen E-Mail-Versanddienst (Brevo, Sendinblue SAS, Frankreich) versandt.",
+        content: "Wenn Sie uns über ein Formular oder per E-Mail kontaktieren, verarbeiten wir die Angaben (z. B. Name, E-Mail-Adresse, Unternehmen, Themen, Nachricht), um Ihre Anfrage zu bearbeiten und Rückfragen zu stellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen/Vertrag), sonst lit. f (berechtigtes Interesse an der Beantwortung) bzw. lit. a, wenn Sie eingewilligt haben. Speicherdauer: bis die Anfrage erledigt ist und danach bis zum Ablauf gesetzlicher Aufbewahrungsfristen; Anfragen ohne Vertragsschluss löschen wir spätestens nach 24 Monaten. Benachrichtigungen und Antworten werden über den E-Mail-Dienst Zoho Mail (Zoho Corporation B.V., Niederlande; Rechenzentrum in der EU) versandt.",
       },
       {
         title: "4. Kundenkonto und Bereiche nach Anmeldung",

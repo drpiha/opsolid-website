@@ -68,7 +68,7 @@ export const content = {
       },
       {
         title: "3. Contact forms, email and AI-check requests",
-        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through an email delivery service (Brevo, Sendinblue SAS, France).",
+        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through the email service Zoho Mail (Zoho Corporation B.V., Netherlands; EU data centre).",
       },
       {
         title: "4. Customer account and signed-in areas",
