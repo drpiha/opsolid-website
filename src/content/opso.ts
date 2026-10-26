@@ -12,6 +12,8 @@ export type OpsoShowcaseContent = {
   imageAlt: string;
   items: [DemoProfile, DemoProfile, DemoProfile, DemoProfile];
 };
+/** App screens in the order of public/img/opso/<locale>/NN-*.webp (the caption is also printed in the image). */
+export const OPSO_SCREENS = ["01-create", "02-share", "03-recipient", "04-fairs", "05-messages", "06-contacts", "07-editor", "08-privacy"] as const;
 type OpsoContent = {
   meta: { title: string; description: string };
   status: string;
@@ -21,37 +23,80 @@ type OpsoContent = {
   availabilityLink: string;
   navLabel: string;
   nav: [string, string, string, string];
-  illustration: { caption: string; alt: string };
-  overview: { title: string; intro: string; items: [SectionItem, SectionItem, SectionItem] };
+  heroAlt: [string, string];
+  flow: { title: string; intro: string; steps: [SectionItem, SectionItem, SectionItem] };
+  features: { title: string; intro: string; items: SectionItem[] };
+  screens: { title: string; intro: string; label: string; note: string; alts: [string, string, string, string, string, string, string, string] };
+  audience: { title: string; intro: string; items: string[]; note: string };
   families: OpsoShowcaseContent & { title: string; intro: string };
   sharing: SectionItem;
-  plans: { title: string; intro: string; free: string; soon: string; unit: string; included: string; coming: string; note: string };
-  availability: SectionItem & { contact: string };
-  faq: { title: string; items: [SectionItem, SectionItem, SectionItem, SectionItem] };
+  price: { title: string; text: string; points: [string, string, string] };
+  availability: { title: string; text: string; android: SectionItem; ios: SectionItem; contact: string; note: string };
+  faq: { title: string; items: SectionItem[] };
 };
 
 const en: OpsoContent = {
-  meta: { title: "OpSo | Digital business cards with your own style", description: "Four OpSo example cards with portraits and distinct styles, from light and minimal to bold and colourful. Features and app availability at a glance." },
-  status: "In testing · Launch in preparation",
-  title: "Your work, in your own style",
-  intro: "Give people more than a name and a number. Bring your portrait, expertise, services and contact details together in a digital card that feels like you.",
-  explore: "Explore the examples",
-  availabilityLink: "App availability",
+  meta: {
+    title: "OpSo | Your card, the people you meet, and the follow-up, in one free app",
+    description: "OpSo is a free digital business card with contacts, follow-up reminders and a trade fair calendar. Share by QR, NFC or link; recipients need no app. Android closed beta, iPhone coming soon.",
+  },
+  status: "Android closed beta · iPhone coming soon",
+  title: "Your card, the people you meet, and the follow-up, in one free app.",
+  intro: "OpSo is for everyone who meets people face to face and wants to follow up afterwards: trade fair visitors, small exhibitors, freelancers and tradespeople. Share your card in seconds, note where you met, and never lose track of who to get back to.",
+  explore: "See what it does",
+  availabilityLink: "Availability",
   navLabel: "On this page",
-  nav: ["What it does", "Example cards", "Plans", "Availability"],
-  illustration: { caption: "Example profiles with AI-generated portraits", alt: "OpSo example card" },
-  overview: {
-    title: "From a first hello to a fuller picture",
-    intro: "A portrait, a clear introduction and useful details help someone understand what you do and how to reach you.",
-    items: [
-      { title: "More of what makes you, you", text: "Start with your portrait and introduction. Add services, selected work and the contact options that fit your business. Choose what visitors see." },
-      { title: "Room for more than a card", text: "Website layouts with a top menu and up to six addressable pages are being prepared for release. Give services, selected work and contact information their own space." },
-      { title: "Preview, save, then publish", text: "Review changes in mobile and desktop preview. Save your draft, then publish when it is ready. Later edits stay in your draft until you publish again." },
+  nav: ["How it works", "What it does", "Screens", "Availability"],
+  heroAlt: ["OpSo contacts list with notes and lead status (demo data)", "OpSo share screen with QR code, tap and NFC card (demo data)"],
+  flow: {
+    title: "Meet. Remember. Follow up.",
+    intro: "Three steps that happen at a stand, a meeting or a handshake.",
+    steps: [
+      { title: "Share your card", text: "Show a QR code, tap phones, use an NFC tag or send the link. Your card opens in the other person’s browser, so they need no app." },
+      { title: "Save who and where", text: "Every contact keeps the place you met, notes and a lead status. Scan a paper business card and it lands in the same list." },
+      { title: "Follow up in time", text: "Set a reminder and send a ready-made follow-up message, so a good conversation does not end at the stand." },
     ],
   },
+  features: {
+    title: "What OpSo already does today",
+    intro: "Only features that exist in the app now. Nothing here is a promise for later.",
+    items: [
+      { title: "Web card, no app needed", text: "Your card lives at opso.cc/yourname and opens in any browser." },
+      { title: "QR, NFC tag and tap", text: "Share with a QR code, a compatible NFC tag or, on Android, by tapping phones." },
+      { title: "Business card scan", text: "Photograph a paper card and add the person to your contacts." },
+      { title: "Contacts with “where we met”", text: "Notes, lead status (hot, warm, VIP) and the place you met, in one searchable list." },
+      { title: "Follow-up reminders", text: "A reminder per contact and a ready follow-up message to adapt and send." },
+      { title: "Trade fair calendar", text: "A curated list of fairs. Tap “I’m going” and new contacts are filed under the fair." },
+      { title: "1:1 messages", text: "Chat with people you are connected to, with text, photos and files." },
+      { title: "Save to your phone", text: "Save a contact straight into your phone’s address book, or export your contacts as CSV or vCard." },
+      { title: "Your data, your call", text: "You choose what is public. Export your data or delete your account at any time." },
+    ],
+  },
+  screens: {
+    title: "The app, screen by screen",
+    intro: "Real screens from the Android app. The people and companies shown are fictional demo data.",
+    label: "App screens, scroll sideways",
+    note: "Demo data only. Portraits are AI-generated and show no real people.",
+    alts: [
+      "Create your card: name, role and company, then publish",
+      "Share screen with QR code and the tabs Tap and NFC card",
+      "Your card in the recipient’s browser with one tap to save the contact",
+      "Trade fair calendar with search and an I’m going button",
+      "A chat with a connected contact, with text and an attached file",
+      "Contacts list with lead status, notes and CSV or vCard export",
+      "Card editor with templates, colours and fonts and a live preview",
+      "Privacy settings: choose what is public, export or delete your data",
+    ],
+  },
+  audience: {
+    title: "Who OpSo is for",
+    intro: "For people who rely on conversations in person and need a calm way to follow them up.",
+    items: ["Trade fair visitors", "Small exhibitors", "Freelancers and consultants", "Tradespeople and local businesses", "Community and event organisers"],
+    note: "If you mostly meet people online, a profile on a business network may serve you better. OpSo is built for the handshake.",
+  },
   families: {
-    title: "Different people, different first impressions",
-    intro: "Architecture, consulting, brand design and digital products. Explore four complete examples, each with its own colour, character and content.",
+    title: "Your web card, in your own style",
+    intro: "Four example cards with different looks. This is what a recipient sees in the browser.",
     label: "Choose an example profile",
     caption: "Fictional demonstration profiles with AI-generated portraits. Captured from OpSo; these are not customer endorsements.",
     desktop: "Desktop",
@@ -66,39 +111,91 @@ const en: OpsoContent = {
       { title: "Felix Berger", profession: "Product designer", style: "Fresh mint", text: "A clear, approachable profile. Light mint complements an introduction to digital product design and collaboration." },
     ],
   },
-  sharing: { title: "Scan, tap or open the link", text: "A published OpSo card or website opens in the recipient’s browser, with no OpSo app required. Share its link, show its QR code or use a compatible NFC tag that points to the same address. NFC requires a compatible phone and tag." },
-  plans: { title: "Start with one, plan for more", intro: "The launch offer includes one free card or website in one account. Larger account plans are in development.", free: "Free", soon: "Coming soon", unit: "cards / websites per account", included: "1 card or website included", coming: "In development", note: "OpSo currently has no active checkout or charges. Pro and Studio cannot be purchased yet; their prices and launch dates are not announced." },
-  availability: { title: "The app is still in testing", text: "OpSo is in quality assurance before public launch. It is not yet published on Google Play. A verified public Android download link is not available yet; it will appear here when ready.", contact: "Ask us about OpSo" },
+  sharing: { title: "Scan, tap or open the link", text: "A published OpSo card opens in the recipient’s browser, with no OpSo app required. Share its link, show its QR code or use a compatible NFC tag that points to the same address. NFC requires a compatible phone and tag." },
+  price: {
+    title: "Free today, no ads",
+    text: "OpSo is free to use right now. There is no checkout and nothing is charged.",
+    points: ["No ads", "No payment details needed", "Export or delete your data any time"],
+  },
+  availability: {
+    title: "Where to get OpSo",
+    text: "OpSo is in testing. There is no public store listing yet, so there is no download link on this page.",
+    android: { title: "Android: closed beta", text: "The app is in Google Play closed testing and open to invited testers only. Write to us and we will add you." },
+    ios: { title: "iPhone: coming soon", text: "The iPhone version is being prepared and is moving towards TestFlight. No date is set yet." },
+    contact: "Request beta access",
+    note: "Until then you can already open any published card in a browser, for example the demo cards above.",
+  },
   faq: { title: "Before you get started", items: [
-    { title: "Is this a link page or a website?", text: "OpSo combines compact digital business cards with website layouts. The website features in testing include a top menu and addressable subpages, with up to six pages in total." },
-    { title: "Does the recipient need an app?", text: "No. The published card or website opens in a browser. QR codes and compatible NFC tags point to its public link." },
-    { title: "Can I connect my own domain now?", text: "Not yet. Domain setup is being prepared. Connecting and publishing on your own domain is not currently available." },
-    { title: "What do Free, Pro and Studio include?", text: "Free includes one card or website. Pro is planned for up to 10 and Studio for up to 50 in one account. Pro and Studio are still in development, with checkout disabled." },
+    { title: "Does the other person need the app?", text: "No. Your published card opens in a browser. QR codes and compatible NFC tags point to its public link." },
+    { title: "What does OpSo cost?", text: "Nothing at the moment. OpSo is free and has no ads. If that ever changes, it will be announced on this page before any charge." },
+    { title: "Can I get it on my iPhone?", text: "Not yet. The iPhone version is coming soon. Until then, anyone with an iPhone can still open your card in the browser." },
+    { title: "What happens to my data?", text: "You decide what is public on your card. You can export your data and delete your account in the app at any time. Details are in the privacy policy." },
+    { title: "Can I use my own domain?", text: "Not yet. Cards are published at opso.cc." },
   ] },
 };
 
 const de: OpsoContent = {
-  meta: { title: "OpSo | Digitale Visitenkarten mit eigenem Stil", description: "Vier OpSo-Beispielkarten mit Porträts und eigenem Stil, von hell und zurückhaltend bis farbenfroh. Funktionen und App-Verfügbarkeit im Überblick." },
-  status: "In der Testphase · Veröffentlichung in Vorbereitung",
-  title: "Ihre Arbeit, in Ihrem eigenen Stil",
-  intro: "Zeigen Sie mehr als einen Namen und eine Nummer. Verbinden Sie Porträt, Expertise, Leistungen und Kontaktdaten in einer digitalen Visitenkarte, die zu Ihnen passt.",
-  explore: "Beispiele entdecken",
-  availabilityLink: "Verfügbarkeit der App",
+  meta: {
+    title: "OpSo | Karte, Kontakte und Follow-up an einem Ort",
+    description: "OpSo ist eine kostenlose digitale Visitenkarte mit Kontakten, Follow-up-Erinnerungen und Messekalender. Teilen per QR, NFC oder Link; der Empfänger braucht keine App. Android Closed Beta, iPhone folgt.",
+  },
+  status: "Android Closed Beta · iPhone folgt",
+  title: "Karte, Kontakte und Follow-up an einem Ort: Wen du triffst, vergisst du nicht mehr.",
+  intro: "OpSo ist für alle, die Menschen persönlich treffen und danach nachfassen wollen: Messebesucher, kleine Aussteller, Freiberufler und Handwerker. Teile deine Karte in Sekunden, notiere, wo ihr euch getroffen habt, und behalte im Blick, bei wem du dich melden wolltest.",
+  explore: "Funktionen ansehen",
+  availabilityLink: "Verfügbarkeit",
   navLabel: "Auf dieser Seite",
-  nav: ["Funktionen", "Beispielkarten", "Pläne", "Verfügbarkeit"],
-  illustration: { caption: "Beispielprofile mit KI-generierten Porträts", alt: "OpSo-Beispielkarte" },
-  overview: {
-    title: "Vom ersten Kontakt zum vollständigen Bild",
-    intro: "Ein Porträt, eine klare Vorstellung und die passenden Informationen zeigen, was Sie tun und wie man Sie erreicht.",
-    items: [
-      { title: "Mehr von dem, was Sie ausmacht", text: "Beginnen Sie mit Porträt und Vorstellung. Ergänzen Sie Leistungen, ausgewählte Arbeiten und passende Kontaktwege. Sie entscheiden, was Besucher sehen." },
-      { title: "Mehr Raum als eine Visitenkarte", text: "Website-Layouts mit einem oberen Menü und bis zu sechs direkt aufrufbaren Seiten werden für den Start vorbereitet. Für Leistungen, ausgewählte Arbeiten und Kontaktdaten." },
-      { title: "Prüfen, speichern, veröffentlichen", text: "Sehen Sie Änderungen in der Mobil- und Desktop-Vorschau an. Speichern Sie Ihren Entwurf und veröffentlichen Sie ihn, sobald er fertig ist. Spätere Änderungen bleiben bis zur erneuten Veröffentlichung im Entwurf." },
+  nav: ["Ablauf", "Funktionen", "Bildschirme", "Verfügbarkeit"],
+  heroAlt: ["OpSo-Kontaktliste mit Notizen und Lead-Status (Demodaten)", "OpSo-Teilen-Bildschirm mit QR-Code, Antippen und NFC-Karte (Demodaten)"],
+  flow: {
+    title: "Treffen. Merken. Nachfassen.",
+    intro: "Drei Schritte, die am Messestand, im Termin oder beim Händeschütteln passieren.",
+    steps: [
+      { title: "Karte teilen", text: "QR-Code zeigen, Handys aneinanderhalten, NFC-Tag nutzen oder den Link senden. Deine Karte öffnet sich im Browser des Gegenübers, eine App ist nicht nötig." },
+      { title: "Wer und wo festhalten", text: "Jeder Kontakt behält den Ort des Treffens, Notizen und einen Lead-Status. Eine Papier-Visitenkarte scannst du ein und sie landet in derselben Liste." },
+      { title: "Rechtzeitig nachfassen", text: "Setze eine Erinnerung und sende eine fertige Follow-up-Nachricht, damit ein gutes Gespräch nicht am Stand endet." },
     ],
   },
+  features: {
+    title: "Was OpSo heute schon kann",
+    intro: "Nur Funktionen, die es in der App jetzt gibt. Nichts davon ist ein Versprechen für später.",
+    items: [
+      { title: "Webkarte ohne App", text: "Deine Karte liegt unter opso.cc/deinname und öffnet sich in jedem Browser." },
+      { title: "QR, NFC-Tag und Antippen", text: "Teile per QR-Code, mit einem kompatiblen NFC-Tag oder auf Android durch Aneinanderhalten der Handys." },
+      { title: "Visitenkarten-Scan", text: "Fotografiere eine Papierkarte und füge die Person deinen Kontakten hinzu." },
+      { title: "Kontakte mit „Wo wir uns trafen“", text: "Notizen, Lead-Status (heiß, warm, VIP) und der Ort des Treffens in einer durchsuchbaren Liste." },
+      { title: "Follow-up-Erinnerungen", text: "Eine Erinnerung pro Kontakt und eine fertige Follow-up-Nachricht zum Anpassen und Senden." },
+      { title: "Messekalender", text: "Eine kuratierte Liste von Messen. Tippe auf „Ich gehe hin“, neue Kontakte werden der Messe zugeordnet." },
+      { title: "1:1-Nachrichten", text: "Schreibe mit verbundenen Personen, mit Text, Fotos und Dateien." },
+      { title: "Aufs Handy speichern", text: "Speichere einen Kontakt direkt im Adressbuch deines Handys oder exportiere deine Kontakte als CSV oder vCard." },
+      { title: "Deine Daten, deine Entscheidung", text: "Du bestimmst, was öffentlich ist. Export und Konto löschen sind jederzeit möglich." },
+    ],
+  },
+  screens: {
+    title: "Die App, Bildschirm für Bildschirm",
+    intro: "Echte Bildschirme aus der Android-App. Die gezeigten Personen und Firmen sind fiktive Demodaten.",
+    label: "App-Bildschirme, seitlich scrollen",
+    note: "Nur Demodaten. Die Porträts sind KI-generiert und zeigen keine realen Personen.",
+    alts: [
+      "Karte erstellen: Name, Rolle und Firma, dann veröffentlichen",
+      "Teilen-Bildschirm mit QR-Code und den Reitern Antippen und NFC-Karte",
+      "Deine Karte im Browser des Empfängers, ein Tipp speichert den Kontakt",
+      "Messekalender mit Suche und der Schaltfläche Ich gehe hin",
+      "Ein Chat mit einem verbundenen Kontakt, mit Text und angehängter Datei",
+      "Kontaktliste mit Lead-Status, Notizen und Export als CSV oder vCard",
+      "Karteneditor mit Vorlagen, Farben und Schriften und Live-Vorschau",
+      "Datenschutz-Einstellungen: Öffentliches wählen, Daten exportieren oder löschen",
+    ],
+  },
+  audience: {
+    title: "Für wen OpSo gemacht ist",
+    intro: "Für Menschen, die vom persönlichen Gespräch leben und es danach entspannt weiterführen wollen.",
+    items: ["Messebesucher", "Kleine Aussteller", "Freiberufler und Berater", "Handwerker und lokale Betriebe", "Community- und Veranstaltungsorganisatoren"],
+    note: "Wer überwiegend online Kontakte knüpft, ist mit einem Profil in einem Business-Netzwerk vielleicht besser bedient. OpSo ist für den Handschlag gebaut.",
+  },
   families: {
-    title: "Verschiedene Menschen, verschiedene erste Eindrücke",
-    intro: "Architektur, Beratung, Markengestaltung und digitale Produkte. Entdecken Sie vier ausgearbeitete Beispiele mit eigener Farbwelt, Persönlichkeit und passenden Inhalten.",
+    title: "Deine Webkarte, in deinem Stil",
+    intro: "Vier Beispielkarten mit unterschiedlichem Look. So sieht sie der Empfänger im Browser.",
     label: "Beispielprofil auswählen",
     caption: "Fiktive Beispielprofile mit KI-generierten Porträts. Aufnahmen aus OpSo, keine Kundenreferenzen.",
     desktop: "Desktop",
@@ -113,39 +210,91 @@ const de: OpsoContent = {
       { title: "Felix Berger", profession: "Produktdesigner", style: "Frisches Mint", text: "Ein klarer, zugänglicher Auftritt. Helles Mint begleitet seine Vorstellung, digitales Produktdesign und Möglichkeiten zur Zusammenarbeit." },
     ],
   },
-  sharing: { title: "Scannen, antippen oder den Link öffnen", text: "Eine veröffentlichte OpSo-Karte oder Website öffnet sich im Browser des Empfängers, ohne OpSo-App. Teilen Sie den Link, zeigen Sie den QR-Code oder nutzen Sie einen kompatiblen NFC-Tag mit derselben Adresse. NFC setzt ein kompatibles Smartphone und einen passenden Tag voraus." },
-  plans: { title: "Mit einem Auftritt starten und mehr einplanen", intro: "Zum Start ist eine Karte oder Website in einem Konto kostenlos enthalten. Größere Kontopläne sind in Entwicklung.", free: "Kostenlos", soon: "Demnächst", unit: "Karten / Websites pro Konto", included: "1 Karte oder Website enthalten", coming: "In Entwicklung", note: "OpSo hat derzeit keinen aktiven Checkout und erhebt keine Gebühren. Pro und Studio sind noch nicht buchbar; Preise und Starttermine stehen noch nicht fest." },
-  availability: { title: "Die App ist noch in der Testphase", text: "OpSo durchläuft die Qualitätssicherung vor dem öffentlichen Start. Die App ist noch nicht bei Google Play veröffentlicht. Ein geprüfter öffentlicher Android-Download steht noch nicht bereit und wird hier ergänzt, sobald er verfügbar ist.", contact: "OpSo anfragen" },
+  sharing: { title: "Scannen, antippen oder den Link öffnen", text: "Eine veröffentlichte OpSo-Karte öffnet sich im Browser des Empfängers, ohne OpSo-App. Teile den Link, zeige den QR-Code oder nutze einen kompatiblen NFC-Tag mit derselben Adresse. NFC setzt ein kompatibles Smartphone und einen passenden Tag voraus." },
+  price: {
+    title: "Heute kostenlos, ohne Werbung",
+    text: "OpSo ist aktuell kostenlos nutzbar. Es gibt keinen Checkout, und es wird nichts berechnet.",
+    points: ["Keine Werbung", "Keine Zahlungsdaten nötig", "Export und Löschen deiner Daten jederzeit"],
+  },
+  availability: {
+    title: "Wo es OpSo gibt",
+    text: "OpSo ist in der Testphase. Es gibt noch keinen öffentlichen Store-Eintrag, deshalb steht hier kein Download-Link.",
+    android: { title: "Android: Closed Beta", text: "Die App ist im geschlossenen Test bei Google Play und nur für eingeladene Tester offen. Schreib uns, wir nehmen dich auf." },
+    ios: { title: "iPhone: folgt in Kürze", text: "Die iPhone-Version wird vorbereitet und läuft auf TestFlight zu. Ein Termin steht noch nicht fest." },
+    contact: "Beta-Zugang anfragen",
+    note: "Bis dahin kannst du jede veröffentlichte Karte schon im Browser öffnen, zum Beispiel die Demokarten oben.",
+  },
   faq: { title: "Vor dem Start", items: [
-    { title: "Ist das eine Linkseite oder eine Website?", text: "OpSo verbindet kompakte digitale Visitenkarten mit Website-Layouts. Die Website-Funktionen in der Testphase umfassen ein oberes Menü und direkt aufrufbare Unterseiten, insgesamt bis zu sechs Seiten." },
-    { title: "Braucht der Empfänger eine App?", text: "Nein. Die veröffentlichte Karte oder Website öffnet sich im Browser. QR-Codes und kompatible NFC-Tags führen zu ihrem öffentlichen Link." },
-    { title: "Kann ich bereits eine eigene Domain verbinden?", text: "Noch nicht. Die Domain-Einrichtung wird vorbereitet. Das Verbinden und Veröffentlichen unter einer eigenen Domain ist derzeit nicht verfügbar." },
-    { title: "Was enthalten Free, Pro und Studio?", text: "Free enthält eine Karte oder Website. Für Pro sind bis zu 10 und für Studio bis zu 50 in einem Konto vorgesehen. Pro und Studio sind noch in Entwicklung, der Checkout ist deaktiviert." },
+    { title: "Braucht das Gegenüber die App?", text: "Nein. Deine veröffentlichte Karte öffnet sich im Browser. QR-Codes und kompatible NFC-Tags führen zu ihrem öffentlichen Link." },
+    { title: "Was kostet OpSo?", text: "Aktuell nichts. OpSo ist kostenlos und ohne Werbung. Sollte sich das ändern, steht es vor jeder Berechnung auf dieser Seite." },
+    { title: "Gibt es OpSo fürs iPhone?", text: "Noch nicht. Die iPhone-Version folgt in Kürze. Bis dahin kann jeder mit iPhone deine Karte trotzdem im Browser öffnen." },
+    { title: "Was passiert mit meinen Daten?", text: "Du bestimmst, was auf deiner Karte öffentlich ist. Datenexport und Konto löschen sind jederzeit in der App möglich. Details stehen in der Datenschutzerklärung." },
+    { title: "Kann ich eine eigene Domain nutzen?", text: "Noch nicht. Karten werden unter opso.cc veröffentlicht." },
   ] },
 };
 
 const tr: OpsoContent = {
-  meta: { title: "OpSo | Kendi tarzınızı yansıtan dijital kartvizitler", description: "Fotoğraflı dört OpSo örnek kartı: açık ve sade tasarımlardan renkli olanlara. Özellikler ve uygulamanın yayın durumu bir bakışta." },
-  status: "Test aşamasında · Yayına hazırlanıyor",
-  title: "İşiniz, kendi tarzınızla",
-  intro: "Bir isim ve numaradan fazlasını paylaşın. Fotoğrafınızı, uzmanlığınızı, hizmetlerinizi ve iletişim bilgilerinizi sizi yansıtan bir dijital kartvizitte birleştirin.",
-  explore: "Örnekleri keşfedin",
-  availabilityLink: "Uygulamanın durumu",
+  meta: {
+    title: "OpSo | Kartın, kişilerin ve sohbetin tek ücretsiz uygulamada",
+    description: "OpSo; kişi listesi, takip hatırlatıcıları ve fuar takvimi olan ücretsiz bir dijital kartvizit. QR, NFC veya bağlantıyla paylaş; karşı tarafın uygulama kurması gerekmez. Android kapalı beta, iPhone yakında.",
+  },
+  status: "Android kapalı beta · iPhone yakında",
+  title: "Tanıştığın insanları kaydet, hatırla, takip et: kartın, kişilerin ve sohbetin tek ücretsiz uygulamada.",
+  intro: "OpSo, insanlarla yüz yüze tanışıp sonrasında takip etmek isteyenler için: fuar ziyaretçileri, küçük katılımcılar, serbest çalışanlar ve esnaf. Kartını saniyeler içinde paylaş, nerede tanıştığını not et, kimi arayacağını unutma.",
+  explore: "Neler yaptığını gör",
+  availabilityLink: "Uygulama durumu",
   navLabel: "Bu sayfada",
-  nav: ["Özellikler", "Örnek kartlar", "Planlar", "Uygulama durumu"],
-  illustration: { caption: "Yapay zekâ ile üretilmiş portrelerle örnek profiller", alt: "OpSo örnek kartı" },
-  overview: {
-    title: "İlk merhabadan daha kapsamlı bir tanıtıma",
-    intro: "Bir fotoğraf, net bir tanıtım ve faydalı bilgiler; ne yaptığınızı ve size nasıl ulaşılacağını anlatır.",
-    items: [
-      { title: "Sizi anlatan daha fazla ayrıntı", text: "Fotoğrafınız ve tanıtımınızla başlayın. Hizmetlerinizi, seçili çalışmalarınızı ve işinize uygun iletişim yollarını ekleyin. Ziyaretçilerin neler göreceğine siz karar verin." },
-      { title: "Kartvizitin ötesinde bir alan", text: "Üst menüsü ve kendi adresinden açılan en fazla altı sayfası olan site düzenleri yayına hazırlanıyor. Hizmetlerinize, seçili çalışmalarınıza ve iletişim bilgilerinize yer açın." },
-      { title: "İnceleyin, kaydedin, yayımlayın", text: "Değişiklikleri mobil ve masaüstü önizlemede inceleyin. Taslağınızı kaydedin, hazır olduğunda yayımlayın. Sonraki değişiklikler yeniden yayımlayana kadar taslakta kalır." },
+  nav: ["Nasıl çalışır", "Özellikler", "Ekranlar", "Uygulama durumu"],
+  heroAlt: ["OpSo kişi listesi, notlar ve durum etiketleriyle (demo veri)", "OpSo paylaşma ekranı: karekod, dokun ve NFC kart (demo veri)"],
+  flow: {
+    title: "Tanış. Hatırla. Takip et.",
+    intro: "Fuar standında, toplantıda ya da bir el sıkışmada gerçekleşen üç adım.",
+    steps: [
+      { title: "Kartını paylaş", text: "Karekodu göster, telefonları dokundur, NFC etiketi kullan ya da bağlantıyı gönder. Kartın karşı tarafın tarayıcısında açılır; uygulama gerekmez." },
+      { title: "Kim ve nerede, kaydet", text: "Her kişi, tanıştığınız yeri, notları ve bir durum etiketini taşır. Kâğıt kartviziti taratırsan aynı listeye eklenir." },
+      { title: "Zamanında takip et", text: "Bir hatırlatıcı kur ve hazır bir takip mesajı gönder; güzel bir sohbet standda bitmesin." },
     ],
   },
+  features: {
+    title: "OpSo bugün neler yapıyor",
+    intro: "Yalnızca uygulamada şu anda var olan özellikler. Hiçbiri sonraya verilmiş bir söz değil.",
+    items: [
+      { title: "Uygulamasız web kartı", text: "Kartın opso.cc/adin adresinde durur ve her tarayıcıda açılır." },
+      { title: "Karekod, NFC etiketi ve dokun", text: "Karekodla, uyumlu bir NFC etiketiyle ya da Android’de telefonları dokundurarak paylaş." },
+      { title: "Kartvizit tarama", text: "Kâğıt kartı fotoğrafla, kişiyi listene ekle." },
+      { title: "“Nerede tanıştık” notlu kişiler", text: "Notlar, durum etiketi (sıcak, ılık, VIP) ve tanışılan yer; aranabilir tek bir listede." },
+      { title: "Takip hatırlatıcıları", text: "Kişi başına bir hatırlatıcı ve uyarlayıp gönderebileceğin hazır bir takip mesajı." },
+      { title: "Fuar takvimi", text: "Seçilmiş fuarların listesi. “Gidiyorum”a dokun, yeni kişiler o fuara eklenir." },
+      { title: "Birebir mesajlaşma", text: "Bağlantıda olduğun kişilerle yazı, fotoğraf ve dosya ile mesajlaş." },
+      { title: "Telefonuna kaydet", text: "Bir kişiyi doğrudan telefonunun rehberine kaydet ya da kişilerini CSV veya vCard olarak dışa aktar." },
+      { title: "Verin, kararın", text: "Neyin herkese açık olacağını sen seçersin. Verilerini istediğin an indirebilir, hesabını silebilirsin." },
+    ],
+  },
+  screens: {
+    title: "Uygulama, ekran ekran",
+    intro: "Android uygulamasından gerçek ekranlar. Görünen kişiler ve şirketler kurgusal demo verisidir.",
+    label: "Uygulama ekranları, yana kaydır",
+    note: "Yalnızca demo veri. Portreler yapay zekâ ile üretilmiştir, gerçek kişileri göstermez.",
+    alts: [
+      "Kartını oluştur: ad, unvan ve şirket, sonra yayınla",
+      "Karekod ile Dokun ve NFC kart sekmelerini gösteren paylaşma ekranı",
+      "Kartın alıcının tarayıcısında, tek dokunuşla kişi olarak kaydediliyor",
+      "Arama ve Gidiyorum düğmesiyle fuar takvimi",
+      "Bağlantıdaki bir kişiyle, yazı ve ekli dosyalı sohbet",
+      "Durum etiketleri, notlar ve CSV ya da vCard dışa aktarımıyla kişi listesi",
+      "Şablon, renk ve yazı tipleri ile canlı önizlemeli kart editörü",
+      "Gizlilik ayarları: neyin açık olacağını seç, verini indir ya da sil",
+    ],
+  },
+  audience: {
+    title: "OpSo kimler için",
+    intro: "İşini yüz yüze sohbetlerle yürüten ve sonrasını rahatça takip etmek isteyenler için.",
+    items: ["Fuar ziyaretçileri", "Küçük fuar katılımcıları", "Serbest çalışanlar ve danışmanlar", "Esnaf ve yerel işletmeler", "Topluluk ve etkinlik organizatörleri"],
+    note: "Bağlantılarını çoğunlukla çevrimiçi kuruyorsan, bir iş ağındaki profil sana daha uygun olabilir. OpSo el sıkışma için tasarlandı.",
+  },
   families: {
-    title: "Farklı insanlar, farklı ilk izlenimler",
-    intro: "Mimarlık, danışmanlık, marka tasarımı ve dijital ürünler. Kendine özgü rengi, karakteri ve içeriği olan dört kapsamlı örneği inceleyin.",
+    title: "Web kartın, kendi tarzında",
+    intro: "Farklı görünümlü dört örnek kart. Alıcı kartı tarayıcıda böyle görür.",
     label: "Örnek profil seçin",
     caption: "Yapay zekâ ile üretilmiş portreler içeren kurgusal örnek profiller. OpSo’dan alınan görüntülerdir; müşteri referansı değildir.",
     desktop: "Masaüstü",
@@ -160,19 +309,29 @@ const tr: OpsoContent = {
       { title: "Felix Berger", profession: "Ürün tasarımcısı", style: "Ferah mint", text: "Sade, ulaşılabilir bir profil. Açık mint; tanıtımına, dijital ürün tasarımına ve iş birliği seçeneklerine eşlik eder." },
     ],
   },
-  sharing: { title: "Okutun, dokundurun veya bağlantıyı açın", text: "Yayımlanmış OpSo kartı veya sitesi, alıcının tarayıcısında açılır; OpSo uygulaması gerekmez. Bağlantıyı paylaşın, karekodu gösterin veya aynı adrese yönlenen uyumlu bir NFC etiketi kullanın. NFC için uyumlu telefon ve etiket gerekir." },
-  plans: { title: "Bir tane ile başlayın, devamını planlayın", intro: "Başlangıçta tek hesapta bir kart veya web sitesi ücretsizdir. Daha fazla kart ve site için hesap planları geliştiriliyor.", free: "Ücretsiz", soon: "Yakında", unit: "hesap başına kart / web sitesi", included: "1 kart veya web sitesi dahil", coming: "Geliştirme aşamasında", note: "OpSo’da şu anda aktif ödeme adımı veya ücretlendirme yoktur. Pro ve Studio henüz satın alınamaz; fiyatları ve çıkış tarihleri açıklanmadı." },
-  availability: { title: "Uygulama hâlâ test aşamasında", text: "OpSo genel kullanıma açılmadan önce kalite kontrolünden geçiyor. Henüz Google Play’de yayımlanmadı. Doğrulanmış, herkese açık bir Android indirme bağlantısı şu anda hazır değil; hazır olduğunda burada paylaşılacak.", contact: "OpSo hakkında bize ulaşın" },
+  sharing: { title: "Okut, dokundur ya da bağlantıyı aç", text: "Yayımlanmış OpSo kartı, alıcının tarayıcısında açılır; OpSo uygulaması gerekmez. Bağlantıyı paylaş, karekodu göster veya aynı adrese yönlenen uyumlu bir NFC etiketi kullan. NFC için uyumlu telefon ve etiket gerekir." },
+  price: {
+    title: "Bugün ücretsiz, reklamsız",
+    text: "OpSo şu anda ücretsiz kullanılıyor. Ödeme adımı yok, hiçbir şey ücretlendirilmiyor.",
+    points: ["Reklam yok", "Ödeme bilgisi gerekmez", "Verilerini istediğin an indir ya da sil"],
+  },
+  availability: {
+    title: "OpSo’ya nereden ulaşılır",
+    text: "OpSo test aşamasında. Henüz herkese açık bir mağaza sayfası yok, bu yüzden burada indirme bağlantısı da yok.",
+    android: { title: "Android: kapalı beta", text: "Uygulama Google Play’de kapalı testte ve yalnızca davet edilen testçilere açık. Bize yaz, seni ekleyelim." },
+    ios: { title: "iPhone: yakında", text: "iPhone sürümü hazırlanıyor ve TestFlight’a doğru ilerliyor. Henüz bir tarih yok." },
+    contact: "Beta erişimi iste",
+    note: "O zamana kadar yayımlanmış her kartı tarayıcıda açabilirsin; örneğin yukarıdaki demo kartları.",
+  },
   faq: { title: "Başlamadan önce", items: [
-    { title: "Bu bir bağlantı sayfası mı, web sitesi mi?", text: "OpSo sade dijital kartvizitleri site düzenleriyle birleştirir. Test aşamasındaki site özellikleri, üst menü ve kendi adresinden açılabilen toplam en fazla altı sayfa içerir." },
-    { title: "Alıcının uygulama yüklemesi gerekiyor mu?", text: "Hayır. Yayımlanmış kart veya site tarayıcıda açılır. Karekodlar ve uyumlu NFC etiketleri aynı herkese açık bağlantıya yönlenir." },
-    { title: "Kendi alan adımı şimdi bağlayabilir miyim?", text: "Henüz değil. Alan adı kurulumu hazırlanıyor. Kendi alan adınızı bağlama ve bu adreste yayımlama şu anda kullanıma açık değildir." },
-    { title: "Free, Pro ve Studio neleri içeriyor?", text: "Free bir kart veya web sitesi içerir. Pro için tek hesapta en fazla 10, Studio için en fazla 50 planlanıyor. Pro ve Studio geliştirme aşamasındadır, ödeme adımı kapalıdır." },
+    { title: "Karşı tarafın uygulamaya ihtiyacı var mı?", text: "Hayır. Yayımlanmış kartın tarayıcıda açılır. Karekodlar ve uyumlu NFC etiketleri herkese açık bağlantıya yönlenir." },
+    { title: "OpSo ne kadar?", text: "Şu anda hiçbir şey. OpSo ücretsizdir ve reklam içermez. Bu değişirse, herhangi bir ücret alınmadan önce bu sayfada duyurulur." },
+    { title: "iPhone için var mı?", text: "Henüz yok. iPhone sürümü yakında. O zamana kadar iPhone kullanan herkes kartını yine de tarayıcıda açabilir." },
+    { title: "Verilerime ne oluyor?", text: "Kartında neyin herkese açık olacağına sen karar verirsin. Verilerini dışa aktarmak ve hesabını silmek uygulamada her zaman mümkündür. Ayrıntılar gizlilik politikasında." },
+    { title: "Kendi alan adımı kullanabilir miyim?", text: "Henüz değil. Kartlar opso.cc adresinde yayımlanır." },
   ] },
 };
 
-// Like the existing content bundles, secondary locales fall back to English.
-// They are excluded from public hreflang/sitemap until fully translated.
 export function getOpsoContent(locale: Locale): OpsoContent {
   return locale === "de" ? de : locale === "tr" ? tr : en;
 }
