@@ -37,8 +37,8 @@ type OpsoContent = {
 
 const en: OpsoContent = {
   meta: {
-    title: "OpSo | Your card, the people you meet, and the follow-up, in one free app",
-    description: "OpSo is a free digital business card with contacts, follow-up reminders and a trade fair calendar. Share by QR, NFC or link; recipients need no app. Android closed beta, iPhone coming soon.",
+    title: "OpSo | Digital business card with contacts and follow-up",
+    description: "Free digital business card with contacts, follow-up and a fair calendar. Android closed test, iPhone in internal testing. Recipients need no app.",
   },
   status: "Android closed beta · iPhone coming soon",
   title: "Your card, the people you meet, and the follow-up, in one free app.",
@@ -52,7 +52,7 @@ const en: OpsoContent = {
     title: "Meet. Remember. Follow up.",
     intro: "Three steps that happen at a stand, a meeting or a handshake.",
     steps: [
-      { title: "Share your card", text: "Show a QR code, tap phones, use an NFC tag or send the link. Your card opens in the other person’s browser, so they need no app." },
+      { title: "Share your card", text: "Show a QR code, tap phones (Android), use an NFC tag or send the link. Your card opens in the other person’s browser, so they need no app." },
       { title: "Save who and where", text: "Every contact keeps the place you met, notes and a lead status. Scan a paper business card and it lands in the same list." },
       { title: "Follow up in time", text: "Set a reminder and send a ready-made follow-up message, so a good conversation does not end at the stand." },
     ],
@@ -121,7 +121,7 @@ const en: OpsoContent = {
     title: "Where to get OpSo",
     text: "OpSo is in testing. There is no public store listing yet, so there is no download link on this page.",
     android: { title: "Android: closed beta", text: "The app is in Google Play closed testing and open to invited testers only. Write to us and we will add you." },
-    ios: { title: "iPhone: coming soon", text: "The iPhone version is being prepared and is moving towards TestFlight. No date is set yet." },
+    ios: { title: "iPhone: coming soon", text: "The iPhone version is in internal testing (TestFlight), not public yet. There is no App Store date." },
     contact: "Request beta access",
     note: "Until then you can already open any published card in a browser, for example the demo cards above.",
   },
@@ -137,7 +137,7 @@ const en: OpsoContent = {
 const de: OpsoContent = {
   meta: {
     title: "OpSo | Karte, Kontakte und Follow-up an einem Ort",
-    description: "OpSo ist eine kostenlose digitale Visitenkarte mit Kontakten, Follow-up-Erinnerungen und Messekalender. Teilen per QR, NFC oder Link; der Empfänger braucht keine App. Android Closed Beta, iPhone folgt.",
+    description: "Kostenlose digitale Visitenkarte mit Kontakten, Follow-up und Messekalender. Android Closed Beta, iPhone im internen Test. Empfänger brauchen keine App.",
   },
   status: "Android Closed Beta · iPhone folgt",
   title: "Karte, Kontakte und Follow-up an einem Ort: Wen du triffst, vergisst du nicht mehr.",
@@ -151,7 +151,7 @@ const de: OpsoContent = {
     title: "Treffen. Merken. Nachfassen.",
     intro: "Drei Schritte, die am Messestand, im Termin oder beim Händeschütteln passieren.",
     steps: [
-      { title: "Karte teilen", text: "QR-Code zeigen, Handys aneinanderhalten, NFC-Tag nutzen oder den Link senden. Deine Karte öffnet sich im Browser des Gegenübers, eine App ist nicht nötig." },
+      { title: "Karte teilen", text: "QR-Code zeigen, Handys aneinanderhalten (Android), NFC-Tag nutzen oder den Link senden. Deine Karte öffnet sich im Browser des Gegenübers, eine App ist nicht nötig." },
       { title: "Wer und wo festhalten", text: "Jeder Kontakt behält den Ort des Treffens, Notizen und einen Lead-Status. Eine Papier-Visitenkarte scannst du ein und sie landet in derselben Liste." },
       { title: "Rechtzeitig nachfassen", text: "Setze eine Erinnerung und sende eine fertige Follow-up-Nachricht, damit ein gutes Gespräch nicht am Stand endet." },
     ],
@@ -207,7 +207,7 @@ const de: OpsoContent = {
       { title: "Clara Weber", profession: "Architektin", style: "Helle Steintöne", text: "Ein ruhiger, durchdachter Auftritt. Helle Flächen geben ihrer Arbeitsweise und ihren Architekturleistungen Raum." },
       { title: "James Bennett", profession: "Unternehmensberater", style: "Klassisches Navy", text: "Ein professionelles Profil mit klarem Fokus. Tiefes Marineblau gliedert Expertise, Leistungen und Kontaktmöglichkeiten." },
       { title: "Maya Collins", profession: "Markendesignerin", style: "Koralle & Violett", text: "Ein farbenfroher Einblick in kreative Arbeit. Eine ausdrucksstarke Farbwelt verbindet Persönlichkeit und Gestaltung." },
-      { title: "Felix Berger", profession: "Produktdesigner", style: "Frisches Mint", text: "Ein klarer, zugänglicher Auftritt. Helles Mint begleitet seine Vorstellung, digitales Produktdesign und Möglichkeiten zur Zusammenarbeit." },
+      { title: "Felix Berger", profession: "Produktdesigner", style: "Frisches Mint", text: "Ein klarer, zugänglicher Auftritt. Helles Mint begleitet die Vorstellung seines digitalen Produktdesigns und seine Angebote zur Zusammenarbeit." },
     ],
   },
   sharing: { title: "Scannen, antippen oder den Link öffnen", text: "Eine veröffentlichte OpSo-Karte öffnet sich im Browser des Empfängers, ohne OpSo-App. Teile den Link, zeige den QR-Code oder nutze einen kompatiblen NFC-Tag mit derselben Adresse. NFC setzt ein kompatibles Smartphone und einen passenden Tag voraus." },
@@ -220,7 +220,7 @@ const de: OpsoContent = {
     title: "Wo es OpSo gibt",
     text: "OpSo ist in der Testphase. Es gibt noch keinen öffentlichen Store-Eintrag, deshalb steht hier kein Download-Link.",
     android: { title: "Android: Closed Beta", text: "Die App ist im geschlossenen Test bei Google Play und nur für eingeladene Tester offen. Schreib uns, wir nehmen dich auf." },
-    ios: { title: "iPhone: folgt in Kürze", text: "Die iPhone-Version wird vorbereitet und läuft auf TestFlight zu. Ein Termin steht noch nicht fest." },
+    ios: { title: "iPhone: folgt in Kürze", text: "Die iPhone-Version wird intern getestet (TestFlight). Ein Termin für den App Store steht noch nicht fest." },
     contact: "Beta-Zugang anfragen",
     note: "Bis dahin kannst du jede veröffentlichte Karte schon im Browser öffnen, zum Beispiel die Demokarten oben.",
   },
@@ -236,7 +236,7 @@ const de: OpsoContent = {
 const tr: OpsoContent = {
   meta: {
     title: "OpSo | Kartın, kişilerin ve sohbetin tek ücretsiz uygulamada",
-    description: "OpSo; kişi listesi, takip hatırlatıcıları ve fuar takvimi olan ücretsiz bir dijital kartvizit. QR, NFC veya bağlantıyla paylaş; karşı tarafın uygulama kurması gerekmez. Android kapalı beta, iPhone yakında.",
+    description: "Kişiler, takip ve fuar takvimi olan ücretsiz dijital kartvizit. Android kapalı beta, iPhone dahili testte. Karşı tarafın uygulaması gerekmez.",
   },
   status: "Android kapalı beta · iPhone yakında",
   title: "Tanıştığın insanları kaydet, hatırla, takip et: kartın, kişilerin ve sohbetin tek ücretsiz uygulamada.",
@@ -250,7 +250,7 @@ const tr: OpsoContent = {
     title: "Tanış. Hatırla. Takip et.",
     intro: "Fuar standında, toplantıda ya da bir el sıkışmada gerçekleşen üç adım.",
     steps: [
-      { title: "Kartını paylaş", text: "Karekodu göster, telefonları dokundur, NFC etiketi kullan ya da bağlantıyı gönder. Kartın karşı tarafın tarayıcısında açılır; uygulama gerekmez." },
+      { title: "Kartını paylaş", text: "Karekodu göster, telefonları dokundur (Android), NFC etiketi kullan ya da bağlantıyı gönder. Kartın karşı tarafın tarayıcısında açılır; uygulama gerekmez." },
       { title: "Kim ve nerede, kaydet", text: "Her kişi, tanıştığınız yeri, notları ve bir durum etiketini taşır. Kâğıt kartviziti taratırsan aynı listeye eklenir." },
       { title: "Zamanında takip et", text: "Bir hatırlatıcı kur ve hazır bir takip mesajı gönder; güzel bir sohbet standda bitmesin." },
     ],
@@ -267,7 +267,7 @@ const tr: OpsoContent = {
       { title: "Fuar takvimi", text: "Seçilmiş fuarların listesi. “Gidiyorum”a dokun, yeni kişiler o fuara eklenir." },
       { title: "Birebir mesajlaşma", text: "Bağlantıda olduğun kişilerle yazı, fotoğraf ve dosya ile mesajlaş." },
       { title: "Telefonuna kaydet", text: "Bir kişiyi doğrudan telefonunun rehberine kaydet ya da kişilerini CSV veya vCard olarak dışa aktar." },
-      { title: "Verin, kararın", text: "Neyin herkese açık olacağını sen seçersin. Verilerini istediğin an indirebilir, hesabını silebilirsin." },
+      { title: "Verilerin, kararın", text: "Neyin herkese açık olacağını sen seçersin. Verilerini istediğin an indirebilir, hesabını silebilirsin." },
     ],
   },
   screens: {
@@ -319,7 +319,7 @@ const tr: OpsoContent = {
     title: "OpSo’ya nereden ulaşılır",
     text: "OpSo test aşamasında. Henüz herkese açık bir mağaza sayfası yok, bu yüzden burada indirme bağlantısı da yok.",
     android: { title: "Android: kapalı beta", text: "Uygulama Google Play’de kapalı testte ve yalnızca davet edilen testçilere açık. Bize yaz, seni ekleyelim." },
-    ios: { title: "iPhone: yakında", text: "iPhone sürümü hazırlanıyor ve TestFlight’a doğru ilerliyor. Henüz bir tarih yok." },
+    ios: { title: "iPhone: yakında", text: "iPhone sürümü şu an dahili olarak test ediliyor (TestFlight), henüz herkese açık değil. App Store için tarih yok." },
     contact: "Beta erişimi iste",
     note: "O zamana kadar yayımlanmış her kartı tarayıcıda açabilirsin; örneğin yukarıdaki demo kartları.",
   },
