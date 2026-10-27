@@ -69,7 +69,7 @@ export default function OpsoPage({ params }: Props) {
           <div className={styles.heroPhones}>
             {/* The headline is the LCP; only the first phone is fetched early. */}
             <Image className={styles.phoneBack} src={shot(1)} alt={c.heroAlt[1]} width={540} height={960} sizes="(max-width: 1000px) 45vw, 22vw" />
-            <Image className={styles.phoneFront} src={shot(5)} alt={c.heroAlt[0]} width={540} height={960} sizes="(max-width: 1000px) 55vw, 26vw" priority />
+            <Image className={styles.phoneFront} src={shot(5)} alt={c.heroAlt[0]} width={540} height={960} sizes="(max-width: 1000px) 55vw, 26vw" />
           </div>
         </header>
 

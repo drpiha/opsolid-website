@@ -80,7 +80,7 @@
 .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
 .step { padding: 1.6rem; border: 1px solid var(--line-firm); border-radius: var(--r-lg); background: var(--bg-2); }
 .step p { color: var(--ink-200); font-size: .92rem; margin: 0; }
-.stepNo { font-family: var(--v4-mono); font-size: .8rem; color: var(--copper-500); letter-spacing: .08em; }
+.stepNo { font-family: var(--v4-mono); font-size: .8rem; color: var(--v4-cu-hi); letter-spacing: .08em; }
 .ledger { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 5vw, 5rem); margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-firm); }
 .ledger li { display: grid; grid-template-columns: minmax(0, 1fr); padding: 1.25rem 0; border-bottom: 1px solid var(--line-firm); }
 .ledger h3 { margin: 0 0 .35rem; font-size: 1.05rem; }
