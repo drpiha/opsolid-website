@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import {
+  Fraunces,
   Inter,
   Instrument_Serif,
   JetBrains_Mono,
@@ -9,10 +10,13 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import localFont from "next/font/local";
+import { GeistMono } from "geist/font/mono";
 import { isV4Path } from "@/lib/v4";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
 import "./globals.css";
+// Loaded after globals.css (which pulls in the legacy v4 marketing CSS) so the v7 base wins at equal specificity.
+import "../styles/opsolid-v7.css";
 
 // v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
 // serve the marketing site. The legacy families below still serve app
@@ -29,7 +33,7 @@ const archivo = localFont({
   style: "normal",
   declarations: [{ prop: "font-stretch", value: "100% 118%" }],
   display: "swap",
-  preload: true,
+  preload: false,
   variable: "--font-archivo",
 });
 
@@ -43,12 +47,21 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
+// v7 marketing body font, also used by app surfaces. Variable (all weights in one file per subset);
+// latin-ext carries the Turkish letters (İ ı Ş ş Ğ ğ). Preloaded: it is the LCP text face.
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
   display: "swap",
-  preload: false,
   variable: "--font-inter",
-  weight: ["400", "500", "600", "700"],
+});
+
+// v7 display face: Fraunces variable (opsz + SOFT axes), normal and italic, used at weight 300.
+const fraunces = Fraunces({
+  subsets: ["latin", "latin-ext"],
+  axes: ["opsz", "SOFT"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-fraunces",
 });
 
 // V2 redesign font stack — Plus Jakarta Sans serves both display and body
@@ -163,9 +176,9 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    // Marketing surface "Licht & Kupfer": porcelain browser chrome in both UA schemes.
-    { media: "(prefers-color-scheme: light)", color: "#F5F3EF" },
-    { media: "(prefers-color-scheme: dark)", color: "#F5F3EF" },
+    // Marketing surface (v7): porcelain browser chrome in both UA schemes.
+    { media: "(prefers-color-scheme: light)", color: "#F6F2EC" },
+    { media: "(prefers-color-scheme: dark)", color: "#F6F2EC" },
   ],
 };
 
@@ -191,6 +204,8 @@ export default function RootLayout({
     archivo.variable,
     ibmPlexMono.variable,
     inter.variable,
+    fraunces.variable,
+    GeistMono.variable,
     instrumentSerif.variable,
     jetBrainsMono.variable,
     geist.variable,

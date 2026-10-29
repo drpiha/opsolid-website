@@ -1,4 +1,5 @@
-import { v4Meta, v4Page } from "@/components/v4/make-page";
+import { page } from "@/content/v7/pages/ueber";
+import { v7Meta, v7Page } from "@/components/v7/make-page";
 
-export const generateMetadata = v4Meta("about");
-export default v4Page("about");
+export const generateMetadata = v7Meta(page);
+export default v7Page(page);

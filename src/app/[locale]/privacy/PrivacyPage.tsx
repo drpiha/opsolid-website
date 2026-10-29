@@ -1,7 +1,9 @@
 import { contents } from "@/content";
-import type { L3 } from "@/content/v4/types";
+import { LegalLayout } from "@/components/v7/LegalPage";
+import { LABEL } from "@/content/v7/site";
+import { href } from "@/lib/v7-routes";
+import type { L3 } from "@/lib/v7-routes";
 import { SITE_CONFIG } from "@/lib/constants";
-import styles from "../impressum/legal.module.css";
 
 // Server-rendered from the content data: no client content bundle on this route.
 const LABELS: Record<L3, { eyebrow: string; notice: string; owner: string; email: string }> = {
@@ -19,60 +21,53 @@ export function PrivacyPage({ locale }: { locale: L3 }) {
   const title = s.title.replace("Datenschutzerklärung", "Datenschutz­erklärung");
 
   return (
-    <div className="v4-page">
-      <section className="v4-sec is-flow" aria-labelledby="privacy-title" style={{ paddingTop: "clamp(112px, 16vh, 168px)" }}>
-        <div className="v4-in">
-          <div className="v4-col is-wide">
-            <p className="v4-eyebrow">{L.eyebrow}</p>
-            <h1 id="privacy-title" className="v4-h1" style={{ fontSize: "clamp(2rem, 4.6vw, 3.8rem)" }}>
-              {title}
-            </h1>
-            <p className={styles.sub}>{s.subtitle}</p>
-            <div className={styles.notice} role="note" aria-label={L.notice}>
-              <p className="v4-eyebrow">{L.notice}</p>
-              <p>{s.notice}</p>
-            </div>
-
-            <div className={`v4-prose ${styles.doc}`}>
-              {(s.sections as ReadonlyArray<Section>).map((section) => (
-                <section key={section.title}>
-                  <h2>{section.title}</h2>
-                  {section.isResponsible ? (
-                    <>
-                    <p>
-                      OpSolid
-                      <br />
-                      Hasan D&ouml;nmez ({L.owner})
-                      <br />
-                      {SITE_CONFIG.address.street}
-                      <br />
-                      {SITE_CONFIG.address.postalCode} {SITE_CONFIG.address.city}
-                      <br />
-                      {SITE_CONFIG.address.country}
-                      <br />
-                      {L.email}: <a href={`mailto:${SITE_CONFIG.email}`}>{SITE_CONFIG.email}</a>
-                    </p>
-                    {section.content ? <p>{section.content}</p> : null}
-                    </>
-                  ) : (
-                    <>
-                      {section.content ? <p>{section.content}</p> : null}
-                      {section.subsections?.map((sub) => (
-                        <div key={sub.title}>
-                          <h3>{sub.title}</h3>
-                          <p>{sub.content}</p>
-                        </div>
-                      ))}
-                    </>
-                  )}
-                </section>
+    <LegalLayout
+      locale={locale}
+      crumbs={[
+        { name: LABEL[locale].home, path: href("home", locale), key: "home" },
+        { name: LABEL[locale].privacy, path: href("privacy", locale), key: "privacy" },
+      ]}
+      eyebrow={L.eyebrow}
+      title={title}
+      subtitle={s.subtitle}
+      noticeLabel={L.notice}
+      notice={s.notice}
+      frameLabel={L.eyebrow}
+      stand={s.lastUpdated}
+    >
+      {(s.sections as ReadonlyArray<Section>).map((section) => (
+        <section key={section.title}>
+          <h2>{section.title}</h2>
+          {section.isResponsible ? (
+            <>
+              <p>
+                OpSolid
+                <br />
+                Hasan D&ouml;nmez ({L.owner})
+                <br />
+                {SITE_CONFIG.address.street}
+                <br />
+                {SITE_CONFIG.address.postalCode} {SITE_CONFIG.address.city}
+                <br />
+                {SITE_CONFIG.address.country}
+                <br />
+                {L.email}: <a href={`mailto:${SITE_CONFIG.email}`}>{SITE_CONFIG.email}</a>
+              </p>
+              {section.content ? <p>{section.content}</p> : null}
+            </>
+          ) : (
+            <>
+              {section.content ? <p>{section.content}</p> : null}
+              {section.subsections?.map((sub) => (
+                <div key={sub.title}>
+                  <h3>{sub.title}</h3>
+                  <p>{sub.content}</p>
+                </div>
               ))}
-            </div>
-
-            <p className="v4-stand">{s.lastUpdated}</p>
-          </div>
-        </div>
-      </section>
-    </div>
+            </>
+          )}
+        </section>
+      ))}
+    </LegalLayout>
   );
 }

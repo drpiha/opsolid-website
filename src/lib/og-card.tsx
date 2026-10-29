@@ -7,7 +7,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import type { L3 } from "@/content/v4/types";
+import type { L3 } from "@/lib/v7-routes";
 import { OG_CLAIM, OG_SIZE, OG_TAGLINE } from "@/lib/seo-v4";
 
 export { OG_SIZE, ogAlt } from "@/lib/seo-v4";

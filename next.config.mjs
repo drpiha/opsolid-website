@@ -68,7 +68,7 @@ const nextConfig = {
         headers: securityHeaders,
       },
       { source: "/img/:path*", headers: publicAssetCache },
-      // Hero video and posters (src/components/v4/HeroScene.tsx).
+      // Hero video and posters (the v7 MediaFigure).
       { source: "/media/:path*", headers: publicAssetCache },
       { source: "/images/:path*", headers: publicAssetCache },
       { source: "/icons/:path*", headers: publicAssetCache },

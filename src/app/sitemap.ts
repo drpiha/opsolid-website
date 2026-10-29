@@ -1,51 +1,36 @@
 import { MetadataRoute } from "next";
-import { SITE_CONFIG, SITE_UPDATED_ISO } from "@/lib/constants";
-import { PUBLIC_LOCALES } from "@/lib/i18n";
+import { SITE_UPDATED_ISO } from "@/lib/constants";
 import { content as en } from "@/content/en";
+import { L3_LOCALES, PAGE_KEYS, absUrl, alternates } from "@/lib/v7-routes";
 
-/** Public marketing paths. Google ignores priority/changefreq, so only real lastModified is emitted. */
-const STATIC_PAGES: string[] = [
-  "",
-  "/agents",
-  "/websites",
-  "/leistungen",
-  "/ai-automation-check",
-  "/ki-beratung",
-  "/prozessautomatisierung",
-  "/microsoft-365-automatisierung",
-  "/interne-tools",
-  "/ki-schulungen",
-  "/ueber-uns",
-  "/contact",
-  "/blog",
-  "/opso",
-  // Kutasia is a project in development, not a product yet: /products/kutasia 301s to /websites (work samples).
-];
-
-function buildLanguageMap(path: string): Record<string, string> {
-  const map: Record<string, string> = {};
-  for (const loc of PUBLIC_LOCALES) map[loc] = `${SITE_CONFIG.url}/${loc}${path}`;
-  // x-default points at German — primary target market is DE-speaking SMEs.
-  map["x-default"] = `${SITE_CONFIG.url}/de${path}`;
-  return map;
-}
+/**
+ * Sitemap of the v7 marketing site: every page key except the legal pages (impressum, privacy)
+ * × de/en/tr, plus the blog posts. Public URLs only (localized slugs, the German home is
+ * https://opsolid.de/), each with reciprocal hreflang alternates. Google ignores
+ * priority/changefreq, so only a real lastModified is emitted. Redirecting URLs never appear here.
+ *
+ * Blog posts: the same post slug exists in all three locales (key "blog", sub "/<slug>").
+ */
+const EXCLUDED = new Set(["impressum", "privacy"]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const stamp = new Date(SITE_UPDATED_ISO + "T00:00:00Z");
   const entries: MetadataRoute.Sitemap = [];
 
-  for (const path of STATIC_PAGES) {
-    const languages = buildLanguageMap(path);
-    for (const loc of PUBLIC_LOCALES) {
-      entries.push({ url: `${SITE_CONFIG.url}/${loc}${path}`, lastModified: stamp, alternates: { languages } });
+  for (const key of PAGE_KEYS) {
+    if (EXCLUDED.has(key)) continue;
+    const languages = alternates(key);
+    for (const loc of L3_LOCALES) {
+      entries.push({ url: absUrl(key, loc), lastModified: stamp, alternates: { languages } });
     }
   }
 
   for (const post of en.blog.posts) {
-    const path = `/blog/${post.slug}`;
-    const languages = buildLanguageMap(path);
-    for (const loc of PUBLIC_LOCALES) {
-      entries.push({ url: `${SITE_CONFIG.url}/${loc}${path}`, lastModified: new Date(post.date + "T00:00:00Z"), alternates: { languages } });
+    const sub = `/${post.slug}`;
+    const languages = alternates("blog", sub);
+    const modified = new Date(post.date + "T00:00:00Z");
+    for (const loc of L3_LOCALES) {
+      entries.push({ url: absUrl("blog", loc, sub), lastModified: modified, alternates: { languages } });
     }
   }
 

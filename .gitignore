@@ -80,3 +80,6 @@ handoff/
 __pycache__/
 *.py[co]
 .claude/worktrees/
+
+# Local page captures (scripts/site-capture.mjs)
+.shots/

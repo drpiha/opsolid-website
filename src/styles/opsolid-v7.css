@@ -1,0 +1,124 @@
+/* OpSolid v7 (relaunch 2026-10-29, direction A "Klarheit").
+   Tokens and base styles for the marketing surface. Scoped to html[data-v4] (internal flag name, kept);
+   app surfaces keep their own theme. Components use Tailwind utilities with the hex values below;
+   this file owns the page ground, fonts, focus, the skip link and the few things utilities cannot do. */
+
+html[data-v4],
+html[data-v4][data-theme] {
+  --porcelain: #f6f2ec;
+  --paper: #ffffff;
+  --ink: #16191d;
+  --stone: #6b665f;
+  --copper: #b5623a;
+  --copper-deep: #8a4524;
+  --line: #e3dcd1;
+  --v7-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --v7-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --v7-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: light;
+  background: var(--porcelain);
+  scroll-padding-top: calc(88px + env(safe-area-inset-top, 0px));
+  scroll-padding-bottom: 16px;
+}
+
+html[data-v4] body {
+  background: var(--porcelain);
+  color: var(--ink);
+  font-family: var(--v7-body);
+  font-size: 17px;
+  line-height: 1.6;
+  font-stretch: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  hyphens: manual;
+  overflow-x: clip;
+}
+@media (min-width: 768px) {
+  html[data-v4] body { font-size: 18px; }
+}
+@media (max-width: 639px) {
+  html[data-v4] body { hyphens: auto; }
+}
+html[data-v4] body.grain::before { display: none; }
+
+html[data-v4] .f-display {
+  font-family: var(--v7-display);
+  font-variation-settings: "SOFT" 50;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-stretch: 100%;
+}
+html[data-v4] .f-mono {
+  font-family: var(--v7-mono);
+  letter-spacing: 0.02em;
+  font-stretch: 100%;
+  /* mono fact lines and captions: no auto-hyphenation ("Analy-se") */
+  hyphens: manual;
+}
+
+html[data-v4] ::selection { background: #e9cdbb; color: var(--ink); }
+html[data-v4] :focus-visible {
+  outline: 2px solid var(--copper-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+html[data-v4] .on-ink :focus-visible { outline-color: #e8b99e; }
+
+html[data-v4] h1,
+html[data-v4] h2,
+html[data-v4] h3 { overflow-wrap: anywhere; text-wrap: balance; }
+html[data-v4] .v7 p,
+html[data-v4] .v7 li,
+html[data-v4] .v7 dd { text-wrap: pretty; }
+html[data-v4] .v7 a { text-underline-offset: 6px; }
+
+/* Skip link: first focusable element. */
+.v7-skip {
+  position: fixed;
+  left: 12px;
+  top: -80px;
+  z-index: 100;
+  background: #16191d;
+  color: #f6f2ec;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 500;
+  transition: top 0.15s;
+}
+.v7-skip:focus { top: 12px; }
+
+/* Hero entrance without JS: opacity + 16 px rise, 500 ms, staggered by --d. */
+@keyframes v7-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.v7-rise { animation: v7-rise 500ms cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: var(--d, 0ms); }
+@media (prefers-reduced-motion: reduce) {
+  .v7-rise { animation: none; }
+  html[data-v4] * { scroll-behavior: auto !important; }
+}
+
+/* Video slot: reserve the poster's aspect ratio; phones in portrait use the portrait poster's ratio. */
+.v7-ar { aspect-ratio: var(--ar); }
+@media (max-width: 767px) and (orientation: portrait) {
+  .v7-ar { aspect-ratio: var(--arp, var(--ar)); }
+}
+
+/* Full-screen mobile menu: a native modal <dialog>. */
+.v7-menu { margin: 0; padding: 0; border: 0; width: 100%; max-width: none; height: 100%; max-height: none; background: #f6f2ec; color: #16191d; }
+.v7-menu::backdrop { background: rgba(22, 25, 29, 0.4); }
+.v7-menu:not([open]) { display: none; }
+.v7-menu[open] { display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; }
+html:has(.v7-menu[open]) { overflow: hidden; }
+
+/* Header ground: opaque porcelain, no glass. */
+.v7-header { background: #f6f2ec; padding-top: env(safe-area-inset-top, 0px); }
+
+/* Legacy element rules (tokens.css) colour h1-h4 and p with --ink-*. Inside v7 they inherit instead, so
+   text on the ink panel stays light. Zero-specificity scope: same weight as the element rules, loaded later. */
+:where(.v7) h1,
+:where(.v7) h2,
+:where(.v7) h3,
+:where(.v7) h4,
+:where(.v7) p { color: inherit; }
+html[data-v4] .v7 .v4-logo { color: inherit; }

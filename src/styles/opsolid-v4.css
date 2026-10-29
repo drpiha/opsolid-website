@@ -1,7 +1,7 @@
 /* =============================================================================
    OpSolid marketing surface — "Licht & Kupfer" (2026-10, owner choice: direction A)
    Light porcelain surfaces, deep ink, copper as the single accent. A full-bleed hero video with a tap
-   layer (components/v4/HeroScene) replaces the former 3D stage. Class names keep the v4- prefix.
+   layer replaces the former 3D stage. Class names keep the v4- prefix.
    Scoped to html[data-v4]; app surfaces keep the existing theme system.
    Families: Archivo (display + body, width axis) · IBM Plex Mono (labels).
    ========================================================================== */
@@ -134,7 +134,7 @@ html[data-v4] { scroll-padding-top: calc(80px + env(safe-area-inset-top, 0px)); 
   color: var(--v4-ink);
   text-decoration: none;
 }
-/* Official lockup (components/v4/Logo.tsx): ink on porcelain. */
+/* Official lockup (components/v7/Logo.tsx): ink on porcelain. */
 .v4-logo { display: block; flex: none; aspect-ratio: 1259 / 300; fill: currentColor; color: var(--v4-ink); }
 html:not([data-v4]) .v4-logo { color: var(--v4-cu); }
 .v4-brand .v4-logo, .v4-sheet-title .v4-logo { width: 109px; height: 26px; }
