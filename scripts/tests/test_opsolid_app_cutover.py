@@ -453,11 +453,12 @@ class ExistingRuntimeContracts(unittest.TestCase):
                         cutover.predecessor_config(reference, current, changed)
 
     def test_legacy_script_hash_is_accepted_only_for_exact_predecessor_not_apply(self):
-        self.assertEqual(sorted(path.name for path in cutover.LEGACY_PREDECESSORS), ["app-cutover-1a6a38b57fda46b6b8c39eac", "app-cutover-1f5ed7aa270c4db798cb19ce", "app-cutover-d5434be240b94b7b934a886e"])
+        self.assertEqual(sorted(path.name for path in cutover.LEGACY_PREDECESSORS), ["app-cutover-1a6a38b57fda46b6b8c39eac", "app-cutover-1f5ed7aa270c4db798cb19ce", "app-cutover-7353db231df54fe88a181280", "app-cutover-d5434be240b94b7b934a886e"])
         self.assertTrue(all(path.parent == cutover.backup.BASE and re.fullmatch(r"[a-f0-9]{64}", digest) for path, digest in cutover.LEGACY_PREDECESSORS.items()))
         digests = list(cutover.LEGACY_PREDECESSORS.values())
         self.assertEqual(len(set(digests)), len(digests))
         self.assertEqual(cutover.LEGACY_PREDECESSORS[cutover.backup.BASE / "app-cutover-d5434be240b94b7b934a886e"], "bb958107c41acd80a24c0bcecb945c0798bb7a71863dce25873b35f47fa92f38")
+        self.assertEqual(cutover.LEGACY_PREDECESSORS[cutover.backup.BASE / "app-cutover-7353db231df54fe88a181280"], "277725db2878ca0aed5d42c8a5acdc96bfbb2c8fe312272e1baa16a117fce104")
         for legacy, other in zip(digests, digests[1:] + digests[:1]):
             with self.subTest(legacy=legacy[:8]), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder).resolve()
@@ -543,12 +544,12 @@ global.fetch = async (url, options) => {
   if (!url.startsWith('http://127.0.0.1:3000/') || options.redirect!=='manual') throw new Error('unsafe_request');
   seen.push(path);
   if (path==='/api/health') return {status:200,json:async()=>({ok:true,dbOk:true,commit:'unknown'})};
-  if (path!=='/de') throw new Error('unexpected_path');
+  if (path!=='/') throw new Error('unexpected_path');
   const status = mode==='page_500' ? 500 : mode==='page_redirect' ? 307 : 200;
   const type = mode==='page_json' ? 'application/json' : 'text/html; charset=utf-8';
   return {status,headers:{get:()=>type},body:{cancel:async()=>{}}};
 };
-process.on('exit',()=>{if(mode==='good'&&!seen.includes('/de'))process.exitCode=2;});
+process.on('exit',()=>{if(mode==='good'&&!seen.includes('/'))process.exitCode=2;});
 """
 
     def run_node(self, mode):

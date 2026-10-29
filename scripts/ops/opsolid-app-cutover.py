@@ -39,6 +39,8 @@ LEGACY_PREDECESSORS = {
     backup.BASE / "app-cutover-1a6a38b57fda46b6b8c39eac": "ba7ca4ffffe1c9edb97f2b56c14a0ba6bb51982e1c5c17fd9d7fde92d7932e67",
     backup.BASE / "app-cutover-1f5ed7aa270c4db798cb19ce": "ed193abc71c27d17530b5d1e0b3365e35447255cb6c24569aa0436649232e72b",
     backup.BASE / "app-cutover-d5434be240b94b7b934a886e": "bb958107c41acd80a24c0bcecb945c0798bb7a71863dce25873b35f47fa92f38",
+    # 5c02e81 release (2026-10-27), written by this script before the v7 read-proof change.
+    backup.BASE / "app-cutover-7353db231df54fe88a181280": "277725db2878ca0aed5d42c8a5acdc96bfbb2c8fe312272e1baa16a117fce104",
 }
 # Per-start network endpoint values; a restarted container receives new ones.
 ENDPOINT_FIELDS = {"EndpointID", "IPAddress", "IPPrefixLen", "Gateway", "GlobalIPv6Address", "GlobalIPv6PrefixLen", "IPv6Gateway", "MacAddress"}
@@ -382,7 +384,7 @@ async function run(){
  const response=await fetch('http://127.0.0.1:3000/api/health',{redirect:'manual',signal:AbortSignal.timeout(5000)});
  const body=await response.json();
  if(response.status!==200||body.ok!==true||body.dbOk!==true||body.commit!==(process.env.GIT_COMMIT||'unknown'))throw Error('health');
- const page=await fetch('http://127.0.0.1:3000/de',{redirect:'manual',signal:AbortSignal.timeout(5000)});
+ const page=await fetch('http://127.0.0.1:3000/',{redirect:'manual',signal:AbortSignal.timeout(5000)});
  await page.body?.cancel();
  if(page.status!==200||!(page.headers.get('content-type')||'').includes('text/html'))throw Error('marketing_page');
  const rows=await client.$queryRawUnsafe('SELECT current_user::text AS current_user,session_user::text AS session_user');
