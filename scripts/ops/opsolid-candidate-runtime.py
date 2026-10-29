@@ -229,7 +229,9 @@ async function run() {
   }
   assert(healthy);
   stage = 'http_pages';
-  for (const locale of ['de','en','tr']) for (const page of ['opso','login','agents']) await request('/'+locale+'/'+page, 200, true, page==='login');
+  // v7: the consulting hub under each locale's own slug (EN/TR are middleware rewrites); /<locale>/agents is a 301 now.
+  const hub = { de: 'ki-beratung', en: 'ai-automation-consulting', tr: 'yapay-zeka-danismanligi' };
+  for (const locale of ['de','en','tr']) for (const page of ['opso','login',hub[locale]]) await request('/'+locale+'/'+page, 200, true, page==='login');
   await request('/de/signup', 301, false, false, '/de/opso');
   stage = 'http_guards';
   await request('/api/v1/cards', 401);
