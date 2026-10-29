@@ -46,7 +46,8 @@ function Lang({ locale, current, sub, className = "" }: { locale: L3; current: L
             prefetch={false}
             hrefLang={l}
             lang={l}
-            aria-label={LANG_NAME[l]}
+            // The accessible name is the visible "DE"/"EN"/"TR" (WCAG 2.5.3 label in name); the full name is a tooltip.
+            title={LANG_NAME[l]}
             aria-current={active ? "true" : undefined}
             onClick={() => rememberLocale(l)}
             className={`f-mono inline-flex min-h-[44px] min-w-[40px] items-center justify-center rounded-[10px] px-2 text-[12px] uppercase ${

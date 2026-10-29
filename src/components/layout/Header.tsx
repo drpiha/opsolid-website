@@ -32,8 +32,8 @@ const LANG_LABEL: L3 = { de: "Sprache", en: "Language", tr: "Dil" };
 
 const VISIBLE_LOCALES: (keyof L3)[] = ["de", "en", "tr"];
 const LOCALE_LABELS: L3 = { de: "DE", en: "EN", tr: "TR" };
-// Accessible names keep the visible abbreviation (label in name) and add the language's own name.
-const LOCALE_NAMES: L3 = { de: "Deutsch (DE)", en: "English (EN)", tr: "Türkçe (TR)" };
+// Tooltip only: the accessible name stays the visible abbreviation (WCAG 2.5.3 label in name).
+const LOCALE_NAMES: L3 = { de: "Deutsch", en: "English", tr: "Türkçe" };
 
 /**
  * Language switch as real links (crawlable alternates, Tab/Enter like any link). A plain click goes through
@@ -56,7 +56,7 @@ function LangLinks({ pathname, current, onPick }: { pathname: string; current: s
           prefetch={false}
           hrefLang={l}
           lang={l}
-          aria-label={LOCALE_NAMES[l]}
+          title={LOCALE_NAMES[l]}
           aria-current={l === current ? "true" : undefined}
           onClick={(e) => pick(e, l)}
           className={cx("v4-lang-chip", l === current && "is-active")}

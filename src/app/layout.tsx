@@ -10,7 +10,6 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import localFont from "next/font/local";
-import { GeistMono } from "geist/font/mono";
 import { isV4Path } from "@/lib/v4";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
@@ -47,21 +46,34 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-// v7 marketing body font, also used by app surfaces. Variable (all weights in one file per subset);
-// latin-ext carries the Turkish letters (İ ı Ş ş Ğ ğ). Preloaded: it is the LCP text face.
+// v7 marketing body font, also used by app surfaces. Variable (all weights in one file per subset).
+// Only the latin file is preloaded (it is the LCP text face); the latin-ext file with the Turkish
+// letters (İ ı Ş ş Ğ ğ) is still declared by unicode-range and loads only on pages that use them.
 const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
 });
 
-// v7 display face: Fraunces variable (opsz + SOFT axes), normal and italic, used at weight 300.
+// v7 display face: Fraunces with the wght and opsz axes only (the optical sizes carry the display look),
+// normal and italic, used at weight 300. With the SOFT axis and both subsets preloaded the fonts weighed
+// about 700 KiB and pushed the mobile LCP to 6.8 s; now ~146 KiB for both styles, latin-ext on demand.
 const fraunces = Fraunces({
-  subsets: ["latin", "latin-ext"],
-  axes: ["opsz", "SOFT"],
+  subsets: ["latin"],
+  axes: ["opsz"],
   style: ["normal", "italic"],
   display: "swap",
   variable: "--font-fraunces",
+});
+
+// v7 mono labels (eyebrows, figure captions). Same file as `geist/font/mono`, declared here so it is
+// NOT preloaded: labels are never the LCP, so they should not compete with the display and body faces.
+const geistMono = localFont({
+  src: "../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
+  variable: "--font-geist-mono",
+  display: "swap",
+  preload: false,
+  weight: "100 900",
 });
 
 // V2 redesign font stack — Plus Jakarta Sans serves both display and body
@@ -205,7 +217,7 @@ export default function RootLayout({
     ibmPlexMono.variable,
     inter.variable,
     fraunces.variable,
-    GeistMono.variable,
+    geistMono.variable,
     instrumentSerif.variable,
     jetBrainsMono.variable,
     geist.variable,
