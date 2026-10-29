@@ -16,11 +16,11 @@ const de: PageDef = {
   crumb: "Anwendungsfälle",
   hero: {
     eyebrow: "Anwendungsfälle · Beispiele nach Branche",
-    h1: ["Anwendungsfälle, die im ", "Alltag", " tragen."],
-    lede: "Hier sehen Sie, wie KI-Automatisierung in vier Branchen aussehen kann: Dienstleistung, Gastronomie und Hotellerie, Handel sowie Praxen. Alles sind Beispiele, keine Kundenprojekte. Zu jedem gehört, was beim Menschen bleibt.",
+    h1: ["Anwendungsfälle, die im ", "Alltag", " tragen"],
+    lede: "So kann KI-Automatisierung in vier Branchen aussehen: Dienstleistung, Gastronomie und Hotellerie, Handel sowie Praxen. Zu jedem Beispiel gehört, was beim Menschen bleibt.",
     primary: { label: "KI-Check ansehen", to: "check" },
     secondary: { label: "Anwendungsfall besprechen", to: "kontakt", query: { anliegen: "beratung" } },
-    facts: ["Beispiele, keine Kundenprojekte", "Der Mensch gibt frei", "Praxen: nur organisatorische Abläufe"],
+    facts: ["Beispiele, keine Kundenprojekte", "Praxen: nur organisatorische Abläufe"],
     media: {
       kind: "svg",
       name: "flow",
@@ -34,15 +34,14 @@ const de: PageDef = {
       t: "sectors",
       id: "branchen",
       label: "Branchen",
-      note: "Vier Felder, jeweils mit Beispielideen.",
-      h: "Anwendungsfälle nach Branche.",
-      lede: "Jede Branche hat andere Eingänge und andere Grenzen. Wählen Sie Ihre, und sehen Sie, was sich übernehmen lässt und was bei Ihrem Team bleibt.",
+      h: "Anwendungsfälle nach Branche",
+      lede: "Wählen Sie Ihre Branche: Sie sehen, was sich übernehmen lässt und was bei Ihrem Team bleibt.",
       tag: "Beispielideen, keine Kundenprojekte",
       items: [
         {
           name: "Dienstleistung",
-          h: "Anfragen, Angebote und Termine vorbereiten lassen.",
-          p: "Agenturen, Beratungen und Büros leben von Anfragen und Zusagen. Viel davon folgt demselben Muster und lässt sich vorbereiten, bevor ein Mensch hinsieht.",
+          h: "Anfragen, Angebote und Termine vorbereiten lassen",
+          p: "Agenturen, Beratungen und Büros: Vieles in Anfragen und Zusagen folgt demselben Muster und lässt sich vorbereiten, bevor ein Mensch hinsieht.",
           ideas: [
             "Anfragen aus E-Mail und Formular sortieren und mit Antwortentwurf vorbereiten",
             "Angebotsentwürfe aus Vorlage und Kurzbriefing erstellen",
@@ -53,7 +52,7 @@ const de: PageDef = {
         },
         {
           name: "Gastronomie & Hotellerie",
-          h: "Gäste auch dann erreichen, wenn das Haus voll ist.",
+          h: "Gäste auch dann erreichen, wenn das Haus voll ist",
           p: "Anrufe, Reservierungen und immer dieselben Fragen kommen oft dann, wenn niemand Zeit hat. Ein Assistent nimmt die Routine ab.",
           ideas: [
             "Reservierungsanfragen per Telefon oder Chat außerhalb der Öffnungszeiten aufnehmen",
@@ -65,7 +64,7 @@ const de: PageDef = {
         },
         {
           name: "Handel",
-          h: "Bestellungen und Kundenfragen ohne Tipparbeit.",
+          h: "Bestellungen und Kundenfragen ohne Tipparbeit",
           p: "Im Handel wandern Daten zwischen Lieferanten, Warenwirtschaft und Kundenservice. Je weniger davon von Hand läuft, desto seltener schleichen sich Tippfehler ein.",
           ideas: [
             "Fragen zu Lieferstatus und Retouren vorsortieren und vorbereitet beantworten",
@@ -78,7 +77,7 @@ const de: PageDef = {
         {
           name: "Praxen (ohne Gesundheitsdaten)",
           tab: "Praxen",
-          h: "Organisation entlasten, ohne sensible Inhalte anzufassen.",
+          h: "Organisation entlasten, ohne sensible Inhalte anzufassen",
           p: "Wir automatisieren hier nur organisatorische Abläufe. Gesundheitsdaten bleiben außen vor, und fachliche Inhalte verarbeitet ein Mensch.",
           ideas: [
             "Terminanfragen und Terminverschiebungen organisieren",
@@ -94,9 +93,8 @@ const de: PageDef = {
       t: "examples",
       id: "szenarien",
       label: "Szenarien",
-      note: "Drei Beispiel-Szenarien im Detail.",
-      h: "Drei Abläufe im Vorher und Nachher.",
-      lede: "Die Szenarien sind Beispiele für typische Abläufe, keine Kundenprojekte. Sie zeigen, wo KI vorbereitet und wo ein Mensch entscheidet.",
+      h: "Drei Abläufe im Vorher und Nachher",
+      lede: "Sie zeigen, wo KI vorbereitet und wo ein Mensch entscheidet.",
       tag: "Beispiel-Szenario",
       items: [
         {
@@ -129,65 +127,23 @@ const de: PageDef = {
       t: "principles",
       id: "kriterien",
       label: "Kriterien",
-      note: "Vier Prüfkriterien.",
-      h: "Woran sich ein guter Anwendungsfall erkennen lässt.",
-      lede: "Nicht jeder Ablauf eignet sich. Im KI-Check prüfen wir vier Dinge, bevor wir etwas empfehlen.",
+      h: "Woran sich ein guter Anwendungsfall erkennen lässt",
+      lede: "Im KI-Check prüfen wir vier Dinge, bevor wir etwas empfehlen.",
       items: [
-        { h: "Er kehrt regelmäßig wieder.", p: "Ein Ablauf, der täglich oder wöchentlich läuft, trägt den Aufwand eher als ein seltener." },
-        { h: "Er folgt erkennbaren Regeln.", p: "Wo Menschen immer ähnlich entscheiden, lässt sich vorbereiten. Wo jeder Fall anders ist, bleibt es Handarbeit." },
-        { h: "Die Eingänge sind digital.", p: "E-Mail, Formular, Dokument oder Datensatz lassen sich verarbeiten. Handschriftliche Zettel sind schwieriger." },
-        { h: "Ein Mensch kann das Ergebnis prüfen.", p: "Wir bauen nur, was Ihr Team sehen, ändern und freigeben kann, bevor es nach außen geht." },
-      ],
-    },
-    {
-      t: "steps",
-      id: "weg",
-      label: "Weg",
-      note: "Vom Beispiel zu Ihrem Ablauf.",
-      h: "So finden wir Ihren Anwendungsfall.",
-      lede: "Beispiele helfen bei der Vorstellung. Welcher Ablauf bei Ihnen zuerst dran ist, klären wir an Ihren Abläufen.",
-      cta: { label: "Zum KI-Check", to: "check" },
-      items: [
-        { h: "Kennenlernen", p: "Ein kurzes, unverbindliches Gespräch. Sie schildern, wo die Arbeit hakt, und wir sagen, ob ein KI-Check sinnvoll ist." },
-        { h: "KI-Check", p: "90 Minuten remote plus schriftlicher Kurzbericht, ab 490 € netto, NDA vor der Analyse. Der Bericht nennt die Abläufe, die sich lohnen, und die, die es nicht tun." },
-        { h: "Pilot", p: "Wir setzen einen Ablauf um. Umfang und Festpreis stehen vorab schriftlich fest." },
-      ],
-    },
-    {
-      t: "rows",
-      id: "grenzen",
-      label: "Grenzen",
-      note: "Was wir nicht automatisieren.",
-      h: "Was bei Menschen bleibt.",
-      lede: "Manches gehört nicht in eine Automatisierung, auch wenn es technisch ginge. Das sagen wir Ihnen offen.",
-      items: [
-        {
-          h: "Entscheidungen mit Folgen",
-          p: "Preise, Kulanz, Zusagen und alles, was Ihr Unternehmen rechtlich oder finanziell bindet, entscheidet eine Person.",
-        },
-        {
-          h: "Heikle Kundenkontakte",
-          p: "Beschwerden, Konflikte und persönliche Anliegen brauchen ein Gegenüber. Ein Assistent übergibt, sobald es persönlich wird.",
-        },
-        {
-          h: "Gesundheitsdaten",
-          p: "Abläufe mit Gesundheitsdaten nehmen wir nicht auf. In Praxen betrachten wir ausschließlich organisatorische Abläufe.",
-          href: { label: "Wie wir arbeiten", to: "beratung" },
-        },
+        { h: "Er kehrt regelmäßig wieder", p: "Ein Ablauf, der täglich oder wöchentlich läuft, trägt den Aufwand eher als ein seltener." },
+        { h: "Er folgt erkennbaren Regeln", p: "Wo Menschen immer ähnlich entscheiden, lässt sich vorbereiten. Wo jeder Fall anders ist, bleibt es Handarbeit." },
+        { h: "Die Eingänge sind digital", p: "E-Mail, Formular, Dokument oder Datensatz lassen sich verarbeiten. Handschriftliche Zettel sind schwieriger." },
+        { h: "Ein Mensch kann das Ergebnis prüfen", p: "Wir bauen nur, was Ihr Team sehen, ändern und freigeben kann, bevor es nach außen geht." },
       ],
     },
   ],
   faq: {
     label: "Häufige Fragen",
-    h: "Fragen zu Anwendungsfällen.",
+    h: "Fragen zu Anwendungsfällen",
     items: [
       {
-        q: "Sind das Kundenprojekte?",
-        a: "Nein. Alle Szenarien und Ideen auf dieser Seite sind Beispiele für typische Abläufe. Sie zeigen, was möglich ist, und sind keine Referenzen.",
-      },
-      {
         q: "Gibt es einen Anwendungsfall für meine Branche?",
-        a: "Die vier Branchen sind unser Schwerpunkt. Ob ein konkreter Ablauf in Ihrem Betrieb passt, klären wir im KI-Check an Ihren eigenen Abläufen, nicht anhand einer Branchenschablone.",
+        a: "Die vier Branchen sind unser Schwerpunkt. Ob ein konkreter Ablauf in Ihrem Betrieb passt, klären wir im KI-Check an Ihren eigenen Abläufen.",
       },
       {
         q: "Wir sind eine Praxis. Geht das?",
@@ -199,7 +155,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet ein Anwendungsfall?",
-        a: "Der KI-Check kostet ab 490 € netto. Für die Umsetzung als Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Der KI-Check kostet ab 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für die Umsetzung als Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -216,7 +172,7 @@ const de: PageDef = {
       serviceType: "KI-Beratung",
       description:
         "Beispiele für KI-Automatisierung in Dienstleistung, Gastronomie und Hotellerie, Handel sowie Praxen. Beispiele, keine Kundenprojekte.",
-      offers: [{ name: "KI-Check", price: 490, from: true }],
+      offers: [{ name: "KI-Check", price: 990, from: true }],
     },
   },
 };
@@ -232,11 +188,11 @@ const en: PageDef = {
   crumb: "Use cases",
   hero: {
     eyebrow: "Use cases · examples by sector",
-    h1: ["Use cases that hold up in ", "daily", " work."],
-    lede: "Here you can see what AI automation can look like in four sectors: services, hospitality, retail and practices. All of it is examples, not client projects. Each one comes with what stays with people.",
+    h1: ["Use cases that hold up in ", "daily", " work"],
+    lede: "This is what AI automation can look like in four sectors: services, hospitality, retail and practices. Each example comes with what stays with people.",
     primary: { label: "See the AI check", to: "check" },
     secondary: { label: "Discuss a use case", to: "kontakt", query: { anliegen: "beratung" } },
-    facts: ["Examples, not client projects", "A person approves", "Practices: organisational workflows only"],
+    facts: ["Examples, not client projects", "Practices: organisational workflows only"],
     media: {
       kind: "svg",
       name: "flow",
@@ -250,15 +206,14 @@ const en: PageDef = {
       t: "sectors",
       id: "branchen",
       label: "Sectors",
-      note: "Four fields, each with example ideas.",
-      h: "Use cases by sector.",
-      lede: "Every sector has different inputs and different limits. Pick yours and see what can be taken over and what stays with your team.",
+      h: "Use cases by sector",
+      lede: "Pick your sector and see what can be taken over and what stays with your team.",
       tag: "Example ideas, not client projects",
       items: [
         {
           name: "Services",
-          h: "Have enquiries, quotes and appointments prepared for you.",
-          p: "Agencies, consultancies and offices live on enquiries and commitments. Much of it follows the same pattern and can be prepared before a person looks at it.",
+          h: "Have enquiries, quotes and appointments prepared for you",
+          p: "Agencies, consultancies and offices: much of the work on enquiries and commitments follows the same pattern and can be prepared before a person looks at it.",
           ideas: [
             "Sort enquiries from email and forms and prepare a draft reply",
             "Create quote drafts from a template and a short briefing",
@@ -269,7 +224,7 @@ const en: PageDef = {
         },
         {
           name: "Hospitality",
-          h: "Reach guests even when the house is full.",
+          h: "Reach guests even when the house is full",
           p: "Calls, bookings and the same questions again and again often arrive when nobody has time. An assistant takes over the routine.",
           ideas: [
             "Take booking requests by phone or chat outside opening hours",
@@ -281,7 +236,7 @@ const en: PageDef = {
         },
         {
           name: "Retail",
-          h: "Orders and customer questions without the typing.",
+          h: "Orders and customer questions without the typing",
           p: "In retail, data moves between suppliers, inventory systems and customer service. The less of it runs by hand, the fewer typing errors creep in.",
           ideas: [
             "Pre-sort questions about delivery status and returns and answer them with prepared replies",
@@ -294,7 +249,7 @@ const en: PageDef = {
         {
           name: "Practices (no health data)",
           tab: "Practices",
-          h: "Relieve the organisation without touching sensitive content.",
+          h: "Relieve the organisation without touching sensitive content",
           p: "Here we automate organisational workflows only. Health data stays out, and a person handles professional content.",
           ideas: [
             "Organise appointment requests and rescheduling",
@@ -310,9 +265,8 @@ const en: PageDef = {
       t: "examples",
       id: "szenarien",
       label: "Scenarios",
-      note: "Three example scenarios in detail.",
-      h: "Three workflows, before and after.",
-      lede: "The scenarios are examples of typical workflows, not client projects. They show where AI prepares and where a person decides.",
+      h: "Three workflows, before and after",
+      lede: "They show where AI prepares and where a person decides.",
       tag: "Example scenario",
       items: [
         {
@@ -345,65 +299,23 @@ const en: PageDef = {
       t: "principles",
       id: "kriterien",
       label: "Criteria",
-      note: "Four criteria.",
-      h: "How to recognise a good use case.",
-      lede: "Not every workflow is suitable. In the AI check we examine four things before we recommend anything.",
+      h: "How to recognise a good use case",
+      lede: "In the AI check we examine four things before we recommend anything.",
       items: [
-        { h: "It recurs regularly.", p: "A workflow that runs daily or weekly carries the effort better than a rare one." },
-        { h: "It follows recognisable rules.", p: "Where people decide in similar ways, preparation works. Where every case is different, it stays manual." },
-        { h: "The inputs are digital.", p: "Email, form, document or record can be processed. Handwritten notes are harder." },
-        { h: "A person can check the result.", p: "We only build what your team can see, change and approve before it goes outside." },
-      ],
-    },
-    {
-      t: "steps",
-      id: "weg",
-      label: "Path",
-      note: "From the example to your workflow.",
-      h: "How we find your use case.",
-      lede: "Examples help you picture it. Which workflow comes first at your company, we clarify using your own workflows.",
-      cta: { label: "To the AI check", to: "check" },
-      items: [
-        { h: "Intro call", p: "A short conversation with no obligation. You describe where the work gets stuck, and we tell you whether an AI check makes sense." },
-        { h: "AI check", p: "90 minutes remote plus a short written report, from €490 net, NDA before the analysis. The report names the workflows that are worth it, and those that are not." },
-        { h: "Pilot", p: "We implement one workflow. Scope and fixed price are set in writing beforehand." },
-      ],
-    },
-    {
-      t: "rows",
-      id: "grenzen",
-      label: "Limits",
-      note: "What we do not automate.",
-      h: "What stays with people.",
-      lede: "Some things do not belong in an automation, even if it were technically possible. We tell you openly.",
-      items: [
-        {
-          h: "Decisions with consequences",
-          p: "Prices, goodwill, commitments and anything that binds your company legally or financially are decided by a person.",
-        },
-        {
-          h: "Sensitive customer contact",
-          p: "Complaints, conflicts and personal matters need someone on the other end. An assistant hands over as soon as it becomes personal.",
-        },
-        {
-          h: "Health data",
-          p: "We do not record workflows that involve health data. For practices we look at organisational workflows only.",
-          href: { label: "How we work", to: "beratung" },
-        },
+        { h: "It recurs regularly", p: "A workflow that runs daily or weekly carries the effort better than a rare one." },
+        { h: "It follows recognisable rules", p: "Where people decide in similar ways, preparation works. Where every case is different, it stays manual." },
+        { h: "The inputs are digital", p: "Email, form, document or record can be processed. Handwritten notes are harder." },
+        { h: "A person can check the result", p: "We only build what your team can see, change and approve before it goes outside." },
       ],
     },
   ],
   faq: {
     label: "Frequently asked questions",
-    h: "Questions about use cases.",
+    h: "Questions about use cases",
     items: [
       {
-        q: "Are these client projects?",
-        a: "No. All scenarios and ideas on this page are examples of typical workflows. They show what is possible and are not references.",
-      },
-      {
         q: "Is there a use case for my sector?",
-        a: "The four sectors are our focus. Whether a specific workflow fits your business, we clarify in the AI check using your own workflows, not a sector template.",
+        a: "The four sectors are our focus. Whether a specific workflow fits your business, we clarify in the AI check using your own workflows.",
       },
       {
         q: "We are a practice. Does this work?",
@@ -415,7 +327,7 @@ const en: PageDef = {
       },
       {
         q: "What does a use case cost?",
-        a: "The AI check costs from €490 net. For implementation as a pilot, we set scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
+        a: "The AI check costs from €990 net. Credited in full against a follow-up order within 60 days. For implementation as a pilot, we set scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
     ],
   },
@@ -432,7 +344,7 @@ const en: PageDef = {
       serviceType: "AI consulting",
       description:
         "Examples of AI automation in services, hospitality, retail and practices. Examples, not client projects.",
-      offers: [{ name: "AI check", price: 490, from: true }],
+      offers: [{ name: "AI check", price: 990, from: true }],
     },
   },
 };
@@ -448,11 +360,11 @@ const tr: PageDef = {
   crumb: "Kullanım örnekleri",
   hero: {
     eyebrow: "Kullanım örnekleri · sektöre göre örnekler",
-    h1: ["Günlük işte ", "ayakta kalan", " kullanım örnekleri."],
-    lede: "YZ otomasyonunun dört sektörde nasıl görünebileceğini burada görürsünüz: hizmet, yeme-içme ve konaklama, perakende ve muayenehaneler. Hepsi örnektir, müşteri projesi değildir. Her birinde insanda neyin kaldığı da yazılıdır.",
+    h1: ["Günlük işte ", "ayakta kalan", " kullanım örnekleri"],
+    lede: "YZ otomasyonu dört sektörde böyle görünebilir: hizmet, yeme-içme ve konaklama, perakende ve muayenehaneler. Her örnekte insanda neyin kaldığı da yazılıdır.",
     primary: { label: "YZ Kontrolü'nü inceleyin", to: "check" },
     secondary: { label: "Bir kullanım örneğini görüşün", to: "kontakt", query: { anliegen: "beratung" } },
-    facts: ["Örnekler, müşteri projesi değil", "Onayı insan verir", "Muayenehaneler: yalnızca idari iş akışları"],
+    facts: ["Örnekler, müşteri projesi değil", "Muayenehaneler: yalnızca idari iş akışları"],
     media: {
       kind: "svg",
       name: "flow",
@@ -466,15 +378,14 @@ const tr: PageDef = {
       t: "sectors",
       id: "branchen",
       label: "Sektörler",
-      note: "Dört alan, her birinde örnek fikirler.",
-      h: "Sektöre göre kullanım örnekleri.",
-      lede: "Her sektörün girdileri ve sınırları farklıdır. Kendinizinkini seçin; nelerin devralınabildiğini ve nelerin ekibinizde kaldığını görün.",
+      h: "Sektöre göre kullanım örnekleri",
+      lede: "Sektörünüzü seçin; nelerin devralınabildiğini ve nelerin ekibinizde kaldığını görün.",
       tag: "Örnek fikirler, müşteri projesi değil",
       items: [
         {
           name: "Hizmet",
-          h: "Talepleri, teklifleri ve randevuları hazırlatmak.",
-          p: "Ajanslar, danışmanlık şirketleri ve ofisler talepler ve taahhütlerle yaşar. Bunların büyük kısmı aynı kalıbı izler ve bir insan bakmadan önce hazırlanabilir.",
+          h: "Talepleri, teklifleri ve randevuları hazırlatmak",
+          p: "Ajanslar, danışmanlık şirketleri ve ofisler: talepler ve taahhütlerle ilgili işlerin büyük kısmı aynı kalıbı izler ve bir insan bakmadan önce hazırlanabilir.",
           ideas: [
             "E-posta ve formdan gelen talepleri sıralamak ve yanıt taslağı hazırlamak",
             "Şablon ve kısa bir brifingten teklif taslakları oluşturmak",
@@ -485,7 +396,7 @@ const tr: PageDef = {
         },
         {
           name: "Yeme-içme ve konaklama",
-          h: "Mekân doluyken de misafirlere ulaşmak.",
+          h: "Mekân doluyken de misafirlere ulaşmak",
           p: "Aramalar, rezervasyonlar ve hep aynı sorular çoğu zaman kimsenin vakti olmadığı anlarda gelir. Bir asistan rutini üstlenir.",
           ideas: [
             "Çalışma saatleri dışında telefon veya sohbetle rezervasyon taleplerini almak",
@@ -497,7 +408,7 @@ const tr: PageDef = {
         },
         {
           name: "Perakende",
-          h: "Siparişler ve müşteri soruları, yazı yazmadan.",
+          h: "Siparişler ve müşteri soruları, yazı yazmadan",
           p: "Perakendede veriler tedarikçiler, stok sistemi ve müşteri hizmetleri arasında dolaşır. Ne kadarı elle yürürse, yazım hatası riski de o kadar artar.",
           ideas: [
             "Teslimat durumu ve iade sorularını ön sıralamaya almak ve hazır yanıtlarla cevaplamak",
@@ -510,7 +421,7 @@ const tr: PageDef = {
         {
           name: "Muayenehaneler (sağlık verisi olmadan)",
           tab: "Muayenehaneler",
-          h: "Hassas içeriğe dokunmadan idari yükü hafifletmek.",
+          h: "Hassas içeriğe dokunmadan idari yükü hafifletmek",
           p: "Burada yalnızca idari iş akışlarını otomatikleştiririz. Sağlık verileri dışarıda kalır; mesleki içerikleri bir insan işler.",
           ideas: [
             "Randevu taleplerini ve erteleme isteklerini düzenlemek",
@@ -526,9 +437,8 @@ const tr: PageDef = {
       t: "examples",
       id: "szenarien",
       label: "Senaryolar",
-      note: "Ayrıntılı üç örnek senaryo.",
-      h: "Üç iş akışı, öncesi ve sonrasıyla.",
-      lede: "Senaryolar tipik iş akışlarının örnekleridir, müşteri projesi değildir. YZ'nin nerede hazırladığını ve nerede bir insanın karar verdiğini gösterirler.",
+      h: "Üç iş akışı, öncesi ve sonrasıyla",
+      lede: "YZ'nin nerede hazırladığını ve nerede bir insanın karar verdiğini gösterirler.",
       tag: "Örnek senaryo",
       items: [
         {
@@ -561,65 +471,23 @@ const tr: PageDef = {
       t: "principles",
       id: "kriterien",
       label: "Ölçütler",
-      note: "Dört ölçüt.",
       h: "İyi bir kullanım örneği nasıl anlaşılır?",
-      lede: "Her iş akışı uygun değildir. YZ Kontrolü'nde bir şey önermeden önce dört şeye bakarız.",
+      lede: "YZ Kontrolü'nde bir şey önermeden önce dört şeye bakarız.",
       items: [
-        { h: "Düzenli olarak tekrarlanır.", p: "Günlük ya da haftalık işleyen bir iş akışı, nadir bir iş akışından daha iyi emeğini çıkarır." },
-        { h: "Tanınabilir kuralları izler.", p: "İnsanların hep benzer karar verdiği yerde hazırlık mümkündür. Her vakanın farklı olduğu yerde iş elle kalır." },
-        { h: "Girdiler dijitaldir.", p: "E-posta, form, belge ya da kayıt işlenebilir. El yazısı notlar daha zordur." },
-        { h: "Bir insan sonucu kontrol edebilir.", p: "Yalnızca ekibinizin dışarı çıkmadan görebildiği, değiştirebildiği ve onaylayabildiği şeyi kurarız." },
-      ],
-    },
-    {
-      t: "steps",
-      id: "weg",
-      label: "Yol",
-      note: "Örnekten sizin iş akışınıza.",
-      h: "Kullanım örneğinizi nasıl buluruz?",
-      lede: "Örnekler hayal etmeye yardım eder. Sizde hangi iş akışının önce geldiğini, kendi iş akışlarınız üzerinden netleştiririz.",
-      cta: { label: "YZ Kontrolü'ne gidin", to: "check" },
-      items: [
-        { h: "Tanışma", p: "Kısa ve bağlayıcı olmayan bir görüşme. İşin nerede tıkandığını anlatırsınız; biz de bir YZ Kontrolü'nün anlamlı olup olmadığını söyleriz." },
-        { h: "YZ Kontrolü", p: "90 dakika uzaktan görüşme ve kısa yazılı rapor, 490 €'dan itibaren (net); analizden önce NDA. Rapor, değen iş akışlarını da değmeyenleri de söyler." },
-        { h: "Pilot", p: "Bir iş akışını hayata geçiririz. Kapsam ve sabit fiyat önceden yazılı olarak belirlenir." },
-      ],
-    },
-    {
-      t: "rows",
-      id: "grenzen",
-      label: "Sınırlar",
-      note: "Neyi otomatikleştirmiyoruz?",
-      h: "İnsanda kalanlar.",
-      lede: "Bazı şeyler, teknik olarak mümkün olsa bile bir otomasyona ait değildir. Bunu size açıkça söyleriz.",
-      items: [
-        {
-          h: "Sonuçları olan kararlar",
-          p: "Fiyatlar, hoşgörü, taahhütler ve şirketinizi hukuken ya da mali olarak bağlayan her şeye bir insan karar verir.",
-        },
-        {
-          h: "Hassas müşteri temasları",
-          p: "Şikâyetler, anlaşmazlıklar ve kişisel konular karşıda birine ihtiyaç duyar. Konu kişiselleştiği anda asistan devreder.",
-        },
-        {
-          h: "Sağlık verileri",
-          p: "Sağlık verisi içeren iş akışlarını kaydetmeyiz. Muayenehanelerde yalnızca idari iş akışlarına bakarız.",
-          href: { label: "Nasıl çalışıyoruz?", to: "beratung" },
-        },
+        { h: "Düzenli olarak tekrarlanır", p: "Günlük ya da haftalık işleyen bir iş akışı, nadir bir iş akışından daha iyi emeğini çıkarır." },
+        { h: "Tanınabilir kuralları izler", p: "İnsanların hep benzer karar verdiği yerde hazırlık mümkündür. Her vakanın farklı olduğu yerde iş elle kalır." },
+        { h: "Girdiler dijitaldir", p: "E-posta, form, belge ya da kayıt işlenebilir. El yazısı notlar daha zordur." },
+        { h: "Bir insan sonucu kontrol edebilir", p: "Yalnızca ekibinizin dışarı çıkmadan görebildiği, değiştirebildiği ve onaylayabildiği şeyi kurarız." },
       ],
     },
   ],
   faq: {
     label: "Sık sorulan sorular",
-    h: "Kullanım örnekleri hakkında sorular.",
+    h: "Kullanım örnekleri hakkında sorular",
     items: [
       {
-        q: "Bunlar müşteri projeleri mi?",
-        a: "Hayır. Bu sayfadaki tüm senaryolar ve fikirler tipik iş akışlarının örnekleridir. Nelerin mümkün olduğunu gösterir; referans değildir.",
-      },
-      {
         q: "Sektörüm için bir kullanım örneği var mı?",
-        a: "Dört sektör odağımızdır. Belirli bir iş akışının işletmenize uyup uymadığını, bir sektör şablonuyla değil, YZ Kontrolü'nde kendi iş akışlarınız üzerinden netleştiririz.",
+        a: "Dört sektör odağımızdır. Belirli bir iş akışının işletmenize uyup uymadığını, YZ Kontrolü'nde kendi iş akışlarınız üzerinden netleştiririz.",
       },
       {
         q: "Biz bir muayenehaneyiz. Bu mümkün mü?",
@@ -631,7 +499,7 @@ const tr: PageDef = {
       },
       {
         q: "Bir kullanım örneği ne kadar tutar?",
-        a: "YZ Kontrolü 490 €'dan itibaren (net). Pilot olarak uygulama için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+        a: "YZ Kontrolü 990 €'dan itibaren (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot olarak uygulama için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
       },
     ],
   },
@@ -648,7 +516,7 @@ const tr: PageDef = {
       serviceType: "Yapay zeka danışmanlığı",
       description:
         "Hizmet, yeme-içme ve konaklama, perakende ile muayenehaneler için YZ otomasyonu örnekleri. Örnekler, müşteri projesi değil.",
-      offers: [{ name: "YZ Kontrolü", price: 490, from: true }],
+      offers: [{ name: "YZ Kontrolü", price: 990, from: true }],
     },
   },
 };

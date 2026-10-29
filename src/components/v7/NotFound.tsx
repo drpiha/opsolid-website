@@ -8,22 +8,22 @@ import { btnPrimary, wrap } from "./ui";
 const COPY: Record<L3, { eyebrow: string; h1: [string, string]; lede: string; home: string; more: string }> = {
   de: {
     eyebrow: "Fehler 404",
-    h1: ["Diese Seite", "gibt es nicht."],
-    lede: "Die Seite existiert nicht oder wurde verschoben. Von hier kommen Sie zu den wichtigsten Seiten.",
+    h1: ["Diese Seite", "gibt es nicht"],
+    lede: "Die Seite existiert nicht oder wurde verschoben.",
     home: "Zur Startseite",
     more: "Weitere Seiten",
   },
   en: {
     eyebrow: "Error 404",
-    h1: ["This page", "does not exist."],
-    lede: "The page does not exist or has moved. From here you can reach the main pages.",
+    h1: ["This page", "does not exist"],
+    lede: "The page does not exist or has moved.",
     home: "Back to home",
     more: "More pages",
   },
   tr: {
     eyebrow: "Hata 404",
-    h1: ["Bu sayfa", "mevcut değil."],
-    lede: "Sayfa mevcut değil veya taşınmış. Buradan ana sayfalara ulaşabilirsiniz.",
+    h1: ["Bu sayfa", "mevcut değil"],
+    lede: "Sayfa mevcut değil veya taşınmış.",
     home: "Ana sayfaya dön",
     more: "Diğer sayfalar",
   },

@@ -23,8 +23,8 @@ const de: PageDef = {
   crumb: "Über uns",
   hero: {
     eyebrow: "Über OpSolid",
-    h1: ["Beratung, die beim", "Ablauf", "anfängt."],
-    lede: "OpSolid berät Unternehmen bei der Automatisierung mit KI. Wir fangen beim Ablauf an, nicht bei der Technik, und sagen offen, wenn sich etwas nicht lohnt.",
+    h1: ["Beratung, die beim", "Ablauf", "anfängt"],
+    lede: "OpSolid berät Unternehmen bei der Automatisierung mit KI. Wir fangen beim Ablauf an, nicht bei der Technik.",
     primary: { label: "Kennenlernen anfragen", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "KI-Check ansehen", to: "check" },
     facts: ["Unabhängig von KI-Anbietern", "NDA vor der Analyse", "Pilot zum Festpreis, vorab schriftlich"],
@@ -42,25 +42,24 @@ const de: PageDef = {
       id: "angebot",
       label: "Angebot",
       note: "Was wir tun, in dieser Reihenfolge.",
-      h: "Drei Bereiche, die Beratung zuerst.",
-      lede: "Die Beratung steht an erster Stelle. KI-Schulungen und OpSo ergänzen sie, ersetzen sie aber nicht.",
+      h: "Drei Bereiche, die Beratung zuerst",
       items: [
         {
           tag: "1 · Beratung",
           h: "KI-Beratung und KI-Automatisierung",
-          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Der Einstieg ist der KI-Check ab 490 € netto: 90 Minuten remote plus schriftlicher Kurzbericht. Danach folgt auf Wunsch ein Pilot zum Festpreis, vorab schriftlich, und der Betrieb monatlich nach Vereinbarung.",
+          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
           href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
           tag: "2 · KI-Schulungen",
           h: "Ihr Team lernt, KI sicher zu nutzen",
-          p: "Online, auf Deutsch und Englisch, live für Ihr Team. Wir bauen ein Netzwerk freiberuflicher Trainerinnen und Trainer auf. Wer Ihre Schulung hält, nennen wir Ihnen vor der Buchung namentlich.",
+          p: "Online, auf Deutsch und Englisch, live für Ihr Team. Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich.",
           href: { label: "Zu den KI-Schulungen", to: "schulungen" },
         },
         {
           tag: "3 · Eigenes Produkt",
           h: "OpSo, unsere digitale Visitenkarte",
-          p: "Ein eigenes Produkt, getrennt von der Beratung. Es ist in der Testphase: Android im geschlossenen Test bei Google Play, iPhone bei Apple zur Prüfung eingereicht (Stand: 28.10.2026).",
+          p: "Ein eigenes Produkt, getrennt von der Beratung, in der Testphase: Android im geschlossenen Test bei Google Play, iPhone bei Apple zur Prüfung eingereicht (Stand: 28.10.2026).",
           href: { label: "Zu OpSo", to: "opso" },
         },
       ],
@@ -70,8 +69,8 @@ const de: PageDef = {
       id: "methode",
       label: "Methode",
       note: "Fünf Schritte vom Gespräch bis zur Übergabe.",
-      h: "So arbeiten wir.",
-      lede: "Wir nehmen den Ablauf auf, messen die Ausgangslage, pilotieren klein und übergeben vollständig. Jeder Schritt hat ein Ergebnis, und nach jedem entscheiden Sie neu.",
+      h: "So arbeiten wir",
+      lede: "Jeder Schritt hat ein Ergebnis, und nach jedem entscheiden Sie neu.",
       items: [
         {
           h: "Ablauf aufnehmen",
@@ -100,23 +99,22 @@ const de: PageDef = {
       id: "grundsaetze",
       label: "Grundsätze",
       note: "Woran Sie uns messen können.",
-      h: "Vier Grundsätze für jedes Projekt.",
-      lede: "Sie begrenzen unsere Arbeit und schützen damit Ihre Entscheidung.",
+      h: "Vier Grundsätze für jedes Projekt",
       items: [
         {
-          h: "Bei den Menschen anfangen.",
+          h: "Bei den Menschen anfangen",
           p: "Wir beginnen bei Ihren echten Abläufen und bei denen, die sie erledigen. Wo Automatisierung nicht sinnvoll ist, sagen wir das.",
         },
         {
-          h: "Unabhängig bleiben.",
+          h: "Unabhängig bleiben",
           p: "Wir verkaufen keine KI-Lizenzen und keine Software von Anbietern. Wir empfehlen, was zu Ihrem Ablauf passt und auf Ihren vorhandenen Systemen aufbaut.",
         },
         {
-          h: "Daten mit Plan.",
+          h: "Daten mit Plan",
           p: "Vor dem Start klären wir, wo Daten verarbeitet werden, und schließen die nötigen Verträge (AVV). Die abschließende Bewertung trifft Ihr Datenschutzbeauftragter.",
         },
         {
-          h: "Der Mensch entscheidet.",
+          h: "Der Mensch entscheidet",
           p: "Jeder Assistent hat klare Grenzen und übergibt an Ihr Team. Freigaben bleiben bei Ihnen.",
         },
       ],
@@ -126,12 +124,10 @@ const de: PageDef = {
       id: "menschen",
       label: "Menschen",
       note: "Gründer, Ort, Arbeitsweise.",
-      h: "Wer hinter OpSolid steht.",
-      lede: "OpSolid wurde von Hasan Dönmez gegründet und hat seinen Sitz in Arnsberg im Sauerland.",
+      h: "Wer hinter OpSolid steht",
+      lede: "Unsere Methode stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen.",
       paras: [
-        "Die Erfahrung hinter OpSolid stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen. Daraus ist unsere Methode entstanden.",
         "Wir arbeiten mit Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n und Python, binden CRM und ERP an und hosten bei Bedarf in der EU.",
-        "Unser Schwerpunkt liegt auf Dienstleistung, Gastronomie und Hotellerie, Handel und Praxen (ohne Gesundheitsdaten).",
       ],
       facts: [
         ["Gründer", "Hasan Dönmez"],
@@ -146,51 +142,37 @@ const de: PageDef = {
       id: "abgrenzung",
       label: "Abgrenzung",
       note: "Eine Verwechslung ausschließen.",
-      h: "OpSolid ist nicht TopSolid.",
-      lede: "Die Namen klingen ähnlich. Mit dem CAD/CAM-Anbieter haben wir nichts zu tun.",
+      h: "OpSolid ist nicht TopSolid",
       paras: [
-        "OpSolid ist nicht TopSolid (CAD/CAM-Software) und steht in keiner Verbindung dazu. Wir beraten zu KI und zur Automatisierung von Abläufen in Unternehmen und entwickeln keine Konstruktions- oder Fertigungssoftware.",
-        "Der Einstieg bei uns: Das Kennenlernen ist kostenlos und unverbindlich, der KI-Check kostet ab 490 € netto. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        "Die Namen klingen ähnlich, aber OpSolid steht in keiner Verbindung zu TopSolid (CAD/CAM-Software). Wir beraten zu KI und zur Automatisierung von Abläufen in Unternehmen und entwickeln keine Konstruktions- oder Fertigungssoftware.",
       ],
     },
   ],
   faq: {
     label: "Häufige Fragen",
-    h: "Häufige Fragen zu OpSolid.",
+    h: "Häufige Fragen zu OpSolid",
     items: [
       {
-        q: "Sind Sie mit TopSolid verbunden?",
-        a: "Nein. OpSolid ist nicht TopSolid (CAD/CAM-Software) und steht in keiner Verbindung dazu.",
-      },
-      {
         q: "Verkaufen Sie KI-Lizenzen oder Software von Anbietern?",
-        a: "Nein. Wir sind unabhängig und verkaufen weder KI-Lizenzen noch Software von Anbietern. Zugänge und Dokumentation gehören Ihnen, und wir bauen auf den Systemen auf, die Sie bereits nutzen.",
+        a: "Nein. Wir sind unabhängig und empfehlen, was auf den Systemen aufbaut, die Sie bereits nutzen.",
       },
       {
         q: "Müssen wir für ein Projekt nach Arnsberg kommen?",
-        a: "Nein. Wir arbeiten remote in Deutschland und Europa. Termine vor Ort sind nach Absprache möglich.",
-      },
-      {
-        q: "In welchen Sprachen arbeiten Sie?",
-        a: "Auf Deutsch, Englisch und Türkisch. Die KI-Schulungen finden online auf Deutsch und Englisch statt.",
+        a: "Nein. Wir arbeiten remote in Deutschland und Europa, auf Deutsch, Englisch und Türkisch. Termine vor Ort sind nach Absprache möglich.",
       },
       {
         q: "Welche Branchen beraten Sie?",
-        a: "Unser Schwerpunkt liegt auf Dienstleistung, Gastronomie und Hotellerie, Handel und Praxen, ohne Gesundheitsdaten.",
-      },
-      {
-        q: "Wer steht hinter OpSolid?",
-        a: "OpSolid wurde von Hasan Dönmez gegründet und hat seinen Sitz in Arnsberg (Sauerland, Nordrhein-Westfalen).",
+        a: "Dienstleistung, Gastronomie und Hotellerie, Handel und Praxen, ohne Gesundheitsdaten.",
       },
       {
         q: "Wie beginnt die Zusammenarbeit, und was kostet der Einstieg?",
-        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen. Danach folgt auf Wunsch der KI-Check ab 490 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen. Auf Wunsch folgt der KI-Check ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
   cta: {
     label: "Kennenlernen",
-    h: "Mit einem Ablauf anfangen.",
+    h: "Mit einem Ablauf anfangen",
     p: "Schreiben Sie uns, welcher Ablauf Sie gerade Zeit kostet. Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
@@ -208,8 +190,8 @@ const en: PageDef = {
   crumb: "About",
   hero: {
     eyebrow: "About OpSolid",
-    h1: ["Consulting that starts with the", "workflow.", ""],
-    lede: "OpSolid advises companies on automation with AI. We start with the workflow, not with the technology, and we tell you plainly when something is not worth doing.",
+    h1: ["Consulting that starts with the", "workflow", ""],
+    lede: "OpSolid advises companies on automation with AI. We start with the workflow, not with the technology.",
     primary: { label: "Request an introductory call", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "See the AI check", to: "check" },
     facts: ["Independent of AI vendors", "NDA before the analysis", "Pilot at a fixed price, in writing first"],
@@ -227,25 +209,24 @@ const en: PageDef = {
       id: "angebot",
       label: "Offer",
       note: "What we do, in this order.",
-      h: "Three areas, consulting first.",
-      lede: "Consulting comes first. AI training and OpSo complement it; they do not replace it.",
+      h: "Three areas, consulting first",
       items: [
         {
           tag: "1 · Consulting",
           h: "AI consulting and AI automation",
-          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check, from €490 net: 90 minutes remote plus a short written report. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, and then operation, monthly by agreement.",
+          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check, from €990 net: 90 minutes remote plus a short written report. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
           href: { label: "To AI consulting", to: "beratung" },
         },
         {
           tag: "2 · AI training",
           h: "Your team learns to use AI safely",
-          p: "Online, in German and English, live for your team. We are building a network of freelance trainers. Before you book, we tell you by name who will deliver your training.",
+          p: "Online, in German and English, live for your team. Before you book, we tell you by name who will deliver your training.",
           href: { label: "To AI training", to: "schulungen" },
         },
         {
           tag: "3 · Our own product",
           h: "OpSo, our digital business card",
-          p: "A product of our own, separate from the consulting. It is in testing: Android in a closed test on Google Play, iPhone submitted to Apple for review (as of 28 October 2026).",
+          p: "A product of our own, separate from the consulting, in testing: Android in a closed test on Google Play, iPhone submitted to Apple for review (as of 28 October 2026).",
           href: { label: "To OpSo", to: "opso" },
         },
       ],
@@ -255,8 +236,8 @@ const en: PageDef = {
       id: "methode",
       label: "Method",
       note: "Five steps from the first call to handover.",
-      h: "How we work.",
-      lede: "We map the workflow, measure the starting point, pilot small and hand over completely. Every step has a result, and after each one you decide again.",
+      h: "How we work",
+      lede: "Every step has a result, and after each one you decide again.",
       items: [
         {
           h: "Map the workflow",
@@ -285,23 +266,22 @@ const en: PageDef = {
       id: "grundsaetze",
       label: "Principles",
       note: "What you can hold us to.",
-      h: "Four principles for every project.",
-      lede: "They limit our work and so protect your decision.",
+      h: "Four principles for every project",
       items: [
         {
-          h: "Start with the people.",
+          h: "Start with the people",
           p: "We begin with your real workflows and the people who carry them out. Where automation does not make sense, we say so.",
         },
         {
-          h: "Stay independent.",
+          h: "Stay independent",
           p: "We sell no AI licences and no vendor software. We recommend what fits your workflow and builds on the systems you already use.",
         },
         {
-          h: "Data with a plan.",
+          h: "Data with a plan",
           p: "Before we start, we clarify where data is processed and put the necessary contracts in place (data processing agreements). The final assessment rests with your data protection officer.",
         },
         {
-          h: "People decide.",
+          h: "People decide",
           p: "Every assistant has clear limits and hands over to your team. Approvals stay with you.",
         },
       ],
@@ -311,12 +291,10 @@ const en: PageDef = {
       id: "menschen",
       label: "People",
       note: "Founder, place, way of working.",
-      h: "Who is behind OpSolid.",
-      lede: "OpSolid was founded by Hasan Dönmez and is based in Arnsberg in the Sauerland region of Germany.",
+      h: "Who is behind OpSolid",
+      lede: "Our method comes from IT project management, digitalisation and process optimisation in the day-to-day operations of companies.",
       paras: [
-        "The experience behind OpSolid comes from IT project management, digitalisation and process optimisation in the day-to-day operations of companies. Our method grew out of that work.",
         "We work with Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n and Python, connect CRM and ERP systems, and host in the EU where needed.",
-        "Our focus is on services, hospitality, retail and practices (without health data).",
       ],
       facts: [
         ["Founder", "Hasan Dönmez"],
@@ -331,51 +309,37 @@ const en: PageDef = {
       id: "abgrenzung",
       label: "Not to be confused",
       note: "Avoiding a mix-up.",
-      h: "OpSolid is not TopSolid.",
-      lede: "The names sound alike. We have nothing to do with the CAD/CAM vendor.",
+      h: "OpSolid is not TopSolid",
       paras: [
-        "OpSolid is not TopSolid (CAD/CAM software) and has no connection to it. We advise companies on AI and on automating their workflows, and we do not develop design or manufacturing software.",
-        "Working with us starts like this: the introductory call is free and without obligation, and the AI check starts at €490 net. All prices are net of VAT and for businesses only.",
+        "The names sound alike, but OpSolid has no connection to TopSolid (CAD/CAM software). We advise companies on AI and on automating their workflows, and we do not develop design or manufacturing software.",
       ],
     },
   ],
   faq: {
     label: "Frequently asked questions",
-    h: "Frequently asked questions about OpSolid.",
+    h: "Frequently asked questions about OpSolid",
     items: [
       {
-        q: "Are you connected to TopSolid?",
-        a: "No. OpSolid is not TopSolid (CAD/CAM software) and has no connection to it.",
-      },
-      {
         q: "Do you sell AI licences or vendor software?",
-        a: "No. We are independent and sell neither AI licences nor vendor software. Access and documentation belong to you, and we build on the systems you already use.",
+        a: "No. We are independent and recommend what builds on the systems you already use.",
       },
       {
         q: "Do we have to come to Arnsberg for a project?",
-        a: "No. We work remotely in Germany and Europe. Meetings on site are possible by arrangement.",
-      },
-      {
-        q: "Which languages do you work in?",
-        a: "German, English and Turkish. AI training takes place online in German and English.",
+        a: "No. We work remotely in Germany and Europe, in German, English and Turkish. Meetings on site are possible by arrangement.",
       },
       {
         q: "Which industries do you advise?",
-        a: "Our focus is on services, hospitality, retail and practices, without health data.",
-      },
-      {
-        q: "Who is behind OpSolid?",
-        a: "OpSolid was founded by Hasan Dönmez and is based in Arnsberg (Sauerland, North Rhine-Westphalia, Germany).",
+        a: "Services, hospitality, retail and practices, without health data.",
       },
       {
         q: "How does working together begin, and what does the entry point cost?",
-        a: "With a free introductory call, without obligation. If you wish, the AI check follows, from €490 net: 90 minutes remote plus a short written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
+        a: "With a free introductory call, without obligation. If you wish, the AI check follows, from €990 net: 90 minutes remote plus a short written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
       },
     ],
   },
   cta: {
     label: "Introductory call",
-    h: "Start with one workflow.",
+    h: "Start with one workflow",
     p: "Tell us which workflow is costing you time right now. In an introductory call, we clarify whether an AI check makes sense.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "To AI consulting", to: "beratung" },
@@ -393,8 +357,8 @@ const tr: PageDef = {
   crumb: "Hakkımızda",
   hero: {
     eyebrow: "OpSolid hakkında",
-    h1: ["İş akışından", "başlayan", "danışmanlık."],
-    lede: "OpSolid, şirketlere yapay zeka ile otomasyon konusunda danışmanlık verir. Teknolojiden değil iş akışından başlarız; bir şeye değmiyorsa bunu açıkça söyleriz.",
+    h1: ["İş akışından", "başlayan", "danışmanlık"],
+    lede: "OpSolid, şirketlere yapay zeka ile otomasyon konusunda danışmanlık verir. Teknolojiden değil, iş akışından başlarız.",
     primary: { label: "Tanışma görüşmesi talep edin", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "YZ Kontrolünü görün", to: "check" },
     facts: ["YZ sağlayıcılarından bağımsız", "Analizden önce NDA", "Sabit fiyatlı pilot, önceden yazılı"],
@@ -412,25 +376,24 @@ const tr: PageDef = {
       id: "angebot",
       label: "Hizmetler",
       note: "Ne yapıyoruz, hangi sırayla.",
-      h: "Üç alan, önce danışmanlık.",
-      lede: "Danışmanlık başta gelir. YZ eğitimleri ve OpSo onu tamamlar; yerini almaz.",
+      h: "Üç alan, önce danışmanlık",
       items: [
         {
           tag: "1 · Danışmanlık",
           h: "Yapay zeka danışmanlığı ve otomasyonu",
-          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası, 490 €'dan başlayan (net) YZ Kontrolüdür: 90 dakika uzaktan ve kısa bir yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra da aylık, anlaşmaya göre işletme.",
+          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası, 990 €'dan başlayan (net) YZ Kontrolüdür: 90 dakika uzaktan ve kısa bir yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
           href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
           tag: "2 · YZ eğitimleri",
           h: "Ekibiniz yapay zekayı güvenle kullanmayı öğrenir",
-          p: "Çevrim içi, Almanca ve İngilizce, ekibiniz için canlı. Serbest çalışan eğitmenlerden oluşan bir ağ kuruyoruz. Eğitimi kimin vereceğini rezervasyondan önce size adıyla bildiririz.",
+          p: "Çevrim içi, Almanca ve İngilizce, ekibiniz için canlı. Eğitmeni rezervasyondan önce size adıyla bildiririz.",
           href: { label: "YZ eğitimlerine", to: "schulungen" },
         },
         {
           tag: "3 · Kendi ürünümüz",
           h: "OpSo, dijital kartvizitimiz",
-          p: "Danışmanlıktan ayrı, kendi ürünümüz. Test aşamasında: Android'de Google Play'de kapalı test, iPhone'da Apple'a incelenmek üzere gönderildi (28.10.2026 itibarıyla).",
+          p: "Danışmanlıktan ayrı, kendi ürünümüz; test aşamasında: Android'de Google Play'de kapalı test, iPhone'da Apple'a incelenmek üzere gönderildi (28.10.2026 itibarıyla).",
           href: { label: "OpSo'ya", to: "opso" },
         },
       ],
@@ -441,7 +404,7 @@ const tr: PageDef = {
       label: "Yöntem",
       note: "İlk görüşmeden teslime beş adım.",
       h: "Nasıl çalışıyoruz?",
-      lede: "İş akışını kayda alır, başlangıç durumunu ölçer, küçük bir pilotla başlar ve eksiksiz teslim ederiz. Her adımın bir sonucu vardır; her adımdan sonra yeniden siz karar verirsiniz.",
+      lede: "Her adımın bir sonucu vardır; her adımdan sonra yeniden siz karar verirsiniz.",
       items: [
         {
           h: "İş akışını kayda almak",
@@ -470,23 +433,22 @@ const tr: PageDef = {
       id: "grundsaetze",
       label: "İlkeler",
       note: "Bizi nelerle ölçebilirsiniz.",
-      h: "Her projede dört ilke.",
-      lede: "Çalışmamızı sınırlar ve böylece kararınızı korur.",
+      h: "Her projede dört ilke",
       items: [
         {
-          h: "İnsanlardan başlamak.",
+          h: "İnsanlardan başlamak",
           p: "Gerçek iş akışlarınızdan ve bu işleri yapan insanlardan başlarız. Otomasyonun anlamlı olmadığı yerde bunu söyleriz.",
         },
         {
-          h: "Bağımsız kalmak.",
+          h: "Bağımsız kalmak",
           p: "YZ lisansı ya da sağlayıcı yazılımı satmayız. İş akışınıza uyanı ve zaten kullandığınız sistemlerin üzerine kurulabilecek olanı öneririz.",
         },
         {
-          h: "Planlı veri yönetimi.",
+          h: "Planlı veri yönetimi",
           p: "Başlamadan önce verilerin nerede işlendiğini netleştirir, gerekli sözleşmeleri (veri işleme sözleşmesi) yaparız. Nihai değerlendirmeyi veri koruma sorumlunuz yapar.",
         },
         {
-          h: "Kararı insan verir.",
+          h: "Kararı insan verir",
           p: "Her asistanın net sınırları vardır ve ekibinize devreder. Onaylar sizde kalır.",
         },
       ],
@@ -497,11 +459,9 @@ const tr: PageDef = {
       label: "İnsanlar",
       note: "Kurucu, yer, çalışma biçimi.",
       h: "OpSolid'in arkasında kim var?",
-      lede: "OpSolid'i Hasan Dönmez kurdu; merkezi Almanya'nın Sauerland bölgesindeki Arnsberg'dedir.",
+      lede: "Yöntemimiz, şirketlerin günlük işleyişi içinde yürütülen BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından doğdu.",
       paras: [
-        "OpSolid'in arkasındaki deneyim, şirketlerin günlük işleyişi içinde yürütülen BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından gelir. Yöntemimiz bu çalışmalardan doğdu.",
         "Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n ve Python ile çalışır, CRM ve ERP sistemlerini bağlar, gerektiğinde AB'de barındırırız.",
-        "Odağımız hizmet sektörü, yeme-içme ve konaklama, perakende ve muayenehaneler (sağlık verisi olmadan).",
       ],
       facts: [
         ["Kurucu", "Hasan Dönmez"],
@@ -516,51 +476,37 @@ const tr: PageDef = {
       id: "abgrenzung",
       label: "Ayrım",
       note: "Karışıklığı önlemek için.",
-      h: "OpSolid, TopSolid değildir.",
-      lede: "Adlar birbirine benziyor. CAD/CAM yazılımı sağlayıcısıyla bir ilgimiz yok.",
+      h: "OpSolid, TopSolid değildir",
       paras: [
-        "OpSolid, TopSolid (CAD/CAM yazılımı) ile ilgili değildir ve onunla bağlantısı yoktur. Şirketlere yapay zeka ve iş akışı otomasyonu konusunda danışmanlık veririz; tasarım ya da üretim yazılımı geliştirmeyiz.",
-        "Bizimle çalışmanın başlangıcı: Tanışma görüşmesi ücretsiz ve bağlayıcı değildir, YZ Kontrolü 490 €'dan başlar (net). Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
+        "Adlar birbirine benziyor, ancak OpSolid'in TopSolid (CAD/CAM yazılımı) ile bir bağlantısı yoktur. Şirketlere yapay zeka ve iş akışı otomasyonu konusunda danışmanlık veririz; tasarım ya da üretim yazılımı geliştirmeyiz.",
       ],
     },
   ],
   faq: {
     label: "Sık sorulan sorular",
-    h: "OpSolid hakkında sık sorulan sorular.",
+    h: "OpSolid hakkında sık sorulan sorular",
     items: [
       {
-        q: "TopSolid ile bağlantınız var mı?",
-        a: "Hayır. OpSolid, TopSolid (CAD/CAM yazılımı) ile ilgili değildir ve onunla bağlantısı yoktur.",
-      },
-      {
         q: "YZ lisansı ya da sağlayıcı yazılımı satıyor musunuz?",
-        a: "Hayır. Bağımsızız; YZ lisansı da sağlayıcı yazılımı da satmayız. Erişimler ve dokümantasyon size aittir; zaten kullandığınız sistemlerin üzerine kurarız.",
+        a: "Hayır. Bağımsızız; zaten kullandığınız sistemlerin üzerine kurulabilecek olanı öneririz.",
       },
       {
         q: "Proje için Arnsberg'e gelmemiz gerekir mi?",
-        a: "Hayır. Almanya ve Avrupa'da uzaktan çalışıyoruz. Yerinde görüşmeler anlaşmayla mümkündür.",
-      },
-      {
-        q: "Hangi dillerde çalışıyorsunuz?",
-        a: "Almanca, İngilizce ve Türkçe. YZ eğitimleri çevrim içi, Almanca ve İngilizce verilir.",
+        a: "Hayır. Almanya ve Avrupa'da uzaktan, Almanca, İngilizce ve Türkçe çalışıyoruz. Yerinde görüşmeler anlaşmayla mümkündür.",
       },
       {
         q: "Hangi sektörlere danışmanlık veriyorsunuz?",
-        a: "Odağımız hizmet sektörü, yeme-içme ve konaklama, perakende ve muayenehaneler; sağlık verisi olmadan.",
-      },
-      {
-        q: "OpSolid'in arkasında kim var?",
-        a: "OpSolid'i Hasan Dönmez kurdu; merkezi Arnsberg'dedir (Sauerland, Kuzey Ren-Vestfalya, Almanya).",
+        a: "Hizmet sektörü, yeme-içme ve konaklama, perakende ve muayenehaneler; sağlık verisi olmadan.",
       },
       {
         q: "İş birliği nasıl başlar, giriş ne kadar tutar?",
-        a: "Ücretsiz ve bağlayıcı olmayan bir tanışma görüşmesiyle. İsterseniz ardından YZ Kontrolü gelir, 490 €'dan başlar (net): 90 dakika uzaktan ve kısa bir yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
+        a: "Ücretsiz ve bağlayıcı olmayan bir tanışma görüşmesiyle. İsterseniz ardından YZ Kontrolü gelir, 990 €'dan başlar (net): 90 dakika uzaktan ve kısa bir yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
       },
     ],
   },
   cta: {
     label: "Tanışma",
-    h: "Tek bir iş akışıyla başlayın.",
+    h: "Tek bir iş akışıyla başlayın",
     p: "Şu anda hangi iş akışının size zaman kaybettirdiğini yazın. Tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },

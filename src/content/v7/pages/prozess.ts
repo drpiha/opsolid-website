@@ -1,7 +1,7 @@
 /**
  * Prozessautomatisierung (key "prozess", /ki-beratung/prozessautomatisierung). Includes the internal-tools
  * section (#interne-tools, formerly /interne-tools). German is the source; EN and TR are transcreations.
- * No prices on the page except the published KI-Check "ab 490 €"; the pilot has no number.
+ * No prices on the page except the published KI-Check "ab 990 €"; the pilot has no number.
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -10,17 +10,17 @@ const de: PageDef = {
   meta: {
     title: "Prozessautomatisierung: Daten nur einmal erfassen",
     description:
-      "Prozessautomatisierung für Unternehmen: Wir messen den Ablauf, bauen einen Pilot zum Festpreis und übergeben ihn mit Dokumentation. KI-Check ab 490 € netto.",
+      "Prozessautomatisierung für Unternehmen: Wir messen den Ablauf, bauen einen Pilot zum Festpreis und übergeben ihn mit Dokumentation. KI-Check ab 990 € netto.",
   },
   crumbs: ["beratung"],
   crumb: "Prozessautomatisierung",
   hero: {
     eyebrow: "KI-Beratung · Prozessautomatisierung",
-    h1: ["Daten nur ", "einmal", " erfassen."],
-    lede: "Wir automatisieren wiederkehrende Abläufe zwischen E-Mail, Excel, CRM und ERP. Zuerst messen wir, wie der Ablauf heute läuft. Dann bauen wir einen Pilot zum Festpreis und übergeben ihn mit Dokumentation.",
+    h1: ["Daten nur ", "einmal", " erfassen"],
+    lede: "Wir automatisieren wiederkehrende Abläufe zwischen E-Mail, Excel, CRM und ERP: erst messen, wie der Ablauf heute läuft, dann ein Pilot zum Festpreis, dann die Übergabe.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zu den internen Werkzeugen", to: "prozess", hash: "interne-tools" },
-    facts: ["KI-Check ab 490 € netto", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
+    facts: ["KI-Check ab 990 € netto", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -31,26 +31,11 @@ const de: PageDef = {
   },
   blocks: [
     {
-      t: "situations",
-      id: "ausgangslage",
-      label: "Ausgangslage",
-      note: "Wo derselbe Datensatz mehrfach angefasst wird.",
-      h: "Wo dieselben Daten zweimal getippt werden.",
-      lede: "Automatisierung lohnt sich zuerst dort, wo ein Mensch Daten von einem System ins nächste überträgt.",
-      items: [
-        { h: "Aus der E-Mail wird eine Tabellenzeile.", p: "Anfragen und Bestellungen kommen per Postfach und werden von Hand in Excel oder ins CRM übertragen." },
-        { h: "Das Angebot entsteht in drei Programmen.", p: "Kundendaten, Preise und Texte werden aus verschiedenen Quellen zusammenkopiert und dann von Hand versendet." },
-        { h: "Der Bericht entsteht jede Woche neu.", p: "Zahlen werden aus mehreren Systemen exportiert, zusammengeführt und formatiert, bevor sie jemand liest." },
-        { h: "Niemand weiß, welche Liste stimmt.", p: "Mehrere Personen pflegen dieselbe Tabelle. Änderungen gehen verloren, und Freigaben laufen per Zuruf." },
-      ],
-    },
-    {
       t: "examples",
       id: "ablaeufe",
       label: "Typische Abläufe",
-      note: "Beispiel-Szenarien, keine Kundenprojekte.",
-      h: "Fünf Abläufe, die sich oft zuerst lohnen.",
-      lede: "Wir wählen den Ablauf, bei dem Aufwand und Nutzen am besten zusammenpassen. Diese fünf zeigen, wie das aussehen kann.",
+      h: "Vier Abläufe, die sich oft zuerst lohnen",
+      lede: "Wir wählen den Ablauf, bei dem Aufwand und Nutzen am besten zusammenpassen.",
       tag: "Beispiel-Szenario",
       items: [
         {
@@ -60,13 +45,6 @@ const de: PageDef = {
           after: "Eingehende Mails werden nach Thema gekennzeichnet und als Vorgang im richtigen System angelegt.",
           human: "Ihr Team beantwortet den Vorgang. Auf Wunsch liegt ein Antwortentwurf bereit.",
           href: { label: "Weitere Anwendungsfälle", to: "anwendungen" },
-        },
-        {
-          area: "Angebote & Aufträge",
-          h: "Vom Anfragedatensatz zum Angebot",
-          before: "Das Angebot wird aus CRM-Daten, Preisliste und Vorlage von Hand zusammengestellt.",
-          after: "Die Vorlage füllt sich aus den Kundendaten und geht in die Freigabe.",
-          human: "Eine Person prüft das Angebot und gibt es frei.",
         },
         {
           area: "Belege & Rechnungen",
@@ -95,9 +73,8 @@ const de: PageDef = {
       t: "process",
       id: "vorgehen",
       label: "Vorgehen",
-      note: "Vier Schritte, nach jedem entscheiden Sie.",
-      h: "Erst messen, dann bauen.",
-      lede: "Wir beginnen mit einem einzelnen Ablauf und messen ihn, bevor wir etwas automatisieren. Nach jedem Schritt entscheiden Sie, ob es weitergeht.",
+      h: "Erst messen, dann bauen",
+      lede: "Wir beginnen mit einem einzelnen Ablauf. Nach jedem Schritt entscheiden Sie, ob es weitergeht.",
       cta: { label: "Den KI-Check ansehen", to: "check" },
       steps: [
         {
@@ -124,7 +101,7 @@ const de: PageDef = {
         {
           name: "Übergabe",
           h: "Dokumentation und Quellcode",
-          p: "Dokumentation, Zugänge und, soweit vorhanden, der Quellcode gehen an Ihr Team. Auf Wunsch betreuen wir die Lösung weiter.",
+          p: "Dokumentation, Zugänge und, soweit vorhanden, der Quellcode gehen an Ihr Team. Was übergeben wird, halten wir vor dem Start schriftlich fest. Auf Wunsch betreuen wir die Lösung weiter.",
           result: "Ihr Team erhält, was es braucht, um den Ablauf selbst zu betreiben.",
           meta: "Betrieb monatlich nach Vereinbarung",
         },
@@ -134,10 +111,10 @@ const de: PageDef = {
       t: "spec",
       id: "werkzeuge",
       label: "Werkzeuge",
-      h: "Werkzeuge, die zu Ihrem Ablauf passen.",
+      h: "Werkzeuge, die zu Ihrem Ablauf passen",
       lede: "Wir bauen mit dem, was bei Ihnen schon im Haus ist, und ergänzen nur, wo es nötig ist.",
       rows: [
-        ["Microsoft Power Automate", "Wenn Microsoft 365 im Haus ist: Freigaben, Dokumente und Postfach-Regeln. Mehr dazu auf der Seite zu Microsoft 365."],
+        ["Microsoft Power Automate", "Wenn Microsoft 365 im Haus ist: Freigaben, Dokumente und Postfach-Regeln."],
         ["Make", "Für Verbindungen zwischen Cloud-Diensten, wenn kein Standard-Connector reicht."],
         ["n8n", "Für Abläufe mit sensiblen Daten: selbst gehostet auf einem Server in der EU möglich."],
         ["Python", "Für Sonderfälle: Dateien auslesen, Daten prüfen, Berichte erzeugen."],
@@ -150,8 +127,7 @@ const de: PageDef = {
       t: "compare",
       id: "vorher-nachher",
       label: "Vorher und nachher",
-      note: "Ein Beispiel, kein Kundenfall.",
-      h: "Derselbe Ablauf, von Hand und automatisiert.",
+      h: "Derselbe Ablauf, von Hand und automatisiert",
       lede: "Als Beispiel: Eine Anfrage kommt per E-Mail und soll zum Angebot werden.",
       tag: "Beispiel-Szenario",
       before: {
@@ -177,9 +153,8 @@ const de: PageDef = {
       t: "rows",
       id: "interne-tools",
       label: "Interne Werkzeuge",
-      note: "Wenn die Tabelle nicht mehr reicht.",
-      h: "Aus der Excel-Liste wird ein Werkzeug.",
-      lede: "Manche Abläufe passen in keine Standard-Software. Dann bauen wir ein kleines, fokussiertes Werkzeug für genau diesen Ablauf, statt eine weitere Plattform mit Monatsabo pro Nutzer einzuführen. Fertige Software ist oft die bessere Wahl, und das sagen wir Ihnen vorher.",
+      h: "Aus der Excel-Liste wird ein Werkzeug",
+      lede: "Passt ein Ablauf in keine Standard-Software, bauen wir ein kleines Werkzeug genau dafür. Fertige Software ist oft die bessere Wahl, und das sagen wir Ihnen vorher.",
       items: [
         { h: "Admin-Konsolen", p: "Aufträge, Ausnahmen und Kundennotizen an einem Ort statt in drei Tabs." },
         { h: "Dashboards", p: "Kennzahlen und Warnungen aus CRM, ERP und Finanzsystem in einer Ansicht, ohne Handarbeit." },
@@ -193,42 +168,18 @@ const de: PageDef = {
         },
       ],
     },
-    {
-      t: "principles",
-      id: "absicherung",
-      label: "Absicherung",
-      note: "Auch der Fehlerfall ist geplant.",
-      h: "Was wir für den Fehlerfall einplanen.",
-      lede: "Eine Automatisierung muss auch dann ruhig weiterlaufen, wenn etwas schiefgeht. Deshalb planen wir den Fehlerfall von Anfang an mit.",
-      items: [
-        { h: "Protokoll.", p: "Jeder Lauf wird festgehalten, damit Ihr Team nachvollziehen kann, was passiert ist." },
-        { h: "Manueller Rückfall.", p: "Fällt ein Schritt aus, landet der Vorgang bei einer Person, statt zu verschwinden." },
-        {
-          h: "Daten mit Plan.",
-          p: "Vor dem Start klären wir, wo Daten verarbeitet werden, und schließen die nötigen Verträge (AVV). Die abschließende Bewertung trifft Ihr Datenschutzbeauftragter.",
-        },
-        {
-          h: "Übergabe statt Abhängigkeit.",
-          p: "Dokumentation und, soweit vorhanden, Quellcode gehen an Ihr Team. Wir bauen so, dass Sie die Lösung auch ohne uns betreiben können. Was übergeben wird, halten wir vor dem Start schriftlich fest.",
-        },
-      ],
-    },
   ],
   faq: {
     label: "Häufige Fragen",
-    h: "Fragen zur Prozessautomatisierung.",
+    h: "Fragen zur Prozessautomatisierung",
     items: [
       {
         q: "Brauchen wir dafür KI?",
         a: "Nicht immer. Oft reicht eine saubere Automatisierung ohne KI. Wo KI hilft, etwa beim Auslesen von Belegen oder beim Sortieren von Mails, prüft eine Person das Ergebnis.",
       },
       {
-        q: "Was ist ein typisches erstes Projekt?",
-        a: "Ein einzelner Ablauf mit großem Hebel, zum Beispiel die Angebotserstellung, die Mail-Sortierung oder ein Wochenbericht. Welcher zuerst dran ist, klären wir im KI-Check.",
-      },
-      {
         q: "Was kostet das?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet ab 490 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Was, wenn sich der Ablauf später ändert?",
@@ -240,14 +191,14 @@ const de: PageDef = {
       },
       {
         q: "Wo laufen die Automatisierungen?",
-        a: "Bei Ihnen oder auf Servern in der EU, je nach Werkzeug und Daten. Das legen wir vor dem Start schriftlich fest.",
+        a: "Bei Ihnen oder auf Servern in der EU, je nach Werkzeug und Daten. Die nötigen Verträge (AVV) schließen wir vor dem Start; die abschließende Bewertung trifft Ihr Datenschutzbeauftragter.",
       },
     ],
   },
   cta: {
     label: "KI-Check",
     h: "Welcher Ablauf soll als Erstes entlastet werden?",
-    p: "Beschreiben Sie ihn in wenigen Sätzen. Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist. Der KI-Check zeigt, ob sich die Automatisierung lohnt. Wenn nicht, steht auch das im Bericht.",
+    p: "Beschreiben Sie ihn in wenigen Sätzen. Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -266,17 +217,17 @@ const en: PageDef = {
   meta: {
     title: "Process automation: enter your data only once",
     description:
-      "Process automation for companies: we measure the workflow, build a pilot at a fixed price and hand it over with documentation. AI check from €490 net.",
+      "Process automation for companies: we measure the workflow, build a pilot at a fixed price and hand it over with documentation. AI check from €990 net.",
   },
   crumbs: ["beratung"],
   crumb: "Process automation",
   hero: {
     eyebrow: "AI automation consulting · Process automation",
-    h1: ["Enter your data ", "once", "."],
-    lede: "We automate recurring workflows between email, Excel, CRM and ERP. First we measure how the workflow runs today. Then we build a pilot at a fixed price and hand it over with documentation.",
+    h1: ["Enter your data ", "once", ""],
+    lede: "We automate recurring workflows between email, Excel, CRM and ERP: first measure how the workflow runs today, then a pilot at a fixed price, then the handover.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "On to internal tools", to: "prozess", hash: "interne-tools" },
-    facts: ["AI check from €490 net", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
+    facts: ["AI check from €990 net", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -287,26 +238,11 @@ const en: PageDef = {
   },
   blocks: [
     {
-      t: "situations",
-      id: "ausgangslage",
-      label: "Starting point",
-      note: "Where the same record gets handled more than once.",
-      h: "Where the same data gets typed twice.",
-      lede: "Automation pays off first where a person moves data from one system into the next.",
-      items: [
-        { h: "An email becomes a spreadsheet row.", p: "Requests and orders arrive in a mailbox and are copied by hand into Excel or the CRM." },
-        { h: "A quote is built in three programs.", p: "Customer data, prices and text are pasted together from different sources and then sent by hand." },
-        { h: "The report is rebuilt every week.", p: "Figures are exported from several systems, merged and formatted before anyone reads them." },
-        { h: "Nobody knows which list is right.", p: "Several people maintain the same spreadsheet. Changes get lost and approvals happen by word of mouth." },
-      ],
-    },
-    {
       t: "examples",
       id: "ablaeufe",
       label: "Typical flows",
-      note: "Example scenarios, not client projects.",
-      h: "Five workflows that often pay off first.",
-      lede: "We pick the workflow where effort and benefit match best. These five show what that can look like.",
+      h: "Four workflows that often pay off first",
+      lede: "We pick the workflow where effort and benefit match best.",
       tag: "Example scenario",
       items: [
         {
@@ -316,13 +252,6 @@ const en: PageDef = {
           after: "Incoming mail is tagged by topic and created as a case in the right system.",
           human: "Your team answers the case. A draft reply is ready on request.",
           href: { label: "More use cases", to: "anwendungen" },
-        },
-        {
-          area: "Quotes & orders",
-          h: "From inquiry record to quote",
-          before: "The quote is assembled by hand from CRM data, a price list and a template.",
-          after: "The template fills itself from the customer data and goes to approval.",
-          human: "A person checks the quote and approves it.",
         },
         {
           area: "Receipts & invoices",
@@ -351,9 +280,8 @@ const en: PageDef = {
       t: "process",
       id: "vorgehen",
       label: "Approach",
-      note: "Four steps, you decide after each.",
-      h: "Measure first, then build.",
-      lede: "We start with a single workflow and measure it before we automate anything. After each step you decide whether to continue.",
+      h: "Measure first, then build",
+      lede: "We start with a single workflow. After each step you decide whether to continue.",
       cta: { label: "See the AI check", to: "check" },
       steps: [
         {
@@ -380,7 +308,7 @@ const en: PageDef = {
         {
           name: "Handover",
           h: "Documentation and source code",
-          p: "Documentation, access and, where there is any, source code go to your team. If you want, we keep looking after the solution.",
+          p: "Documentation, access and, where there is any, source code go to your team. What is handed over, we put in writing before we start. If you want, we keep looking after the solution.",
           result: "Your team gets what it needs to run the workflow itself.",
           meta: "operation monthly by agreement",
         },
@@ -390,10 +318,10 @@ const en: PageDef = {
       t: "spec",
       id: "werkzeuge",
       label: "Tools",
-      h: "Tools that fit your workflow.",
+      h: "Tools that fit your workflow",
       lede: "We build with what you already have and add only where needed.",
       rows: [
-        ["Microsoft Power Automate", "Where Microsoft 365 is in place: approvals, documents and mailbox rules. More on the Microsoft 365 page."],
+        ["Microsoft Power Automate", "Where Microsoft 365 is in place: approvals, documents and mailbox rules."],
         ["Make", "For connections between cloud services when no standard connector is enough."],
         ["n8n", "For workflows with sensitive data: can be self-hosted on a server in the EU."],
         ["Python", "For special cases: reading files, checking data, generating reports."],
@@ -406,8 +334,7 @@ const en: PageDef = {
       t: "compare",
       id: "vorher-nachher",
       label: "Before and after",
-      note: "An example, not a client case.",
-      h: "The same workflow, by hand and automated.",
+      h: "The same workflow, by hand and automated",
       lede: "As an example: an inquiry arrives by email and is meant to become a quote.",
       tag: "Example scenario",
       before: {
@@ -433,9 +360,8 @@ const en: PageDef = {
       t: "rows",
       id: "interne-tools",
       label: "Internal tools",
-      note: "When the spreadsheet is no longer enough.",
-      h: "From Excel list to a proper tool.",
-      lede: "Some workflows fit no standard software. Then we build a small, focused tool for exactly that workflow instead of adding another platform with a monthly fee per user. Off-the-shelf software is often the better choice, and we tell you so up front.",
+      h: "From Excel list to a proper tool",
+      lede: "If a workflow fits no standard software, we build a small tool for exactly that. Off-the-shelf software is often the better choice, and we tell you so up front.",
       items: [
         { h: "Admin consoles", p: "Orders, exceptions and customer notes in one place instead of three tabs." },
         { h: "Dashboards", p: "Key figures and alerts from CRM, ERP and finance system in one view, without manual work." },
@@ -449,42 +375,18 @@ const en: PageDef = {
         },
       ],
     },
-    {
-      t: "principles",
-      id: "absicherung",
-      label: "Safeguards",
-      note: "The failure case is planned too.",
-      h: "What we plan for when something fails.",
-      lede: "An automation has to keep running calmly even when something goes wrong. That is why we plan for failure from the start.",
-      items: [
-        { h: "A log.", p: "Every run is recorded so your team can see what happened." },
-        { h: "Manual fallback.", p: "If a step fails, the case lands with a person instead of disappearing." },
-        {
-          h: "Data with a plan.",
-          p: "Before we start, we clarify where data is processed and sign the necessary agreements (DPA). The final assessment is made by your data protection officer.",
-        },
-        {
-          h: "Handover, not dependency.",
-          p: "Documentation and, where there is any, source code go to your team. We build so that you can run the solution without us. What is handed over, we put in writing before we start.",
-        },
-      ],
-    },
   ],
   faq: {
     label: "Common questions",
-    h: "Questions about process automation.",
+    h: "Questions about process automation",
     items: [
       {
         q: "Do we need AI for this?",
         a: "Not always. A clean automation without AI is often enough. Where AI helps, for example reading receipts or sorting mail, a person checks the result.",
       },
       {
-        q: "What does a typical first project look like?",
-        a: "A single workflow with a big lever, for example quote creation, mail sorting or a weekly report. Which one comes first, we clarify in the AI check.",
-      },
-      {
         q: "What does it cost?",
-        a: "Getting to know each other is free and non-binding. The AI check costs from €490 net: 90 minutes remote plus a short written report, NDA before the analysis. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "Getting to know each other is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
       },
       {
         q: "What if the workflow changes later?",
@@ -496,14 +398,14 @@ const en: PageDef = {
       },
       {
         q: "Where do the automations run?",
-        a: "With you or on servers in the EU, depending on the tool and the data. We settle this in writing before we start.",
+        a: "With you or on servers in the EU, depending on the tool and the data. We sign the necessary agreements (DPA) before we start; the final assessment is made by your data protection officer.",
       },
     ],
   },
   cta: {
     label: "AI check",
     h: "Which workflow should be relieved first?",
-    p: "Describe it in a few sentences. In our first conversation we clarify whether an AI check makes sense. The AI check shows whether automation pays off. If it does not, the report says so.",
+    p: "Describe it in a few sentences. In our first conversation we clarify whether an AI check makes sense.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Back to AI automation consulting", to: "beratung" },
   },
@@ -522,17 +424,17 @@ const tr: PageDef = {
   meta: {
     title: "Süreç otomasyonu: veriyi yalnızca bir kez girin",
     description:
-      "Şirketler için süreç otomasyonu: iş akışını ölçer, sabit fiyatlı bir pilot kurar ve dokümantasyonla teslim ederiz. YZ Kontrolü 490 €'dan itibaren (net).",
+      "Şirketler için süreç otomasyonu: iş akışını ölçer, sabit fiyatlı bir pilot kurar ve dokümantasyonla teslim ederiz. YZ Kontrolü 990 €'dan itibaren (net).",
   },
   crumbs: ["beratung"],
   crumb: "Süreç otomasyonu",
   hero: {
     eyebrow: "YZ danışmanlığı · Süreç otomasyonu",
-    h1: ["Veriyi yalnızca ", "bir kez", " girin."],
-    lede: "E-posta, Excel, CRM ve ERP arasında tekrar eden iş akışlarını otomatikleştiriyoruz. Önce iş akışının bugün nasıl işlediğini ölçüyoruz. Ardından sabit fiyatlı bir pilot kuruyor ve dokümantasyonla birlikte teslim ediyoruz.",
+    h1: ["Veriyi yalnızca ", "bir kez", " girin"],
+    lede: "E-posta, Excel, CRM ve ERP arasında tekrar eden iş akışlarını otomatikleştiriyoruz: önce iş akışının bugün nasıl işlediğini ölçüyor, sonra sabit fiyatlı bir pilot kuruyor, ardından teslim ediyoruz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Şirket içi araçlara geçin", to: "prozess", hash: "interne-tools" },
-    facts: ["YZ Kontrolü 490 €'dan itibaren (net)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
+    facts: ["YZ Kontrolü 990 €'dan itibaren (net)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
     media: {
       kind: "svg",
       name: "flow",
@@ -543,26 +445,11 @@ const tr: PageDef = {
   },
   blocks: [
     {
-      t: "situations",
-      id: "ausgangslage",
-      label: "Başlangıç durumu",
-      note: "Aynı kaydın birden fazla kez ele alındığı yerler.",
-      h: "Aynı verinin iki kez girildiği yerler.",
-      lede: "Otomasyon önce, bir kişinin veriyi bir sistemden ötekine elle taşıdığı yerde karşılığını verir.",
-      items: [
-        { h: "E-posta bir tablo satırına dönüşüyor.", p: "Talepler ve siparişler e-posta kutusuna gelir, elle Excel'e veya CRM'e aktarılır." },
-        { h: "Teklif üç programda hazırlanıyor.", p: "Müşteri verileri, fiyatlar ve metinler farklı kaynaklardan kopyalanır, sonra elle gönderilir." },
-        { h: "Rapor her hafta baştan hazırlanıyor.", p: "Rakamlar birkaç sistemden dışa aktarılır, birleştirilir ve biçimlendirilir; ancak sonra biri okur." },
-        { h: "Hangi listenin doğru olduğunu kimse bilmiyor.", p: "Birkaç kişi aynı tabloyu günceller. Değişiklikler kaybolur, onaylar sözlü yürür." },
-      ],
-    },
-    {
       t: "examples",
       id: "ablaeufe",
       label: "Tipik iş akışları",
-      note: "Örnek senaryolar, müşteri projesi değil.",
-      h: "Çoğu zaman önce karşılık veren beş iş akışı.",
-      lede: "Emek ile faydanın en iyi örtüştüğü iş akışını seçiyoruz. Bu beşi, bunun nasıl görünebileceğini gösteriyor.",
+      h: "Çoğu zaman önce karşılık veren dört iş akışı",
+      lede: "Emek ile faydanın en iyi örtüştüğü iş akışını seçiyoruz.",
       tag: "Örnek senaryo",
       items: [
         {
@@ -572,13 +459,6 @@ const tr: PageDef = {
           after: "Gelen e-postalar konuya göre etiketlenir ve doğru sistemde bir kayıt olarak açılır.",
           human: "Kaydı ekibiniz yanıtlar. İsterseniz yanıt taslağı hazır bekler.",
           href: { label: "Diğer kullanım örnekleri", to: "anwendungen" },
-        },
-        {
-          area: "Teklifler ve siparişler",
-          h: "Talep kaydından teklife",
-          before: "Teklif; CRM verileri, fiyat listesi ve şablondan elle derlenir.",
-          after: "Şablon müşteri verilerinden dolar ve onaya gider.",
-          human: "Bir kişi teklifi kontrol eder ve onaylar.",
         },
         {
           area: "Belgeler ve faturalar",
@@ -607,9 +487,8 @@ const tr: PageDef = {
       t: "process",
       id: "vorgehen",
       label: "Yöntem",
-      note: "Dört adım; her adımdan sonra siz karar verirsiniz.",
-      h: "Önce ölçüyoruz, sonra kuruyoruz.",
-      lede: "Tek bir iş akışıyla başlıyor ve bir şeyi otomatikleştirmeden önce onu ölçüyoruz. Her adımdan sonra devam edip etmeyeceğinize siz karar verirsiniz.",
+      h: "Önce ölçüyoruz, sonra kuruyoruz",
+      lede: "Tek bir iş akışıyla başlıyoruz. Her adımdan sonra devam edip etmeyeceğinize siz karar verirsiniz.",
       cta: { label: "YZ Kontrolü'ne bakın", to: "check" },
       steps: [
         {
@@ -636,7 +515,7 @@ const tr: PageDef = {
         {
           name: "Teslim",
           h: "Dokümantasyon ve kaynak kod",
-          p: "Dokümantasyon, erişimler ve varsa kaynak kod ekibinize geçer. İsterseniz çözümü sonrasında da biz yürütürüz.",
+          p: "Dokümantasyon, erişimler ve varsa kaynak kod ekibinize geçer. Nelerin teslim edileceğini başlamadan önce yazılı olarak belirleriz. İsterseniz çözümü sonrasında da biz yürütürüz.",
           result: "Ekibiniz, iş akışını kendisi işletmek için gereken her şeyi alır.",
           meta: "işletme aylık, anlaşmaya göre",
         },
@@ -646,10 +525,10 @@ const tr: PageDef = {
       t: "spec",
       id: "werkzeuge",
       label: "Araçlar",
-      h: "İş akışınıza uyan araçlar.",
+      h: "İş akışınıza uyan araçlar",
       lede: "Elinizde zaten olanla kuruyor, yalnızca gerektiği yerde ekleme yapıyoruz.",
       rows: [
-        ["Microsoft Power Automate", "Microsoft 365 kullanılıyorsa: onaylar, belgeler ve e-posta kuralları. Ayrıntısı Microsoft 365 sayfasında."],
+        ["Microsoft Power Automate", "Microsoft 365 kullanılıyorsa: onaylar, belgeler ve e-posta kuralları."],
         ["Make", "Hazır bir bağlayıcı yetmediğinde bulut hizmetleri arasındaki bağlantılar için."],
         ["n8n", "Hassas verili iş akışları için: kendi kontrolünüzdeki bir AB sunucusunda barındırılabilir."],
         ["Python", "Özel durumlar için: dosya okumak, veri denetlemek, rapor üretmek."],
@@ -662,8 +541,7 @@ const tr: PageDef = {
       t: "compare",
       id: "vorher-nachher",
       label: "Önce ve sonra",
-      note: "Bir örnek, müşteri vakası değil.",
-      h: "Aynı iş akışı: elle ve otomatik.",
+      h: "Aynı iş akışı: elle ve otomatik",
       lede: "Örnek olarak: e-postayla bir talep gelir ve teklife dönüşmesi gerekir.",
       tag: "Örnek senaryo",
       before: {
@@ -689,9 +567,8 @@ const tr: PageDef = {
       t: "rows",
       id: "interne-tools",
       label: "Şirket içi araçlar",
-      note: "Tablo artık yetmediğinde.",
-      h: "Excel listesi gerçek bir araca dönüşsün.",
-      lede: "Bazı iş akışları hiçbir hazır yazılıma uymaz. O zaman kullanıcı başına aylık ücretli bir platform daha eklemek yerine, tam o iş akışı için küçük ve odaklı bir araç geliştiriyoruz. Hazır yazılım çoğu zaman daha iyi bir seçimdir; bunu size önceden söyleriz.",
+      h: "Excel listesi gerçek bir araca dönüşsün",
+      lede: "Bir iş akışı hiçbir hazır yazılıma uymuyorsa, tam o iş için küçük bir araç geliştiriyoruz. Hazır yazılım çoğu zaman daha iyi bir seçimdir; bunu size önceden söyleriz.",
       items: [
         { h: "Yönetim konsolları", p: "Siparişler, istisnalar ve müşteri notları üç sekme yerine tek yerde." },
         { h: "Dashboard'lar", p: "CRM, ERP ve finans sisteminden rakamlar ve uyarılar tek ekranda, elle uğraşmadan." },
@@ -705,42 +582,18 @@ const tr: PageDef = {
         },
       ],
     },
-    {
-      t: "principles",
-      id: "absicherung",
-      label: "Güvenceler",
-      note: "Hata durumu da planlanır.",
-      h: "Bir şey ters giderse neyi önceden planlıyoruz?",
-      lede: "Bir otomasyon, bir şey ters gittiğinde de sakin biçimde çalışmaya devam etmelidir. Bu yüzden hata durumunu en başından planlıyoruz.",
-      items: [
-        { h: "Kayıt.", p: "Her çalışma kaydedilir; ekibiniz ne olduğunu izleyebilir." },
-        { h: "Elle devam etme.", p: "Bir adım aksarsa kayıt kaybolmaz, bir kişiye düşer." },
-        {
-          h: "Planlı veri işleme.",
-          p: "Başlamadan önce verilerin nerede işleneceğini netleştirir ve gerekli sözleşmeleri (veri işleme sözleşmesi) yaparız. Nihai değerlendirmeyi veri koruma sorumlunuz yapar.",
-        },
-        {
-          h: "Bağımlılık değil, teslim.",
-          p: "Dokümantasyon ve varsa kaynak kod ekibinize geçer. Çözümü bizsiz de işletebileceğiniz biçimde kurarız. Nelerin teslim edileceğini başlamadan önce yazılı olarak belirleriz.",
-        },
-      ],
-    },
   ],
   faq: {
     label: "Sık sorulanlar",
-    h: "Süreç otomasyonu hakkında sorular.",
+    h: "Süreç otomasyonu hakkında sorular",
     items: [
       {
         q: "Bunun için YZ gerekir mi?",
         a: "Her zaman değil. Çoğu zaman YZ içermeyen düzgün bir otomasyon yeter. YZ'nin yardımcı olduğu yerde, örneğin belge okumada veya e-posta sıralamada, sonucu bir kişi kontrol eder.",
       },
       {
-        q: "Tipik bir ilk proje nasıl olur?",
-        a: "Etkisi büyük tek bir iş akışı; örneğin teklif hazırlama, e-posta sıralama veya haftalık rapor. Hangisinin önce geleceğini YZ Kontrolü'nde netleştiririz.",
-      },
-      {
         q: "Ücreti ne kadar?",
-        a: "Tanışma görüşmesi ücretsiz ve bağlayıcı değildir. YZ Kontrolü 490 €'dan itibaren (net): 90 dakika uzaktan görüşme ve kısa yazılı rapor, analizden önce NDA. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+        a: "Tanışma görüşmesi ücretsiz ve bağlayıcı değildir. YZ Kontrolü 990 €'dan itibaren (net): 90 dakika uzaktan görüşme ve kısa yazılı rapor, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
       },
       {
         q: "İş akışı sonradan değişirse ne olur?",
@@ -752,14 +605,14 @@ const tr: PageDef = {
       },
       {
         q: "Otomasyonlar nerede çalışır?",
-        a: "Sizde veya AB'deki sunucularda; araca ve verilere bağlı olarak. Bunu başlamadan önce yazılı olarak belirleriz.",
+        a: "Sizde veya AB'deki sunucularda; araca ve verilere bağlı olarak. Gerekli sözleşmeleri (AVV) başlamadan önce yaparız; nihai değerlendirmeyi veri koruma sorumlunuz yapar.",
       },
     ],
   },
   cta: {
     label: "YZ Kontrolü",
     h: "Önce hangi iş akışı hafiflesin?",
-    p: "Birkaç cümleyle anlatın. Tanışma görüşmesinde bir YZ Kontrolü'nün anlamlı olup olmadığını netleştiririz. YZ Kontrolü, otomasyonun karşılığını verip vermeyeceğini gösterir; vermiyorsa bunu da raporda yazarız.",
+    p: "Birkaç cümleyle anlatın. Tanışma görüşmesinde bir YZ Kontrolü'nün anlamlı olup olmadığını netleştiririz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "YZ danışmanlığına dönün", to: "beratung" },
   },

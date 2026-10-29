@@ -22,11 +22,11 @@ const de: PageDef = {
   crumb: "Kontakt",
   hero: {
     eyebrow: "Kontakt",
-    h1: ["Erzählen Sie uns, welcher Ablauf", "Sie bremst.", ""],
+    h1: ["Erzählen Sie uns, welcher Ablauf", "Sie bremst", ""],
     lede: "Drei Sätze genügen: Welcher Ablauf, welche Systeme, was stört heute? Wir antworten persönlich per E-Mail, in der Regel innerhalb weniger Arbeitstage.",
     primary: { label: "Nachricht schreiben", to: "kontakt", hash: "formular" },
     secondary: { label: "KI-Check ansehen", to: "check" },
-    facts: ["Antwort in der Regel innerhalb weniger Arbeitstage", "NDA vor der Analyse", "Kennenlernen kostenlos und unverbindlich"],
+    facts: ["NDA vor der Analyse", "Kennenlernen kostenlos und unverbindlich"],
     media: {
       kind: "svg",
       name: "flow",
@@ -41,8 +41,8 @@ const de: PageDef = {
       id: "formular",
       label: "Nachricht",
       note: "Ein paar Sätze reichen.",
-      h: "Nachricht schreiben.",
-      lede: "Wählen Sie das Thema und beschreiben Sie kurz Ihren Ablauf. Das genügt für eine erste, persönliche Antwort.",
+      h: "Nachricht schreiben",
+      lede: "Thema wählen, Ablauf kurz beschreiben: Das genügt für eine erste Antwort.",
       topics: [
         { value: "ki-check", label: "KI-Check" },
         { value: "beratung", label: "KI-Beratung und KI-Automatisierung" },
@@ -57,8 +57,8 @@ const de: PageDef = {
       id: "ablauf",
       label: "Danach",
       note: "Drei Schritte, ohne Verpflichtung.",
-      h: "Was nach Ihrer Nachricht passiert.",
-      lede: "Sie bekommen eine persönliche Antwort, danach folgt das Kennenlernen. Nach jedem Schritt entscheiden Sie, ob es weitergeht.",
+      h: "Was nach Ihrer Nachricht passiert",
+      lede: "Nach jedem Schritt entscheiden Sie, ob es weitergeht.",
       items: [
         {
           h: "Persönliche Antwort per E-Mail",
@@ -70,22 +70,8 @@ const de: PageDef = {
         },
         {
           h: "Angebot für den KI-Check",
-          p: "Wenn ein KI-Check sinnvoll ist, erhalten Sie von uns ein Angebot: ab 490 € netto, 90 Minuten remote plus schriftlicher Kurzbericht. Der Umfang steht vorab schriftlich fest, die NDA unterzeichnen wir vor der Analyse.",
+          p: "Wenn ein KI-Check sinnvoll ist, erhalten Sie ein Angebot: ab 990 € netto, 90 Minuten remote plus schriftlicher Kurzbericht. Der Umfang steht vorab schriftlich fest, die NDA unterzeichnen wir vor der Analyse.",
         },
-      ],
-    },
-    {
-      t: "situations",
-      id: "anlaesse",
-      label: "Anlässe",
-      note: "Vier typische Anlässe.",
-      h: "Worum Sie uns schreiben können.",
-      lede: "Wählen Sie im Formular das Thema, das am besten passt. Mehrfachauswahl ist möglich.",
-      items: [
-        { h: "Ein Ablauf kostet zu viel Zeit.", p: "Anfragen, Angebote, Termine oder Dokumente laufen von Hand, und Sie möchten wissen, ob sich Automatisierung lohnt: Thema KI-Check." },
-        { h: "Ihr Team soll KI sicher nutzen.", p: "Sie suchen eine Schulung mit Regeln für den Alltag, etwa zu KI-Kompetenz oder Microsoft 365 Copilot: Thema KI-Schulung." },
-        { h: "Sie interessieren sich für OpSo.", p: "Sie möchten die digitale Visitenkarte testen oder haben Fragen zum Stand der App: Thema OpSo." },
-        { h: "Sie möchten Trainerin oder Trainer werden.", p: "Wir bauen ein Netzwerk freiberuflicher KI-Trainerinnen und -Trainer auf. Schreiben Sie uns, wenn Sie mitmachen möchten: Thema Trainerin oder Trainer werden." },
       ],
     },
     {
@@ -93,8 +79,7 @@ const de: PageDef = {
       id: "direkt",
       label: "Direkt",
       note: "Wenn Sie lieber schreiben oder anrufen.",
-      h: "Direkter Kontakt.",
-      lede: "Sie erreichen uns auch ohne Formular, per E-Mail oder Telefon.",
+      h: "Direkter Kontakt",
       items: [
         { h: "E-Mail", p: MAIL, href: { label: "E-Mail schreiben", href: `mailto:${MAIL}` } },
         { h: "Telefon", p: PHONE, href: { label: "Anrufen", href: TEL } },
@@ -107,25 +92,19 @@ const de: PageDef = {
       id: "vertraulichkeit",
       label: "Vertraulichkeit",
       note: "Ihre Angaben bleiben bei uns.",
-      h: "Vertraulich, bevor es konkret wird.",
-      lede: "Vor der Analyse Ihrer Abläufe unterzeichnen wir eine NDA.",
+      h: "Vertraulich, bevor es konkret wird",
       paras: [
-        "Für die erste Nachricht genügt eine grobe Beschreibung. Details besprechen wir erst, wenn die NDA unterzeichnet ist. Bitte senden Sie uns keine Zugangsdaten und keine personenbezogenen Daten Dritter per Formular oder E-Mail.",
-        "Ihre Angaben im Formular verwenden wir nur, um Ihre Anfrage zu beantworten. Mehr dazu steht in der Datenschutzerklärung.",
+        "Für die erste Nachricht genügt eine grobe Beschreibung. Details besprechen wir erst nach unterzeichneter NDA. Bitte senden Sie uns keine Zugangsdaten und keine personenbezogenen Daten Dritter per Formular oder E-Mail.",
       ],
     },
   ],
   faq: {
     label: "Häufige Fragen",
-    h: "Häufige Fragen zum Kontakt.",
+    h: "Häufige Fragen zum Kontakt",
     items: [
       {
         q: "Wie schnell antworten Sie?",
         a: "In der Regel innerhalb weniger Arbeitstage, persönlich per E-Mail.",
-      },
-      {
-        q: "Kostet das Kennenlernen etwas?",
-        a: "Nein. Das Kennenlernen dauert 30 Minuten und ist kostenlos und unverbindlich.",
       },
       {
         q: "Muss ich schon genau wissen, was ich brauche?",
@@ -133,22 +112,18 @@ const de: PageDef = {
       },
       {
         q: "Beraten Sie auch Privatpersonen?",
-        a: "Nein. Unsere Leistungen richten sich nur an Unternehmen. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Nein. Unsere Leistungen richten sich nur an Unternehmen.",
       },
       {
-        q: "Brauche ich vor der ersten Nachricht eine NDA?",
-        a: "Nein. Für die erste Nachricht genügt eine grobe Beschreibung ohne vertrauliche Details. Die NDA unterzeichnen wir vor der Analyse.",
-      },
-      {
-        q: "Was kostet der KI-Check?",
-        a: "Der KI-Check kostet ab 490 € netto zzgl. USt., nur für Unternehmen: 90 Minuten remote plus schriftlicher Kurzbericht. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
+        q: "Was kostet der Einstieg?",
+        a: "Das Kennenlernen (30 Minuten) ist kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto zzgl. USt., nur für Unternehmen: 90 Minuten remote plus schriftlicher Kurzbericht. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
       },
     ],
   },
   cta: {
     label: "KI-Check",
     h: "Lieber erst die Abläufe prüfen lassen?",
-    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt: ab 490 € netto, 90 Minuten remote plus schriftlicher Kurzbericht.",
+    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt. Er kostet ab 990 € netto.",
     primary: { label: "Zum KI-Check", to: "check" },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -165,11 +140,11 @@ const en: PageDef = {
   crumb: "Contact",
   hero: {
     eyebrow: "Contact",
-    h1: ["Tell us which workflow", "slows you down.", ""],
+    h1: ["Tell us which workflow", "slows you down", ""],
     lede: "Three sentences are enough: which workflow, which systems, what is wrong today? We reply personally by email, usually within a few working days.",
     primary: { label: "Write a message", to: "kontakt", hash: "formular" },
     secondary: { label: "See the AI check", to: "check" },
-    facts: ["Usually a reply within a few working days", "NDA before the analysis", "Introductory call free and without obligation"],
+    facts: ["NDA before the analysis", "Introductory call free and without obligation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -184,8 +159,8 @@ const en: PageDef = {
       id: "formular",
       label: "Message",
       note: "A few sentences are enough.",
-      h: "Write a message.",
-      lede: "Choose a topic and briefly describe your workflow. That is enough for a first, personal reply.",
+      h: "Write a message",
+      lede: "Choose a topic, describe your workflow briefly: that is enough for a first reply.",
       topics: [
         { value: "ki-check", label: "AI check" },
         { value: "beratung", label: "AI consulting and AI automation" },
@@ -200,8 +175,8 @@ const en: PageDef = {
       id: "ablauf",
       label: "Next",
       note: "Three steps, without obligation.",
-      h: "What happens after your message.",
-      lede: "You get a personal reply, then an introductory call. After each step, you decide whether to continue.",
+      h: "What happens after your message",
+      lede: "After each step, you decide whether to continue.",
       items: [
         {
           h: "A personal reply by email",
@@ -213,22 +188,8 @@ const en: PageDef = {
         },
         {
           h: "A quote for the AI check",
-          p: "If an AI check makes sense, we send you a quote: from €490 net, 90 minutes remote plus a short written report. The scope is agreed in writing beforehand, and we sign the NDA before the analysis.",
+          p: "If an AI check makes sense, you receive a quote: from €990 net, 90 minutes remote plus a short written report. The scope is agreed in writing beforehand, and we sign the NDA before the analysis.",
         },
-      ],
-    },
-    {
-      t: "situations",
-      id: "anlaesse",
-      label: "Reasons",
-      note: "Four typical reasons.",
-      h: "What you can write to us about.",
-      lede: "Choose the topic in the form that fits best. You can pick more than one.",
-      items: [
-        { h: "A workflow costs too much time.", p: "Enquiries, quotes, appointments or documents run by hand, and you want to know whether automation pays off: topic AI check." },
-        { h: "Your team should use AI safely.", p: "You are looking for training with rules for daily work, such as AI literacy or Microsoft 365 Copilot: topic AI training." },
-        { h: "You are interested in OpSo.", p: "You would like to try the digital business card or have questions about the state of the app: topic OpSo." },
-        { h: "You would like to become a trainer.", p: "We are building a network of freelance AI trainers. Write to us if you would like to take part: topic Becoming a trainer." },
       ],
     },
     {
@@ -236,8 +197,7 @@ const en: PageDef = {
       id: "direkt",
       label: "Direct",
       note: "If you prefer to write or call.",
-      h: "Direct contact.",
-      lede: "You can also reach us without the form, by email or phone.",
+      h: "Direct contact",
       items: [
         { h: "Email", p: MAIL, href: { label: "Write an email", href: `mailto:${MAIL}` } },
         { h: "Phone", p: PHONE, href: { label: "Call us", href: TEL } },
@@ -250,25 +210,19 @@ const en: PageDef = {
       id: "vertraulichkeit",
       label: "Confidentiality",
       note: "What you tell us stays with us.",
-      h: "Confidential before it gets specific.",
-      lede: "Before we analyse your workflows, we sign an NDA.",
+      h: "Confidential before it gets specific",
       paras: [
         "A rough description is enough for the first message. We discuss details only once the NDA is signed. Please do not send us access credentials or third parties' personal data by form or email.",
-        "We use what you enter in the form only to answer your inquiry. You will find more in the privacy policy.",
       ],
     },
   ],
   faq: {
     label: "Frequently asked questions",
-    h: "Frequently asked questions about getting in touch.",
+    h: "Frequently asked questions about getting in touch",
     items: [
       {
         q: "How quickly do you reply?",
         a: "Usually within a few working days, personally by email.",
-      },
-      {
-        q: "Does the introductory call cost anything?",
-        a: "No. It takes 30 minutes and is free and without obligation.",
       },
       {
         q: "Do I need to know exactly what I need?",
@@ -276,22 +230,18 @@ const en: PageDef = {
       },
       {
         q: "Do you also advise private individuals?",
-        a: "No. Our services are for companies only. All prices are net of VAT and for businesses only.",
+        a: "No. Our services are for companies only.",
       },
       {
-        q: "Do I need an NDA before my first message?",
-        a: "No. A rough description without confidential details is enough for the first message. We sign the NDA before the analysis.",
-      },
-      {
-        q: "What does the AI check cost?",
-        a: "The AI check starts at €490 net of VAT, for businesses only: 90 minutes remote plus a short written report. You receive the report even if we do not recommend any automation.",
+        q: "What does it cost to get started?",
+        a: "The introductory call (30 minutes) is free and without obligation. The AI check starts at €990 net of VAT, for businesses only: 90 minutes remote plus a short written report. Credited in full against a follow-up order within 60 days. You receive the report even if we do not recommend any automation.",
       },
     ],
   },
   cta: {
     label: "AI check",
     h: "Would you rather have your workflows checked first?",
-    p: "The AI check shows where automation pays off for you: from €490 net, 90 minutes remote plus a short written report.",
+    p: "The AI check shows where automation pays off for you. It starts at €990 net.",
     primary: { label: "To the AI check", to: "check" },
     secondary: { label: "To AI consulting", to: "beratung" },
   },
@@ -308,11 +258,11 @@ const tr: PageDef = {
   crumb: "İletişim",
   hero: {
     eyebrow: "İletişim",
-    h1: ["Hangi iş akışının", "sizi yavaşlattığını", "anlatın."],
+    h1: ["Hangi iş akışının", "sizi yavaşlattığını", "anlatın"],
     lede: "Üç cümle yeter: hangi iş akışı, hangi sistemler, bugün ne aksıyor? Size e-postayla bizzat yanıt veririz; genellikle birkaç iş günü içinde.",
     primary: { label: "Mesaj yazın", to: "kontakt", hash: "formular" },
     secondary: { label: "YZ Kontrolünü görün", to: "check" },
-    facts: ["Genellikle birkaç iş günü içinde yanıt", "Analizden önce NDA", "Tanışma görüşmesi ücretsiz ve bağlayıcı değil"],
+    facts: ["Analizden önce NDA", "Tanışma görüşmesi ücretsiz ve bağlayıcı değil"],
     media: {
       kind: "svg",
       name: "flow",
@@ -327,8 +277,8 @@ const tr: PageDef = {
       id: "formular",
       label: "Mesaj",
       note: "Birkaç cümle yeterli.",
-      h: "Mesaj yazın.",
-      lede: "Konuyu seçin ve iş akışınızı kısaca anlatın. İlk, kişisel yanıt için bu yeterlidir.",
+      h: "Mesaj yazın",
+      lede: "Konuyu seçin, iş akışınızı kısaca anlatın: ilk yanıt için bu yeterli.",
       topics: [
         { value: "ki-check", label: "YZ Kontrolü" },
         { value: "beratung", label: "Yapay zeka danışmanlığı ve otomasyonu" },
@@ -344,7 +294,7 @@ const tr: PageDef = {
       label: "Sonrası",
       note: "Taahhüt gerektirmeyen üç adım.",
       h: "Mesajınızdan sonra ne olur?",
-      lede: "Önce kişisel bir yanıt alırsınız, ardından tanışma görüşmesi yapılır. Her adımdan sonra devam edip etmeyeceğinize siz karar verirsiniz.",
+      lede: "Her adımdan sonra devam edip etmeyeceğinize siz karar verirsiniz.",
       items: [
         {
           h: "E-postayla kişisel yanıt",
@@ -356,22 +306,8 @@ const tr: PageDef = {
         },
         {
           h: "YZ Kontrolü için teklif",
-          p: "Bir YZ Kontrolü anlamlıysa size teklif sunarız: 490 €'dan başlar (net), 90 dakika uzaktan ve kısa bir yazılı rapor. Kapsam önceden yazılı olarak belirlenir, NDA'yı analizden önce imzalarız.",
+          p: "Bir YZ Kontrolü anlamlıysa size teklif sunarız: 990 €'dan başlar (net), 90 dakika uzaktan ve kısa bir yazılı rapor. Kapsam önceden yazılı olarak belirlenir, NDA'yı analizden önce imzalarız.",
         },
-      ],
-    },
-    {
-      t: "situations",
-      id: "anlaesse",
-      label: "Konular",
-      note: "Dört tipik konu.",
-      h: "Bize hangi konuda yazabilirsiniz?",
-      lede: "Formda size en uygun konuyu seçin. Birden fazla seçebilirsiniz.",
-      items: [
-        { h: "Bir iş akışı çok zaman alıyor.", p: "Talepler, teklifler, randevular ya da belgeler elle yürüyor ve otomasyonun karşılığını verip vermeyeceğini öğrenmek istiyorsunuz: konu YZ Kontrolü." },
-        { h: "Ekibinizin yapay zekayı güvenle kullanmasını istiyorsunuz.", p: "Günlük iş için kurallar içeren bir eğitim arıyorsunuz; örneğin YZ Yetkinliği ya da Microsoft 365 Copilot: konu YZ eğitimi." },
-        { h: "OpSo ilginizi çekiyor.", p: "Dijital kartviziti denemek istiyor ya da uygulamanın durumu hakkında sorularınız var: konu OpSo." },
-        { h: "Eğitmen olmak istiyorsunuz.", p: "Serbest çalışan YZ eğitmenlerinden oluşan bir ağ kuruyoruz. Katılmak isterseniz bize yazın: konu Eğitmen olmak." },
       ],
     },
     {
@@ -379,8 +315,7 @@ const tr: PageDef = {
       id: "direkt",
       label: "Doğrudan",
       note: "Yazmayı ya da aramayı tercih ederseniz.",
-      h: "Doğrudan iletişim.",
-      lede: "Forma gerek kalmadan e-posta veya telefonla da bize ulaşabilirsiniz.",
+      h: "Doğrudan iletişim",
       items: [
         { h: "E-posta", p: MAIL, href: { label: "E-posta yazın", href: `mailto:${MAIL}` } },
         { h: "Telefon", p: PHONE, href: { label: "Arayın", href: TEL } },
@@ -393,25 +328,19 @@ const tr: PageDef = {
       id: "vertraulichkeit",
       label: "Gizlilik",
       note: "Anlattıklarınız bizde kalır.",
-      h: "Ayrıntılara geçmeden önce gizlilik.",
-      lede: "İş akışlarınızı analiz etmeden önce bir gizlilik sözleşmesi (NDA) imzalarız.",
+      h: "Ayrıntılara geçmeden önce gizlilik",
       paras: [
         "İlk mesaj için kabaca bir açıklama yeterli. Ayrıntıları ancak NDA imzalandıktan sonra konuşuruz. Lütfen form ya da e-postayla erişim bilgileri veya üçüncü kişilerin kişisel verilerini göndermeyin.",
-        "Formda yazdıklarınızı yalnızca talebinizi yanıtlamak için kullanırız. Ayrıntılar gizlilik politikasında.",
       ],
     },
   ],
   faq: {
     label: "Sık sorulan sorular",
-    h: "İletişim hakkında sık sorulan sorular.",
+    h: "İletişim hakkında sık sorulan sorular",
     items: [
       {
         q: "Ne kadar hızlı yanıt veriyorsunuz?",
         a: "Genellikle birkaç iş günü içinde, e-postayla ve kişisel olarak.",
-      },
-      {
-        q: "Tanışma görüşmesi ücretli mi?",
-        a: "Hayır. 30 dakika sürer, ücretsizdir ve bağlayıcı değildir.",
       },
       {
         q: "Ne istediğimi tam olarak bilmem gerekiyor mu?",
@@ -419,22 +348,18 @@ const tr: PageDef = {
       },
       {
         q: "Bireylere de danışmanlık veriyor musunuz?",
-        a: "Hayır. Hizmetlerimiz yalnızca şirketlere yöneliktir. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
+        a: "Hayır. Hizmetlerimiz yalnızca şirketlere yöneliktir.",
       },
       {
-        q: "İlk mesajdan önce NDA gerekir mi?",
-        a: "Hayır. İlk mesaj için gizli ayrıntılar içermeyen kaba bir açıklama yeterlidir. NDA'yı analizden önce imzalarız.",
-      },
-      {
-        q: "YZ Kontrolü ne kadar tutar?",
-        a: "YZ Kontrolü 490 €'dan başlar (net, KDV hariç, yalnızca şirketler için): 90 dakika uzaktan ve kısa bir yazılı rapor. Otomasyon önermesek de raporu alırsınız.",
+        q: "Başlamak ne kadar tutar?",
+        a: "Tanışma görüşmesi (30 dakika) ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 €'dan başlar (net, KDV hariç, yalnızca şirketler için): 90 dakika uzaktan ve kısa bir yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
       },
     ],
   },
   cta: {
     label: "YZ Kontrolü",
     h: "Önce iş akışlarınıza mı bakalım?",
-    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir: 490 €'dan başlar (net), 90 dakika uzaktan ve kısa bir yazılı rapor.",
+    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir. 990 €'dan başlar (net).",
     primary: { label: "YZ Kontrolüne", to: "check" },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },

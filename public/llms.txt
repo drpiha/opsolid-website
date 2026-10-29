@@ -6,20 +6,21 @@ Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CA
 
 ## The three pillars
 1. AI automation consulting: process first, then AI. Phone and chat assistants, process automation, Microsoft 365 and document workflows are what the consulting delivers, not separate product lines. Industries: services, hospitality, retail, practices (without health data).
-2. AI training (KI-Schulungen): online, in German and English. A freelance trainer network is still being built; each course is delivered by a trainer we name before booking, or by OpSolid. We issue our own attendance certificate (Teilnahmebescheinigung).
+2. AI training (KI-Schulungen): online, in German and English. Each course is delivered by a trainer we name before booking, or by OpSolid. We issue our own attendance certificate (Teilnahmebescheinigung).
 3. OpSo: our own digital business card product, in its test phase. Android: closed test on Google Play. iPhone: submitted to Apple for review (as of 28.10.2026).
 
 ## How an engagement works
 - Getting to know each other: free, no commitment.
-- AI check (KI-Check): from 490 EUR net. 90 minutes remote plus a short written report (schriftlicher Kurzbericht). NDA before the analysis. You receive the report even if we recommend no automation.
+- AI check (KI-Check): from 990 EUR net. 90 minutes remote plus a short written report (schriftlicher Kurzbericht). NDA before the analysis. You receive the report even if we recommend no automation.
 - Pilot at a fixed price (Pilot zum Festpreis): the price is fixed in writing before the start; no price is published.
 - Operation and extension (Betrieb und Ausbau): monthly, by agreement; no price is published.
 
 ## Published prices
 All prices are net (netto), plus VAT, for businesses only. These are the only published prices.
-- AI check (KI-Check): from 490 EUR net.
-- AI literacy basics (KI-Kompetenz Basis): 1,490 EUR net, half day, up to 15 people, per team.
-- Copilot practice day (Copilot-Praxistag): from 2,400 EUR net, 1 day, up to 12 people.
+- AI check (KI-Check): from 990 EUR net. Credited in full against a follow-up order within 60 days.
+- AI literacy basics (KI-Kompetenz Basis): from 1,790 EUR net per team, half day, 10 people included, each additional person 90 EUR (up to 15).
+- Copilot practice day (Copilot-Praxistag): from 2,900 EUR net per team, 1 day, 10 people included, each additional person 150 EUR (up to 12).
+- AI agents and workflow automation course (KI-Agenten & Workflow-Automatisierung): from 5,900 EUR net per team, 2 days, 8 people included, each additional person 290 EUR (up to 10).
 
 Funding: We check with you which funding fits your project.
 

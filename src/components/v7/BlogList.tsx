@@ -37,7 +37,7 @@ export const BLOG_T: Record<
   de: {
     eyebrow: "Journal",
     h1: ["Automatisierung und KI", "in der Praxis"],
-    lede: "Kurze Texte darüber, was bei Automatisierung und KI im Alltag funktioniert und worauf es im laufenden Betrieb ankommt.",
+    lede: "Kurze Texte dazu, was im Alltag funktioniert und im laufenden Betrieb zählt.",
     title: "Journal: Automatisierung und KI in der Praxis",
     desc: "Das OpSolid Journal: kurze Texte zu KI-Automatisierung, Integration und Betrieb. Was im Alltag funktioniert und worauf Unternehmen achten sollten.",
     frame: "Beiträge",
@@ -49,7 +49,7 @@ export const BLOG_T: Record<
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
-      p: "Schreiben Sie uns kurz, worum es geht. Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist. Der KI-Check kostet ab 490 € netto.",
+      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet ab 490 € netto.",
       primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Den KI-Check ansehen", to: "check" },
     },
@@ -57,7 +57,7 @@ export const BLOG_T: Record<
   en: {
     eyebrow: "Journal",
     h1: ["Automation and AI", "in practice"],
-    lede: "Short texts on what works in automation and AI in daily business, and what matters once a system is in use.",
+    lede: "Short texts on what works in daily business and what matters once a system is in use.",
     title: "Journal: automation and AI in practice",
     desc: "The OpSolid journal: short texts on AI automation, integration and operations. What works in daily business and what companies should look out for.",
     frame: "Entries",
@@ -69,7 +69,7 @@ export const BLOG_T: Record<
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
-      p: "Tell us briefly what it is about. In an introductory call, we clarify whether an AI check makes sense. The AI check starts at €490 net.",
+      p: "In an introductory call, free and without obligation, we clarify whether an AI check makes sense. The AI check starts at €490 net.",
       primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "See the AI check", to: "check" },
     },
@@ -77,7 +77,7 @@ export const BLOG_T: Record<
   tr: {
     eyebrow: "Notlar",
     h1: ["Uygulamada otomasyon ve YZ:", "sahadan notlar"],
-    lede: "Otomasyon ve yapay zekada günlük işte neyin işe yaradığını, bir sistem kullanıma girdikten sonra nelerin önemli olduğunu anlatan kısa yazılar.",
+    lede: "Günlük işte neyin işe yaradığını ve sistem kullanıma girdikten sonra nelerin önemli olduğunu anlatan kısa yazılar.",
     title: "Notlar: uygulamada otomasyon ve YZ",
     desc: "OpSolid notları: YZ otomasyonu, entegrasyon ve işletme üzerine kısa yazılar. Günlük işte neyin işe yaradığı ve şirketlerin nelere dikkat etmesi gerektiği.",
     frame: "Yazılar",
@@ -89,7 +89,7 @@ export const BLOG_T: Record<
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
-      p: "Konuyu bize kısaca yazın. Tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını birlikte netleştiririz. YZ Kontrolü 490 €'dan başlar (net).",
+      p: "Ücretsiz ve bağlayıcı olmayan tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolü 490 €'dan başlar (net).",
       primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolünü görün", to: "check" },
     },
