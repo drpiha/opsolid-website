@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 import { contents } from "@/content";
-import type { L3 } from "@/content/v4/types";
+import { LegalLayout } from "@/components/v7/LegalPage";
+import { LABEL } from "@/content/v7/site";
+import { href } from "@/lib/v7-routes";
+import type { L3 } from "@/lib/v7-routes";
 import { SITE_CONFIG } from "@/lib/constants";
-import styles from "./legal.module.css";
 
 // Server-rendered from the content data: no client content bundle on this route.
 const LABELS: Record<L3, { legal: string; notice: string; owner: string; email: string; phone: string; phoneTr: string }> = {
@@ -38,17 +40,17 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
       body: (
         <p>
           {L.email}:{" "}
-          <a href={`mailto:${SITE_CONFIG.email}`} className="v4-link">
+          <a href={`mailto:${SITE_CONFIG.email}`} >
             {SITE_CONFIG.email}
           </a>
           <br />
           {L.phone}:{" "}
-          <a href="tel:+4917631020654" className="v4-link">
+          <a href="tel:+4917631020654" >
             +49 176 31020654
           </a>
           <br />
           {L.phoneTr}:{" "}
-          <a href="tel:+905335717885" className="v4-link">
+          <a href="tel:+905335717885" >
             +90 533 571 78 85
           </a>
         </p>
@@ -75,32 +77,24 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
   ];
 
   return (
-    <div className="v4-page">
-      <section className="v4-sec is-flow" aria-labelledby="impressum-title" style={{ paddingTop: "clamp(112px, 16vh, 168px)" }}>
-        <div className="v4-in">
-          <div className="v4-col is-wide">
-            <p className="v4-eyebrow">{L.legal}</p>
-            <h1 id="impressum-title" className="v4-h1" style={{ fontSize: "clamp(2rem, 4.6vw, 3.8rem)" }}>
-              {s.title}
-            </h1>
-            <div className={styles.notice} role="note" aria-label={L.notice}>
-              <p className="v4-eyebrow">{L.notice}</p>
-              <p>{s.notice}</p>
-            </div>
-
-            <ol className={`v4-rows ${styles.list}`}>
-              {items.map((item) => (
-                <li key={item.heading} className="v4-row">
-                  <div className="v4-row-in">
-                    <h2 className="v4-row-h">{item.heading}</h2>
-                    <div className={styles.body}>{item.body}</div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-    </div>
+    <LegalLayout
+      locale={locale}
+      crumbs={[
+        { name: LABEL[locale].home, path: href("home", locale), key: "home" },
+        { name: LABEL[locale].impressum, path: href("impressum", locale), key: "impressum" },
+      ]}
+      eyebrow={L.legal}
+      title={s.title}
+      noticeLabel={L.notice}
+      notice={s.notice}
+      frameLabel={L.legal}
+    >
+      {items.map((item) => (
+        <section key={item.heading}>
+          <h2>{item.heading}</h2>
+          {item.body}
+        </section>
+      ))}
+    </LegalLayout>
   );
 }

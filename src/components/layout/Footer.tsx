@@ -3,9 +3,11 @@
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
-import { FxToggle } from "@/components/v4/FxToggle";
+import { FxToggle } from "@/components/layout/FxToggle";
 import { SITE_CONFIG, formatStand } from "@/lib/constants";
-import { Logo } from "@/components/v4/Logo";
+import { Logo } from "@/components/v7/Logo";
+import { V7Footer } from "@/components/v7/Footer";
+import { isV4Path } from "@/lib/v4";
 
 type L3 = { de: string; en: string; tr: string };
 const L = (de: string, en: string, tr: string): L3 => ({ de, en, tr });
@@ -60,7 +62,7 @@ const NOT_TOPSOLID = L(
 );
 const STAND = L("Stand", "Updated", "Güncelleme");
 
-export function Footer() {
+function AppFooter() {
   const pathname = usePathname();
   const { locale } = useLocale();
   const loc: keyof L3 = locale === "de" || locale === "tr" ? locale : "en";
@@ -117,4 +119,12 @@ export function Footer() {
       </div>
     </footer>
   );
+}
+
+/** Marketing paths render the v7 footer on ink; app surfaces keep the old one. */
+export function Footer() {
+  const pathname = usePathname();
+  const { locale } = useLocale();
+  if (isV4Path(pathname)) return <V7Footer locale={locale === "de" || locale === "tr" ? locale : "en"} />;
+  return <AppFooter />;
 }

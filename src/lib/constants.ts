@@ -4,7 +4,7 @@
 // =============================================================================
 
 /** Date of the last substantive content update; drives the visible "Stand:" line. */
-export const SITE_UPDATED_ISO = "2026-10-21";
+export const SITE_UPDATED_ISO = "2026-10-29";
 
 /** "Oktober 2026" / "October 2026" / "Ekim 2026". */
 export function formatStand(locale: string): string {
@@ -15,9 +15,9 @@ export function formatStand(locale: string): string {
 
 export const SITE_CONFIG = {
   name: "OpSolid",
-  tagline: "KI-Agenten, Websites und Automatisierung",
+  tagline: "KI-Automatisierung und KI-Beratung für Unternehmen",
   description:
-    "OpSolid entwickelt KI-Agenten, Websites und Prozessautomatisierung für kleine und mittlere Unternehmen: praxisnah, dokumentiert, datenschutzbewusst.",
+    "OpSolid berät Unternehmen bei KI-Automatisierung: vom KI-Check über den Pilot zum Festpreis bis zum Betrieb. Dazu KI-Schulungen und OpSo, unser digitales Kartenprodukt.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   phone: "+49 176 31020654",

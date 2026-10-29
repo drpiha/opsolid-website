@@ -8,21 +8,34 @@ import { LOCALES, PUBLIC_LOCALES } from "@/lib/i18n";
 
 const V4_FIRST_SEGMENTS = new Set([
   "",
-  "agents",
-  "websites",
-  "leistungen",
+  // German route folders (also the DE public slugs)
   "ki-beratung",
-  "prozessautomatisierung",
-  "microsoft-365-automatisierung",
-  "interne-tools",
   "ki-schulungen",
-  "ai-automation-check",
   "opso",
+  "projekte",
   "ueber-uns",
   "contact",
   "blog",
   "impressum",
   "privacy",
+  // EN / TR public slugs (middleware rewrites them to the folders above)
+  "ai-automation-consulting",
+  "ai-training",
+  "projects",
+  "about",
+  "yapay-zeka-danismanligi",
+  "yapay-zeka-egitimleri",
+  "projeler",
+  "hakkimizda",
+  "iletisim",
+  // Retired v4 paths: they 301 in middleware, listed so a stray render still gets the marketing shell
+  "agents",
+  "websites",
+  "leistungen",
+  "prozessautomatisierung",
+  "microsoft-365-automatisierung",
+  "interne-tools",
+  "ai-automation-check",
 ]);
 
 /**

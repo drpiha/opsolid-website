@@ -13,11 +13,13 @@ import { LOCALES } from "@/lib/i18n";
 // App routes live under /:locale/… (e.g. /de/card/edit/<id>?t=<token>), so each
 // is listed with every locale prefix as well as bare. No trailing slash on
 // dashboard/onboarding so their index pages match too.
-const LOCALIZED_PRIVATE_PATHS = ["/card/edit/", "/card/manage/", "/onboarding", "/dashboard"];
+const LOCALIZED_PRIVATE_PATHS = ["/card/edit/", "/card/manage/", "/onboarding", "/dashboard", "/login", "/magic-link"];
+// "/de" is not a prefix any more for the German home ("/"), but /de/<private> still exists.
 const PRIVATE_PATHS = [
   "/api/",
   "/admin/",
   "/dev/",
+  "/voice/",
   ...LOCALIZED_PRIVATE_PATHS,
   ...LOCALES.flatMap((locale) => LOCALIZED_PRIVATE_PATHS.map((path) => `/${locale}${path}`)),
 ];
@@ -33,6 +35,7 @@ const AI_BOTS = [
   "Perplexity-User", // user-triggered fetch
   "Google-Extended", // Gemini training/grounding (no effect on Search)
   "Applebot-Extended", // Apple training (no effect on Siri/Spotlight)
+  "Bingbot", // Bing search (feeds Copilot and ChatGPT-adjacent indexes)
 ];
 
 export default function robots(): MetadataRoute.Robots {

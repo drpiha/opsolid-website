@@ -3,13 +3,20 @@ import type { NextRequest } from "next/server";
 import {
   LOCALES,
   PUBLIC_LOCALES,
-  ROUTING_DEFAULT_LOCALE,
   isLocale,
   type Locale,
 } from "@/lib/i18n";
+import type { L3 } from "@/lib/v7-routes";
 import { lookupCountryViaApi, resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
 import { isV4Path } from "@/lib/v4";
+import {
+  foreignSlugTarget,
+  internalToPublic,
+  isL3,
+  publicToInternal,
+  withLocalePrefix,
+} from "@/lib/v7-routes";
 
 /** Origin of a Sentry DSN baked in at build time ("" when unset or malformed). */
 function sentryOrigin(dsn: string | undefined): string {
@@ -119,9 +126,14 @@ function maybeAttachGeoDebug(req: NextRequest, res: NextResponse, r: LocaleResol
   );
 }
 
-/** Delete every legacy locale cookie so none can override the current one. */
-function clearLegacyLocaleCookies(res: NextResponse) {
+/**
+ * Expire the legacy locale cookies the request actually carries, so none can
+ * override the current one. A request without them gets no Set-Cookie at all
+ * (keeps responses cache-friendly and quiet).
+ */
+function clearLegacyLocaleCookies(req: NextRequest, res: NextResponse) {
   for (const name of LEGACY_COOKIE_NAMES) {
+    if (!req.cookies.has(name)) continue;
     // Don't clobber a value this same response is deliberately setting.
     if (res.cookies.get(name)) continue;
     res.cookies.set(name, "", { path: "/", maxAge: 0, sameSite: "lax" });
@@ -168,9 +180,37 @@ function isLocalDev(host: string): boolean {
   return false;
 }
 
+/**
+ * Marker for the second pass. After a middleware rewrite ("/" → "/de", "/en/ai-training" →
+ * "/en/ki-schulungen") Next runs the middleware once more for the rewritten path, which would
+ * turn the rewrite target into a redirect ("/de" → "/") and loop. The first pass stamps the
+ * request with this per-process random token; a request that carries it is passed through.
+ * A client cannot guess the token, so it cannot skip the routing rules.
+ */
+const REWRITE_TOKEN = crypto.randomUUID();
+const REWRITE_HEADER = "x-opsolid-rewritten";
+
 export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const host = (req.headers.get("host") || "").toLowerCase();
+
+  if (req.headers.get(REWRITE_HEADER) === REWRITE_TOKEN) {
+    return NextResponse.next({ request: { headers: marketingPassHeaders(req) } });
+  }
+
+  // -- www → apex ------------------------------------------------------------
+  // First of all, so www never reaches the custom-domain resolver or the locale
+  // logic. One permanent hop to the canonical host, path and query kept.
+  // App surfaces (/api/*, /voice/*: webhooks, POSTs) keep their pre-v7 behaviour on www, and only
+  // GET/HEAD are redirected (a 301 turns a POST into a GET).
+  if (
+    host === "www.opsolid.de" &&
+    (req.method === "GET" || req.method === "HEAD") &&
+    !pathname.startsWith("/api/") &&
+    !pathname.startsWith("/voice")
+  ) {
+    return NextResponse.redirect(`https://opsolid.de${pathname}${search}`, 301);
+  }
 
   // Pages only answer GET/HEAD. The app has no Server Actions and no page-level
   // POST handler, so refusing other methods here keeps request bodies away
@@ -305,30 +345,74 @@ export async function middleware(req: NextRequest) {
   // are only written in de/en/tr.
   const isPartialLocale = hasLocale && !PUBLIC_LOCALES.includes(firstSegment as Locale);
 
-  // Retired-route 301 redirects. Checked after the locale split so both
-  // /solutions and /en/solutions resolve to the right target with the locale
-  // prefix preserved (a partial locale goes straight to /en, every target is a
-  // marketing page). A locale-less retired URL always lands on the default
-  // locale: a permanent redirect must not depend on request headers.
+  // Retired-route 301 redirects (v4 pages and older URLs). Checked after the locale split so both
+  // /solutions and /en/solutions resolve to the right target. Targets are internal German route
+  // paths; internalToPublic() turns them into the locale's public slug so every redirect is ONE hop.
+  // A partial locale goes to /en (the marketing pages only exist in de/en/tr); a locale-less retired
+  // URL always lands on the default locale: a permanent redirect must not depend on request headers.
   const retiredTarget = getRetiredRedirectTarget(pathWithoutLocale);
   if (retiredTarget !== null) {
-    const localeForRedirect: Locale = !hasLocale
-      ? ROUTING_DEFAULT_LOCALE
-      : isPartialLocale && isV4Path(retiredTarget)
-        ? "en"
-        : (firstSegment as Locale);
+    const targetLocale: L3 = !hasLocale
+      ? "de"
+      : isL3(firstSegment)
+        ? firstSegment
+        : "en";
+    const [targetPath, targetHash] = internalToPublic(targetLocale, retiredTarget).split("#");
     const url = req.nextUrl.clone();
-    url.pathname =
-      retiredTarget === "/" ? `/${localeForRedirect}` : `/${localeForRedirect}${retiredTarget}`;
+    url.pathname = withLocalePrefix(targetLocale, targetPath);
+    url.hash = targetHash ? `#${targetHash}` : "";
     const response = NextResponse.redirect(url, 301);
-    clearLegacyLocaleCookies(response);
+    clearLegacyLocaleCookies(req, response);
     return response;
   }
 
   if (!hasLocale) {
-    // Root and other locale-less URLs: 307 (never cached as permanent) to the
-    // resolved locale. Nothing is persisted here; only an explicit language
-    // switch sets the cookie (LocaleContext.setLocale).
+    // Root: the German home is served AT "/" (200). Only an explicit language
+    // choice (our cookie, en/tr) redirects (307, per visitor, never cached).
+    // Everybody else gets the German page plus a language hint derived from the
+    // country (x-opsolid-suggest); there is no geo redirect at "/".
+    if (pathname === "/") {
+      const cookieValue = req.cookies.get(COOKIE_NAME)?.value;
+      if (cookieValue === "en" || cookieValue === "tr") {
+        const url = req.nextUrl.clone();
+        url.pathname = `/${cookieValue}`;
+        const response = NextResponse.redirect(url, 307);
+        response.headers.set("Vary", "Cookie");
+        response.headers.set("Cache-Control", "private, no-store");
+        clearLegacyLocaleCookies(req, response);
+        return response;
+      }
+      // An explicit German choice (cookie "de") never gets a hint, and needs no geo lookup.
+      const resolution =
+        cookieValue === "de"
+          ? null
+          : await resolveLocale({
+              cookie: undefined,
+              header: (name) => req.headers.get(name),
+              lookupCountry: (ip) => lookupCountryFromIp(ip, req),
+            });
+      // "" for DACH and for an unknown country; "en" / "tr" otherwise.
+      const suggest =
+        resolution && (resolution.locale === "en" || resolution.locale === "tr") ? resolution.locale : "";
+      const url = req.nextUrl.clone();
+      url.pathname = "/de";
+      const response = NextResponse.rewrite(url, {
+        request: { headers: marketingHeaders(req, "/de" + search, "de", "/", suggest) },
+      });
+      response.headers.set("Content-Security-Policy", V4_CSP);
+      // "/" answers 307 or 200 by cookie and carries a country-based hint: no shared cache.
+      response.headers.set("Vary", "Cookie");
+      // The hint depends on the country, so "/" must never sit in a shared cache. Next may replace
+      // Vary on rendered pages, so say it explicitly.
+      response.headers.set("Cache-Control", "private, no-cache");
+      if (resolution) maybeAttachGeoDebug(req, response, resolution);
+      clearLegacyLocaleCookies(req, response);
+      return response;
+    }
+
+    // Other locale-less URLs: 307 (never cached as permanent) to the resolved locale's
+    // public slug (/ki-beratung → /en/ai-automation-consulting). Nothing is persisted here; only an
+    // explicit language switch sets the cookie (LocaleContext.setLocale).
     const resolution = await resolveLocale({
       cookie: req.cookies.get(COOKIE_NAME)?.value,
       header: (name) => req.headers.get(name),
@@ -336,49 +420,120 @@ export async function middleware(req: NextRequest) {
     });
     const { locale } = resolution;
     const url = req.nextUrl.clone();
-    url.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
+    if (isL3(locale)) {
+      const slug = foreignSlugTarget(locale, pathname);
+      url.pathname = withLocalePrefix(locale, slug ?? pathname);
+    } else {
+      url.pathname = `/${locale}${pathname}`;
+    }
     const response = NextResponse.redirect(url, 307);
     // The answer depends on the cookie and on the client's country (IP or geo header), so no shared cache.
     response.headers.set("Vary", "Cookie");
     response.headers.set("Cache-Control", "private, no-store");
     maybeAttachGeoDebug(req, response, resolution);
-    clearLegacyLocaleCookies(response);
+    clearLegacyLocaleCookies(req, response);
+    return response;
+  }
+
+  // The German home lives at "/": /de and /de/ are permanent aliases of it.
+  if (firstSegment === "de" && pathWithoutLocale === "/") {
+    // Rewrite pass of "/" (the first pass stamped x-public-path "/"): render it. This keeps a
+    // re-instantiated middleware module (different REWRITE_TOKEN) from answering "/" with a
+    // permanent self-redirect. A client spoofing the header only gets the German page at /de.
+    if (req.headers.get("x-public-path") === "/") {
+      return NextResponse.next({ request: { headers: marketingPassHeaders(req) } });
+    }
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    const response = NextResponse.redirect(url, 308);
+    clearLegacyLocaleCookies(req, response);
     return response;
   }
 
   // Marketing pages under a partial locale (/es, /ar/agents, …) would render
-  // the English copy with lang="es" / dir="rtl": send them to the /en page.
-  // Card surfaces (/c/*) never reach this (excluded by the matcher).
+  // the English copy with lang="es" / dir="rtl": send them to the /en page
+  // (its public slug). Card surfaces (/c/*) never reach this (excluded by the matcher).
   if (isPartialLocale && isV4Path(pathname)) {
+    const slug = foreignSlugTarget("en", pathWithoutLocale);
     const url = req.nextUrl.clone();
-    url.pathname = pathWithoutLocale === "/" ? "/en" : `/en${pathWithoutLocale}`;
+    url.pathname = withLocalePrefix("en", slug ?? pathWithoutLocale);
     const response = NextResponse.redirect(url, 301);
-    clearLegacyLocaleCookies(response);
+    clearLegacyLocaleCookies(req, response);
     return response;
   }
 
-  // Forward pathname as header so server components can read it
-  const requestHeaders = new Headers(req.headers);
-  requestHeaders.set("x-pathname", pathname + search);
-  requestHeaders.set("x-locale", firstSegment);
-  // Next 14 reads a nonce from an inbound CSP header; a client must never be
-  // able to supply one.
-  requestHeaders.delete("content-security-policy");
-  requestHeaders.delete("content-security-policy-report-only");
+  let internalPath = pathname;
+  if (isL3(firstSegment)) {
+    // A v7 page path that belongs to another locale (/en/ki-beratung, /tr/ai-training) → 301 to this
+    // locale's own public slug.
+    const foreign = foreignSlugTarget(firstSegment, pathWithoutLocale);
+    if (foreign !== null) {
+      const url = req.nextUrl.clone();
+      url.pathname = withLocalePrefix(firstSegment, foreign);
+      const response = NextResponse.redirect(url, 301);
+      clearLegacyLocaleCookies(req, response);
+      return response;
+    }
+    // This locale's public slug (/en/ai-training) → the German route folder that renders it.
+    const internal = publicToInternal(firstSegment, pathWithoutLocale);
+    if (internal !== null) {
+      internalPath = internal === "/" ? `/${firstSegment}` : `/${firstSegment}${internal}`;
+    }
+  }
 
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
-  if (isV4Path(pathname)) response.headers.set("Content-Security-Policy", V4_CSP);
+  // Forward the internal path and the browser-visible path as headers so server components can read them
+  const requestHeaders = marketingHeaders(req, internalPath + search, firstSegment, pathname, "");
+
+  const response =
+    internalPath === pathname
+      ? NextResponse.next({ request: { headers: requestHeaders } })
+      : NextResponse.rewrite(Object.assign(req.nextUrl.clone(), { pathname: internalPath }), {
+          request: { headers: requestHeaders },
+        });
+  if (isV4Path(internalPath)) response.headers.set("Content-Security-Policy", V4_CSP);
 
   // NOTE: we deliberately do NOT persist the locale here. The cookie is written
-  // only on a confident geo redirect (above) or an explicit switcher choice
-  // (LocaleContext.setLocale). Auto-saving whatever /:locale the visitor happens
-  // to be viewing is exactly what let a broken-geo /en visit pin everyone to
-  // English — so being on a prefixed URL no longer writes the cookie, and a
-  // bare "/" visit always re-detects. Legacy cookies are still swept so stale
-  // pins from older logic disappear on the very next page load.
-  clearLegacyLocaleCookies(response);
+  // only on an explicit switcher choice (LocaleContext.setLocale). Auto-saving
+  // whatever /:locale the visitor happens to be viewing is exactly what let a
+  // broken-geo /en visit pin everyone to English, so a bare "/" visit always
+  // re-detects. Legacy cookies are still swept (only when the request carries
+  // them) so stale pins from older logic disappear on the next page load.
+  clearLegacyLocaleCookies(req, response);
 
   return response;
+}
+
+/**
+ * Request headers for the rendering pass. x-pathname is the INTERNAL path (what isV4Path and the
+ * layout's lang logic read), x-public-path is the path the browser shows (language switcher, active
+ * nav), x-opsolid-suggest is the language hint of the German home ("en" | "tr" | ""). Client-supplied
+ * copies of our headers and any CSP header are dropped.
+ */
+function marketingHeaders(
+  req: NextRequest,
+  internalPathWithSearch: string,
+  locale: string,
+  publicPath: string,
+  suggest: string,
+): Headers {
+  const h = new Headers(req.headers);
+  h.set("x-pathname", internalPathWithSearch);
+  h.set("x-locale", locale);
+  h.set("x-public-path", publicPath);
+  h.set("x-opsolid-suggest", suggest);
+  h.set(REWRITE_HEADER, REWRITE_TOKEN);
+  // Next 14 reads a nonce from an inbound CSP header; a client must never be
+  // able to supply one.
+  h.delete("content-security-policy");
+  h.delete("content-security-policy-report-only");
+  return h;
+}
+
+/** Second pass: keep the headers of the first pass, drop the token again. */
+function marketingPassHeaders(req: NextRequest): Headers {
+  const h = new Headers(req.headers);
+  h.delete(REWRITE_HEADER);
+  return h;
 }
 
 export const config = {

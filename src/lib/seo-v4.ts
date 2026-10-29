@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SITE_CONFIG, SITE_UPDATED_ISO } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
-import type { L3 } from "@/content/v4/types";
+import type { L3 } from "@/lib/v7-routes";
 
 /** Narrow any route param to one of the three public locales (others render EN). */
 export function pickLocale(raw: string | undefined): L3 {
@@ -14,15 +14,15 @@ export const OG_LOCALE: Record<L3, string> = { de: "de_DE", en: "en_US", tr: "tr
 /** Share card (src/lib/og-card.tsx) size and per-locale tagline: the home-page title of each locale. */
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_TAGLINE: Record<L3, string> = {
-  de: "KI-Agenten, Websites und Automatisierung",
-  en: "AI agents, websites and automation",
-  tr: "YZ asistanları, web siteleri ve otomasyon",
+  de: "KI-Automatisierung und KI-Beratung für Unternehmen",
+  en: "AI automation consulting for companies",
+  tr: "Şirketler için yapay zeka otomasyonu ve danışmanlığı",
 };
-/** Share-card claim: the home hero headline of each locale. */
+/** Share-card claim: the home hero headline of each locale (v7: "Erst der Prozess. Dann die KI."). */
 export const OG_CLAIM: Record<L3, string> = {
-  de: "Weniger Routine. Mehr Zeit für Ihre Kunden.",
-  en: "Less routine. More time for your customers.",
-  tr: "Daha az rutin. Müşterilere daha çok zaman.",
+  de: "Erst der Prozess. Dann die KI.",
+  en: "Process first. Then AI.",
+  tr: "Önce süreç. Sonra yapay zeka.",
 };
 export function ogAlt(locale: L3): string {
   return `OpSolid · ${OG_TAGLINE[locale]} · ${OG_CLAIM[locale]}`;

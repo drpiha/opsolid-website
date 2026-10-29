@@ -2,52 +2,38 @@
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
 import NextLink from "next/link";
-import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { useAuthState } from "@/components/layout/useAuthState";
 import { AccountMenu } from "@/components/layout/AccountMenu";
 import { isV4Path } from "@/lib/v4";
 import { stripLocaleFromPath, withLocale } from "@/lib/i18n";
-import { Logo } from "@/components/v4/Logo";
+import { Logo } from "@/components/v7/Logo";
+import { V7Header } from "@/components/v7/Header";
+import { href as pageHref, type L3 as V7Locale } from "@/lib/v7-routes";
+import { LABEL, NAV_KEYS, NAV_LABEL } from "@/content/v7/site";
 
 type L3 = { de: string; en: string; tr: string };
-type NavItem = { key: string; href: string; match: RegExp; label: L3 };
 
 /** Class join for the header: v4 classes never conflict, so tailwind-merge (cn) stays out of the marketing bundle. */
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ");
 
-// v4 primary navigation. The service pages (Prozessautomatisierung,
-// Microsoft 365, Interne Tools, KI-Beratung) sit under "Leistungen".
-const NAV_ITEMS: NavItem[] = [
-  { key: "agents", href: "/agents", match: /\/agents(\/|$)/, label: { de: "KI-Agenten", en: "AI agents", tr: "YZ asistanları" } },
-  { key: "websites", href: "/websites", match: /\/websites(\/|$)/, label: { de: "Websites", en: "Websites", tr: "Web siteleri" } },
-  {
-    key: "services",
-    href: "/leistungen",
-    match: /\/(leistungen|ki-beratung|prozessautomatisierung|microsoft-365-automatisierung|interne-tools)(\/|$)/,
-    label: { de: "Leistungen", en: "Services", tr: "Hizmetler" },
-  },
-  { key: "check", href: "/ai-automation-check", match: /\/ai-automation-check/, label: { de: "KI-Check", en: "AI Check", tr: "YZ Kontrolü" } },
-  { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, label: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
-  { key: "opso", href: "/opso", match: /\/opso(\/|$)/, label: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
-  { key: "about", href: "/ueber-uns", match: /\/ueber-uns/, label: { de: "Über OpSolid", en: "About", tr: "Hakkımızda" } },
-];
+// App surfaces show the same primary navigation as the v7 marketing header (public, localized URLs), so
+// nothing here links to a retired page.
+const navItems = (l: V7Locale) => NAV_KEYS.map((k) => ({ key: k, href: pageHref(k, l), label: NAV_LABEL[l][k] ?? LABEL[l][k] }));
 
-// One CTA, one target on desktop and in the mobile sheet: the KI-Check is the entry offer, like every
-// in-page "Mit dem KI-Check starten" button.
-const CTA: L3 = { de: "KI-Check starten", en: "Start the AI Check", tr: "YZ Kontrolüyle başlayın" };
-const CTA_HREF = "/ai-automation-check";
+// One CTA, one target on desktop and in the mobile sheet: the KI-Check, the entry offer.
+const CTA: L3 = { de: "KI-Check anfragen", en: "Request an AI check", tr: "YZ Kontrolü isteyin" };
 const CONTACT: L3 = { de: "Kontakt", en: "Contact", tr: "İletişim" };
 const MENU: L3 = { de: "Menü", en: "Menu", tr: "Menü" };
 const CLOSE: L3 = { de: "Menü schließen", en: "Close menu", tr: "Menüyü kapat" };
-const NAV_LABEL: L3 = { de: "Hauptnavigation", en: "Main", tr: "Ana menü" };
+const NAV_ARIA: L3 = { de: "Hauptnavigation", en: "Main", tr: "Ana menü" };
 const LANG_LABEL: L3 = { de: "Sprache", en: "Language", tr: "Dil" };
 
 const VISIBLE_LOCALES: (keyof L3)[] = ["de", "en", "tr"];
 const LOCALE_LABELS: L3 = { de: "DE", en: "EN", tr: "TR" };
-// Accessible names keep the visible abbreviation (label in name) and add the language's own name.
-const LOCALE_NAMES: L3 = { de: "Deutsch (DE)", en: "English (EN)", tr: "Türkçe (TR)" };
+// Tooltip only: the accessible name stays the visible abbreviation (WCAG 2.5.3 label in name).
+const LOCALE_NAMES: L3 = { de: "Deutsch", en: "English", tr: "Türkçe" };
 
 /**
  * Language switch as real links (crawlable alternates, Tab/Enter like any link). A plain click goes through
@@ -70,7 +56,7 @@ function LangLinks({ pathname, current, onPick }: { pathname: string; current: s
           prefetch={false}
           hrefLang={l}
           lang={l}
-          aria-label={LOCALE_NAMES[l]}
+          title={LOCALE_NAMES[l]}
           aria-current={l === current ? "true" : undefined}
           onClick={(e) => pick(e, l)}
           className={cx("v4-lang-chip", l === current && "is-active")}
@@ -82,7 +68,7 @@ function LangLinks({ pathname, current, onPick }: { pathname: string; current: s
   );
 }
 
-export function Header() {
+function AppHeader() {
   const pathname = usePathname();
   const { locale, setLocale } = useLocale();
   const [open, setOpen] = useState(false);
@@ -141,23 +127,22 @@ export function Header() {
 
   if (pathname && /\/card\/edit\//.test(pathname)) return null;
   const isOpsoPage = /\/opso\/?$/.test(pathname || "");
+  const NAV_ITEMS = navItems(loc);
+  const CTA_HREF = `${pageHref("kontakt", loc)}?anliegen=ki-check`;
 
   return (
     <header className={cx("v4-header", scrolled && "is-scrolled", !v4 && "is-app")} role="banner">
       <div className="v4-header-in">
-        <Link href="/" className="v4-brand" aria-label="OpSolid">
+        <NextLink href={pageHref("home", loc)} className="v4-brand" aria-label="OpSolid">
           <Logo />
-        </Link>
+        </NextLink>
 
-        <nav className="v4-nav" aria-label={NAV_LABEL[loc]}>
-          {NAV_ITEMS.map((n) => {
-            const active = n.match.test(pathname || "");
-            return (
-              <Link key={n.key} href={n.href} className={cx("v4-nav-link", active && "is-active")} aria-current={active ? "page" : undefined}>
-                {n.label[loc]}
-              </Link>
-            );
-          })}
+        <nav className="v4-nav" aria-label={NAV_ARIA[loc]}>
+          {NAV_ITEMS.map((n) => (
+            <NextLink key={n.key} href={n.href} className="v4-nav-link">
+              {n.label}
+            </NextLink>
+          ))}
         </nav>
 
         <div className="v4-header-right">
@@ -169,12 +154,12 @@ export function Header() {
               <AccountMenu status={auth.status} user={auth.user} onLogout={logout} loggingOut={loggingOut} />
             </div>
           )}
-          <Link href={CTA_HREF} className="v4-btn v4-btn-primary v4-header-cta">
+          <NextLink href={CTA_HREF} className="v4-btn v4-btn-primary v4-header-cta">
             {CTA[loc]}
             <span className="v4-btn-arr" aria-hidden="true">
               →
             </span>
-          </Link>
+          </NextLink>
 
           <button
             ref={menuRef}
@@ -203,24 +188,21 @@ export function Header() {
                 </svg>
               </button>
             </div>
-            <nav className="v4-sheet-nav" aria-label={NAV_LABEL[loc]}>
+            <nav className="v4-sheet-nav" aria-label={NAV_ARIA[loc]}>
               <ul>
-                {NAV_ITEMS.map((n) => {
-                  const active = n.match.test(pathname || "");
-                  return (
-                    <li key={n.key}>
-                      <Link href={n.href} onClick={close} className={cx("v4-sheet-link", active && "is-active")} aria-current={active ? "page" : undefined}>
-                        <span>{n.label[loc]}</span>
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    </li>
-                  );
-                })}
+                {NAV_ITEMS.map((n) => (
+                  <li key={n.key}>
+                    <NextLink href={n.href} onClick={close} className="v4-sheet-link">
+                      <span>{n.label}</span>
+                      <span aria-hidden="true">→</span>
+                    </NextLink>
+                  </li>
+                ))}
                 <li>
-                  <Link href="/contact" onClick={close} className="v4-sheet-link">
+                  <NextLink href={pageHref("kontakt", loc)} onClick={close} className="v4-sheet-link">
                     <span>{CONTACT[loc]}</span>
                     <span aria-hidden="true">→</span>
-                  </Link>
+                  </NextLink>
                 </li>
                 {!isOpsoPage && auth.status === "authed" && (
                   <li>
@@ -231,12 +213,12 @@ export function Header() {
                 )}
               </ul>
               <div className="v4-sheet-foot">
-                <Link href={CTA_HREF} onClick={close} className="v4-btn v4-btn-primary v4-btn-lg">
+                <NextLink href={CTA_HREF} onClick={close} className="v4-btn v4-btn-primary v4-btn-lg">
                   {CTA[loc]}
                   <span className="v4-btn-arr" aria-hidden="true">
                     →
                   </span>
-                </Link>
+                </NextLink>
                 <div className="v4-lang v4-lang-sheet" role="group" aria-label={LANG_LABEL[loc]}>
                   <LangLinks pathname={pathname || "/"} current={locale} onPick={setLocale} />
                 </div>
@@ -247,4 +229,19 @@ export function Header() {
       </div>
     </header>
   );
+}
+
+/**
+ * Marketing paths (isV4Path) render the v7 header; app surfaces keep theirs. The decision follows the client
+ * pathname so a soft navigation between the two kinds swaps the header. `publicPath` and `suggest` come from
+ * the request headers x-public-path / x-opsolid-suggest (set by the middleware) via the locale layout.
+ */
+export function Header({ publicPath = "/", suggest = "" }: { publicPath?: string; suggest?: "en" | "tr" | "" }) {
+  const pathname = usePathname();
+  const { locale } = useLocale();
+  if (isV4Path(pathname)) {
+    const l: V7Locale = locale === "de" || locale === "tr" ? locale : "en";
+    return <V7Header locale={l} publicPath={publicPath} suggest={suggest} />;
+  }
+  return <AppHeader />;
 }

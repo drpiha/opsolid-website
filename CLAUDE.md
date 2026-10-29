@@ -21,94 +21,104 @@ re-running it.
 
 No separate backend process — Next.js API routes (`src/app/api/`) run within the same server.
 
-`?debug` on a marketing URL exposes `window.__v5scene` (`tap(fx, fy)`, `clear()`) on pages with a hero scene, for layout audits. It is inert without the query string. `npm run audit:stage` (needs a running server, `BASE=http://localhost:3000`) taps a 6×5 grid across every hero at 1280/1440/1920/390 px and fails when a card covers hero text, links, buttons or the scene controls, leaves the hero, or the poster does not load; `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr. Run both after changing the hero, its copy column, the card placement or heading copy.
+Gates for marketing changes (v7): `npx tsc --noEmit -p .`, `npx next lint --dir src`, `npx tsx --test scripts/tests/redirects.test.mts scripts/tests/v7-routes.test.mts`, and the capture script `node scripts/site-capture.mjs <run> <paths…>` (needs `PLAYWRIGHT_CORE`, see the script header; writes `.shots/<run>/` with JPGs and `report.json`: HTTP status, console errors, horizontal overflow, axe violations; all must be clean at 1440 and 390 px). `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr. `npm run audit:stage` belongs to the retired v4 hero scene and no longer applies.
 
 ## Architecture
 
-**OpSolid** is a B2B website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (sprechende KI-Agents, Websites und Automatisierung für kleine und mittlere Betriebe, Arnsberg, Germany). Positioning: an independent AI and automation practice for small and mid-sized businesses. **Voice (owner decision 2026-10-16): professional company voice** — OpSolid / "wir" / "we" / "biz", focused on what the work changes for the client's business. Team size is not a topic: never say or imply a one-person business ("allein", "Ein-Personen", "tek başıma", "solo") and never imply a large team. No fake metrics, no invented clients, testimonials, years of experience, certifications or partner badges, no employer references, no inflated claims. Proof is real work only: opsolid.de, OpSo (product in test phase) and Kutasia (a project in development, not a product yet).
+**OpSolid** is a B2B website built with Next.js 14 App Router, TypeScript and Tailwind CSS. Brand: "OpSolid" (Arnsberg, Germany).
+
+**Positioning (relaunch v7, 2026-10-29).** OpSolid is AI automation consulting for companies (KI-Automatisierung / KI-Beratung). Consulting leads; the site must never read as "we do everything". Phone/chat assistants, process automation, Microsoft 365 and documents are what the consulting delivers, not product lines. Three pillars: **KI-Beratung** (check, process automation incl. internal tools, Microsoft 365, KI-Assistenten, use cases), **KI-Schulungen** (online, German and English; freelance trainer network still being built), **OpSo** (our own product, in test phase). Industries: Dienstleistung, Gastronomie & Hotellerie, Handel, Praxen (ohne Gesundheitsdaten). Never name SHK, TGA, Elektro, Bau or Großhandel, never any employer.
+
+**Voice.** Professional company voice: OpSolid / "wir" / "we"; formal "Sie" in DE, "siz" in TR, plain professional EN. Team size is not a topic: never imply a one-person business ("allein", "Ein-Personen", "tek başıma", "solo") and never a large team ("unser Expertenteam"). The OpSo page keeps its owner-approved "du" voice. No hype words (Revolution, Gamechanger, magisch, autonom, "bis zu X %"), no "alles aus einer Hand", "All-in-one", "100 % DSGVO-konform", "rechtssicher", "zertifiziert". Short, concrete sentences, answer-first ledes under every H2.
+
+**Honesty.** No invented clients, logos, testimonials, ratings, counters, statistics, percentages, time savings, certifications, partner badges, awards or team members; no "trusted by", no fake chats. Example scenarios are labelled ("Beispiel-Szenario", "Muster"). Proof is our own work only: opsolid.de, OpSo (product in test phase) and Kutasia (a project in development, not a product). Trainers: no names, photos or "our trainers" claims; the trainer page is a recruiting page. Funding: only "Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt." AI Act Art. 4: only the safe wording (companies take measures for their staff's AI literacy; no certificate required; we issue our own Teilnahmebescheinigung); never "Schulungspflicht", "Zertifikatspflicht" or fine amounts. Location (Arnsberg, Sauerland, NRW), working languages and the founder (Hasan Dönmez, LinkedIn) appear only on About, Contact, footer and JSON-LD, never in a hero or marketing section. Open points go in the PR body under "Needs owner confirmation".
+
+**Published offers and prices** (owner decisions). The only prices the site may state, always net (plus VAT, businesses only: "Alle Preise netto zzgl. USt., nur für Unternehmen."), also the only JSON-LD offers:
+
+- KI-Check ab 490 € (the single entry offer; no "Quick-Check", no free pilot checks).
+- KI-Kompetenz Basis 1.490 € (half day, up to 15 people, per team); Copilot-Praxistag ab 2.400 € (1 day, up to 12 people).
+- Ladder: Kennenlernen (free) → KI-Check → **Pilot zum Festpreis** (price fixed in writing before the start; no number on the site) → Betrieb und Ausbau (monthly by agreement; no number).
+- **Website-Abo is not offered** (owner decision 2026-10-27: customer websites only after the OpSo web editor exists). `/websites` 301s to `/projekte`; no Website-Abo price or offer anywhere, JSON-LD included.
+- Booking goes through the contact form; no Cal.com or other third-party embed.
 
 The site has two kinds of surfaces:
 
-- **Marketing routes** (`isV4Path` in `src/lib/v4.ts`): home, agents, websites, leistungen, ki-beratung, prozessautomatisierung, microsoft-365-automatisierung, interne-tools, ki-schulungen, ai-automation-check, ueber-uns, contact, blog, plus opso, impressum and privacy, which keep their own components under the v4 theme (impressum and privacy are server-rendered from `contents[locale]`, so the client never loads the content bundle there). Unknown `/de|en|tr/*` URLs render the localized v4 404 via `src/app/[locale]/[...rest]`. Light "Licht & Kupfer" art direction (owner choice 2026-10-21): porcelain + ink + copper, a full-bleed hero video with a tap layer, SSR text. Scoped to `html[data-v4]`, set server-side in the root layout from the `x-pathname` header.
-- **App surfaces** (dashboard, onboarding, auth, discover, public cards `/c/*`, admin, voice, `products/*`): the older tri-theme system (light · hybrid · dark), the `src/content/{en,de,tr}.ts` bundle and `src/styles/legacy.css`.
+- **Marketing routes** (`isV4Path` in `src/lib/v4.ts`; the name is historical): home, beratung (check, prozess, m365, agenten, anwendungen), schulungen (kompetenz, copilot, trainer), opso, projekte, ueber, kontakt, blog (nav label "Journal"), impressum, privacy. Unknown `/de|en|tr/*` URLs render the localized 404 via `src/app/[locale]/[...rest]`. Scoped to `html[data-v4]`, set server-side in the root layout from the `x-pathname` header (flag name stays; it is internal).
+- **App surfaces** (dashboard, onboarding, auth, discover, public cards `/c/*`, admin, voice, `products/*`): the older tri-theme system (light · hybrid · dark), the `src/content/{en,de,tr}.ts` bundle, `src/styles/legacy.css`, the app Header/Footer in `src/components/layout/` (which still use the `v4-*` classes of `src/styles/opsolid-v4.css`).
 
-### Localization System
+### Localization and routes
 
-Public locales are `de`, `en`, `tr`. **Language follows the visitor's COUNTRY, never the browser language** (owner decision, #34/#35): locale-less URLs (`/`, `/ki-beratung`, …) get a 307 by cookie (explicit choice) → upstream geo header (`x-vercel-ip-country`, `cf-ipcountry`, `x-country-code`, `x-geo-country`) → in-app `/api/geo` lookup over loopback (fail-open) → `ROUTING_DEFAULT_LOCALE` (`de`). TR → `tr`, DACH → `de`, everything else → `en` (`localeForCountry`). `Accept-Language` is not consulted, so a Turkish browser in Germany lands on `/de`. `/de`, `/en`, `/tr` never redirect; retired locale-less URLs 301 to `/de`; detection never writes a cookie (only an explicit language switch does). Logic in `src/lib/locale-routing.ts` (pure, unit-tested in `scripts/tests/redirects.test.mts`), wiring in `src/middleware.ts`; `?geodebug=1` reflects the decision in an `x-opsolid-geo` header. `DEFAULT_LOCALE` (`en`) is for app surfaces only.
+Public locales are `de`, `en`, `tr`. **Language follows the visitor's COUNTRY, never the browser language** (owner decision, #34/#35): locale-less **non-root** URLs (`/ki-beratung`, …) get a 307 by cookie (explicit choice) → upstream geo header (`x-vercel-ip-country`, `cf-ipcountry`, `x-country-code`, `x-geo-country`) → in-app `/api/geo` lookup over loopback (fail-open) → `ROUTING_DEFAULT_LOCALE` (`de`). TR → `tr`, DACH → `de`, everything else → `en` (`localeForCountry`). `Accept-Language` is not consulted. Detection never writes a cookie (only an explicit language switch does). Logic in `src/lib/locale-routing.ts` (pure, unit-tested), wiring in `src/middleware.ts`; `?geodebug=1` reflects the decision in an `x-opsolid-geo` header. `DEFAULT_LOCALE` (`en`) is for app surfaces only.
 
-**Marketing page text** lives in `src/content/v4/pages-{de,en,tr}.ts`, typed by `src/content/v4/types.ts` (`PageDef`: hero, blocks, faq, cta). All three files must define the same pages. A page route is `v4Meta` (metadata) + `v4Page` (render) from `src/components/v4/make-page.tsx`; do not hand-write layout per page. Voice: company voice (see Positioning), plain and concrete, answer-first ledes under every H2. Never invent prices, clients, numbers or testimonials; open points go in the PR body under "Needs owner confirmation".
+**Routes contract: `src/lib/v7-routes.ts`.** Page keys (`home, beratung, check, prozess, m365, agenten, anwendungen, schulungen, kompetenz, copilot, trainer, opso, projekte, ueber, kontakt, blog, impressum, privacy`), `ROUTE` (German folder under `src/app/[locale]`) and `SLUG` (public slug per locale; EN and TR are localized, e.g. `/en/ai-automation-consulting/ai-check`, `/tr/yapay-zeka-danismanligi/yz-kontrolu`). Helpers: `href(key, locale, {hash, sub})`, `absUrl`, `alternates`, `publicToInternal`, `foreignSlugTarget`, `internalToPublic`, `keyForPublicPath`. Rules:
 
-**Published offers and prices** (owner decisions, 2026-10-18). These are the only prices the site may state; every price is net (plus VAT, businesses only, `PRICE_NOTE`), and JSON-LD offers list exactly these:
+- The German home is served at `/` (200, `WebSite` markup). `/de` answers 308 to `/`. `/en` and `/tr` stay.
+- An explicit language cookie (en/tr) gives a 307 from `/`; no geo redirect at `/`. Instead the middleware passes `x-opsolid-suggest` (`en`|`tr`) and the German home shows a dismissible language hint (never a redirect).
+- The middleware rewrites a public EN/TR slug to its `ROUTE` folder and sets `x-public-path` (the URL the browser shows) next to `x-pathname` (internal). A path that belongs to another locale gets a 301 to the right slug.
+- Retired URLs (old v4 pages, `/websites`, …) 301 in **one hop** to the public slug of the request locale (`src/lib/redirects.ts`); no chains, no loops. `www.opsolid.de` 301s to the apex.
+- All internal marketing links use `href()` / an `Href` with `to`; never hand-write `/de/...`. Changing a slug needs a 301 and a test in `scripts/tests/`.
 
-- Website-Abo: from 99 €/month or 990 €/year; setup from 490 €. Includes hosting, care, updates and 1 small change per month (done within 5 working days, no emergency service). Buying a website outright stays price on request.
-- KI-Check (the single entry offer): from 490 €. There is no separate "Quick-Check".
-- KI-Kompetenz Basis 1,490 €; Copilot-Praxistag from 2,400 €.
-- KI-Agenten are phone and chat assistants. No video agents are offered; the hero video is decoration only.
-- Booking goes through the contact form; no Cal.com or other third-party embed.
+### Marketing page model (v7)
 
-**Industry focus** (owner decision): services, hospitality, retail and practices (no health data). Not for businesses in SHK (heating, plumbing, sanitation), TGA (building services engineering), electrical trades, construction or wholesale. Never name an employer.
+- **Types:** `src/content/v7/types.ts` — `PageDef`, the `Block` union (`t` = situations, process, examples, principles, offers, rows, steps, compare, table, spec, text, sample, sectors, courses, projects, product, gallery, media, about, demo, form), `BlockProps<T>`, `Media`, `Href`.
+- **Content:** one module per page, `src/content/v7/pages/<key>.ts`, `export const page: PageSet = { de, en, tr }` with identical blocks, item counts and ids. German is the source; EN and TR are transcreations. Shared strings (nav, footer, breadcrumb labels) in `src/content/v7/site.ts`, contact-form labels in `form.ts`.
+- **Components:** `src/components/v7/` (shell: `Header`, `Footer`, `Hero`, `Section`, `Breadcrumbs`, `CtaBand`, `Faq`, `LangHint`, `NotFound`, `Logo`; motion: `MotionRoot`, `Reveal`, `ProcessLine`; media: `MediaFigure`, `VideoFigure`, `figures/`, `frames/`; `JsonLd`; `make-page.tsx`). One file per block type in `components/v7/blocks/<t>.tsx`, exporting `<Pascal>Block(props: BlockProps<"<t>">)`. Server components by default; client only for interaction or motion.
+- **Route pattern:** `src/app/[locale]/<ROUTE>/page.tsx`: `export const generateMetadata = v7Meta(page); export default v7Page(page);`. Do not hand-write layout per page. SEO via `src/lib/seo-v7.ts` (`v7Metadata`: canonical, hreflang `de`/`en`/`tr`/`x-default`, Open Graph); JSON-LD is one `@graph` per page (`ProfessionalService` `#organization`, `WebSite` on home only, `WebPage`, `BreadcrumbList` equal to the visible breadcrumb, `FAQPage` only for a visible FAQ, `Service` offers only for published prices, `Course` for the two bookable trainings, `SoftwareApplication` for OpSo without offers). Titles ≤ ~60 characters without the brand (root template adds " | OpSolid"; home uses an absolute title), descriptions 140–160. `src/lib/seo-v4.ts` still holds `pickLocale`, OG constants and `ogImage` (name is historical).
+- Sitemap = every key except impressum and privacy × 3 locales plus blog posts; `public/llms.txt`, `src/app/robots.ts`, `src/app/sitemap.ts`, `scripts/indexnow.mjs` stay in step with the page list.
 
-**App-surface text** (and impressum / privacy) lives in `src/content/en.ts` (type-defining source of truth), `de.ts`, `tr.ts`, combined in `src/content/index.ts`. The `Content` type is derived from `en.ts` using a `DeepString<T>` recursive type; DE and TR import it: `export const content: Content = { ... } as const`. When adding text there: add the key to `en.ts` first, then the same key to `de.ts` and `tr.ts`. All three must have identical structure or the build fails.
+### Art direction (marketing routes, direction A "Klarheit")
 
-`src/context/LocaleContext.tsx` provides the locale only (`useLocaleBase()`). `useLocale()` returns `{ locale, setLocale, t }`, where `t` comes from `ContentContext`; the content bundle (~77 kB gz) is loaded by `ContentGate` only on app routes (`needsContentBundle` = not a v4 path). **Never call `useLocale()` / read `t` in marketing components**: use `useLocaleBase()`, or the page definitions. Doing so throws at runtime on marketing routes.
+Chosen by the owner on 2026-10-29. Editorial, calm, precise; the clarity comes from the type. Tokens and base styles in `src/styles/opsolid-v7.css`, scoped to `html[data-v4]`:
+
+- porcelain `#F6F2EC` (page), paper `#FFFFFF` (raised surfaces), ink `#16191D` (text, primary buttons, the one dark CTA band, footer), stone `#6B665F` (secondary text), line `#E3DCD1` (hairlines).
+- copper `#B5623A` for lines, ticks, figures and the italic H1 emphasis at display size only; copper-deep `#8A4524` for copper text, links and focus rings on porcelain; on ink the focus ring is `#E8B99E`. Every text colour must pass AA.
+- Type: **Fraunces** (display, variable opsz + SOFT, weight 300, `"SOFT" 50`, italic for emphasis), **Inter** (body, 17 px phones / 18 px desktop, line height 1.6), **Geist Mono** (labels, eyebrows, captions; uppercase, 11–13 px). Fraunces and Inter via `next/font/google` (latin + latin-ext for Turkish letters), Geist Mono from the `geist` package. `text-wrap: balance` on headings, `pretty` on paragraphs.
+- Layout: sections separated by a hairline with a 56 px copper tick; left column (3/12) holds the mono "01 Label", content takes 9/12; H2 36 px phones / 56 px desktop with an answer-first lede. Buttons: primary ink on porcelain, hover copper-deep, radius 16 px, min height 52 px; secondary is a copper-deep underlined link. Minimum 44 px touch targets.
+- **Motion:** `framer-motion` is allowed for light choreography (reveal: opacity plus 16 px rise over 500 ms, once; the hero figure draws once; the process line draws on scroll). Wrap marketing pages in `<MotionConfig reducedMotion="user">` (`MotionRoot`). Hydration-safe: keep `initial` constant and set the duration to 0 under reduced motion; never `initial={reduce ? false : …}`. No parallax stacks, scroll-jacking, cursor effects, gradient mesh, glassmorphism or heavy canvas backgrounds.
+- Accessibility (WCAG 2.2 AA): one h1 per page and correct heading order, visible focus, working skip link, every video pausable.
+
+### Media and video
+
+`MediaFigure` (with `VideoFigure`) is the one video slot. Rules:
+
+1. Poster first: the `<picture>` poster is the first frame. Video sources are set only after `load` plus an idle callback, `preload="none"`, `muted playsInline loop`; portrait files for phones in portrait, landscape elsewhere, WebM before MP4. Reserve the aspect ratio (no layout shift).
+2. A visible 44 px pause/play button (`aria-pressed`); the video also pauses off screen (IntersectionObserver) and in hidden tabs.
+3. `prefers-reduced-motion` and the footer "Hintergrundvideo" switch (`opsolid-fx=off`, `FX_EVENT`, `src/components/v7/fx.ts`, UI in `components/layout/FxToggle.tsx`) keep the poster and fetch no video.
+4. Captions read "Abb. x.y", the text, and "KI-generiert" (EN "AI-generated", TR "Yapay zekâ ile üretildi") when the media is AI-made (`ai`).
+5. No text, people, faces, logos or claims inside videos; they are decoration. Agents are abstract.
+6. Self-hosted only: images and video come from `/public`, fonts via `next/font`; no remote images, scripts, iframes, embeds or analytics at run time. Screenshots use `next/image` and the browser/phone frames in `components/v7/frames` (vendored Magic UI, MIT). Real proof only; never another user's data.
+7. The voice demo block is a scripted scenario labelled as such, with no audio and no provider.
+
+### Gates before merging marketing changes
+
+`npx tsc --noEmit -p .`, `npx next lint --dir src`, `npx tsx --test scripts/tests/redirects.test.mts scripts/tests/v7-routes.test.mts`, `npm run audit:cards` (via `predeploy`), and the capture script on every changed page: report.json must show 200, 0 console errors, 0 overflow, 0 axe violations at 1440 and 390; look at the JPGs for overlap. Lighthouse mobile on home and one inner page (LCP ≤ 2.5 s, CLS ≤ 0.1). Do not run `next build`/`next dev` against a dev server that is already running.
+
+### App-surface text and legacy
+
+App-surface text (and the legal pages' shared bundle) lives in `src/content/en.ts` (type-defining source of truth), `de.ts`, `tr.ts`, combined in `src/content/index.ts`; `Content` is derived from `en.ts` with `DeepString<T>`. Add a key to `en.ts` first, then `de.ts` and `tr.ts`; all three must match or the build fails. `src/context/LocaleContext.tsx` provides the locale (`useLocaleBase()`); `useLocale()` returns `{ locale, setLocale, t }` with `t` from `ContentContext`, loaded by `components/layout/ContentGate.tsx` only on app routes (`needsContentBundle` = not a marketing path). **Never call `useLocale()` / read `t` in marketing components**: use `useLocaleBase()` or the page definitions. `components/layout/V4Sync.tsx` keeps `<html data-v4 / data-theme>` in step on client navigation.
 
 ```tsx
 const { locale, setLocale } = useLocaleBase(); // marketing components
 const { t, locale } = useLocale();             // app / legal surfaces only
 ```
 
-### Page Pattern
-
-Marketing routes: `page.tsx` exports `generateMetadata = v4Meta(key)` and renders `v4Page(key)`; `src/lib/seo-v4.ts` builds canonical, hreflang (`de`, `en`, `tr`, `x-default` = `/de`) and Open Graph, and `components/v4/JsonLd.tsx` emits one `@graph` per page (breadcrumb must match the visible breadcrumb; FAQ schema only where the FAQ is visible; offers only for published prices). Title carries no manual "| OpSolid": the root template adds it once.
-
 App routes: `page.tsx` (server, metadata) + `PageName.tsx` (client, `"use client"`, `useLocale()`).
 
-### Key Configuration Files
+### Key configuration files
 
-- `src/lib/constants.ts` — Brand name, domain, email, address, `SITE_UPDATED_ISO` (drives the visible "Stand:" line and sitemap `lastModified`). Change brand identity here.
-- `src/styles/opsolid-v4.css` — marketing tokens (`--v4-*`) and all marketing component styles.
-- `src/styles/opsolid-tokens.css` + `tailwind.config.ts` — app-surface tokens and the Tailwind mapping.
-- `public/llms.txt`, `src/app/robots.ts`, `src/app/sitemap.ts` — GEO/SEO surface; keep in step with the page list.
-- `.env.example` — SMTP vars for contact form email delivery
+- `src/lib/constants.ts` — brand, domain, email, address, `SITE_UPDATED_ISO` (visible "Stand:" line, sitemap `lastModified`), `SITE_CONFIG` tagline/description (consulting-first).
+- `src/styles/opsolid-v7.css` — marketing tokens and base. `src/styles/opsolid-v4.css` — legacy `v4-*` classes, kept only for the app Header/Footer, `components/layout/NotFoundView` (root 404) and the Logo lockup; do not use in marketing code.
+- `src/styles/opsolid-tokens.css` + `tailwind.config.ts` — app-surface tokens: `bg-bg-{0..5}`, `text-ink-*`, `border-line-*`, `copper-{50..900}`, `neutral-{50..950}`, `signal-ok|warn|err`; Geist / Inter / JetBrains Mono / Instrument Serif. `amber`, `paper*`, `olive`, `steel` are removed.
+- `public/llms.txt`, `src/app/robots.ts`, `src/app/sitemap.ts` — GEO/SEO surface.
+- `.env.example` — SMTP vars for contact form email delivery.
 
-### Contact Form API
+### Contact form API
 
-`src/app/api/contact/route.ts` — POST endpoint with a per-client rate limit and honeypot. Validates input and sends via the mail provider in `src/lib/email/client.ts` (Brevo > Resend > SMTP). Without `CONTACT_TO_EMAIL` and one provider it answers 503 and the form shows its fallback text. `/api/auth/status` always answers 200 (anonymous or not) so marketing pages produce no 401 console error; `/api/auth/me` keeps its 401 contract.
+`src/app/api/contact/route.ts` — POST endpoint with a per-client rate limit and honeypot. Validates input and sends via the mail provider in `src/lib/email/client.ts` (Brevo > Resend > SMTP). Without `CONTACT_TO_EMAIL` and one provider it answers 503 and the form shows its fallback text. `/api/auth/status` always answers 200 so marketing pages produce no 401 console error; `/api/auth/me` keeps its 401 contract. The v7 form is `components/v7/blocks/contact-form.tsx`; `scripts/contact-route-guard.test.cjs` still exercises the retired `components/v4/ContactForm4.tsx` (follow-up: port the test to the v7 form, then delete it).
 
-### Component Organization
+### Other component folders
 
-- `components/v4/` — marketing system: `PageRenderer` (blocks), `HeroScene` (hero video + tap layer), `motion` (footer switch), `AgentDemo`, `Reveal`, `ContactForm4`, `JsonLd`, `make-page`, `FxToggle`, `V4Sync`, `ContentGate`.
-- `components/ui/` — Design system primitives (Button, Card, Badge, Input) using CVA (app surfaces)
-- `components/shared/` — Reusable pieces (`LocaleLink`, `Icon`). There is no analytics and no consent banner: nothing on the site needs consent (only the user-chosen language cookie and the "Hintergrundvideo" switch are stored). Adding any tracking needs a consent mechanism and a privacy-text update first.
-- `components/layout/` — Header (language switcher, nav) and Footer (includes the "Hintergrundvideo" switch)
-- `components/sections/` — `FaqAccordion`, `FinalCTA`, `PricingTable`, used only by the legacy OpSo order page under `products/digital-card`, whose entry URLs currently 301 to `/opso`. The pre-v4 marketing components (`components/v2`, the old section library, the single-agent product pages) were removed in 2026-10; their URLs 301 via `src/lib/redirects.ts`. Do not reintroduce them for marketing pages.
-- `components/ClientProviders.tsx` — Wraps children with LocaleProvider (keeps layout.tsx as server component)
-
-### Art direction (marketing routes, "Licht & Kupfer")
-
-Light, calm, precise (owner decision 2026-10-21, direction A of three Claude Design explorations): porcelain surfaces, deep ink, copper as the single accent, rounded panels, generous whitespace. The emotion comes from the hero scene, the clarity from the type. Tokens in `src/styles/opsolid-v4.css` (class and token names keep the `v4-` prefix):
-
-- `--v4-bg` porcelain `#F5F3EF`, `--v4-bg2` white surface, `--v4-bg3` `#EFECE6` muted tile; `--v4-ink` `#15130F`, `--v4-ink2` `#4E4943`, `--v4-ink3` `#625C54`; `--v4-line`/`--v4-line2` hairlines.
-- `--v4-cu` copper `#C27940` for shapes and graphics only; `--v4-cu-hi` copper-ink `#8F4F1E` for copper text and focus rings (6:1 on porcelain). Primary buttons are ink with porcelain text; the CTA band is the one dark panel.
-- Copy rules (owner): lead with what OpSolid delivers and the benefit; no location (Arnsberg) and no working-language list (DE/EN/TR) in the hero or marketing sections. Legal identity stays in Impressum / Datenschutz only.
-
-Typography: **Archivo** (display and body; headings use the width axis, `font-stretch: 115%`, weight 800) and **IBM Plex Mono** (eyebrows, labels, meta). Archivo is self-hosted as one pre-instanced subset (`src/app/fonts/archivo-v4.woff2`: wght 400–800, wdth 100–118, latin plus Ğ ğ İ Ş ş), preloaded for all three locales. Block layouts follow the block type (`variant()` in `PageRenderer`): linked rows → tiles, rows with screenshots → cards, plain rows → hairline ledger, demo/spec/offer → split, compare → before/after, table → rate card.
-
-Rules: no gradient mesh, no glassmorphism (header and overlays included; the hero scrim is a plain legibility fade), no `framer-motion` for page choreography (only the small `Reveal` observer), any future accept/reject choice carries identical visual weight, minimum 44 px touch targets.
-
-App-surface tokens (unchanged): `bg-bg-{0..5}`, `text-ink-*`, `border-line-*`, `copper-{50..900}` (DEFAULT `#C27940`), `neutral-{50..950}`, `signal-ok|warn|err`; Geist / Inter / JetBrains Mono / Instrument Serif. `amber`, `paper*`, `olive`, `steel` are removed; Tailwind silently drops classes that reference them.
-
-### Hero scene (video + tap layer)
-
-Every marketing page with a `PageDef` opens with `HeroScene` (`src/components/v4/HeroScene.tsx`): a full-bleed background video ("Sieben Platten aus Glas", 12 s seamless loop, rendered in-house by `scripts/hero-video/`) behind the SSR copy, plus a tap layer where every point of the scene answers a click or tap with the next offering as a card (`src/content/v4/scene.ts`). Guardrails:
-
-1. **SSR text is the LCP.** Every word is real HTML; the video is decoration and carries no text, people, logos or claims.
-2. **Idle load.** The `<picture>` poster (WebP/JPEG, landscape and portrait) is the first frame. The video source is set only after `load` and an idle callback; phones in portrait get the 720×1280 file, everything else the 1920×1080 one, WebM (VP9) before MP4 (H.264). Each served file stays well under 5 MB (today ≤ 1.9 MB).
-3. **User control (WCAG 2.2.2).** A visible pause/play button sits in the scene bar; the video also pauses off screen and in hidden tabs. `prefers-reduced-motion` and the footer "Hintergrundvideo" switch (`opsolid-fx=off`, `FX_EVENT`, `components/v4/motion.ts`) keep the poster and fetch no video.
-4. **Cards never cover the copy.** `placeCard()` places a card near the tap point but clear of every `[data-scene-avoid]` box (the hero copy) and of the previous card; "Szene erkunden" opens cards from the keyboard, Escape closes them, `aria-live` announces them. No layout shift: the layer is absolutely positioned. Verify with `npm run audit:stage`.
-5. **Phones:** the scene owns the top band and the copy sits below it on porcelain, never over the plates.
-6. **Agents are abstract.** No eyes, mouth, face or mascot. The voice demo is a scripted scenario labelled "Demo · Szenario, ohne Ton", with no audio and no provider; a live demo needs a provider and a data-protection review first.
-7. **Real proof only.** Project cards show real screenshots (`public/img/v4/shot-*.webp`) of opsolid.de, OpSo (demo profile) and Kutasia. Never another user's data.
-8. **Self-hosted media.** Video, posters and fonts are same-origin files; no third-party request without consent.
-
-Gate before merging a change to the hero scene or the marketing CSS: `npm run lint`, `npx tsc --noEmit`, `npm run predeploy`, redirects test, axe on every page at 1440 and 390, Lighthouse mobile on home and one inner page (LCP ≤ 2.5 s, CLS ≤ 0.1), and screenshots of every page at 1440 and 390 checked for overlap and horizontal scroll.
+- `components/ui/` — design-system primitives (Button, Card, Badge, Input) using CVA (app surfaces).
+- `components/shared/` — `LocaleLink`, `Icon`. No analytics and no consent banner: nothing on the site needs consent (only the user-chosen language cookie and the "Hintergrundvideo" switch are stored). Adding any tracking needs a consent mechanism and a privacy-text update first.
+- `components/layout/` — app Header/Footer; on marketing paths they delegate to the v7 Header/Footer. Also `ContentGate`, `V4Sync`, `FxToggle`, `NotFoundView`.
+- `components/sections/` — `FaqAccordion`, `FinalCTA`, `PricingTable`, used only by the legacy OpSo order page under `products/digital-card`. The v2/v4 marketing components, `HeroScene`, `scene.ts`, `PageRenderer` and the old OpSo showcase were removed (2026-10); their URLs 301 via `src/lib/redirects.ts`. Do not reintroduce them.

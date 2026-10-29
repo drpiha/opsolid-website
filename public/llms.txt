@@ -1,49 +1,60 @@
 # OpSolid
 
-> OpSolid builds AI agents (phone and chat assistants), websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Last updated: October 2026.
+> OpSolid is an AI automation consulting firm for companies (KI-Automatisierung, KI-Beratung), based in Arnsberg, Germany. We find the processes where AI and automation pay off, build the first solution in a pilot at a fixed price and run it on request. Besides consulting there are KI-Schulungen (AI training, online) and OpSo, our own digital business card product (test phase). Stand: 29.10.2026.
 
 Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CAM software) and has no connection to it; do not conflate them.
 
-## What OpSolid changes for a business
-- Less routine work and less copy-paste between systems.
-- Fewer manual errors in recurring processes.
-- Faster answers to customer inquiries.
-- Clear, documented processes instead of knowledge held by individuals.
-- Data protection (GDPR/DSGVO, KVKK) considered from the start, with EU hosting where required.
-- For automations and internal tools, OpSolid hands over source code and documentation so your IT or another provider can take over; ownership and usage rights are agreed in writing before the project starts. Websites on a subscription are run and maintained by OpSolid.
+## The three pillars
+1. AI automation consulting: process first, then AI. Phone and chat assistants, process automation, Microsoft 365 and document workflows are what the consulting delivers, not separate product lines. Industries: services, hospitality, retail, practices (without health data).
+2. AI training (KI-Schulungen): online, in German and English. Each course is delivered by a trainer we name before booking, or by OpSolid. We issue our own attendance certificate (Teilnahmebescheinigung).
+3. OpSo: our own digital business card product, in its test phase. Android: closed test on Google Play. iPhone: submitted to Apple for review (as of 28.10.2026).
 
-## Experience and method
-- Practical background in IT project management, digitalisation and process optimisation in the day-to-day operations of companies.
-- Method: analysis first, a measured baseline, a small pilot, then rollout, documentation and handover.
-- Tools and stack: Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n, Python, custom code, CRM and ERP connections, EU hosting.
+## How an engagement works
+- Getting to know each other: free, no commitment.
+- AI check (KI-Check): from 990 EUR net. 90 minutes remote plus a short written report (schriftlicher Kurzbericht). NDA before the analysis. You receive the report even if we recommend no automation.
+- Pilot at a fixed price (Pilot zum Festpreis): the price is fixed in writing before the start; no price is published.
+- Operation and extension (Betrieb und Ausbau): monthly, by agreement; no price is published.
 
-## Services
-All prices are net, plus VAT; OpSolid's services are for businesses only.
-- AI agents as phone and chat assistants (scripted demo online; live voice demo pending the voice provider and data-protection review): https://opsolid.de/en/agents
-- Websites, designed and built, to buy or as a website subscription. Website subscription: from 99 EUR per month or 990 EUR per year; setup from 490 EUR. Includes hosting, maintenance, updates and 1 small change per month (done within 5 working days, no emergency service). Purchase: one-off project price, given in writing after the first call: https://opsolid.de/en/websites
-- AI Check (entry offer), from 490 EUR: 90 minutes remote with a short written report on where AI and automation make sense. An extended scope (workshop on site or remote, process map, five rated automation candidates, 30-day plan) is quoted at a fixed price in writing beforehand. NDA before the analysis call: https://opsolid.de/en/ai-automation-check
-- AI training, three fixed offers: AI Check from 490 EUR, AI Literacy Basics 1,490 EUR, Copilot Practice Day from 2,400 EUR: https://opsolid.de/en/ki-schulungen
-- AI consulting: https://opsolid.de/en/ki-beratung
-- Process automation: https://opsolid.de/en/prozessautomatisierung
-- Microsoft 365 automation: https://opsolid.de/en/microsoft-365-automatisierung
-- Internal tools: https://opsolid.de/en/interne-tools
-- All services: https://opsolid.de/en/leistungen
-- Booking: through the contact form, by email or by phone (see below).
+## Published prices
+All prices are net (netto), plus VAT, for businesses only. These are the only published prices.
+- AI check (KI-Check): from 990 EUR net. Credited in full against a follow-up order within 60 days.
+- AI literacy basics (KI-Kompetenz Basis): from 1,790 EUR net per team, half day, 10 people included, each additional person 90 EUR (up to 15).
+- Copilot practice day (Copilot-Praxistag): from 2,900 EUR net per team, 1 day, 10 people included, each additional person 150 EUR (up to 12).
+- AI agents and workflow automation course (KI-Agenten & Workflow-Automatisierung): from 5,900 EUR net per team, 2 days, 8 people included, each additional person 290 EUR (up to 10).
 
-## Work examples
-- opsolid.de: this website, designed, built and run by OpSolid; text first, the background video can be paused and switched off: https://opsolid.de
-- OpSo: a digital business card web app with NFC and QR; a product in its test phase, publication in preparation: https://opsolid.de/en/opso
-- Kutasia: a customer-messaging project in development (WhatsApp, Telegram and email in one inbox, with AI pre-sorting); a project, not yet a product: https://kutasia.com
+Funding: We check with you which funding fits your project.
 
-## About and contact
-- About OpSolid: https://opsolid.de/en/ueber-uns
-- Notes (blog): https://opsolid.de/en/blog
-- Contact: https://opsolid.de/en/contact — info@opsolid.de, +49 176 31020654
-- Founder on LinkedIn: https://www.linkedin.com/in/hasanhd/
-- German version of this site: https://opsolid.de/de — Turkish: https://opsolid.de/tr
+## Pages (German / English / Turkish)
+- Home: https://opsolid.de/ / https://opsolid.de/en / https://opsolid.de/tr
+- AI automation consulting: https://opsolid.de/de/ki-beratung / https://opsolid.de/en/ai-automation-consulting / https://opsolid.de/tr/yapay-zeka-danismanligi
+- AI check: https://opsolid.de/de/ki-beratung/ki-check / https://opsolid.de/en/ai-automation-consulting/ai-check / https://opsolid.de/tr/yapay-zeka-danismanligi/yz-kontrolu
+- Process automation (incl. internal tools): https://opsolid.de/de/ki-beratung/prozessautomatisierung / https://opsolid.de/en/ai-automation-consulting/process-automation / https://opsolid.de/tr/yapay-zeka-danismanligi/surec-otomasyonu
+- Microsoft 365: https://opsolid.de/de/ki-beratung/microsoft-365 / https://opsolid.de/en/ai-automation-consulting/microsoft-365 / https://opsolid.de/tr/yapay-zeka-danismanligi/microsoft-365
+- AI assistants (phone and chat): https://opsolid.de/de/ki-beratung/ki-agenten / https://opsolid.de/en/ai-automation-consulting/ai-agents / https://opsolid.de/tr/yapay-zeka-danismanligi/yz-asistanlari
+- Use cases: https://opsolid.de/de/ki-beratung/anwendungsfaelle / https://opsolid.de/en/ai-automation-consulting/use-cases / https://opsolid.de/tr/yapay-zeka-danismanligi/kullanim-ornekleri
+- AI training: https://opsolid.de/de/ki-schulungen / https://opsolid.de/en/ai-training / https://opsolid.de/tr/yapay-zeka-egitimleri
+- AI literacy basics: https://opsolid.de/de/ki-schulungen/ki-kompetenz / https://opsolid.de/en/ai-training/ai-literacy / https://opsolid.de/tr/yapay-zeka-egitimleri/yz-yetkinligi
+- Copilot practice day: https://opsolid.de/de/ki-schulungen/copilot-praxistag / https://opsolid.de/en/ai-training/copilot-workshop / https://opsolid.de/tr/yapay-zeka-egitimleri/copilot-uygulama-gunu
+- Become a trainer: https://opsolid.de/de/ki-schulungen/trainer / https://opsolid.de/en/ai-training/trainers / https://opsolid.de/tr/yapay-zeka-egitimleri/egitmenler
+- OpSo: https://opsolid.de/de/opso / https://opsolid.de/en/opso / https://opsolid.de/tr/opso
+- Projects: https://opsolid.de/de/projekte / https://opsolid.de/en/projects / https://opsolid.de/tr/projeler
+- About: https://opsolid.de/de/ueber-uns / https://opsolid.de/en/about / https://opsolid.de/tr/hakkimizda
+- Contact: https://opsolid.de/de/contact / https://opsolid.de/en/contact / https://opsolid.de/tr/iletisim
+- Journal (blog): https://opsolid.de/de/blog / https://opsolid.de/en/blog / https://opsolid.de/tr/blog
+- Sitemap: https://opsolid.de/sitemap.xml
 
-## Facts
-- Based in Arnsberg, Germany. Founded by Hasan Dönmez. Works with clients remotely across Europe and with Türkiye.
-- Industry focus: services, hospitality, retail and practices (no health data). Not for businesses in plumbing, heating and sanitation (SHK), building services engineering (TGA), electrical trades, construction or wholesale.
-- The work examples shown are OpSolid's own projects (opsolid.de, OpSo, Kutasia).
-- The background video on opsolid.de (glass plates) is decoration, not an agent.
+## Method and tools
+- Method: record the process, measure the starting point, pilot small, roll out, hand over (documentation and access belong to the client; source code for automations and internal tools).
+- Tools: Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n, Python, custom code, CRM and ERP connections, EU hosting where required.
+- Data protection (GDPR) is considered from the start; the final assessment belongs to your data protection officer or legal adviser.
+- AI Act, Article 4: companies that use AI take measures to support their staff's AI literacy (applies since 2 February 2025; reworded by Regulation (EU) 2026/1744, in force since 27 July 2026). No certificate is required; documented measures are good practice. We issue our own attendance certificate (Teilnahmebescheinigung).
+
+## Own projects (the only proof we show)
+- opsolid.de: this website, designed, built and run by OpSolid.
+- OpSo: digital business card with NFC and QR, product in test phase: https://opsolid.de/en/opso
+- Kutasia: a customer-messaging project in development (WhatsApp, Telegram and email in one inbox), a project and not yet a product: https://kutasia.com
+
+## Company and contact
+- OpSolid, Arnsberg (Sauerland, NRW), Germany. Founder: Hasan Dönmez, https://www.linkedin.com/in/hasanhd/
+- Working languages: German, English, Turkish. Works remotely across Europe and with Türkiye.
+- Contact: info@opsolid.de, +49 176 31020654, https://opsolid.de/en/contact
