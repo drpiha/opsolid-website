@@ -33,10 +33,14 @@ Gates for marketing changes (v7): `npx tsc --noEmit -p .`, `npx next lint --dir 
 
 **Honesty.** No invented clients, logos, testimonials, ratings, counters, statistics, percentages, time savings, certifications, partner badges, awards or team members; no "trusted by", no fake chats. Example scenarios are labelled ("Beispiel-Szenario", "Muster"). Proof is our own work only: opsolid.de, OpSo (product in test phase) and Kutasia (a project in development, not a product). Trainers: no names, photos or "our trainers" claims; the trainer page is a recruiting page. Funding: only "Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt." AI Act Art. 4: only the safe wording (companies take measures for their staff's AI literacy; no certificate required; we issue our own Teilnahmebescheinigung); never "Schulungspflicht", "Zertifikatspflicht" or fine amounts. Location (Arnsberg, Sauerland, NRW), working languages and the founder (Hasan Dönmez, LinkedIn) appear only on About, Contact, footer and JSON-LD, never in a hero or marketing section. Open points go in the PR body under "Needs owner confirmation".
 
-**Published offers and prices** (owner decisions). The only prices the site may state, always net (plus VAT, businesses only: "Alle Preise netto zzgl. USt., nur für Unternehmen."), also the only JSON-LD offers:
+**Published offers and prices** (owner decision 2026-10-29, live since 2026-10-30). The only prices the site may state, always net (plus VAT, businesses only: "Alle Preise netto zzgl. USt., nur für Unternehmen."), also the only JSON-LD offers:
 
-- KI-Check ab 490 € (the single entry offer; no "Quick-Check", no free pilot checks).
-- KI-Kompetenz Basis 1.490 € (half day, up to 15 people, per team); Copilot-Praxistag ab 2.400 € (1 day, up to 12 people).
+- KI-Check ab 990 € (the single entry offer; no "Quick-Check", no free pilot checks). The exact price is confirmed in writing after a short pre-call, and the amount is credited in full against a follow-up order within 60 days.
+- Trainings are team packages with included seats plus a per-person surcharge, shown as "Auf Anfrage" until trainers exist:
+  - KI-Kompetenz Basis ab 1.790 € (half day, 10 people included, +90 € per person, max 15);
+  - Copilot-Praxistag ab 2.900 € (1 day, 10 included, +150 € per person, max 12);
+  - KI-Agenten & Workflow-Automatisierung ab 5.900 € (2 days, 8 included, +290 € per person, max 10).
+- Exception (owner-approved in #53): the OpSo page shows the planned physical NFC card price "24,90 € inkl. MwSt." with its "geplanter Einführungspreis" label (consumer product, not a consulting offer).
 - Ladder: Kennenlernen (free) → KI-Check → **Pilot zum Festpreis** (price fixed in writing before the start; no number on the site) → Betrieb und Ausbau (monthly by agreement; no number).
 - **Website-Abo is not offered** (owner decision 2026-10-27: customer websites only after the OpSo web editor exists). `/websites` 301s to `/projekte`; no Website-Abo price or offer anywhere, JSON-LD included.
 - Booking goes through the contact form; no Cal.com or other third-party embed.
