@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate, die für aufeinander aufbauende Lernschritte stehen",
-      caption: "Von den Grundlagen zu den Regeln.",
+      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Grundlagen, Grenzen, Regeln, Nachweis",
+      caption: "Von den Grundlagen über die Grenzen zu den Regeln.",
       fig: "0.1",
+      labels: ["Grundlagen", "Grenzen", "Regeln", "Nachweis"],
     },
   },
   blocks: [
@@ -57,6 +58,12 @@ const de: PageDef = {
         { h: "Neue Werkzeuge kommen, die Unsicherheit bleibt", p: "Copilot, ChatGPT oder Gemini sind verfügbar. Niemand hat gezeigt, wie man sie sicher nutzt." },
         { h: "Mitarbeitende fragen, was erlaubt ist", p: "Es fehlt eine einfache Antwort und ein Ort, an dem Fragen willkommen sind." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Wer KI nutzt, sollte ihre Grenzen kennen",
     },
     {
       t: "steps",
@@ -168,9 +175,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Sketch: nested rounded squares standing for learning steps that build on each other",
-      caption: "From the basics to the rules.",
+      alt: "Sketch: nested rounded squares above a workflow in four stations: basics, limits, rules, record",
+      caption: "From the basics, through the limits, to the rules.",
       fig: "0.1",
+      labels: ["Basics", "Limits", "Rules", "Record"],
     },
   },
   blocks: [
@@ -201,6 +209,12 @@ const en: PageDef = {
         { h: "New tools arrive, the uncertainty stays", p: "Copilot, ChatGPT or Gemini are available. Nobody has shown how to use them safely." },
         { h: "Staff ask what is allowed", p: "There is no simple answer and no place where questions are welcome." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Anyone who uses AI should know its limits",
     },
     {
       t: "steps",
@@ -312,9 +326,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Taslak: birbiri içine geçmiş yuvarlatılmış kareler, birbirini izleyen öğrenme adımlarını temsil eder",
-      caption: "Temellerden kurallara.",
+      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: temeller, sınırlar, kurallar, belge",
+      caption: "Temellerden sınırlara, oradan kurallara.",
       fig: "0.1",
+      labels: ["Temeller", "Sınırlar", "Kurallar", "Belge"],
     },
   },
   blocks: [
@@ -345,6 +360,12 @@ const tr: PageDef = {
         { h: "Yeni araçlar geliyor, belirsizlik kalıyor", p: "Copilot, ChatGPT ya da Gemini kullanıma açık. Ama bunları güvenle nasıl kullanacağını kimse göstermedi." },
         { h: "Çalışanlar neye izin verildiğini soruyor", p: "Basit bir cevap yok ve soruların hoş karşılandığı bir yer de yok." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Yapay zekayı kullanan, sınırlarını bilmeli",
     },
     {
       t: "steps",

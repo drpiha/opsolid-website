@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Skizze: ein Ablauf von der Anfrage über Prüfung und Entwurf zur Freigabe durch eine Person",
-      caption: "Jedes Beispiel endet bei einem Menschen, der freigibt.",
-      fig: "3.1",
+      alt: "Skizze eines Ablaufs in vier Stationen: Branche, Ablauf, Entwurf, Freigabe",
+      caption: "Von der Branche zur Freigabe: Jedes Beispiel endet bei einem Menschen.",
+      fig: "0.1",
+      labels: ["Branche", "Ablauf", "Entwurf", "Freigabe"],
     },
   },
   blocks: [
@@ -124,6 +125,12 @@ const de: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Nicht jeder Ablauf braucht Automatisierung",
+    },
+    {
       t: "principles",
       id: "kriterien",
       label: "Kriterien",
@@ -196,9 +203,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Sketch: a flow from an enquiry through review and draft to approval by a person",
-      caption: "Every example ends with a person who approves.",
-      fig: "3.1",
+      alt: "Sketch of a workflow in four stations: sector, workflow, draft, approval",
+      caption: "From sector to approval: every example ends with a person.",
+      fig: "0.1",
+      labels: ["Sector", "Workflow", "Draft", "Approval"],
     },
   },
   blocks: [
@@ -296,6 +304,12 @@ const en: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Not every workflow needs automation",
+    },
+    {
       t: "principles",
       id: "kriterien",
       label: "Criteria",
@@ -368,9 +382,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Çizim: bir talepten inceleme ve taslak aşamalarından geçerek bir kişinin onayına uzanan akış",
-      caption: "Her örnek, onay veren bir insanla biter.",
-      fig: "3.1",
+      alt: "Dört istasyonlu bir iş akışı çizimi: sektör, akış, taslak, onay",
+      caption: "Sektörden onaya: Her örnek bir insanla biter.",
+      fig: "0.1",
+      labels: ["Sektör", "Akış", "Taslak", "Onay"],
     },
   },
   blocks: [
@@ -466,6 +481,12 @@ const tr: PageDef = {
           href: { label: "Microsoft 365 hakkında", to: "m365" },
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Her iş akışının otomasyona ihtiyacı yok",
     },
     {
       t: "principles",

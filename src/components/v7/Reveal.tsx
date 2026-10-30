@@ -1,10 +1,10 @@
-"use client";
-import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import type { CSSProperties, ReactNode } from "react";
 
 /**
- * Entrance: opacity + 16 px rise, 500 ms, once. `initial` is constant (hydration-safe); reduced motion
- * only shortens the duration to 0, so the final state is shown at once.
+ * Entrance: opacity + a short rise, once. CSS-first (src/styles/opsolid-v7-motion.css): a plain
+ * transition driven by one tiny IntersectionObserver (RevealObserver) after hydration; no framer-motion. Server component, no state, nothing that can
+ * differ between server and client. Reduced motion shows the final state at once (no animation at all).
+ * `delay` (seconds) is the stagger inside a list; it is capped so long lists never feel slow.
  */
 export function Reveal({
   children,
@@ -19,18 +19,11 @@ export function Reveal({
   y?: number;
   as?: "div" | "li" | "p" | "article";
 }) {
-  const reduce = useReducedMotion();
-  const M = motion[as];
+  const Tag = as;
+  const style = { ["--d" as string]: Math.min(delay, 0.24), ["--y" as string]: `${y}px` } as CSSProperties;
   return (
-    <M
-      data-reveal
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -6% 0px" }}
-      transition={{ duration: reduce ? 0 : 0.5, delay: reduce ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <Tag data-reveal className={`v7-reveal${className ? ` ${className}` : ""}`} style={style}>
       {children}
-    </M>
+    </Tag>
   );
 }

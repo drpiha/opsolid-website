@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate, die für aufeinander aufbauende Lernschritte stehen",
-      caption: "Schritt für Schritt, an Ihren Aufgaben.",
+      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Aufgaben, Übung, Regeln, Nachweis",
+      caption: "Von Ihren Aufgaben über Übung und Regeln zum Nachweis.",
       fig: "0.1",
+      labels: ["Aufgaben", "Übung", "Regeln", "Nachweis"],
     },
   },
   blocks: [
@@ -78,6 +79,12 @@ const de: PageDef = {
         { h: "Keine echten Kundendaten", p: "Geübt wird mit Beispieldaten oder mit Inhalten, die Sie ausdrücklich dafür freigeben." },
         { h: "Klare Grenzen", p: "Wir sagen, was KI kann und was nicht. In den Schulungen verkaufen wir weder Lizenzen noch Produkte." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Wir verkaufen Schulung, keine Lizenzen",
     },
     {
       t: "spec",
@@ -218,9 +225,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Sketch: nested rounded squares standing for learning steps that build on each other",
-      caption: "Step by step, on your own tasks.",
+      alt: "Sketch: nested rounded squares above a workflow in four stations: tasks, practice, rules, record",
+      caption: "From your tasks, through practice and rules, to a record.",
       fig: "0.1",
+      labels: ["Tasks", "Practice", "Rules", "Record"],
     },
   },
   blocks: [
@@ -272,6 +280,12 @@ const en: PageDef = {
         { h: "No real customer data", p: "We practise with sample data or with content you explicitly release for the purpose." },
         { h: "Clear limits", p: "We say what AI can do and what it cannot. In our training we sell neither licences nor products." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "We sell training, not licences",
     },
     {
       t: "spec",
@@ -412,9 +426,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Taslak: birbiri içine geçmiş yuvarlatılmış kareler, birbirini izleyen öğrenme adımlarını temsil eder",
-      caption: "Adım adım, kendi görevleriniz üzerinde.",
+      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: görevler, uygulama, kurallar, belge",
+      caption: "Görevlerinizden uygulama ve kurallar üzerinden belgeye.",
       fig: "0.1",
+      labels: ["Görevler", "Uygulama", "Kurallar", "Belge"],
     },
   },
   blocks: [
@@ -466,6 +481,12 @@ const tr: PageDef = {
         { h: "Gerçek müşteri verisi yok", p: "Örnek verilerle ya da sizin bu amaçla açıkça paylaştığınız içeriklerle çalışılır." },
         { h: "Net sınırlar", p: "YZ'nin neyi yapabildiğini ve neyi yapamadığını söyleriz. Eğitimlerde lisans da ürün de satmıyoruz." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Eğitim satıyoruz, lisans değil",
     },
     {
       t: "spec",

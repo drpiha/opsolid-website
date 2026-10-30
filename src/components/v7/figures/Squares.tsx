@@ -1,17 +1,18 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
 import type { L3 } from "@/lib/v7-routes";
+import { placeLabels } from "./fit";
 
 const COPPER = "#B5623A";
-const LABELS: Record<L3, string[]> = {
+const LABELS: Record<L3, readonly string[]> = {
   de: ["Anfrage", "Prüfung", "Entwurf", "Freigabe"],
   en: ["Request", "Review", "Draft", "Approval"],
   tr: ["Talep", "İnceleme", "Taslak", "Onay"],
 };
 const XS = [40, 146, 254, 360];
 
-/** Nested rounded squares (the mark) over a hairline workflow. Draws itself once; reduced motion shows the end state. */
-export function Squares({ alt, locale }: { alt: string; locale: L3 }) {
+/** Nested rounded squares (the mark) over a hairline workflow with four stage labels (per page via `labels`). Draws itself once; reduced motion shows the end state. */
+export function Squares({ alt, locale, labels: custom }: { alt: string; locale: L3; labels?: readonly string[] }) {
   const reduce = useReducedMotion();
   const draw = (i: number) => ({
     initial: { pathLength: 0, opacity: 0 },
@@ -24,7 +25,7 @@ export function Squares({ alt, locale }: { alt: string; locale: L3 }) {
     { inset: 60, rx: 42, o: 0.6 },
     { inset: 90, rx: 24, o: 0.42 },
   ];
-  const labels = LABELS[locale];
+  const labels = placeLabels(custom ?? LABELS[locale], XS, 400);
   return (
     <svg viewBox="0 0 400 440" className="h-auto w-full" role="img" aria-label={alt}>
       {squares.map((s, i) => (
@@ -46,8 +47,8 @@ export function Squares({ alt, locale }: { alt: string; locale: L3 }) {
       {XS.map((x, i) => (
         <g key={x}>
           <rect x={x - 8} y={384} width={16} height={16} rx={5} fill={i === 3 ? COPPER : "#F6F2EC"} stroke={COPPER} strokeWidth="1" />
-          <text x={x} y={426} textAnchor="middle" fill="#6B665F" fontSize="11" style={{ fontFamily: "var(--font-geist-mono), monospace", letterSpacing: "0.02em" }}>
-            {labels[i]}
+          <text x={labels[i].x} y={426} textAnchor="middle" fill="#6B665F" fontSize={labels[i].fs} style={{ fontFamily: "var(--font-geist-mono), monospace", letterSpacing: "0.02em" }}>
+            {labels[i].text}
           </text>
         </g>
       ))}

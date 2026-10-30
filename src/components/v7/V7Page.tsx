@@ -7,6 +7,7 @@ import { FaqSection } from "./FaqSection";
 import { Hero } from "./Hero";
 import { JsonLd } from "./JsonLd";
 import { MotionRoot } from "./MotionRoot";
+import { RevealObserver } from "./RevealObserver";
 import { AboutBlock } from "./blocks/about";
 import { CompareBlock } from "./blocks/compare";
 import { CoursesBlock } from "./blocks/courses";
@@ -28,6 +29,7 @@ import { SpecBlock } from "./blocks/spec";
 import { StepsBlock } from "./blocks/steps";
 import { TableBlock } from "./blocks/table";
 import { TextBlock } from "./blocks/text";
+import { StatementBlock } from "./blocks/statement";
 
 type Registry = { [T in BlockType]: ComponentType<BlockProps<T>> };
 
@@ -53,6 +55,7 @@ const REGISTRY: Registry = {
   about: AboutBlock,
   demo: DemoBlock,
   form: FormBlock,
+  statement: StatementBlock,
 };
 
 /** Renders one PageDef: hero, breadcrumbs (inner pages), numbered blocks, FAQ, CTA band and the JSON-LD graph. */
@@ -62,14 +65,22 @@ export function V7Page({ page, locale }: { page: PageDef; locale: L3 }) {
   return (
     <MotionRoot>
       <div className="v7">
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
+        <RevealObserver />
         {!home && <Breadcrumbs crumbs={crumbs} locale={locale} />}
         <Hero hero={page.hero} locale={locale} home={home} />
         {page.blocks.map((block, i) => {
           const Component = REGISTRY[block.t] as ComponentType<BlockProps<BlockType>>;
-          return <Component key={block.id} block={block} locale={locale} num={String(i + 1).padStart(2, "0")} />;
+          // Statement bands are not sections: they do not take a section number.
+          const n = page.blocks.slice(0, i + 1).filter((b) => b.t !== "statement").length;
+          const el = <Component key={block.id} block={block} locale={locale} num={String(n).padStart(2, "0")} />;
+          // The first block under the hero never reveals (the page opens complete).
+          return i === 0 ? (
+            <div key={block.id} className="v7-still contents">
+              {el}
+            </div>
+          ) : (
+            el
+          );
         })}
         {page.faq && <FaqSection faq={page.faq} locale={locale} />}
         <CtaBand cta={page.cta} locale={locale} />

@@ -28,12 +28,12 @@ export function Breadcrumbs({ crumbs, locale }: { crumbs: Crumb[]; locale: L3 })
                   {c.name}
                 </span>
               ) : (
-                <Link href={c.path} className="inline-flex min-h-[44px] items-center underline decoration-[#B5623A]/40 underline-offset-4 hover:text-[#16191D] hover:decoration-[#8A4524]">
+                <Link href={c.path} className="inline-flex min-h-[44px] min-w-[24px] items-center underline md:min-h-[28px] decoration-[#B5623A]/40 underline-offset-4 hover:text-[#16191D] hover:decoration-[#8A4524]">
                   {c.name}
                 </Link>
               )}
               {!last && (
-                <span aria-hidden="true" className="text-[#B5623A]">
+                <span aria-hidden="true" className="text-[#8A4524]">
                   /
                 </span>
               )}

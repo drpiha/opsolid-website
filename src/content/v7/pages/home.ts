@@ -81,6 +81,12 @@ const de: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Ihr Team entscheidet, die Maschine bereitet vor",
+    },
+    {
       t: "examples",
       id: "automatisieren",
       label: "Was wir automatisieren",
@@ -171,7 +177,7 @@ const de: PageDef = {
           alt: "Konzept-Render einer schwarzen NFC-Visitenkarte mit kupferfarbener Folienprägung auf Stein",
         },
         caption: "NFC-Karte, Konzept-Render",
-        fig: "6.1",
+        fig: "5.1",
       },
     },
     {
@@ -265,7 +271,7 @@ const en: PageDef = {
   crumb: "Home",
   hero: {
     eyebrow: "AI automation for services, hospitality, retail and practices",
-    h1: ["Process first.", "Then the AI", ""],
+    h1: ["Process first.", "AI second", ""],
     lede: "OpSolid advises companies on automation with AI: we find the workflows worth automating, build the first solution at a fixed price and, if you wish, keep looking after it.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See the method", to: "home", hash: "vorgehen" },
@@ -301,7 +307,7 @@ const en: PageDef = {
       steps: [
         {
           name: "Conversation",
-          h: "Getting to know each other",
+          h: "Intro call (30 minutes, free)",
           p: "A short conversation about your workflow.",
           result: "You know whether an AI check makes sense.",
           meta: "30 minutes, free",
@@ -328,6 +334,12 @@ const en: PageDef = {
           meta: "monthly by agreement",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Your team decides, the machine prepares",
     },
     {
       t: "examples",
@@ -385,7 +397,7 @@ const en: PageDef = {
           status: "bookable",
           statusLabel: "On request",
           format: "Half day · 10 people included, up to 15 · per team",
-          p: "Fundamentals, risks, data protection and rules for daily work. Plus a certificate of attendance for your records.",
+          p: "Fundamentals, risks, data protection and rules for daily work. Plus a confirmation of attendance for your records.",
           price: "from €1,790 net, each additional person €90",
           href: { label: "See the training", to: "kompetenz" },
         },
@@ -420,7 +432,7 @@ const en: PageDef = {
           alt: "Concept render of a black NFC business card with copper foil embossing on stone",
         },
         caption: "NFC card, concept render",
-        fig: "6.1",
+        fig: "5.1",
       },
     },
     {
@@ -482,7 +494,7 @@ const en: PageDef = {
       },
       {
         q: "What does getting started cost?",
-        a: "Getting to know each other is free and without obligation. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot, we agree scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
+        a: "The intro call is free and without obligation. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot, we agree scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
     ],
   },
@@ -579,6 +591,12 @@ const tr: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Karar ekibinizin, hazırlık makinenin",
+    },
+    {
       t: "examples",
       id: "automatisieren",
       label: "Neleri otomatikleştiriyoruz",
@@ -669,7 +687,7 @@ const tr: PageDef = {
           alt: "Taş üzerinde bakır folyo baskılı siyah bir NFC kartvizitin konsept görseli",
         },
         caption: "NFC kart, konsept görsel",
-        fig: "6.1",
+        fig: "5.1",
       },
     },
     {

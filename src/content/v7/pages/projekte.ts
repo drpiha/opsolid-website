@@ -70,6 +70,12 @@ const de: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Eigene Projekte, keine Kundenreferenzen",
+    },
+    {
       t: "rows",
       id: "bezug",
       label: "Bezug zur Beratung",
@@ -210,6 +216,12 @@ const en: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Our own projects, not client references",
+    },
+    {
       t: "rows",
       id: "bezug",
       label: "Link to consulting",
@@ -348,6 +360,12 @@ const tr: PageDef = {
           frame: "browser",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Kendi projelerimiz, müşteri referansı değil",
     },
     {
       t: "rows",

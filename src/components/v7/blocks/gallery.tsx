@@ -29,7 +29,7 @@ export function GalleryBlock({ block, locale, num }: BlockProps<"gallery">) {
                 {block.frame === "none" && (
                   <Image src={it.img.src} alt={it.img.alt} width={it.img.w} height={it.img.h} sizes="(min-width: 768px) 620px, 82vw" className="h-auto w-full rounded-[16px] border border-[#E3DCD1]" />
                 )}
-                <figcaption className={`${mono} mt-4 border-t border-[#E3DCD1] pt-3 text-[11px] uppercase leading-[1.6] text-[#6B665F]`}>
+                <figcaption className={`${mono} mt-4 border-t border-[#E3DCD1] pt-3 text-[12px] uppercase leading-[1.6] text-[#6B665F]`}>
                   <span className="mr-2 text-[#8A4524]">{FIG[locale]} {Number(num) || num}.{i + 1}</span>
                   {it.caption}
                 </figcaption>

@@ -26,30 +26,31 @@ export function h1Parts([pre, em, post]: [string, string, string]): [string, str
 /** Page hero: eyebrow with copper rule, H1 [pre, *emphasis*, post], lede, CTAs, fact line, optional figure. */
 export function Hero({ hero, locale, home }: { hero: PageDef["hero"]; locale: L3; home?: boolean }) {
   const [pre, em, post] = h1Parts(hero.h1);
+  // Only the figure column rises in. The eyebrow, H1, lede, CTAs and the fact line are visible on first paint
+  // (no faint mono label in a screenshot, and the LCP candidates are never delayed).
   const rise = (ms: number) => ({ ["--d" as string]: `${ms}ms` });
   return (
     <section aria-labelledby="hero-h" className={`${wrap} pb-4 pt-10 md:pt-20`}>
-      <div className="grid gap-x-8 gap-y-14 md:grid-cols-12">
-        <div className={hero.media ? "md:col-span-8" : "md:col-span-10"}>
-          <p className="v7-rise f-mono flex max-w-[64ch] items-start gap-3 text-[12px] uppercase leading-[1.6] text-[#8A4524] md:text-[13px]" style={rise(0)}>
+      <div className="grid gap-x-8 gap-y-8 md:grid-cols-12 md:gap-y-14 lg:items-center">
+        <div className={hero.media ? "md:col-span-8 lg:col-span-7" : "md:col-span-10"}>
+          <p className="f-mono flex max-w-[64ch] items-start gap-3 text-[12px] uppercase leading-[1.6] text-[#8A4524] md:text-[13px]">
             <span aria-hidden="true" className="mt-[0.8em] h-px w-8 shrink-0 bg-[#B5623A]" />
             {hero.eyebrow}
           </p>
           <h1
             id="hero-h"
-            className={`v7-rise f-display mt-8 font-light leading-[1.03] tracking-[-0.02em] text-[#16191D] ${
-              home ? "text-[clamp(2.5rem,6.8vw,6.5rem)]" : "text-[clamp(2.25rem,5.4vw,5.25rem)]"
+            className={`f-display mt-8 font-light leading-[1] tracking-[-0.025em] text-[#16191D] text-[clamp(2.75rem,12.5vw,3.4rem)] md:leading-[1.03] md:tracking-[-0.02em] ${
+              home ? "md:text-[clamp(2.5rem,6.8vw,6.5rem)]" : "md:text-[clamp(2.25rem,5.4vw,5.25rem)]"
             }`}
-            style={rise(80)}
           >
             {pre}
             {em && <em className="font-light italic text-[#B5623A]">{em}</em>}
             {post}
           </h1>
-          <p className="v7-rise mt-9 max-w-[38rem] text-[18px] leading-[1.6] text-[#16191D] md:text-[20px]" style={rise(160)}>
+          <p className="v7-lede mt-9 max-w-[38rem] text-[18px] leading-[1.6] text-[#16191D] md:text-[20px]">
             {hero.lede}
           </p>
-          <div className="v7-rise mt-10 flex flex-wrap items-center gap-x-8 gap-y-3" style={rise(240)}>
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
             <LinkTo link={hero.primary} locale={locale} className={btnPrimary}>
               {hero.primary.label}
               {arrow}
@@ -64,17 +65,17 @@ export function Hero({ hero, locale, home }: { hero: PageDef["hero"]; locale: L3
         </div>
 
         {hero.media && (
-          <div className="v7-rise md:col-span-4 md:pt-4" style={rise(200)}>
-            <MediaFigure media={hero.media} locale={locale} priority className="mx-auto max-w-[400px] md:max-w-none" />
+          <div className="v7-rise md:col-span-4 lg:col-span-5" style={rise(200)}>
+            <MediaFigure media={hero.media} locale={locale} priority className="mx-auto max-w-[400px] md:max-w-none lg:ml-auto lg:max-w-[480px]" />
           </div>
         )}
       </div>
 
       {hero.facts && hero.facts.length > 0 && (
-        <p className="v7-rise f-mono mt-16 border-t border-[#E3DCD1] pt-5 text-[12px] leading-[1.9] text-[#6B665F] md:mt-24 md:text-[13px]" style={rise(320)}>
+        <p className="f-mono mt-16 border-t border-[#E3DCD1] pt-5 text-[12px] leading-[1.9] text-[#6B665F] md:mt-24 md:text-[13px]">
           {hero.facts.map((f, i) => (
             <span key={f}>
-              {i > 0 && <span className="mx-1.5 text-[#B5623A]">·</span>}
+              {i > 0 && <span className="mx-1.5 text-[#8A4524]">·</span>}
               {f}
             </span>
           ))}

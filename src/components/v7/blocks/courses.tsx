@@ -15,7 +15,7 @@ export function CoursesBlock({ block, locale, num }: BlockProps<"courses">) {
         {block.items.map((c, i) => {
           const bookable = c.status === "bookable";
           return (
-            <Reveal as="li" key={c.name} delay={(i % 2) * 0.06} className={`flex flex-col rounded-[24px] border p-6 md:p-8 ${bookable ? "border-[#E3DCD1] bg-white" : "border-[#E3DCD1] bg-transparent"}`}>
+            <Reveal as="li" key={c.name} delay={(i % 2) * 0.06} className={`v7-card flex flex-col rounded-[24px] border p-6 md:p-8 ${bookable ? "border-[#E3DCD1] bg-white" : "border-[#E3DCD1] bg-transparent"}`}>
               <p
                 className={`${mono} self-start rounded-full border px-3 py-1 text-[12px] uppercase ${
                   bookable ? "border-[#8A4524] text-[#8A4524]" : "border-[#CFC6B8] text-[#6B665F]"

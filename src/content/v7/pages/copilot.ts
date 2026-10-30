@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Skizze: vier Stationen von Eingang über Regeln und Entwurf bis zum Menschen, der entscheidet",
-      caption: "Copilot entwirft. Ihr Team entscheidet.",
+      alt: "Skizze eines Ablaufs in vier Stationen: Aufgabe, Anweisung, Entwurf, Prüfung",
+      caption: "Von der Aufgabe zur Prüfung, im Alltag Ihres Teams.",
       fig: "0.1",
+      labels: ["Aufgabe", "Anweisung", "Entwurf", "Prüfung"],
     },
   },
   blocks: [
@@ -73,6 +74,12 @@ const de: PageDef = {
         { h: "Gute Anfragen und Kontrolle", p: "Aufgaben so beschreiben, dass der Entwurf brauchbar wird, und Ergebnisse vor der Weitergabe kontrollieren." },
         { h: "Ihre Abläufe", p: "Jede Person hält fest, welche Abläufe sie künftig mit Copilot unterstützt." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Copilot entwirft, Ihr Team entscheidet",
     },
     {
       t: "examples",
@@ -202,9 +209,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Sketch: four stations from input through rules and draft to the person who decides",
-      caption: "Copilot drafts. Your team decides.",
+      alt: "Sketch of a workflow in four stations: task, prompt, draft, review",
+      caption: "From task to review, in your team's daily work.",
       fig: "0.1",
+      labels: ["Task", "Prompt", "Draft", "Review"],
     },
   },
   blocks: [
@@ -251,6 +259,12 @@ const en: PageDef = {
         { h: "Asking well and checking", p: "Describe tasks so the draft becomes usable, and check results before they are passed on." },
         { h: "Your workflows", p: "Each person notes which workflows they will support with Copilot from now on." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Copilot drafts, your team decides",
     },
     {
       t: "examples",
@@ -380,9 +394,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Taslak: girişten kurallar ve taslak üzerinden karar veren kişiye uzanan dört istasyon",
-      caption: "Copilot taslak hazırlar. Ekibiniz karar verir.",
+      alt: "Dört istasyonlu bir iş akışı çizimi: görev, komut, taslak, kontrol",
+      caption: "Görevden kontrole, ekibinizin günlük işinde.",
       fig: "0.1",
+      labels: ["Görev", "Komut", "Taslak", "Kontrol"],
     },
   },
   blocks: [
@@ -429,6 +444,12 @@ const tr: PageDef = {
         { h: "İyi istek yazmak ve kontrol etmek", p: "Görevi, taslağın işe yarayacağı şekilde tarif etmek ve sonuçları iletmeden önce kontrol etmek." },
         { h: "Sizin iş akışlarınız", p: "Herkes, bundan sonra hangi işlerini Copilot ile destekleyeceğini not eder." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Copilot taslak hazırlar, ekibiniz karar verir",
     },
     {
       t: "examples",

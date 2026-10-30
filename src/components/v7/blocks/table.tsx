@@ -25,7 +25,7 @@ export function TableBlock({ block: b, locale, num }: BlockProps<"table">) {
                   <td
                     key={j}
                     data-label={b.cols[j]}
-                    className={`py-4 pr-6 align-top max-md:block max-md:py-1 max-md:before:font-[family-name:var(--font-geist-mono)] max-md:before:block max-md:before:text-[11px] max-md:before:uppercase max-md:before:text-[#6B665F] max-md:before:content-[attr(data-label)] ${
+                    className={`py-4 pr-6 align-top max-md:block max-md:py-1 max-md:before:font-[family-name:var(--font-geist-mono)] max-md:before:block max-md:before:text-[12px] max-md:before:uppercase max-md:before:text-[#6B665F] max-md:before:content-[attr(data-label)] ${
                       j === 0 ? "f-display text-[1.25rem] leading-[1.25] md:text-[1.375rem]" : "text-[#16191D]"
                     }`}
                   >

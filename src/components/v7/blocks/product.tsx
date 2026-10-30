@@ -27,14 +27,14 @@ export function ProductBlock({ block: b, locale, num }: BlockProps<"product">) {
             </ul>
             {b.price && (
               <p className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-[#E3DCD1] pt-5 text-[16px]">
-                <span className="f-mono text-[11px] uppercase text-[#6B665F]">{b.price.label}</span>
+                <span className="f-mono text-[12px] uppercase text-[#6B665F]">{b.price.label}</span>
                 <span className="f-mono text-[15px] text-[#8A4524]">{b.price.value}</span>
               </p>
             )}
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-8 border-l border-[#B5623A] pl-5 text-[16px] leading-[1.6] text-[#16191D]">
-              <span className="f-mono mb-1 block text-[11px] uppercase text-[#8A4524]">{STATUS[locale]}</span>
+              <span className="f-mono mb-1 block text-[12px] uppercase text-[#8A4524]">{STATUS[locale]}</span>
               {b.status}
             </p>
             {b.href && (

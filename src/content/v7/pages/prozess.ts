@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Eingang, Regeln, Entwurf, Mensch",
-      caption: "Der Mensch entscheidet. Die Routine läuft von allein.",
-      fig: "1.1",
+      alt: "Skizze eines Ablaufs in vier Stationen: Messen, Pilot, Einführung, Übergabe",
+      caption: "Erst messen, dann bauen, am Ende die Übergabe.",
+      fig: "0.1",
+      labels: ["Messen", "Pilot", "Einführung", "Übergabe"],
     },
   },
   blocks: [
@@ -106,6 +107,12 @@ const de: PageDef = {
           meta: "Betrieb monatlich nach Vereinbarung",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Fertige Software ist oft die bessere Wahl",
     },
     {
       t: "spec",
@@ -231,9 +238,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Sketch of a workflow in four stations: input, rules, draft, person",
-      caption: "A person decides. The routine runs on its own.",
-      fig: "1.1",
+      alt: "Sketch of a workflow in four stations: measure, pilot, rollout, handover",
+      caption: "Measure first, then build, then hand over.",
+      fig: "0.1",
+      labels: ["Measure", "Pilot", "Rollout", "Handover"],
     },
   },
   blocks: [
@@ -315,6 +323,12 @@ const en: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Ready-made software is often the better choice",
+    },
+    {
       t: "spec",
       id: "werkzeuge",
       label: "Tools",
@@ -386,7 +400,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost?",
-        a: "Getting to know each other is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "The intro call is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
       },
       {
         q: "What if the workflow changes later?",
@@ -438,9 +452,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: giriş, kurallar, taslak, kişi",
-      caption: "Kararı insan verir. Rutin kendiliğinden işler.",
-      fig: "1.1",
+      alt: "Dört istasyonlu bir iş akışı çizimi: ölçme, pilot, canlı, teslim",
+      caption: "Önce ölçülür, sonra kurulur, sonunda teslim edilir.",
+      fig: "0.1",
+      labels: ["Ölçme", "Pilot", "Canlı", "Teslim"],
     },
   },
   blocks: [
@@ -520,6 +535,12 @@ const tr: PageDef = {
           meta: "işletme aylık, anlaşmaya göre",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Hazır yazılım çoğu zaman daha iyi seçimdir",
     },
     {
       t: "spec",

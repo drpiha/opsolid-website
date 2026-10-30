@@ -15,7 +15,7 @@ export function OffersBlock({ block: b, locale, num }: BlockProps<"offers">) {
             as="li"
             key={it.name}
             delay={(i % 2) * 0.07}
-            className={`flex flex-col rounded-[24px] border p-6 md:p-7 ${it.featured ? "border-[#B5623A]/60 bg-white shadow-[0_24px_44px_-30px_rgba(22,25,29,0.3)]" : "border-[#E3DCD1] bg-white/70"}`}
+            className={`v7-card flex flex-col rounded-[24px] border p-6 md:p-7 ${it.featured ? "border-[#B5623A]/60 bg-white shadow-[0_24px_44px_-30px_rgba(22,25,29,0.3)]" : "border-[#E3DCD1] bg-white/70"}`}
           >
             <p className="f-mono text-[12px] uppercase text-[#8A4524]">{String(i + 1).padStart(2, "0")}</p>
             <h3 className="f-display mt-3 text-[1.5rem] leading-[1.15] md:text-[1.75rem]">{it.name}</h3>

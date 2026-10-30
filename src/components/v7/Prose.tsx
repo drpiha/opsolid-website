@@ -25,7 +25,7 @@ const prose = [
   "[&_caption]:mb-3 [&_caption]:text-left [&_caption]:font-[family-name:var(--font-geist-mono),ui-monospace,monospace] [&_caption]:tracking-[0.02em] [&_caption]:text-[12px] [&_caption]:uppercase [&_caption]:text-[#6B665F]",
   "[&_th]:border-b [&_th]:border-[#16191D] [&_th]:py-2 [&_th]:pr-4 [&_th]:text-left [&_th]:font-[family-name:var(--font-geist-mono),ui-monospace,monospace] [&_th]:tracking-[0.02em] [&_th]:text-[12px] [&_th]:font-normal [&_th]:uppercase [&_th]:text-[#6B665F]",
   "[&_td]:border-b [&_td]:border-[#E3DCD1] [&_td]:py-3 [&_td]:pr-4 [&_td]:align-top",
-  "[&_figure]:mt-8 [&_figcaption]:mt-2 [&_figcaption]:font-[family-name:var(--font-geist-mono),ui-monospace,monospace] [&_figcaption]:tracking-[0.02em] [&_figcaption]:text-[11px] [&_figcaption]:uppercase [&_figcaption]:text-[#6B665F]",
+  "[&_figure]:mt-8 [&_figcaption]:mt-2 [&_figcaption]:font-[family-name:var(--font-geist-mono),ui-monospace,monospace] [&_figcaption]:tracking-[0.02em] [&_figcaption]:text-[12px] [&_figcaption]:uppercase [&_figcaption]:text-[#6B665F]",
   "[&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[16px]",
 ].join(" ");
 
