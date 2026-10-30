@@ -93,7 +93,7 @@ export function DemoPlayer({ block }: { block: BlockOf<"demo"> }) {
       <div ref={box} aria-hidden="true" className="max-h-[360px] min-h-[160px] space-y-3 overflow-y-auto px-4 pb-5 md:px-6">
         {lines.map((l, i) => (
           <p key={i} className={`flex max-w-[52ch] flex-col gap-1 text-[16px] ${l.agent ? "" : "ml-auto items-end text-right"}`}>
-            <b className={`${mono} text-[11px] font-normal uppercase ${l.agent ? "text-[#8A4524]" : "text-[#6B665F]"}`}>{l.who}</b>
+            <b className={`${mono} text-[12px] font-normal uppercase ${l.agent ? "text-[#8A4524]" : "text-[#6B665F]"}`}>{l.who}</b>
             <span className={`rounded-[16px] px-4 py-2.5 ${l.agent ? "bg-[#F6F2EC]" : "border border-[#E3DCD1]"}`}>{l.text}</span>
           </p>
         ))}

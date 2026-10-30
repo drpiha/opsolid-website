@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, useScroll } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useInView, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import type { BlockOf } from "@/content/v7/types";
 import type { L3 } from "@/lib/v7-routes";
 import { Reveal } from "./Reveal";
@@ -44,10 +44,10 @@ function StepRow({ s, n, total, last, locale }: { s: Step; n: number; total: num
         <Reveal className="md:col-span-6" delay={0.1}>
           <div className="rounded-[18px] border border-[#E3DCD1] bg-white p-5 shadow-[0_1px_0_rgba(22,25,29,0.04),0_24px_44px_-28px_rgba(22,25,29,0.28)] md:p-6">
             <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#E3DCD1] pb-3">
-              <span className="f-mono text-[11px] uppercase text-[#6B665F]">
+              <span className="f-mono text-[12px] uppercase text-[#6B665F]">
                 {n}/{total} · {s.name}
               </span>
-              <span className="f-mono text-[11px] uppercase text-[#8A4524]">{t.result}</span>
+              <span className="f-mono text-[12px] uppercase text-[#8A4524]">{t.result}</span>
             </div>
             <p className="f-display text-[22px] leading-[1.25] md:text-[26px]">{s.result}</p>
           </div>
@@ -57,29 +57,101 @@ function StepRow({ s, n, total, last, locale }: { s: Step; n: number; total: num
   );
 }
 
-/** Process line: a copper line draws itself with scroll progress through the four steps. */
+const MARK = 36;
+/** Squares of the mark, outermost first; they fill copper from the innermost outwards, one per step passed. */
+const RINGS = [0, 1, 2, 3].map((k) => ({ inset: k * 4.5, rx: 11 - k * 2.4 }));
+
+/** The nested-squares mark (the brand's own sign) at the head of the line: one more square fills with each step passed. */
+function ProgressMark({ filled }: { filled: number }) {
+  return (
+    <svg width={MARK} height={MARK} viewBox={`0 0 ${MARK} ${MARK}`} aria-hidden="true" className="block overflow-visible">
+      <rect x={0.5} y={0.5} width={MARK - 1} height={MARK - 1} rx={11.5} fill="#F6F2EC" />
+      {RINGS.map((r, k) => {
+        const on = filled >= RINGS.length - k;
+        return (
+          <rect
+            key={k}
+            x={r.inset + 0.5}
+            y={r.inset + 0.5}
+            width={MARK - r.inset * 2 - 1}
+            height={MARK - r.inset * 2 - 1}
+            rx={r.rx}
+            stroke="#B5623A"
+            strokeWidth="1"
+            fill="#B5623A"
+            fillOpacity={on ? 0.3 : 0}
+            style={{ transition: "fill-opacity 200ms ease" }}
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+/**
+ * Process line: a copper line draws itself with scroll progress through the four steps; its head carries the
+ * nested-squares mark, which fills one square per step passed. Scroll-linked only (no pinning, no scroll
+ * hijack); under reduced motion the line is complete and the mark sits at the last step, fully filled.
+ */
 export function ProcessLine({ steps, locale }: { steps: Step[]; locale: L3 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLOListElement>(null);
   const [h, setH] = useState(0);
+  const [rm, setRm] = useState(false);
+  const [filled, setFilled] = useState(0);
+  const geo = useRef({ h: 0, nodes: [] as number[] });
+  const headY = useMotionValue(16);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 60%", "end 55%"] });
+
+  useEffect(() => setRm(!!reduce), [reduce]);
+
+  const sync = useCallback(
+    (p: number) => {
+      const { h: height, nodes } = geo.current;
+      if (!height || !nodes.length) return;
+      const y = rm ? nodes[nodes.length - 1] : 16 + Math.min(1, Math.max(0, p)) * (height - 16);
+      headY.set(y);
+      const n = rm ? nodes.length : nodes.filter((ny) => ny <= y + 1).length;
+      setFilled((prev) => (prev === n ? prev : n));
+    },
+    [headY, rm],
+  );
+
+  useMotionValueEvent(scrollYProgress, "change", sync);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const ro = new ResizeObserver(() => setH(el.offsetHeight));
+    const measure = () => {
+      geo.current = {
+        h: el.offsetHeight,
+        nodes: Array.from(el.children).map((c) => (c as HTMLElement).offsetTop + 18),
+      };
+      setH(el.offsetHeight);
+      sync(scrollYProgress.get());
+    };
+    const ro = new ResizeObserver(measure);
     ro.observe(el);
-    setH(el.offsetHeight);
+    measure();
     return () => ro.disconnect();
-  }, []);
+  }, [scrollYProgress, sync]);
 
   return (
     <ol ref={ref} className="relative">
       {h > 0 && (
         <svg className="pointer-events-none absolute left-0 top-0" width="24" height={h} viewBox={`0 0 24 ${h}`} aria-hidden="true">
           <path d={`M12 16V${h}`} stroke="#E3DCD1" strokeWidth="1" fill="none" />
-          <motion.path d={`M12 16V${h}`} stroke="#B5623A" strokeWidth="1.5" fill="none" style={{ pathLength: reduce ? 1 : scrollYProgress }} />
+          <motion.path d={`M12 16V${h}`} stroke="#B5623A" strokeWidth="1.5" fill="none" style={{ pathLength: rm ? 1 : scrollYProgress }} />
         </svg>
+      )}
+      {h > 0 && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute z-10"
+          style={{ left: 12 - MARK / 2, top: -MARK / 2, y: headY }}
+        >
+          <ProgressMark filled={filled} />
+        </motion.div>
       )}
       {steps.map((s, i) => (
         <StepRow key={s.name} s={s} n={i + 1} total={steps.length} last={i === steps.length - 1} locale={locale} />

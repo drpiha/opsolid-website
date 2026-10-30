@@ -72,7 +72,7 @@ export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; local
                 <h3 className={`${display} text-balance text-[1.5rem] leading-[1.15] md:text-[2rem]`}>{s.h}</h3>
                 <p className="mt-4 max-w-[52ch]">{s.p}</p>
                 <p className="mt-6 border-l border-[#B5623A] pl-5 text-[16px] leading-[1.6]">
-                  <span className={`${mono} mb-1 block text-[11px] uppercase text-[#8A4524]`}>{STAYS[locale]}</span>
+                  <span className={`${mono} mb-1 block text-[12px] uppercase text-[#8A4524]`}>{STAYS[locale]}</span>
                   {s.stays}
                 </p>
               </div>

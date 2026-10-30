@@ -35,7 +35,7 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
   const t = SITE_STR[locale];
   const ai = media.kind !== "svg" && media.ai;
   const caption = media.caption || media.fig || ai ? (
-    <figcaption className="f-mono mt-2 border-t border-[#E3DCD1] pt-3 text-[11px] uppercase leading-[1.6] text-[#6B665F]">
+    <figcaption className="f-mono mt-2 border-t border-[#E3DCD1] pt-3 text-[12px] uppercase leading-[1.6] text-[#6B665F]">
       {media.fig && (
         <span className="mr-2 text-[#8A4524]">
           {t.figure} {media.fig}
@@ -43,14 +43,14 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
       )}
       {media.caption}
       {ai && (
-        <span className="ml-2 whitespace-nowrap rounded-full border border-[#B5623A]/50 px-2 py-0.5 text-[10px] text-[#8A4524]">{t.aiLabel}</span>
+        <span className="ml-2 whitespace-nowrap rounded-full border border-[#B5623A]/50 px-2 py-0.5 text-[12px] text-[#8A4524]">{t.aiLabel}</span>
       )}
     </figcaption>
   ) : null;
 
   let body: React.ReactNode;
   if (media.kind === "svg") {
-    body = media.name === "squares" ? <Squares alt={media.alt} locale={locale} /> : <Flow alt={media.alt} locale={locale} />;
+    body = media.name === "squares" ? <Squares alt={media.alt} locale={locale} labels={media.labels} /> : <Flow alt={media.alt} locale={locale} labels={media.labels} />;
   } else if (media.kind === "image") {
     const sizes = media.frame === "phone" ? "(min-width: 1024px) 240px, 60vw" : "(min-width: 1024px) 720px, 100vw";
     if (media.frame === "browser") body = <BrowserFrame img={media.img} />;

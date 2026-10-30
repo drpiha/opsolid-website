@@ -69,7 +69,7 @@ export function V7Footer({ locale }: { locale: L3 }) {
           <nav aria-label={t.footerNav} className="grid grid-cols-2 gap-x-6 gap-y-10 md:col-span-8 md:grid-cols-4">
             {FOOTER_COLS.map((col) => (
               <div key={col.id}>
-                <h2 className="f-mono text-[11px] font-normal uppercase text-[#E3B79C]">{t.footer[col.id]}</h2>
+                <h2 className="f-mono text-[12px] font-normal uppercase text-[#E3B79C]">{t.footer[col.id]}</h2>
                 <ul className="mt-4 space-y-0.5">
                   {col.keys.map((k) => (
                     <li key={k}>

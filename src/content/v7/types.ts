@@ -31,7 +31,8 @@ export type Frame = "none" | "browser" | "phone";
  * Videos are decoration: no text, people, logos or claims in them.
  */
 export type Media =
-  | { kind: "svg"; name: "squares" | "flow"; alt: string; caption?: string; fig?: string }
+  /** `labels`: the four stage names drawn under the figure, per page (default: the consulting flow). */
+  | { kind: "svg"; name: "squares" | "flow"; alt: string; caption?: string; fig?: string; labels?: [string, string, string, string] }
   | { kind: "image"; img: Img; frame?: Frame; caption?: string; fig?: string; ai?: boolean }
   | {
       kind: "video";
@@ -131,7 +132,13 @@ export type Block =
       script: { who: string; agent: boolean; text: string; ms: number }[];
     })
   /** The contact form (POST /api/contact). Field labels live in src/content/v7/form.ts. */
-  | (SectionBase & { t: "form"; topics: { value: string; label: string }[]; intro?: string });
+  | (SectionBase & { t: "form"; topics: { value: string; label: string }[]; intro?: string })
+  /**
+   * The one break from the section template per page: a full-bleed ink band with the page's single most
+   * important sentence in display type (our own statement, never a quote). Not numbered; `label` names the
+   * band for screen readers; `note` is an optional short mono line under it.
+   */
+  | { t: "statement"; id: string; label: string; text: string; note?: string };
 
 export type BlockType = Block["t"];
 export type BlockOf<T extends BlockType> = Extract<Block, { t: T }>;

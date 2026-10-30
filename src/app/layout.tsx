@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import {
-  Fraunces,
   Inter,
   Instrument_Serif,
   JetBrains_Mono,
@@ -16,6 +15,7 @@ import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
 import "./globals.css";
 // Loaded after globals.css (which pulls in the legacy v4 marketing CSS) so the v7 base wins at equal specificity.
 import "../styles/opsolid-v7.css";
+import "../styles/opsolid-v7-motion.css";
 
 // v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
 // serve the marketing site. The legacy families below still serve app
@@ -55,25 +55,29 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// v7 display face: Fraunces with the wght and opsz axes only (the optical sizes carry the display look),
-// normal and italic, used at weight 300. With the SOFT axis and both subsets preloaded the fonts weighed
-// about 700 KiB and pushed the mobile LCP to 6.8 s; now ~146 KiB for both styles, latin-ext on demand.
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  axes: ["opsz"],
-  style: ["normal", "italic"],
+// v7 display face: Fraunces as two pre-instanced static files (weight 300, normal + italic, SOFT 50, WONK 0,
+// one display optical size of 72), subset to latin + latin-ext and the punctuation the copy uses, as WOFF.
+// ~63 KiB for both styles together (the old variable Google files were ~146 KiB, ~290 KiB with latin-ext
+// on /tr). Built from google/fonts ofl/fraunces with fontTools (varLib.instancer, then subset); licence in
+// ./fonts/fraunces-OFL.txt. Only weight 300 exists: every use sets font-weight 300 (.f-display, font-light).
+const fraunces = localFont({
+  src: [
+    { path: "./fonts/fraunces-300.woff", weight: "300", style: "normal" },
+    { path: "./fonts/fraunces-300-italic.woff", weight: "300", style: "italic" },
+  ],
   display: "swap",
   variable: "--font-fraunces",
 });
 
-// v7 mono labels (eyebrows, figure captions). Same file as `geist/font/mono`, declared here so it is
-// NOT preloaded: labels are never the LCP, so they should not compete with the display and body faces.
+// v7 mono labels (eyebrows, figure captions): Geist Mono, static weight 400, latin + latin-ext (~13 KiB).
+// Subset from the geist package's GeistMono-Variable.ttf, instanced at wght 400. Not preloaded: labels are
+// never the LCP, so they should not compete with the display and body faces.
 const geistMono = localFont({
-  src: "../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2",
+  src: "./fonts/geist-mono-400.woff",
   variable: "--font-geist-mono",
   display: "swap",
   preload: false,
-  weight: "100 900",
+  weight: "400",
 });
 
 // V2 redesign font stack — Plus Jakarta Sans serves both display and body

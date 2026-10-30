@@ -37,15 +37,19 @@ html[data-v4] body {
   html[data-v4] body { font-size: 18px; }
 }
 @media (max-width: 639px) {
-  html[data-v4] body { hyphens: auto; }
+  /* Phones: automatic hyphenation only for long words, with at least 4 letters on each side of the break
+     (word >= 8, before >= 4, after >= 4), so "Automatisierung" is not split as "Au-tomatisierung". */
+  html[data-v4] body { hyphens: auto; hyphenate-limit-chars: 8 4 4; }
 }
+/* Hero ledes are never auto-hyphenated (explicit soft hyphens only, for long German compounds). */
+html[data-v4] .v7-lede { hyphens: manual; }
 html[data-v4] body.grain::before { display: none; }
 
 html[data-v4] .f-display {
   font-family: var(--v7-display);
-  font-variation-settings: "SOFT" 50;
-  font-optical-sizing: auto;
+  /* Static pre-instanced Fraunces (weight 300, SOFT 50, WONK 0, opsz 72): no variation settings apply. */
   font-weight: 300;
+  font-synthesis: none;
   font-stretch: 100%;
 }
 html[data-v4] .f-mono {
@@ -97,6 +101,13 @@ html[data-v4] .v7 a { text-underline-offset: 6px; }
   .v7-rise { animation: none; }
   html[data-v4] * { scroll-behavior: auto !important; }
 }
+
+/* Text floor: nothing below 12 px (WCAG-minded; mono captions and labels included). Safety net for utility
+   classes that still ask for 9-11 px; the components should move to text-[12px]. */
+html[data-v4] [class*="text-[9px]"],
+html[data-v4] [class*="text-[10px]"],
+html[data-v4] [class*="text-[11px]"] { font-size: 12px; }
+html[data-v4] [class*="before:text-[11px]"]::before { font-size: 12px; }
 
 /* Video slot: reserve the poster's aspect ratio; phones in portrait use the portrait poster's ratio. */
 .v7-ar { aspect-ratio: var(--ar); }

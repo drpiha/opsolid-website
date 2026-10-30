@@ -1,0 +1,45 @@
+/* v7 motion system: reveal, micro-interactions and the signature motion. Scoped to the marketing flag
+   html[data-v4] like opsolid-v7.css. Everything here must leave the page complete and static under
+   prefers-reduced-motion. Timings: 120 to 200 ms for interaction, one easing curve. */
+
+/* ---------- Reveal (CSS transition, one tiny IntersectionObserver; once per element) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* RevealObserver hides below-the-fold elements after hydration and releases them on entry. */
+  html[data-v4] .v7-reveal.v7-pre { opacity: 0; transform: translate3d(0, var(--y, 16px), 0); }
+  html[data-v4] .v7-reveal.v7-pre.v7-in {
+    opacity: 1;
+    transform: none;
+    transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--d, 0) * 1s), transform 480ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--d, 0) * 1s);
+  }
+}
+/* The first block under the hero never reveals: the page opens complete. */
+html[data-v4] .v7-still .v7-reveal { opacity: 1; transform: none; }
+
+/* ---------- Micro-interactions (one set) ---------- */
+/* Arrow nudge: the trailing arrow (a glyph span or an svg) moves 4 px on hover and keyboard focus. */
+html[data-v4] .v7-link > [aria-hidden="true"]:last-child { display: inline-block; }
+html[data-v4] .v7-link > svg:last-child { flex-shrink: 0; }
+/* Buttons: colour change, press scale. */
+html[data-v4] .v7-btn { transition: background-color 150ms ease, transform 120ms ease; }
+html[data-v4] .v7-link { transition: color 150ms ease, text-decoration-color 150ms ease, background-color 150ms ease, transform 120ms ease; }
+/* Cards and rows: hairline to copper-deep on hover and keyboard focus inside. */
+html[data-v4] .v7-card { transition: border-color 160ms ease, box-shadow 160ms ease; }
+html[data-v4] .v7-card:hover,
+html[data-v4] .v7-card:focus-within { border-color: #8a4524; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-v4] .v7-link > [aria-hidden="true"]:last-child,
+  html[data-v4] .v7-link > svg:last-child { transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1); }
+  html[data-v4] .v7-link:hover > [aria-hidden="true"]:last-child,
+  html[data-v4] .v7-link:focus-visible > [aria-hidden="true"]:last-child,
+  html[data-v4] .v7-link:hover > svg:last-child,
+  html[data-v4] .v7-link:focus-visible > svg:last-child { transform: translateX(4px); }
+  html[data-v4] .v7-btn:active { transform: scale(0.98); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-v4] .v7-btn,
+  html[data-v4] .v7-link,
+  html[data-v4] .v7-card { transition: none; }
+}
+

@@ -113,7 +113,7 @@ export function BlogList({ locale }: { locale: L3 }) {
     <MotionRoot>
       <div className="v7">
         <Breadcrumbs crumbs={crumbs} locale={locale} />
-        <PlainHero eyebrow={t.eyebrow} h1={<>{t.h1[0]} <em className="font-light italic text-[#B5623A]">{t.h1[1]}</em></>} lede={t.lede} />
+        <PlainHero eyebrow={t.eyebrow} h1={<>{t.h1[0]} <em className="font-light italic text-[#8A4524]">{t.h1[1]}</em></>} lede={t.lede} />
         <section id="beitraege" aria-label={t.frame} className="mt-20 scroll-mt-20 md:mt-32">
           <Frame label={t.frame} note={t.frameNote}>
             <ul className="border-t border-[#16191D]">
@@ -122,7 +122,7 @@ export function BlogList({ locale }: { locale: L3 }) {
                   <p className="f-mono text-[12px] uppercase leading-[1.7] text-[#6B665F] md:col-span-3">
                     <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
                     <span className="mt-1 block text-[#8A4524]">
-                      {t.cat[p.category] ?? p.category} <span className="text-[#B5623A]">·</span> {getReadMinutes(p.slug, locale)} {t.min}
+                      {t.cat[p.category] ?? p.category} <span className="text-[#8A4524]">·</span> {getReadMinutes(p.slug, locale)} {t.min}
                     </span>
                   </p>
                   <div className="md:col-span-6">
