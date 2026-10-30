@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate und ein Ablauf von Anfrage über Prüfung und Entwurf zur Freigabe",
-      caption: "Von der Anfrage zur Freigabe, im eigenen Tenant.",
-      fig: "1.2",
+      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Tenant, Flow, Copilot, Übergabe",
+      caption: "Vom Tenant-Check zur Übergabe, in Ihrer eigenen Umgebung.",
+      fig: "0.1",
+      labels: ["Tenant", "Flow", "Copilot", "Übergabe"],
     },
   },
   blocks: [
@@ -117,6 +118,12 @@ const de: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Daten und Konten bleiben bei Ihnen",
+    },
+    {
       t: "spec",
       id: "voraussetzungen",
       label: "Voraussetzungen",
@@ -203,9 +210,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Sketch: nested rounded squares and a flow from request through review and draft to approval",
-      caption: "From request to approval, inside your own tenant.",
-      fig: "1.2",
+      alt: "Sketch: nested rounded squares above a workflow in four stations: tenant, flow, copilot, handover",
+      caption: "From tenant check to handover, inside your own environment.",
+      fig: "0.1",
+      labels: ["Tenant", "Flow", "Copilot", "Handover"],
     },
   },
   blocks: [
@@ -296,6 +304,12 @@ const en: PageDef = {
       ],
     },
     {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Data and accounts stay with you",
+    },
+    {
       t: "spec",
       id: "voraussetzungen",
       label: "Prerequisites",
@@ -338,7 +352,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost?",
-        a: "Getting to know each other is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "The intro call is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
       },
       {
         q: "How does this relate to the Copilot workshop?",
@@ -382,9 +396,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve talepten incelemeye, taslağa ve onaya uzanan bir akış",
-      caption: "Talepten onaya, kendi tenant'ınızın içinde.",
-      fig: "1.2",
+      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: tenant, flow, copilot, teslim",
+      caption: "Tenant incelemesinden teslime, kendi ortamınızda.",
+      fig: "0.1",
+      labels: ["Tenant", "Flow", "Copilot", "Teslim"],
     },
   },
   blocks: [
@@ -473,6 +488,12 @@ const tr: PageDef = {
           meta: "işletme aylık, anlaşmaya göre",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Veriler ve hesaplar sizde kalır",
     },
     {
       t: "spec",

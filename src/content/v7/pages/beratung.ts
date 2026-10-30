@@ -26,7 +26,7 @@ const de: PageDef = {
       name: "flow",
       alt: "Skizze: ein Ablauf von der Anfrage über Prüfung und Entwurf zur Freigabe durch eine Person",
       caption: "Erst der Ablauf, dann das Werkzeug. Die Freigabe bleibt bei Ihnen.",
-      fig: "1.1",
+      fig: "0.1",
     },
   },
   blocks: [
@@ -134,6 +134,12 @@ const de: PageDef = {
         },
       ],
       footnote: "Alle Preise netto zzgl. USt., nur für Unternehmen. Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt.",
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Jeder Schritt endet mit einem schriftlichen Ergebnis",
     },
     {
       t: "rows",
@@ -276,7 +282,7 @@ const en: PageDef = {
       name: "flow",
       alt: "Sketch: a flow from an enquiry through review and draft to approval by a person",
       caption: "Process first, tool second. Approval stays with you.",
-      fig: "1.1",
+      fig: "0.1",
     },
   },
   blocks: [
@@ -384,6 +390,12 @@ const en: PageDef = {
         },
       ],
       footnote: "All prices are net of VAT and for businesses only. We check with you which funding fits your project.",
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "Every step ends with a written result",
     },
     {
       t: "rows",
@@ -526,7 +538,7 @@ const tr: PageDef = {
       name: "flow",
       alt: "Çizim: bir talepten inceleme ve taslak aşamalarından geçerek bir kişinin onayına uzanan akış",
       caption: "Önce süreç, sonra araç. Onay sizde kalır.",
-      fig: "1.1",
+      fig: "0.1",
     },
   },
   blocks: [
@@ -634,6 +646,12 @@ const tr: PageDef = {
         },
       ],
       footnote: "Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir. Projenize hangi teşvikin uyduğunu sizinle birlikte değerlendiririz.",
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Her adım yazılı bir sonuçla biter",
     },
     {
       t: "rows",

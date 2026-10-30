@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Eingang, Regeln, Entwurf, Mensch",
-      caption: "Am Ende steht immer ein Mensch.",
-      fig: "1.3",
+      alt: "Skizze eines Ablaufs in vier Stationen: Anliegen, Regeln, Antwort, Übergabe",
+      caption: "Vom Anliegen zur Übergabe: Am Ende steht immer ein Mensch.",
+      fig: "0.1",
+      labels: ["Anliegen", "Regeln", "Antwort", "Übergabe"],
     },
   },
   blocks: [
@@ -76,6 +77,12 @@ const de: PageDef = {
         { h: "Standardfragen beantworten", p: "Leistungen, Abläufe und Zeiten erklären, auf Basis Ihrer eigenen Unterlagen. Kennt er die Antwort nicht, sagt er das und übergibt." },
         { h: "An Menschen übergeben", p: "Bei Beschwerden, Sonderfällen und Unsicherheit geht das Gespräch an eine Person Ihres Teams, ebenso, wenn Anrufende lieber mit einem Menschen sprechen." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Der Assistent sagt von Beginn an, dass er eine KI ist",
     },
     {
       t: "principles",
@@ -212,9 +219,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Sketch of a workflow in four stations: input, rules, draft, person",
-      caption: "A person always has the last word.",
-      fig: "1.3",
+      alt: "Sketch of a workflow in four stations: request, rules, reply, handover",
+      caption: "From request to handover: a person always has the last word.",
+      fig: "0.1",
+      labels: ["Request", "Rules", "Reply", "Handover"],
     },
   },
   blocks: [
@@ -264,6 +272,12 @@ const en: PageDef = {
         { h: "Answer standard questions", p: "Explain services, processes and hours, based on your own documents. If it does not know the answer, it says so and hands over." },
         { h: "Hand over to people", p: "For complaints, special cases and uncertainty, the conversation goes to a person on your team, as it does whenever a caller prefers to speak to a human." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "The assistant says from the start that it is an AI",
     },
     {
       t: "principles",
@@ -400,9 +414,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: giriş, kurallar, taslak, kişi",
-      caption: "Son sözü her zaman bir insan söyler.",
-      fig: "1.3",
+      alt: "Dört istasyonlu bir iş akışı çizimi: talep, kurallar, yanıt, aktarım",
+      caption: "Talepten aktarıma: Son sözü her zaman bir insan söyler.",
+      fig: "0.1",
+      labels: ["Talep", "Kurallar", "Yanıt", "Aktarım"],
     },
   },
   blocks: [
@@ -452,6 +467,12 @@ const tr: PageDef = {
         { h: "Standart soruları yanıtlamak", p: "Hizmetleri, süreçleri ve saatleri kendi belgelerinize dayanarak açıklamak. Yanıtı bilmiyorsa bunu söyler ve devreder." },
         { h: "İnsana devretmek", p: "Şikâyet, özel durum veya belirsizlikte görüşme ekibinizden bir kişiye aktarılır; arayan bir insanla konuşmak istediğinde de öyle." },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Asistan en başta yapay zeka olduğunu söyler",
     },
     {
       t: "principles",

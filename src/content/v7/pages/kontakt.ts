@@ -30,9 +30,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Eingang, Regeln, Entwurf, Mensch",
-      caption: "Am Ende steht immer ein Mensch.",
+      alt: "Skizze eines Ablaufs in vier Stationen: Nachricht, Antwort, Gespräch, Angebot",
+      caption: "Von Ihrer Nachricht zum Angebot: Nach jedem Schritt entscheiden Sie.",
       fig: "0.1",
+      labels: ["Nachricht", "Antwort", "Gespräch", "Angebot"],
     },
   },
   blocks: [
@@ -148,9 +149,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Sketch of a workflow in four stations: input, rules, draft, person",
-      caption: "A person always has the last word.",
+      alt: "Sketch of a workflow in four stations: message, reply, call, quote",
+      caption: "From your message to a quote: you decide after every step.",
       fig: "0.1",
+      labels: ["Message", "Reply", "Call", "Quote"],
     },
   },
   blocks: [
@@ -266,9 +268,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: giriş, kurallar, taslak, kişi",
-      caption: "Son sözü her zaman bir insan söyler.",
+      alt: "Dört istasyonlu bir iş akışı çizimi: mesaj, yanıt, görüşme, teklif",
+      caption: "Mesajınızdan teklife: Her adımdan sonra siz karar verirsiniz.",
       fig: "0.1",
+      labels: ["Mesaj", "Yanıt", "Görüşme", "Teklif"],
     },
   },
   blocks: [

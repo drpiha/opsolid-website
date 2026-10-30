@@ -24,9 +24,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate, die Schritt für Schritt kleiner werden",
+      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Betrieb, Abläufe, Auswahl, Bericht",
       caption: "Vom ganzen Betrieb zu dem einen Ablauf, der sich lohnt.",
-      fig: "2.1",
+      fig: "0.1",
+      labels: ["Betrieb", "Abläufe", "Auswahl", "Bericht"],
     },
   },
   blocks: [
@@ -115,6 +116,12 @@ const de: PageDef = {
         },
       ],
       footnote: "Alle Preise netto zzgl. USt., nur für Unternehmen. Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt.",
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Bericht auch ohne Empfehlung",
     },
     {
       t: "sample",
@@ -244,9 +251,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Sketch: nested rounded squares that get smaller step by step",
+      alt: "Sketch: nested rounded squares above a workflow in four stations: business, workflows, shortlist, report",
       caption: "From the whole business to the one workflow that is worth it.",
-      fig: "2.1",
+      fig: "0.1",
+      labels: ["Business", "Workflows", "Shortlist", "Report"],
     },
   },
   blocks: [
@@ -335,6 +343,12 @@ const en: PageDef = {
         },
       ],
       footnote: "All prices are net of VAT and for businesses only. We check with you which funding fits your project.",
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "A report even without a recommendation",
     },
     {
       t: "sample",
@@ -464,9 +478,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Çizim: adım adım küçülen, iç içe geçmiş yuvarlatılmış kareler",
+      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: işletme, akışlar, seçim, rapor",
       caption: "Bütün işletmeden, değen o tek iş akışına.",
-      fig: "2.1",
+      fig: "0.1",
+      labels: ["İşletme", "Akışlar", "Seçim", "Rapor"],
     },
   },
   blocks: [
@@ -555,6 +570,12 @@ const tr: PageDef = {
         },
       ],
       footnote: "Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir. Projenize hangi teşvikin uyduğunu sizinle birlikte değerlendiririz.",
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Öneri çıkmasa bile rapor var",
     },
     {
       t: "sample",

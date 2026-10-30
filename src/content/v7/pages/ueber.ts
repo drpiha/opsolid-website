@@ -31,9 +31,10 @@ const de: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate und ein Ablauf von Anfrage über Prüfung und Entwurf zur Freigabe",
-      caption: "Erst der Ablauf, dann die Technik.",
+      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Aufnahme, Messung, Pilot, Übergabe",
+      caption: "Aufnehmen, messen, pilotieren, übergeben.",
       fig: "0.1",
+      labels: ["Aufnahme", "Messung", "Pilot", "Übergabe"],
     },
   },
   blocks: [
@@ -93,6 +94,12 @@ const de: PageDef = {
           p: "Dokumentation und Zugänge gehören Ihnen. Bei Automatisierungen und internen Tools übergeben wir auch den Quellcode, sodass Ihre IT oder ein anderer Dienstleister übernehmen kann.",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Leitsatz",
+      text: "Wir verkaufen keine KI-Lizenzen",
     },
     {
       t: "principles",
@@ -198,9 +205,10 @@ const en: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Sketch: nested rounded squares and a flow from enquiry through review and draft to approval",
-      caption: "The workflow first, then the technology.",
+      alt: "Sketch: nested rounded squares above a workflow in four stations: intake, baseline, pilot, handover",
+      caption: "Map, measure, pilot, hand over.",
       fig: "0.1",
+      labels: ["Intake", "Baseline", "Pilot", "Handover"],
     },
   },
   blocks: [
@@ -260,6 +268,12 @@ const en: PageDef = {
           p: "Documentation and access belong to you. For automations and internal tools, we also hand over the source code, so your IT team or another provider can take over.",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Key point",
+      text: "We do not sell AI licences",
     },
     {
       t: "principles",
@@ -365,9 +379,10 @@ const tr: PageDef = {
     media: {
       kind: "svg",
       name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve talepten kontrol ve taslak aşamalarından onaya uzanan bir akış",
-      caption: "Önce iş akışı, sonra teknoloji.",
+      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: kayıt, ölçüm, pilot, teslim",
+      caption: "Kaydet, ölç, pilotla, teslim et.",
       fig: "0.1",
+      labels: ["Kayıt", "Ölçüm", "Pilot", "Teslim"],
     },
   },
   blocks: [
@@ -427,6 +442,12 @@ const tr: PageDef = {
           p: "Dokümantasyon ve erişimler size aittir. Otomasyonlarda ve şirket içi araçlarda kaynak kodu da teslim ederiz; böylece BT ekibiniz veya başka bir hizmet sağlayıcı devralabilir.",
         },
       ],
+    },
+    {
+      t: "statement",
+      id: "leitsatz",
+      label: "Ana fikir",
+      text: "Yapay zeka lisansı satmıyoruz",
     },
     {
       t: "principles",
