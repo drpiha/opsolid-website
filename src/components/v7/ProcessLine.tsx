@@ -42,7 +42,7 @@ function StepRow({ s, n, total, last, locale }: { s: Step; n: number; total: num
           <p className="mt-4 text-[#16191D]">{s.p}</p>
         </Reveal>
         <Reveal className="md:col-span-6" delay={0.1}>
-          <div className="rounded-[18px] border border-[#E3DCD1] bg-white p-5 shadow-[0_1px_0_rgba(22,25,29,0.04),0_24px_44px_-28px_rgba(22,25,29,0.28)] md:p-6">
+          <div className="rounded-[5px] border border-l-[3px] border-[#E3DCD1] border-l-[#8A4524] p-5 md:p-6">
             <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#E3DCD1] pb-3">
               <span className="f-mono text-[12px] uppercase text-[#6B665F]">
                 {n}/{total} · {s.name}
@@ -57,15 +57,18 @@ function StepRow({ s, n, total, last, locale }: { s: Step; n: number; total: num
   );
 }
 
-const MARK = 36;
-/** Squares of the mark, outermost first; they fill copper from the innermost outwards, one per step passed. */
-const RINGS = [0, 1, 2, 3].map((k) => ({ inset: k * 4.5, rx: 11 - k * 2.4 }));
+const MARK = 46;
+const DEEP = "#8A4524";
+/** Squares of the mark, outermost first; they fill copper-deep from the innermost outwards, one per step passed. */
+const RINGS = [0, 1, 2, 3].map((k) => ({ inset: k * (MARK / 8), rx: MARK * 0.31 - k * (MARK * 0.067) }));
 
 /** The nested-squares mark (the brand's own sign) at the head of the line: one more square fills with each step passed. */
-function ProgressMark({ filled }: { filled: number }) {
+function ProgressMark({ filled, pop }: { filled: number; pop: boolean }) {
+  // Each newly filled step remounts the mark with a 200 ms scale pop (1.14 to 1); the filled state is kept.
   return (
+    <motion.div key={filled} initial={pop && filled > 0 ? { scale: 1.14 } : false} animate={{ scale: 1 }} transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}>
     <svg width={MARK} height={MARK} viewBox={`0 0 ${MARK} ${MARK}`} aria-hidden="true" className="block overflow-visible">
-      <rect x={0.5} y={0.5} width={MARK - 1} height={MARK - 1} rx={11.5} fill="#F6F2EC" />
+      <rect x={0.5} y={0.5} width={MARK - 1} height={MARK - 1} rx={MARK * 0.32} fill="#F6F2EC" />
       {RINGS.map((r, k) => {
         const on = filled >= RINGS.length - k;
         return (
@@ -76,15 +79,15 @@ function ProgressMark({ filled }: { filled: number }) {
             width={MARK - r.inset * 2 - 1}
             height={MARK - r.inset * 2 - 1}
             rx={r.rx}
-            stroke="#B5623A"
-            strokeWidth="1"
-            fill="#B5623A"
-            fillOpacity={on ? 0.3 : 0}
-            style={{ transition: "fill-opacity 200ms ease" }}
+            stroke={DEEP}
+            strokeWidth="1.25"
+            fill={DEEP}
+            fillOpacity={on ? 0.26 : 0}
           />
         );
       })}
     </svg>
+    </motion.div>
   );
 }
 
@@ -141,7 +144,7 @@ export function ProcessLine({ steps, locale }: { steps: Step[]; locale: L3 }) {
       {h > 0 && (
         <svg className="pointer-events-none absolute left-0 top-0" width="24" height={h} viewBox={`0 0 24 ${h}`} aria-hidden="true">
           <path d={`M12 16V${h}`} stroke="#E3DCD1" strokeWidth="1" fill="none" />
-          <motion.path d={`M12 16V${h}`} stroke="#B5623A" strokeWidth="1.5" fill="none" style={{ pathLength: rm ? 1 : scrollYProgress }} />
+          <motion.path d={`M12 16V${h}`} stroke={DEEP} strokeWidth="1.75" fill="none" style={{ pathLength: rm ? 1 : scrollYProgress }} />
         </svg>
       )}
       {h > 0 && (
@@ -150,7 +153,7 @@ export function ProcessLine({ steps, locale }: { steps: Step[]; locale: L3 }) {
           className="pointer-events-none absolute z-10"
           style={{ left: 12 - MARK / 2, top: -MARK / 2, y: headY }}
         >
-          <ProgressMark filled={filled} />
+          <ProgressMark filled={filled} pop={!rm} />
         </motion.div>
       )}
       {steps.map((s, i) => (

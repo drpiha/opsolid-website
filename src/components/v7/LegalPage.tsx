@@ -26,7 +26,7 @@ export function PlainHero({
     <section aria-labelledby={id} className={`${wrap} pb-4 pt-10 md:pt-20`}>
       <div className="grid gap-x-8 md:grid-cols-12">
         <div className="md:col-span-10">
-          <p className="v7-rise f-mono flex max-w-[64ch] items-start gap-3 text-[12px] uppercase leading-[1.6] text-[#8A4524] md:text-[13px]" style={rise(0)}>
+          <p className="f-mono flex max-w-[64ch] items-start gap-3 text-[12px] uppercase leading-[1.6] text-[#8A4524] md:text-[13px]">
             <span aria-hidden="true" className="mt-[0.8em] h-px w-8 shrink-0 bg-[#B5623A]" />
             <span>{eyebrow}</span>
           </p>
