@@ -106,8 +106,8 @@ export const content: Content = {
     posts: [
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
-        title: "AB Yapay Zeka Yasası ve Dijital Omnibus: Güncel Hukuki Durum",
-        seoTitle: "AB Yapay Zeka Yasası ve Omnibus: Güncel Durum",
+        title: "AB Yapay Zeka Yasası ve Dijital Omnibus: güncel hukuki durum",
+        seoTitle: "AB Yapay Zeka Yasası ve Omnibus: güncel durum",
         excerpt:
           "(AB) 2026/1744 sayılı Tüzük Yapay Zeka Yasası'nı değiştiriyor: 4. madde (YZ yetkinliği) ve 50. maddede (şeffaflık) neler değişti, hangi tarihler geçerli.",
         category: "ai",
