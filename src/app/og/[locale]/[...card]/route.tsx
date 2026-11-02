@@ -25,13 +25,13 @@ function headline(h1: PageDef["hero"]["h1"]): string {
 
 function card(locale: L3, parts: string[]): { label: string; title: string } | null {
   const [key, slug, ...rest] = parts;
-  if (rest.length) return null;
+  if (rest.length || slug === "") return null;
   if (key === "blog") {
-    if (!slug) return { label: LABEL[locale].blog, title: BLOG_T[locale].h1.join(" ") };
+    if (slug === undefined) return { label: LABEL[locale].blog, title: BLOG_T[locale].h1.join(" ") };
     const post = BLOG[locale].posts.find((p) => p.slug === slug);
     return post ? { label: LABEL[locale].blog, title: post.title } : null;
   }
-  const set = slug ? undefined : pageSet(key as PageKey);
+  const set = slug === undefined ? pageSet(key as PageKey) : undefined;
   if (!set) return null;
   const page = set[locale];
   return { label: page.key === "home" ? OG_TAGLINE[locale] : LABEL[locale][page.key], title: headline(page.hero.h1) };

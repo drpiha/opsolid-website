@@ -25,7 +25,7 @@ export function FaqList({ items }: { items: FaqData["items"] }) {
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="group flex min-h-[64px] w-full items-center justify-between gap-6 py-4 text-left"
               >
-                <span className="f-display text-[22px] leading-[1.2] md:text-[26px]">{it.q}</span>
+                <span className="f-display text-[22px] leading-[1.2] transition-colors duration-200 group-hover:text-[#8A4524] motion-reduce:transition-none md:text-[26px]">{it.q}</span>
                 <svg aria-hidden="true" viewBox="0 0 20 20" className={`size-5 shrink-0 text-[#B5623A] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} fill="none">
                   <path d="M4 7.5l6 6 6-6" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
