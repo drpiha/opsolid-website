@@ -144,13 +144,33 @@ test("isV4Path knows every public marketing first segment and still excludes app
   for (const k of R.PAGE_KEYS) for (const l of R.L3_LOCALES) assert.equal(V4.isV4Path(R.href(k, l)), true, `${k}/${l}`);
 });
 
-test("every opsolid.de page URL in llms.txt is a current public URL", async () => {
-  const { readFileSync } = await import("node:fs");
-  const txt = readFileSync(new URL("../../public/llms.txt", import.meta.url), "utf8");
+async function llmsTxt(): Promise<string> {
+  const mod = await import("../../src/app/llms.txt/route.ts");
+  const L: typeof import("../../src/app/llms.txt/route.ts") = (mod as any).GET ? (mod as any) : (mod as any).default;
+  return L.GET().text();
+}
+
+test("every opsolid.de URL in llms.txt is a current public page or journal post", async () => {
+  const txt = await llmsTxt();
+  const { contents } = await import("../../src/content/index.ts").then((m: any) => (m.contents ? m : m.default));
   const valid = new Set<string>();
   for (const k of R.PAGE_KEYS) for (const l of R.L3_LOCALES) valid.add(R.absUrl(k, l));
-  const urls = (txt.match(/https:\/\/opsolid\.de[^\s)\]>,]*/g) ?? []).map((u) => u.replace(/[.;]+$/, ""));
-  const pageUrls = urls.map((u) => (u === "https://opsolid.de" ? "https://opsolid.de/" : u)).filter((u) => !/\.(txt|xml|png|jpg|svg|ico)$/.test(u) && !/\/blog\/./.test(u));
-  assert.ok(pageUrls.length > 10);
+  for (const l of R.L3_LOCALES) for (const p of contents[l].blog.posts) valid.add(R.absUrl("blog", l, `/${p.slug}`));
+  const urls = (txt.match(/https:\/\/opsolid\.de[^\s)\]>,]*/g) ?? []).map((u) => u.replace(/[.;:]+$/, ""));
+  const pageUrls = urls.map((u) => (u === "https://opsolid.de" ? "https://opsolid.de/" : u)).filter((u) => !/\.(txt|xml|png|jpg|svg|ico)$/.test(u));
+  assert.ok(pageUrls.length > 60);
   for (const u of pageUrls) assert.ok(valid.has(u), `llms.txt links a URL that is not a public page: ${u}`);
+});
+
+test("llms.txt follows the llmstxt.org shape and states only the published prices", async () => {
+  const txt = await llmsTxt();
+  assert.match(txt, /^# OpSolid\n\n> /);
+  for (const h of ["## Seiten (Deutsch)", "## Pages (English)", "## Sayfalar (Türkçe)", "## Journal", "## Optional"]) assert.ok(txt.includes(`\n${h}\n`), h);
+  // every page entry is a Markdown link with a note
+  const links = txt.split("\n").filter((l) => l.startsWith("- [") && l.includes("](https://opsolid.de"));
+  assert.ok(links.length >= 45 + 21, `${links.length} link lines`);
+  for (const l of links) assert.match(l, /^- \[[^\]]+\]\(https:\/\/opsolid\.de[^)]*\)(: .+)?$/);
+  assert.ok(!/[–—]/.test(txt), "no en or em dash");
+  for (const p of ["990 €", "1.790 €", "2.900 €", "5.900 €", "€990", "€1,790", "€2,900", "€5,900", "24,90 €"]) assert.ok(txt.includes(p), p);
+  assert.ok(!/490 €|€490/.test(txt), "the old KI-Check price must not come back");
 });

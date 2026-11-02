@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getPostContent, getReadMinutes } from "@/content/blog";
 import { LABEL } from "@/content/v7/site";
 import { SITE_CONFIG } from "@/lib/constants";
-import { ogImage } from "@/lib/seo-v4";
+import { shareImage } from "@/lib/seo-v7";
 import { absUrl, href, type L3 } from "@/lib/v7-routes";
 import { postUpdated } from "@/lib/v7-updated";
 import { BLOG, BLOG_T, fmtDate } from "./BlogList";
@@ -27,9 +27,9 @@ const L: Record<L3, { read: string; min: string; by: string; prev: string; next:
  * BlogPosting + WebPage + BreadcrumbList, with the full website, organization and founder nodes. The author is
  * the organization, as the visible byline says ("Von OpSolid").
  */
-function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; crumbs: Crumb[]; post: { title: string; excerpt: string; date: string; category: string } }) {
+function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; crumbs: Crumb[]; post: { title: string; excerpt: string; date: string; modified?: string; category: string } }) {
   const url = absUrl("blog", locale, `/${slug}`);
-  const modified = postUpdated(slug, post.date);
+  const modified = postUpdated(post);
   const graph = [
     ...sharedNodes(locale),
     {
@@ -41,7 +41,7 @@ function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; 
       datePublished: post.date,
       dateModified: modified,
       inLanguage: locale,
-      image: `${SITE_CONFIG.url}${ogImage(locale).url}`,
+      image: `${SITE_CONFIG.url}${shareImage(locale, "blog", `/${slug}`, post.title).url}`,
       articleSection: post.category,
       author: { "@id": ORG },
       publisher: { "@id": ORG },

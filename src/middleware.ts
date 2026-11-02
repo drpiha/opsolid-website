@@ -476,12 +476,13 @@ export async function middleware(req: NextRequest) {
   }
 
   // App folders without an index page (/de/card, /de/events, …) and unknown children of them would
-  // render the not-found UI with status 200 (a soft 404). Render the catch-all instead: a real 404
-  // with the localized page.
+  // render the not-found UI with status 200 (a soft 404). Render the localized catch-all 404 instead.
+  // The status is set here: a rewritten request keeps 200 even when the target calls notFound().
   if (isDeadAppPath(pathWithoutLocale)) {
     const url = req.nextUrl.clone();
     url.pathname = `/${firstSegment}/not-found`;
     const response = NextResponse.rewrite(url, {
+      status: 404,
       request: { headers: marketingHeaders(req, url.pathname, firstSegment, pathname, "") },
     });
     clearLegacyLocaleCookies(req, response);

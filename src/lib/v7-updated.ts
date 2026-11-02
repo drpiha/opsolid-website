@@ -12,15 +12,11 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   blog: "2026-11-02", // CTA price corrected to ab 990 € with the 60-day credit
 };
 
-/** Journal posts revised after publication (slug → date); every other post uses its publish date. */
-const POST_UPDATED: Record<string, string> = {
-  "eu-ai-act-august-2026-omnibus-compliance": "2026-11-02", // Official Journal facts, EUR-Lex sources
-};
-
 export function pageUpdated(key: PageKey): string {
   return PAGE_UPDATED[key] ?? SITE_UPDATED_ISO;
 }
 
-export function postUpdated(slug: string, published: string): string {
-  return POST_UPDATED[slug] ?? published;
+/** A journal post's last substantive revision: its `modified` date (set in the post list when the text changes), else the publish date. */
+export function postUpdated(post: { date: string; modified?: string }): string {
+  return post.modified ?? post.date;
 }

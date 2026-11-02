@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {};
   // Long headings get a short seoTitle for the <title>; the visible H1 keeps the full title.
   const m = v7Metadata(loc, "blog", { title: post.seoTitle ?? post.title, description: post.excerpt }, { sub: `/${params.slug}`, ogType: "article" });
-  const modifiedTime = postUpdated(params.slug, post.date);
+  const modifiedTime = postUpdated(post);
   return { ...m, openGraph: { ...m.openGraph, publishedTime: post.date, modifiedTime } as Metadata["openGraph"] };
 }
 

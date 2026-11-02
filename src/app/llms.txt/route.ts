@@ -1,20 +1,5 @@
 import { contents } from "@/content";
-import type { PageSet } from "@/content/v7/types";
-import { page as agenten } from "@/content/v7/pages/agenten";
-import { page as anwendungen } from "@/content/v7/pages/anwendungen";
-import { page as beratung } from "@/content/v7/pages/beratung";
-import { page as check } from "@/content/v7/pages/check";
-import { page as copilot } from "@/content/v7/pages/copilot";
-import { page as home } from "@/content/v7/pages/home";
-import { page as kompetenz } from "@/content/v7/pages/kompetenz";
-import { page as kontakt } from "@/content/v7/pages/kontakt";
-import { page as m365 } from "@/content/v7/pages/m365";
-import { page as opso } from "@/content/v7/pages/opso";
-import { page as projekte } from "@/content/v7/pages/projekte";
-import { page as prozess } from "@/content/v7/pages/prozess";
-import { page as schulungen } from "@/content/v7/pages/schulungen";
-import { page as trainer } from "@/content/v7/pages/trainer";
-import { page as ueber } from "@/content/v7/pages/ueber";
+import { PAGE_SETS } from "@/content/v7/pages";
 import { SITE_CONFIG, SITE_UPDATED_ISO } from "@/lib/constants";
 import { absUrl, type L3 } from "@/lib/v7-routes";
 import { pageUpdated, postUpdated } from "@/lib/v7-updated";
@@ -28,13 +13,13 @@ import { pageUpdated, postUpdated } from "@/lib/v7-updated";
 export const dynamic = "force-static";
 
 // Nav order: consulting first, then trainings, then the product, then the company.
-const PAGES: PageSet[] = [home, beratung, check, prozess, m365, agenten, anwendungen, schulungen, kompetenz, copilot, trainer, opso, projekte, ueber, kontakt];
+const PAGES = PAGE_SETS;
 
 const AI_ACT = "https://eur-lex.europa.eu/eli/reg/2024/1689/oj";
 const OMNIBUS = "https://eur-lex.europa.eu/eli/reg/2026/1744/oj";
 
 function stand(): string {
-  const dates = [SITE_UPDATED_ISO, ...PAGES.map((p) => pageUpdated(p.de.key)), ...contents.en.blog.posts.map((p) => postUpdated(p.slug, p.date))];
+  const dates = [SITE_UPDATED_ISO, ...PAGES.map((p) => pageUpdated(p.de.key)), ...contents.en.blog.posts.map((p) => postUpdated(p))];
   const [y, m, d] = dates.sort().at(-1)!.split("-");
   return `${d}.${m}.${y}`;
 }

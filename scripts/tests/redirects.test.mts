@@ -60,6 +60,9 @@ test("older pages land on the current pages in one hop", () => {
   assert.equal(getRetiredRedirectTarget("/solutions"), "/ki-beratung");
   assert.equal(getRetiredRedirectTarget("/use-cases"), "/ki-beratung/anwendungsfaelle");
   assert.equal(getRetiredRedirectTarget("/faq"), "/contact");
+  assert.equal(getRetiredRedirectTarget("/kontakt"), "/contact");
+  assert.equal(R.internalToPublic("de", "/contact"), "/contact");
+  assert.equal(R.internalToPublic("tr", "/contact"), "/iletisim");
   assert.equal(getRetiredRedirectTarget("/pricing"), "/contact");
   // the OpSo flow under /products/digital-card/* keeps working (the gallery is retired, see above)
   assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks"), null);

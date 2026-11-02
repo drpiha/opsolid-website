@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const post of en.blog.posts) {
     const sub = `/${post.slug}`;
     const languages = alternates("blog", sub);
-    const lastModified = day(postUpdated(post.slug, post.date));
+    const lastModified = day(postUpdated(post));
     for (const loc of L3_LOCALES) {
       entries.push({ url: absUrl("blog", loc, sub), lastModified, alternates: { languages } });
     }
