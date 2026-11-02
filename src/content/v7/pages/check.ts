@@ -8,7 +8,7 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "check",
   meta: {
-    title: "KI-Check ab 990 € netto: wo sich Automatisierung lohnt",
+    title: "KI-Check ab 990 € netto: wo Automatisierung lohnt",
     description:
       "Der KI-Check zeigt, welche Abläufe sich automatisieren lassen: 90 Minuten remote, schriftlicher Kurzbericht, NDA vor der Analyse, ab 990 € netto.",
   },
@@ -462,7 +462,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "check",
   meta: {
-    title: "YZ Kontrolü 990 €'dan itibaren: otomasyon nerede işe yarar?",
+    title: "YZ Kontrolü 990 €'dan itibaren: otomasyon nerede?",
     description:
       "YZ Kontrolü hangi iş akışlarının otomatikleştirilebileceğini gösterir: 90 dakika uzaktan, kısa yazılı rapor, önceden NDA, 990 €'dan (net). Yükümlülük yok.",
   },

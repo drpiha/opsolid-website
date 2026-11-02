@@ -1,10 +1,10 @@
 // =============================================================================
-// ARABIC CONTENT — M6 minimal locale (RTL)
+// ARABIC CONTENT - M6 minimal locale (RTL)
 // =============================================================================
 // See es.ts for the proxy/fallback rationale; this file follows the same
 // pattern. Translated keys override English; everything else falls back to
 // `en.ts`. The page-level `dir="rtl"` attribute is set in the locale-aware
-// `<html>` tag (see app/[locale]/layout.tsx — handled there once Arabic is
+// `<html>` tag (see app/[locale]/layout.tsx - handled there once Arabic is
 // added to the LOCALES list).
 // =============================================================================
 

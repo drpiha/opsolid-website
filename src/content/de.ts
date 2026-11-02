@@ -1,6 +1,6 @@
 ﻿// =============================================================================
 // GERMAN CONTENT (Deutsch)
-// Struktur identisch mit en.ts — alle Werte ins Deutsche übersetzt (Siezen).
+// Struktur identisch mit en.ts - alle Werte ins Deutsche übersetzt (Siezen).
 // =============================================================================
 
 import type { Content } from "./en";
@@ -88,7 +88,7 @@ export const content: Content = {
       },
       {
         title: "8. Ihre Rechte",
-        content: "Auskunft (Art. 15), Berichtigung (16), Löschung (17), Einschränkung (18), Datenübertragbarkeit (20), Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (21), Widerruf einer Einwilligung mit Wirkung für die Zukunft (7 Abs. 3) und Beschwerde bei einer Aufsichtsbehörde (77). Zuständig: Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2–4, 40213 Düsseldorf (ldi.nrw.de). Anfragen an info@opsolid.de.",
+        content: "Auskunft (Art. 15), Berichtigung (16), Löschung (17), Einschränkung (18), Datenübertragbarkeit (20), Widerspruch gegen Verarbeitungen auf Grundlage berechtigter Interessen (21), Widerruf einer Einwilligung mit Wirkung für die Zukunft (7 Abs. 3) und Beschwerde bei einer Aufsichtsbehörde (77). Zuständig: Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen, Kavalleriestraße 2-4, 40213 Düsseldorf (ldi.nrw.de). Anfragen an info@opsolid.de.",
       },
       {
         title: "9. Pflicht zur Bereitstellung, automatisierte Entscheidungen",
@@ -109,26 +109,27 @@ export const content: Content = {
     posts: [
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
-        title: "EU-KI-Verordnung ab 2. August 2026 anwendbar: Was die Omnibus-Änderungen für Ihr Unternehmen bedeuten",
-        seoTitle: "EU-KI-Verordnung ab 2. August 2026 anwendbar",
+        title: "EU-KI-Verordnung und Digital-Omnibus: Wo der Rechtsstand heute liegt",
+        seoTitle: "EU-KI-Verordnung und Digital-Omnibus: Rechtsstand",
         excerpt:
-          "Ab dem 2. August 2026 ist die KI-Verordnung weitgehend anwendbar. Was Omnibus VII geändert hat – und welche Transparenzpflichten ab diesem Tag gelten.",
+          "Die Verordnung (EU) 2026/1744 ändert die KI-Verordnung. Was sich bei Art. 4 zur KI-Kompetenz und bei Art. 50 zur Transparenz geändert hat und welche Fristen gelten.",
         category: "ai",
         date: "2026-07-07",
+        modified: "2026-11-02",
       },
       {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         seoTitle: "Workflow-Automatisierung: Was im Betrieb zählt",
         excerpt:
-          "Was eine Automatisierung im laufenden Betrieb trägt: Fehlerbehandlung, Datenhoheit, Nachvollziehbarkeit und Ausstiegskosten – unabhängig vom Werkzeug.",
+          "Was eine Automatisierung im laufenden Betrieb trägt: Fehlerbehandlung, Datenhoheit, Nachvollziehbarkeit und Ausstiegskosten - unabhängig vom Werkzeug.",
         category: "automation",
         date: "2026-03-15",
       },
       {
         slug: "5-signs-your-business-needs-process-automation",
         title: "5 Anzeichen, dass Ihr Unternehmen Prozessautomatisierung braucht",
-        seoTitle: "5 Anzeichen, dass Sie Prozessautomatisierung brauchen",
+        seoTitle: "Prozessautomatisierung: 5 Anzeichen für Bedarf",
         excerpt:
           "Verbringt Ihr Team zu viel Zeit mit manueller Arbeit? Hier sind die wichtigsten Indikatoren, dass es Zeit ist, in Automatisierung zu investieren.",
         category: "operations",
@@ -138,15 +139,16 @@ export const content: Content = {
         slug: "connecting-crm-erp-the-integration-playbook",
         title: "CRM und ERP verbinden: ein Überblick",
         excerpt:
-          "Ein praktischer Überblick zur Synchronisierung Ihrer CRM- und ERP-Systeme – Datensilos abbauen und eine zentrale Datenquelle schaffen.",
+          "Ein praktischer Überblick zur Synchronisierung Ihrer CRM- und ERP-Systeme - Datensilos abbauen und eine zentrale Datenquelle schaffen.",
         category: "integration",
         date: "2026-02-28",
       },
       {
         slug: "ai-chatbots-vs-rule-based-bots",
         title: "KI-Chatbots vs. regelbasierte Bots: Was brauchen Sie?",
+        seoTitle: "KI-Chatbots oder regelbasierte Bots?",
         excerpt:
-          "Den Unterschied zwischen KI-gestützten und regelbasierten Chatbots verstehen – und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
+          "Den Unterschied zwischen KI-gestützten und regelbasierten Chatbots verstehen - und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
         category: "ai",
         date: "2026-02-20",
       },
@@ -164,7 +166,7 @@ export const content: Content = {
         slug: "whatsapp-business-automation-guide",
         title: "WhatsApp-Business-Automatisierung: ein Überblick",
         excerpt:
-          "So automatisieren Sie Kundenkommunikation über WhatsApp – von Bestellbestätigungen bis zu Support-Bots – ohne die persönliche Note zu verlieren.",
+          "So automatisieren Sie Kundenkommunikation über WhatsApp - von Bestellbestätigungen bis zu Support-Bots - ohne die persönliche Note zu verlieren.",
         category: "automation",
         date: "2026-02-05",
       },
@@ -176,37 +178,37 @@ export const content: Content = {
       {
         question: "Was genau macht OpSolid?",
         answer:
-          "OpSolid entwickelt Automatisierungssysteme, Integrationen und interne Tools für Unternehmen. Wenn Ihr Team Zeit mit manueller, wiederkehrender Arbeit verbringt — Dateneingabe, E-Mail-Nachfassaktionen, Bestellverarbeitung, Berichterstellung — baut OpSolid Systeme, die das automatisch und zuverlässig erledigen.",
+          "OpSolid entwickelt Automatisierungssysteme, Integrationen und interne Tools für Unternehmen. Wenn Ihr Team Zeit mit manueller, wiederkehrender Arbeit verbringt - Dateneingabe, E-Mail-Nachfassaktionen, Bestellverarbeitung, Berichterstellung - baut OpSolid Systeme, die das automatisch und zuverlässig erledigen.",
         category: "general",
       },
       {
         question: "Welche Tools und Plattformen werden eingesetzt?",
         answer:
-          "Jedes Projekt wird als individuelles System ausgeliefert, gebaut aus produktionsreifen Engineering-Schichten — REST APIs, Message Queues, Postgres und Webhooks als Kern, ergänzt durch KI-Primitive, wo sie sich auszahlen. Die Architektur wird pro Anwendungsfall gewählt, nicht nach einem One-size-fits-all-Werkzeugkasten.",
+          "Jedes Projekt wird als individuelles System ausgeliefert, gebaut aus produktionsreifen Engineering-Schichten - REST APIs, Message Queues, Postgres und Webhooks als Kern, ergänzt durch KI-Primitive, wo sie sich auszahlen. Die Architektur wird pro Anwendungsfall gewählt, nicht nach einem One-size-fits-all-Werkzeugkasten.",
         category: "technical",
       },
       {
         question: "Warum individuelle Entwicklung statt einer SaaS-Plattform?",
         answer:
-          "Individuell entwickelte Systeme geben Ihnen volle Kontrolle über Ihre Daten, Ihre Workflows und die Kostenkurve. Keine Gebühren pro Ausführung, keine intransparenten Preisstufen, keine Abhängigkeit vom Anbieter. Die Architektur wird passgenau für Ihre Prozesse entworfen — und der Quellcode gehört Ihnen.",
+          "Individuell entwickelte Systeme geben Ihnen volle Kontrolle über Ihre Daten, Ihre Workflows und die Kostenkurve. Keine Gebühren pro Ausführung, keine intransparenten Preisstufen, keine Abhängigkeit vom Anbieter. Die Architektur wird passgenau für Ihre Prozesse entworfen - und der Quellcode gehört Ihnen.",
         category: "technical",
       },
       {
         question: "Wie lange dauert ein typisches Projekt?",
         answer:
-          "Die meisten Projekte dauern 2–6 Wochen von der Analyse bis zum Deployment, abhängig von der Komplexität. Einfache Automatisierungen können innerhalb von Tagen live sein. Komplexe Multi-System-Integrationen können länger dauern. Die Arbeit erfolgt iterativ — Sie sehen früh und regelmäßig Ergebnisse.",
+          "Die meisten Projekte dauern 2-6 Wochen von der Analyse bis zum Deployment, abhängig von der Komplexität. Einfache Automatisierungen können innerhalb von Tagen live sein. Komplexe Multi-System-Integrationen können länger dauern. Die Arbeit erfolgt iterativ - Sie sehen früh und regelmäßig Ergebnisse.",
         category: "process",
       },
       {
         question: "Gibt es nach dem Deployment laufenden Support?",
         answer:
-          "Ja. Monitoring, Wartung und Optimierung stehen nach dem Deployment zur Verfügung. Automatisierungssysteme entwickeln sich mit Ihrem Unternehmen weiter — laufender Support stellt sicher, dass Ihre Systeme Schritt halten. Dokumentation und Schulungen werden ebenfalls bereitgestellt, damit Ihr Team den täglichen Betrieb eigenständig verwalten kann.",
+          "Ja. Monitoring, Wartung und Optimierung stehen nach dem Deployment zur Verfügung. Automatisierungssysteme entwickeln sich mit Ihrem Unternehmen weiter - laufender Support stellt sicher, dass Ihre Systeme Schritt halten. Dokumentation und Schulungen werden ebenfalls bereitgestellt, damit Ihr Team den täglichen Betrieb eigenständig verwalten kann.",
         category: "process",
       },
       {
         question: "Was kostet es?",
         answer:
-          "Jedes Projekt ist anders. Ein kostenloses Erstgespräch hilft, Ihre Anforderungen zu verstehen, gefolgt von einem transparenten Angebot. Die Preisgestaltung ist projektbasiert, nicht stundenbasiert — Sie kennen die Investition im Voraus.",
+          "Jedes Projekt ist anders. Ein kostenloses Erstgespräch hilft, Ihre Anforderungen zu verstehen, gefolgt von einem transparenten Angebot. Die Preisgestaltung ist projektbasiert, nicht stundenbasiert - Sie kennen die Investition im Voraus.",
         category: "process",
       },
       {
@@ -218,7 +220,7 @@ export const content: Content = {
       {
         question: "Müssen bestehende Tools ersetzt werden?",
         answer:
-          "Nein. OpSolid entwickelt Systeme, die Ihre bestehenden Tools verbinden — nicht ersetzen. Das Ziel ist, das, was Sie bereits haben, besser zusammenarbeiten zu lassen und Datensilos sowie manuelle Übergaben zu eliminieren.",
+          "Nein. OpSolid entwickelt Systeme, die Ihre bestehenden Tools verbinden - nicht ersetzen. Das Ziel ist, das, was Sie bereits haben, besser zusammenarbeiten zu lassen und Datensilos sowie manuelle Übergaben zu eliminieren.",
         category: "general",
       },
       {
@@ -230,7 +232,7 @@ export const content: Content = {
       {
         question: "Welche Branchen werden bedient?",
         answer:
-          "OpSolid arbeitet branchenübergreifend — E-Commerce, Logistik, Fertigung, professionelle Dienstleistungen und mehr. Lösungen werden um Ihre Prozesse herum gebaut, nicht um Ihre Branchenbezeichnung. Wenn Ihre Abläufe wiederkehrende manuelle Arbeit beinhalten, kann Automatisierung helfen.",
+          "OpSolid arbeitet branchenübergreifend - E-Commerce, Logistik, Fertigung, professionelle Dienstleistungen und mehr. Lösungen werden um Ihre Prozesse herum gebaut, nicht um Ihre Branchenbezeichnung. Wenn Ihre Abläufe wiederkehrende manuelle Arbeit beinhalten, kann Automatisierung helfen.",
         category: "general",
       },
     ],
@@ -417,7 +419,7 @@ export const content: Content = {
           email: "Geschäfts-E-Mail",
           company: "Unternehmen (optional)",
           teamSize: "Wie viele Karten?",
-          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          teamSizeOptions: ["1", "2-5", "6-20", "20+"],
           message:
             "Noch etwas, das wir wissen sollten? (Branche, Link-Wünsche usw.)",
           consent:
@@ -506,7 +508,7 @@ export const content: Content = {
       },
       preview: {
         meta: {
-          title: "Digitale Visitenkarte — Live-Vorschau | OpSolid",
+          title: "Digitale Visitenkarte: Live-Vorschau | OpSolid",
           description:
             "Erstellen Sie Ihre digitale Visitenkarte selbst. Live-Vorschau auf dem Handy, zwischen Vorlagen wischen und kostenlos in Sekunden veröffentlichen.",
         },
@@ -572,17 +574,17 @@ export const content: Content = {
           eyebrow: "KARTE ERSTELLEN",
           title: "Ihre Daten, Ihr Design, Ihre Karte.",
           subtitle:
-            "Füllen Sie das Formular aus — die Karte wird direkt nach dem Veröffentlichen unter opsolid.de/c/… live.",
+            "Füllen Sie das Formular aus - die Karte wird direkt nach dem Veröffentlichen unter opsolid.de/c/… live.",
           howToCreate:
-            "Jeder kann eine Karte erstellen — ganz ohne Konto. Design wählen, Formular ausfüllen, in wenigen Minuten live. Sie erhalten einen privaten Link zum jederzeitigen Bearbeiten.",
+            "Jeder kann eine Karte erstellen - ganz ohne Konto. Design wählen, Formular ausfüllen, in wenigen Minuten live. Sie erhalten einen privaten Link zum jederzeitigen Bearbeiten.",
           eventJoinLabel:
             "Meine Karte im Teilnehmerverzeichnis anzeigen, damit andere Teilnehmer mich finden.",
           draftRestored:
-            "Ihr letzter Entwurf wurde wiederhergestellt — machen Sie dort weiter, wo Sie aufgehört haben.",
+            "Ihr letzter Entwurf wurde wiederhergestellt - machen Sie dort weiter, wo Sie aufgehört haben.",
           draftDiscard: "Neu beginnen",
           selectedTemplate: "Gewähltes Design",
           changeTemplate: "Ändern",
-          contactSection: "Kontakt — so erreichen wir Sie",
+          contactSection: "Kontakt - so erreichen wir Sie",
           contactName: "Ihr Name",
           contactEmail: "E-Mail",
           contactPhone: "Telefon",
@@ -590,17 +592,17 @@ export const content: Content = {
           callMeBackHint:
             "Wir melden uns innerhalb eines Werktags, um Details zu klären.",
           cardSection: "Inhalt Ihrer Karte",
-          sampleHint: "Beispielinhalt zum Ausprobieren — mit Ihren eigenen Daten überschreiben.",
+          sampleHint: "Beispielinhalt zum Ausprobieren - mit Ihren eigenen Daten überschreiben.",
           clearSample: "Leeren",
           cardLanguageLabel: "Kartensprache",
           cardLanguageHint:
             "Die Sprache, die Besucher Ihrer Karte sehen. Später im Editor änderbar.",
           spotlightSection: "Aktuell · Spotlight",
           spotlightHint:
-            "Eine auffällige, aktuelle Notiz direkt unter deinem Foto — ein kurzer Text und/oder ein Link. Leer lassen zum Ausblenden.",
+            "Eine auffällige, aktuelle Notiz direkt unter deinem Foto - ein kurzer Text und/oder ein Link. Leer lassen zum Ausblenden.",
           spotlightEnabled: "Auf meiner Karte anzeigen",
           spotlightBody: "Was gibt es gerade Neues?",
-          spotlightBodyPlaceholder: "z. B. Nehme im Juli neue Projekte an — meld dich 👋",
+          spotlightBodyPlaceholder: "z. B. Nehme im Juli neue Projekte an - meld dich 👋",
           spotlightLinkUrl: "Link (optional)",
           spotlightLinkLabel: "Button-Text (optional)",
           spotlightLinkLabelPlaceholder: "Mehr erfahren",
@@ -610,9 +612,9 @@ export const content: Content = {
           spotlightPlaceBottom: "Unten auf der Karte",
           statsSection: "Kennzahlen",
           statsHint:
-            "Echte Zahlen, die viele Designs als Kennzahlen-Leiste zeigen (z. B. 12 — Jahre).",
+            "Echte Zahlen, die viele Designs als Kennzahlen-Leiste zeigen (z. B. 12 - Jahre).",
           statsEmpty:
-            "Noch keine Kennzahlen. Fügen Sie echte Zahlen hinzu (z. B. 12 — Jahre Erfahrung). Ohne Kennzahlen zeigt die Karte diesen Bereich einfach nicht.",
+            "Noch keine Kennzahlen. Fügen Sie echte Zahlen hinzu (z. B. 12 - Jahre Erfahrung). Ohne Kennzahlen zeigt die Karte diesen Bereich einfach nicht.",
           statsValue: "12+",
           statsLabel: "Jahre Erfahrung",
           statsAdd: "Kennzahl hinzufügen",
@@ -627,7 +629,7 @@ export const content: Content = {
           locationHidden: "Ausblenden",
           locationAutoHint: "Aus Ihrer Adresse abgeleitet:",
           locationAutoEmpty:
-            "Noch keine Adresse — es wird kein Standort angezeigt, bis Sie eine hinzufügen.",
+            "Noch keine Adresse - es wird kein Standort angezeigt, bis Sie eine hinzufügen.",
           locationPlaceholder: "Remote · Berlin",
           locationHiddenHint: "Auf Ihrer Karte erscheint kein Standort-Chip.",
           copyFromContact: "Von oben übernehmen",
@@ -695,7 +697,7 @@ export const content: Content = {
             "Der Link enthält alle Formulardaten; die Karte wird erst veröffentlicht, wenn Sie sie erstellen.",
           videoSection: "Video (optional)",
           videoHint:
-            "YouTube- oder Vimeo-Link einfügen — er läuft direkt auf Ihrer Karte.",
+            "YouTube- oder Vimeo-Link einfügen - er läuft direkt auf Ihrer Karte.",
           videoLabel: "Video-Link",
           videoPlaceholder: "https://youtube.com/watch?v=…",
           videoInvalid: "Nur YouTube- oder Vimeo-Links werden unterstützt.",
@@ -705,24 +707,24 @@ export const content: Content = {
           videoPlacementBottom: "Unten",
           customSectionsSection: "Eigene Abschnitte (optional)",
           customSectionsHint:
-            "Bis zu 6 Abschnitte — Auszeichnungen, Sprachen, alles was Sie wollen.",
+            "Bis zu 6 Abschnitte - Auszeichnungen, Sprachen, alles was Sie wollen.",
           // Editable section labels
           labelsSection: "Abschnittstitel (optional)",
           labelsHint:
-            'Benennen Sie die Abschnitts-TITEL auf Ihrer Karte um (z.B. "Leistungen" → "Menü"). Den Inhalt selbst geben Sie in den Abschnitten oben ein — ein leerer Abschnitt (und sein Titel) erscheint nicht auf der Karte. Leer lassen behält die Vorgabe.',
+            'Benennen Sie die Abschnitts-TITEL auf Ihrer Karte um (z.B. "Leistungen" → "Menü"). Den Inhalt selbst geben Sie in den Abschnitten oben ein - ein leerer Abschnitt (und sein Titel) erscheint nicht auf der Karte. Leer lassen behält die Vorgabe.',
           customSectionAdd: "Abschnitt hinzufügen",
           customSectionTitle: "Titel",
           customSectionTitlePh: "z.B. Sprachen, Auszeichnungen, Presse",
           customSectionBody: "Inhalt",
           customSectionBodyPh:
-            "Fließtext — sichtbar für jeden, der Ihre Karte öffnet.",
+            "Fließtext - sichtbar für jeden, der Ihre Karte öffnet.",
           customSectionRemove: "Entfernen",
           customSectionsCount: "{n} von 6",
           customSectionAddImage: "Bild hinzufügen (optional)",
           // FAQ editor
           faqSection: "FAQ (optional)",
           faqHint:
-            "Bis zu 12 häufig gestellte Fragen — erscheinen als Akkordeon auf Ihrer Karte.",
+            "Bis zu 12 häufig gestellte Fragen - erscheinen als Akkordeon auf Ihrer Karte.",
           faqQuestion: "Frage",
           faqAnswer: "Antwort",
           faqAdd: "Frage hinzufügen",
@@ -732,7 +734,7 @@ export const content: Content = {
           // Testimonials editor
           testimonialsSection: "Kundenstimmen (optional)",
           testimonialsHint:
-            "Bis zu 8 Kundenzitate — werden auf allen Vorlagen angezeigt, die keine eigenen Stimmen enthalten.",
+            "Bis zu 8 Kundenzitate - werden auf allen Vorlagen angezeigt, die keine eigenen Stimmen enthalten.",
           testimonialAuthor: "Name (z. B. Maria K.)",
           testimonialRole: "Position / Unternehmen (optional)",
           testimonialQuote: "Zitat",
@@ -746,14 +748,14 @@ export const content: Content = {
           typographyDefaultLabel: "Vorlagen-Standard",
           typographyDefaultDesc: "Verwendet die Schriften der Vorlage.",
           typographyModernLabel: "Modern",
-          typographyModernDesc: "Inter + Manrope — minimalistisch, geschäftlich.",
+          typographyModernDesc: "Inter + Manrope - minimalistisch, geschäftlich.",
           typographyClassicLabel: "Klassisch",
           typographyClassicDesc:
-            "Cormorant Garamond + Source Sans 3 — elegant, traditionell.",
+            "Cormorant Garamond + Source Sans 3 - elegant, traditionell.",
           typographyEditorialLabel: "Editorial",
-          typographyEditorialDesc: "Playfair Display + Inter — Magazin-Feeling.",
+          typographyEditorialDesc: "Playfair Display + Inter - Magazin-Feeling.",
           typographyBoldLabel: "Markant",
-          typographyBoldDesc: "Bebas Neue + Inter — auffällig, sportlich.",
+          typographyBoldDesc: "Bebas Neue + Inter - auffällig, sportlich.",
           billingSection: "Zahlungsmodell",
           billingMonthly: "Monatlich",
           monthlyFooter: "Niedrige Einstiegshürde. Jederzeit kündbar.",
@@ -767,7 +769,7 @@ export const content: Content = {
           submitting: "Wird verarbeitet …",
           previewLabel: "Live-Vorschau",
           previewHint:
-            "Die Vorschau aktualisiert sich live — so sieht Ihre Karte nach Veröffentlichung aus.",
+            "Die Vorschau aktualisiert sich live - so sieht Ihre Karte nach Veröffentlichung aus.",
           invalidInput: "Bitte prüfen Sie die markierten Felder.",
           serverError: "Serverfehler. Bitte erneut versuchen.",
           noCheckoutUrl: "Keine Zahlungs-URL erhalten.",
@@ -813,7 +815,7 @@ export const content: Content = {
       edit: {
         title: "Karte bearbeiten",
         subtitle:
-          "Tippfehler, Telefonnummern, Social Links — ändern Sie alles selbst. Änderungen sind sofort live.",
+          "Tippfehler, Telefonnummern, Social Links - ändern Sie alles selbst. Änderungen sind sofort live.",
         publicUrlLabel: "Ihre öffentliche Karte:",
         liveBadge: "Karte ist live",
         slugRenameWarning:
@@ -859,7 +861,7 @@ export const content: Content = {
         adjustLogo: "Logo anpassen",
         expandSection: "Bereich öffnen",
         collapseSection: "Bereich schließen",
-        // WS-2 / WS-3 — vereinfachter Editor
+        // WS-2 / WS-3 - vereinfachter Editor
         backToCards: "Meine Karten",
         tierBasic: "Basis",
         tierMore: "Mehr Details",
@@ -867,7 +869,7 @@ export const content: Content = {
         allDesigns: "Alle Designs",
         allDesignsHint: "Alle 90+ Designs nach Branche durchsuchen.",
         performanceTitle: "Performance & CRM",
-        uploadCue: "Hochgeladen — zum Veröffentlichen auf Speichern tippen.",
+        uploadCue: "Hochgeladen - zum Veröffentlichen auf Speichern tippen.",
         completenessTitle: "Karten-Vollständigkeit",
         completenessSummary: "{done}/{total} erledigt",
         completenessGoto: "Los",
@@ -882,7 +884,7 @@ export const content: Content = {
         completenessBio: "Über mich",
         contactReadonlyLabel: "Ihre Kontaktdaten (nur Anzeige)",
         contactReadonlyHint:
-          "E-Mail, Name oder Telefon ändern? Antworten Sie auf Ihre Bestell-E-Mail — wir erledigen das.",
+          "E-Mail, Name oder Telefon ändern? Antworten Sie auf Ihre Bestell-E-Mail - wir erledigen das.",
         statusLabel: "Bestellstatus",
         save: "Änderungen speichern",
         saving: "Wird gespeichert …",
@@ -890,13 +892,13 @@ export const content: Content = {
         savedError: "Änderungen konnten nicht gespeichert werden. Bitte erneut versuchen.",
         shareHeading: "Karte teilen",
         shareBody:
-          "Laden Sie ein 1200×630-Bild Ihrer Karte herunter — für LinkedIn, Instagram oder Ihre Signatur.",
+          "Laden Sie ein 1200×630-Bild Ihrer Karte herunter - für LinkedIn, Instagram oder Ihre Signatur.",
         downloadOg: "Social-Bild herunterladen",
         shareNotReady:
           "Das Teilen-Bild steht zur Verfügung, sobald Ihre Karte veröffentlicht ist.",
         notFoundTitle: "Dieser Bearbeitungslink funktioniert nicht",
         notFoundBody:
-          "Der Link ist abgelaufen oder ungültig. Antworten Sie auf Ihre Bestell-E-Mail — wir senden Ihnen einen neuen Link.",
+          "Der Link ist abgelaufen oder ungültig. Antworten Sie auf Ihre Bestell-E-Mail - wir senden Ihnen einen neuen Link.",
       },
       cancel: {
         heading: "Abo kündigen",
@@ -919,9 +921,9 @@ export const content: Content = {
       },
       meta: {
         title:
-          "OpSo Smart — Kostenlose digitale Visitenkarte, in Sekunden live | OpSolid",
+          "OpSo Smart: Kostenlose digitale Visitenkarte, in Sekunden live | OpSolid",
         description:
-          "Erstellen Sie Ihre digitale Visitenkarte kostenlos und veröffentlichen Sie sie in Sekunden — Link, QR, WhatsApp, E-Mail. Keine App für den Empfänger, jederzeit bearbeitbar. EU-Hosting (Frankfurt), DSGVO-nativ.",
+          "Erstellen Sie Ihre digitale Visitenkarte kostenlos und veröffentlichen Sie sie in Sekunden - Link, QR, WhatsApp, E-Mail. Keine App für den Empfänger, jederzeit bearbeitbar. EU-Hosting (Frankfurt), DSGVO-nativ.",
       },
     },
 
@@ -955,15 +957,15 @@ export const content: Content = {
           },
           {
             q: "Welche Prozesse können automatisiert werden?",
-            a: "Alles Wiederkehrende mit klarem Input und klarem Output — Angebote, Dokumentenerstellung, Reporting, Datenabgleich, E-Mail-Routing, Support-Triage.",
+            a: "Alles Wiederkehrende mit klarem Input und klarem Output - Angebote, Dokumentenerstellung, Reporting, Datenabgleich, E-Mail-Routing, Support-Triage.",
           },
           {
             q: "Ist KI-Nutzung datenschutzkonform möglich?",
-            a: "Ja — mit der richtigen Modellauswahl, EU-Datenresidenz und einer schriftlichen Richtlinie. Wir richten das von Anfang an mit ein.",
+            a: "Ja, mit der richtigen Modellauswahl, EU-Datenresidenz und einer schriftlichen Richtlinie. Wir richten das von Anfang an mit ein.",
           },
           {
             q: "Muss mein Unternehmen bereits KI nutzen?",
-            a: "Nein. Viele Mandate starten ganz ohne KI im Einsatz — das Ergebnis ist trotzdem eine messbare Verbesserung.",
+            a: "Nein. Viele Mandate starten ganz ohne KI im Einsatz - das Ergebnis ist trotzdem eine messbare Verbesserung.",
           },
           {
             q: "Wie lange dauert ein erster Automation Check?",
@@ -971,11 +973,11 @@ export const content: Content = {
           },
           {
             q: "Können bestehende Tools wie Microsoft 365 weiter genutzt werden?",
-            a: "Ja — der größte Teil dessen, was wir bauen, sitzt auf den Tools auf, die Sie ohnehin schon bezahlen.",
+            a: "Ja, der größte Teil dessen, was wir bauen, sitzt auf den Tools auf, die Sie ohnehin schon bezahlen.",
           },
           {
             q: "Entwickelt OpSolid auch individuelle Lösungen?",
-            a: "Ja — wo Standard nicht passt, bauen wir interne Tools, eigene Workflows und Integrationen.",
+            a: "Ja, wo Standard nicht passt, bauen wir interne Tools, eigene Workflows und Integrationen.",
           },
         ],
       },
@@ -991,7 +993,7 @@ export const content: Content = {
           post: " zu machen?",
         },
         lead:
-          "Lassen Sie uns gemeinsam prüfen, welche Aufgaben in Ihrem Unternehmen mit KI und Automatisierung vereinfacht werden können. Keine Verpflichtung nach dem Gespräch — wenn es nicht passt, sagen wir das auch offen.",
+          "Lassen Sie uns gemeinsam prüfen, welche Aufgaben in Ihrem Unternehmen mit KI und Automatisierung vereinfacht werden können. Keine Verpflichtung nach dem Gespräch - wenn es nicht passt, sagen wir das auch offen.",
         ctaPrimary: "Kostenloses Erstgespräch buchen",
         ctaSecondary: "Wissen lesen",
         trustLine:
@@ -1013,7 +1015,7 @@ export const content: Content = {
           post: "",
         },
         lead:
-          "Erstellen Sie in einer Minute eine mobilfreundliche digitale Visitenkarte. Teilen Sie sie per Link, QR-Code, WhatsApp oder E-Mail — Ihre Empfänger brauchen keine App. Kontaktdaten, Terminlink und Portfolio aktualisieren Sie jederzeit zentral, ganz ohne Neudruck.",
+          "Erstellen Sie in einer Minute eine mobilfreundliche digitale Visitenkarte. Teilen Sie sie per Link, QR-Code, WhatsApp oder E-Mail - Ihre Empfänger brauchen keine App. Kontaktdaten, Terminlink und Portfolio aktualisieren Sie jederzeit zentral, ganz ohne Neudruck.",
         ctaPrimary: "Kostenlos erstellen",
         ctaSecondary: "Designs ansehen",
         features: [
@@ -1038,7 +1040,7 @@ export const content: Content = {
         eyebrow: "[ BRANCHENVORLAGEN ]",
         headline: "Ausgangspunkte, keine Zwangsjacken",
         lead:
-          "Vorlagenlayouts für Recht, Medizin, Handwerk und Gastronomie — jede mit den Kontaktfeldern, Compliance-Angaben und Kalenderintegrationen, die in der Branche täglich gebraucht werden. Jedes Layout ist ein Ausgangspunkt zum Forken und Anpassen, kein festes Theme.",
+          "Vorlagenlayouts für Recht, Medizin, Handwerk und Gastronomie - jede mit den Kontaktfeldern, Compliance-Angaben und Kalenderintegrationen, die in der Branche täglich gebraucht werden. Jedes Layout ist ein Ausgangspunkt zum Forken und Anpassen, kein festes Theme.",
         items: [
           {
             sector: "LAW",
@@ -1080,19 +1082,19 @@ export const content: Content = {
             num: "01",
             title: "In einer Minute erstellen",
             body:
-              "Design wählen, ein paar Felder ausfüllen, kostenlos veröffentlichen — ganz ohne Konto.",
+              "Design wählen, ein paar Felder ausfüllen, kostenlos veröffentlichen - ganz ohne Konto.",
           },
           {
             num: "02",
             title: "Überall teilen",
             body:
-              "Per Link, QR-Code, WhatsApp oder E-Mail. Ihre Empfänger öffnen die Karte im Browser — keine App nötig.",
+              "Per Link, QR-Code, WhatsApp oder E-Mail. Ihre Empfänger öffnen die Karte im Browser - keine App nötig.",
           },
           {
             num: "03",
             title: "Jederzeit bearbeiten",
             body:
-              "Neue Rolle, neue Nummer, neues Foto — einmal ändern, sofort auf Ihrer Live-Karte.",
+              "Neue Rolle, neue Nummer, neues Foto - einmal ändern, sofort auf Ihrer Live-Karte.",
           },
         ],
       },
@@ -1100,7 +1102,7 @@ export const content: Content = {
         eyebrow: "[ WHITE-GLOVE · FÜR SIE GESTALTET ]",
         headline: "Lieber von uns gestalten lassen?",
         lead:
-          "Zwei Done-for-you-Wege: White-Glove gestaltet Ihre Karte in 48 Stunden von Hand, oder wir erstellen ein Angebot für Teams und Sonderwünsche. Sagen Sie uns unten, was Sie brauchen — oder schreiben Sie uns einfach.",
+          "Zwei Done-for-you-Wege: White-Glove gestaltet Ihre Karte in 48 Stunden von Hand, oder wir erstellen ein Angebot für Teams und Sonderwünsche. Sagen Sie uns unten, was Sie brauchen - oder schreiben Sie uns einfach.",
         options: [
           {
             tag: "WHITE-GLOVE",
@@ -1114,13 +1116,13 @@ export const content: Content = {
             price: "Auf Anfrage",
             title: "Maßgeschneidert oder Team-Rollout",
             body:
-              "Besondere Layouts, viele Karten, eigene Domain — wir kalkulieren und senden Ihnen ein Angebot.",
+              "Besondere Layouts, viele Karten, eigene Domain - wir kalkulieren und senden Ihnen ein Angebot.",
           },
         ],
         channels: {
           heading: "Direkt erreichen",
-          note: "Am schnellsten per WhatsApp — meist antworten wir innerhalb eines Werktags.",
-          prefill: "Hallo OpSolid — ich hätte gern eine individuelle OpSo Smart Karte.",
+          note: "Am schnellsten per WhatsApp - meist antworten wir innerhalb eines Werktags.",
+          prefill: "Hallo OpSolid - ich hätte gern eine individuelle OpSo Smart Karte.",
           labels: {
             whatsappTr: "WhatsApp · TR",
             whatsappDe: "WhatsApp · DE",
@@ -1135,20 +1137,20 @@ export const content: Content = {
           company: "Unternehmen (optional)",
           industry: "Branche",
           teamSize: "Wie viele Karten?",
-          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          teamSizeOptions: ["1", "2-5", "6-20", "20+"],
           message: "Was brauchen Sie? Stil, Links, Sonderwünsche…",
           consent:
             "Ich willige ein, dass OpSolid diese Anfrage zur Beantwortung verarbeitet.",
           privacyLink: "Datenschutz",
           submit: "Anfrage senden",
           submitting: "Senden…",
-          success: "Danke — wir antworten innerhalb eines Werktags.",
+          success: "Danke, wir antworten innerhalb eines Werktags.",
           error: "Etwas ist schiefgelaufen. Bitte direkt an info@opsolid.de schreiben.",
         },
       },
       gallery: {
         heading: "Alle Designs",
-        subheading: "Die komplette Auswahl — passend für Ihre Branche.",
+        subheading: "Die komplette Auswahl - passend für Ihre Branche.",
         countLabel: "Designs",
         allChip: "Alle",
         useDesign: "Dieses Design wählen",
@@ -1190,7 +1192,7 @@ export const content: Content = {
         eyebrow: "[ PREISE ]",
         headline: "Kostenlos starten. Zahlen, wenn Sie mehr brauchen.",
         lead:
-          "Kostenlos erstellen und veröffentlichen. Upgraden Sie für eigene Domain und Analytics — oder lassen Sie alles von uns gestalten.",
+          "Kostenlos erstellen und veröffentlichen. Upgraden Sie für eigene Domain und Analytics - oder lassen Sie alles von uns gestalten.",
       },
     },
 
@@ -1203,7 +1205,7 @@ export const content: Content = {
 
     pricing: {
       meta: {
-        title: "Preise — Standard, Professional, Enterprise | OpSolid",
+        title: "Preise: Standard, Professional, Enterprise | OpSolid",
         description: "Preisübersicht für die Produkte von OpSolid (Preise für die meisten Produkte auf Anfrage): Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation und Kutasia.",
       },
       hero: {
@@ -1343,7 +1345,7 @@ export const content: Content = {
         {
           id: "whatsapp-agent",
           name: "WhatsApp Agent",
-          tagline: "WhatsApp Business API — automatisierte Antworten, Broadcast, Übergabe.",
+          tagline: "WhatsApp Business API - automatisierte Antworten, Broadcast, Übergabe.",
           href: "/products/whatsapp-agent",
           tiers: [
             {
@@ -1483,7 +1485,7 @@ export const content: Content = {
         {
           id: "custom-automation",
           name: "Custom Automation",
-          tagline: "Workflow-Builds — Sprint, Projekt oder Retainer. Kein SaaS.",
+          tagline: "Workflow-Builds - Sprint, Projekt oder Retainer. Kein SaaS.",
           href: "/products/custom-automation",
           tiers: [
             {
@@ -1499,7 +1501,7 @@ export const content: Content = {
               name: "Professional",
               setup: "Preis auf Anfrage",
               monthly: "Preis auf Anfrage",
-              included: ["3–5 Workflows", "Discovery-Workshop", "Build + 90 Tage Support", "Integration + Custom Code", "Ops-Dashboard"],
+              included: ["3-5 Workflows", "Discovery-Workshop", "Build + 90 Tage Support", "Integration + Custom Code", "Ops-Dashboard"],
               overage: "",
               forWhom: "Mid-Market Digital-Ops-Projekt",
               isHighlighted: true,
@@ -1518,7 +1520,7 @@ export const content: Content = {
         {
           id: "kutasia",
           name: "Kutasia",
-          tagline: "Unified KI-Workspace — WhatsApp, Telegram, E-Mail und Voice in einem Posteingang, mit Hero-Automatisierungen und messetauglichem Demo-Modus.",
+          tagline: "Unified KI-Workspace - WhatsApp, Telegram, E-Mail und Voice in einem Posteingang, mit Hero-Automatisierungen und messetauglichem Demo-Modus.",
           href: "/products/kutasia",
           tiers: [
             {
@@ -1557,7 +1559,7 @@ export const content: Content = {
     send: {
       triggerLabel: "Meine Daten senden",
       modalTitle: "Meine Daten senden",
-      modalSubtitle: "Hinterlasse deine Kontaktdaten — wir melden uns.",
+      modalSubtitle: "Hinterlasse deine Kontaktdaten - wir melden uns.",
       submitLabel: "Senden",
       submittingLabel: "Wird gesendet…",
       closeLabel: "Schließen",
@@ -1606,7 +1608,7 @@ export const content: Content = {
       storyHint: "Für WhatsApp-Status & Instagram-Stories",
       vcardVisitor: "Kontakt speichern",
       vcardOwner: "Meine vCard (.vcf)",
-      vcardOwnerHint: "Weiterleiten — andere speichern dich in ihren Kontakten",
+      vcardOwnerHint: "Weiterleiten - andere speichern dich in ihren Kontakten",
       emailSignature: "E-Mail-Signatur",
       copy: "Kopieren",
       openCard: "Karte öffnen",
@@ -1619,7 +1621,7 @@ export const content: Content = {
     },
     owner: {
       banner:
-        "Du bist der Inhaber dieser Karte — Änderungen werden sofort veröffentlicht.",
+        "Du bist der Inhaber dieser Karte - Änderungen werden sofort veröffentlicht.",
       publicBannerLabel: "Deine Karte",
       editLabel: "Bearbeiten",
       previewLabel: "Vorschau-Modus",
@@ -1629,7 +1631,7 @@ export const content: Content = {
     manage: {
       title: "Kartenverwaltung",
       subtitle:
-        "Statistiken, Teilen-Links und Leads für deine Karte — alles an einem Ort.",
+        "Statistiken, Teilen-Links und Leads für deine Karte - alles an einem Ort.",
       backToCard: "Karte ansehen",
       editCard: "Karte bearbeiten",
       statsHeading: "Letzte 30 Tage",
@@ -1640,7 +1642,7 @@ export const content: Content = {
       statScans: "Link-Scans",
       linksHeading: "Teilen-Links",
       linksHint:
-        "Erstelle pro Kanal einen eigenen Kurzlink — QR auf Drucksachen, E-Mail-Signatur, Instagram-Bio — und sieh, welcher Kanal Besucher bringt.",
+        "Erstelle pro Kanal einen eigenen Kurzlink - QR auf Drucksachen, E-Mail-Signatur, Instagram-Bio - und sieh, welcher Kanal Besucher bringt.",
       linkLabelPlaceholder: "Bezeichnung (z. B. Messe-QR)",
       linkCodePlaceholder: "Wunsch-Code (optional)",
       linkSourcePlaceholder: "Quelle (z. B. instagram)",
@@ -1649,7 +1651,7 @@ export const content: Content = {
       creating: "Wird erstellt …",
       linkLimitReached: "Link-Limit für diese Karte erreicht.",
       codeUnavailable:
-        "Dieser Code ist vergeben oder ungültig — bitte einen anderen wählen.",
+        "Dieser Code ist vergeben oder ungültig - bitte einen anderen wählen.",
       linkCreateFailed:
         "Der Link konnte nicht erstellt werden. Bitte erneut versuchen.",
       scansLabel: "Scans",
@@ -1661,7 +1663,7 @@ export const content: Content = {
       disableLabel: "Deaktivieren",
       enableLabel: "Aktivieren",
       noLinksYet:
-        "Noch keine Teilen-Links. Deine Karten-URL funktioniert immer — Kurzlinks ergänzen das Tracking pro Kanal.",
+        "Noch keine Teilen-Links. Deine Karten-URL funktioniert immer - Kurzlinks ergänzen das Tracking pro Kanal.",
       leadsHeading: "Leads",
       leadsHint:
         "Personen, die ihre Kontaktdaten über deine Karte geteilt haben.",
@@ -1672,13 +1674,13 @@ export const content: Content = {
       leadStatusQualified: "Qualifiziert",
       leadStatusArchived: "Archiviert",
       notPublished:
-        "Diese Karte ist noch nicht veröffentlicht — Links und Statistiken werden aktiv, sobald sie live ist.",
-      publicLinkLabel: "Ihr öffentlicher Kartenlink — diesen teilen",
+        "Diese Karte ist noch nicht veröffentlicht - Links und Statistiken werden aktiv, sobald sie live ist.",
+      publicLinkLabel: "Ihr öffentlicher Kartenlink - diesen teilen",
       publicLinkHint:
         "Jeder mit diesem Link sieht Ihre Karte. Für Chats, E-Mail-Signaturen, QR-Codes.",
-      privateLinkLabel: "Ihre privaten Links — nur für Sie",
+      privateLinkLabel: "Ihre privaten Links - nur für Sie",
       privateLinkHint:
-        "Diese Verwaltungsseite und Ihre Bearbeitungsseite sind privat: Wer ihre Links hat, kann Ihre Karte ändern. Sie stehen in Ihrer Karten-E-Mail — niemals weitergeben.",
+        "Diese Verwaltungsseite und Ihre Bearbeitungsseite sind privat: Wer ihre Links hat, kann Ihre Karte ändern. Sie stehen in Ihrer Karten-E-Mail - niemals weitergeben.",
     },
     eventDirectory: {
       eyebrow: "Teilnehmerverzeichnis",
@@ -1690,29 +1692,29 @@ export const content: Content = {
       participantsHint:
         "Karten, deren Inhaber sich öffentlich listen lassen. Antippen, um den Kontakt anzusehen und zu speichern.",
       emptyState:
-        "Noch keine Teilnehmer gelistet — seien Sie der Erste: Karte erstellen und ins Verzeichnis eintragen.",
+        "Noch keine Teilnehmer gelistet - seien Sie der Erste: Karte erstellen und ins Verzeichnis eintragen.",
       searchPlaceholder: "Nach Name, Firma oder Rolle suchen …",
       noResults: "Keine Teilnehmer passen zu Ihrer Suche.",
     },
     mobileAppSoon:
-      "Mobile App kommt bald — Karte unterwegs erstellen und verwalten. Heute funktioniert alles im Browser.",
+      "Mobile App kommt bald - Karte unterwegs erstellen und verwalten. Heute funktioniert alles im Browser.",
     quickCreate: {
       title: "Ihre Karte in 60 Sekunden",
       subtitle:
-        "Fünf Felder, ein Button — Ihre digitale Visitenkarte ist sofort live. Kostenlos, ohne Konto.",
+        "Fünf Felder, ein Button - Ihre digitale Visitenkarte ist sofort live. Kostenlos, ohne Konto.",
       nameLabel: "Vollständiger Name",
       titleLabel: "Position",
       companyLabel: "Unternehmen",
       phoneLabel: "Telefon",
       emailLabel: "E-Mail",
       emailHint:
-        "Ihre privaten Bearbeitungs- und Verwaltungslinks gehen an diese Adresse — bitte prüfen.",
+        "Ihre privaten Bearbeitungs- und Verwaltungslinks gehen an diese Adresse - bitte prüfen.",
       photoLabel: "Foto hinzufügen (optional)",
       photoChange: "Foto ändern",
       photoHint: "JPG, PNG oder WebP",
       photoError:
-        "Foto-Upload fehlgeschlagen — Sie können es später im Editor hinzufügen.",
-      submit: "Karte erstellen — kostenlos",
+        "Foto-Upload fehlgeschlagen - Sie können es später im Editor hinzufügen.",
+      submit: "Karte erstellen - kostenlos",
       submitting: "Wird erstellt …",
       errorRequired: "Name, Telefon und E-Mail sind erforderlich.",
       errorGeneric: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
@@ -1721,7 +1723,7 @@ export const content: Content = {
       designModern: "Modern",
       designVisual: "Visuell",
       designHint:
-        "Wählen Sie einen Startlook — Design und Details können Sie jederzeit ändern.",
+        "Wählen Sie einen Startlook - Design und Details können Sie jederzeit ändern.",
       logoLabel: "Logo hinzufügen (optional)",
       logoChange: "Logo ändern",
       logoHint: "PNG mit Transparenz funktioniert am besten",
@@ -1744,10 +1746,10 @@ export const content: Content = {
       title: "Ihre Karte ist live!",
       step1Title: "Teilen",
       step1Body:
-        "Nutzen Sie den Teilen-Button — er verschickt Ihren öffentlichen Link, den QR-Code oder ein großes Kartenbild per WhatsApp.",
+        "Nutzen Sie den Teilen-Button - er verschickt Ihren öffentlichen Link, den QR-Code oder ein großes Kartenbild per WhatsApp.",
       step2Title: "E-Mail prüfen",
       step2Body:
-        "Dort liegen Ihre privaten Bearbeitungs- und Verwaltungslinks. Nicht weitergeben — sie kontrollieren Ihre Karte.",
+        "Dort liegen Ihre privaten Bearbeitungs- und Verwaltungslinks. Nicht weitergeben - sie kontrollieren Ihre Karte.",
       step3Title: "Wirkung verfolgen",
       step3Body:
         "Aufrufe, eingehende Kontakte und Kanal-Kurzlinks finden Sie auf Ihrer Verwaltungsseite.",
@@ -1801,7 +1803,7 @@ export const content: Content = {
       weak_password: "Das Passwort muss mindestens 12 Zeichen mit mindestens einem Buchstaben und einer Zahl enthalten.",
       email_in_use: "Diese E-Mail ist bereits registriert. Versuchen Sie sich anzumelden.",
       invalid_credentials: "Ungültige E-Mail oder Passwort.",
-      rate_limited: "Zu viele Anfragen — bitte warten Sie einige Minuten und versuchen Sie es erneut.",
+      rate_limited: "Zu viele Anfragen - bitte warten Sie einige Minuten und versuchen Sie es erneut.",
       generic: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
       invalid_input: "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut.",
       email_unavailable: "Diese E-Mail kann nicht für die Registrierung verwendet werden.",
@@ -1833,7 +1835,7 @@ export const content: Content = {
     industry: {
       title: "Welche Art von Karte erstellen Sie?",
       subtitle:
-        "Wählen Sie eine Branche — wir starten mit einem passenden Design und einer sinnvollen Farbpalette. Alles lässt sich später anpassen.",
+        "Wählen Sie eine Branche - wir starten mit einem passenden Design und einer sinnvollen Farbpalette. Alles lässt sich später anpassen.",
       surpriseMe: "Überrasch mich",
       categories: {
         architecture: "Architektur",
@@ -1891,14 +1893,14 @@ export const content: Content = {
     personal: {
       title: "Erzählen Sie uns von sich",
       subtitle:
-        "Wir haben vorab ausgefüllt, was wir wissen. Ergänzen Sie Berufsbezeichnung und Telefon — der Rest ist optional.",
+        "Wir haben vorab ausgefüllt, was wir wissen. Ergänzen Sie Berufsbezeichnung und Telefon - der Rest ist optional.",
       nameLabel: "Vollständiger Name",
       namePlaceholder: "Anna Fischer",
       titleLabel: "Berufsbezeichnung",
       titlePlaceholder: "Gründerin & Designerin",
       emailLabel: "E-Mail",
       emailHint:
-        "Mit Ihrem Konto verknüpft — ändern Sie sie später in den Einstellungen.",
+        "Mit Ihrem Konto verknüpft - ändern Sie sie später in den Einstellungen.",
       phoneLabel: "Telefon",
       companyLabel: "Unternehmen",
       companyPlaceholder: "Atelier Nord",
@@ -1906,7 +1908,7 @@ export const content: Content = {
       bioPlaceholder: "Ein oder zwei Sätze, die Sie vorstellen.",
       photoLabel: "Profilfoto",
       photoCta: "Foto hier ablegen",
-      photoHint: "Ziehen oder klicken zum Hochladen — JPG/PNG bis 5 MB",
+      photoHint: "Ziehen oder klicken zum Hochladen - JPG/PNG bis 5 MB",
       photoBrowse: "Datei wählen",
       photoUploading: "Wird hochgeladen…",
       photoUploaded: "Foto hochgeladen",
@@ -1916,14 +1918,14 @@ export const content: Content = {
       skipCta: "Überspringen & abschließen",
     },
     preview: {
-      title: "Fast geschafft — letzter Blick",
+      title: "Fast geschafft - letzter Blick",
       subtitle:
         "Prüfen Sie Ihre Karte rechts und wählen Sie die Adresse, die Sie teilen möchten.",
       slugLabel: "Karten-Adresse",
       slugChecking: "Wird geprüft…",
       slugAvailable: "Verfügbar",
       slugTaken: "Vergeben",
-      slugTakenHint: "Diese Adresse ist vergeben — probieren Sie eine Variante.",
+      slugTakenHint: "Diese Adresse ist vergeben - probieren Sie eine Variante.",
       slugReset: "Auf Standard zurücksetzen",
       summaryName: "Name",
       summaryTitle: "Position",
@@ -1947,12 +1949,12 @@ export const content: Content = {
       slug_invalid:
         "Mindestens 3 Zeichen: Kleinbuchstaben, Zahlen, Bindestriche.",
       slug_taken:
-        "Diese Adresse ist bereits vergeben — bitte wählen Sie eine andere.",
+        "Diese Adresse ist bereits vergeben - bitte wählen Sie eine andere.",
       upload_failed:
-        "Upload fehlgeschlagen — bitte versuchen Sie eine andere Datei.",
-      upload_too_large: "Dieses Bild ist über 5 MB — bitte ein kleineres wählen.",
+        "Upload fehlgeschlagen - bitte versuchen Sie eine andere Datei.",
+      upload_too_large: "Dieses Bild ist über 5 MB - bitte ein kleineres wählen.",
       network_error:
-        "Etwas ist schiefgelaufen — bitte Verbindung prüfen und erneut versuchen.",
+        "Etwas ist schiefgelaufen - bitte Verbindung prüfen und erneut versuchen.",
     },
   },
 } as const;

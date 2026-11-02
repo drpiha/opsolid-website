@@ -1,5 +1,5 @@
 // =============================================================================
-// ITALIAN CONTENT — M6 minimal locale
+// ITALIAN CONTENT - M6 minimal locale
 // =============================================================================
 // See es.ts for the proxy/fallback rationale; this file follows the same
 // pattern. Translated keys override English; everything else falls back to

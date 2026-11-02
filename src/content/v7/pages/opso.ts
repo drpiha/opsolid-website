@@ -281,7 +281,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "opso",
   meta: {
-    title: "OpSo: your card, contacts and follow-up in one place",
+    title: "OpSo: your card, contacts and follow-up",
     description:
       "OpSo is the free digital business card with contacts and follow-up. Android: closed test, iPhone: submitted to Apple. Recipients need no app. By OpSolid.",
   },

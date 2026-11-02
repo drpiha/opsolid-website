@@ -54,7 +54,7 @@ export const content: Content = {
     title: "Gizlilik Politikası",
     subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
-      "Bağlayıcı Almanca metnin çevirisidir. Bu metin, opsolid.de’yi ziyaret ettiğinizde ve formlarını ile hesap alanlarını kullandığınızda kişisel verilerinizin işlenmesi hakkında GDPR m. 13–14 ve 6698 sayılı KVKK m. 10 uyarınca bilgi verir. OpSo uygulaması ve kart sayfaları için https://card.opsolid.de/privacy adresindeki ayrı metin geçerlidir. Metinler özenle hazırlanmıştır ancak bir avukat tarafından incelenmemiştir.",
+      "Bağlayıcı Almanca metnin çevirisidir. Bu metin, opsolid.de’yi ziyaret ettiğinizde ve formlarını ile hesap alanlarını kullandığınızda kişisel verilerinizin işlenmesi hakkında GDPR m. 13-14 ve 6698 sayılı KVKK m. 10 uyarınca bilgi verir. OpSo uygulaması ve kart sayfaları için https://card.opsolid.de/privacy adresindeki ayrı metin geçerlidir. Metinler özenle hazırlanmıştır ancak bir avukat tarafından incelenmemiştir.",
     lastUpdated: "Son güncelleme: 21 Ekim 2026",
     sections: [
       {
@@ -88,7 +88,7 @@ export const content: Content = {
       },
       {
         title: "8. Haklarınız",
-        content: "Erişim (GDPR m. 15), düzeltme (16), silme (17), kısıtlama (18), taşınabilirlik (20), meşru menfaate dayalı işlemeye itiraz (21), rızanın ileriye dönük geri çekilmesi (7/3) ve denetim otoritesine şikâyet (77). Yetkili otorite: Kuzey Ren-Vestfalya Eyaleti Veri Koruma ve Bilgi Özgürlüğü Komiserliği, Kavalleriestraße 2–4, 40213 Düsseldorf (ldi.nrw.de). Türkiye’deki ilgili kişiler ayrıca Kişisel Verileri Koruma Kurulu’na başvurabilir.",
+        content: "Erişim (GDPR m. 15), düzeltme (16), silme (17), kısıtlama (18), taşınabilirlik (20), meşru menfaate dayalı işlemeye itiraz (21), rızanın ileriye dönük geri çekilmesi (7/3) ve denetim otoritesine şikâyet (77). Yetkili otorite: Kuzey Ren-Vestfalya Eyaleti Veri Koruma ve Bilgi Özgürlüğü Komiserliği, Kavalleriestraße 2-4, 40213 Düsseldorf (ldi.nrw.de). Türkiye’deki ilgili kişiler ayrıca Kişisel Verileri Koruma Kurulu’na başvurabilir.",
         subsections: [{ title: "KVKK m. 11 haklarınız", content: "Verinin işlenip işlenmediğini öğrenme; bilgi talep etme; amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme; aktarıldığı üçüncü kişileri bilme; eksik/yanlış işlenmişse düzeltilmesini isteme; KVKK m. 7 kapsamında silinmesini veya yok edilmesini isteme ve üçüncü kişilere bildirilmesini isteme; otomatik analiz sonucu aleyhe çıkan sonuca itiraz; kanuna aykırı işleme nedeniyle zararın giderilmesini isteme. Başvuru: info@opsolid.de adresine yazılı (e-posta) olarak; en geç otuz gün içinde sonuçlandırılır." }],
       },
       {
@@ -106,18 +106,20 @@ export const content: Content = {
     posts: [
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
-        title: "AB Yapay Zeka Yasası Yürürlükte: Omnibus Değişiklikleri İşletmeniz İçin Ne Anlama Geliyor",
-        seoTitle: "AB Yapay Zeka Yasası: Omnibus Neleri Değiştirdi",
+        title: "AB Yapay Zeka Yasası ve Dijital Omnibus: Güncel Hukuki Durum",
+        seoTitle: "AB Yapay Zeka Yasası ve Omnibus: Güncel Durum",
         excerpt:
-          "AB Yapay Zeka Yasası 2 Ağustos 2026'dan itibaren büyük ölçüde uygulanıyor. Omnibus VII neler değiştirdi – ve hangi şeffaflık yükümlülükleri geçerli.",
+          "(AB) 2026/1744 sayılı Tüzük, AB Yapay Zeka Yasası'nı değiştiriyor. YZ yetkinliğine ilişkin 4. maddede ve şeffaflığa ilişkin 50. maddede neler değişti, hangi tarihler geçerli.",
         category: "ai",
         date: "2026-07-07",
+        modified: "2026-11-02",
       },
       {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
+        seoTitle: "İş Akışı Otomasyonu: Uygulamada Ne Önemli",
         excerpt:
-          "Bir iş akışı otomasyonunu üretimde ayakta tutan şeyler: hata yönetimi, veri egemenliği, izlenebilirlik ve çıkış maliyeti – seçilen araçtan bağımsız olarak.",
+          "Bir iş akışı otomasyonunu üretimde ayakta tutan şeyler: hata yönetimi, veri egemenliği, izlenebilirlik ve çıkış maliyeti - seçilen araçtan bağımsız olarak.",
         category: "automation",
         date: "2026-03-15",
       },
@@ -134,7 +136,7 @@ export const content: Content = {
         slug: "connecting-crm-erp-the-integration-playbook",
         title: "CRM ve ERP Bağlantısı: Genel Bakış",
         excerpt:
-          "CRM ve ERP sistemlerinizi senkronize etmeye pratik bir bakış — veri silolarını azaltarak tek bir doğru kaynak oluşturmak.",
+          "CRM ve ERP sistemlerinizi senkronize etmeye pratik bir bakış - veri silolarını azaltarak tek bir doğru kaynak oluşturmak.",
         category: "integration",
         date: "2026-02-28",
       },
@@ -160,7 +162,7 @@ export const content: Content = {
         slug: "whatsapp-business-automation-guide",
         title: "WhatsApp Business Otomasyonu: Genel Bakış",
         excerpt:
-          "WhatsApp üzerinde müşteri iletişimini nasıl otomatize edeceğiniz — sipariş onaylarından destek botlarına — kişisel dokunuşu kaybetmeden.",
+          "WhatsApp üzerinde müşteri iletişimini nasıl otomatize edeceğiniz - sipariş onaylarından destek botlarına - kişisel dokunuşu kaybetmeden.",
         category: "automation",
         date: "2026-02-05",
       },
@@ -172,37 +174,37 @@ export const content: Content = {
       {
         question: "OpSolid tam olarak ne yapar?",
         answer:
-          "OpSolid, işletmeler için otomasyon sistemleri, entegrasyonlar ve dahili araçlar geliştirir. Ekibiniz manuel, tekrarlayan işlere — veri girişi, e-posta takipleri, sipariş işleme, rapor oluşturma — zaman harcıyorsa, OpSolid bunları otomatik ve güvenilir bir şekilde yürüten sistemler geliştirir.",
+          "OpSolid, işletmeler için otomasyon sistemleri, entegrasyonlar ve dahili araçlar geliştirir. Ekibiniz manuel, tekrarlayan işlere - veri girişi, e-posta takipleri, sipariş işleme, rapor oluşturma - zaman harcıyorsa, OpSolid bunları otomatik ve güvenilir bir şekilde yürüten sistemler geliştirir.",
         category: "general",
       },
       {
         question: "Hangi araçlar ve platformlar kullanılıyor?",
         answer:
-          "Her proje özel bir sistem olarak teslim edilir; temeli REST API'ler, mesaj kuyrukları, Postgres ve webhook'lardan kurulur; AI bileşenleri ise değer kattığı yerlerde eklenir. Mimari her kullanım senaryosu için ayrı seçilir — tek tip bir araç kutusu kullanılmaz.",
+          "Her proje özel bir sistem olarak teslim edilir; temeli REST API'ler, mesaj kuyrukları, Postgres ve webhook'lardan kurulur; AI bileşenleri ise değer kattığı yerlerde eklenir. Mimari her kullanım senaryosu için ayrı seçilir - tek tip bir araç kutusu kullanılmaz.",
         category: "technical",
       },
       {
         question: "Neden hazır bir SaaS yerine özel geliştirme?",
         answer:
-          "Özel olarak geliştirilmiş sistemler verileriniz, iş akışlarınız ve maliyet eğriniz üzerinde tam kontrol sağlar. Her çalıştırma başına ücret yok, tedarikçi kilidi yok, kapalı fiyat katmanları yok. Mimari, süreçlerinize göre tasarlanır — ve kaynak kod sizindir.",
+          "Özel olarak geliştirilmiş sistemler verileriniz, iş akışlarınız ve maliyet eğriniz üzerinde tam kontrol sağlar. Her çalıştırma başına ücret yok, tedarikçi kilidi yok, kapalı fiyat katmanları yok. Mimari, süreçlerinize göre tasarlanır - ve kaynak kod sizindir.",
         category: "technical",
       },
       {
         question: "Tipik bir proje ne kadar sürer?",
         answer:
-          "Çoğu proje, karmaşıklığa bağlı olarak keşiften devreye almaya kadar 2-6 hafta sürer. Basit otomasyonlar günler içinde canlıya alınabilir. Karmaşık çoklu sistem entegrasyonları daha uzun sürebilir. Çalışmalar iteratif olarak yapılır — sonuçları erken ve sık görürsünüz.",
+          "Çoğu proje, karmaşıklığa bağlı olarak keşiften devreye almaya kadar 2-6 hafta sürer. Basit otomasyonlar günler içinde canlıya alınabilir. Karmaşık çoklu sistem entegrasyonları daha uzun sürebilir. Çalışmalar iteratif olarak yapılır - sonuçları erken ve sık görürsünüz.",
         category: "process",
       },
       {
         question: "Devreye alma sonrası sürekli destek var mı?",
         answer:
-          "Evet. Devreye alma sonrasında izleme, bakım ve optimizasyon hizmetleri mevcuttur. Otomasyon sistemleri işletmeniz büyüdükçe gelişir — sürekli destek, sistemlerinizin ayak uydurmasını sağlar. Ekibinizin günlük operasyonları bağımsız olarak yönetebilmesi için dokümantasyon ve eğitim de sağlanır.",
+          "Evet. Devreye alma sonrasında izleme, bakım ve optimizasyon hizmetleri mevcuttur. Otomasyon sistemleri işletmeniz büyüdükçe gelişir - sürekli destek, sistemlerinizin ayak uydurmasını sağlar. Ekibinizin günlük operasyonları bağımsız olarak yönetebilmesi için dokümantasyon ve eğitim de sağlanır.",
         category: "process",
       },
       {
         question: "Maliyeti ne kadar?",
         answer:
-          "Her proje farklıdır. Ücretsiz bir ilk görüşme ihtiyaçlarınızı anlamaya yardımcı olur, ardından şeffaf bir teklif sunulur. Fiyatlandırma saatlik değil, proje bazlıdır — yatırımı önceden bilirsiniz.",
+          "Her proje farklıdır. Ücretsiz bir ilk görüşme ihtiyaçlarınızı anlamaya yardımcı olur, ardından şeffaf bir teklif sunulur. Fiyatlandırma saatlik değil, proje bazlıdır - yatırımı önceden bilirsiniz.",
         category: "process",
       },
       {
@@ -214,7 +216,7 @@ export const content: Content = {
       {
         question: "Mevcut araçların değiştirilmesi gerekiyor mu?",
         answer:
-          "Hayır. OpSolid, mevcut araçlarınızı birbirine bağlayan sistemler geliştirir — onların yerini almaz. Amaç, sahip olduğunuz araçların birlikte daha iyi çalışmasını sağlamak, veri silolarını ve manuel aktarımları ortadan kaldırmaktır.",
+          "Hayır. OpSolid, mevcut araçlarınızı birbirine bağlayan sistemler geliştirir - onların yerini almaz. Amaç, sahip olduğunuz araçların birlikte daha iyi çalışmasını sağlamak, veri silolarını ve manuel aktarımları ortadan kaldırmaktır.",
         category: "general",
       },
       {
@@ -226,7 +228,7 @@ export const content: Content = {
       {
         question: "Hangi sektörlere hizmet veriliyor?",
         answer:
-          "OpSolid, sektörler genelinde çalışır — e-ticaret, lojistik, üretim, profesyonel hizmetler ve daha fazlası. Çözümler sektör etiketinize göre değil, süreçlerinize göre geliştirilir. Operasyonlarınız tekrarlayan manuel iş içeriyorsa, otomasyon yardımcı olabilir.",
+          "OpSolid, sektörler genelinde çalışır - e-ticaret, lojistik, üretim, profesyonel hizmetler ve daha fazlası. Çözümler sektör etiketinize göre değil, süreçlerinize göre geliştirilir. Operasyonlarınız tekrarlayan manuel iş içeriyorsa, otomasyon yardımcı olabilir.",
         category: "general",
       },
     ],
@@ -413,7 +415,7 @@ export const content: Content = {
           email: "İş e-postası",
           company: "Şirket (opsiyonel)",
           teamSize: "Kaç kart?",
-          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          teamSizeOptions: ["1", "2-5", "6-20", "20+"],
           message:
             "Bilmemiz gereken başka bir şey var mı? (sektör, link tercihleri vb.)",
           consent:
@@ -502,7 +504,7 @@ export const content: Content = {
       },
       preview: {
         meta: {
-          title: "Dijital Kartvizit — Canlı Önizleme | OpSolid",
+          title: "Dijital Kartvizit: Canlı Önizleme | OpSolid",
           description:
             "Dijital kartvizitinizi kendiniz oluşturun. Telefonunuzda canlı önizleyin, şablonlar arasında kaydırın ve saniyeler içinde ücretsiz yayınlayın.",
         },
@@ -568,17 +570,17 @@ export const content: Content = {
           eyebrow: "KART OLUŞTUR",
           title: "Bilgileriniz, tasarımınız, kartınız.",
           subtitle:
-            "Formu doldurun — yayınlar yayınlamaz kartınız opsolid.de/c/… adresinde canlıya alınır.",
+            "Formu doldurun - yayınlar yayınlamaz kartınız opsolid.de/c/… adresinde canlıya alınır.",
           howToCreate:
-            "Kartı herkes oluşturabilir — hesap gerekmez. Tasarımı seç, formu doldur; dakikalar içinde yayında olur. Dilediğin zaman düzenlemen için özel bir bağlantı alırsın.",
+            "Kartı herkes oluşturabilir - hesap gerekmez. Tasarımı seç, formu doldur; dakikalar içinde yayında olur. Dilediğin zaman düzenlemen için özel bir bağlantı alırsın.",
           eventJoinLabel:
-            "Kartım katılımcı rehberinde görünsün — diğer katılımcılar beni bulabilsin.",
+            "Kartım katılımcı rehberinde görünsün - diğer katılımcılar beni bulabilsin.",
           draftRestored:
-            "Önceki taslağın geri yüklendi — kaldığın yerden devam edebilirsin.",
+            "Önceki taslağın geri yüklendi - kaldığın yerden devam edebilirsin.",
           draftDiscard: "Baştan başla",
           selectedTemplate: "Seçili tasarım",
           changeTemplate: "Değiştir",
-          contactSection: "İletişim — size nasıl ulaşırız",
+          contactSection: "İletişim - size nasıl ulaşırız",
           contactName: "Adınız",
           contactEmail: "E-posta",
           contactPhone: "Telefon",
@@ -586,17 +588,17 @@ export const content: Content = {
           callMeBackHint:
             "1 iş günü içinde detayları netleştirmek için size dönüş yapacağız.",
           cardSection: "Kart içeriğiniz",
-          sampleHint: "Denemek için örnek içerik — kendi bilgilerinizle değiştirin.",
+          sampleHint: "Denemek için örnek içerik - kendi bilgilerinizle değiştirin.",
           clearSample: "Örneği temizle",
           cardLanguageLabel: "Kart dili",
           cardLanguageHint:
             "Kartınızı ziyaret edenlerin göreceği dil. Daha sonra editörden değiştirebilirsiniz.",
           spotlightSection: "Şu an · Öne çıkan",
           spotlightHint:
-            "Fotoğrafının hemen altında görünen dikkat çekici, anlık bir not — kısa bir yazı ve/veya tek bir bağlantı. Gizlemek için boş bırak.",
+            "Fotoğrafının hemen altında görünen dikkat çekici, anlık bir not - kısa bir yazı ve/veya tek bir bağlantı. Gizlemek için boş bırak.",
           spotlightEnabled: "Kartımda göster",
           spotlightBody: "Şu an neler oluyor?",
-          spotlightBodyPlaceholder: "ör. Temmuz için yeni projeler alıyorum — merhaba de 👋",
+          spotlightBodyPlaceholder: "ör. Temmuz için yeni projeler alıyorum - merhaba de 👋",
           spotlightLinkUrl: "Bağlantı (isteğe bağlı)",
           spotlightLinkLabel: "Buton metni (isteğe bağlı)",
           spotlightLinkLabelPlaceholder: "Daha fazla",
@@ -606,9 +608,9 @@ export const content: Content = {
           spotlightPlaceBottom: "Kartın altında",
           statsSection: "İstatistikler",
           statsHint:
-            "Birçok tasarımda istatistik şeridi olarak görünen gerçek rakamlar (ör. 12 — Yıl).",
+            "Birçok tasarımda istatistik şeridi olarak görünen gerçek rakamlar (ör. 12 - Yıl).",
           statsEmpty:
-            "Henüz istatistik yok. Gurur duyduğunuz gerçek rakamları ekleyin (ör. 12 — Yıl deneyim). İstatistik girilmezse kartta bu bölüm hiç görünmez.",
+            "Henüz istatistik yok. Gurur duyduğunuz gerçek rakamları ekleyin (ör. 12 - Yıl deneyim). İstatistik girilmezse kartta bu bölüm hiç görünmez.",
           statsValue: "12+",
           statsLabel: "Yıl deneyim",
           statsAdd: "İstatistik ekle",
@@ -623,7 +625,7 @@ export const content: Content = {
           locationHidden: "Gizle",
           locationAutoHint: "Adresinizden türetildi:",
           locationAutoEmpty:
-            "Henüz adres yok — adres ekleyene kadar konum gösterilmez.",
+            "Henüz adres yok - adres ekleyene kadar konum gösterilmez.",
           locationPlaceholder: "Remote · İstanbul",
           locationHiddenHint: "Kartınızda konum etiketi görünmez.",
           copyFromContact: "Yukarıdaki bilgileri kullan",
@@ -692,7 +694,7 @@ export const content: Content = {
             "Bağlantı tüm form bilgilerini içerir; kart siz oluşturana kadar yayında değildir.",
           videoSection: "Video (opsiyonel)",
           videoHint:
-            "YouTube veya Vimeo bağlantısı yapıştır — kartında doğrudan oynar.",
+            "YouTube veya Vimeo bağlantısı yapıştır - kartında doğrudan oynar.",
           videoLabel: "Video bağlantısı",
           videoPlaceholder: "https://youtube.com/watch?v=…",
           videoInvalid: "Yalnızca YouTube veya Vimeo bağlantıları desteklenir.",
@@ -702,24 +704,24 @@ export const content: Content = {
           videoPlacementBottom: "Alt",
           customSectionsSection: "Özel bölümler (opsiyonel)",
           customSectionsHint:
-            "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen.",
+            "En fazla 6 bölüm ekleyebilirsin - ödüller, diller, ne istersen.",
           // Düzenlenebilir bölüm başlıkları
           labelsSection: "Bölüm başlıkları (opsiyonel)",
           labelsHint:
-            'Bunlar kartınızdaki bölüm BAŞLIKLARINI yeniden adlandırır (örn. "Hizmetler" → "Menü"). İçeriği yukarıdaki bölümlerden girersiniz — boş bıraktığınız bir bölüm (ve başlığı) kartta görünmez. Boş bırakırsanız varsayılan kalır.',
+            'Bunlar kartınızdaki bölüm BAŞLIKLARINI yeniden adlandırır (örn. "Hizmetler" → "Menü"). İçeriği yukarıdaki bölümlerden girersiniz - boş bıraktığınız bir bölüm (ve başlığı) kartta görünmez. Boş bırakırsanız varsayılan kalır.',
           customSectionAdd: "Bölüm ekle",
           customSectionTitle: "Başlık",
           customSectionTitlePh: "Örn. Diller, Ödüller, Basın",
           customSectionBody: "İçerik",
           customSectionBodyPh:
-            "Açıklama — kartını açan herkesin göreceği metin.",
+            "Açıklama - kartını açan herkesin göreceği metin.",
           customSectionRemove: "Kaldır",
           customSectionsCount: "{n} / 6",
           customSectionAddImage: "Resim ekle (opsiyonel)",
           // FAQ editor
           faqSection: "SSS (opsiyonel)",
           faqHint:
-            "En fazla 12 sık sorulan soru — kartında akordiyon biçiminde görünür.",
+            "En fazla 12 sık sorulan soru - kartında akordiyon biçiminde görünür.",
           faqQuestion: "Soru",
           faqAnswer: "Cevap",
           faqAdd: "Soru ekle",
@@ -729,7 +731,7 @@ export const content: Content = {
           // Testimonials editor
           testimonialsSection: "Müşteri yorumları (opsiyonel)",
           testimonialsHint:
-            "En fazla 8 müşteri alıntısı — yerleşik yorumları olmayan tüm şablonlarda gösterilir.",
+            "En fazla 8 müşteri alıntısı - yerleşik yorumları olmayan tüm şablonlarda gösterilir.",
           testimonialAuthor: "Ad (ör. Ayşe K.)",
           testimonialRole: "Unvan / şirket (opsiyonel)",
           testimonialQuote: "Alıntı",
@@ -743,14 +745,14 @@ export const content: Content = {
           typographyDefaultLabel: "Şablon varsayılanı",
           typographyDefaultDesc: "Şablonun kendi tipografisini kullanır.",
           typographyModernLabel: "Modern",
-          typographyModernDesc: "Inter + Manrope — minimalist, kurumsal.",
+          typographyModernDesc: "Inter + Manrope - minimalist, kurumsal.",
           typographyClassicLabel: "Klasik",
           typographyClassicDesc:
-            "Cormorant Garamond + Source Sans 3 — zarif, geleneksel.",
+            "Cormorant Garamond + Source Sans 3 - zarif, geleneksel.",
           typographyEditorialLabel: "Editöryel",
-          typographyEditorialDesc: "Playfair Display + Inter — dergi havası.",
+          typographyEditorialDesc: "Playfair Display + Inter - dergi havası.",
           typographyBoldLabel: "Cesur",
-          typographyBoldDesc: "Bebas Neue + Inter — etkileyici, sportif.",
+          typographyBoldDesc: "Bebas Neue + Inter - etkileyici, sportif.",
           billingSection: "Ödeme modeli",
           billingMonthly: "Aylık",
           monthlyFooter: "Düşük giriş bariyeri. İstediğiniz zaman iptal.",
@@ -764,7 +766,7 @@ export const content: Content = {
           submitting: "İşleniyor …",
           previewLabel: "Canlı önizleme",
           previewHint:
-            "Önizleme anlık güncellenir — yayımdan sonra kartınız böyle görünecek.",
+            "Önizleme anlık güncellenir - yayımdan sonra kartınız böyle görünecek.",
           invalidInput: "Lütfen işaretli alanları kontrol edin.",
           serverError: "Sunucu hatası. Lütfen tekrar deneyin.",
           noCheckoutUrl: "Ödeme URL'i alınamadı.",
@@ -810,7 +812,7 @@ export const content: Content = {
       edit: {
         title: "Kartınızı düzenleyin",
         subtitle:
-          "Yazım hataları, telefon numarası, sosyal linkler — kartınızdaki her şeyi kendiniz düzenleyin. Değişiklikler saniyeler içinde canlıya çıkar.",
+          "Yazım hataları, telefon numarası, sosyal linkler - kartınızdaki her şeyi kendiniz düzenleyin. Değişiklikler saniyeler içinde canlıya çıkar.",
         liveBadge: "Kartın yayında",
         slugRenameWarning:
           "Yeni adres «Kaydet»'e basıldığında uygulanır. Eski adres otomatik olarak yeni adrese yönlenir.",
@@ -855,7 +857,7 @@ export const content: Content = {
         adjustLogo: "Logoyu ayarla",
         expandSection: "Bölümü aç",
         collapseSection: "Bölümü kapat",
-        // WS-2 / WS-3 — sadeleştirilmiş editör
+        // WS-2 / WS-3 - sadeleştirilmiş editör
         backToCards: "Kartlarım",
         tierBasic: "Temel",
         tierMore: "Daha fazla",
@@ -863,7 +865,7 @@ export const content: Content = {
         allDesigns: "Tüm tasarımlar",
         allDesignsHint: "90+ tasarımı sektöre göre incele.",
         performanceTitle: "Performans & CRM",
-        uploadCue: "Yüklendi — yayına almak için Kaydet'e bas.",
+        uploadCue: "Yüklendi - yayına almak için Kaydet'e bas.",
         completenessTitle: "Kart tamamlanma",
         completenessSummary: "{done}/{total} tamam",
         completenessGoto: "Git",
@@ -879,7 +881,7 @@ export const content: Content = {
         publicUrlLabel: "Herkese açık kartınız:",
         contactReadonlyLabel: "İletişim bilgileriniz (salt okunur)",
         contactReadonlyHint:
-          "E-posta, ad veya telefonu değiştirmek istiyorsanız sipariş e-postanıza yanıt verin — biz hallederiz.",
+          "E-posta, ad veya telefonu değiştirmek istiyorsanız sipariş e-postanıza yanıt verin - biz hallederiz.",
         statusLabel: "Sipariş durumu",
         save: "Değişiklikleri kaydet",
         saving: "Kaydediliyor …",
@@ -893,7 +895,7 @@ export const content: Content = {
           "Paylaşım görseli, kartınız yayımlandıktan sonra kullanılabilir hale gelir.",
         notFoundTitle: "Bu düzenleme bağlantısı açılamıyor",
         notFoundBody:
-          "Bu bağlantının süresi dolmuş veya artık geçerli değil. Lütfen sipariş e-postanıza yanıt verin — size yeni bir bağlantı gönderelim.",
+          "Bu bağlantının süresi dolmuş veya artık geçerli değil. Lütfen sipariş e-postanıza yanıt verin - size yeni bir bağlantı gönderelim.",
       },
       cancel: {
         heading: "Aboneliği iptal et",
@@ -916,9 +918,9 @@ export const content: Content = {
       },
       meta: {
         title:
-          "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı | OpSolid",
+          "OpSo Smart: Ücretsiz dijital kartvizit, saniyeler içinde canlı | OpSolid",
         description:
-          "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın — link, QR, WhatsApp, e-posta. Alıcıya uygulama gerekmez, istediğiniz zaman düzenlenir. EU barındırma (Frankfurt), GDPR-yerli.",
+          "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın - link, QR, WhatsApp, e-posta. Alıcıya uygulama gerekmez, istediğiniz zaman düzenlenir. EU barındırma (Frankfurt), GDPR-yerli.",
       },
     },
 
@@ -952,11 +954,11 @@ export const content: Content = {
           },
           {
             q: "Hangi süreçler otomatikleştirilebilir?",
-            a: "Net girdi ve net çıktısı olan her tekrarlı iş — teklifler, doküman üretimi, raporlama, veri senkronizasyonu, e-posta yönlendirme, destek triyajı.",
+            a: "Net girdi ve net çıktısı olan her tekrarlı iş - teklifler, doküman üretimi, raporlama, veri senkronizasyonu, e-posta yönlendirme, destek triyajı.",
           },
           {
             q: "AI kullanımı KVKK/DSGVO uyumlu olabilir mi?",
-            a: "Evet — doğru model seçimi, AB veri rezidanslığı ve yazılı bir yönerge ile. Bunu en baştan birlikte kurarız.",
+            a: "Evet, doğru model seçimi, AB veri rezidanslığı ve yazılı bir yönerge ile. Bunu en baştan birlikte kurarız.",
           },
           {
             q: "Şirketimin zaten AI kullanıyor olması gerekiyor mu?",
@@ -964,15 +966,15 @@ export const content: Content = {
           },
           {
             q: "İlk Automation Check ne kadar sürer?",
-            a: "Görüşme için 60–90 dakika, yazılı 30 günlük plan için birkaç iş günü daha.",
+            a: "Görüşme için 60-90 dakika, yazılı 30 günlük plan için birkaç iş günü daha.",
           },
           {
             q: "Microsoft 365 gibi mevcut araçlarımız kullanılmaya devam edebilir mi?",
-            a: "Evet — kurduğumuzun büyük kısmı zaten ödediğiniz araçların üzerine oturur.",
+            a: "Evet, kurduğumuzun büyük kısmı zaten ödediğiniz araçların üzerine oturur.",
           },
           {
             q: "OpSolid özel çözümler de geliştirir mi?",
-            a: "Evet — standart çözüm uymadığında dahili araçlar, özel iş akışları ve entegrasyonlar geliştiririz.",
+            a: "Evet, standart çözüm uymadığında dahili araçlar, özel iş akışları ve entegrasyonlar geliştiririz.",
           },
         ],
       },
@@ -988,7 +990,7 @@ export const content: Content = {
           post: " hale getirmeye hazır mısınız?",
         },
         lead:
-          "Şirketinizdeki hangi görevlerin AI ve otomasyonla sadeleştirilebileceğini birlikte değerlendirelim. Görüşmeden sonra bir yükümlülük yok — uygun değilse bunu da açıkça söyleriz.",
+          "Şirketinizdeki hangi görevlerin AI ve otomasyonla sadeleştirilebileceğini birlikte değerlendirelim. Görüşmeden sonra bir yükümlülük yok - uygun değilse bunu da açıkça söyleriz.",
         ctaPrimary: "Ücretsiz görüşme planla",
         ctaSecondary: "Bilgi içeriklerini gör",
         trustLine:
@@ -1010,7 +1012,7 @@ export const content: Content = {
           post: " bir kartvizit",
         },
         lead:
-          "Bir dakikada mobil uyumlu bir dijital kartvizit oluşturun. Bağlantı, QR kod, WhatsApp veya e-posta ile paylaşın — karşı tarafın uygulamaya ihtiyacı yok. İletişim bilgilerinizi, randevu bağlantınızı ve portföyünüzü istediğiniz zaman tek merkezden güncelleyin, yeniden baskı yok.",
+          "Bir dakikada mobil uyumlu bir dijital kartvizit oluşturun. Bağlantı, QR kod, WhatsApp veya e-posta ile paylaşın - karşı tarafın uygulamaya ihtiyacı yok. İletişim bilgilerinizi, randevu bağlantınızı ve portföyünüzü istediğiniz zaman tek merkezden güncelleyin, yeniden baskı yok.",
         ctaPrimary: "Ücretsiz oluştur",
         ctaSecondary: "Tasarımları gör",
         features: [
@@ -1033,9 +1035,9 @@ export const content: Content = {
       },
       templates: {
         eyebrow: "[ SEKTÖR ŞABLONLARI ]",
-        headline: "Başlangıç noktası — deli gömleği değil",
+        headline: "Başlangıç noktası - deli gömleği değil",
         lead:
-          "Hukuk, sağlık, zanaat ve konaklama için hazır düzenler — her biri o sektörde fiilen kullanılan iletişim alanları, uyumluluk bildirimleri ve takvim entegrasyonları ile. Kilitli bir tema değil, dilediğiniz gibi çatallayıp değiştirebileceğiniz bir başlangıç noktası.",
+          "Hukuk, sağlık, zanaat ve konaklama için hazır düzenler - her biri o sektörde fiilen kullanılan iletişim alanları, uyumluluk bildirimleri ve takvim entegrasyonları ile. Kilitli bir tema değil, dilediğiniz gibi çatallayıp değiştirebileceğiniz bir başlangıç noktası.",
         items: [
           {
             sector: "LAW",
@@ -1077,19 +1079,19 @@ export const content: Content = {
             num: "01",
             title: "Bir dakikada oluştur",
             body:
-              "Tasarım seç, birkaç alan doldur, ücretsiz yayınla — hesap gerekmez.",
+              "Tasarım seç, birkaç alan doldur, ücretsiz yayınla - hesap gerekmez.",
           },
           {
             num: "02",
             title: "Her yerde paylaş",
             body:
-              "Bağlantı, QR kod, WhatsApp veya e-posta ile. Karşı taraf tarayıcıda açar — uygulama yok.",
+              "Bağlantı, QR kod, WhatsApp veya e-posta ile. Karşı taraf tarayıcıda açar - uygulama yok.",
           },
           {
             num: "03",
             title: "İstediğin zaman düzenle",
             body:
-              "Yeni unvan, yeni numara, yeni foto — bir kez değiştir, anında canlı.",
+              "Yeni unvan, yeni numara, yeni foto - bir kez değiştir, anında canlı.",
           },
         ],
       },
@@ -1097,7 +1099,7 @@ export const content: Content = {
         eyebrow: "[ WHITE-GLOVE · SİZİN İÇİN TASARLANIR ]",
         headline: "Sizin için biz tasarlayalım mı?",
         lead:
-          "İki 'sizin yerinize yapalım' yolu: White-glove kartınızı 48 saatte elde tasarlar, ya da ekipler ve özel istekler için teklif çıkarırız. Aşağıdan ne istediğini yaz — ya da direkt bize mesaj at.",
+          "İki 'sizin yerinize yapalım' yolu: White-glove kartınızı 48 saatte elde tasarlar, ya da ekipler ve özel istekler için teklif çıkarırız. Aşağıdan ne istediğini yaz - ya da direkt bize mesaj at.",
         options: [
           {
             tag: "WHITE-GLOVE",
@@ -1111,13 +1113,13 @@ export const content: Content = {
             price: "Talep üzerine",
             title: "Özel tasarım veya ekip kurulumu",
             body:
-              "Özel düzenler, çok sayıda kart, kendi alan adınız — kapsamı çıkarıp size teklif göndeririz.",
+              "Özel düzenler, çok sayıda kart, kendi alan adınız - kapsamı çıkarıp size teklif göndeririz.",
           },
         ],
         channels: {
           heading: "Direkt bize ulaşın",
-          note: "En hızlısı WhatsApp — genelde bir iş günü içinde yanıtlıyoruz.",
-          prefill: "Merhaba OpSolid — özel bir OpSo Smart kart istiyorum.",
+          note: "En hızlısı WhatsApp - genelde bir iş günü içinde yanıtlıyoruz.",
+          prefill: "Merhaba OpSolid - özel bir OpSo Smart kart istiyorum.",
           labels: {
             whatsappTr: "WhatsApp · TR",
             whatsappDe: "WhatsApp · DE",
@@ -1132,14 +1134,14 @@ export const content: Content = {
           company: "Firma (opsiyonel)",
           industry: "Sektör",
           teamSize: "Kaç kart?",
-          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          teamSizeOptions: ["1", "2-5", "6-20", "20+"],
           message: "Ne lazım? Stil, bağlantılar, özel istekler…",
           consent:
             "OpSolid'in bu talebi yanıtlamak için işlemesine onay veriyorum.",
           privacyLink: "Gizlilik Politikası",
           submit: "Talebi gönder",
           submitting: "Gönderiliyor…",
-          success: "Teşekkürler — bir iş günü içinde yanıtlayacağız.",
+          success: "Teşekkürler, bir iş günü içinde yanıtlayacağız.",
           error: "Bir şeyler ters gitti. Lütfen doğrudan info@opsolid.de adresine yazın.",
         },
       },
@@ -1188,7 +1190,7 @@ export const content: Content = {
         eyebrow: "[ FİYATLANDIRMA ]",
         headline: "Ücretsiz başla. Sadece ihtiyaç oldukça öde.",
         lead:
-          "Ücretsiz oluştur ve yayınla. Kendi alan adın ve analitik için yükselt — ya da her şeyi biz tasarlayalım.",
+          "Ücretsiz oluştur ve yayınla. Kendi alan adın ve analitik için yükselt - ya da her şeyi biz tasarlayalım.",
       },
     },
 
@@ -1201,7 +1203,7 @@ export const content: Content = {
 
     pricing: {
       meta: {
-        title: "Fiyatlandırma — Standard, Professional, Enterprise | OpSolid",
+        title: "Fiyatlandırma: Standard, Professional, Enterprise | OpSolid",
         description: "OpSolid ürünleri için fiyat özeti (çoğu ürünün fiyatı talep üzerine): Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
       },
       hero: {
@@ -1341,7 +1343,7 @@ export const content: Content = {
         {
           id: "whatsapp-agent",
           name: "WhatsApp Agent",
-          tagline: "WhatsApp Business API — otomatik yanıt, broadcast, devir.",
+          tagline: "WhatsApp Business API - otomatik yanıt, broadcast, devir.",
           href: "/products/whatsapp-agent",
           tiers: [
             {
@@ -1481,7 +1483,7 @@ export const content: Content = {
         {
           id: "custom-automation",
           name: "Custom Automation",
-          tagline: "Workflow inşa — sprint, proje veya retainer. SaaS değil.",
+          tagline: "Workflow inşa - sprint, proje veya retainer. SaaS değil.",
           href: "/products/custom-automation",
           tiers: [
             {
@@ -1497,7 +1499,7 @@ export const content: Content = {
               name: "Professional",
               setup: "Fiyat talep üzerine",
               monthly: "Fiyat talep üzerine",
-              included: ["3–5 workflow", "Discovery workshop", "Build + 90 gün destek", "Entegrasyon + custom kod", "Ops dashboard"],
+              included: ["3-5 workflow", "Discovery workshop", "Build + 90 gün destek", "Entegrasyon + custom kod", "Ops dashboard"],
               overage: "",
               forWhom: "Mid-market dijital ops projesi",
               isHighlighted: true,
@@ -1516,7 +1518,7 @@ export const content: Content = {
         {
           id: "kutasia",
           name: "Kutasia",
-          tagline: "Unified AI çalışma alanı — WhatsApp, Telegram, e-posta ve Voice tek inbox'ta, hero otomasyonlar ve fuar-test edilmiş demo modu ile.",
+          tagline: "Unified AI çalışma alanı - WhatsApp, Telegram, e-posta ve Voice tek inbox'ta, hero otomasyonlar ve fuar-test edilmiş demo modu ile.",
           href: "/products/kutasia",
           tiers: [
             {
@@ -1605,7 +1607,7 @@ export const content: Content = {
       storyHint: "WhatsApp durumu ve Instagram story için",
       vcardVisitor: "Kişiyi kaydet",
       vcardOwner: "vCard'ım (.vcf)",
-      vcardOwnerHint: "İlet — karşı taraf seni rehberine kaydeder",
+      vcardOwnerHint: "İlet - karşı taraf seni rehberine kaydeder",
       emailSignature: "E-posta imzası",
       copy: "Kopyala",
       openCard: "Kartı aç",
@@ -1618,7 +1620,7 @@ export const content: Content = {
     },
     owner: {
       banner:
-        "Bu kartın sahibi sensin — değişiklikler kaydedildiğinde anında yayınlanır.",
+        "Bu kartın sahibi sensin - değişiklikler kaydedildiğinde anında yayınlanır.",
       publicBannerLabel: "Senin kartın",
       editLabel: "Düzenle",
       previewLabel: "Önizleme modu",
@@ -1628,7 +1630,7 @@ export const content: Content = {
     manage: {
       title: "Kart yönetimi",
       subtitle:
-        "Kartın için istatistikler, paylaşım linkleri ve lead'ler — hepsi tek yerde.",
+        "Kartın için istatistikler, paylaşım linkleri ve lead'ler - hepsi tek yerde.",
       backToCard: "Kartı görüntüle",
       editCard: "Kartı düzenle",
       statsHeading: "Son 30 gün",
@@ -1639,7 +1641,7 @@ export const content: Content = {
       statScans: "Link taraması",
       linksHeading: "Paylaşım linkleri",
       linksHint:
-        "Her kanal için ayrı bir kısa link oluştur — baskıdaki QR, e-posta imzası, Instagram bio — hangi kanalın ziyaretçi getirdiğini gör.",
+        "Her kanal için ayrı bir kısa link oluştur - baskıdaki QR, e-posta imzası, Instagram bio - hangi kanalın ziyaretçi getirdiğini gör.",
       linkLabelPlaceholder: "Etiket (örn. Fuar QR)",
       linkCodePlaceholder: "Özel kod (isteğe bağlı)",
       linkSourcePlaceholder: "Kaynak (örn. instagram)",
@@ -1647,7 +1649,7 @@ export const content: Content = {
       createLink: "Link oluştur",
       creating: "Oluşturuluyor…",
       linkLimitReached: "Bu kart için link limitine ulaşıldı.",
-      codeUnavailable: "Bu kod alınmış veya geçersiz — başka bir kod dene.",
+      codeUnavailable: "Bu kod alınmış veya geçersiz - başka bir kod dene.",
       linkCreateFailed: "Link oluşturulamadı. Lütfen tekrar dene.",
       scansLabel: "tarama",
       activeLabel: "Aktif",
@@ -1658,7 +1660,7 @@ export const content: Content = {
       disableLabel: "Kapat",
       enableLabel: "Aç",
       noLinksYet:
-        "Henüz paylaşım linki yok. Kart URL'in her zaman çalışır — kısa linkler kanal bazlı takip ekler.",
+        "Henüz paylaşım linki yok. Kart URL'in her zaman çalışır - kısa linkler kanal bazlı takip ekler.",
       leadsHeading: "Lead'ler",
       leadsHint: "Kartın üzerinden iletişim bilgisini paylaşan kişiler.",
       noLeadsYet:
@@ -1668,13 +1670,13 @@ export const content: Content = {
       leadStatusQualified: "Nitelikli",
       leadStatusArchived: "Arşivlendi",
       notPublished:
-        "Bu kart henüz yayınlanmadı — linkler ve istatistikler kart yayına girince aktifleşir.",
-      publicLinkLabel: "Halka açık kart linkin — paylaşacağın link bu",
+        "Bu kart henüz yayınlanmadı - linkler ve istatistikler kart yayına girince aktifleşir.",
+      publicLinkLabel: "Halka açık kart linkin - paylaşacağın link bu",
       publicLinkHint:
         "Bu linke sahip herkes kartını görür. Sohbetlere, e-posta imzana, QR kodlara koy.",
-      privateLinkLabel: "Özel linklerin — sadece sende kalsın",
+      privateLinkLabel: "Özel linklerin - sadece sende kalsın",
       privateLinkHint:
-        "Bu yönetim sayfası ve düzenleme sayfan özeldir: linklerine sahip olan herkes kartını değiştirebilir. Kart e-postanda duruyorlar — asla paylaşma.",
+        "Bu yönetim sayfası ve düzenleme sayfan özeldir: linklerine sahip olan herkes kartını değiştirebilir. Kart e-postanda duruyorlar - asla paylaşma.",
     },
     eventDirectory: {
       eyebrow: "Katılımcı rehberi",
@@ -1686,29 +1688,29 @@ export const content: Content = {
       participantsHint:
         "Sahipleri herkese açık listelenmeyi seçen kartlar. Birine dokunarak kişiyi görüntüle ve rehberine kaydet.",
       emptyState:
-        "Henüz listelenen katılımcı yok — ilk sen ol: kartını oluştur ve rehbere katıl.",
+        "Henüz listelenen katılımcı yok - ilk sen ol: kartını oluştur ve rehbere katıl.",
       searchPlaceholder: "İsim, şirket veya unvana göre ara…",
       noResults: "Aramanla eşleşen katılımcı yok.",
     },
     mobileAppSoon:
-      "Mobil uygulama yakında — kartını yolda da oluştur ve yönet. Bugün her şey tarayıcıda çalışıyor.",
+      "Mobil uygulama yakında - kartını yolda da oluştur ve yönet. Bugün her şey tarayıcıda çalışıyor.",
     quickCreate: {
       title: "60 saniyede kartın hazır",
       subtitle:
-        "Beş alan, tek buton — dijital kartvizitin anında yayında. Ücretsiz, hesap gerekmez.",
+        "Beş alan, tek buton - dijital kartvizitin anında yayında. Ücretsiz, hesap gerekmez.",
       nameLabel: "Ad soyad",
       titleLabel: "Unvan",
       companyLabel: "Şirket",
       phoneLabel: "Telefon",
       emailLabel: "E-posta",
       emailHint:
-        "Özel düzenleme ve yönetim linklerin bu adrese gider — kontrol etmeyi unutma.",
+        "Özel düzenleme ve yönetim linklerin bu adrese gider - kontrol etmeyi unutma.",
       photoLabel: "Fotoğraf ekle (isteğe bağlı)",
       photoChange: "Fotoğrafı değiştir",
       photoHint: "JPG, PNG veya WebP",
       photoError:
-        "Fotoğraf yüklenemedi — daha sonra düzenleyiciden ekleyebilirsin.",
-      submit: "Kartımı oluştur — ücretsiz",
+        "Fotoğraf yüklenemedi - daha sonra düzenleyiciden ekleyebilirsin.",
+      submit: "Kartımı oluştur - ücretsiz",
       submitting: "Oluşturuluyor…",
       errorRequired: "Ad, telefon ve e-posta zorunlu.",
       errorGeneric: "Bir şeyler ters gitti. Lütfen tekrar dene.",
@@ -1717,7 +1719,7 @@ export const content: Content = {
       designModern: "Modern",
       designVisual: "Görsel",
       designHint:
-        "Bir başlangıç görünümü seç — tasarımı ve detayları istediğin zaman değiştirebilirsin.",
+        "Bir başlangıç görünümü seç - tasarımı ve detayları istediğin zaman değiştirebilirsin.",
       logoLabel: "Logo ekle (opsiyonel)",
       logoChange: "Logoyu değiştir",
       logoHint: "Şeffaf PNG en iyi sonucu verir",
@@ -1740,10 +1742,10 @@ export const content: Content = {
       title: "Kartın yayında!",
       step1Title: "Paylaş",
       step1Body:
-        "Paylaş butonunu kullan — halka açık linkini, QR'ını veya WhatsApp'ta büyük kart görselini gönderir.",
+        "Paylaş butonunu kullan - halka açık linkini, QR'ını veya WhatsApp'ta büyük kart görselini gönderir.",
       step2Title: "E-postanı kontrol et",
       step2Body:
-        "Özel düzenleme ve yönetim linklerin orada. Kimseyle paylaşma — kartının kontrolü onlarda.",
+        "Özel düzenleme ve yönetim linklerin orada. Kimseyle paylaşma - kartının kontrolü onlarda.",
       step3Title: "Etkisini izle",
       step3Body:
         "Görüntülenmeler, gelen kişiler ve kanal bazlı kısa linkler yönetim sayfanda.",
@@ -1797,7 +1799,7 @@ export const content: Content = {
       weak_password: "Şifre en az 12 karakter olmalı ve en az bir harf ve bir rakam içermelidir.",
       email_in_use: "Bu e-posta zaten kayıtlı. Giriş yapmayı deneyin.",
       invalid_credentials: "Geçersiz e-posta veya şifre.",
-      rate_limited: "Çok fazla istek — lütfen birkaç dakika bekleyip tekrar deneyin.",
+      rate_limited: "Çok fazla istek - lütfen birkaç dakika bekleyip tekrar deneyin.",
       generic: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
       invalid_input: "Lütfen girişinizi kontrol edip tekrar deneyin.",
       email_unavailable: "Bu e-posta kayıt için kullanılamaz.",
@@ -1829,7 +1831,7 @@ export const content: Content = {
     industry: {
       title: "Nasıl bir kart hazırlıyorsunuz?",
       subtitle:
-        "Bir sektör seçin — size uygun bir tasarım ve uyumlu bir renk paleti ile başlayalım. Her şeyi sonradan değiştirebilirsiniz.",
+        "Bir sektör seçin - size uygun bir tasarım ve uyumlu bir renk paleti ile başlayalım. Her şeyi sonradan değiştirebilirsiniz.",
       surpriseMe: "Sürpriz olsun",
       categories: {
         architecture: "Mimarlık",
@@ -1887,13 +1889,13 @@ export const content: Content = {
     personal: {
       title: "Kendinizden bahsedin",
       subtitle:
-        "Bildiklerimizi sizin için doldurduk. Ünvan ve telefon ekleyin — gerisi isteğe bağlı.",
+        "Bildiklerimizi sizin için doldurduk. Ünvan ve telefon ekleyin - gerisi isteğe bağlı.",
       nameLabel: "Ad Soyad",
       namePlaceholder: "Ayşe Yıldız",
       titleLabel: "Ünvan",
       titlePlaceholder: "Kurucu & Tasarımcı",
       emailLabel: "E-posta",
-      emailHint: "Hesabınıza bağlı — sonradan ayarlardan değiştirebilirsiniz.",
+      emailHint: "Hesabınıza bağlı - sonradan ayarlardan değiştirebilirsiniz.",
       phoneLabel: "Telefon",
       companyLabel: "Şirket",
       companyPlaceholder: "Atölye Kuzey",
@@ -1901,7 +1903,7 @@ export const content: Content = {
       bioPlaceholder: "Sizi tanıtan bir-iki cümle.",
       photoLabel: "Profil fotoğrafı",
       photoCta: "Fotoğrafı buraya bırakın",
-      photoHint: "Sürükleyin veya tıklayın — JPG/PNG, en fazla 5MB",
+      photoHint: "Sürükleyin veya tıklayın - JPG/PNG, en fazla 5MB",
       photoBrowse: "Dosya seç",
       photoUploading: "Yükleniyor…",
       photoUploaded: "Fotoğraf yüklendi",
@@ -1911,14 +1913,14 @@ export const content: Content = {
       skipCta: "Atla ve bitir",
     },
     preview: {
-      title: "Az kaldı — son bir kontrol",
+      title: "Az kaldı - son bir kontrol",
       subtitle:
         "Sağda kartınızı inceleyin ve paylaşmak istediğiniz adresi seçin.",
       slugLabel: "Kart adresi",
       slugChecking: "Kontrol ediliyor…",
       slugAvailable: "Uygun",
       slugTaken: "Dolu",
-      slugTakenHint: "Bu adres alınmış — bir varyasyon deneyin.",
+      slugTakenHint: "Bu adres alınmış - bir varyasyon deneyin.",
       slugReset: "Varsayılana sıfırla",
       summaryName: "İsim",
       summaryTitle: "Ünvan",
@@ -1940,11 +1942,11 @@ export const content: Content = {
       brand_invalid: "6 haneli hex kullanın (örn. #1a365d).",
       slug_invalid:
         "En az 3 karakter: küçük harf, rakam ve tire kullanılabilir.",
-      slug_taken: "Bu adres zaten alınmış — lütfen başka bir adres seçin.",
-      upload_failed: "Yükleme başarısız — lütfen başka bir dosya deneyin.",
-      upload_too_large: "Bu görsel 5MB'tan büyük — daha küçük bir görsel deneyin.",
+      slug_taken: "Bu adres zaten alınmış - lütfen başka bir adres seçin.",
+      upload_failed: "Yükleme başarısız - lütfen başka bir dosya deneyin.",
+      upload_too_large: "Bu görsel 5MB'tan büyük - daha küçük bir görsel deneyin.",
       network_error:
-        "Bir şeyler ters gitti — bağlantınızı kontrol edin ve tekrar deneyin.",
+        "Bir şeyler ters gitti - bağlantınızı kontrol edin ve tekrar deneyin.",
     },
   },
 } as const;

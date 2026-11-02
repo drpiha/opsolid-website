@@ -162,6 +162,10 @@ const de: PageDef = {
     h: "Fragen zu KI-Assistenten",
     items: [
       {
+        q: "Was ist ein KI-Telefonassistent?",
+        a: "Ein KI-Telefonassistent nimmt Anliegen am Telefon auf und beantwortet Standardfragen auf Basis Ihrer Unterlagen. Er sagt von Beginn an, dass er eine KI ist, und übergibt bei Beschwerden, Sonderfällen und Unsicherheit an eine Person Ihres Teams. Einen Listenpreis gibt es nicht: Es beginnt mit dem KI-Check ab 990 € netto, danach folgt ein Pilot zum Festpreis, den wir vorab schriftlich vereinbaren.",
+      },
+      {
         q: "Was kostet ein KI-Assistent?",
         a: "Einen Listenpreis gibt es nicht. Der Pilot hat einen Festpreis, den wir vorab schriftlich nennen; er hängt von Aufgaben, Anbindungen und Gesprächsaufkommen ab. Der KI-Check davor kostet ab 990 € netto (bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an), Betrieb und Ausbau danach rechnen wir monatlich nach Vereinbarung ab. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
@@ -357,6 +361,10 @@ const en: PageDef = {
     h: "Questions about AI assistants",
     items: [
       {
+        q: "What is an AI phone assistant?",
+        a: "An AI phone assistant takes requests on the phone and answers standard questions from your own documents. It says from the start that it is an AI and hands over to a person on your team for complaints, special cases and uncertainty. There is no list price: it starts with the AI check from €990 net, followed by a pilot at a fixed price that we agree in writing beforehand.",
+      },
+      {
         q: "What does an AI assistant cost?",
         a: "There is no list price. The pilot has a fixed price that we name in writing beforehand; it depends on tasks, connections and call volume. The AI check before it costs from €990 net (credited in full against a follow-up order within 60 days), and operation and expansion afterwards are billed monthly by agreement. All prices net of VAT, businesses only.",
       },
@@ -551,6 +559,10 @@ const tr: PageDef = {
     label: "Sık sorulanlar",
     h: "YZ asistanları hakkında sorular",
     items: [
+      {
+        q: "Yapay zeka telefon asistanı nedir?",
+        a: "Yapay zeka telefon asistanı, telefondaki talepleri alır ve standart soruları kendi belgelerinize dayanarak yanıtlar. En başta yapay zeka olduğunu söyler; şikâyet, özel durum ve belirsizlikte ekibinizden bir kişiye devreder. Liste fiyatı yoktur: YZ Kontrolü 990 €'dan itibaren (net) ile başlar, ardından önceden yazılı olarak kararlaştırdığımız sabit fiyatlı bir pilot gelir.",
+      },
       {
         q: "Bir YZ asistanının maliyeti nedir?",
         a: "Liste fiyatı yoktur. Pilotun sabit bir fiyatı vardır ve bunu önceden yazılı olarak bildiririz; fiyat görevlere, bağlantılara ve arama hacmine bağlıdır. Öncesindeki YZ Kontrolü 990 €'dan itibaren (net) başlar (60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir), sonrasındaki işletme ve geliştirme anlaşmaya göre aylık faturalandırılır. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
