@@ -189,43 +189,34 @@ const articles: Record<string, Record<string, string>> = {
   "eu-ai-act-august-2026-omnibus-compliance": {
     en: `<p><em>Updated on 2 November 2026 after publication in the Official Journal. The text published in the Official Journal of the EU is authoritative.</em></p>
 
-<p>The EU AI Act (Regulation (EU) 2024/1689) has been in force since 1 August 2024 and has largely applied since 2 August 2026. It is amended by Regulation (EU) 2026/1744 of 8 July 2026, the Digital Omnibus on AI. The Council of the EU gave its final approval on 29 June 2026. The Regulation was published in the Official Journal on 24 July 2026 (OJ L, 2026/1744) and entered into force on the third day after publication, 27 July 2026. It extends several key deadlines and simplifies compliance for smaller businesses. It also replaces Article 4 on AI literacy and amends Article 50 on transparency, which concerns every business operating a customer-facing AI system in the EU.</p>
+<p>This is a short summary for companies that use AI tools such as chatbots, phone assistants or AI in office work. It covers what the EU AI Act requires of them and what the Digital Omnibus on AI changed.</p>
 
-<h2>Three Key Facts</h2>
-<p>First: any chatbot, AI assistant, or automated system interacting with users has had to disclose that it is AI since 2 August 2026 (Article 50). Second: the compliance deadline for most high-risk AI applications (recruitment screening, credit scoring, education systems, biometric identification) was extended by 16 months to 2 December 2027. Third: companies with up to 750 employees and annual revenue under 150 million euros now qualify for expanded SME protections under the AI Act.</p>
+<h2>What changed and when</h2>
+<p>The AI Act, Regulation (EU) 2024/1689, entered into force on 1 August 2024 and applies largely from 2 August 2026. It is amended by Regulation (EU) 2026/1744 of 8 July 2026, the Digital Omnibus on AI. Negotiators reached a provisional agreement in early May 2026, the European Parliament adopted its position on 16 June 2026 and the Council approved on 29 June 2026. The Regulation was published in the Official Journal on 24 July 2026 (OJ L, 2026/1744) and entered into force on the third day after publication, 27 July 2026.</p>
+<p>The Omnibus moves the deadlines for high-risk AI systems. Annex III systems (for example recruitment screening, creditworthiness, education and essential services) now apply from 2 December 2027. AI systems in products under Annex I and Article 6(1) apply from 2 August 2028.</p>
 
-<h2>What the Digital Omnibus Changed</h2>
-<p>The EU reached political agreement on the Omnibus amendments on 7 May 2026. The European Parliament formally endorsed them on 16 June, and the Council gave final approval on 29 June. Regulation (EU) 2026/1744 of 8 July 2026 was published in the Official Journal on 24 July 2026 and entered into force on 27 July 2026, ahead of the 2 August date.</p>
-
-<p>The most significant deadline extension applies to Annex III high-risk AI systems: those used in employment and HR screening, educational institutions, essential services, creditworthiness assessment, and public administration. These systems now face a compliance deadline of 2 December 2027, pushed back 16 months from the original date of 2 August 2026. AI systems embedded as safety components in regulated products face an even longer runway: their deadline moves to 2 August 2028.</p>
-
-<h2>Article 4: AI Literacy</h2>
-<p>Article 4 was replaced. Companies that use AI take measures for the AI literacy of their staff and of other persons who operate or use AI systems on their behalf. No certificate is required. We do not give legal advice; the text published in the Official Journal is authoritative.</p>
+<h2>Article 4: AI literacy</h2>
+<p>Article 4 was replaced. Providers and deployers of AI systems take measures to support the development of AI literacy of their staff and of other persons dealing with the operation and use of AI systems on their behalf. The obligation does not require them to guarantee a specific level of AI literacy of any individual, and it prescribes no particular training or certificate. Article 4 has applied since 2 February 2025; the current wording applies since 27 July 2026.</p>
 
 <h2>Article 50: Transparency</h2>
-<p>Article 50 was amended as well. Paragraph 7, on codes of practice, was replaced. For Article 50(2), which covers the marking of synthetic content, providers who placed their systems on the market before 2 August 2026 get a transitional period of four months, until 2 December 2026.</p>
-<p>The core transparency duties apply since 2 August 2026:</p>
+<p>The transparency duties of Article 50 apply since 2 August 2026. Who must do what:</p>
 <ul>
-<li>Any AI system designed for direct interaction with humans (chatbots, virtual assistants, automated email responders) must inform users they are communicating with an AI.</li>
-<li>Emotion recognition systems and biometric categorisation systems must notify the people they analyse.</li>
-<li>Deepfakes and AI-generated audio or video content must be labelled as artificially created using watermarks, metadata, or visible disclosure.</li>
+<li><strong>Providers</strong> design AI systems that interact directly with people so that those people are informed they are interacting with an AI (Art. 50(1)).</li>
+<li><strong>Providers</strong> of systems that generate synthetic audio, image, video or text content mark that content in a machine-readable way (Art. 50(2)).</li>
+<li><strong>Deployers</strong> inform people who are exposed to emotion recognition or biometric categorisation (Art. 50(3)).</li>
+<li><strong>Deployers</strong> disclose deepfakes and certain AI-generated text published to inform the public (Art. 50(4)).</li>
 </ul>
-<p>These requirements apply to both providers (companies that build AI systems) and deployers (companies that put them in front of customers). A business running a third-party AI chatbot on its website is a deployer, and the disclosure obligation falls on both parties.</p>
+<p>A company that runs a third-party chatbot is a deployer. Whether it needs its own notice is a question for its legal adviser.</p>
+<p>The Omnibus replaced paragraph 7 of Article 50, on codes of practice. Under the new Article 111(4), providers of systems that generate synthetic audio, image, video or text content and that were placed on the market before 2 August 2026 must take the necessary steps to comply with Article 50(2) by 2 December 2026.</p>
 
-<h2>Expanded SME Protections</h2>
-<p>Under the original AI Act, reduced compliance burdens applied only to small and medium-sized enterprises as defined by EU rules: up to 250 employees and 50 million euros in revenue. The Omnibus extends these protections to "small mid-cap" companies: up to 750 employees and 150 million euros in annual revenue. This matters for the German Mittelstand. Many family-owned manufacturing and technology companies in the 250 to 750 employee range now qualify for simplified conformity assessment pathways, lower documentation requirements, and priority access to regulatory sandboxes.</p>
+<h2>New prohibitions</h2>
+<p>Two new prohibitions in Article 5(1) apply from 2 December 2026. They cover AI systems that generate or manipulate realistic intimate or sexually explicit images, video or audio of identifiable people without their consent (so-called nudifier applications), and AI systems that generate or manipulate child sexual abuse material. For providers, the ban applies where this is the intended purpose or a reasonably foreseeable and reproducible outcome without adequate safeguards.</p>
 
-<h2>New Prohibition: Non-Consensual Intimate Imagery</h2>
-<p>The Omnibus introduced one new prohibition absent from the original AI Act. AI systems that generate or manipulate non-consensual intimate imagery, so-called nudifier applications, are banned from 2 December 2026. Providers face liability when such output is an intended or foreseeable outcome of the system. This closes a gap that earlier drafts of the AI Act left open.</p>
+<h2>Relief for SMEs and small mid-caps</h2>
+<p>Small mid-caps now get some of the relief that was already available to SMEs. These are companies that are not SMEs, with fewer than 750 employees and either annual turnover of up to EUR 150 million or a balance sheet total of up to EUR 129 million (Recommendation (EU) 2025/1099). They benefit from simplified technical documentation, a quality management system proportionate to company size, and priority access to the AI Office's Union-level regulatory sandbox. (SMEs have fewer than 250 employees and turnover of up to EUR 50 million or a balance sheet of up to EUR 43 million.)</p>
 
-<h2>Industrial AI Exemption</h2>
-<p>AI systems used exclusively under the EU Machinery Regulation are now exempt from the AI Act's classification requirements. This is relevant for German manufacturers using AI for production line monitoring, predictive maintenance, or automated quality control. If those systems fall under the Machinery Regulation, they do not require AI Act conformity procedures.</p>
-
-<h2>What This Means for DACH Businesses</h2>
-<p>Any German or EU business running a customer-facing AI system (an automated support bot, a lead qualification assistant, an AI-powered scheduling tool) needs transparent disclosure mechanisms in place. That is the non-negotiable part of the August date.</p>
-<p>High-risk applications (AI used to screen job applicants, assess creditworthiness, or make decisions about access to essential services) have until December 2027 to reach full compliance. But the risk management frameworks, technical documentation, and human oversight mechanisms the AI Act requires are substantial. Starting those assessments in mid-2027 leaves too little runway. Now is the right moment to begin.</p>
-<p>For Mittelstand companies in the newly expanded SME category, the Omnibus provides meaningful regulatory breathing room, but not an exemption. The core obligations apply; the pathways to demonstrate compliance are simplified.</p>
-<p>OpSolid designs and builds automation and AI systems for mid-market businesses in Germany and the EU. When integrating AI into business workflows, whether customer-facing or internal, compliance with the AI Act's disclosure requirements and risk classification framework is part of the architecture from the start, not an afterthought. We do not give legal advice.</p>
+<h2>What this means in practice</h2>
+<p>If you use AI tools, it helps to know which ones you run, in what role (provider or deployer) and where they talk to customers or publish content. Take reasonable steps to help the people who work with these tools understand them, and check whether Article 50 duties apply to what you do. This summary is no promise of compliance. We do not give legal advice; for your own case, ask your legal adviser.</p>
 
 <h2>Sources</h2>
 <ul>
@@ -236,96 +227,78 @@ const articles: Record<string, Record<string, string>> = {
 
     de: `<p><em>Aktualisiert am 2. November 2026 nach der Veröffentlichung im Amtsblatt. Maßgeblich ist der im Amtsblatt der EU veröffentlichte Text.</em></p>
 
-<p>Die KI-Verordnung (AI Act, Verordnung (EU) 2024/1689) ist seit dem 1. August 2024 in Kraft und wird seit dem 2. August 2026 weitgehend angewendet. Sie wird durch die Verordnung (EU) 2026/1744 vom 8. Juli 2026, den Digital-Omnibus zur KI, geändert. Der Rat der EU erteilte seine endgültige Zustimmung am 29. Juni 2026. Die Verordnung wurde am 24. Juli 2026 im Amtsblatt veröffentlicht (ABl. L, 2026/1744) und trat am dritten Tag nach der Veröffentlichung in Kraft, am 27. Juli 2026. Sie verlängert mehrere wichtige Fristen und vereinfacht die Compliance für kleinere Unternehmen. Außerdem ersetzt sie Artikel 4 zur KI-Kompetenz und ändert Artikel 50 zur Transparenz; das betrifft jedes Unternehmen, das in der EU ein kundengerichtetes KI-System betreibt.</p>
+<p>Dies ist eine kurze Zusammenfassung für Unternehmen, die KI-Werkzeuge wie Chatbots, Telefonassistenten oder KI in der Büroarbeit nutzen. Sie zeigt, was die KI-Verordnung von ihnen verlangt und was der Digital-Omnibus zur KI geändert hat.</p>
 
-<h2>Drei wichtige Fakten</h2>
-<p>Erstens: Jeder Chatbot, KI-Assistent oder jedes automatisierte System, das mit Nutzern interagiert, muss seit dem 2. August 2026 offenlegen, dass es sich um KI handelt (Artikel 50). Zweitens: Die Compliance-Frist für die meisten Hochrisiko-KI-Anwendungen (Personalauswahl, Kreditscoring, Bildungssysteme, biometrische Identifikation) wurde um 16 Monate auf den 2. Dezember 2027 verlängert. Drittens: Unternehmen mit bis zu 750 Mitarbeitern und einem Jahresumsatz unter 150 Millionen Euro kommen nun in den Genuss erweiterter KMU-Schutzbestimmungen der KI-Verordnung.</p>
-
-<h2>Was der Digital-Omnibus geändert hat</h2>
-<p>Die politische Einigung über die Omnibus-Änderungen wurde am 7. Mai 2026 erzielt. Das Europäische Parlament stimmte formal am 16. Juni zu, der Rat erteilte seine endgültige Zustimmung am 29. Juni. Die Verordnung (EU) 2026/1744 vom 8. Juli 2026 wurde am 24. Juli 2026 im Amtsblatt veröffentlicht und trat am 27. Juli 2026 in Kraft, noch vor dem 2. August.</p>
-
-<p>Die bedeutendste Fristverlängerung betrifft Hochrisiko-KI-Systeme nach Anhang III: Systeme, die in der Personalauswahl, in Bildungseinrichtungen, bei wesentlichen Dienstleistungen, zur Kreditwürdigkeitsbewertung und in der öffentlichen Verwaltung eingesetzt werden. Die Compliance-Frist für diese Systeme wurde auf den 2. Dezember 2027 verschoben, 16 Monate später als ursprünglich. KI-Systeme, die als Sicherheitskomponenten in regulierten Produkten verbaut sind, erhalten noch mehr Zeit: ihre Frist wurde auf den 2. August 2028 verlegt.</p>
+<h2>Was sich wann geändert hat</h2>
+<p>Die KI-Verordnung (AI Act), Verordnung (EU) 2024/1689, ist am 1. August 2024 in Kraft getreten und gilt weitgehend ab dem 2. August 2026. Sie wird durch die Verordnung (EU) 2026/1744 vom 8. Juli 2026, den Digital-Omnibus zur KI, geändert. Die Verhandlungsführer erzielten Anfang Mai 2026 eine vorläufige Einigung, das Europäische Parlament nahm am 16. Juni 2026 seine Position an und der Rat stimmte am 29. Juni 2026 zu. Die Verordnung wurde am 24. Juli 2026 im Amtsblatt veröffentlicht (ABl. L, 2026/1744) und trat am dritten Tag nach der Veröffentlichung in Kraft, am 27. Juli 2026.</p>
+<p>Der Omnibus verschiebt die Fristen für Hochrisiko-KI-Systeme. Systeme nach Anhang III (zum Beispiel Bewerberauswahl, Kreditwürdigkeitsprüfung, Bildung und wesentliche Dienste) gelten nun ab dem 2. Dezember 2027. KI-Systeme in Produkten nach Anhang I und Artikel 6 Absatz 1 gelten ab dem 2. August 2028.</p>
 
 <h2>Artikel 4: KI-Kompetenz</h2>
-<p>Artikel 4 wurde neu gefasst. Unternehmen, die KI einsetzen, ergreifen Maßnahmen für die KI-Kompetenz ihres Personals und anderer Personen, die in ihrem Auftrag KI-Systeme betreiben oder nutzen. Ein Zertifikat ist nicht vorgeschrieben. Wir geben keine Rechtsberatung; maßgeblich ist der im Amtsblatt veröffentlichte Text.</p>
+<p>Artikel 4 wurde neu gefasst. Anbieter und Betreiber von KI-Systemen ergreifen Maßnahmen, um die KI-Kompetenz ihres Personals und anderer Personen zu fördern, die in ihrem Auftrag mit dem Betrieb und der Nutzung von KI-Systemen befasst sind. Die Pflicht verlangt nicht, dass sie ein bestimmtes Maß an KI-Kompetenz einzelner Personen garantieren, und sie schreibt weder eine bestimmte Schulung noch ein Zertifikat vor. Artikel 4 gilt seit dem 2. Februar 2025; die aktuelle Fassung gilt seit dem 27. Juli 2026.</p>
 
 <h2>Artikel 50: Transparenz</h2>
-<p>Auch Artikel 50 wurde geändert. Absatz 7 zu Verhaltenskodizes wurde ersetzt. Für Artikel 50 Absatz 2 (die Kennzeichnung synthetischer Inhalte) gilt für Anbieter, die ihre Systeme vor dem 2. August 2026 in Verkehr gebracht haben, eine Übergangsfrist von vier Monaten bis zum 2. Dezember 2026.</p>
-<p>Die grundlegenden Transparenzpflichten gelten seit dem 2. August 2026:</p>
+<p>Die Transparenzpflichten des Artikels 50 gelten seit dem 2. August 2026. Wer was tun muss:</p>
 <ul>
-<li>Jedes KI-System, das zur direkten Interaktion mit Menschen ausgelegt ist (Chatbots, virtuelle Assistenten, automatisierte E-Mail-Beantworter), muss Nutzern mitteilen, dass sie mit einer KI kommunizieren.</li>
-<li>Systeme zur Emotionserkennung und biometrischen Kategorisierung müssen die betroffenen Personen darüber informieren.</li>
-<li>Deepfakes sowie KI-generierte Audio- oder Videoinhalte müssen als künstlich erstellt gekennzeichnet werden, durch Wasserzeichen, Metadaten oder sichtbare Hinweise.</li>
+<li><strong>Anbieter</strong> gestalten KI-Systeme, die direkt mit Menschen interagieren, so, dass diese Menschen darüber informiert werden, dass sie mit einer KI interagieren (Art. 50 Abs. 1).</li>
+<li><strong>Anbieter</strong> von Systemen, die synthetische Audio-, Bild-, Video- oder Textinhalte erzeugen, kennzeichnen diese Inhalte in einem maschinenlesbaren Format (Art. 50 Abs. 2).</li>
+<li><strong>Betreiber</strong> informieren Personen, die einer Emotionserkennung oder biometrischen Kategorisierung ausgesetzt sind (Art. 50 Abs. 3).</li>
+<li><strong>Betreiber</strong> legen Deepfakes und bestimmte KI-generierte Texte offen, die veröffentlicht werden, um die Öffentlichkeit zu informieren (Art. 50 Abs. 4).</li>
 </ul>
-<p>Diese Anforderungen gelten sowohl für Anbieter (Unternehmen, die KI-Systeme entwickeln) als auch für Betreiber (Unternehmen, die sie gegenüber Kunden einsetzen). Ein Unternehmen, das einen Drittanbieter-Chatbot auf seiner Website betreibt, ist Betreiber, und die Offenlegungspflicht trifft beide Parteien.</p>
+<p>Ein Unternehmen, das einen Chatbot eines Drittanbieters betreibt, ist Betreiber. Ob es einen eigenen Hinweis braucht, ist eine Frage für die eigene Rechtsberatung.</p>
+<p>Der Omnibus hat Absatz 7 des Artikels 50 zu den Praxisleitfäden ersetzt. Nach dem neuen Artikel 111 Absatz 4 müssen Anbieter von Systemen, die synthetische Audio-, Bild-, Video- oder Textinhalte erzeugen und vor dem 2. August 2026 in Verkehr gebracht wurden, die erforderlichen Schritte ergreifen, um Artikel 50 Absatz 2 bis zum 2. Dezember 2026 zu erfüllen.</p>
 
-<h2>Erweiterte KMU-Schutzbestimmungen</h2>
-<p>In der ursprünglichen KI-Verordnung galten reduzierte Compliance-Anforderungen nur für kleine und mittlere Unternehmen im EU-Sinne: bis zu 250 Mitarbeitern und 50 Millionen Euro Umsatz. Der Omnibus erweitert diese Erleichterungen auf "kleine mittelgroße Unternehmen": bis zu 750 Mitarbeitern und 150 Millionen Euro Jahresumsatz. Das ist eine bedeutende Änderung für den deutschen Mittelstand. Viele familiengeführte Hersteller und Technologieunternehmen mit 250 bis 750 Beschäftigten kommen jetzt in den Genuss vereinfachter Konformitätsbewertungsverfahren, geringerer Dokumentationspflichten und bevorzugtem Zugang zu Regulierungs-Sandboxen.</p>
+<h2>Neue Verbote</h2>
+<p>Zwei neue Verbote in Artikel 5 Absatz 1 gelten ab dem 2. Dezember 2026. Sie betreffen KI-Systeme, die realistische intime oder sexuell explizite Bilder, Videos oder Audioinhalte identifizierbarer Personen ohne deren Einwilligung erzeugen oder manipulieren (sogenannte Nudifier-Anwendungen), sowie KI-Systeme, die Material über sexuellen Kindesmissbrauch erzeugen oder manipulieren. Für Anbieter gilt das Verbot, wenn dies der Zweck ist oder ein hinreichend vorhersehbares und reproduzierbares Ergebnis ohne angemessene Schutzvorkehrungen.</p>
 
-<h2>Neues Verbot: Nicht einvernehmliche intime Abbildungen</h2>
-<p>Der Omnibus führt ein neues Verbot ein, das in der ursprünglichen KI-Verordnung nicht enthalten war. KI-Systeme, die nicht einvernehmliche intime Aufnahmen erzeugen oder manipulieren, sogenannte Nudifier-Anwendungen, sind ab dem 2. Dezember 2026 verboten. Anbieter haften, wenn solche Ausgaben ein beabsichtigtes oder vorhersehbares Ergebnis des Systems sind. Damit wird eine Lücke geschlossen, die frühere Entwürfe offen gelassen hatten.</p>
+<h2>Erleichterungen für KMU und kleine Mid-Caps</h2>
+<p>Kleine Mid-Caps erhalten nun einen Teil der Erleichterungen, die bisher KMU vorbehalten waren. Gemeint sind Unternehmen, die keine KMU sind, weniger als 750 Beschäftigte haben und entweder einen Jahresumsatz von höchstens 150 Mio. EUR oder eine Bilanzsumme von höchstens 129 Mio. EUR aufweisen (Empfehlung (EU) 2025/1099). Sie profitieren von vereinfachter technischer Dokumentation, einem der Unternehmensgröße angemessenen Qualitätsmanagementsystem und vorrangigem Zugang zur Reallabor-Umgebung des KI-Büros auf Unionsebene. (KMU haben weniger als 250 Beschäftigte und einen Umsatz von höchstens 50 Mio. EUR oder eine Bilanzsumme von höchstens 43 Mio. EUR.)</p>
 
-<h2>Ausnahme für Industrie-KI</h2>
-<p>KI-Systeme, die ausschließlich im Rahmen der EU-Maschinenverordnung eingesetzt werden, sind nun von den Klassifizierungsanforderungen der KI-Verordnung ausgenommen. Das ist relevant für deutsche Hersteller, die KI zur Produktionsüberwachung, vorausschauenden Wartung oder automatisierten Qualitätskontrolle nutzen. Sofern diese Systeme unter die Maschinenverordnung fallen, benötigen sie keine KI-Konformitätsprüfung.</p>
-
-<h2>Was das für DACH-Unternehmen bedeutet</h2>
-<p>Jedes deutsche oder europäische Unternehmen, das ein kundengerichtetes KI-System betreibt (einen automatisierten Support-Bot, einen Lead-Qualifizierungsassistenten oder ein KI-gestütztes Buchungssystem), braucht transparente Offenlegungsmechanismen. Das ist der nicht verhandelbare Teil des August-Termins.</p>
-<p>Hochrisiko-Anwendungen (KI zur Vorauswahl von Stellenbewerbern, zur Kreditwürdigkeitsbewertung oder für Entscheidungen über den Zugang zu wesentlichen Dienstleistungen) haben bis Dezember 2027 Zeit für die vollständige Compliance. Aber die von der KI-Verordnung geforderten Risikomanagementsysteme, technischen Dokumentationen und Mechanismen zur menschlichen Aufsicht sind umfangreich. Wer erst Mitte 2027 anfängt, wird den Zeitplan kaum einhalten. Jetzt ist der richtige Zeitpunkt, diese Bewertungen zu beginnen.</p>
-<p>Für Mittelstandsunternehmen in der neu erweiterten KMU-Kategorie bietet der Omnibus echte regulatorische Erleichterungen, aber keine Befreiung. Die grundlegenden Pflichten gelten weiterhin; die Wege zum Nachweis der Konformität sind vereinfacht.</p>
-<p>OpSolid entwickelt Automatisierungs- und KI-Systeme für mittelständische Unternehmen in Deutschland und der EU. Bei der Integration von KI-Komponenten in Geschäftsprozesse, ob kundengerichtet oder intern, ist die Einhaltung der Offenlegungsanforderungen und des Risikoklassifizierungsrahmens der KI-Verordnung von Anfang an Teil des Designs. Wir geben keine Rechtsberatung.</p>
+<h2>Was das in der Praxis bedeutet</h2>
+<p>Wer KI-Werkzeuge nutzt, sollte wissen, welche er einsetzt, in welcher Rolle (Anbieter oder Betreiber) und wo sie mit Kundschaft sprechen oder Inhalte veröffentlichen. Ergreifen Sie angemessene Maßnahmen, damit die Menschen, die mit diesen Werkzeugen arbeiten, sie verstehen, und prüfen Sie, ob Pflichten aus Artikel 50 auf Ihr Vorgehen zutreffen. Diese Zusammenfassung ist kein Versprechen von Konformität. Wir geben keine Rechtsberatung; für Ihren eigenen Fall fragen Sie bitte Ihre Rechtsberatung.</p>
 
 <h2>Quellen</h2>
 <ul>
-<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">EU-Rat: Endgültige Zustimmung zur KI-Vereinfachung, 29. Juni 2026</a></li>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">Rat der EU: Endgültige Zustimmung zur Vereinfachung der KI-Verordnung, 29. Juni 2026 (Englisch)</a></li>
 <li><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj/deu">Verordnung (EU) 2024/1689 (KI-Verordnung), EUR-Lex</a></li>
 <li><a href="https://eur-lex.europa.eu/eli/reg/2026/1744/oj/deu">Verordnung (EU) 2026/1744 (Digital-Omnibus zur KI), EUR-Lex</a></li>
 </ul>`,
 
     tr: `<p><em>2 Kasım 2026'da, Resmî Gazete'de yayımlanmasının ardından güncellendi. Esas olan, AB Resmî Gazetesi'nde yayımlanan metindir.</em></p>
 
-<p>AB Yapay Zeka Yasası ((AB) 2024/1689 sayılı Tüzük) 1 Ağustos 2024'ten beri yürürlükte ve 2 Ağustos 2026'dan beri büyük ölçüde uygulanıyor. Yasa, 8 Temmuz 2026 tarihli (AB) 2026/1744 sayılı Tüzük, yani yapay zekaya ilişkin Dijital Omnibus ile değiştirildi. AB Konseyi nihai onayını 29 Haziran 2026'da verdi. Tüzük 24 Temmuz 2026'da AB Resmî Gazetesi'nde yayımlandı (OJ L, 2026/1744) ve yayımdan sonraki üçüncü gün, 27 Temmuz 2026'da yürürlüğe girdi. Paket bazı önemli son tarihleri uzatıyor ve küçük işletmeler için uyum gerekliliklerini basitleştiriyor. Ayrıca yapay zeka yetkinliğine ilişkin 4. maddeyi yeniden düzenliyor ve şeffaflığa ilişkin 50. maddeyi değiştiriyor; bu, AB'de müşteriye yönelik bir yapay zeka sistemi işleten her işletmeyi ilgilendiriyor.</p>
+<p>Bu, chatbot, telefon asistanı ya da ofis işlerinde yapay zeka gibi araçlar kullanan şirketler için kısa bir özettir. Yapay Zeka Yasası'nın onlardan ne istediğini ve Yapay Zeka Dijital Omnibusu'nun neyi değiştirdiğini gösterir.</p>
 
-<h2>Üç Temel Gerçek</h2>
-<p>Birincisi: Kullanıcılarla doğrudan etkileşim kuran herhangi bir chatbot, yapay zeka asistanı veya otomatik sistem, 2 Ağustos 2026'dan beri bir yapay zeka olduğunu açıklamak zorunda (Madde 50). İkincisi: Çoğu yüksek riskli yapay zeka uygulamasının uyum son tarihi (işe alım taraması, kredi skorlama, eğitim sistemleri, biyometrik kimlik tespiti) 16 ay ertelenerek 2 Aralık 2027'ye taşındı. Üçüncüsü: 750 çalışana ve 150 milyon euro yıllık ciroye kadar olan şirketler, Yapay Zeka Yasası kapsamında genişletilmiş KOBİ korumalarından yararlanmaya başlayacak.</p>
+<h2>Ne zaman ne değişti</h2>
+<p>Yapay Zeka Yasası (AI Act), yani (AB) 2024/1689 sayılı Tüzük, 1 Ağustos 2024'te yürürlüğe girdi ve büyük ölçüde 2 Ağustos 2026'dan itibaren uygulanıyor. 8 Temmuz 2026 tarihli (AB) 2026/1744 sayılı Tüzük, yani Yapay Zeka Dijital Omnibusu ile değiştirildi. Müzakereciler 2026 Mayıs başında geçici bir anlaşmaya vardı, Avrupa Parlamentosu 16 Haziran 2026'da görüşünü kabul etti, Konsey 29 Haziran 2026'da onayladı. Tüzük 24 Temmuz 2026'da Resmî Gazete'de yayımlandı (OJ L, 2026/1744) ve yayımdan sonraki üçüncü gün, 27 Temmuz 2026'da yürürlüğe girdi.</p>
+<p>Omnibus, yüksek riskli yapay zeka sistemleri için tarihleri kaydırıyor. Ek III kapsamındaki sistemler (örneğin işe alım taraması, kredi değerliliği, eğitim ve temel hizmetler) artık 2 Aralık 2027'den itibaren uygulanıyor. Ek I ve 6. maddenin 1. fıkrası kapsamındaki ürünlerde yer alan yapay zeka sistemleri 2 Ağustos 2028'den itibaren uygulanıyor.</p>
 
-<h2>Dijital Omnibus Neleri Değiştirdi</h2>
-<p>Omnibus değişikliklerine ilişkin siyasi mutabakat 7 Mayıs 2026'da sağlandı. Avrupa Parlamentosu resmi olarak 16 Haziran'da onayladı; Konsey nihai onayını 29 Haziran'da verdi. 8 Temmuz 2026 tarihli (AB) 2026/1744 sayılı Tüzük 24 Temmuz 2026'da Resmî Gazete'de yayımlandı ve 27 Temmuz 2026'da yürürlüğe girdi, yani 2 Ağustos'tan önce.</p>
+<h2>4. madde: Yapay zeka okuryazarlığı</h2>
+<p>4. madde yeniden düzenlendi. Yapay zeka sistemlerinin sağlayıcıları ve kullanıcı kuruluşları (deployer), kendi personelinin ve kendileri adına yapay zeka sistemlerinin işletilmesi ve kullanımıyla ilgilenen diğer kişilerin yapay zeka okuryazarlığının gelişmesini desteklemek için önlemler alır. Bu yükümlülük, tek tek kişiler için belirli bir okuryazarlık düzeyinin garanti edilmesini gerektirmez ve belirli bir eğitim ya da sertifika öngörmez. 4. madde 2 Şubat 2025'ten beri uygulanıyor; mevcut metin 27 Temmuz 2026'dan beri geçerli.</p>
 
-<p>En önemli süre uzatması Ek III yüksek riskli yapay zeka sistemlerini kapsıyor: insan kaynakları taramasında, eğitim kurumlarında, temel hizmetlerde, kredi değerlendirmesinde ve kamu yönetiminde kullanılan sistemler. Bu sistemlerin uyum son tarihi, 2 Ağustos 2026'dan 2 Aralık 2027'ye (16 ay) ertelendi. Düzenlenmiş ürünlere güvenlik bileşeni olarak entegre edilen yapay zeka sistemlerinin son tarihi ise 2 Ağustos 2028'e taşındı.</p>
-
-<h2>Madde 4: Yapay Zeka Yetkinliği</h2>
-<p>4. madde yeni metinle değiştirildi. Yapay zeka kullanan şirketler, çalışanlarının ve kendi adlarına yapay zeka sistemlerini işleten ya da kullanan diğer kişilerin yapay zeka yetkinliği için önlemler alır. Sertifika zorunlu değildir. Hukuki danışmanlık vermiyoruz; esas olan, Resmî Gazete'de yayımlanan metindir.</p>
-
-<h2>Madde 50: Şeffaflık</h2>
-<p>50. madde de değiştirildi. Uygulama kurallarına ilişkin 7. fıkranın yerine yenisi konuldu. 50. maddenin 2. fıkrası (sentetik içeriğin işaretlenmesi) için, sistemlerini 2 Ağustos 2026'dan önce piyasaya sunan sağlayıcılara dört aylık, yani 2 Aralık 2026'ya kadar süren bir geçiş süresi tanındı.</p>
-<p>Temel şeffaflık yükümlülükleri 2 Ağustos 2026'dan beri geçerli:</p>
+<h2>50. madde: Şeffaflık</h2>
+<p>50. maddedeki şeffaflık yükümlülükleri 2 Ağustos 2026'dan beri uygulanıyor. Kim ne yapmalı:</p>
 <ul>
-<li>İnsanlarla doğrudan etkileşim kurmak üzere tasarlanmış herhangi bir yapay zeka sistemi (chatbotlar, sanal asistanlar, otomatik e-posta yanıtlayıcılar) kullanıcılara bir yapay zeka ile iletişim kurduklarını bildirmek zorunda.</li>
-<li>Duygu tanıma sistemleri ve biyometrik kategorizasyon sistemleri, analiz ettikleri kişileri bilgilendirmek zorunda.</li>
-<li>Deepfake'ler ile yapay zeka üretimi ses ya da video içerikler, filigranlar, meta veriler veya görünür açıklamalar aracılığıyla yapay olarak üretildiği belirtilerek etiketlenmek zorunda.</li>
+<li><strong>Sağlayıcılar</strong>, insanlarla doğrudan etkileşen yapay zeka sistemlerini, bu kişilere bir yapay zeka ile etkileşim içinde oldukları bildirilecek şekilde tasarlar (madde 50/1).</li>
+<li><strong>Sağlayıcılar</strong>, sentetik ses, görüntü, video ya da metin içeriği üreten sistemlerde bu içeriği makine tarafından okunabilir biçimde işaretler (madde 50/2).</li>
+<li><strong>Kullanıcı kuruluşlar (deployer)</strong>, duygu tanıma ya da biyometrik kategorizasyona maruz kalan kişileri bilgilendirir (madde 50/3).</li>
+<li><strong>Kullanıcı kuruluşlar (deployer)</strong>, deepfake içerikleri ve kamuyu bilgilendirmek amacıyla yayımlanan belirli yapay zeka üretimi metinleri açıklar (madde 50/4).</li>
 </ul>
-<p>Bu gereklilikler hem sağlayıcılar (yapay zeka sistemi geliştiren şirketler) hem de konuşlandırıcılar (müşterilerine sunan şirketler) için geçerli. Web sitesinde üçüncü taraf yapay zeka chatbotu çalıştıran bir işletme konuşlandırıcı konumundadır ve açıklama yükümlülüğü her iki tarafı da bağlar.</p>
+<p>Üçüncü taraf bir chatbot işleten şirket, kullanıcı kuruluştur (deployer). Kendi bildirimine ihtiyaç duyup duymadığı, hukuk danışmanına sorulacak bir sorudur.</p>
+<p>Omnibus, 50. maddenin uygulama kılavuzlarına ilişkin 7. fıkrasını değiştirdi. Yeni 111. maddenin 4. fıkrasına göre, sentetik ses, görüntü, video ya da metin içeriği üreten ve 2 Ağustos 2026'dan önce piyasaya sürülmüş sistemlerin sağlayıcıları, 50. maddenin 2. fıkrasına uyum için gerekli adımları 2 Aralık 2026'ya kadar atmak zorundadır.</p>
 
-<h2>Genişletilmiş KOBİ Korumaları</h2>
-<p>Orijinal Yapay Zeka Yasası'nda azaltılmış uyum yükümlülükleri yalnızca AB tanımına göre küçük ve orta ölçekli işletmeler için geçerliydi: 250 çalışana ve 50 milyon euro ciroye kadar. Omnibus bu korumaları, 750 çalışana ve 150 milyon euro yıllık ciroye kadar olan "küçük orta büyüklükteki" şirketlere genişletiyor. Alman Mittelstand için bu önemli bir değişiklik. 250 ila 750 çalışanı olan pek çok aile şirketi ve teknoloji firması artık basitleştirilmiş uygunluk değerlendirme yollarından, daha az belgeleme zorunluluklarından ve düzenleyici sanal ortamlara öncelikli erişimden yararlanabilecek.</p>
+<h2>Yeni yasaklar</h2>
+<p>5. maddenin 1. fıkrasındaki iki yeni yasak 2 Aralık 2026'dan itibaren uygulanıyor. Bunlar, kimliği belirlenebilir kişilerin gerçekçi mahrem ya da cinsel içerikli görüntü, video veya seslerini rızaları olmadan üreten ya da manipüle eden yapay zeka sistemlerini (nudifier uygulamaları olarak bilinen) ve çocuk istismarı materyali üreten ya da manipüle eden yapay zeka sistemlerini kapsıyor. Sağlayıcılar için yasak, bu durum sistemin amacıysa ya da yeterli güvenceler olmadan makul ölçüde öngörülebilir ve yeniden üretilebilir bir sonuçsa geçerli.</p>
 
-<h2>Yeni Yasak: Rızasız Mahrem Görüntüler</h2>
-<p>Omnibus, orijinal Yapay Zeka Yasası'nda yer almayan yeni bir yasak getirdi. Rızasız mahrem görüntüler üreten veya manipüle eden yapay zeka sistemleri (nudifier uygulamaları olarak bilinen) 2 Aralık 2026'dan itibaren yasaklanıyor. Sağlayıcılar, sistemin bu tür çıktılar üretmesi amaçlandığında veya öngörülebilir bir sonuç olduğunda sorumluluk taşıyor. Bu, önceki taslak versiyonlarındaki bir boşluğu kapatıyor.</p>
+<h2>KOBİ'ler ve küçük orta ölçekli şirketler için kolaylıklar</h2>
+<p>Küçük orta ölçekli şirketler (small mid-cap) artık KOBİ'lere tanınan kolaylıkların bir kısmından yararlanıyor. Bunlar KOBİ olmayan, 750'den az çalışanı olan ve yıllık cirosu en fazla 150 milyon avro ya da bilanço toplamı en fazla 129 milyon avro olan şirketlerdir ((AB) 2025/1099 sayılı Tavsiye). Basitleştirilmiş teknik dokümantasyon, şirket büyüklüğüyle orantılı bir kalite yönetim sistemi ve Yapay Zeka Ofisi'nin Birlik düzeyindeki düzenleyici test ortamına öncelikli erişimden yararlanırlar. (KOBİ'lerin çalışan sayısı 250'den azdır; cirosu en fazla 50 milyon avro ya da bilanço toplamı en fazla 43 milyon avro olmalıdır.)</p>
 
-<h2>Endüstriyel Yapay Zeka Muafiyeti</h2>
-<p>Yalnızca AB Makina Yönetmeliği kapsamında kullanılan yapay zeka sistemleri, artık Yapay Zeka Yasası'nın sınıflandırma gerekliliklerinden muaf tutuluyor. Bu, üretim hattı izleme, tahmin bakımı veya otomatik kalite kontrolü için yapay zeka kullanan Alman üreticiler açısından önem taşıyor. Bu sistemler Makina Yönetmeliği kapsamına giriyorsa, Yapay Zeka Yasası uygunluk prosedürlerine tabi olmayacaklar.</p>
-
-<h2>DACH İşletmeleri İçin Ne Anlama Geliyor</h2>
-<p>Müşteriye yönelik bir yapay zeka sistemi işleten herhangi bir Alman veya Avrupalı işletme (otomatik destek botu, müşteri adayı nitelendirme asistanı veya yapay zeka destekli randevu aracı) şeffaf açıklama mekanizmalarına ihtiyaç duyuyor. Ağustos tarihinin pazarlık konusu olmayan kısmı bu.</p>
-<p>Yüksek riskli uygulamalar (iş başvurularını taramak, kredi değerlendirmesi yapmak veya temel hizmetlere erişim kararı vermek için kullanılan yapay zeka) tam uyum için Aralık 2027'ye kadar süreye sahip. Ancak Yapay Zeka Yasası'nın gerektirdiği risk yönetimi çerçeveleri, teknik belgeler ve insan denetim mekanizmaları kapsamlıdır. 2027 ortasında başlamak yeterli zaman bırakmaz. Bu değerlendirmelere şimdi başlamak doğru adım.</p>
-<p>Yeni genişletilmiş KOBİ kategorisindeki Mittelstand şirketleri için Omnibus gerçek bir düzenleyici nefes alanı sunuyor, ancak muafiyet değil. Temel yükümlülükler geçerliliğini koruyor; uyumu göstermek için izlenen yollar basitleşiyor.</p>
-<p>OpSolid, Almanya ve AB'deki orta ölçekli işletmeler için otomasyon ve yapay zeka sistemleri geliştiriyor. Yapay zeka bileşenlerini iş süreçlerine entegre ederken, ister müşteriye yönelik isterse dahili olsun, Yapay Zeka Yasası'nın açıklama gereklilikleri ve risk sınıflandırma çerçevesine uyum, tasarımın başından beri ayrılmaz bir parçasıdır. Hukuki danışmanlık vermiyoruz.</p>
+<h2>Uygulamada ne anlama geliyor</h2>
+<p>Yapay zeka araçları kullanıyorsanız, hangilerini, hangi rolde (sağlayıcı ya da kullanıcı kuruluş) ve nerede müşterilerle konuştuklarını ya da içerik yayımladıklarını bilmek işinize yarar. Bu araçlarla çalışan kişilerin onları anlamasına yardımcı olmak için makul önlemler alın ve 50. maddedeki yükümlülüklerin yaptığınız işe uyup uymadığını kontrol edin. Bu özet, uyum vaadi değildir. Hukuki danışmanlık vermiyoruz; kendi durumunuz için lütfen hukuk danışmanınıza başvurun.</p>
 
 <h2>Kaynaklar</h2>
 <ul>
-<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">AB Konseyi: Yapay Zeka Yasası basitleştirme nihai onayı, 29 Haziran 2026</a></li>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/">AB Konseyi: Yapay Zeka Yasası'nın sadeleştirilmesine nihai onay, 29 Haziran 2026 (İngilizce)</a></li>
 <li><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng">Tüzük (AB) 2024/1689 (AI Act), EUR-Lex, İngilizce</a></li>
-<li><a href="https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng">Tüzük (AB) 2026/1744 (Dijital Omnibus), EUR-Lex, İngilizce</a></li>
+<li><a href="https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng">Tüzük (AB) 2026/1744 (Yapay Zeka Dijital Omnibusu), EUR-Lex, İngilizce</a></li>
 </ul>`,
   },
 };
