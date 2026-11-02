@@ -88,8 +88,8 @@ export type Block =
   | (SectionBase & { t: "table"; caption: string; cols: string[]; rows: string[][]; footnote?: string })
   /** Key-value list (scope, format, duration, group size). */
   | (SectionBase & { t: "spec"; rows: [string, string][]; footnote?: string })
-  /** Plain paragraphs. */
-  | (SectionBase & { t: "text"; paras: string[] })
+  /** Plain paragraphs; legal sections close with their primary sources (EUR-Lex) and the date they were checked. */
+  | (SectionBase & { t: "text"; paras: string[]; sources?: { items: { label: string; href: `https://${string}` }[]; asOf?: string } })
   /** A sample deliverable, visibly stamped as a sample (`mark`: "Muster"). */
   | (SectionBase & { t: "sample"; mark: string; title: string; meta: string; rows: [string, string][]; foot: string })
   /** Use cases by sector: tabs on wide screens, stacked on phones. Ideas are examples, labelled by `tag`. */
