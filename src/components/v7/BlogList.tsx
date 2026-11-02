@@ -5,6 +5,7 @@ import { content as tr } from "@/content/tr";
 import { getReadMinutes } from "@/content/blog";
 import { LABEL } from "@/content/v7/site";
 import type { Href, PageDef } from "@/content/v7/types";
+import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
@@ -128,7 +129,7 @@ export function BlogList({ locale }: { locale: L3 }) {
                   <div className="md:col-span-6">
                     <h2 className="f-display text-[1.5rem] leading-[1.15] md:text-[1.875rem]">
                       <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
-                        {p.title}
+                        {soft(p.title)}
                       </Link>
                     </h2>
                     <p className="mt-3 text-[#16191D]">{p.excerpt}</p>
