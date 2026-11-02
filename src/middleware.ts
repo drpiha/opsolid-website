@@ -221,18 +221,6 @@ export async function middleware(req: NextRequest) {
     return new NextResponse(null, { status: 405, headers: { Allow: "GET, HEAD" } });
   }
 
-  // -- URL hygiene -------------------------------------------------------------
-  // Duplicate spellings of a page get one permanent hop to the canonical one: repeated slashes
-  // (/en//about) and an upper-case locale prefix (/EN/about, which would otherwise 307 to /de/EN/about).
-  if (!pathname.startsWith("/api/")) {
-    const canonical = canonicalPathname(pathname, isLocale);
-    if (canonical !== null) {
-      const url = req.nextUrl.clone();
-      url.pathname = canonical;
-      return NextResponse.redirect(url, 308);
-    }
-  }
-
   // -- Voice Agent master kill switch ---------------------------------------
   // Gate /api/voice/* and /voice/* when VOICE_AGENT_ENABLED is falsy.
   // Exceptions: webhooks (must keep receiving Retell events) and diagnostics
@@ -346,6 +334,18 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(url);
   }
   // ------------------------------------------------------------------------
+
+  // -- URL hygiene (main site only, after the card, short-link and custom-domain hosts) -------------
+  // Duplicate spellings of a page get one permanent hop to the canonical one: repeated slashes
+  // (/en//about) and an upper-case locale prefix (/EN/about, which would otherwise 307 to /de/EN/about).
+  {
+    const canonical = canonicalPathname(pathname, isLocale);
+    if (canonical !== null) {
+      const url = req.nextUrl.clone();
+      url.pathname = canonical;
+      return NextResponse.redirect(url, 308);
+    }
+  }
 
   // Check if pathname already starts with a valid locale
   const firstSegment = pathname.split("/")[1];
