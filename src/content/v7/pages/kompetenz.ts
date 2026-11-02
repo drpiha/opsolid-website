@@ -421,7 +421,7 @@ const tr: PageDef = {
         asOf: "Hukuki durum: 2 Kasım 2026",
         items: [
           { label: "Tüzük (AB) 2024/1689 (AI Act), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" },
-          { label: "Tüzük (AB) 2026/1744 (4. madde yeniden düzenlendi), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
+          { label: "Tüzük (AB) 2026/1744 (4. madde yeni metinle değiştirildi), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
         ],
       },
     },

@@ -112,7 +112,7 @@ export const content: Content = {
         title: "EU-KI-Verordnung und Digital-Omnibus: Wo der Rechtsstand heute liegt",
         seoTitle: "EU-KI-Verordnung und Digital-Omnibus: Rechtsstand",
         excerpt:
-          "Die Verordnung (EU) 2026/1744 ändert die KI-Verordnung. Was sich bei Art. 4 zur KI-Kompetenz und bei Art. 50 zur Transparenz geändert hat und welche Fristen gelten.",
+          "Die Verordnung (EU) 2026/1744 ändert die KI-Verordnung: Was sich bei Art. 4 (KI-Kompetenz) und Art. 50 (Transparenz) ändert und welche Fristen gelten.",
         category: "ai",
         date: "2026-07-07",
         modified: "2026-11-02",

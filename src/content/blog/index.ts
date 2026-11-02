@@ -200,10 +200,10 @@ const articles: Record<string, Record<string, string>> = {
 <p>The most significant deadline extension applies to Annex III high-risk AI systems: those used in employment and HR screening, educational institutions, essential services, creditworthiness assessment, and public administration. These systems now face a compliance deadline of 2 December 2027, pushed back 16 months from the original date of 2 August 2026. AI systems embedded as safety components in regulated products face an even longer runway: their deadline moves to 2 August 2028.</p>
 
 <h2>Article 4: AI Literacy</h2>
-<p>Article 4 was replaced. Providers and deployers of AI systems take measures to support the development of AI literacy of their staff and of other persons who operate or use AI systems on their behalf. The obligation does not require them to guarantee a specific level of AI literacy of any individual. The rule does not prescribe a particular training or certificate. We do not give legal advice; the text published in the Official Journal is authoritative.</p>
+<p>Article 4 was replaced. Companies that use AI take measures for the AI literacy of their staff and of other persons who operate or use AI systems on their behalf. No certificate is required. We do not give legal advice; the text published in the Official Journal is authoritative.</p>
 
 <h2>Article 50: Transparency</h2>
-<p>Article 50 was amended as well. Paragraph 7, on codes of practice, was replaced. For Article 50(2), which covers the marking of synthetic content, providers who placed their systems on the market before 2 August 2026 get a transitional period of four months, until 2 December 2026. Systems placed on the market after 2 August 2026 are not covered by this transitional period.</p>
+<p>Article 50 was amended as well. Paragraph 7, on codes of practice, was replaced. For Article 50(2), which covers the marking of synthetic content, providers who placed their systems on the market before 2 August 2026 get a transitional period of four months, until 2 December 2026.</p>
 <p>The core transparency duties apply since 2 August 2026:</p>
 <ul>
 <li>Any AI system designed for direct interaction with humans (chatbots, virtual assistants, automated email responders) must inform users they are communicating with an AI.</li>
@@ -247,10 +247,10 @@ const articles: Record<string, Record<string, string>> = {
 <p>Die bedeutendste Fristverlängerung betrifft Hochrisiko-KI-Systeme nach Anhang III: Systeme, die in der Personalauswahl, in Bildungseinrichtungen, bei wesentlichen Dienstleistungen, zur Kreditwürdigkeitsbewertung und in der öffentlichen Verwaltung eingesetzt werden. Die Compliance-Frist für diese Systeme wurde auf den 2. Dezember 2027 verschoben, 16 Monate später als ursprünglich. KI-Systeme, die als Sicherheitskomponenten in regulierten Produkten verbaut sind, erhalten noch mehr Zeit: ihre Frist wurde auf den 2. August 2028 verlegt.</p>
 
 <h2>Artikel 4: KI-Kompetenz</h2>
-<p>Artikel 4 wurde neu gefasst. Anbieter und Betreiber von KI-Systemen ergreifen Maßnahmen, um die KI-Kompetenz ihres Personals und anderer Personen zu fördern, die in ihrem Auftrag KI-Systeme betreiben oder nutzen. Die Pflicht verlangt nicht, dass sie ein bestimmtes Maß an KI-Kompetenz einzelner Personen sicherstellen. Eine bestimmte Schulung oder ein Zertifikat schreibt die Vorschrift nicht vor. Wir geben keine Rechtsberatung; maßgeblich ist der im Amtsblatt veröffentlichte Text.</p>
+<p>Artikel 4 wurde neu gefasst. Unternehmen, die KI einsetzen, ergreifen Maßnahmen für die KI-Kompetenz ihres Personals und anderer Personen, die in ihrem Auftrag KI-Systeme betreiben oder nutzen. Ein Zertifikat ist nicht vorgeschrieben. Wir geben keine Rechtsberatung; maßgeblich ist der im Amtsblatt veröffentlichte Text.</p>
 
 <h2>Artikel 50: Transparenz</h2>
-<p>Auch Artikel 50 wurde geändert. Absatz 7 zu Verhaltenskodizes wurde ersetzt. Für Artikel 50 Absatz 2 (die Kennzeichnung synthetischer Inhalte) gilt für Anbieter, die ihre Systeme vor dem 2. August 2026 in Verkehr gebracht haben, eine Übergangsfrist von vier Monaten bis zum 2. Dezember 2026. Systeme, die nach dem 2. August 2026 in Verkehr gebracht werden, fallen nicht unter diese Übergangsfrist.</p>
+<p>Auch Artikel 50 wurde geändert. Absatz 7 zu Verhaltenskodizes wurde ersetzt. Für Artikel 50 Absatz 2 (die Kennzeichnung synthetischer Inhalte) gilt für Anbieter, die ihre Systeme vor dem 2. August 2026 in Verkehr gebracht haben, eine Übergangsfrist von vier Monaten bis zum 2. Dezember 2026.</p>
 <p>Die grundlegenden Transparenzpflichten gelten seit dem 2. August 2026:</p>
 <ul>
 <li>Jedes KI-System, das zur direkten Interaktion mit Menschen ausgelegt ist (Chatbots, virtuelle Assistenten, automatisierte E-Mail-Beantworter), muss Nutzern mitteilen, dass sie mit einer KI kommunizieren.</li>
@@ -294,10 +294,10 @@ const articles: Record<string, Record<string, string>> = {
 <p>En önemli süre uzatması Ek III yüksek riskli yapay zeka sistemlerini kapsıyor: insan kaynakları taramasında, eğitim kurumlarında, temel hizmetlerde, kredi değerlendirmesinde ve kamu yönetiminde kullanılan sistemler. Bu sistemlerin uyum son tarihi, 2 Ağustos 2026'dan 2 Aralık 2027'ye (16 ay) ertelendi. Düzenlenmiş ürünlere güvenlik bileşeni olarak entegre edilen yapay zeka sistemlerinin son tarihi ise 2 Ağustos 2028'e taşındı.</p>
 
 <h2>Madde 4: Yapay Zeka Yetkinliği</h2>
-<p>4. madde yeniden düzenlendi. Yapay zeka sistemlerinin sağlayıcıları ve konuşlandırıcıları, kendi personelinin ve kendi adlarına yapay zeka sistemlerini işleten ya da kullanan diğer kişilerin yapay zeka yetkinliğinin gelişmesini destekleyecek önlemler alır. Bu yükümlülük, tek tek kişiler için belirli bir yapay zeka yetkinliği düzeyinin güvence altına alınmasını gerektirmez. Düzenleme belirli bir eğitim ya da sertifika öngörmez. Hukuki danışmanlık vermiyoruz; esas olan, Resmî Gazete'de yayımlanan metindir.</p>
+<p>4. madde yeni metinle değiştirildi. Yapay zeka kullanan şirketler, çalışanlarının ve kendi adlarına yapay zeka sistemlerini işleten ya da kullanan diğer kişilerin yapay zeka yetkinliği için önlemler alır. Sertifika zorunlu değildir. Hukuki danışmanlık vermiyoruz; esas olan, Resmî Gazete'de yayımlanan metindir.</p>
 
 <h2>Madde 50: Şeffaflık</h2>
-<p>50. madde de değiştirildi. Uygulama kurallarına ilişkin 7. fıkra yeniden düzenlendi. 50. maddenin 2. fıkrası (sentetik içeriğin işaretlenmesi) için, sistemlerini 2 Ağustos 2026'dan önce piyasaya sunan sağlayıcılara dört aylık, yani 2 Aralık 2026'ya kadar süren bir geçiş süresi tanındı. 2 Ağustos 2026'dan sonra piyasaya sunulan sistemler bu geçiş süresinin kapsamında değil.</p>
+<p>50. madde de değiştirildi. Uygulama kurallarına ilişkin 7. fıkranın yerine yenisi konuldu. 50. maddenin 2. fıkrası (sentetik içeriğin işaretlenmesi) için, sistemlerini 2 Ağustos 2026'dan önce piyasaya sunan sağlayıcılara dört aylık, yani 2 Aralık 2026'ya kadar süren bir geçiş süresi tanındı.</p>
 <p>Temel şeffaflık yükümlülükleri 2 Ağustos 2026'dan beri geçerli:</p>
 <ul>
 <li>İnsanlarla doğrudan etkileşim kurmak üzere tasarlanmış herhangi bir yapay zeka sistemi (chatbotlar, sanal asistanlar, otomatik e-posta yanıtlayıcılar) kullanıcılara bir yapay zeka ile iletişim kurduklarını bildirmek zorunda.</li>

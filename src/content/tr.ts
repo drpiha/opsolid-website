@@ -109,7 +109,7 @@ export const content: Content = {
         title: "AB Yapay Zeka Yasası ve Dijital Omnibus: Güncel Hukuki Durum",
         seoTitle: "AB Yapay Zeka Yasası ve Omnibus: Güncel Durum",
         excerpt:
-          "(AB) 2026/1744 sayılı Tüzük, AB Yapay Zeka Yasası'nı değiştiriyor. YZ yetkinliğine ilişkin 4. maddede ve şeffaflığa ilişkin 50. maddede neler değişti, hangi tarihler geçerli.",
+          "(AB) 2026/1744 sayılı Tüzük Yapay Zeka Yasası'nı değiştiriyor: 4. madde (YZ yetkinliği) ve 50. maddede (şeffaflık) neler değişti, hangi tarihler geçerli.",
         category: "ai",
         date: "2026-07-07",
         modified: "2026-11-02",
