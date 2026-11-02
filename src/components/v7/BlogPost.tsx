@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getPostContent, getReadMinutes } from "@/content/blog";
 import { LABEL } from "@/content/v7/site";
-import { SITE_CONFIG, SITE_UPDATED_ISO } from "@/lib/constants";
+import { SITE_CONFIG } from "@/lib/constants";
 import { ogImage } from "@/lib/seo-v4";
 import { absUrl, href, type L3 } from "@/lib/v7-routes";
+import { postUpdated } from "@/lib/v7-updated";
 import { BLOG, BLOG_T, fmtDate } from "./BlogList";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
@@ -15,7 +16,6 @@ import { Prose } from "./Prose";
 import { linkDeep } from "./ui";
 
 const ORG = `${SITE_CONFIG.url}/#organization`;
-const PERSON = `${SITE_CONFIG.url}/#person`;
 
 const L: Record<L3, { read: string; min: string; by: string; prev: string; next: string; nav: string; body: string }> = {
   de: { read: "Lesezeit", min: "Min.", by: "Von OpSolid", prev: "Vorheriger Beitrag", next: "Nächster Beitrag", nav: "Weitere Beiträge", body: "Beitrag" },
@@ -23,9 +23,13 @@ const L: Record<L3, { read: string; min: string; by: string; prev: string; next:
   tr: { read: "Okuma süresi", min: "dk", by: "Yazar: OpSolid", prev: "Önceki yazı", next: "Sonraki yazı", nav: "Diğer yazılar", body: "Yazı" },
 };
 
-/** BlogPosting + WebPage + BreadcrumbList, with the full organization and founder nodes the article points to. */
+/**
+ * BlogPosting + WebPage + BreadcrumbList, with the full website, organization and founder nodes. The author is
+ * the organization, as the visible byline says ("Von OpSolid").
+ */
 function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; crumbs: Crumb[]; post: { title: string; excerpt: string; date: string; category: string } }) {
   const url = absUrl("blog", locale, `/${slug}`);
+  const modified = postUpdated(slug, post.date);
   const graph = [
     ...sharedNodes(locale),
     {
@@ -35,11 +39,11 @@ function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; 
       headline: post.title,
       description: post.excerpt,
       datePublished: post.date,
-      dateModified: post.date,
+      dateModified: modified,
       inLanguage: locale,
       image: `${SITE_CONFIG.url}${ogImage(locale).url}`,
       articleSection: post.category,
-      author: { "@id": PERSON },
+      author: { "@id": ORG },
       publisher: { "@id": ORG },
     },
     {
@@ -50,7 +54,7 @@ function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; 
       description: post.excerpt,
       inLanguage: locale,
       isPartOf: { "@id": `${SITE_CONFIG.url}/#website` },
-      dateModified: SITE_UPDATED_ISO,
+      dateModified: modified,
       breadcrumb: { "@id": `${url}#breadcrumb` },
     },
     {

@@ -49,7 +49,7 @@ export const BLOG_T: Record<
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
-      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet ab 490 € netto.",
+      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
       primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Den KI-Check ansehen", to: "check" },
     },
@@ -69,7 +69,7 @@ export const BLOG_T: Record<
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
-      p: "In an introductory call, free and without obligation, we clarify whether an AI check makes sense. The AI check starts at €490 net.",
+      p: "In an introductory call, free and without obligation, we clarify whether an AI check makes sense. The AI check starts at €990 net and is credited in full against a follow-up order within 60 days.",
       primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "See the AI check", to: "check" },
     },
@@ -89,7 +89,7 @@ export const BLOG_T: Record<
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
-      p: "Ücretsiz ve bağlayıcı olmayan tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolü 490 €'dan başlar (net).",
+      p: "Ücretsiz ve bağlayıcı olmayan tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolü 990 €'dan başlar (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
       primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolünü görün", to: "check" },
     },

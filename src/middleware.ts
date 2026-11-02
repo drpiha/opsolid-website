@@ -9,6 +9,7 @@ import {
 import type { L3 } from "@/lib/v7-routes";
 import { lookupCountryViaApi, resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
+import { canonicalPathname, isDeadAppPath } from "@/lib/url-hygiene";
 import { isV4Path } from "@/lib/v4";
 import {
   foreignSlugTarget,
@@ -218,6 +219,18 @@ export async function middleware(req: NextRequest) {
   // advisories). /api/* (incl. /api/voice/*) keeps its own method handling.
   if (req.method !== "GET" && req.method !== "HEAD" && !pathname.startsWith("/api/")) {
     return new NextResponse(null, { status: 405, headers: { Allow: "GET, HEAD" } });
+  }
+
+  // -- URL hygiene -------------------------------------------------------------
+  // Duplicate spellings of a page get one permanent hop to the canonical one: repeated slashes
+  // (/en//about) and an upper-case locale prefix (/EN/about, which would otherwise 307 to /de/EN/about).
+  if (!pathname.startsWith("/api/")) {
+    const canonical = canonicalPathname(pathname, isLocale);
+    if (canonical !== null) {
+      const url = req.nextUrl.clone();
+      url.pathname = canonical;
+      return NextResponse.redirect(url, 308);
+    }
   }
 
   // -- Voice Agent master kill switch ---------------------------------------
@@ -458,6 +471,19 @@ export async function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
     url.pathname = withLocalePrefix("en", slug ?? pathWithoutLocale);
     const response = NextResponse.redirect(url, 301);
+    clearLegacyLocaleCookies(req, response);
+    return response;
+  }
+
+  // App folders without an index page (/de/card, /de/events, …) and unknown children of them would
+  // render the not-found UI with status 200 (a soft 404). Render the catch-all instead: a real 404
+  // with the localized page.
+  if (isDeadAppPath(pathWithoutLocale)) {
+    const url = req.nextUrl.clone();
+    url.pathname = `/${firstSegment}/not-found`;
+    const response = NextResponse.rewrite(url, {
+      request: { headers: marketingHeaders(req, url.pathname, firstSegment, pathname, "") },
+    });
     clearLegacyLocaleCookies(req, response);
     return response;
   }

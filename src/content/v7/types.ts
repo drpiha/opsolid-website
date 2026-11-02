@@ -71,7 +71,7 @@ export type Block =
   | (SectionBase & { t: "examples"; tag: string; items: { area: string; h: string; before: string; after: string; human: string; href?: Href }[] })
   /** Principles / commitments: 3 to 6 numbered items. */
   | (SectionBase & { t: "principles"; items: { h: string; p: string }[] })
-  /** Offer ladder or rate cards. `price` only from the published list ("ab 490 €"); omit it when unpublished. */
+  /** Offer ladder or rate cards. `price` only from the published list ("ab 990 €"); omit it when unpublished. */
   | (SectionBase & {
       t: "offers";
       items: { name: string; price?: string; unit?: string; p: string; points: string[]; href?: Href; featured?: boolean }[];
@@ -162,7 +162,7 @@ export type PageDef = {
     lede: string;
     primary: Href;
     secondary?: Href;
-    /** Mono fact line under the hero ("Ab 490 € netto · NDA vor dem Gespräch · Bericht auch ohne Empfehlung"). */
+    /** Mono fact line under the hero ("Ab 990 € netto · NDA vor dem Gespräch · Bericht auch ohne Empfehlung"). */
     facts?: string[];
     /** Right-hand figure. */
     media?: Media;

@@ -11,6 +11,12 @@
 @import "../styles/opsolid-v4.css";
 
 @layer base {
+  /* Inter is two self-hosted faces (src/app/layout.tsx): the Turkish supplement comes first and only
+     covers Ğ ğ İ Ş ş by unicode-range, every other character falls through to the latin face. */
+  :root {
+    --font-inter: var(--font-inter-tr), var(--font-inter-latin);
+  }
+
   /* Legacy light-mode variables kept for any stragglers still reading them.
      Mapped to current tokens so they stay in sync with the active theme. */
   :root {

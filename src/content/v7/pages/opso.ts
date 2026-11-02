@@ -272,7 +272,7 @@ const de: PageDef = {
     software: {
       name: "OpSo",
       description: "Digitale Visitenkarte mit Kontaktliste und Follow-up. Karte teilen per QR-Code, NFC oder Link; Empfänger brauchen keine App. In der Testphase.",
-      os: ["Android", "iOS"],
+      os: ["Android"],
       category: "BusinessApplication",
     },
   },
@@ -527,7 +527,7 @@ const en: PageDef = {
     software: {
       name: "OpSo",
       description: "Digital business card with a contact list and follow-up. Share your card by QR code, NFC or link; recipients need no app. In test phase.",
-      os: ["Android", "iOS"],
+      os: ["Android"],
       category: "BusinessApplication",
     },
   },
@@ -786,7 +786,7 @@ const tr: PageDef = {
     software: {
       name: "OpSo",
       description: "Kişi listesi ve takip özelliği olan dijital kartvizit. Kartını karekod, NFC ya da bağlantıyla paylaş; karşı tarafın uygulaması gerekmez. Test aşamasında.",
-      os: ["Android", "iOS"],
+      os: ["Android"],
       category: "BusinessApplication",
     },
   },

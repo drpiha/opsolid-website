@@ -35,6 +35,7 @@ export function v7Metadata(
       images: [ogImage(locale)],
     },
     twitter: { card: "summary_large_image", title: meta.title, description: meta.description, images: [ogImage(locale).url] },
-    robots: opts?.noindex ? { index: false, follow: false } : undefined,
+    // Legal pages stay out of the index, but their links (home, contact) are still followed.
+    robots: opts?.noindex ? { index: false, follow: true } : undefined,
   };
 }
