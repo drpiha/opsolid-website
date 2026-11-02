@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Href } from "@/content/v7/types";
+import { soft } from "@/lib/soft-hyphen";
 import type { L3 } from "@/lib/v7-routes";
 import { LinkTo } from "./LinkTo";
 import { Reveal } from "./Reveal";
@@ -47,7 +48,7 @@ export function Section({
           <div className="min-w-0 md:col-span-9">
             <Reveal>
               <h2 id={`${id}-h`} className={`${h2} ${wide ? "" : "max-w-[20ch]"}`}>
-                {h}
+                {soft(h)}
               </h2>
             </Reveal>
             {lede && (

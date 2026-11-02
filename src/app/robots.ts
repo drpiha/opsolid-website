@@ -11,10 +11,10 @@ import { LOCALES } from "@/lib/i18n";
  * guidance, not security: private routes are protected by auth, not by this file.
  */
 // App routes live under /:locale/… (e.g. /de/card/edit/<id>?t=<token>), so each
-// is listed with every locale prefix as well as bare. No trailing slash on
-// dashboard/onboarding so their index pages match too.
+// is listed with every app locale prefix as well as bare: the marketing pages of
+// es/it/fr/ar answer 301, but their app surfaces (card editor, dashboard, login)
+// still answer 200. No trailing slash on dashboard/onboarding so their index pages match too.
 const LOCALIZED_PRIVATE_PATHS = ["/card/edit/", "/card/manage/", "/onboarding", "/dashboard", "/login", "/magic-link"];
-// "/de" is not a prefix any more for the German home ("/"), but /de/<private> still exists.
 const PRIVATE_PATHS = [
   "/api/",
   "/admin/",
@@ -24,6 +24,7 @@ const PRIVATE_PATHS = [
   ...LOCALES.flatMap((locale) => LOCALIZED_PRIVATE_PATHS.map((path) => `/${locale}${path}`)),
 ];
 
+// Named so the welcome is explicit; they share the "*" rules in one group.
 const AI_BOTS = [
   "OAI-SearchBot", // ChatGPT search
   "GPTBot", // OpenAI training
@@ -40,12 +41,7 @@ const AI_BOTS = [
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      { userAgent: "*", allow: "/", disallow: PRIVATE_PATHS },
-      // A bot-specific group replaces the "*" group, so the private paths are repeated.
-      ...AI_BOTS.map((userAgent) => ({ userAgent, allow: "/", disallow: PRIVATE_PATHS })),
-    ],
+    rules: [{ userAgent: ["*", ...AI_BOTS], allow: "/", disallow: PRIVATE_PATHS }],
     sitemap: `${SITE_CONFIG.url}/sitemap.xml`,
-    host: SITE_CONFIG.url,
   };
 }

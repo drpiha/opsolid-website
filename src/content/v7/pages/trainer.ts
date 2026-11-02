@@ -295,7 +295,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "trainer",
   meta: {
-    title: "Eğitmen olun: serbest çalışan YZ eğitmenleri aranıyor",
+    title: "Eğitmen olun: serbest YZ eğitmenleri aranıyor",
     description:
       "OpSolid, Almanca ve İngilizce çevrimiçi eğitimler için serbest çalışan YZ eğitmenleri arıyor. Ücretli deneme oturumu, çerçeve sözleşme, yöntemde özgürlük.",
   },

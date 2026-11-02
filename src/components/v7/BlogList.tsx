@@ -5,6 +5,7 @@ import { content as tr } from "@/content/tr";
 import { getReadMinutes } from "@/content/blog";
 import { LABEL } from "@/content/v7/site";
 import type { Href, PageDef } from "@/content/v7/types";
+import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
@@ -49,7 +50,7 @@ export const BLOG_T: Record<
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
-      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet ab 490 € netto.",
+      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
       primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Den KI-Check ansehen", to: "check" },
     },
@@ -69,7 +70,7 @@ export const BLOG_T: Record<
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
-      p: "In an introductory call, free and without obligation, we clarify whether an AI check makes sense. The AI check starts at €490 net.",
+      p: "In an introductory call, free and without obligation, we clarify whether an AI check makes sense. The AI check starts at €990 net and is credited in full against a follow-up order within 60 days.",
       primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "See the AI check", to: "check" },
     },
@@ -89,7 +90,7 @@ export const BLOG_T: Record<
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
-      p: "Ücretsiz ve bağlayıcı olmayan tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolü 490 €'dan başlar (net).",
+      p: "Ücretsiz ve bağlayıcı olmayan tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolü 990 €'dan başlar (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
       primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolünü görün", to: "check" },
     },
@@ -128,7 +129,7 @@ export function BlogList({ locale }: { locale: L3 }) {
                   <div className="md:col-span-6">
                     <h2 className="f-display text-[1.5rem] leading-[1.15] md:text-[1.875rem]">
                       <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
-                        {p.title}
+                        {soft(p.title)}
                       </Link>
                     </h2>
                     <p className="mt-3 text-[#16191D]">{p.excerpt}</p>

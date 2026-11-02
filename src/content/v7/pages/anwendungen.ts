@@ -8,7 +8,7 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "anwendungen",
   meta: {
-    title: "KI-Anwendungsfälle für Dienstleistung, Gastronomie, Handel",
+    title: "KI-Anwendungsfälle: Service, Gastronomie, Handel",
     description:
       "Beispiele für KI-Automatisierung in Dienstleistung, Gastronomie und Hotellerie, Handel und Praxen, mit dem, was beim Menschen bleibt. Keine Kundenprojekte.",
   },
@@ -366,7 +366,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "anwendungen",
   meta: {
-    title: "Hizmet, yeme-içme ve perakende için YZ kullanım örnekleri",
+    title: "YZ örnekleri: hizmet, yeme-içme, perakende",
     description:
       "Sektöre göre YZ otomasyonu örnekleri: hizmet, yeme-içme ve konaklama, perakende ve muayenehaneler. İnsanda kalanlarla birlikte. Örnekler, müşteri projesi değil.",
   },

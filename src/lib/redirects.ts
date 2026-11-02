@@ -23,6 +23,8 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   // Top-level info pages
   "/solutions": "/ki-beratung",
   "/faq": "/contact",
+  // The German word people type; the contact page's slug is /contact in de and en, /iletisim in tr.
+  "/kontakt": "/contact",
   "/use-cases": "/ki-beratung/anwendungsfaelle",
 
   // Former /about → /ueber-mich → /ueber-uns. NOTE: no "/about" key: the EN public slug of the About

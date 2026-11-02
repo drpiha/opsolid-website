@@ -8,7 +8,7 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "schulungen",
   meta: {
-    title: "KI-Schulungen für Teams: online, Deutsch und Englisch",
+    title: "KI-Schulungen für Teams: online, Deutsch, Englisch",
     description:
       "Online-Schulungen zu KI für Ihr Team: KI-Kompetenz Basis ab 1.790 €, Copilot-Praxistag ab 2.900 €, KI-Agenten ab 5.900 € netto. Live, mit Bescheinigung.",
   },
@@ -111,6 +111,13 @@ const de: PageDef = {
         "Ein Zertifikat ist nicht vorgeschrieben. Dokumentierte Maßnahmen sind gute Praxis, denn sie lassen sich später belegen.",
         "Unsere Schulungen können Teil dieser Maßnahmen sein. Dafür stellen wir eine eigene Teilnahmebescheinigung aus. Das ist keine Rechtsberatung.",
       ],
+      sources: {
+        asOf: "Rechtsstand: 2. November 2026",
+        items: [
+          { label: "Verordnung (EU) 2024/1689 (KI-Verordnung), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/deu" },
+          { label: "Verordnung (EU) 2026/1744 (Art. 4 neu gefasst), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/deu" },
+        ],
+      },
     },
     {
       t: "steps",
@@ -209,7 +216,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "schulungen",
   meta: {
-    title: "AI training for teams: live online, English and German",
+    title: "AI training for teams: online, English, German",
     description:
       "Live online AI training for your team: AI literacy basics from €1,790, Copilot workshop from €2,900, AI agents from €5,900 net. With a participation record.",
   },
@@ -312,6 +319,13 @@ const en: PageDef = {
         "No certificate is required. Documented measures are good practice because they can be evidenced later.",
         "Our training can be one of those measures. We issue our own participation record for it. This is not legal advice.",
       ],
+      sources: {
+        asOf: "Legal status: 2 November 2026",
+        items: [
+          { label: "Regulation (EU) 2024/1689 (AI Act), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" },
+          { label: "Regulation (EU) 2026/1744 (Article 4 replaced), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
+        ],
+      },
     },
     {
       t: "steps",
@@ -410,7 +424,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "schulungen",
   meta: {
-    title: "Ekipler için YZ eğitimleri: çevrimiçi, Almanca ve İngilizce",
+    title: "YZ eğitimleri: ekipler için, çevrimiçi",
     description:
       "Ekibiniz için canlı YZ eğitimleri: Temel 1.790 €'dan, Copilot Uygulama Günü 2.900 €'dan, YZ Ajanları 5.900 €'dan itibaren (net). Katılım belgesiyle.",
   },
@@ -513,6 +527,13 @@ const tr: PageDef = {
         "Sertifika zorunlu değildir. Belgelenmiş önlemler iyi uygulamadır, çünkü sonradan kanıtlanabilir.",
         "Eğitimlerimiz bu önlemlerin bir parçası olabilir. Bunun için kendi katılım belgemizi düzenleriz. Bu hukuki danışmanlık değildir.",
       ],
+      sources: {
+        asOf: "Hukuki durum: 2 Kasım 2026",
+        items: [
+          { label: "Tüzük (AB) 2024/1689 (AI Act), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" },
+          { label: "Tüzük (AB) 2026/1744 (4. madde yeni metinle değiştirildi), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
+        ],
+      },
     },
     {
       t: "steps",

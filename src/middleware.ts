@@ -9,6 +9,7 @@ import {
 import type { L3 } from "@/lib/v7-routes";
 import { lookupCountryViaApi, resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
+import { canonicalPathname, isDeadAppPath } from "@/lib/url-hygiene";
 import { isV4Path } from "@/lib/v4";
 import {
   foreignSlugTarget,
@@ -334,6 +335,18 @@ export async function middleware(req: NextRequest) {
   }
   // ------------------------------------------------------------------------
 
+  // -- URL hygiene (main site only, after the card, short-link and custom-domain hosts) -------------
+  // Duplicate spellings of a page get one permanent hop to the canonical one: repeated slashes
+  // (/en//about) and an upper-case locale prefix (/EN/about, which would otherwise 307 to /de/EN/about).
+  {
+    const canonical = canonicalPathname(pathname, isLocale);
+    if (canonical !== null) {
+      const url = req.nextUrl.clone();
+      url.pathname = canonical;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
   // Check if pathname already starts with a valid locale
   const firstSegment = pathname.split("/")[1];
   const hasLocale = isLocale(firstSegment);
@@ -458,6 +471,20 @@ export async function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
     url.pathname = withLocalePrefix("en", slug ?? pathWithoutLocale);
     const response = NextResponse.redirect(url, 301);
+    clearLegacyLocaleCookies(req, response);
+    return response;
+  }
+
+  // App folders without an index page (/de/card, /de/events, …) and unknown children of them would
+  // render the not-found UI with status 200 (a soft 404). Render the localized catch-all 404 instead.
+  // The status is set here: a rewritten request keeps 200 even when the target calls notFound().
+  if (isDeadAppPath(pathWithoutLocale)) {
+    const url = req.nextUrl.clone();
+    url.pathname = `/${firstSegment}/not-found`;
+    const response = NextResponse.rewrite(url, {
+      status: 404,
+      request: { headers: marketingHeaders(req, url.pathname, firstSegment, pathname, "") },
+    });
     clearLegacyLocaleCookies(req, response);
     return response;
   }

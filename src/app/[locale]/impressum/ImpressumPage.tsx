@@ -23,7 +23,7 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
       heading: sec.according,
       body: (
         <p>
-          OpSolid
+          OpSolid, Inh. Hasan D&ouml;nmez
           <br />
           Hasan D&ouml;nmez ({L.owner})
           <br />

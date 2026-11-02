@@ -520,7 +520,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "beratung",
   meta: {
-    title: "Şirketler için yapay zeka danışmanlığı ve otomasyon",
+    title: "Şirketler için YZ danışmanlığı ve otomasyon",
     description:
       "İş akışlarınızdan başlayan yapay zeka danışmanlığı: YZ Kontrolü 990 €'dan (net), sabit fiyatlı pilot, anlaşmaya göre işletme. Bağımsız, lisans satışı yok.",
   },

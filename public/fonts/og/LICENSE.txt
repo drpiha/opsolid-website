@@ -1,13 +1,12 @@
 Fonts used only by the Open Graph image routes (src/lib/og-card.tsx).
-Static latin + latin-ext subsets served by Google Fonts.
 
-archivo-800-semiexpanded.ttf
-  Archivo, ExtraBold, SemiExpanded
-  Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
+fraunces-300.woff
+  Fraunces Light, the same pre-instanced latin + latin-ext subset as src/app/fonts/fraunces-300.woff
+  Copyright 2018 The Fraunces Project Authors (https://github.com/undercasetype/Fraunces)
 
-ibm-plex-mono-500.ttf
-  IBM Plex Mono, Medium
-  Copyright 2017 IBM Corp. with Reserved Font Name "Plex"
+geist-mono-400.woff
+  Geist Mono Regular, the same latin + latin-ext subset as src/app/fonts/geist-mono-400.woff
+  Copyright (c) 2023 Vercel, in collaboration with basement.studio
 
 Both are licensed under the SIL Open Font License, Version 1.1:
 https://openfontlicense.org/open-font-license-official-text/
