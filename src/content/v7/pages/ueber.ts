@@ -189,7 +189,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "ueber",
   meta: {
-    title: "About OpSolid: independent AI consulting from Arnsberg",
+    title: "About OpSolid: independent AI consulting",
     description:
       "OpSolid is an independent AI automation consultancy in Arnsberg, Germany: offer, method, principles and founder. Not to be confused with TopSolid (CAD/CAM).",
   },
@@ -363,7 +363,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "ueber",
   meta: {
-    title: "OpSolid hakkında: Arnsberg'den bağımsız YZ danışmanlığı",
+    title: "OpSolid hakkında: bağımsız YZ danışmanlığı",
     description:
       "OpSolid, Arnsberg merkezli bağımsız bir YZ otomasyonu danışmanlığıdır: hizmetler, yöntem, ilkeler ve kurucu. TopSolid (CAD/CAM) ile karıştırılmamalıdır.",
   },

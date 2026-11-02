@@ -88,7 +88,7 @@ export const content = {
       },
       {
         title: "8. Your rights",
-        content: "Access (Art. 15), rectification (16), erasure (17), restriction (18), portability (20), objection to processing based on legitimate interests (21), withdrawal of consent with effect for the future (7(3)) and complaint to a supervisory authority (77). Competent: State Commissioner for Data Protection and Freedom of Information of North Rhine-Westphalia, Kavalleriestraße 2–4, 40213 Düsseldorf (ldi.nrw.de). Requests to info@opsolid.de.",
+        content: "Access (Art. 15), rectification (16), erasure (17), restriction (18), portability (20), objection to processing based on legitimate interests (21), withdrawal of consent with effect for the future (7(3)) and complaint to a supervisory authority (77). Competent: State Commissioner for Data Protection and Freedom of Information of North Rhine-Westphalia, Kavalleriestraße 2-4, 40213 Düsseldorf (ldi.nrw.de). Requests to info@opsolid.de.",
       },
       {
         title: "9. Obligation to provide data, automated decisions",
@@ -109,19 +109,21 @@ export const content = {
     posts: [
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
-        title: "EU AI Act Applies from 2 August 2026: What the Omnibus Amendments Mean for Your Business",
-        // <title> when the heading is too long for search results (≤ 55 chars; the layout adds " | OpSolid").
-        seoTitle: "EU AI Act from 2 August 2026: the Omnibus Changes",
+        title: "EU AI Act and the Digital Omnibus: Where the Law Stands",
+        // <title> when the heading is too long for search results (≤ 50 chars; the layout adds " | OpSolid").
+        seoTitle: "EU AI Act and Digital Omnibus: Current Status",
         excerpt:
-          "The EU AI Act largely applies from 2 August 2026. Here is what the Omnibus VII amendments changed – and which transparency rules apply from that day.",
+          "Regulation (EU) 2026/1744 amends the EU AI Act. What changed for Article 4 on AI literacy and Article 50 on transparency, and which dates apply.",
         category: "ai",
         date: "2026-07-07",
+        modified: "2026-11-02",
       },
       {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
+        seoTitle: "Workflow Automation: What Actually Matters",
         excerpt:
-          "What keeps a workflow automation running in production — error handling, data sovereignty, observability and exit cost — whichever engine you pick.",
+          "What keeps a workflow automation running in production - error handling, data sovereignty, observability and exit cost - whichever engine you pick.",
         category: "automation",
         date: "2026-03-15",
       },
@@ -137,13 +139,14 @@ export const content = {
         slug: "connecting-crm-erp-the-integration-playbook",
         title: "Connecting CRM and ERP: An Overview",
         excerpt:
-          "A practical overview of synchronising your CRM and ERP systems — reducing data silos and creating a single source of truth.",
+          "A practical overview of synchronising your CRM and ERP systems - reducing data silos and creating a single source of truth.",
         category: "integration",
         date: "2026-02-28",
       },
       {
         slug: "ai-chatbots-vs-rule-based-bots",
         title: "AI Chatbots vs. Rule-Based Bots: Which One Do You Need?",
+        seoTitle: "AI Chatbots vs. Rule-Based Bots: Which Fits?",
         excerpt:
           "Understanding the difference between AI-powered and rule-based chatbots, and when each approach makes sense for your business.",
         category: "ai",
@@ -155,7 +158,7 @@ export const content = {
           "Choosing the Right Automation Architecture for Your Business",
         seoTitle: "Choosing the Right Automation Architecture",
         excerpt:
-          "Choosing between point-to-point integrations, a central orchestration layer and hybrid models — by volume, compliance and team size, not vendor pitch.",
+          "Choosing between point-to-point integrations, a central orchestration layer and hybrid models - by volume, compliance and team size, not vendor pitch.",
         category: "automation",
         date: "2026-02-12",
       },
@@ -163,7 +166,7 @@ export const content = {
         slug: "whatsapp-business-automation-guide",
         title: "WhatsApp Business Automation: An Overview",
         excerpt:
-          "How to automate customer communication on WhatsApp — from order confirmations to support bots — without losing the personal touch.",
+          "How to automate customer communication on WhatsApp - from order confirmations to support bots - without losing the personal touch.",
         category: "automation",
         date: "2026-02-05",
       },
@@ -175,37 +178,37 @@ export const content = {
       {
         question: "What exactly does OpSolid do?",
         answer:
-          "OpSolid builds automation systems, integrations, and internal tools for businesses. If your team spends time on manual, repetitive work — data entry, email follow-ups, order processing, report generation — OpSolid builds systems that handle it automatically and reliably.",
+          "OpSolid builds automation systems, integrations, and internal tools for businesses. If your team spends time on manual, repetitive work - data entry, email follow-ups, order processing, report generation - OpSolid builds systems that handle it automatically and reliably.",
         category: "general",
       },
       {
         question: "What tools and platforms are used?",
         answer:
-          "Each engagement is delivered as a custom system, built from production-ready engineering layers — REST APIs, message queues, Postgres, and webhooks at the core, supplemented by AI primitives where they earn their keep. The architecture is chosen for each use case rather than a one-size-fits-all toolkit.",
+          "Each engagement is delivered as a custom system, built from production-ready engineering layers - REST APIs, message queues, Postgres, and webhooks at the core, supplemented by AI primitives where they earn their keep. The architecture is chosen for each use case rather than a one-size-fits-all toolkit.",
         category: "technical",
       },
       {
         question: "Why custom development instead of a SaaS platform?",
         answer:
-          "Custom-built systems put you in full control of your data, your workflows, and the cost curve. No per-execution fees, no opaque pricing tiers, and no dependency on a single vendor. The architecture is designed to fit your processes — and the source code is yours to keep.",
+          "Custom-built systems put you in full control of your data, your workflows, and the cost curve. No per-execution fees, no opaque pricing tiers, and no dependency on a single vendor. The architecture is designed to fit your processes - and the source code is yours to keep.",
         category: "technical",
       },
       {
         question: "How long does a typical project take?",
         answer:
-          "Most projects take 2-6 weeks from discovery to deployment, depending on complexity. Simple automations can be live within days. Complex multi-system integrations may take longer. Work is done iteratively — you see results early and often.",
+          "Most projects take 2-6 weeks from discovery to deployment, depending on complexity. Simple automations can be live within days. Complex multi-system integrations may take longer. Work is done iteratively - you see results early and often.",
         category: "process",
       },
       {
         question: "Is ongoing support available after deployment?",
         answer:
-          "Yes. Monitoring, maintenance, and optimization are available after deployment. Automation systems evolve as your business grows — ongoing support ensures your systems keep up. Documentation and training are also provided so your team can manage day-to-day operations independently.",
+          "Yes. Monitoring, maintenance, and optimization are available after deployment. Automation systems evolve as your business grows - ongoing support ensures your systems keep up. Documentation and training are also provided so your team can manage day-to-day operations independently.",
         category: "process",
       },
       {
         question: "How much does it cost?",
         answer:
-          "Every project is different. A free initial consultation helps understand your needs, followed by a transparent proposal. Pricing is project-based, not hourly — you know the investment upfront.",
+          "Every project is different. A free initial consultation helps understand your needs, followed by a transparent proposal. Pricing is project-based, not hourly - you know the investment upfront.",
         category: "process",
       },
       {
@@ -217,7 +220,7 @@ export const content = {
       {
         question: "Do existing tools need to be replaced?",
         answer:
-          "No. OpSolid builds systems that connect your existing tools — not replace them. The goal is to make what you already have work better together, eliminating data silos and manual handoffs.",
+          "No. OpSolid builds systems that connect your existing tools - not replace them. The goal is to make what you already have work better together, eliminating data silos and manual handoffs.",
         category: "general",
       },
       {
@@ -229,7 +232,7 @@ export const content = {
       {
         question: "What industries are served?",
         answer:
-          "OpSolid works across industries — e-commerce, logistics, manufacturing, professional services, and more. Solutions are built around your processes, not your industry label. If your operations involve repetitive manual work, automation can help.",
+          "OpSolid works across industries - e-commerce, logistics, manufacturing, professional services, and more. Solutions are built around your processes, not your industry label. If your operations involve repetitive manual work, automation can help.",
         category: "general",
       },
     ],
@@ -416,7 +419,7 @@ export const content = {
           email: "Work email",
           company: "Company (optional)",
           teamSize: "How many cards?",
-          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          teamSizeOptions: ["1", "2-5", "6-20", "20+"],
           message:
             "Anything else we should know? (industry, link preferences, etc.)",
           consent:
@@ -505,7 +508,7 @@ export const content = {
       },
       preview: {
         meta: {
-          title: "Digital Business Card — Live Preview | OpSolid",
+          title: "Digital Business Card: Live Preview | OpSolid",
           description:
             "Build your own digital business card. Preview it live on your phone, swipe between templates, and publish free in seconds.",
         },
@@ -571,17 +574,17 @@ export const content = {
           eyebrow: "CREATE YOUR CARD",
           title: "Your details, your design, your card.",
           subtitle:
-            "Fill out the form — your card goes live at opsolid.de/c/… as soon as you publish.",
+            "Fill out the form - your card goes live at opsolid.de/c/… as soon as you publish.",
           howToCreate:
-            "Anyone can create a card — no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime.",
+            "Anyone can create a card - no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime.",
           eventJoinLabel:
             "List my card in the participant directory so other attendees can find me.",
           draftRestored:
-            "Your previous draft was restored — continue where you left off.",
+            "Your previous draft was restored - continue where you left off.",
           draftDiscard: "Start over",
           selectedTemplate: "Selected design",
           changeTemplate: "Change",
-          contactSection: "Contact — how we reach you",
+          contactSection: "Contact - how we reach you",
           contactName: "Your name",
           contactEmail: "Email",
           contactPhone: "Phone",
@@ -589,17 +592,17 @@ export const content = {
           callMeBackHint:
             "We'll get back to you within one business day to confirm details.",
           cardSection: "Your card content",
-          sampleHint: "Sample content to explore — replace it with your own details.",
+          sampleHint: "Sample content to explore - replace it with your own details.",
           clearSample: "Clear",
           cardLanguageLabel: "Card language",
           cardLanguageHint:
             "The language your card's visitors will see. You can change it later in the editor.",
           spotlightSection: "Now · Spotlight",
           spotlightHint:
-            "A bold, momentary update shown right below your photo — a short note and/or one link. Leave empty to hide it.",
+            "A bold, momentary update shown right below your photo - a short note and/or one link. Leave empty to hide it.",
           spotlightEnabled: "Show on my card",
           spotlightBody: "What's happening right now?",
-          spotlightBodyPlaceholder: "e.g. Booking new projects for July — say hi 👋",
+          spotlightBodyPlaceholder: "e.g. Booking new projects for July - say hi 👋",
           spotlightLinkUrl: "Link (optional)",
           spotlightLinkLabel: "Button text (optional)",
           spotlightLinkLabelPlaceholder: "Read more",
@@ -609,9 +612,9 @@ export const content = {
           spotlightPlaceBottom: "Bottom of the card",
           statsSection: "Stats",
           statsHint:
-            "Real numbers shown as a stat strip on many designs (e.g. 12 — Years).",
+            "Real numbers shown as a stat strip on many designs (e.g. 12 - Years).",
           statsEmpty:
-            "No stats yet. Add real numbers you're proud of (e.g. 12 — Years of experience). Cards without stats simply don't show this section.",
+            "No stats yet. Add real numbers you're proud of (e.g. 12 - Years of experience). Cards without stats simply don't show this section.",
           statsValue: "12+",
           statsLabel: "Years of experience",
           statsAdd: "Add stat",
@@ -626,7 +629,7 @@ export const content = {
           locationHidden: "Hidden",
           locationAutoHint: "Derived from your address:",
           locationAutoEmpty:
-            "No address yet — no location will be shown until you add one.",
+            "No address yet - no location will be shown until you add one.",
           locationPlaceholder: "Remote · Berlin",
           locationHiddenHint: "No location chip will appear on your card.",
           copyFromContact: "Use info from above",
@@ -670,7 +673,7 @@ export const content = {
           previewOpenInNewTab: "Open in new tab",
           previewLanguage: "Card language",
           previewNoPaymentNote: "Preview only",
-          // Phase 7.9 — photo position editor
+          // Phase 7.9 - photo position editor
           editPosition: "Edit position",
           photoEditorTitle: "Profile photo position",
           photoEditorSubtitle: "Drag to position, slide to zoom.",
@@ -682,7 +685,7 @@ export const content = {
           photoEditorSave: "Save",
           photoEditorCancel: "Cancel",
           photoEditorHint: "The ring shows the visible centre of the image.",
-          // Phase 7.9 — share-link modal
+          // Phase 7.9 - share-link modal
           shareLink: "Preview link",
           shareLinkTitle: "Share preview link",
           shareLinkSubtitle:
@@ -696,7 +699,7 @@ export const content = {
           // Video embed (YouTube / Vimeo)
           videoSection: "Video (optional)",
           videoHint:
-            "Paste a YouTube or Vimeo link — it plays right on your card.",
+            "Paste a YouTube or Vimeo link - it plays right on your card.",
           videoLabel: "Video link",
           videoPlaceholder: "https://youtube.com/watch?v=…",
           videoInvalid: "Only YouTube or Vimeo links are supported.",
@@ -704,27 +707,27 @@ export const content = {
           videoPlacementTop: "Top",
           videoPlacementDefault: "Default",
           videoPlacementBottom: "Bottom",
-          // Phase 7.9 — custom sections editor
+          // Phase 7.9 - custom sections editor
           customSectionsSection: "Custom sections (optional)",
           customSectionsHint:
-            "Add up to 6 sections — awards, languages, anything you want.",
+            "Add up to 6 sections - awards, languages, anything you want.",
           // Editable section labels
           labelsSection: "Section titles (optional)",
           labelsHint:
-            'Rename the section TITLES on your card (e.g. "Services" → "Menu"). Enter the content itself in the sections above — a section you leave empty (and its title) won\'t appear on the card. Leave a field blank to keep the default.',
+            'Rename the section TITLES on your card (e.g. "Services" → "Menu"). Enter the content itself in the sections above - a section you leave empty (and its title) won\'t appear on the card. Leave a field blank to keep the default.',
           customSectionAdd: "Add section",
           customSectionTitle: "Title",
           customSectionTitlePh: "e.g. Languages, Awards, Press",
           customSectionBody: "Content",
           customSectionBodyPh:
-            "Body text — visible to anyone who opens your card.",
+            "Body text - visible to anyone who opens your card.",
           customSectionRemove: "Remove",
           customSectionsCount: "{n} of 6",
           customSectionAddImage: "Add image (optional)",
           // FAQ editor
           faqSection: "FAQ (optional)",
           faqHint:
-            "Add up to 12 frequently asked questions — they appear as an accordion on your card.",
+            "Add up to 12 frequently asked questions - they appear as an accordion on your card.",
           faqQuestion: "Question",
           faqAnswer: "Answer",
           faqAdd: "Add question",
@@ -734,7 +737,7 @@ export const content = {
           // Testimonials editor
           testimonialsSection: "Testimonials (optional)",
           testimonialsHint:
-            "Add up to 8 client quotes — shown on all templates that don't display them natively.",
+            "Add up to 8 client quotes - shown on all templates that don't display them natively.",
           testimonialAuthor: "Name (e.g. Maria K.)",
           testimonialRole: "Role / company (optional)",
           testimonialQuote: "Quote",
@@ -742,21 +745,21 @@ export const content = {
           testimonialRemove: "Remove",
           testimonialsEmpty:
             "No testimonials yet. Add your first client quote.",
-          // Phase 7.9 — typography presets
+          // Phase 7.9 - typography presets
           typographySection: "Typography (optional)",
           typographyHint:
             "Override the template's fonts. Leave on default to use the template's own typography.",
           typographyDefaultLabel: "Template default",
           typographyDefaultDesc: "Uses the template's own typography.",
           typographyModernLabel: "Modern",
-          typographyModernDesc: "Inter + Manrope — minimalist, corporate.",
+          typographyModernDesc: "Inter + Manrope - minimalist, corporate.",
           typographyClassicLabel: "Classic",
           typographyClassicDesc:
-            "Cormorant Garamond + Source Sans 3 — elegant, traditional.",
+            "Cormorant Garamond + Source Sans 3 - elegant, traditional.",
           typographyEditorialLabel: "Editorial",
-          typographyEditorialDesc: "Playfair Display + Inter — magazine feel.",
+          typographyEditorialDesc: "Playfair Display + Inter - magazine feel.",
           typographyBoldLabel: "Bold",
-          typographyBoldDesc: "Bebas Neue + Inter — striking, sporty.",
+          typographyBoldDesc: "Bebas Neue + Inter - striking, sporty.",
           billingSection: "Billing mode",
           billingMonthly: "Monthly",
           monthlyFooter: "Lowest barrier. Cancel any time.",
@@ -770,7 +773,7 @@ export const content = {
           submitting: "Processing …",
           previewLabel: "Live preview",
           previewHint:
-            "Preview updates live — that's how your card looks after publishing.",
+            "Preview updates live - that's how your card looks after publishing.",
           invalidInput: "Please check the highlighted fields.",
           serverError: "Server error. Please try again.",
           noCheckoutUrl: "No payment URL returned.",
@@ -816,7 +819,7 @@ export const content = {
       edit: {
         title: "Edit your card",
         subtitle:
-          "Typos, phone numbers, social links — fix anything on your card yourself. Changes go live in seconds.",
+          "Typos, phone numbers, social links - fix anything on your card yourself. Changes go live in seconds.",
         publicUrlLabel: "Your public card:",
         contactReadonlyLabel: "Your contact details (read-only)",
         contactReadonlyHint:
@@ -871,7 +874,7 @@ export const content = {
         revert: "Revert",
         untitledCard: "Untitled card",
         viewLive: "View live",
-        // B7 — section labels + photo/logo thumbnail affordances
+        // B7 - section labels + photo/logo thumbnail affordances
         sectionPersonBrand: "Person & Brand",
         sectionContact: "Contact",
         sectionContent: "Content",
@@ -880,7 +883,7 @@ export const content = {
         adjustLogo: "Adjust logo",
         expandSection: "Expand section",
         collapseSection: "Collapse section",
-        // WS-2 / WS-3 — simplified progressive editor
+        // WS-2 / WS-3 - simplified progressive editor
         backToCards: "My cards",
         tierBasic: "Basics",
         tierMore: "More details",
@@ -888,7 +891,7 @@ export const content = {
         allDesigns: "All designs",
         allDesignsHint: "Browse all 90+ designs by sector.",
         performanceTitle: "Performance & CRM",
-        uploadCue: "Uploaded — hit Save to publish it.",
+        uploadCue: "Uploaded - hit Save to publish it.",
         completenessTitle: "Card completeness",
         completenessSummary: "{done}/{total} done",
         completenessGoto: "Go",
@@ -923,9 +926,9 @@ export const content = {
       },
       meta: {
         title:
-          "OpSo Smart — Free digital business card, live in seconds | OpSolid",
+          "OpSo Smart: Free digital business card, live in seconds | OpSolid",
         description:
-          "Build your own digital business card for free and publish it in seconds — link, QR, WhatsApp, email. No app for the receiver, editable anytime. EU-hosted (Frankfurt), GDPR-native.",
+          "Build your own digital business card for free and publish it in seconds - link, QR, WhatsApp, email. No app for the receiver, editable anytime. EU-hosted (Frankfurt), GDPR-native.",
       },
     },
 
@@ -972,11 +975,11 @@ export const content = {
           },
           {
             q: "Which processes can be automated?",
-            a: "Anything repetitive with a clear input and a clear output — quotes, document generation, reporting, data sync, email routing, support triage.",
+            a: "Anything repetitive with a clear input and a clear output - quotes, document generation, reporting, data sync, email routing, support triage.",
           },
           {
             q: "Can AI be used in a GDPR-compliant way?",
-            a: "Yes — with the right model choice, data residency and a written guideline. We help you set this up from the start.",
+            a: "Yes, with the right model choice, data residency and a written guideline. We help you set this up from the start.",
           },
           {
             q: "Do we need to be using AI already?",
@@ -988,11 +991,11 @@ export const content = {
           },
           {
             q: "Can we keep using our existing tools like Microsoft 365?",
-            a: "Yes — most of what we build sits on top of the tools you already pay for.",
+            a: "Yes, most of what we build sits on top of the tools you already pay for.",
           },
           {
             q: "Do you also build custom solutions?",
-            a: "Yes — where off-the-shelf does not fit, we build internal tools, custom workflows and integrations.",
+            a: "Yes, where off-the-shelf does not fit, we build internal tools, custom workflows and integrations.",
           },
         ],
       },
@@ -1008,7 +1011,7 @@ export const content = {
           post: "?",
         },
         lead:
-          "Let's look together at which tasks in your company can be simplified with AI and automation. No obligation after the call — if it's not the right fit, we'll say so plainly.",
+          "Let's look together at which tasks in your company can be simplified with AI and automation. No obligation after the call - if it's not the right fit, we'll say so plainly.",
         ctaPrimary: "Book a free discovery call",
         ctaSecondary: "Read insights",
         trustLine:
@@ -1030,7 +1033,7 @@ export const content = {
           post: "",
         },
         lead:
-          "Create a mobile-friendly digital business card in a minute. Share it by link, QR code, WhatsApp, or email — your recipients need no app. Update your contact details, booking link, and portfolio anytime, no reprint.",
+          "Create a mobile-friendly digital business card in a minute. Share it by link, QR code, WhatsApp, or email - your recipients need no app. Update your contact details, booking link, and portfolio anytime, no reprint.",
         ctaPrimary: "Create for free",
         ctaSecondary: "See designs",
         features: [
@@ -1055,7 +1058,7 @@ export const content = {
         eyebrow: "[ INDUSTRY TEMPLATES ]",
         headline: "Starting points, not straitjackets",
         lead:
-          "Template layouts for law, medical, skilled trades, and hospitality — each with the contact fields, compliance disclosures, and calendar integrations that sector relies on day-to-day. Every layout is a fork-and-modify starting point, not a locked theme.",
+          "Template layouts for law, medical, skilled trades, and hospitality - each with the contact fields, compliance disclosures, and calendar integrations that sector relies on day-to-day. Every layout is a fork-and-modify starting point, not a locked theme.",
         items: [
           {
             sector: "LAW",
@@ -1097,19 +1100,19 @@ export const content = {
             num: "01",
             title: "Create in a minute",
             body:
-              "Pick a design, fill in a few fields, publish free — no account needed.",
+              "Pick a design, fill in a few fields, publish free - no account needed.",
           },
           {
             num: "02",
             title: "Share anywhere",
             body:
-              "By link, QR code, WhatsApp, or email. Recipients open it in the browser — no app.",
+              "By link, QR code, WhatsApp, or email. Recipients open it in the browser - no app.",
           },
           {
             num: "03",
             title: "Edit anytime",
             body:
-              "New role, new number, new photo — change once, instantly live.",
+              "New role, new number, new photo - change once, instantly live.",
           },
         ],
       },
@@ -1117,7 +1120,7 @@ export const content = {
         eyebrow: "[ WHITE-GLOVE · DESIGNED FOR YOU ]",
         headline: "Prefer we design it for you?",
         lead:
-          "Two done-for-you paths: white-glove hand-designs your card in 48 hours, or we quote a bespoke build for teams and special requests. Tell us what you need below — or just message us.",
+          "Two done-for-you paths: white-glove hand-designs your card in 48 hours, or we quote a bespoke build for teams and special requests. Tell us what you need below - or just message us.",
         options: [
           {
             tag: "WHITE-GLOVE",
@@ -1131,13 +1134,13 @@ export const content = {
             price: "On request",
             title: "Bespoke or team rollout",
             body:
-              "Special layouts, many cards, your own domain — we scope it and send you a quote.",
+              "Special layouts, many cards, your own domain - we scope it and send you a quote.",
           },
         ],
         channels: {
           heading: "Reach us directly",
-          note: "Fastest by WhatsApp — we usually reply within one business day.",
-          prefill: "Hi OpSolid — I'd like a custom OpSo Smart card.",
+          note: "Fastest by WhatsApp - we usually reply within one business day.",
+          prefill: "Hi OpSolid - I'd like a custom OpSo Smart card.",
           labels: {
             whatsappTr: "WhatsApp · TR",
             whatsappDe: "WhatsApp · DE",
@@ -1152,14 +1155,14 @@ export const content = {
           company: "Company (optional)",
           industry: "Industry / sector",
           teamSize: "How many cards?",
-          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          teamSizeOptions: ["1", "2-5", "6-20", "20+"],
           message: "What do you need? Style, links, special requests…",
           consent:
             "I consent to OpSolid processing this request to reply.",
           privacyLink: "Privacy Policy",
           submit: "Send request",
           submitting: "Sending…",
-          success: "Thanks — we'll reply within one business day.",
+          success: "Thanks, we'll reply within one business day.",
           error: "Something went wrong. Please email info@opsolid.de directly.",
         },
       },
@@ -1221,7 +1224,7 @@ export const content = {
 
     pricing: {
       meta: {
-        title: "Pricing — Standard, Professional, Enterprise | OpSolid",
+        title: "Pricing: Standard, Professional, Enterprise | OpSolid",
         description: "Pricing overview for OpSolid's products (prices for most products on request): Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation, and Kutasia.",
       },
       hero: {
@@ -1361,7 +1364,7 @@ export const content = {
         {
           id: "whatsapp-agent",
           name: "WhatsApp Agent",
-          tagline: "WhatsApp Business API — automated replies, broadcast, hand-off.",
+          tagline: "WhatsApp Business API - automated replies, broadcast, hand-off.",
           href: "/products/whatsapp-agent",
           tiers: [
             {
@@ -1501,7 +1504,7 @@ export const content = {
         {
           id: "custom-automation",
           name: "Custom Automation",
-          tagline: "Workflow builds — sprint, project, or retainer. Not SaaS.",
+          tagline: "Workflow builds - sprint, project, or retainer. Not SaaS.",
           href: "/products/custom-automation",
           tiers: [
             {
@@ -1517,7 +1520,7 @@ export const content = {
               name: "Professional",
               setup: "Price on request",
               monthly: "Price on request",
-              included: ["3–5 workflows", "Discovery workshop", "Build + 90-day support", "Integration + custom code", "Ops dashboard"],
+              included: ["3-5 workflows", "Discovery workshop", "Build + 90-day support", "Integration + custom code", "Ops dashboard"],
               overage: "",
               forWhom: "Mid-market digital ops project",
               isHighlighted: true,
@@ -1536,7 +1539,7 @@ export const content = {
         {
           id: "kutasia",
           name: "Kutasia",
-          tagline: "Unified AI workspace — WhatsApp, Telegram, Email and Voice in one inbox, with hero automations and a fair-tested demo mode.",
+          tagline: "Unified AI workspace - WhatsApp, Telegram, Email and Voice in one inbox, with hero automations and a fair-tested demo mode.",
           href: "/products/kutasia",
           tiers: [
             {
@@ -1623,7 +1626,7 @@ export const content = {
       storyHint: "For WhatsApp status & Instagram stories",
       vcardVisitor: "Save contact",
       vcardOwner: "My vCard (.vcf)",
-      vcardOwnerHint: "Forward — saves you to their contacts",
+      vcardOwnerHint: "Forward - saves you to their contacts",
       emailSignature: "Email signature",
       copy: "Copy",
       openCard: "Open card",
@@ -1635,7 +1638,7 @@ export const content = {
       retry: "Try again",
     },
     owner: {
-      banner: "You're the owner of this card — changes go live instantly.",
+      banner: "You're the owner of this card - changes go live instantly.",
       publicBannerLabel: "Your card",
       editLabel: "Edit",
       previewLabel: "Preview mode",
@@ -1645,7 +1648,7 @@ export const content = {
     manage: {
       title: "Card management",
       subtitle:
-        "Stats, share links, and leads for your card — everything in one place.",
+        "Stats, share links, and leads for your card - everything in one place.",
       backToCard: "View card",
       editCard: "Edit card",
       statsHeading: "Last 30 days",
@@ -1656,7 +1659,7 @@ export const content = {
       statScans: "Link scans",
       linksHeading: "Share links",
       linksHint:
-        "Create a separate short link per channel — QR on print, email signature, Instagram bio — and see which one brings visitors.",
+        "Create a separate short link per channel - QR on print, email signature, Instagram bio - and see which one brings visitors.",
       linkLabelPlaceholder: "Label (e.g. Trade fair QR)",
       linkCodePlaceholder: "Custom code (optional)",
       linkSourcePlaceholder: "Source (e.g. instagram)",
@@ -1664,7 +1667,7 @@ export const content = {
       createLink: "Create link",
       creating: "Creating…",
       linkLimitReached: "Link limit reached for this card.",
-      codeUnavailable: "That code is taken or invalid — try another one.",
+      codeUnavailable: "That code is taken or invalid - try another one.",
       linkCreateFailed: "Could not create the link. Please try again.",
       scansLabel: "scans",
       activeLabel: "Active",
@@ -1675,7 +1678,7 @@ export const content = {
       disableLabel: "Turn off",
       enableLabel: "Turn on",
       noLinksYet:
-        "No share links yet. Your card URL always works — short links add per-channel tracking.",
+        "No share links yet. Your card URL always works - short links add per-channel tracking.",
       leadsHeading: "Leads",
       leadsHint: "People who shared their contact details through your card.",
       noLeadsYet:
@@ -1685,13 +1688,13 @@ export const content = {
       leadStatusQualified: "Qualified",
       leadStatusArchived: "Archived",
       notPublished:
-        "This card is not published yet — links and stats activate once it goes live.",
-      publicLinkLabel: "Your public card link — share this one",
+        "This card is not published yet - links and stats activate once it goes live.",
+      publicLinkLabel: "Your public card link - share this one",
       publicLinkHint:
         "Anyone with this link sees your card. Put it in chats, email signatures, QR codes.",
-      privateLinkLabel: "Your private links — keep them to yourself",
+      privateLinkLabel: "Your private links - keep them to yourself",
       privateLinkHint:
-        "This management page and your edit page are private: anyone with their links can change your card. They're in your card email — never share them.",
+        "This management page and your edit page are private: anyone with their links can change your card. They're in your card email - never share them.",
     },
     eventDirectory: {
       eyebrow: "Event directory",
@@ -1703,28 +1706,28 @@ export const content = {
       participantsHint:
         "Cards whose owners chose to be listed publicly. Tap one to view and save the contact.",
       emptyState:
-        "No participants listed yet — be the first: create your card and join the directory.",
+        "No participants listed yet - be the first: create your card and join the directory.",
       searchPlaceholder: "Search by name, company or role…",
       noResults: "No participants match your search.",
     },
     mobileAppSoon:
-      "Mobile app coming soon — create and manage your card on the go. Everything works in the browser today.",
+      "Mobile app coming soon - create and manage your card on the go. Everything works in the browser today.",
     quickCreate: {
       title: "Your card in 60 seconds",
       subtitle:
-        "Five fields, one button — your digital business card goes live instantly. Free, no account needed.",
+        "Five fields, one button - your digital business card goes live instantly. Free, no account needed.",
       nameLabel: "Full name",
       titleLabel: "Job title",
       companyLabel: "Company",
       phoneLabel: "Phone",
       emailLabel: "Email",
       emailHint:
-        "Your private edit and management links are sent here — double-check it.",
+        "Your private edit and management links are sent here - double-check it.",
       photoLabel: "Add a photo (optional)",
       photoChange: "Change photo",
       photoHint: "JPG, PNG or WebP",
-      photoError: "Photo upload failed — you can add it later in the editor.",
-      submit: "Create my card — free",
+      photoError: "Photo upload failed - you can add it later in the editor.",
+      submit: "Create my card - free",
       submitting: "Creating…",
       errorRequired: "Name, phone and email are required.",
       errorGeneric: "Something went wrong. Please try again.",
@@ -1733,7 +1736,7 @@ export const content = {
       designModern: "Modern",
       designVisual: "Visual",
       designHint:
-        "Pick a starter look — you can switch designs and add more details anytime.",
+        "Pick a starter look - you can switch designs and add more details anytime.",
       logoLabel: "Add a logo (optional)",
       logoChange: "Change logo",
       logoHint: "PNG with transparency works best",
@@ -1756,10 +1759,10 @@ export const content = {
       title: "Your card is live!",
       step1Title: "Share it",
       step1Body:
-        "Use the Share button — it sends your public link, QR, or a big card image on WhatsApp.",
+        "Use the Share button - it sends your public link, QR, or a big card image on WhatsApp.",
       step2Title: "Check your email",
       step2Body:
-        "Your private edit and management links are there. Keep them to yourself — they control your card.",
+        "Your private edit and management links are there. Keep them to yourself - they control your card.",
       step3Title: "Watch it work",
       step3Body:
         "Views, contacts you receive, and per-channel share links live on your management page.",
@@ -1813,7 +1816,7 @@ export const content = {
       weak_password: "Password must be at least 12 characters with at least one letter and one number.",
       email_in_use: "This email is already registered. Try signing in.",
       invalid_credentials: "Invalid email or password.",
-      rate_limited: "Too many requests — please wait a few minutes and try again.",
+      rate_limited: "Too many requests - please wait a few minutes and try again.",
       generic: "Something went wrong. Please try again.",
       invalid_input: "Please check your input and try again.",
       email_unavailable: "This email cannot be used to sign up.",
@@ -1845,7 +1848,7 @@ export const content = {
     industry: {
       title: "What kind of card are you making?",
       subtitle:
-        "Pick a sector — we'll start with a tailored design and a sensible default palette. You can change everything later.",
+        "Pick a sector - we'll start with a tailored design and a sensible default palette. You can change everything later.",
       surpriseMe: "Surprise me",
       categories: {
         architecture: "Architecture",
@@ -1903,13 +1906,13 @@ export const content = {
     personal: {
       title: "Tell us about you",
       subtitle:
-        "We pre-filled what we know. Add a job title and a phone number — the rest is optional.",
+        "We pre-filled what we know. Add a job title and a phone number - the rest is optional.",
       nameLabel: "Full name",
       namePlaceholder: "Anna Fischer",
       titleLabel: "Job title",
       titlePlaceholder: "Founder & Designer",
       emailLabel: "Email",
-      emailHint: "Linked to your account — change it from settings later.",
+      emailHint: "Linked to your account - change it from settings later.",
       phoneLabel: "Phone",
       companyLabel: "Company",
       companyPlaceholder: "Atelier Nord",
@@ -1917,7 +1920,7 @@ export const content = {
       bioPlaceholder: "One or two sentences that introduce you.",
       photoLabel: "Profile photo",
       photoCta: "Drop a photo here",
-      photoHint: "Drag or click to upload — JPG/PNG up to 5MB",
+      photoHint: "Drag or click to upload - JPG/PNG up to 5MB",
       photoBrowse: "Browse files",
       photoUploading: "Uploading…",
       photoUploaded: "Photo uploaded",
@@ -1927,14 +1930,14 @@ export const content = {
       skipCta: "Skip & finish",
     },
     preview: {
-      title: "Almost there — last look",
+      title: "Almost there - last look",
       subtitle:
         "Review your card on the right and pick the address you'd like to share.",
       slugLabel: "Card address",
       slugChecking: "Checking…",
       slugAvailable: "Available",
       slugTaken: "Taken",
-      slugTakenHint: "That address is taken — try a variation.",
+      slugTakenHint: "That address is taken - try a variation.",
       slugReset: "Reset to default",
       summaryName: "Name",
       summaryTitle: "Title",
@@ -1955,10 +1958,10 @@ export const content = {
       phone_invalid: "That phone number doesn't look right.",
       brand_invalid: "Use a 6-digit hex (e.g. #1a365d).",
       slug_invalid: "Use 3+ characters: lowercase letters, numbers, hyphens.",
-      slug_taken: "That address is already taken — please pick another.",
-      upload_failed: "Upload failed — please try a different file.",
-      upload_too_large: "That image is over 5MB — try a smaller one.",
-      network_error: "Something went wrong — check your connection and retry.",
+      slug_taken: "That address is already taken - please pick another.",
+      upload_failed: "Upload failed - please try a different file.",
+      upload_too_large: "That image is over 5MB - try a smaller one.",
+      network_error: "Something went wrong - check your connection and retry.",
     },
   },
 };

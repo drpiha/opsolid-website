@@ -133,7 +133,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "kontakt",
   meta: {
-    title: "Contact: describe your workflow, request an AI check",
+    title: "Contact: describe your workflow, request a check",
     description:
       "Write to OpSolid by form, email or phone: which workflow slows you down and which systems are involved. We usually reply within a few working days.",
   },
@@ -252,7 +252,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "kontakt",
   meta: {
-    title: "İletişim: iş akışınızı anlatın, YZ Kontrolü talep edin",
+    title: "İletişim: iş akışını anlatın, YZ Kontrolü isteyin",
     description:
       "OpSolid'e form, e-posta veya telefonla yazın: hangi iş akışı sizi yavaşlatıyor, hangi sistemler işin içinde. Genellikle birkaç iş günü içinde yanıt veririz.",
   },

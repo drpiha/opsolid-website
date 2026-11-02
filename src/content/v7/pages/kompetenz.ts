@@ -89,10 +89,17 @@ const de: PageDef = {
       h: "Wie die Schulung zu Art. 4 passt",
       lede: "Sie kann ein Baustein Ihrer Maßnahmen zur KI-Kompetenz sein.",
       paras: [
-        "Unternehmen, die KI einsetzen, ergreifen nach Art. 4 der KI-Verordnung Maßnahmen, um die KI-Kompetenz ihrer Beschäftigten zu fördern. Das gilt seit dem 2. Februar 2025. Die Vorschrift wurde durch die Verordnung (EU) 2026/1744 neu gefasst, die seit dem 27. Juli 2026 in Kraft ist.",
+        "Unternehmen, die KI einsetzen, ergreifen nach Art. 4 der KI-Verordnung (AI Act) Maßnahmen, um die KI-Kompetenz ihrer Beschäftigten zu fördern. Das gilt seit dem 2. Februar 2025. Die Vorschrift wurde durch die Verordnung (EU) 2026/1744 neu gefasst, die seit dem 27. Juli 2026 in Kraft ist.",
         "Ein Zertifikat ist nicht vorgeschrieben. Dokumentierte Maßnahmen sind gute Praxis.",
         "KI-Kompetenz Basis deckt die Grundlagen für alle Beschäftigten ab. Sie ist eine Maßnahme von mehreren, kein vollständiger Nachweis. Wir geben keine Rechtsberatung.",
       ],
+      sources: {
+        asOf: "Rechtsstand: 2. November 2026",
+        items: [
+          { label: "Verordnung (EU) 2024/1689 (KI-Verordnung), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/deu" },
+          { label: "Verordnung (EU) 2026/1744 (Art. 4 neu gefasst), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/deu" },
+        ],
+      },
     },
     {
       t: "sample",
@@ -118,6 +125,10 @@ const de: PageDef = {
     label: "Häufige Fragen",
     h: "Häufige Fragen zu KI-Kompetenz Basis",
     items: [
+      {
+        q: "Ist eine KI-Schulung nach Art. 4 der KI-Verordnung vorgeschrieben?",
+        a: "Art. 4 der KI-Verordnung (AI Act) verlangt von Unternehmen, die KI einsetzen, Maßnahmen zur Förderung der KI-Kompetenz ihrer Beschäftigten. Eine bestimmte Schulung oder ein Zertifikat schreibt die Vorschrift nicht vor. KI-Kompetenz Basis kann eine dieser Maßnahmen sein. Wir geben keine Rechtsberatung.",
+      },
       {
         q: "Ist das ein Zertifikatskurs?",
         a: "Nein. Ein Zertifikat ist nicht vorgeschrieben. Sie erhalten eine Teilnahmebescheinigung von OpSolid, die Ihre dokumentierten Maßnahmen zur KI-Kompetenz ergänzen kann.",
@@ -159,7 +170,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "kompetenz",
   meta: {
-    title: "AI literacy training: the basics for your team, online",
+    title: "AI literacy training: basics for your team",
     description:
       "AI literacy basics: half day, live online, from €1,790 net per team (10 people included, up to 15). Basics, risks, data protection, with a participation record.",
   },
@@ -240,10 +251,17 @@ const en: PageDef = {
       h: "How the course relates to Article 4",
       lede: "It can be one building block of your measures for AI literacy.",
       paras: [
-        "Under Article 4 of the AI Act, companies that use AI take measures to support the AI literacy of their staff. This has applied since 2 February 2025. The provision was reworded by Regulation (EU) 2026/1744, which has been in force since 27 July 2026.",
+        "Under Article 4 of the EU AI Act, companies that use AI take measures to support the AI literacy of their staff. This has applied since 2 February 2025. The provision was reworded by Regulation (EU) 2026/1744, which has been in force since 27 July 2026.",
         "No certificate is required. Documented measures are good practice.",
         "AI literacy basics covers the fundamentals for all staff. It is one measure among several, not complete proof. We do not give legal advice.",
       ],
+      sources: {
+        asOf: "Legal status: 2 November 2026",
+        items: [
+          { label: "Regulation (EU) 2024/1689 (AI Act), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" },
+          { label: "Regulation (EU) 2026/1744 (Article 4 replaced), EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
+        ],
+      },
     },
     {
       t: "sample",
@@ -269,6 +287,10 @@ const en: PageDef = {
     label: "Common questions",
     h: "Common questions about AI literacy basics",
     items: [
+      {
+        q: "Is AI training required under Article 4 of the EU AI Act?",
+        a: "Article 4 of the EU AI Act requires companies that use AI to take measures to support the AI literacy of their staff. The provision does not prescribe a particular training or a certificate. AI literacy basics can be one of those measures. We do not give legal advice.",
+      },
       {
         q: "Is this a certification course?",
         a: "No. A certificate is not required. You receive a participation record from OpSolid, which can complement your documented measures for AI literacy.",
@@ -310,7 +332,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "kompetenz",
   meta: {
-    title: "YZ Yetkinliği eğitimi: ekibiniz için temel, çevrimiçi",
+    title: "YZ Yetkinliği eğitimi: ekip için temel",
     description:
       "YZ Yetkinliği Temel: yarım gün, çevrimiçi, ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil (en fazla 15). Temeller, riskler, veri koruma; belgeli.",
   },
@@ -391,10 +413,17 @@ const tr: PageDef = {
       h: "Eğitim, 4. madde ile nasıl ilişkilidir?",
       lede: "YZ yetkinliği önlemlerinizin bir parçası olabilir.",
       paras: [
-        "YZ kullanan şirketler, Yapay Zekâ Tüzüğü'nün 4. maddesi uyarınca çalışanlarının YZ yetkinliğini desteklemek için önlemler alır. Bu, 2 Şubat 2025'ten beri geçerlidir. Hüküm, 27 Temmuz 2026'dan beri yürürlükte olan (AB) 2026/1744 sayılı Tüzük ile yeniden düzenlenmiştir.",
+        "YZ kullanan şirketler, AB Yapay Zeka Tüzüğü'nün (AI Act) 4. maddesi uyarınca çalışanlarının YZ yetkinliğini desteklemek için önlemler alır. Bu, 2 Şubat 2025'ten beri geçerlidir. Hüküm, 27 Temmuz 2026'dan beri yürürlükte olan (AB) 2026/1744 sayılı Tüzük ile yeniden düzenlenmiştir.",
         "Sertifika zorunlu değildir. Belgelenmiş önlemler iyi uygulamadır.",
         "YZ Yetkinliği Temel, tüm çalışanlar için temelleri kapsar. Birçok önlemden biridir, eksiksiz bir kanıt değildir. Hukuki danışmanlık vermiyoruz.",
       ],
+      sources: {
+        asOf: "Hukuki durum: 2 Kasım 2026",
+        items: [
+          { label: "Tüzük (AB) 2024/1689 (AI Act), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng" },
+          { label: "Tüzük (AB) 2026/1744 (4. madde yeni metinle değiştirildi), EUR-Lex, İngilizce", href: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
+        ],
+      },
     },
     {
       t: "sample",
@@ -420,6 +449,10 @@ const tr: PageDef = {
     label: "Sık sorulan sorular",
     h: "YZ Yetkinliği Temel hakkında sık sorulan sorular",
     items: [
+      {
+        q: "AB Yapay Zeka Tüzüğü'nün 4. maddesi uyarınca YZ eğitimi zorunlu mu?",
+        a: "AB Yapay Zeka Tüzüğü'nün (AI Act) 4. maddesi, YZ kullanan şirketlerden çalışanlarının YZ yetkinliğini desteklemek için önlemler almasını ister. Hüküm belirli bir eğitim veya sertifika öngörmez. YZ Yetkinliği Temel bu önlemlerden biri olabilir. Hukuki danışmanlık vermiyoruz.",
+      },
       {
         q: "Bu bir sertifika kursu mu?",
         a: "Hayır. Sertifika zorunlu değildir. OpSolid'ten bir katılım belgesi alırsınız; bu belge, YZ yetkinliği için belgelenmiş önlemlerinizi tamamlayabilir.",

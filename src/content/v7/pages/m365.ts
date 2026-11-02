@@ -8,7 +8,7 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "m365",
   meta: {
-    title: "Microsoft 365: Power Automate, SharePoint, Copilot",
+    title: "Microsoft 365 Automatisierung mit Power Automate",
     description:
       "Microsoft 365 automatisieren: Power Automate, SharePoint, Teams und Outlook mit Ihren Lizenzen, Copilot mit klaren Regeln. Alles läuft in Ihrem Tenant.",
   },
@@ -194,7 +194,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "m365",
   meta: {
-    title: "Microsoft 365: Power Automate, SharePoint, Copilot",
+    title: "Microsoft 365 automation with Power Automate",
     description:
       "Automate Microsoft 365: Power Automate, SharePoint, Teams and Outlook with the licences you have, Copilot with clear rules. Everything runs in your own tenant.",
   },
@@ -380,7 +380,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "m365",
   meta: {
-    title: "Microsoft 365: Power Automate, SharePoint, Copilot",
+    title: "Power Automate ile Microsoft 365 otomasyonu",
     description:
       "Microsoft 365'i otomatikleştirin: mevcut lisanslarınızla Power Automate, SharePoint, Teams ve Outlook; net kurallarla Copilot. Hepsi kendi tenant'ınızda.",
   },

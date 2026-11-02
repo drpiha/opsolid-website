@@ -8,7 +8,7 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "home",
   meta: {
-    title: "OpSolid – KI-Automatisierung und KI-Beratung für Unternehmen",
+    title: "OpSolid: KI-Automatisierung und KI-Beratung für Unternehmen",
     description:
       "KI-Beratung und KI-Automatisierung für Unternehmen: Wir finden die Abläufe, die sich lohnen, bauen die erste Lösung zum Festpreis. KI-Check ab 990 € netto.",
   },
@@ -263,7 +263,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "home",
   meta: {
-    title: "OpSolid – AI automation consulting for companies",
+    title: "OpSolid: AI automation consulting for companies",
     description:
       "AI automation consulting for companies: we find the workflows worth automating and build the first solution at a fixed price. AI check from €990 net.",
   },
@@ -518,7 +518,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "home",
   meta: {
-    title: "OpSolid – Şirketler için yapay zeka otomasyonu danışmanlığı",
+    title: "OpSolid: Şirketler için yapay zeka otomasyonu danışmanlığı",
     description:
       "Şirketler için YZ otomasyonu ve danışmanlığı: Değer yaratacak iş akışlarını bulur, ilk çözümü sabit fiyatla kurarız. YZ Kontrolü 990 €'dan itibaren (net).",
   },

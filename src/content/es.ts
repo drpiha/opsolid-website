@@ -1,5 +1,5 @@
 // =============================================================================
-// SPANISH CONTENT — M6 minimal locale
+// SPANISH CONTENT - M6 minimal locale
 // =============================================================================
 // Spanish is not a public marketing locale; only the card surfaces (/c/*)
 // use it. Translated keys go under `overrides`; EVERYTHING else falls back to
@@ -23,7 +23,7 @@ type DeepPartial<T> = T extends object
   : T;
 
 // Deep-merge translation overrides on top of the English content tree.
-// Arrays are replaced wholesale (not concat'd) — Spanish-language array
+// Arrays are replaced wholesale (not concat'd) - Spanish-language array
 // items have to be the same length as English ones, since the rendering
 // components index into them positionally.
 function merge<T>(base: T, override: DeepPartial<T>): T {

@@ -1,8 +1,8 @@
 // =============================================================================
-// LOCALE BARREL — M6 expanded to 7 locales
+// LOCALE BARREL - M6 expanded to 7 locales
 // =============================================================================
 // Fully-translated locales: en, de, tr.
-// Partially-translated locales: es, it, fr, ar — used by the public card
+// Partially-translated locales: es, it, fr, ar - used by the public card
 // surfaces (/c/*). They import the English content tree and deep-merge an
 // `overrides` object on top (currently empty), so every key falls back to
 // English. See `src/content/es.ts` for the merge code.
