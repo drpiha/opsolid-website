@@ -116,8 +116,8 @@ export const content: Content = {
       },
       {
         slug: "workflow-automation-fundamentals",
-        title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
-        seoTitle: "İş Akışı Otomasyonu: Uygulamada Ne Önemli",
+        title: "İş akışı otomasyonu: uygulamada gerçekten ne önemli",
+        seoTitle: "İş akışı otomasyonu: uygulamada ne önemli",
         excerpt:
           "Bir iş akışı otomasyonunu üretimde ayakta tutan şeyler: hata yönetimi, veri egemenliği, izlenebilirlik ve çıkış maliyeti - seçilen araçtan bağımsız olarak.",
         category: "automation",
@@ -125,8 +125,8 @@ export const content: Content = {
       },
       {
         slug: "5-signs-your-business-needs-process-automation",
-        title: "İşletmenizin Süreç Otomasyonuna İhtiyacı Olduğunun 5 İşareti",
-        seoTitle: "Süreç Otomasyonuna İhtiyaç Duyduğunuzun 5 İşareti",
+        title: "İşletmenizin süreç otomasyonuna ihtiyacı olduğunun 5 işareti",
+        seoTitle: "Süreç otomasyonuna ihtiyaç duyduğunuzun 5 işareti",
         excerpt:
           "Ekibiniz manuel işlere çok fazla zaman mı harcıyor? İşte otomasyona yatırım yapmanın zamanının geldiğini gösteren temel göstergeler.",
         category: "operations",
@@ -134,7 +134,7 @@ export const content: Content = {
       },
       {
         slug: "connecting-crm-erp-the-integration-playbook",
-        title: "CRM ve ERP Bağlantısı: Genel Bakış",
+        title: "CRM ve ERP bağlantısı: genel bakış",
         excerpt:
           "CRM ve ERP sistemlerinizi senkronize etmeye pratik bir bakış - veri silolarını azaltarak tek bir doğru kaynak oluşturmak.",
         category: "integration",
@@ -142,8 +142,8 @@ export const content: Content = {
       },
       {
         slug: "ai-chatbots-vs-rule-based-bots",
-        title: "Yapay Zeka Chatbot'ları ve Kural Tabanlı Botlar: Hangisine İhtiyacınız Var?",
-        seoTitle: "Yapay Zeka Chatbot'u mu, Kural Tabanlı Bot mu?",
+        title: "Yapay zeka chatbot'ları ve kural tabanlı botlar: hangisine ihtiyacınız var?",
+        seoTitle: "Yapay zeka chatbot'u mu, kural tabanlı bot mu?",
         excerpt:
           "Yapay zeka destekli ve kural tabanlı chatbot'lar arasındaki farkı ve her yaklaşımın işletmeniz için ne zaman mantıklı olduğunu anlayın.",
         category: "ai",
@@ -152,7 +152,7 @@ export const content: Content = {
       {
         slug: "choosing-the-right-automation-architecture",
         title:
-          "İşletmeniz İçin Doğru Otomasyon Mimarisini Seçmek",
+          "İşletmeniz için doğru otomasyon mimarisini seçmek",
         excerpt:
           "Noktadan noktaya entegrasyon, merkezi orkestrasyon veya hibrit model: hacme, uyumluluğa ve ekip büyüklüğüne göre seçim, tedarikçi sunumuna göre değil.",
         category: "automation",
@@ -160,7 +160,7 @@ export const content: Content = {
       },
       {
         slug: "whatsapp-business-automation-guide",
-        title: "WhatsApp Business Otomasyonu: Genel Bakış",
+        title: "WhatsApp Business otomasyonu: genel bakış",
         excerpt:
           "WhatsApp üzerinde müşteri iletişimini nasıl otomatize edeceğiniz - sipariş onaylarından destek botlarına - kişisel dokunuşu kaybetmeden.",
         category: "automation",

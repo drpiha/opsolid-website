@@ -26,7 +26,7 @@ function loadFonts() {
 }
 
 // v7 tokens (src/styles/opsolid-v7.css).
-const V7 = { porcelain: "#F6F2EC", ink: "#16191D", stone: "#6B665F", line: "#E3DCD1", copper: "#B5623A", deep: "#8A4524" };
+const V7 = { porcelain: "#F6F2EC", ink: "#16191D", stone: "#6B665F", rule: "#B9B0A2", copper: "#B5623A", deep: "#8A4524" };
 // The brand mark: four nested rounded squares on a 320 grid (insets 0/30/60/90, radii 84/62/42/24).
 const MARK = [
   { inset: 0, r: 84, o: 0.9, w: 3 },
@@ -56,6 +56,7 @@ export async function renderPageCard({ locale, label, title }: { locale: L3; lab
   if (hit) return png(hit);
 
   const [fraunces, mono] = await loadFonts();
+  const size = titleSize(title);
   const scale = 1.25; // mark drawn at 400 px
   const image = new ImageResponse(
     (
@@ -79,11 +80,12 @@ export async function renderPageCard({ locale, label, title }: { locale: L3; lab
           ))}
         </div>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "72px 80px 64px", width: "100%" }}>
-          <div style={{ display: "flex", alignItems: "center", fontFamily: "Geist Mono", fontSize: 26, letterSpacing: 2, color: V7.stone }}>
+          {/* A long label (the home tagline) steps down so it stays clear of the mark's top edge. */}
+          <div style={{ display: "flex", alignItems: "center", maxWidth: 760, fontFamily: "Geist Mono", fontSize: label.length > 36 ? 22 : 26, letterSpacing: label.length > 36 ? 1.5 : 2, color: V7.stone }}>
             <div style={{ width: 44, height: 2, background: V7.copper, marginRight: 20, display: "flex" }} />
             <div style={{ display: "flex" }}>{label.toLocaleUpperCase(locale)}</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", maxWidth: 740, fontSize: titleSize(title), lineHeight: 1.06, letterSpacing: -1.5 }}>
+          <div style={{ display: "flex", flexDirection: "column", maxWidth: 740, fontSize: size, lineHeight: 1.06, letterSpacing: size > 64 ? -1.5 : -1 }}>
             {title.split("\n").map((line) => (
               <div key={line} style={{ display: "flex" }}>
                 {line}
@@ -92,7 +94,7 @@ export async function renderPageCard({ locale, label, title }: { locale: L3; lab
           </div>
           <div style={{ display: "flex", alignItems: "baseline" }}>
             <div style={{ display: "flex", fontSize: 40, letterSpacing: -0.5, color: V7.ink }}>OpSolid</div>
-            <div style={{ display: "flex", margin: "0 16px", fontFamily: "Geist Mono", fontSize: 24, color: V7.line }}>/</div>
+            <div style={{ display: "flex", margin: "0 16px", fontFamily: "Geist Mono", fontSize: 24, color: V7.rule }}>/</div>
             <div style={{ display: "flex", fontFamily: "Geist Mono", fontSize: 24, letterSpacing: 2, color: V7.deep }}>opsolid.de</div>
           </div>
         </div>
