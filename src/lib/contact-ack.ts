@@ -1,13 +1,12 @@
 // Automatic acknowledgement for trainer applications (owner-approved wording, 2026-11-04).
-// Abuse rules: the mail repeats nothing the applicant typed (not even the name), contains no links and is
+// Abuse rules: the mail repeats nothing the applicant typed (not even the name), contains no links from applicant input (our own fixed address may be linkified by clients) and is
 // never sent more than once per recipient address in 24 hours. It is off unless CONTACT_TRAINER_ACK=on.
 // A failed acknowledgement never fails the submission: callers get a boolean and nothing is thrown.
 
 export type AckLocale = "de" | "en";
 
-// "＠" is a full-width at sign (U+FF20) on purpose: mail clients do not turn it into a link.
 const SIGN = { de: "Freundliche Grüße", en: "Kind regards" } as const;
-const ADDRESS = "info＠opsolid.de";
+const ADDRESS = "info@opsolid.de";
 
 export const ACK_TEXT: Record<AckLocale, { subject: string; lines: string[] }> = {
   de: {

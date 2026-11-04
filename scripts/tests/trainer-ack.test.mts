@@ -58,7 +58,8 @@ test("body has the approved text only: no applicant text, no links, no reply-to"
     const m = buildAck("applicant@example.org", source);
     const all = `${m.subject}\n${m.text}\n${m.html}`;
     assert.equal(/https?:|www\.|<a\s|mailto:/i.test(all), false);
-    assert.equal(/@/.test(all), false, "address uses the full-width sign, so clients cannot linkify it");
+    const addresses = new Set(all.match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g));
+    assert.deepEqual([...addresses], ["info@opsolid.de"], "the only address in the mail is our own");
     assert.equal(/applicant/i.test(all), false);
     assert.equal("replyTo" in m, false);
     assert.equal(m.to, "applicant@example.org");
