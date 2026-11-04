@@ -1,7 +1,7 @@
 /**
  * Contact page (v7). Form (POST /api/contact), next steps, direct contact from SITE_CONFIG, NDA note.
- * The only response-time statement is the one already in the existing contact copy ("in der Regel
- * innerhalb weniger Arbeitstage"). The form pre-selects a topic from ?anliegen=<value>.
+ * Response times: inquiries "in der Regel innerhalb weniger Arbeitstage"; trainer applications "innerhalb von
+ * sieben Tagen" (FAQ, trainer page, form). The form pre-selects a topic from ?anliegen=<value>.
  */
 import { SITE_CONFIG } from "@/lib/constants";
 import type { PageDef, PageSet } from "../types";
@@ -105,7 +105,7 @@ const de: PageDef = {
     items: [
       {
         q: "Wie schnell antworten Sie?",
-        a: "In der Regel innerhalb weniger Arbeitstage, persönlich per E-Mail.",
+        a: "In der Regel innerhalb weniger Arbeitstage, persönlich per E-Mail. Bewerbungen als Trainerin oder Trainer beantworten wir innerhalb von sieben Tagen.",
       },
       {
         q: "Muss ich schon genau wissen, was ich brauche?",
@@ -224,7 +224,7 @@ const en: PageDef = {
     items: [
       {
         q: "How quickly do you reply?",
-        a: "Usually within a few working days, personally by email.",
+        a: "Usually within a few working days, personally by email. We reply to trainer applications within seven days.",
       },
       {
         q: "Do I need to know exactly what I need?",
@@ -343,7 +343,7 @@ const tr: PageDef = {
     items: [
       {
         q: "Ne kadar hızlı yanıt veriyorsunuz?",
-        a: "Genellikle birkaç iş günü içinde, e-postayla ve kişisel olarak.",
+        a: "Genellikle birkaç iş günü içinde, e-postayla ve kişisel olarak. Eğitmen başvurularını yedi gün içinde yanıtlıyoruz.",
       },
       {
         q: "Ne istediğimi tam olarak bilmem gerekiyor mu?",

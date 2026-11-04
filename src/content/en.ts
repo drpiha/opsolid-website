@@ -54,7 +54,7 @@ export const content = {
     subtitle: "Datenschutzerklärung · Aydınlatma Metni",
     notice:
       "Translation of the binding German text. This policy informs you under Arts. 13 and 14 GDPR about the processing of personal data when you visit opsolid.de and use its forms and account areas. The OpSo app and card pages have their own policy at https://card.opsolid.de/privacy. The texts were prepared carefully but have not been reviewed by a lawyer.",
-    lastUpdated: "Last updated: 21 October 2026",
+    lastUpdated: "Last updated: 4 November 2026",
     // Explicit shape: not every locale uses every field (TR adds a KVKK subsection).
     sections: ([
       {
@@ -68,7 +68,15 @@ export const content = {
       },
       {
         title: "3. Contact forms, email and AI-check requests",
-        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through the email service Zoho Mail (Zoho Corporation B.V., Netherlands; EU data centre). Applications as a trainer: we use your details only to select trainers and never pass them to clients. After you submit the form you receive one automatic confirmation of receipt by email; it repeats none of your details. We delete rejected applications six months after the decision and profiles in our trainer pool after twelve months at the latest, or immediately on request.",
+        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through the email service Zoho Mail (Zoho Corporation B.V., Netherlands; EU data centre).",
+        subsections: [
+          {
+            id: "bewerbungen",
+            title: "Trainer applications",
+            content:
+              "If you apply as a trainer, we process your details (name, email address, topics, languages, country and time zone, link, fee expectation and short profile) to decide on a collaboration and to contact you when a client request fits. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps). We do not pass your application to clients; before a course is booked we give a client your name only with your consent. After you submit the form you receive one automatic confirmation of receipt by email; it repeats none of your details. We delete rejected applications six months after the decision; until then we keep them only to be able to defend against possible claims (Art. 6(1)(f) GDPR). We delete profiles in our trainer pool twelve months after the last contact, or immediately on request.",
+          },
+        ],
       },
       {
         title: "4. Customer account and signed-in areas",
@@ -102,7 +110,7 @@ export const content = {
         title: "11. Changes",
         content: "We update this policy when the website, providers or the law change; the version published at the time applies.",
       },
-    ] as Array<{ title: string; content?: string; isResponsible?: string; subsections?: Array<{ title: string; content: string }> }>),
+    ] as Array<{ title: string; content?: string; isResponsible?: string; subsections?: Array<{ id?: string; title: string; content: string }> }>),
   },
 
   blog: {

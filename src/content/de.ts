@@ -54,8 +54,8 @@ export const content: Content = {
     title: "Datenschutzerklärung",
     subtitle: "Privacy Policy · Aydınlatma Metni",
     notice:
-      "Oktober 2026. Diese Erklärung informiert nach Art. 13 und 14 DSGVO über die Verarbeitung personenbezogener Daten beim Besuch von opsolid.de und bei der Nutzung der dort angebotenen Formulare und Bereiche. Für die App und die Kartenseiten „OpSo“ gilt die eigene Erklärung unter https://card.opsolid.de/privacy. Die deutsche Fassung ist verbindlich; Englisch und Türkisch sind Übersetzungen. Die Texte wurden sorgfältig erstellt, aber nicht anwaltlich geprüft.",
-    lastUpdated: "Stand: 21. Oktober 2026",
+      "November 2026. Diese Erklärung informiert nach Art. 13 und 14 DSGVO über die Verarbeitung personenbezogener Daten beim Besuch von opsolid.de und bei der Nutzung der dort angebotenen Formulare und Bereiche. Für die App und die Kartenseiten „OpSo“ gilt die eigene Erklärung unter https://card.opsolid.de/privacy. Die deutsche Fassung ist verbindlich; Englisch und Türkisch sind Übersetzungen. Die Texte wurden sorgfältig erstellt, aber nicht anwaltlich geprüft.",
+    lastUpdated: "Stand: 4. November 2026",
     sections: [
       {
         title: "1. Verantwortlicher",
@@ -68,7 +68,15 @@ export const content: Content = {
       },
       {
         title: "3. Kontaktformular, E-Mail und KI-Check-Anfragen",
-        content: "Wenn Sie uns über ein Formular oder per E-Mail kontaktieren, verarbeiten wir die Angaben (z. B. Name, E-Mail-Adresse, Unternehmen, Themen, Nachricht), um Ihre Anfrage zu bearbeiten und Rückfragen zu stellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen/Vertrag), sonst lit. f (berechtigtes Interesse an der Beantwortung) bzw. lit. a, wenn Sie eingewilligt haben. Speicherdauer: bis die Anfrage erledigt ist und danach bis zum Ablauf gesetzlicher Aufbewahrungsfristen; Anfragen ohne Vertragsschluss löschen wir spätestens nach 24 Monaten. Benachrichtigungen und Antworten werden über den E-Mail-Dienst Zoho Mail (Zoho Corporation B.V., Niederlande; Rechenzentrum in der EU) versandt. Bewerbungen als Trainerin oder Trainer: Wir verwenden Ihre Angaben ausschließlich für die Auswahl von Trainerinnen und Trainern und geben sie nicht an Kunden weiter. Nach dem Absenden erhalten Sie einmalig eine automatische Eingangsbestätigung per E-Mail, die keine Ihrer Angaben wiederholt. Abgelehnte Bewerbungen löschen wir sechs Monate nach der Absage, Profile im Trainerpool nach spätestens zwölf Monaten, auf Wunsch sofort.",
+        content: "Wenn Sie uns über ein Formular oder per E-Mail kontaktieren, verarbeiten wir die Angaben (z. B. Name, E-Mail-Adresse, Unternehmen, Themen, Nachricht), um Ihre Anfrage zu bearbeiten und Rückfragen zu stellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen/Vertrag), sonst lit. f (berechtigtes Interesse an der Beantwortung) bzw. lit. a, wenn Sie eingewilligt haben. Speicherdauer: bis die Anfrage erledigt ist und danach bis zum Ablauf gesetzlicher Aufbewahrungsfristen; Anfragen ohne Vertragsschluss löschen wir spätestens nach 24 Monaten. Benachrichtigungen und Antworten werden über den E-Mail-Dienst Zoho Mail (Zoho Corporation B.V., Niederlande; Rechenzentrum in der EU) versandt.",
+        subsections: [
+          {
+            id: "bewerbungen",
+            title: "Bewerbungen als Trainerin oder Trainer",
+            content:
+              "Wenn Sie sich als Trainerin oder Trainer bewerben, verarbeiten wir Ihre Angaben (Name, E-Mail-Adresse, Themen, Sprachen, Land und Zeitzone, Link, Honorarvorstellung und Kurzprofil), um über eine Zusammenarbeit zu entscheiden und Sie bei passenden Kundenanfragen anzusprechen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen). Ihre Bewerbung geben wir nicht an Kunden weiter; Ihren Namen nennen wir einem Kunden vor der Buchung einer Schulung nur mit Ihrem Einverständnis. Nach dem Absenden erhalten Sie einmalig eine automatische Eingangsbestätigung per E-Mail, die keine Ihrer Angaben wiederholt. Abgelehnte Bewerbungen löschen wir sechs Monate nach der Absage; bis dahin bewahren wir sie nur auf, um mögliche Ansprüche abwehren zu können (Art. 6 Abs. 1 lit. f DSGVO). Profile im Trainerpool löschen wir zwölf Monate nach dem letzten Kontakt, auf Wunsch sofort.",
+          },
+        ],
       },
       {
         title: "4. Kundenkonto und Bereiche nach Anmeldung",

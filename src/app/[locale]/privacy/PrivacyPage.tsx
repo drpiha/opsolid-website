@@ -12,7 +12,7 @@ const LABELS: Record<L3, { eyebrow: string; notice: string; owner: string; email
   tr: { eyebrow: "Yasal · Gizlilik", notice: "Not", owner: "sahibi, şahıs işletmesi", email: "E-posta" },
 };
 
-type Section = { title: string; content?: string; isResponsible?: string; subsections?: Array<{ title: string; content: string }> };
+type Section = { title: string; content?: string; isResponsible?: string; subsections?: Array<{ id?: string; title: string; content: string }> };
 
 export function PrivacyPage({ locale }: { locale: L3 }) {
   const s = contents[locale].privacy;
@@ -59,7 +59,8 @@ export function PrivacyPage({ locale }: { locale: L3 }) {
             <>
               {section.content ? <p>{section.content}</p> : null}
               {section.subsections?.map((sub) => (
-                <div key={sub.title}>
+                // A subsection with an id is a link target (the trainer form links #bewerbungen); the margin keeps it clear of the sticky header.
+                <div key={sub.title} id={sub.id} className={sub.id ? "scroll-mt-28" : undefined}>
                   <h3>{sub.title}</h3>
                   <p>{sub.content}</p>
                 </div>

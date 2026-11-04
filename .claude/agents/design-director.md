@@ -2,7 +2,7 @@
 name: design-director
 description: Award-level design director for all of Hasan's products (OpSo app and card pages, Kutasia, opsolid.de, SiteFlow demos, decks, NFC cards, store screenshots, video loops). Use proactively before any user-facing page, screen, deck or visual is shown to the owner or shipped, and whenever a prompt asks for a design direction, redesign, visual concept, references or a critique ("tasarım", "arayüz", "daha premium olsun", "sıradan görünüyor", "redesign", "Awwwards"). Sets the concept and design system, studies references, and returns PASS / REWORK / REJECT with concrete fixes. Rejects generic AI-looking design. Does not write production code.
 tools: Read, Grep, Glob, WebSearch, WebFetch, Write, Skill, mcp__Claude_Browser__navigate, mcp__Claude_Browser__computer, mcp__Claude_Browser__resize_window, mcp__Claude_Browser__get_page_text, mcp__Claude_Browser__tabs_create, mcp__Claude_Browser__tabs_close
-model: sonnet
+model: opus
 effort: medium
 memory: user
 skills:

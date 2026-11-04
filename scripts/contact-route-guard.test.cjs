@@ -413,3 +413,78 @@ test('a transport returning headers after timeout cannot begin a late body read'
   assert.equal(cancelled, 1);
   assert.equal(h.timers.size, 0);
 });
+
+// Trainer applications (PR #59 follow-up): the route wiring around src/lib/contact-ack.ts.
+const trainerBody = {
+  name: 'Demo Trainer', email: 'applicant@example.test', message: 'Synthetic profile', source: 'v7-contact-en',
+  topics: ['Becoming a trainer'],
+  trainer: { topics: ['copilot', 'grundlagen'], languages: 'DE, EN', region: 'DE, CET', link: 'https://example.test/profile', consent: true },
+};
+const ackEnv = { ...smtpEnv, CONTACT_TRAINER_ACK: 'on' };
+const settle = async () => { for (let i = 0; i < 5; i++) await new Promise((resolve) => setImmediate(resolve)); };
+
+test('trainer application with the flag off: one tagged owner mail with all fields, no acknowledgement', async () => {
+  const h = harness();
+  const response = await h.post(trainerBody);
+  await settle();
+  assert.equal(response.status, 200);
+  assert.equal(h.deliveries.length, 1);
+  const owner = h.deliveries[0];
+  assert.equal(owner.to, 'inbox@example.test');
+  assert.match(owner.subject, /^\[Trainer\] Application from Demo Trainer/);
+  for (const line of ['Trainer application:', 'Topics: Microsoft 365 Copilot, KI-Kompetenz, Datenschutz und Regeln', 'Languages: DE, EN', 'Country and time zone: DE, CET', 'Profile or work sample: https://example.test/profile', 'Fee expectation: Not provided', 'Privacy notice read: yes']) {
+    assert.ok(owner.text.includes(line), line);
+  }
+});
+
+test('trainer application with the flag on: owner mail first, then one fixed acknowledgement, once per mailbox', async () => {
+  const h = harness({ env: ackEnv });
+  assert.equal((await h.post(trainerBody)).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 2);
+  const [owner, ack] = h.deliveries;
+  assert.equal(owner.to, 'inbox@example.test');
+  assert.equal(ack.to, 'applicant@example.test');
+  assert.equal(ack.replyTo, 'info@opsolid.de');
+  assert.equal(ack.headers['Auto-Submitted'], 'auto-generated');
+  assert.doesNotMatch(`${ack.subject}${ack.text}${ack.html}`, /Demo Trainer|Synthetic profile|example\.test/);
+  assert.equal((await h.post({ ...trainerBody, email: 'Applicant+2@example.test' })).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 3, 'second application from the same mailbox: owner mail only');
+});
+
+test('a plain inquiry never triggers the acknowledgement, even with the flag on', async () => {
+  const h = harness({ env: ackEnv });
+  assert.equal((await h.post()).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 1);
+  assert.match(h.deliveries[0].subject, /^New inquiry from/);
+});
+
+test('honeypot, failed owner mail and invalid trainer fields send no acknowledgement', async () => {
+  let h = harness({ env: ackEnv });
+  assert.equal((await h.post({ ...trainerBody, website: 'bot' })).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 0);
+
+  h = harness({ env: ackEnv, delivery: async () => ({ ok: false }) });
+  assert.equal((await h.post(trainerBody)).status, 503);
+  await settle();
+  assert.equal(h.deliveries.length, 1, 'only the failed owner mail was attempted');
+
+  for (const trainer of [{ ...trainerBody.trainer, consent: false }, { ...trainerBody.trainer, link: 'javascript:alert(1)' }, { ...trainerBody.trainer, topics: [] }, { ...trainerBody.trainer, topics: ['other'] }, { ...trainerBody.trainer, languages: ' ' }]) {
+    h = harness({ env: ackEnv });
+    assert.equal((await h.post({ ...trainerBody, trainer })).status, 400);
+    await settle();
+    assert.equal(h.deliveries.length, 0);
+  }
+});
+
+test('a failing acknowledgement never changes the answer to the visitor', async () => {
+  let calls = 0;
+  const h = harness({ env: ackEnv, delivery: async () => (++calls === 1 ? { ok: true } : { ok: false }) });
+  assert.equal((await h.post(trainerBody)).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 2);
+  assert.equal(h.logs.length, 0);
+});

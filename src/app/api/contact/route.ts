@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { hasEmailProvider, sendEmail } from "@/lib/email/client";
 import { escapeHtml } from "@/lib/email/shell";
 import { ContactRequestError, contactLimiter, contactSchema, readContactBody } from "@/lib/contact-guard";
-import { ACK_ENABLED, sendTrainerAck } from "@/lib/contact-ack";
+import { sendTrainerAck } from "@/lib/contact-ack";
 
 export const runtime = "nodejs";
 
@@ -140,7 +140,8 @@ export async function POST(req: NextRequest) {
     const contactTo = process.env.CONTACT_TO_EMAIL?.trim();
     if (!contactTo || !hasEmailProvider()) return unavailable();
 
-    const subject = `New inquiry from ${name}${company ? ` (${company})` : ""}${source ? ` · source=${source}` : ""}`;
+    // "[Trainer]" lets an inbox rule file applications apart from client inquiries.
+    const subject = `${trainer ? "[Trainer] Application from" : "New inquiry from"} ${name}${company ? ` (${company})` : ""}${source ? ` · source=${source}` : ""}`;
     const bodyLines = [`Name: ${name}`, `Email: ${email}`, `Company: ${company || "Not provided"}`];
     if (phone) bodyLines.push(`Phone: ${phone}`);
     if (topics?.length) bodyLines.push(`Topics: ${topics.join(", ")}`);
@@ -170,10 +171,11 @@ export async function POST(req: NextRequest) {
       text: bodyLines.join("\n"),
     });
     if (!result.ok) return unavailable();
-    // Trainer applications get one fixed acknowledgement (flag, 24 h limit and wording in contact-ack.ts).
-    // It counts against the delivery budget and never changes the answer to the visitor.
-    if (trainer && ACK_ENABLED() && chargeSend() === null) {
-      await sendTrainerAck({ to: email, source, from: process.env.CONTACT_FROM_EMAIL || undefined }, sendEmail);
+    // Trainer applications get one fixed acknowledgement (flag, limits and wording in contact-ack.ts). The
+    // site runs as one long-lived Node process, so it goes out after the answer instead of delaying it; it
+    // uses the delivery budget only once it is really sent, and it never changes the answer to the visitor.
+    if (trainer) {
+      void sendTrainerAck({ to: email, source, from: process.env.CONTACT_FROM_EMAIL || undefined }, sendEmail, undefined, () => chargeSend() === null);
     }
     return NextResponse.json({ success: true });
   } catch (error) {
