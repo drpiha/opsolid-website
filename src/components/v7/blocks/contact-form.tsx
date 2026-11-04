@@ -10,20 +10,37 @@ const label = `${mono} mb-2 block text-[12px] uppercase text-[#6B665F]`;
 const control =
   "block min-h-[52px] w-full rounded-[16px] border border-[#CFC6B8] bg-white px-4 py-3 text-[17px] text-[#16191D] placeholder:text-[#6B665F] aria-[invalid=true]:border-[#A12A1B]";
 
-type Field = "name" | "email" | "message";
-const FIELDS: Field[] = ["name", "email", "message"];
+type Field = "name" | "email" | "message" | "ttopics" | "languages" | "region" | "link" | "consent";
+const BASE: Field[] = ["name", "email", "message"];
+const TRAINER_FIELDS: Field[] = ["ttopics", "languages", "region", "link", "consent"];
+const LINK = /^https?:\/\/[^\s]+$/i;
 // The server's rules (src/lib/contact-guard.ts): name and message non-empty after trimming, the address
 // matched with zod's email pattern. Checking them here gives a field-level error instead of a failed send.
 const EMAIL = /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9-]*\.)+[A-Za-z]{2,}$/;
-const isValid = (k: Field, v: string) => (k === "email" ? EMAIL.test(v.trim()) : v.trim().length > 0);
+const isValid = (k: Field, v: string) =>
+  k === "email" ? EMAIL.test(v.trim()) : k === "link" ? v.trim() === "" || LINK.test(v.trim()) : v.trim().length > 0;
 
 export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale: L3 }) {
   const t = FORM[locale];
   const [topics, setTopics] = useState<Set<string>>(new Set());
+  const [tTopics, setTTopics] = useState<Set<string>>(new Set());
+  // Trainer applications (anliegen=trainer) get structured fields; every other topic keeps the plain form.
+  const isTrainer = topics.has("trainer");
+  const tt = t.trainer;
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [errs, setErrs] = useState<Partial<Record<Field, boolean>>>({});
+  const [sentTrainer, setSentTrainer] = useState(false);
   const okRef = useRef<HTMLDivElement>(null);
-  const errText: Record<Field, string> = { name: t.errName, email: t.errEmail, message: t.errMessage };
+  const errText: Record<Field, string> = {
+    name: t.errName,
+    email: t.errEmail,
+    message: t.errMessage,
+    ttopics: tt.errTopics,
+    languages: tt.errLanguages,
+    region: tt.errRegion,
+    link: tt.errLink,
+    consent: tt.errConsent,
+  };
 
   // Pre-select a topic from ?anliegen=<value> (read after mount, so the server HTML stays identical).
   useEffect(() => {
@@ -47,11 +64,20 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
     setTopics(n);
   };
 
+  const toggleT = (v: string) => {
+    const n = new Set(tTopics);
+    if (n.has(v)) n.delete(v);
+    else n.add(v);
+    setTTopics(n);
+    if (n.size) setErrs((e) => ({ ...e, ttopics: false }));
+  };
+
   // A marked field clears its error as soon as its value is valid.
   const recheck = (e: FormEvent<HTMLFormElement>) => {
     const el = e.target as HTMLInputElement;
     const k = el.name as Field;
-    if (errs[k] && isValid(k, el.value)) setErrs({ ...errs, [k]: false });
+    if (!errs[k]) return;
+    if (k === "consent" ? el.checked : isValid(k, el.value)) setErrs({ ...errs, [k]: false });
   };
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -59,7 +85,9 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
     if (state === "sending") return;
     const form = e.currentTarget;
     const f = new FormData(form);
-    const bad = FIELDS.filter((k) => !isValid(k, String(f.get(k) ?? "")));
+    const check = (k: Field) =>
+      k === "ttopics" ? tTopics.size > 0 : k === "consent" ? f.get("consent") === "on" : isValid(k, String(f.get(k) ?? ""));
+    const bad = (isTrainer ? [...BASE, ...TRAINER_FIELDS] : BASE).filter((k) => !check(k));
     const next: Partial<Record<Field, boolean>> = {};
     bad.forEach((k) => {
       next[k] = true;
@@ -67,7 +95,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
     setErrs(next);
     if (bad.length) {
       setState("idle");
-      const first = form.elements.namedItem(bad[0]);
+      const first = bad[0] === "ttopics" ? document.getElementById("f-ttopics") : form.elements.namedItem(bad[0]);
       if (first instanceof HTMLElement) first.focus();
       return;
     }
@@ -83,6 +111,16 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           message: String(f.get("message") ?? ""),
           website: String(f.get("website") ?? ""),
           topics: block.topics.filter((x) => topics.has(x.value)).map((x) => x.label),
+          trainer: isTrainer
+            ? {
+                topics: tt.topics.map(([k]) => k).filter((k) => tTopics.has(k)),
+                languages: String(f.get("languages") ?? ""),
+                region: String(f.get("region") ?? ""),
+                link: String(f.get("link") ?? "").trim() || undefined,
+                rate: String(f.get("rate") ?? "").trim() || undefined,
+                consent: true,
+              }
+            : undefined,
           source: `v7-contact-${locale}`,
         }),
       });
@@ -91,6 +129,8 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
       if (res.ok) {
         form.reset();
         setTopics(new Set());
+        setTTopics(new Set());
+        setSentTrainer(isTrainer);
       }
     } catch {
       setState("err");
@@ -117,7 +157,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
     return (
       <div ref={okRef} tabIndex={-1} role="status" className="mt-10 rounded-[24px] border border-[#8A4524] bg-white p-6 md:mt-14 md:p-8">
         <p className={`${mono} text-[12px] uppercase text-[#8A4524]`}>{t.okH}</p>
-        <p className="mt-3 max-w-[52ch] text-[18px]">{t.ok}</p>
+        <p className="mt-3 max-w-[52ch] text-[18px]">{sentTrainer ? tt.ok : t.ok}</p>
       </div>
     );
   }
@@ -164,18 +204,97 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
         </ul>
         {help("f-topics-h", t.topicsHelp)}
       </fieldset>
+      {isTrainer && (
+        <div className="space-y-7 border-l-2 border-[#B5623A] pl-5 md:pl-7" data-testid="trainer-fields">
+          <fieldset className="m-0 border-0 p-0" aria-describedby="f-ttopics-h">
+            <legend className={label}>{tt.legend}</legend>
+            <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+              {tt.topics.map(([k, text], i) => (
+                <li key={k}>
+                  <label className="relative inline-flex">
+                    <input
+                      id={i === 0 ? "f-ttopics" : undefined}
+                      type="checkbox"
+                      checked={tTopics.has(k)}
+                      onChange={() => toggleT(k)}
+                      aria-invalid={errs.ttopics ? true : undefined}
+                      className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                    />
+                    <span className="inline-flex min-h-[44px] items-center rounded-full border border-[#CFC6B8] bg-white px-4 text-[16px] transition-colors peer-checked:border-[#16191D] peer-checked:bg-[#16191D] peer-checked:text-[#F6F2EC] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#8A4524]">
+                      {text}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            {help("f-ttopics-h", tt.topicsHelp)}
+            {err("ttopics")}
+          </fieldset>
+          <div>
+            <label htmlFor="f-languages" className={label}>
+              {tt.languages}
+            </label>
+            <input id="f-languages" name="languages" type="text" required maxLength={160} className={control} {...mark("languages", "f-languages-h")} />
+            {help("f-languages-h", tt.languagesHelp)}
+            {err("languages")}
+          </div>
+          <div>
+            <label htmlFor="f-region" className={label}>
+              {tt.region}
+            </label>
+            <input id="f-region" name="region" type="text" required maxLength={160} className={control} {...mark("region", "f-region-h")} />
+            {help("f-region-h", tt.regionHelp)}
+            {err("region")}
+          </div>
+          <div>
+            <label htmlFor="f-link" className={label}>
+              {tt.link}
+            </label>
+            <input id="f-link" name="link" type="url" inputMode="url" autoComplete="url" maxLength={300} placeholder="https://" className={control} {...mark("link", "f-link-h")} />
+            {help("f-link-h", tt.linkHelp)}
+            {err("link")}
+          </div>
+          <div>
+            <label htmlFor="f-rate" className={label}>
+              {tt.rate}
+            </label>
+            <input id="f-rate" name="rate" type="text" maxLength={160} className={control} aria-describedby="f-rate-h" />
+            {help("f-rate-h", tt.rateHelp)}
+          </div>
+        </div>
+      )}
       <div>
         <label htmlFor="f-message" className={label}>
-          {t.message}
+          {isTrainer ? tt.message : t.message}
         </label>
         <textarea id="f-message" name="message" required maxLength={10000} rows={6} className={`${control} min-h-[160px]`} {...mark("message", "f-message-h")} />
-        {help("f-message-h", t.messageHelp)}
+        {help("f-message-h", isTrainer ? tt.messageHelp : t.messageHelp)}
         {err("message")}
       </div>
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
         <label htmlFor="f-website">{t.honeypot}</label>
         <input id="f-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
+      {isTrainer && (
+        <div>
+          <label className="flex cursor-pointer items-start gap-3 text-[16px] leading-[1.5]">
+            <input
+              type="checkbox"
+              name="consent"
+              aria-invalid={errs.consent ? true : undefined}
+              aria-describedby={errs.consent ? "f-consent-err" : undefined}
+              className="mt-[3px] h-5 w-5 shrink-0 cursor-pointer accent-[#16191D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8A4524]"
+            />
+            <span>
+              {tt.consent}{" "}
+              <a className="text-[#8A4524] underline underline-offset-4" href={href("privacy", locale)} target="_blank" rel="noopener">
+                {tt.consentLink}
+              </a>
+            </span>
+          </label>
+          {err("consent")}
+        </div>
+      )}
       <div className="flex flex-col gap-4">
         <div>
           <button
@@ -198,7 +317,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           ) : null}
         </p>
       </div>
-      <p className="text-[14px] leading-[1.6] text-[#6B665F]">
+      <p className="text-[14px] leading-[1.6] text-[#6B665F]" hidden={isTrainer || undefined}>
         {t.consent}{" "}
         <a className="text-[#8A4524] underline underline-offset-4" href={href("privacy", locale)}>
           {t.privacy}

@@ -39,6 +39,7 @@ function harness({ env = smtpEnv, delivery = async () => ({ ok: true }), realEma
       };
       if (id === '@/lib/email/shell') return load('src/lib/email/shell.ts');
       if (id === '@/lib/contact-guard') return load('src/lib/contact-guard.ts');
+      if (id === '@/lib/contact-ack') return load('src/lib/contact-ack.ts');
       if (id === 'react') return { useState(initial) {
         const index = stateIndex++;
         states[index] = componentState[index] === undefined ? initial : componentState[index];

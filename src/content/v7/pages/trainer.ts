@@ -21,7 +21,7 @@ const de: PageDef = {
     lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah vermitteln, melden Sie sich.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
-    facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Probesession wird bezahlt"],
+    facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Bezahlte Probesession vor dem ersten Einsatz"],
   },
   blocks: [
     {
@@ -96,11 +96,11 @@ const de: PageDef = {
       items: [
         { h: "Kurzprofil", p: "Sie schicken uns ein kurzes Profil: Themen, Erfahrung, Sprachen und Ihre Selbstständigkeit. Eine Bewerbungsmappe brauchen wir nicht." },
         { h: "Gespräch", p: "Wir sprechen online über Ihre Praxis und Ihre Art zu vermitteln. Sie zeigen uns kurz live, wie Sie arbeiten." },
-        { h: "Bezahlte Probesession", p: "Sie halten eine Probesession von 90 Minuten, die wir bezahlen. Danach entscheiden wir beide, ob die Zusammenarbeit passt." },
-        { h: "Rahmenvertrag", p: "Passt es, schließen wir einen Rahmenvertrag über die Zusammenarbeit und das Honorar." },
+        { h: "Aufnahme in den Trainerpool", p: "Passt es, nehmen wir Sie in unseren Trainerpool auf. Eine Zusage für Einsätze ist damit nicht verbunden." },
+        { h: "Bezahlte Probesession", p: "Vor dem ersten Einsatz halten Sie eine Probesession von 90 Minuten, die wir bezahlen. Wir planen sie, sobald eine passende Anfrage in Sicht ist." },
         {
-          h: "Erste Schulungen, dann Partnerschaft",
-          p: "Sobald eine Anfrage zu Ihrem Thema vorliegt, fragen wir Sie an. Nach erfolgreichen Schulungen bei unseren Kunden ist eine längerfristige Partnerschaft möglich.",
+          h: "Rahmenvertrag und erste Schulung",
+          p: "Verlief die Probesession gut, schließen wir den Rahmenvertrag, und Sie übernehmen die Schulung. Danach ist eine längerfristige Partnerschaft möglich.",
         },
       ],
     },
@@ -143,7 +143,7 @@ const de: PageDef = {
   cta: {
     label: "Trainer werden",
     h: "Sie vermitteln KI praxisnah? Schreiben Sie uns",
-    p: "Ein kurzes Profil genügt: Themen, Erfahrung und Sprachen. Wir melden uns und vereinbaren ein Gespräch.",
+    p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, vereinbaren wir ein Gespräch.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "KI-Check für Unternehmen", to: "check" },
   },
@@ -164,7 +164,7 @@ const en: PageDef = {
     lede: "We are looking for freelance AI trainers for courses in English and German, online and live. If you teach AI in a practical way, get in touch.",
     primary: { label: "Send a short profile", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "How it works", to: "trainer", hash: "ablauf" },
-    facts: ["Freelance", "Online · English and German", "Trial session is paid"],
+    facts: ["Freelance", "Online · English and German", "Paid trial session before the first assignment"],
   },
   blocks: [
     {
@@ -239,11 +239,11 @@ const en: PageDef = {
       items: [
         { h: "Short profile", p: "You send us a short profile: topics, experience, languages and your self-employment. We do not need a full application pack." },
         { h: "Conversation", p: "We talk online about your practice and how you teach. You show us briefly, live, how you work." },
-        { h: "Paid trial session", p: "You run a 90-minute trial session, which we pay for. Afterwards we both decide whether the collaboration fits." },
-        { h: "Framework contract", p: "If it fits, we sign a framework contract covering the collaboration and the fee." },
+        { h: "Joining the trainer pool", p: "If it fits, we add you to our trainer pool. This does not promise any assignments." },
+        { h: "Paid trial session", p: "Before your first assignment you run a 90-minute trial session, which we pay for. We plan it as soon as a matching request is in sight." },
         {
-          h: "First courses, then partnership",
-          p: "Once a request matches your topic, we ask you. After successful courses with our clients, a longer-term partnership is possible.",
+          h: "Framework contract and first course",
+          p: "If the trial session went well, we sign the framework contract and you take on the course. A longer-term partnership can follow.",
         },
       ],
     },
@@ -286,7 +286,7 @@ const en: PageDef = {
   cta: {
     label: "Become a trainer",
     h: "Do you teach AI in a practical way? Write to us",
-    p: "A short profile is enough: topics, experience and languages. We will get back to you and arrange a conversation.",
+    p: "We reply within seven days. If your profile fits our topics, we arrange a conversation.",
     primary: { label: "Send a short profile", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "AI check for companies", to: "check" },
   },
@@ -307,7 +307,7 @@ const tr: PageDef = {
     lede: "Almanca ve İngilizce, çevrimiçi ve canlı eğitimler için serbest çalışan YZ eğitmenleri arıyoruz. YZ'yi uygulamalı anlatıyorsanız bize yazın.",
     primary: { label: "Kısa profil gönderin", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "Süreç nasıl işler", to: "trainer", hash: "ablauf" },
-    facts: ["Serbest çalışan", "Çevrimiçi · Almanca ve İngilizce", "Deneme oturumu ücretli"],
+    facts: ["Serbest çalışan", "Çevrimiçi · Almanca ve İngilizce", "İlk görevden önce ücretli deneme oturumu"],
   },
   blocks: [
     {
@@ -382,11 +382,11 @@ const tr: PageDef = {
       items: [
         { h: "Kısa profil", p: "Bize kısa bir profil gönderirsiniz: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },
         { h: "Görüşme", p: "Sizinle çevrimiçi olarak uygulamanız ve anlatım tarzınız hakkında konuşuruz. Nasıl çalıştığınızı kısaca canlı gösterirsiniz." },
-        { h: "Ücretli deneme oturumu", p: "90 dakikalık bir deneme oturumu verirsiniz; ücretini biz öderiz. Ardından işbirliğinin uyup uymadığına birlikte karar veririz." },
-        { h: "Çerçeve sözleşme", p: "Uyuyorsa işbirliğini ve ücreti düzenleyen bir çerçeve sözleşme imzalarız." },
+        { h: "Eğitmen havuzuna kabul", p: "Uyuyorsa sizi eğitmen havuzumuza alırız. Bu, görev verileceği anlamına gelmez." },
+        { h: "Ücretli deneme oturumu", p: "İlk görevden önce 90 dakikalık bir deneme oturumu verirsiniz; ücretini biz öderiz. Konunuza uygun bir talep göründüğünde planlarız." },
         {
-          h: "İlk eğitimler, sonra ortaklık",
-          p: "Konunuza uygun bir talep geldiğinde size danışırız. Müşterilerimizle yapılan başarılı eğitimlerin ardından uzun vadeli bir ortaklık mümkündür.",
+          h: "Çerçeve sözleşme ve ilk eğitim",
+          p: "Deneme oturumu iyi geçerse çerçeve sözleşmeyi imzalarız ve eğitimi siz üstlenirsiniz. Ardından uzun vadeli bir ortaklık mümkündür.",
         },
       ],
     },
@@ -429,7 +429,7 @@ const tr: PageDef = {
   cta: {
     label: "Eğitmen olun",
     h: "YZ'yi uygulamalı mı anlatıyorsunuz? Bize yazın",
-    p: "Kısa bir profil yeterli: konular, deneyim ve diller. Size döner ve bir görüşme planlarız.",
+    p: "Yedi gün içinde yanıt veriyoruz. Profiliniz konularımıza uyuyorsa bir görüşme planlarız.",
     primary: { label: "Kısa profil gönderin", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "İşletmeler için YZ Kontrolü", to: "check" },
   },

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { hasEmailProvider, sendEmail } from "@/lib/email/client";
 import { escapeHtml } from "@/lib/email/shell";
 import { ContactRequestError, contactLimiter, contactSchema, readContactBody } from "@/lib/contact-guard";
+import { ACK_ENABLED, sendTrainerAck } from "@/lib/contact-ack";
 
 export const runtime = "nodejs";
 
@@ -9,6 +10,12 @@ const unavailable = () => NextResponse.json(
   { error: "Message delivery is temporarily unavailable. Please try again later." },
   { status: 503 },
 );
+const TRAINER_TOPIC_LABEL = {
+  copilot: "Microsoft 365 Copilot",
+  alltag: "KI im Arbeitsalltag",
+  automatisierung: "Workflow-Automatisierung",
+  grundlagen: "KI-Kompetenz, Datenschutz und Regeln",
+} as const;
 const tooMany = (retryAfter: number) => NextResponse.json(
   { error: "Too many requests. Please try again later." },
   { status: 429, headers: { "Retry-After": String(retryAfter) } },
@@ -129,7 +136,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: "Please provide valid contact details and a message." }, { status: 400 });
     }
-    const { name, email, company, message, source, teamSize, phone, topics } = parsed.data;
+    const { name, email, company, message, source, teamSize, phone, topics, trainer } = parsed.data;
     const contactTo = process.env.CONTACT_TO_EMAIL?.trim();
     if (!contactTo || !hasEmailProvider()) return unavailable();
 
@@ -139,6 +146,17 @@ export async function POST(req: NextRequest) {
     if (topics?.length) bodyLines.push(`Topics: ${topics.join(", ")}`);
     if (source) bodyLines.push(`Source: ${source}`);
     if (teamSize) bodyLines.push(`Team size: ${teamSize}`);
+    if (trainer) {
+      bodyLines.push(
+        "", "Trainer application:",
+        `Topics: ${trainer.topics.map((k) => TRAINER_TOPIC_LABEL[k]).join(", ")}`,
+        `Languages: ${trainer.languages}`,
+        `Country and time zone: ${trainer.region}`,
+        `Profile or work sample: ${trainer.link || "Not provided"}`,
+        `Fee expectation: ${trainer.rate || "Not provided"}`,
+        "Privacy notice read: yes",
+      );
+    }
     bodyLines.push("", "Message:", message, "", "---", "Sent from opsolid.de contact form", `Time: ${new Date().toISOString()}`);
 
     const sendRetryAfter = chargeSend();
@@ -151,7 +169,13 @@ export async function POST(req: NextRequest) {
       html: bodyLines.map((line) => line === "" ? "<br/>" : `<p style="margin:0 0 4px 0;">${escapeHtml(line)}</p>`).join(""),
       text: bodyLines.join("\n"),
     });
-    return result.ok ? NextResponse.json({ success: true }) : unavailable();
+    if (!result.ok) return unavailable();
+    // Trainer applications get one fixed acknowledgement (flag, 24 h limit and wording in contact-ack.ts).
+    // It counts against the delivery budget and never changes the answer to the visitor.
+    if (trainer && ACK_ENABLED() && chargeSend() === null) {
+      await sendTrainerAck({ to: email, source, from: process.env.CONTACT_FROM_EMAIL || undefined }, sendEmail);
+    }
+    return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof ContactRequestError) {
       return NextResponse.json({ error: "Invalid contact request." }, { status: error.status });
