@@ -63,15 +63,15 @@ const de: PageDef = {
       items: [
         {
           h: "Persönliche Antwort per E-Mail",
-          p: "Wir lesen Ihre Nachricht, stellen bei Bedarf eine Rückfrage und schlagen einen Termin vor.",
+          p: "Wir lesen Ihre Nachricht und stellen bei Bedarf eine Rückfrage. Vieles klären wir schon schriftlich.",
         },
         {
-          h: "Kennenlernen, 30 Minuten",
-          p: "Wir sprechen in groben Zügen über Ihren Ablauf und Ihre Systeme. Details folgen nach der NDA. Das Gespräch ist kostenlos und unverbindlich.",
+          h: "Kennenlernen, kostenlos",
+          p: "Per E-Mail oder 15 bis 30 Minuten per Video, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Wir sprechen in groben Zügen über Ihren Ablauf; Details folgen nach der NDA. Kostenlos und unverbindlich.",
         },
         {
           h: "Angebot für den KI-Check",
-          p: "Wenn ein KI-Check sinnvoll ist, erhalten Sie ein Angebot: ab 990 € netto, 90 Minuten remote plus schriftlicher Kurzbericht. Der Umfang steht vorab schriftlich fest, die NDA unterzeichnen wir vor der Analyse.",
+          p: "Wenn ein KI-Check sinnvoll ist, erhalten Sie ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse.",
         },
       ],
     },
@@ -85,7 +85,7 @@ const de: PageDef = {
         { h: "E-Mail", p: MAIL, href: { label: "E-Mail schreiben", href: `mailto:${MAIL}` } },
         { h: "Telefon", p: PHONE, href: { label: "Anrufen", href: TEL } },
         { h: "Anschrift", p: `${ADDRESS}, ${SITE_CONFIG.address.country}` },
-        { h: "Arbeitsweise", p: "Remote in Deutschland und Europa, vor Ort nach Absprache. Sprachen: Deutsch, Englisch, Türkisch." },
+        { h: "Arbeitsweise", p: "Remote in Deutschland und Europa, schriftlich und per Video. Sprachen: Deutsch, Englisch, Türkisch." },
       ],
     },
     {
@@ -117,14 +117,18 @@ const de: PageDef = {
       },
       {
         q: "Was kostet der Einstieg?",
-        a: "Das Kennenlernen (30 Minuten) ist kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto zzgl. USt., nur für Unternehmen: 90 Minuten remote plus schriftlicher Kurzbericht. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto zzgl. USt. als Festpreis, nur für Unternehmen: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
+      },
+      {
+        q: "Wann sind Termine möglich?",
+        a: "Mittwochs und freitags zwischen 18:30 und 20:00 Uhr, per Video. Vieles klären wir vorher per E-Mail.",
       },
     ],
   },
   cta: {
     label: "KI-Check",
     h: "Lieber erst die Abläufe prüfen lassen?",
-    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt. Er kostet ab 990 € netto.",
+    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt. Er kostet 990 € netto.",
     primary: { label: "Zum KI-Check", to: "check" },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -182,15 +186,15 @@ const en: PageDef = {
       items: [
         {
           h: "A personal reply by email",
-          p: "We read your message, ask a follow-up question if needed and suggest a time to talk.",
+          p: "We read your message and ask a follow-up question if needed. Much of it we settle in writing.",
         },
         {
-          h: "Introductory call, 30 minutes",
-          p: "We talk in broad terms about your workflow and your systems. Details follow once the NDA is signed. The call is free and without obligation.",
+          h: "Intro, free",
+          p: "By email, or a 15 to 30-minute video call on a Wednesday or Friday between 18:30 and 20:00 German time. We talk in broad terms about your workflow; details follow once the NDA is signed. Free and without obligation.",
         },
         {
           h: "A quote for the AI check",
-          p: "If an AI check makes sense, you receive a quote: from €990 net, 90 minutes remote plus a short written report. The scope is agreed in writing beforehand, and we sign the NDA before the analysis.",
+          p: "If an AI check makes sense, you receive a quote for €990 net, a fixed price: a questionnaire and a written report, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis.",
         },
       ],
     },
@@ -204,7 +208,7 @@ const en: PageDef = {
         { h: "Email", p: MAIL, href: { label: "Write an email", href: `mailto:${MAIL}` } },
         { h: "Phone", p: PHONE, href: { label: "Call us", href: TEL } },
         { h: "Address", p: `${ADDRESS}, Germany` },
-        { h: "Way of working", p: "Remote in Germany and Europe, on site by arrangement. Languages: German, English, Turkish." },
+        { h: "Way of working", p: "Remote in Germany and Europe, in writing and by video. Languages: German, English, Turkish." },
       ],
     },
     {
@@ -236,14 +240,18 @@ const en: PageDef = {
       },
       {
         q: "What does it cost to get started?",
-        a: "The introductory call (30 minutes) is free and without obligation. The AI check starts at €990 net of VAT, for businesses only: 90 minutes remote plus a short written report. Credited in full against a follow-up order within 60 days. You receive the report even if we do not recommend any automation.",
+        a: "The intro is free and without obligation. The AI check costs €990 net of VAT, a fixed price, for businesses only: a questionnaire and a written report, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days. You receive the report even if we do not recommend any automation.",
+      },
+      {
+        q: "When can we talk?",
+        a: "On Wednesdays and Fridays between 18:30 and 20:00 German time, by video. Much of it we settle beforehand by email.",
       },
     ],
   },
   cta: {
     label: "AI check",
     h: "Would you rather have your workflows checked first?",
-    p: "The AI check shows where automation pays off for you. It starts at €990 net.",
+    p: "The AI check shows where automation pays off for you. It costs €990 net.",
     primary: { label: "To the AI check", to: "check" },
     secondary: { label: "To AI consulting", to: "beratung" },
   },
@@ -301,15 +309,15 @@ const tr: PageDef = {
       items: [
         {
           h: "E-postayla kişisel yanıt",
-          p: "Mesajınızı okur, gerekirse bir soru sorar ve görüşme için bir zaman öneririz.",
+          p: "Mesajınızı okur, gerekirse bir soru sorarız. Çoğu konuyu yazılı olarak netleştiririz.",
         },
         {
-          h: "Tanışma görüşmesi, 30 dakika",
-          p: "İş akışınız ve sistemleriniz hakkında genel hatlarıyla konuşuruz. Ayrıntılar NDA'dan sonra gelir. Görüşme ücretsizdir ve bağlayıcı değildir.",
+          h: "Tanışma, ücretsiz",
+          p: "E-postayla ya da çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında 15-30 dakikalık görüntülü görüşmeyle. İş akışınızı genel hatlarıyla konuşuruz; ayrıntılar NDA'dan sonra gelir. Ücretsizdir ve bağlayıcı değildir.",
         },
         {
           h: "YZ Kontrolü için teklif",
-          p: "Bir YZ Kontrolü anlamlıysa size teklif sunarız: 990 €'dan başlar (net), 90 dakika uzaktan ve kısa bir yazılı rapor. Kapsam önceden yazılı olarak belirlenir, NDA'yı analizden önce imzalarız.",
+          p: "Bir YZ Kontrolü anlamlıysa size 990 € (net, sabit fiyat) tutarında bir teklif sunarız: soru formu ve yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız.",
         },
       ],
     },
@@ -323,7 +331,7 @@ const tr: PageDef = {
         { h: "E-posta", p: MAIL, href: { label: "E-posta yazın", href: `mailto:${MAIL}` } },
         { h: "Telefon", p: PHONE, href: { label: "Arayın", href: TEL } },
         { h: "Adres", p: `${ADDRESS}, Almanya` },
-        { h: "Çalışma biçimi", p: "Almanya ve Avrupa'da uzaktan, anlaşmayla yerinde. Diller: Almanca, İngilizce, Türkçe." },
+        { h: "Çalışma biçimi", p: "Almanya ve Avrupa'da uzaktan, yazılı olarak ve görüntülü görüşmeyle. Diller: Almanca, İngilizce, Türkçe." },
       ],
     },
     {
@@ -355,14 +363,18 @@ const tr: PageDef = {
       },
       {
         q: "Başlamak ne kadar tutar?",
-        a: "Tanışma görüşmesi (30 dakika) ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 €'dan başlar (net, KDV hariç, yalnızca şirketler için): 90 dakika uzaktan ve kısa bir yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, KDV hariç, sabit fiyat, yalnızca şirketler için): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
+      },
+      {
+        q: "Ne zaman görüşebiliriz?",
+        a: "Çarşamba ve cuma günleri, Almanya saatiyle 18:30-20:00 arasında, görüntülü olarak. Çoğu konuyu önceden e-postayla netleştiririz.",
       },
     ],
   },
   cta: {
     label: "YZ Kontrolü",
     h: "Önce iş akışlarınıza mı bakalım?",
-    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir. 990 €'dan başlar (net).",
+    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir. Ücreti 990 € (net).",
     primary: { label: "YZ Kontrolüne", to: "check" },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },

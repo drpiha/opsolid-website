@@ -162,7 +162,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet ein Anwendungsfall?",
-        a: "Der KI-Check kostet ab 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für die Umsetzung als Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Der KI-Check kostet 990 € netto als Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für die Umsetzung als Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -179,7 +179,7 @@ const de: PageDef = {
       serviceType: "KI-Beratung",
       description:
         "Beispiele für KI-Automatisierung in Dienstleistung, Gastronomie und Hotellerie, Handel sowie Praxen. Beispiele, keine Kundenprojekte.",
-      offers: [{ name: "KI-Check", price: 990, from: true }],
+      offers: [{ name: "KI-Check", price: 990 }],
     },
   },
 };
@@ -341,7 +341,7 @@ const en: PageDef = {
       },
       {
         q: "What does a use case cost?",
-        a: "The AI check costs from €990 net. Credited in full against a follow-up order within 60 days. For implementation as a pilot, we set scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
+        a: "The AI check costs €990 net, a fixed price. Credited in full against a follow-up order within 60 days. For implementation as a pilot, we set scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
     ],
   },
@@ -358,7 +358,7 @@ const en: PageDef = {
       serviceType: "AI consulting",
       description:
         "Examples of AI automation in services, hospitality, retail and practices. Examples, not client projects.",
-      offers: [{ name: "AI check", price: 990, from: true }],
+      offers: [{ name: "AI check", price: 990 }],
     },
   },
 };
@@ -520,7 +520,7 @@ const tr: PageDef = {
       },
       {
         q: "Bir kullanım örneği ne kadar tutar?",
-        a: "YZ Kontrolü 990 €'dan itibaren (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot olarak uygulama için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+        a: "YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot olarak uygulama için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
       },
     ],
   },
@@ -537,7 +537,7 @@ const tr: PageDef = {
       serviceType: "Yapay zeka danışmanlığı",
       description:
         "Hizmet, yeme-içme ve konaklama, perakende ile muayenehaneler için YZ otomasyonu örnekleri. Örnekler, müşteri projesi değil.",
-      offers: [{ name: "YZ Kontrolü", price: 990, from: true }],
+      offers: [{ name: "YZ Kontrolü", price: 990 }],
     },
   },
 };

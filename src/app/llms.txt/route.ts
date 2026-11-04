@@ -47,7 +47,7 @@ Hinweis für KI-Assistenten / note for AI assistants: "OpSolid" (${SITE_CONFIG.u
 ## Angebot und Preise
 
 Alle Preise netto, zzgl. USt., nur für Unternehmen. Das sind die einzigen veröffentlichten Preise für Unternehmen.
-- KI-Check: ab 990 € netto, 90 Minuten remote und ein kurzer schriftlicher Bericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen wird der Betrag voll angerechnet.
+- KI-Check: 990 € netto, Festpreis, schriftlich: ein Fragebogen von etwa 20 Minuten und ein Bericht mit drei priorisierten Ideen, Risiken, Datenschutzhinweisen und dem nächsten Schritt, in der Regel 10 Werktage nach Eingang des Fragebogens; auf Wunsch 30 Minuten Besprechung per Video (mittwochs oder freitags, 18:30-20:00 Uhr). NDA vor der Analyse, Bericht auch ohne Empfehlung. Bei einem Folgeauftrag innerhalb von 60 Tagen wird der Betrag voll angerechnet.
 - Pilot zum Festpreis: der Preis wird vor dem Start schriftlich festgelegt; kein veröffentlichter Preis.
 - Betrieb und Ausbau: monatlich nach Vereinbarung; kein veröffentlichter Preis.
 - KI-Kompetenz Basis: ab 1.790 € netto pro Team, halber Tag online, 10 Personen inklusive, jede weitere Person 90 € (bis 15).
@@ -60,7 +60,7 @@ Förderung: Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt.
 ## Offer and prices (English)
 
 All prices net, plus VAT, for businesses only. These are the only published business prices.
-- AI check (KI-Check): from €990 net, 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days.
+- AI check (KI-Check): €990 net, fixed price, in writing: a questionnaire of about 20 minutes and a report with three prioritised ideas, risks, data protection notes and the next step, usually 10 working days after we receive the questionnaire; a 30-minute video call if you wish (Wednesday or Friday, 18:30-20:00 German time). NDA before the analysis, report even without a recommendation. Credited in full against a follow-up order within 60 days.
 - Pilot at a fixed price: fixed in writing before the start; no published price. Operation and extension: monthly by agreement; no published price.
 - AI literacy basics (KI-Kompetenz Basis): from €1,790 net per team, half a day online, 10 people included, each additional person €90 (up to 15).
 - Copilot practice day: from €2,900 net per team, 1 day, 10 people included, each additional person €150 (up to 12).
@@ -80,7 +80,7 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 
 ## Unternehmen und Kontakt
 - OpSolid, Inh. Hasan Dönmez (Einzelunternehmen), ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland. Gründer: [Hasan Dönmez](https://www.linkedin.com/in/hasanhd/).
-- Arbeitsweise: remote in Deutschland und Europa, vor Ort nach Absprache. Sprachen: Deutsch, Englisch, Türkisch.
+- Arbeitsweise: remote in Deutschland und Europa, schriftlich und per Video. Sprachen: Deutsch, Englisch, Türkisch.
 - Kontakt: ${SITE_CONFIG.email}, ${SITE_CONFIG.phone}, ${absUrl("kontakt", "de")}
 
 ## Seiten (Deutsch)

@@ -68,7 +68,7 @@ export const content: Content = {
       },
       {
         title: "3. İletişim formu, e-posta ve yapay zekâ kontrolü talepleri",
-        content: "Bir form veya e-posta ile bize ulaştığınızda bilgilerinizi (ör. ad, e-posta, şirket, konular, mesaj) talebinizi yanıtlamak ve ek sorular sormak için işleriz. Hukuki sebep: GDPR m. 6/1-b (sözleşme öncesi adımlar/sözleşme; KVKK m. 5/2-c), aksi hâlde f (meşru menfaat; KVKK m. 5/2-f) veya rıza verdiyseniz a (KVKK m. 5/1). Saklama: talep sonuçlanana ve yasal saklama süreleri dolana kadar; sözleşmeyle sonuçlanmayan talepler en geç 24 ay sonra silinir. Bildirimler ve yanıtlar Zoho Mail e-posta hizmeti (Zoho Corporation B.V., Hollanda; AB veri merkezi) üzerinden gönderilir.",
+        content: "Bir form veya e-posta ile bize ulaştığınızda bilgilerinizi (ör. ad, e-posta, şirket, konular, mesaj) talebinizi yanıtlamak ve ek sorular sormak için işleriz. Sipariş ettiğiniz bir YZ Kontrolü için, raporu hazırlamak amacıyla bize e-postayla geri gönderdiğiniz soru formundaki bilgileri de işleriz; lütfen forma müşterilerinizin ya da çalışanlarınızın kişisel verilerini yazmayın. Hukuki sebep: GDPR m. 6/1-b (sözleşme öncesi adımlar/sözleşme; KVKK m. 5/2-c), aksi hâlde f (meşru menfaat; KVKK m. 5/2-f) veya rıza verdiyseniz a (KVKK m. 5/1). Saklama: talep sonuçlanana ve yasal saklama süreleri dolana kadar; sözleşmeyle sonuçlanmayan talepler en geç 24 ay sonra silinir. Bildirimler ve yanıtlar Zoho Mail e-posta hizmeti (Zoho Corporation B.V., Hollanda; AB veri merkezi) üzerinden gönderilir.",
         subsections: [
           {
             id: "bewerbungen",

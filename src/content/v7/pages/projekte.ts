@@ -145,7 +145,7 @@ const de: PageDef = {
   cta: {
     label: "KI-Check",
     h: "Möchten Sie sehen, wie wir bei Ihnen vorgehen?",
-    p: "Im Kennenlernen besprechen wir Ihren Ablauf, kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto.",
+    p: "Im Kennenlernen besprechen wir Ihren Ablauf, kostenlos und unverbindlich. Der KI-Check kostet 990 € netto.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -291,7 +291,7 @@ const en: PageDef = {
   cta: {
     label: "AI check",
     h: "Would you like to see how we would approach your case?",
-    p: "In an introductory call, free and without obligation, we discuss your workflow. The AI check starts at €990 net.",
+    p: "In a free intro, without obligation, we discuss your workflow. The AI check costs €990 net.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "To AI consulting", to: "beratung" },
   },
@@ -437,7 +437,7 @@ const tr: PageDef = {
   cta: {
     label: "YZ Kontrolü",
     h: "Sizde nasıl ilerleyeceğimizi görmek ister misiniz?",
-    p: "Ücretsiz ve bağlayıcı olmayan tanışma görüşmesinde iş akışınızı konuşuruz. YZ Kontrolü 990 €'dan başlar (net).",
+    p: "Ücretsiz ve bağlayıcı olmayan tanışmada iş akışınızı konuşuruz. YZ Kontrolünün ücreti 990 € (net).",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },

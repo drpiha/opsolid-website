@@ -71,7 +71,7 @@ export type Block =
   | (SectionBase & { t: "examples"; tag: string; items: { area: string; h: string; before: string; after: string; human: string; href?: Href }[] })
   /** Principles / commitments: 3 to 6 numbered items. */
   | (SectionBase & { t: "principles"; items: { h: string; p: string }[] })
-  /** Offer ladder or rate cards. `price` only from the published list ("ab 990 €"); omit it when unpublished. */
+  /** Offer ladder or rate cards. `price` only from the published list ("990 €", "ab 1.790 €"); omit it when unpublished. */
   | (SectionBase & {
       t: "offers";
       items: { name: string; price?: string; unit?: string; p: string; points: string[]; href?: Href; featured?: boolean }[];
@@ -91,7 +91,17 @@ export type Block =
   /** Plain paragraphs; legal sections close with their primary sources (EUR-Lex) and the date they were checked. */
   | (SectionBase & { t: "text"; paras: string[]; sources?: { items: { label: string; href: `https://${string}` }[]; asOf?: string } })
   /** A sample deliverable, visibly stamped as a sample (`mark`: "Muster"). */
-  | (SectionBase & { t: "sample"; mark: string; title: string; meta: string; rows: [string, string][]; foot: string })
+  | (SectionBase & {
+      t: "sample";
+      mark: string;
+      title: string;
+      meta: string;
+      /** Rated items as label + pill; may be empty when `sections` carries the excerpt. */
+      rows: [string, string][];
+      /** Report-style excerpt: headed groups of short lines (`ordered` numbers them). */
+      sections?: { h: string; items: string[]; ordered?: boolean }[];
+      foot: string;
+    })
   /** Use cases by sector: tabs on wide screens, stacked on phones. Ideas are examples, labelled by `tag`. */
   | (SectionBase & { t: "sectors"; tag: string; items: { name: string; /** Short tab label; falls back to `name`. */ tab?: string; h: string; p: string; ideas: string[]; stays: string }[] })
   /** Training catalogue. "bookable" items carry a published price; "planned" items never show a price. */
@@ -162,7 +172,7 @@ export type PageDef = {
     lede: string;
     primary: Href;
     secondary?: Href;
-    /** Mono fact line under the hero ("Ab 990 € netto · NDA vor dem Gespräch · Bericht auch ohne Empfehlung"). */
+    /** Mono fact line under the hero ("KI-Check 990 € netto · NDA vor der Analyse · Bericht auch ohne Empfehlung"). */
     facts?: string[];
     /** Right-hand figure. */
     media?: Media;

@@ -1,7 +1,7 @@
 /**
  * Microsoft 365 (key "m365", /ki-beratung/microsoft-365). Power Automate, SharePoint, Teams/Outlook, Copilot
  * set-up and governance, inside the client's own tenant. German is the source; EN and TR are transcreations.
- * No prices on the page except the published KI-Check "ab 990 €" and the Copilot-Praxistag "ab 2.900 €" (FAQ).
+ * No prices on the page except the published KI-Check "990 €" (fixed price since 2026-11-04) and the Copilot-Praxistag "ab 2.900 €" (FAQ).
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -166,7 +166,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet das?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Wie hängt das mit dem Copilot-Praxistag zusammen?",
@@ -352,7 +352,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost?",
-        a: "The intro call is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "The intro is free and non-binding. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
       },
       {
         q: "How does this relate to the Copilot workshop?",
@@ -538,7 +538,7 @@ const tr: PageDef = {
       },
       {
         q: "Ücreti ne kadar?",
-        a: "Tanışma görüşmesi ücretsiz ve bağlayıcı değildir. YZ Kontrolü 990 €'dan itibaren (net): 90 dakika uzaktan görüşme ve kısa yazılı rapor, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
       },
       {
         q: "Bunun Copilot Uygulama Günüyle ilişkisi nedir?",
