@@ -93,8 +93,8 @@ const de: PageDef = {
       lede: "Sie erhalten ihn nach der Beauftragung per E-Mail. Personenbezogene Daten von Kunden oder Beschäftigten brauchen wir nicht.",
       airy: true,
       items: [
-        { h: "Ihr Betrieb", p: "Branche, Größe, Standorte und die Ansprechperson für den KI-Check." },
-        { h: "Ihre Abläufe", p: "Drei wiederkehrende Aufgaben, die heute viel Zeit kosten, und wer sie erledigt." },
+        { h: "Ihr Betrieb", p: "Branche, Größe und Standorte." },
+        { h: "Ihre Abläufe", p: "Drei wiederkehrende Aufgaben, die heute viel Zeit kosten, und welche Rolle sie erledigt, zum Beispiel Empfang oder Buchhaltung." },
         { h: "Ihre Systeme", p: "E-Mail, Microsoft 365 oder Google Workspace, Branchensoftware und Ablage." },
         { h: "Ihre Daten", p: "Welche Arten von Daten vorkommen und wo sie liegen. Gesundheitsdaten nehmen wir nicht auf." },
         { h: "Ziele und Grenzen", p: "Was besser werden soll und was auf keinen Fall passieren darf." },
@@ -371,8 +371,8 @@ const en: PageDef = {
       lede: "You receive it by email after you place the order. We do not need personal data about your customers or staff.",
       airy: true,
       items: [
-        { h: "Your business", p: "Sector, size, locations and the contact person for the AI check." },
-        { h: "Your workflows", p: "Three recurring tasks that take a lot of time today, and who does them." },
+        { h: "Your business", p: "Sector, size and locations." },
+        { h: "Your workflows", p: "Three recurring tasks that take a lot of time today, and which role handles them, for example front desk or accounts." },
         { h: "Your systems", p: "Email, Microsoft 365 or Google Workspace, industry software and file storage." },
         { h: "Your data", p: "Which kinds of data occur and where they are kept. We do not record health data." },
         { h: "Goals and limits", p: "What should improve and what must not happen under any circumstances." },
@@ -649,8 +649,8 @@ const tr: PageDef = {
       lede: "Siparişten sonra e-postayla alırsınız. Müşterilerinizin ya da çalışanlarınızın kişisel verilerine ihtiyacımız yok.",
       airy: true,
       items: [
-        { h: "İşletmeniz", p: "Sektör, büyüklük, lokasyonlar ve YZ Kontrolü için irtibat kişisi." },
-        { h: "İş akışlarınız", p: "Bugün çok zaman alan üç tekrarlayan görev ve bunları kimin yaptığı." },
+        { h: "İşletmeniz", p: "Sektör, büyüklük ve lokasyonlar." },
+        { h: "İş akışlarınız", p: "Bugün çok zaman alan üç tekrarlayan görev ve bunları hangi rolün yaptığı, örneğin resepsiyon ya da muhasebe." },
         { h: "Sistemleriniz", p: "E-posta, Microsoft 365 veya Google Workspace, sektör yazılımı ve dosya saklama." },
         { h: "Verileriniz", p: "Hangi tür verilerin bulunduğu ve nerede durduğu. Sağlık verilerini kaydetmeyiz." },
         { h: "Hedefler ve sınırlar", p: "Neyin iyileşmesi gerektiği ve neyin kesinlikle olmaması gerektiği." },
