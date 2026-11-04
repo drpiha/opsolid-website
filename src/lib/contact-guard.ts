@@ -15,7 +15,8 @@ export const trainerSchema = z.object({
   topics: z.array(z.enum(TRAINER_TOPICS)).min(1).max(4),
   languages: shortText(160).min(1),
   region: shortText(160).min(1),
-  link: shortText(300).refine((v) => v === "" || /^https?:\/\/[^\s]+$/i.test(v)).optional(),
+  // The form field takes 300 characters and the form adds "https://" (8) to a link typed without a scheme.
+  link: shortText(308).refine((v) => v === "" || /^https?:\/\/[^\s]+$/i.test(v)).optional(),
   rate: shortText(160).optional(),
   consent: z.literal(true),
 });
@@ -29,6 +30,8 @@ export const contactSchema = z.object({
   teamSize: shortText(64).optional(),
   phone: shortText(64).optional(),
   topics: z.array(shortText(64).min(1)).max(10).optional(),
+  /** Topic keys of the v7 form (kontakt.ts values); only known keys become a subject tag, others are ignored. */
+  kinds: z.array(shortText(32)).max(10).optional(),
   website: z.string().max(2_048).optional(),
   trainer: trainerSchema.optional(),
 });

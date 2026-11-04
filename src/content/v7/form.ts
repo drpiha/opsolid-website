@@ -6,6 +6,10 @@ import type { L3 } from "@/lib/v7-routes";
 
 /** Extra fields shown when the topic "trainer" is chosen (trainer applications). */
 export type TrainerFormText = {
+  /** Eyebrow that names the trainer group when it appears. */
+  group: string;
+  /** Replaces the "pick several" hint under the inquiry topics while the trainer topic is chosen (it is exclusive). */
+  alone: string;
   legend: string;
   topicsHelp: string;
   /** Keys match TRAINER_TOPICS in src/lib/contact-guard.ts. */
@@ -20,8 +24,13 @@ export type TrainerFormText = {
   rateHelp: string;
   message: string;
   messageHelp: string;
+  errMessage: string;
   consent: string;
   consentLink: string;
+  /** Screen-reader hint after the privacy link, which opens in a new tab so typed data stays. */
+  newTab: string;
+  send: string;
+  okH: string;
   errTopics: string;
   errLanguages: string;
   errRegion: string;
@@ -61,8 +70,10 @@ export type FormText = {
 export const FORM: Record<L3, FormText> = {
   de: {
   trainer: {
-    legend: "Ihre Themen",
-    topicsHelp: "Mehrfachauswahl möglich.",
+    group: "Bewerbung als Trainerin oder Trainer",
+    alone: "Bewerbungen senden Sie bitte getrennt von anderen Anliegen.",
+    legend: "Welche Themen schulen Sie?",
+    topicsHelp: "Mindestens ein Thema, Mehrfachauswahl möglich.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
       ["alltag", "KI im Arbeitsalltag"],
@@ -78,9 +89,13 @@ export const FORM: Record<L3, FormText> = {
     rate: "Honorarvorstellung (optional)",
     rateHelp: "Freie Angabe, zum Beispiel pro Tag oder pro Stunde.",
     message: "Kurzprofil",
-    messageHelp: "Erfahrung, Praxis im Thema und wie Sie schulen: zwei, drei Sätze genügen.",
+    messageHelp: "Erfahrung, Praxis im Thema, wie Sie schulen und ob Sie freiberuflich oder gewerblich tätig sind: zwei, drei Sätze genügen.",
+    errMessage: "Bitte beschreiben Sie kurz Ihr Profil.",
     consent: "Ich habe den Hinweis zur Verarbeitung meiner Bewerbungsdaten gelesen:",
     consentLink: "Datenschutzerklärung",
+    newTab: "(öffnet in neuem Tab)",
+    send: "Bewerbung senden",
+    okH: "Bewerbung angekommen",
     errTopics: "Bitte wählen Sie mindestens ein Thema.",
     errLanguages: "Bitte nennen Sie Ihre Sprachen.",
     errRegion: "Bitte nennen Sie Land und Zeitzone.",
@@ -114,8 +129,10 @@ export const FORM: Record<L3, FormText> = {
   },
   en: {
   trainer: {
-    legend: "Your topics",
-    topicsHelp: "You can pick more than one.",
+    group: "Trainer application",
+    alone: "Please send applications separately from other requests.",
+    legend: "Which topics do you teach?",
+    topicsHelp: "Pick at least one; more than one is fine.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
       ["alltag", "AI in daily work"],
@@ -131,9 +148,13 @@ export const FORM: Record<L3, FormText> = {
     rate: "Fee expectation (optional)",
     rateHelp: "Free text, for example per day or per hour.",
     message: "Short profile",
-    messageHelp: "Experience, hands-on practice in the topic and how you teach: two or three sentences are enough.",
+    messageHelp: "Experience, hands-on practice in the topic, how you teach and whether you work as a freelancer or a registered business: two or three sentences are enough.",
+    errMessage: "Please describe your profile briefly.",
     consent: "I have read the notice on how my application data is processed:",
     consentLink: "privacy policy",
+    newTab: "(opens in a new tab)",
+    send: "Send application",
+    okH: "Application received",
     errTopics: "Please choose at least one topic.",
     errLanguages: "Please tell us your languages.",
     errRegion: "Please tell us your country and time zone.",
@@ -167,8 +188,10 @@ export const FORM: Record<L3, FormText> = {
   },
   tr: {
   trainer: {
-    legend: "Konularınız",
-    topicsHelp: "Birden fazla seçebilirsiniz.",
+    group: "Eğitmen başvurusu",
+    alone: "Başvurunuzu lütfen diğer taleplerden ayrı gönderin.",
+    legend: "Hangi konularda eğitim veriyorsunuz?",
+    topicsHelp: "En az bir konu seçin; birden fazla seçebilirsiniz.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
       ["alltag", "Günlük işte YZ"],
@@ -184,9 +207,13 @@ export const FORM: Record<L3, FormText> = {
     rate: "Ücret beklentisi (isteğe bağlı)",
     rateHelp: "Serbest yazın, örneğin günlük veya saatlik.",
     message: "Kısa profil",
-    messageHelp: "Deneyim, konudaki uygulama ve eğitim tarzınız: iki üç cümle yeterli.",
+    messageHelp: "Deneyim, konudaki uygulama, eğitim tarzınız ve serbest çalışan mı yoksa işletme sahibi mi olduğunuz: iki üç cümle yeterli.",
+    errMessage: "Lütfen profilinizi kısaca yazın.",
     consent: "Başvuru verilerimin işlenmesine ilişkin bilgilendirmeyi okudum:",
     consentLink: "gizlilik politikası",
+    newTab: "(yeni sekmede açılır)",
+    send: "Başvuruyu gönder",
+    okH: "Başvurunuz ulaştı",
     errTopics: "Lütfen en az bir konu seçin.",
     errLanguages: "Lütfen dillerinizi yazın.",
     errRegion: "Lütfen ülke ve saat diliminizi yazın.",

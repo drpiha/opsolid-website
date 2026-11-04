@@ -10,6 +10,8 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   kompetenz: "2026-11-02", // Art. 4 answer and EUR-Lex sources
   agenten: "2026-11-02", // FAQ: what an AI phone assistant is
   blog: "2026-11-02", // CTA price corrected to ab 990 € with the 60-day credit
+  trainer: "2026-11-04", // trainer pool step, paid trial before the first assignment, seven-day reply
+  kontakt: "2026-11-04", // trainer application fields, seven-day reply for applications
 };
 
 export function pageUpdated(key: PageKey): string {

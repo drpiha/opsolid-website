@@ -55,7 +55,7 @@ export const content: Content = {
     subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
       "Bağlayıcı Almanca metnin çevirisidir. Bu metin, opsolid.de’yi ziyaret ettiğinizde ve formlarını ile hesap alanlarını kullandığınızda kişisel verilerinizin işlenmesi hakkında GDPR m. 13-14 ve 6698 sayılı KVKK m. 10 uyarınca bilgi verir. OpSo uygulaması ve kart sayfaları için https://card.opsolid.de/privacy adresindeki ayrı metin geçerlidir. Metinler özenle hazırlanmıştır ancak bir avukat tarafından incelenmemiştir.",
-    lastUpdated: "Son güncelleme: 21 Ekim 2026",
+    lastUpdated: "Son güncelleme: 4 Kasım 2026",
     sections: [
       {
         title: "1. Veri sorumlusu",
@@ -68,7 +68,15 @@ export const content: Content = {
       },
       {
         title: "3. İletişim formu, e-posta ve yapay zekâ kontrolü talepleri",
-        content: "Bir form veya e-posta ile bize ulaştığınızda bilgilerinizi (ör. ad, e-posta, şirket, konular, mesaj) talebinizi yanıtlamak ve ek sorular sormak için işleriz. Hukuki sebep: GDPR m. 6/1-b (sözleşme öncesi adımlar/sözleşme; KVKK m. 5/2-c), aksi hâlde f (meşru menfaat; KVKK m. 5/2-f) veya rıza verdiyseniz a (KVKK m. 5/1). Saklama: talep sonuçlanana ve yasal saklama süreleri dolana kadar; sözleşmeyle sonuçlanmayan talepler en geç 24 ay sonra silinir. Bildirimler ve yanıtlar Zoho Mail e-posta hizmeti (Zoho Corporation B.V., Hollanda; AB veri merkezi) üzerinden gönderilir. Eğitmen başvuruları: Bilgilerinizi yalnızca eğitmen seçimi için kullanırız ve müşterilere iletmeyiz. Formu gönderdikten sonra e-posta ile bir kez otomatik alındı bildirimi alırsınız; bu bildirim bilgilerinizin hiçbirini tekrarlamaz. Reddedilen başvuruları karardan altı ay sonra, eğitmen havuzundaki profilleri en geç on iki ay sonra, talep üzerine ise hemen sileriz.",
+        content: "Bir form veya e-posta ile bize ulaştığınızda bilgilerinizi (ör. ad, e-posta, şirket, konular, mesaj) talebinizi yanıtlamak ve ek sorular sormak için işleriz. Hukuki sebep: GDPR m. 6/1-b (sözleşme öncesi adımlar/sözleşme; KVKK m. 5/2-c), aksi hâlde f (meşru menfaat; KVKK m. 5/2-f) veya rıza verdiyseniz a (KVKK m. 5/1). Saklama: talep sonuçlanana ve yasal saklama süreleri dolana kadar; sözleşmeyle sonuçlanmayan talepler en geç 24 ay sonra silinir. Bildirimler ve yanıtlar Zoho Mail e-posta hizmeti (Zoho Corporation B.V., Hollanda; AB veri merkezi) üzerinden gönderilir.",
+        subsections: [
+          {
+            id: "bewerbungen",
+            title: "Eğitmen başvuruları",
+            content:
+              "Eğitmen olarak başvurduğunuzda bilgilerinizi (ad, e-posta adresi, konular, diller, ülke ve saat dilimi, bağlantı, ücret beklentisi ve kısa profil) bir işbirliğine karar vermek ve uygun bir müşteri talebi olduğunda size ulaşmak için işleriz. Hukuki sebep: GDPR m. 6/1-b (sözleşme öncesi adımlar; KVKK m. 5/2-c). Başvurunuzu müşterilere iletmeyiz; bir eğitim rezerve edilmeden önce adınızı müşteriye yalnızca onayınızla bildiririz. Formu gönderdikten sonra e-posta ile bir kez İngilizce otomatik alındı bildirimi alırsınız; bu bildirim bilgilerinizin hiçbirini tekrarlamaz. Reddedilen başvuruları karardan altı ay sonra sileriz; o zamana kadar yalnızca olası taleplere karşı savunma amacıyla saklarız (GDPR m. 6/1-f; KVKK m. 5/2-e). Eğitmen havuzundaki profilleri son temastan on iki ay sonra, talep üzerine ise hemen sileriz.",
+          },
+        ],
       },
       {
         title: "4. Müşteri hesabı ve oturum açılan alanlar",
