@@ -52,7 +52,7 @@ export function SampleBlock({ block: b, locale, num }: BlockProps<"sample">) {
                       <span className="mr-3">{String(i + 1).padStart(2, "0")}</span>
                       {s.h}
                     </h4>
-                    <List className={`mt-3 space-y-2.5 text-[15px] leading-[1.6] text-[#16191D] ${s.ordered ? "list-decimal pl-5 marker:text-[#8A4524]" : "list-none p-0"}`}>
+                    <List className={`mt-3 space-y-2.5 text-[15px] leading-[1.6] text-[#16191D] [text-wrap:wrap] ${s.ordered ? "list-decimal pl-5 marker:text-[#8A4524]" : "list-none p-0"}`}>
                       {s.items.map((it) =>
                         s.ordered ? (
                           <li key={it} className="pl-1">
