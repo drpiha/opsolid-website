@@ -500,3 +500,13 @@ test('inquiry subjects carry a tag per known topic key, unknown keys are ignored
   assert.equal((await bad.post({ ...valid, kinds: ['x\nBcc: y'] })).status, 400);
   assert.equal(bad.deliveries.length, 0);
 });
+
+test('a 300-character link typed without a scheme still passes after the form adds https://', async () => {
+  const typed = `${'a'.repeat(297)}.de`; // the field's maxLength, typed without a scheme
+  const link = `https://${typed}`; // what the form sends
+  assert.equal(typed.length, 300);
+  assert.equal(link.length, 308);
+  const h = harness();
+  assert.equal((await h.post({ ...trainerBody, trainer: { ...trainerBody.trainer, link } })).status, 200);
+  assert.equal((await harness().post({ ...trainerBody, trainer: { ...trainerBody.trainer, link: `${link}x` } })).status, 400);
+});

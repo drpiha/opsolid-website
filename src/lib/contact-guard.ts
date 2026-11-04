@@ -15,7 +15,8 @@ export const trainerSchema = z.object({
   topics: z.array(z.enum(TRAINER_TOPICS)).min(1).max(4),
   languages: shortText(160).min(1),
   region: shortText(160).min(1),
-  link: shortText(300).refine((v) => v === "" || /^https?:\/\/[^\s]+$/i.test(v)).optional(),
+  // The form field takes 300 characters and the form adds "https://" (8) to a link typed without a scheme.
+  link: shortText(308).refine((v) => v === "" || /^https?:\/\/[^\s]+$/i.test(v)).optional(),
   rate: shortText(160).optional(),
   consent: z.literal(true),
 });
