@@ -9,6 +9,17 @@ const MAX_IN_FLIGHT = 4;
 // These fields enter mail headers or single-line labels. Message content may
 // contain line breaks and is escaped separately when rendering the HTML body.
 const shortText = (max: number) => z.string().trim().max(max).regex(/^[^\u0000-\u001f\u007f]*$/);
+export const TRAINER_TOPICS = ["copilot", "alltag", "automatisierung", "grundlagen"] as const;
+/** Extra fields of a trainer application (anliegen=trainer). The mail to the owner is the only place they are kept. */
+export const trainerSchema = z.object({
+  topics: z.array(z.enum(TRAINER_TOPICS)).min(1).max(4),
+  languages: shortText(160).min(1),
+  region: shortText(160).min(1),
+  link: shortText(300).refine((v) => v === "" || /^https?:\/\/[^\s]+$/i.test(v)).optional(),
+  rate: shortText(160).optional(),
+  consent: z.literal(true),
+});
+
 export const contactSchema = z.object({
   name: shortText(120).min(1),
   email: shortText(254).email(),
@@ -19,6 +30,7 @@ export const contactSchema = z.object({
   phone: shortText(64).optional(),
   topics: z.array(shortText(64).min(1)).max(10).optional(),
   website: z.string().max(2_048).optional(),
+  trainer: trainerSchema.optional(),
 });
 
 export class ContactRequestError extends Error {

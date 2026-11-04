@@ -68,7 +68,7 @@ export const content = {
       },
       {
         title: "3. Contact forms, email and AI-check requests",
-        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through the email service Zoho Mail (Zoho Corporation B.V., Netherlands; EU data centre).",
+        content: "When you contact us by form or email, we process your details (e.g. name, email, company, topics, message) to handle your request and ask follow-up questions. Legal basis: Art. 6(1)(b) GDPR (pre-contractual steps/contract), otherwise (f) (legitimate interest in answering) or (a) if you consented. Retention: until the request is closed and then until statutory retention periods end; requests without a contract are deleted after 24 months at the latest. Notifications and replies are sent through the email service Zoho Mail (Zoho Corporation B.V., Netherlands; EU data centre). Applications as a trainer: we use your details only to select trainers and never pass them to clients. After you submit the form you receive one automatic confirmation of receipt by email; it repeats none of your details. We delete rejected applications six months after the decision and profiles in our trainer pool after twelve months at the latest, or immediately on request.",
       },
       {
         title: "4. Customer account and signed-in areas",
