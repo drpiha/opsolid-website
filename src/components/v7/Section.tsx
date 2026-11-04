@@ -21,6 +21,7 @@ export function Section({
   locale,
   children,
   wide,
+  airy,
 }: {
   id: string;
   num?: string;
@@ -32,9 +33,10 @@ export function Section({
   locale: L3;
   children?: ReactNode;
   wide?: boolean;
+  airy?: boolean;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-h`} className="mt-24 scroll-mt-20 md:mt-40">
+    <section id={id} aria-labelledby={`${id}-h`} className={`${airy ? "mt-28 md:mt-52" : "mt-24 md:mt-40"} scroll-mt-20`}>
       <div className={wrap}>
         <div className="relative grid gap-x-8 gap-y-8 border-t border-[#E3DCD1] pt-6 md:grid-cols-12">
           <span aria-hidden="true" className="absolute -top-px left-0 h-px w-14 bg-[#B5623A]" />

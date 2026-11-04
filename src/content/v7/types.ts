@@ -60,6 +60,8 @@ type SectionBase = {
   /** Answer-first lede under the H2: one or two plain sentences that answer the section's question. */
   lede?: string;
   cta?: Href;
+  /** One step more space above: a dense section that follows another dense section. */
+  airy?: boolean;
 };
 
 export type Block =

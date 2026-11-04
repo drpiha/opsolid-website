@@ -78,7 +78,7 @@ const de: PageDef = {
         {
           name: "Entscheidung",
           h: "Ihr nächster Schritt",
-          p: "Auf Wunsch besprechen wir den Bericht 30 Minuten per Video, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Dann entscheiden Sie: selbst umsetzen, mit uns pilotieren oder es dabei belassen.",
+          p: "Auf Wunsch besprechen wir den Bericht 30 Minuten per Video, am Mittwoch- oder Freitagabend. Dann entscheiden Sie: selbst umsetzen, mit uns pilotieren oder es dabei belassen.",
           result: "Eine Entscheidung auf Basis von Fakten.",
           meta: "ohne Verpflichtung",
         },
@@ -90,7 +90,8 @@ const de: PageDef = {
       label: "Fragebogen",
       note: "Etwa 20 Minuten.",
       h: "Was der Fragebogen abfragt",
-      lede: "Sie erhalten den Fragebogen nach der Beauftragung per E-Mail und schicken ihn per E-Mail zurück. Personenbezogene Daten von Kunden oder Beschäftigten brauchen wir dafür nicht.",
+      lede: "Sie erhalten ihn nach der Beauftragung per E-Mail. Personenbezogene Daten von Kunden oder Beschäftigten brauchen wir nicht.",
+      airy: true,
       items: [
         { h: "Ihr Betrieb", p: "Branche, Größe, Standorte und die Ansprechperson für den KI-Check." },
         { h: "Ihre Abläufe", p: "Drei wiederkehrende Aufgaben, die heute viel Zeit kosten, und wer sie erledigt." },
@@ -355,7 +356,7 @@ const en: PageDef = {
         {
           name: "Decision",
           h: "Your next step",
-          p: "If you wish, we go through the report in a 30-minute video call on a Wednesday or Friday between 18:30 and 20:00 German time. Then you decide: implement yourself, pilot with us, or leave it there.",
+          p: "If you wish, we go through the report in a 30-minute video call on a Wednesday or Friday evening. Then you decide: implement yourself, pilot with us, or leave it there.",
           result: "A decision based on facts.",
           meta: "no obligation",
         },
@@ -367,7 +368,8 @@ const en: PageDef = {
       label: "Questionnaire",
       note: "About 20 minutes.",
       h: "What the questionnaire asks",
-      lede: "You receive the questionnaire by email after you place the order and send it back by email. We do not need personal data about your customers or staff for it.",
+      lede: "You receive it by email after you place the order. We do not need personal data about your customers or staff.",
+      airy: true,
       items: [
         { h: "Your business", p: "Sector, size, locations and the contact person for the AI check." },
         { h: "Your workflows", p: "Three recurring tasks that take a lot of time today, and who does them." },
@@ -632,7 +634,7 @@ const tr: PageDef = {
         {
           name: "Karar",
           h: "Sonraki adımınız",
-          p: "İsterseniz raporu çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında 30 dakikalık görüntülü görüşmede birlikte ele alırız. Sonra siz karar verirsiniz: kendiniz uygulamak, bizimle pilot yapmak ya da burada bırakmak.",
+          p: "İsterseniz raporu çarşamba veya cuma akşamı 30 dakikalık görüntülü görüşmede birlikte ele alırız. Sonra siz karar verirsiniz: kendiniz uygulamak, bizimle pilot yapmak ya da burada bırakmak.",
           result: "Gerçeklere dayanan bir karar.",
           meta: "yükümlülük yok",
         },
@@ -644,7 +646,8 @@ const tr: PageDef = {
       label: "Soru formu",
       note: "Yaklaşık 20 dakika.",
       h: "Soru formu neleri sorar?",
-      lede: "Soru formunu siparişten sonra e-postayla alır ve e-postayla geri gönderirsiniz. Bunun için müşterilerinizin ya da çalışanlarınızın kişisel verilerine ihtiyacımız yok.",
+      lede: "Siparişten sonra e-postayla alırsınız. Müşterilerinizin ya da çalışanlarınızın kişisel verilerine ihtiyacımız yok.",
+      airy: true,
       items: [
         { h: "İşletmeniz", p: "Sektör, büyüklük, lokasyonlar ve YZ Kontrolü için irtibat kişisi." },
         { h: "İş akışlarınız", p: "Bugün çok zaman alan üç tekrarlayan görev ve bunları kimin yaptığı." },

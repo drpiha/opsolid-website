@@ -5,7 +5,7 @@ import { Section } from "../Section";
 /** Principles / commitments: numbered, two columns on wide screens. */
 export function PrinciplesBlock({ block: b, locale, num }: BlockProps<"principles">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale} airy={b.airy}>
       <ul className="mt-12 grid gap-x-10 md:mt-16 md:grid-cols-2">
         {b.items.map((it, i) => (
           <Reveal as="li" key={it.h} delay={(i % 2) * 0.08} className="border-t border-[#E3DCD1] py-8">
