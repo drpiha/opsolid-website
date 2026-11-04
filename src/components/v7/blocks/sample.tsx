@@ -31,7 +31,7 @@ export function SampleBlock({ block: b, locale, num }: BlockProps<"sample">) {
           {b.sections?.map((s) => {
             const List = s.ordered ? "ol" : "ul";
             return (
-              <div key={s.h} className="border-b border-[#E3DCD1] py-5 last:border-b-0">
+              <div key={s.h} className="border-b border-[#E3DCD1] py-5 last-of-type:border-b-0">
                 <h4 className="f-mono text-[12px] uppercase tracking-[0.02em] text-[#8A4524]">{s.h}</h4>
                 <List className={`mt-3 space-y-2.5 text-[15px] leading-[1.6] text-[#16191D] ${s.ordered ? "list-decimal pl-5 marker:text-[#8A4524]" : "list-none p-0"}`}>
                   {s.items.map((it) => (
