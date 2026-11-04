@@ -10,6 +10,15 @@ const unavailable = () => NextResponse.json(
   { error: "Message delivery is temporarily unavailable. Please try again later." },
   { status: 503 },
 );
+// Subject tags by topic key (the values in src/content/v7/pages/kontakt.ts), so an inbox rule can file each kind.
+const KIND_TAG: Record<string, string> = {
+  "ki-check": "KI-Check",
+  beratung: "Beratung",
+  schulung: "Schulung",
+  trainer: "Trainer",
+  opso: "OpSo",
+  sonstiges: "Sonstiges",
+};
 const TRAINER_TOPIC_LABEL = {
   copilot: "Microsoft 365 Copilot",
   alltag: "KI im Arbeitsalltag",
@@ -136,12 +145,14 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: "Please provide valid contact details and a message." }, { status: 400 });
     }
-    const { name, email, company, message, source, teamSize, phone, topics, trainer } = parsed.data;
+    const { name, email, company, message, source, teamSize, phone, topics, kinds, trainer } = parsed.data;
     const contactTo = process.env.CONTACT_TO_EMAIL?.trim();
     if (!contactTo || !hasEmailProvider()) return unavailable();
 
-    // "[Trainer]" lets an inbox rule file applications apart from client inquiries.
-    const subject = `${trainer ? "[Trainer] Application from" : "New inquiry from"} ${name}${company ? ` (${company})` : ""}${source ? ` · source=${source}` : ""}`;
+    // "[Trainer]", "[KI-Check]" … let an inbox rule file applications and each kind of inquiry apart.
+    const tags = trainer ? ["Trainer"] : (kinds ?? []).map((k) => KIND_TAG[k]).filter((x, i, all) => x && all.indexOf(x) === i);
+    const tag = tags.length ? `[${tags.join(" + ")}] ` : "";
+    const subject = `${tag}${trainer ? "Application from" : "New inquiry from"} ${name}${company ? ` (${company})` : ""}${source ? ` · source=${source}` : ""}`;
     const bodyLines = [`Name: ${name}`, `Email: ${email}`, `Company: ${company || "Not provided"}`];
     if (phone) bodyLines.push(`Phone: ${phone}`);
     if (topics?.length) bodyLines.push(`Topics: ${topics.join(", ")}`);

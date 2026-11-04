@@ -29,6 +29,8 @@ export const contactSchema = z.object({
   teamSize: shortText(64).optional(),
   phone: shortText(64).optional(),
   topics: z.array(shortText(64).min(1)).max(10).optional(),
+  /** Topic keys of the v7 form (kontakt.ts values); only known keys become a subject tag, others are ignored. */
+  kinds: z.array(shortText(32)).max(10).optional(),
   website: z.string().max(2_048).optional(),
   trainer: trainerSchema.optional(),
 });

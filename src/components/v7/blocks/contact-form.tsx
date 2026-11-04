@@ -144,6 +144,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           message: v.message,
           website: String(f.get("website") ?? ""),
           topics: block.topics.filter((x) => topics.has(x.value)).map((x) => x.label),
+          kinds: block.topics.filter((x) => topics.has(x.value)).map((x) => x.value),
           trainer: isTrainer
             ? {
                 topics: tt.topics.map(([k]) => k).filter((k) => tTopics.has(k)),
@@ -234,74 +235,82 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
             </li>
           ))}
         </ul>
-        {help("f-topics-h", t.topicsHelp)}
+        {help("f-topics-h", isTrainer ? tt.alone : t.topicsHelp)}
       </fieldset>
-      <div role="group" aria-labelledby="f-trainer-h" hidden={!isTrainer} className="space-y-7 border-l-2 border-[#B5623A] pl-5 md:pl-7" data-testid="trainer-fields">
-        <p id="f-trainer-h" className={`${mono} text-[12px] uppercase text-[#8A4524]`}>
-          {tt.group}
-        </p>
-        <fieldset className="m-0 border-0 p-0" aria-describedby={errs.ttopics ? "f-ttopics-h f-ttopics-err" : "f-ttopics-h"}>
-          <legend className={label}>{tt.legend}</legend>
-          <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
-            {tt.topics.map(([k, text], i) => (
-              <li key={k}>
-                <label className="relative inline-flex">
-                  <input
-                    id={i === 0 ? "f-ttopics" : undefined}
-                    type="checkbox"
-                    checked={tTopics.has(k)}
-                    onChange={() => toggleT(k)}
-                    aria-invalid={errs.ttopics ? true : undefined}
-                    aria-describedby={errs.ttopics ? "f-ttopics-err" : undefined}
-                    className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                  />
-                  <span className={chip}>{text}</span>
-                </label>
-              </li>
-            ))}
-          </ul>
-          {help("f-ttopics-h", tt.topicsHelp)}
-          {err("ttopics")}
-        </fieldset>
-        <div>
-          <label htmlFor="f-languages" className={label}>
-            {tt.languages}
-          </label>
-          <input id="f-languages" name="languages" type="text" required maxLength={160} className={control} {...mark("languages", "f-languages-h")} />
-          {help("f-languages-h", tt.languagesHelp)}
-          {err("languages")}
+      {/* For an application the copper rule spans the trainer fields and the Kurzprofil, so the whole application
+          reads as one section; for an inquiry the wrapper is plain and the message field looks as before. */}
+      <div
+        role={isTrainer ? "group" : undefined}
+        aria-labelledby={isTrainer ? "f-trainer-h" : undefined}
+        className={isTrainer ? "space-y-7 border-l-2 border-[#B5623A] pl-5 md:pl-7" : "space-y-7"}
+      >
+        <div hidden={!isTrainer} className="space-y-7" data-testid="trainer-fields">
+          <p id="f-trainer-h" className={`${mono} text-[12px] uppercase text-[#8A4524]`}>
+            {tt.group}
+          </p>
+          <fieldset className="m-0 border-0 p-0" aria-describedby={errs.ttopics ? "f-ttopics-h f-ttopics-err" : "f-ttopics-h"}>
+            <legend className={label}>{tt.legend}</legend>
+            <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+              {tt.topics.map(([k, text], i) => (
+                <li key={k}>
+                  <label className="relative inline-flex">
+                    <input
+                      id={i === 0 ? "f-ttopics" : undefined}
+                      type="checkbox"
+                      checked={tTopics.has(k)}
+                      onChange={() => toggleT(k)}
+                      aria-invalid={errs.ttopics ? true : undefined}
+                      aria-describedby={errs.ttopics ? "f-ttopics-err" : undefined}
+                      className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                    />
+                    <span className={chip}>{text}</span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+            {help("f-ttopics-h", tt.topicsHelp)}
+            {err("ttopics")}
+          </fieldset>
+          <div>
+            <label htmlFor="f-languages" className={label}>
+              {tt.languages}
+            </label>
+            <input id="f-languages" name="languages" type="text" required maxLength={160} className={control} {...mark("languages", "f-languages-h")} />
+            {help("f-languages-h", tt.languagesHelp)}
+            {err("languages")}
+          </div>
+          <div>
+            <label htmlFor="f-region" className={label}>
+              {tt.region}
+            </label>
+            <input id="f-region" name="region" type="text" required maxLength={160} className={control} {...mark("region", "f-region-h")} />
+            {help("f-region-h", tt.regionHelp)}
+            {err("region")}
+          </div>
+          <div>
+            <label htmlFor="f-link" className={label}>
+              {tt.link}
+            </label>
+            <input id="f-link" name="link" type="url" inputMode="url" autoComplete="url" maxLength={300} placeholder="https://" className={control} {...mark("link", "f-link-h")} />
+            {help("f-link-h", tt.linkHelp)}
+            {err("link")}
+          </div>
+          <div>
+            <label htmlFor="f-rate" className={label}>
+              {tt.rate}
+            </label>
+            <input id="f-rate" name="rate" type="text" maxLength={160} className={control} aria-describedby="f-rate-h" />
+            {help("f-rate-h", tt.rateHelp)}
+          </div>
         </div>
         <div>
-          <label htmlFor="f-region" className={label}>
-            {tt.region}
+          <label htmlFor="f-message" className={label}>
+            {isTrainer ? tt.message : t.message}
           </label>
-          <input id="f-region" name="region" type="text" required maxLength={160} className={control} {...mark("region", "f-region-h")} />
-          {help("f-region-h", tt.regionHelp)}
-          {err("region")}
+          <textarea id="f-message" name="message" required maxLength={10000} rows={6} className={`${control} min-h-[160px]`} {...mark("message", "f-message-h")} />
+          {help("f-message-h", isTrainer ? tt.messageHelp : t.messageHelp)}
+          {err("message")}
         </div>
-        <div>
-          <label htmlFor="f-link" className={label}>
-            {tt.link}
-          </label>
-          <input id="f-link" name="link" type="url" inputMode="url" autoComplete="url" maxLength={300} placeholder="https://" className={control} {...mark("link", "f-link-h")} />
-          {help("f-link-h", tt.linkHelp)}
-          {err("link")}
-        </div>
-        <div>
-          <label htmlFor="f-rate" className={label}>
-            {tt.rate}
-          </label>
-          <input id="f-rate" name="rate" type="text" maxLength={160} className={control} aria-describedby="f-rate-h" />
-          {help("f-rate-h", tt.rateHelp)}
-        </div>
-      </div>
-      <div>
-        <label htmlFor="f-message" className={label}>
-          {isTrainer ? tt.message : t.message}
-        </label>
-        <textarea id="f-message" name="message" required maxLength={10000} rows={6} className={`${control} min-h-[160px]`} {...mark("message", "f-message-h")} />
-        {help("f-message-h", isTrainer ? tt.messageHelp : t.messageHelp)}
-        {err("message")}
       </div>
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
         <label htmlFor="f-website">{t.honeypot}</label>
@@ -319,7 +328,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           />
           <span>
             {tt.consent}{" "}
-            <a className="text-[#8A4524] underline underline-offset-4" href={href("privacy", locale, { hash: "bewerbungen" })} target="_blank" rel="noopener">
+            <a className="whitespace-nowrap text-[#8A4524] underline underline-offset-4" href={href("privacy", locale, { hash: "bewerbungen" })} target="_blank" rel="noopener">
               {tt.consentLink}
               <span className="sr-only"> {tt.newTab}</span>
             </a>

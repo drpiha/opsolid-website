@@ -8,6 +8,8 @@ import type { L3 } from "@/lib/v7-routes";
 export type TrainerFormText = {
   /** Eyebrow that names the trainer group when it appears. */
   group: string;
+  /** Replaces the "pick several" hint under the inquiry topics while the trainer topic is chosen (it is exclusive). */
+  alone: string;
   legend: string;
   topicsHelp: string;
   /** Keys match TRAINER_TOPICS in src/lib/contact-guard.ts. */
@@ -69,6 +71,7 @@ export const FORM: Record<L3, FormText> = {
   de: {
   trainer: {
     group: "Bewerbung als Trainerin oder Trainer",
+    alone: "Bewerbungen senden Sie bitte getrennt von anderen Anliegen.",
     legend: "Welche Themen schulen Sie?",
     topicsHelp: "Mindestens ein Thema, Mehrfachauswahl möglich.",
     topics: [
@@ -127,6 +130,7 @@ export const FORM: Record<L3, FormText> = {
   en: {
   trainer: {
     group: "Trainer application",
+    alone: "Please send applications separately from other requests.",
     legend: "Which topics do you teach?",
     topicsHelp: "Pick at least one; more than one is fine.",
     topics: [
@@ -185,6 +189,7 @@ export const FORM: Record<L3, FormText> = {
   tr: {
   trainer: {
     group: "Eğitmen başvurusu",
+    alone: "Başvurunuzu lütfen diğer taleplerden ayrı gönderin.",
     legend: "Hangi konularda eğitim veriyorsunuz?",
     topicsHelp: "En az bir konu seçin; birden fazla seçebilirsiniz.",
     topics: [

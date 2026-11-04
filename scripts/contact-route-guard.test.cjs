@@ -488,3 +488,15 @@ test('a failing acknowledgement never changes the answer to the visitor', async 
   assert.equal(h.deliveries.length, 2);
   assert.equal(h.logs.length, 0);
 });
+
+test('inquiry subjects carry a tag per known topic key, unknown keys are ignored', async () => {
+  const h = harness();
+  assert.equal((await h.post({ ...valid, kinds: ['ki-check', 'schulung', 'unknown-key'] })).status, 200);
+  assert.match(h.deliveries[0].subject, /^\[KI-Check \+ Schulung\] New inquiry from Demo Visitor/);
+  const plain = harness();
+  assert.equal((await plain.post(valid)).status, 200);
+  assert.match(plain.deliveries[0].subject, /^New inquiry from Demo Visitor/);
+  const bad = harness();
+  assert.equal((await bad.post({ ...valid, kinds: ['x\nBcc: y'] })).status, 400);
+  assert.equal(bad.deliveries.length, 0);
+});
