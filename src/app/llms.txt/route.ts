@@ -79,7 +79,7 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 - [Kutasia](https://kutasia.com): ein Projekt in Entwicklung für Kundennachrichten (WhatsApp, Telegram und E-Mail in einem Posteingang), noch kein Produkt.
 
 ## Unternehmen und Kontakt
-- OpSolid, Inh. Hasan Dönmez (Einzelunternehmen), ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland. Gründer: [Hasan Dönmez](https://www.linkedin.com/in/hasanhd/).
+- OpSolid, Inh. Hasan Dönmez (Einzelunternehmen), ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland. Gründer: Hasan Dönmez.
 - Arbeitsweise: remote in Deutschland und Europa, schriftlich und per Video. Sprachen: Deutsch, Englisch, Türkisch.
 - Kontakt: ${SITE_CONFIG.email}, ${SITE_CONFIG.phone}, ${absUrl("kontakt", "de")}
 

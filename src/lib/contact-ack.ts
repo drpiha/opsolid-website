@@ -1,16 +1,22 @@
-// Automatic acknowledgement for trainer applications (owner-approved wording, 2026-11-04).
+// Automatic acknowledgement for trainer applications (owner-approved wording, 2026-11-04; Turkish text and
+// the postal address in the signature, 2026-11-05).
 // Abuse rules: the mail repeats nothing the applicant typed (not even the name), contains no links from
 // applicant input (our own fixed address may be linkified by clients), goes to one recipient address at
 // most once in 24 hours and to at most 20 addresses a day (5 an hour) in all, so the form cannot be used
-// to mail strangers in bulk. It is off unless CONTACT_TRAINER_ACK=on. A failed acknowledgement never fails
-// the submission: callers get a boolean and nothing is thrown.
+// to mail strangers in bulk. It is on unless CONTACT_TRAINER_ACK=off: the privacy text promises it, and the
+// release tool keeps the live environment as it is, so it ships switched on with the code (2026-11-05).
+// A failed acknowledgement never fails the submission: callers get a boolean and nothing is thrown.
 
-export type AckLocale = "de" | "en";
+import { SITE_CONFIG } from "@/lib/constants";
+
+export type AckLocale = "de" | "en" | "tr";
 
 const ADDRESS = "info@opsolid.de";
+// Name and postal address on every business mail to a named recipient (§ 15b GewO), as in the Impressum.
+const SIGNATURE = `OpSolid, Inh. Hasan Dönmez, ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, ${ADDRESS}`;
 
 // The approved texts, split only where a mail client needs line breaks. DE keeps the German salutation
-// line; EN keeps "Hello, thank you ..." in one paragraph, exactly as approved.
+// line; EN and TR keep the greeting and the thanks in one paragraph, exactly as approved.
 export const ACK_TEXT: Record<AckLocale, { subject: string; lines: string[] }> = {
   de: {
     subject: "Ihre Bewerbung ist eingegangen",
@@ -18,7 +24,7 @@ export const ACK_TEXT: Record<AckLocale, { subject: string; lines: string[] }> =
       "Guten Tag,",
       "vielen Dank für Ihre Bewerbung. Sie ist bei uns eingegangen. Wir antworten innerhalb von sieben Tagen. Einsätze entstehen aus Kundenanfragen; wir melden uns, sobald eine Anfrage zu Ihrem Thema passt. Ihre Angaben verwenden wir nur für die Auswahl von Trainerinnen und Trainern und löschen sie auf Wunsch.",
       "Freundliche Grüße,",
-      `OpSolid, Inh. Hasan Dönmez, ${ADDRESS}`,
+      SIGNATURE,
     ],
   },
   en: {
@@ -26,17 +32,26 @@ export const ACK_TEXT: Record<AckLocale, { subject: string; lines: string[] }> =
     lines: [
       "Hello, thank you for your application. We have received it and will reply within seven days. Assignments come from client requests; we will contact you when a request fits your topic. We use your details only to select trainers and delete them on request.",
       "Kind regards,",
-      `OpSolid, Inh. Hasan Dönmez, ${ADDRESS}`,
+      SIGNATURE,
+    ],
+  },
+  tr: {
+    subject: "Başvurunuz bize ulaştı",
+    lines: [
+      "Merhaba, başvurunuz için teşekkür ederiz. Başvurunuz bize ulaştı; yedi gün içinde yanıt vereceğiz. Eğitim görevleri müşteri taleplerinden doğar; konunuza uygun bir talep olduğunda size döneriz. Bilgilerinizi yalnızca eğitmen seçimi için kullanır, talep üzerine sileriz.",
+      "Saygılarımızla",
+      SIGNATURE,
     ],
   },
 };
 
-/** The form's `source` ends in the page language ("v7-contact-tr"). Turkish applicants get the English text. */
+/** The form's `source` ends in the page language ("v7-contact-tr"); anything else gets the English text. */
 export function ackLocale(source: string | undefined): AckLocale {
-  return /-de$/.test(source ?? "") ? "de" : "en";
+  const lang = /-(de|tr)$/.exec(source ?? "")?.[1];
+  return lang === "de" || lang === "tr" ? lang : "en";
 }
 
-export const ACK_ENABLED = () => process.env.CONTACT_TRAINER_ACK?.trim().toLowerCase() === "on";
+export const ACK_ENABLED = () => process.env.CONTACT_TRAINER_ACK?.trim().toLowerCase() !== "off";
 
 const HOUR_MS = 60 * 60_000;
 const DAY_MS = 24 * HOUR_MS;

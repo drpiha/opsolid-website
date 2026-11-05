@@ -6,6 +6,8 @@ import * as mod from "../../src/lib/contact-ack.ts";
 const m = ((mod as { default?: unknown }).default ?? mod) as typeof import("../../src/lib/contact-ack.ts");
 const { ACK_MAX_PER_DAY, ACK_MAX_PER_HOUR, ACK_TEXT, ackKey, ackLocale, buildAck, createAckLimiter, sendTrainerAck } = m;
 type AckMail = import("../../src/lib/contact-ack.ts").AckMail;
+import * as constants from "../../src/lib/constants.ts";
+const { SITE_CONFIG } = ((constants as { default?: unknown }).default ?? constants) as typeof import("../../src/lib/constants.ts");
 
 // The acknowledgement for trainer applications: off by default, one mail per mailbox per 24 h, at most
 // 20 a day and 5 an hour in all, nothing the applicant typed in the body, and a failure never throws.
@@ -26,12 +28,12 @@ const withFlag = async (v: string | undefined, fn: () => Promise<void>) => {
 };
 const HOUR = 60 * 60_000;
 
-test("flag off (default): nothing is sent", async () => {
-  for (const flag of [undefined, "off", "", "yes"]) {
+test("on unless the flag says off", async () => {
+  for (const [flag, sent] of [[undefined, true], ["", true], ["on", true], ["off", false], ["OFF", false], [" off ", false]] as const) {
     await withFlag(flag, async () => {
       const s = sink();
-      assert.equal(await sendTrainerAck({ to: "a@example.org", source: "v7-contact-de" }, s.send, createAckLimiter()), false);
-      assert.equal(s.mails.length, 0);
+      assert.equal(await sendTrainerAck({ to: "a@example.org", source: "v7-contact-de" }, s.send, createAckLimiter()), sent, String(flag));
+      assert.equal(s.mails.length, sent ? 1 : 0);
     });
   }
 });
@@ -82,11 +84,17 @@ test("body has the approved text only: our own address, no applicant text, no li
     assert.equal(mail.replyTo, "info@opsolid.de");
     assert.equal(mail.headers["Auto-Submitted"], "auto-generated");
   }
-  assert.equal(ackLocale("v7-contact-tr"), "en");
+  assert.equal(ackLocale("v7-contact-tr"), "tr");
   assert.equal(ackLocale("v7-contact-de"), "de");
+  assert.equal(ackLocale("v7-contact-en"), "en");
+  assert.equal(ackLocale(undefined), "en");
   assert.match(buildAck("a@b.co", "v7-contact-de").text, /^Guten Tag,\n\nvielen Dank für Ihre Bewerbung\. Sie ist bei uns eingegangen\. Wir antworten innerhalb von sieben Tagen\./);
-  assert.match(buildAck("a@b.co", "v7-contact-tr").text, /^Hello, thank you for your application\. We have received it and will reply within seven days\./);
-  assert.equal(ACK_TEXT.en.lines.at(-1), ACK_TEXT.de.lines.at(-1));
+  assert.match(buildAck("a@b.co", "v7-contact-en").text, /^Hello, thank you for your application\. We have received it and will reply within seven days\./);
+  assert.match(buildAck("a@b.co", "v7-contact-tr").text, /^Merhaba, başvurunuz için teşekkür ederiz\. Başvurunuz bize ulaştı; yedi gün içinde yanıt vereceğiz\./);
+  assert.equal(buildAck("a@b.co", "v7-contact-tr").subject, "Başvurunuz bize ulaştı");
+  // One signature in every language: name, the Impressum postal address and our inbox (§ 15b GewO).
+  const signature = `OpSolid, Inh. Hasan Dönmez, ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, info@opsolid.de`;
+  for (const locale of ["de", "en", "tr"] as const) assert.equal(ACK_TEXT[locale].lines.at(-1), signature);
 });
 
 test("a failed send, a throwing send or a closed gate never throws and frees the mailbox", async () => {
