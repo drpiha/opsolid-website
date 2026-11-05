@@ -10,7 +10,7 @@ const de: PageDef = {
   meta: {
     title: "OpSolid: KI-Automatisierung und KI-Beratung für Unternehmen",
     description:
-      "KI-Beratung und KI-Automatisierung für Unternehmen: Wir finden die Abläufe, die sich lohnen, bauen die erste Lösung zum Festpreis. KI-Check ab 990 € netto.",
+      "KI-Beratung und KI-Automatisierung für Unternehmen: Wir finden die Abläufe, die sich lohnen, bauen die erste Lösung zum Festpreis. KI-Check für 990 € netto.",
   },
   crumbs: [],
   crumb: "Start",
@@ -20,7 +20,7 @@ const de: PageDef = {
     lede: "OpSolid berät Unternehmen bei der Automatisierung mit KI: Wir finden die Abläufe, bei denen es sich lohnt, bauen die erste Lösung zum Festpreis und betreuen sie auf Wunsch weiter.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zur Methode", to: "home", hash: "vorgehen" },
-    facts: ["KI-Check ab 990 € netto", "NDA vor der Analyse", "Bericht auch ohne Empfehlung"],
+    facts: ["KI-Check 990 € netto", "NDA vor der Analyse", "Bericht auch ohne Empfehlung"],
     media: {
       kind: "svg",
       name: "squares",
@@ -53,16 +53,16 @@ const de: PageDef = {
         {
           name: "Gespräch",
           h: "Kennenlernen",
-          p: "Ein kurzes Gespräch über Ihren Ablauf.",
+          p: "Kurz abstimmen, per E-Mail oder per Video am Mittwoch- oder Freitagabend.",
           result: "Sie wissen, ob ein KI-Check sinnvoll ist.",
-          meta: "30 Minuten, kostenlos",
+          meta: "kostenlos",
         },
         {
           name: "Analyse",
           h: "KI-Check",
-          p: "90 Minuten remote mit den Menschen, die die Arbeit machen. Eine NDA unterzeichnen wir vor der Analyse.",
-          result: "Ein schriftlicher Kurzbericht: welche Abläufe sich automatisieren lassen und welche nicht.",
-          meta: "ab 990 € netto",
+          p: "Sie füllen einen Fragebogen aus, etwa 20 Minuten. Eine NDA unterzeichnen wir vor der Analyse.",
+          result: "Ein schriftlicher Bericht: drei Ideen nach Priorität, Risiken, Datenschutz und der nächste Schritt.",
+          meta: "990 € netto",
         },
         {
           name: "Umsetzung",
@@ -239,7 +239,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet der Einstieg?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -255,7 +255,7 @@ const de: PageDef = {
       name: "KI-Beratung und KI-Automatisierung",
       serviceType: "KI-Beratung",
       description: "Beratung und Umsetzung von KI-Automatisierung für Unternehmen: KI-Check, Pilot zum Festpreis, Betrieb und Ausbau.",
-      offers: [{ name: "KI-Check", price: 990, from: true }],
+      offers: [{ name: "KI-Check", price: 990 }],
     },
   },
 };
@@ -265,7 +265,7 @@ const en: PageDef = {
   meta: {
     title: "OpSolid: AI automation consulting for companies",
     description:
-      "AI automation consulting for companies: we find the workflows worth automating and build the first solution at a fixed price. AI check from €990 net.",
+      "AI automation consulting for companies: we find the workflows worth automating and build the first solution at a fixed price. AI check for €990 net.",
   },
   crumbs: [],
   crumb: "Home",
@@ -275,7 +275,7 @@ const en: PageDef = {
     lede: "OpSolid advises companies on automation with AI: we find the workflows worth automating, build the first solution at a fixed price and, if you wish, keep looking after it.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See the method", to: "home", hash: "vorgehen" },
-    facts: ["AI check from €990 net", "NDA before the analysis", "Report even without a recommendation"],
+    facts: ["AI check €990 net", "NDA before the analysis", "Report even without a recommendation"],
     media: {
       kind: "svg",
       name: "squares",
@@ -307,17 +307,17 @@ const en: PageDef = {
       steps: [
         {
           name: "Conversation",
-          h: "Intro call (30 minutes, free)",
-          p: "A short conversation about your workflow.",
+          h: "Intro",
+          p: "A short exchange by email, or a video call on a Wednesday or Friday evening.",
           result: "You know whether an AI check makes sense.",
-          meta: "30 minutes, free",
+          meta: "free",
         },
         {
           name: "Analysis",
           h: "AI check",
-          p: "90 minutes remote with the people who do the work. We sign an NDA before the analysis.",
-          result: "A short written report: which workflows can be automated and which cannot.",
-          meta: "from €990 net",
+          p: "You fill in a questionnaire, about 20 minutes. We sign an NDA before the analysis.",
+          result: "A written report: three ideas by priority, the risks, data protection and the next step.",
+          meta: "€990 net",
         },
         {
           name: "Delivery",
@@ -494,14 +494,14 @@ const en: PageDef = {
       },
       {
         q: "What does getting started cost?",
-        a: "The intro call is free and without obligation. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot, we agree scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
+        a: "The intro is free and without obligation. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot, we agree scope and fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
     ],
   },
   cta: {
     label: "AI check",
     h: "Which workflow costs you the most time today?",
-    p: "Tell us briefly what it is about. In a free introductory call we clarify whether an AI check makes sense.",
+    p: "Tell us briefly what it is about. In a free intro we clarify whether an AI check makes sense.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "info@opsolid.de", href: "mailto:info@opsolid.de" },
   },
@@ -510,7 +510,7 @@ const en: PageDef = {
       name: "AI consulting and AI automation",
       serviceType: "AI consulting",
       description: "Consulting and implementation of AI automation for companies: AI check, pilot at a fixed price, operation and expansion.",
-      offers: [{ name: "AI check", price: 990, from: true }],
+      offers: [{ name: "AI check", price: 990 }],
     },
   },
 };
@@ -520,7 +520,7 @@ const tr: PageDef = {
   meta: {
     title: "OpSolid: Şirketler için yapay zeka otomasyonu danışmanlığı",
     description:
-      "Şirketler için YZ otomasyonu ve danışmanlığı: Değer yaratacak iş akışlarını bulur, ilk çözümü sabit fiyatla kurarız. YZ Kontrolü 990 €'dan itibaren (net).",
+      "Şirketler için YZ otomasyonu ve danışmanlığı: Değer yaratacak iş akışlarını bulur, ilk çözümü sabit fiyatla kurarız. YZ Kontrolü 990 € (net).",
   },
   crumbs: [],
   crumb: "Ana sayfa",
@@ -530,7 +530,7 @@ const tr: PageDef = {
     lede: "OpSolid, şirketlere yapay zeka ile otomasyon konusunda danışmanlık verir: Otomatikleştirmeye değecek iş akışlarını bulur, ilk çözümü sabit fiyatla kurar ve isterseniz sonrasında da yanınızda olur.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Yöntemi görün", to: "home", hash: "vorgehen" },
-    facts: ["YZ Kontrolü 990 €'dan itibaren (net)", "Analizden önce NDA", "Öneri çıkmasa da rapor"],
+    facts: ["YZ Kontrolü 990 € (net)", "Analizden önce NDA", "Öneri çıkmasa da rapor"],
     media: {
       kind: "svg",
       name: "squares",
@@ -563,16 +563,16 @@ const tr: PageDef = {
         {
           name: "Görüşme",
           h: "Tanışma",
-          p: "İş akışınız hakkında kısa bir görüşme.",
+          p: "E-postayla kısa bir yazışma ya da çarşamba veya cuma akşamı görüntülü görüşme.",
           result: "YZ Kontrolünün anlamlı olup olmadığını öğrenirsiniz.",
-          meta: "30 dakika, ücretsiz",
+          meta: "ücretsiz",
         },
         {
           name: "Analiz",
           h: "YZ Kontrolü",
-          p: "İşi yapan kişilerle 90 dakika, uzaktan. Analizden önce bir NDA imzalarız.",
-          result: "Kısa bir yazılı rapor: hangi iş akışları otomatikleştirilebilir, hangileri değil.",
-          meta: "990 €'dan itibaren (net)",
+          p: "Yaklaşık 20 dakikalık bir soru formunu doldurursunuz. Analizden önce bir NDA imzalarız.",
+          result: "Yazılı bir rapor: öncelik sırasına göre üç fikir, riskler, veri koruma ve sonraki adım.",
+          meta: "990 € (net)",
         },
         {
           name: "Uygulama",
@@ -749,14 +749,14 @@ const tr: PageDef = {
       },
       {
         q: "Başlangıç ne kadar tutar?",
-        a: "Tanışma görüşmesi ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 €'dan itibaren (net): 90 dakika uzaktan görüşme ve kısa yazılı rapor, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
       },
     ],
   },
   cta: {
     label: "YZ Kontrolü",
     h: "Bugün hangi iş akışı size en çok zaman kaybettiriyor?",
-    p: "Konuyu bize kısaca yazın. Ücretsiz tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz.",
+    p: "Konuyu bize kısaca yazın. Ücretsiz tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "info@opsolid.de", href: "mailto:info@opsolid.de" },
   },
@@ -765,7 +765,7 @@ const tr: PageDef = {
       name: "Yapay zeka danışmanlığı ve otomasyonu",
       serviceType: "Yapay zeka danışmanlığı",
       description: "Şirketler için yapay zeka otomasyonu danışmanlığı ve uygulaması: YZ Kontrolü, sabit fiyatlı pilot, işletme ve geliştirme.",
-      offers: [{ name: "YZ Kontrolü", price: 990, from: true }],
+      offers: [{ name: "YZ Kontrolü", price: 990 }],
     },
   },
 };

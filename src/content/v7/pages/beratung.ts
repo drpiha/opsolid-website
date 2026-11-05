@@ -1,6 +1,6 @@
 /**
  * KI-Beratung (flagship hub, direction A "Klarheit"). German is the source; EN and TR are transcreations.
- * Offer ladder per owner decision 2026-10-29: Kennenlernen (free) → KI-Check ab 990 € netto → Pilot zum
+ * Offer ladder per owner decision 2026-10-29: Kennenlernen (free) → KI-Check 990 € netto (Festpreis since 2026-11-04) → Pilot zum
  * Festpreis (no number) → Betrieb und Ausbau (no number). The sample is a labelled "Muster", not a client report.
  */
 import type { PageDef, PageSet } from "../types";
@@ -10,7 +10,7 @@ const de: PageDef = {
   meta: {
     title: "KI-Beratung und KI-Automatisierung für Unternehmen",
     description:
-      "KI-Beratung, die bei Ihren Abläufen beginnt: KI-Check ab 990 € netto, Pilot zum Festpreis, Betrieb nach Vereinbarung. Unabhängig, ohne Lizenzverkauf.",
+      "KI-Beratung, die bei Ihren Abläufen beginnt: KI-Check für 990 € netto, Pilot zum Festpreis, Betrieb nach Vereinbarung. Unabhängig, ohne Lizenzverkauf.",
   },
   crumbs: [],
   crumb: "KI-Beratung",
@@ -20,7 +20,7 @@ const de: PageDef = {
     lede: "OpSolid berät Unternehmen bei der Automatisierung mit KI. Wir nehmen zuerst auf, wie die Arbeit heute läuft, entscheiden mit Ihnen, was sich lohnt, und bauen eine Lösung, die im Alltag läuft.",
     primary: { label: "KI-Check ansehen", to: "check" },
     secondary: { label: "Kennenlernen vereinbaren", to: "kontakt", query: { anliegen: "beratung" } },
-    facts: ["KI-Check ab 990 € netto", "Pilot zum Festpreis, vorab schriftlich", "Unabhängig, ohne Lizenzverkauf"],
+    facts: ["KI-Check 990 € netto", "Pilot zum Festpreis, vorab schriftlich", "Unabhängig, ohne Lizenzverkauf"],
     media: {
       kind: "svg",
       name: "flow",
@@ -104,14 +104,14 @@ const de: PageDef = {
           name: "Kennenlernen",
           price: "kostenlos",
           unit: "unverbindlich",
-          p: "Ein kurzes Gespräch, in dem wir Ihre Lage verstehen und klären, ob ein KI-Check sinnvoll ist.",
-          points: ["30 Minuten", "Auch die Antwort „noch nicht“ ist ein Ergebnis"],
-          href: { label: "Gespräch anfragen", to: "kontakt", query: { anliegen: "beratung" } },
+          p: "Ein kurzer Austausch per E-Mail oder per Video am Mittwoch- oder Freitagabend: Wir verstehen Ihre Lage und klären, ob ein KI-Check sinnvoll ist.",
+          points: ["Per E-Mail oder 15 bis 30 Minuten per Video", "Auch die Antwort „noch nicht“ ist ein Ergebnis"],
+          href: { label: "Kennenlernen anfragen", to: "kontakt", query: { anliegen: "beratung" } },
         },
         {
           name: "KI-Check",
-          price: "ab 990 € netto",
-          p: "90 Minuten remote mit den Menschen, die die Arbeit machen, plus schriftlicher Kurzbericht. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+          price: "990 € netto",
+          p: "Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
           points: ["NDA vor der Analyse", "Bericht auch ohne Empfehlung", "Erweiterter Umfang zum Festpreis"],
           href: { label: "Zum KI-Check", to: "check" },
           featured: true,
@@ -223,7 +223,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet ein Pilot?",
-        a: "Das hängt vom Ablauf ab. Nach dem KI-Check legen wir Umfang und Festpreis schriftlich fest, bevor die Arbeit beginnt. Der KI-Check selbst kostet ab 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+        a: "Das hängt vom Ablauf ab. Nach dem KI-Check legen wir Umfang und Festpreis schriftlich fest, bevor die Arbeit beginnt. Der KI-Check selbst kostet 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
       },
       {
         q: "Wie steht es um den Datenschutz?",
@@ -235,7 +235,7 @@ const de: PageDef = {
       },
       {
         q: "Wie lange dauert es?",
-        a: "Der KI-Check besteht aus einem Gespräch von 90 Minuten und einem kurzen schriftlichen Bericht. Die Dauer eines Piloten legen wir zusammen mit dem Festpreis schriftlich fest.",
+        a: "Für den KI-Check füllen Sie einen Fragebogen von etwa 20 Minuten aus; den schriftlichen Bericht erhalten Sie in der Regel 10 Werktage nach Eingang des Fragebogens. Die Dauer eines Piloten legen wir zusammen mit dem Festpreis schriftlich fest.",
       },
       {
         q: "Können wir unsere Systeme behalten?",
@@ -246,7 +246,7 @@ const de: PageDef = {
   cta: {
     label: "KI-Check",
     h: "Beginnen Sie mit dem KI-Check",
-    p: "90 Minuten remote plus schriftlicher Kurzbericht, ab 990 € netto. NDA vor der Analyse, keine Bindung danach.",
+    p: "Fragebogen und schriftlicher Bericht für 990 € netto. NDA vor der Analyse, keine Bindung danach.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Erst kennenlernen", to: "kontakt", query: { anliegen: "beratung" } },
   },
@@ -256,7 +256,7 @@ const de: PageDef = {
       serviceType: "KI-Beratung",
       description:
         "KI-Beratung für Unternehmen, die bei den Abläufen beginnt: KI-Check, Pilot zum Festpreis, Betrieb und Ausbau. Unabhängig, ohne Lizenzverkauf.",
-      offers: [{ name: "KI-Check", price: 990, from: true }],
+      offers: [{ name: "KI-Check", price: 990 }],
     },
   },
 };
@@ -266,7 +266,7 @@ const en: PageDef = {
   meta: {
     title: "AI automation consulting for companies",
     description:
-      "AI automation consulting that starts with your workflows: AI check from €990 net, pilot at a fixed price, operation by agreement. Independent, no licence sales.",
+      "AI automation consulting that starts with your workflows: AI check for €990 net, pilot at a fixed price, operation by agreement. Independent, no licence sales.",
   },
   crumbs: [],
   crumb: "AI consulting",
@@ -275,8 +275,8 @@ const en: PageDef = {
     h1: ["AI consulting that starts with your ", "workflows", ""],
     lede: "OpSolid advises companies on automating work with AI. We first record how the work runs today, decide with you what is worth doing, and build a solution that runs day to day.",
     primary: { label: "See the AI check", to: "check" },
-    secondary: { label: "Arrange an intro call", to: "kontakt", query: { anliegen: "beratung" } },
-    facts: ["AI check from €990 net", "Pilot at a fixed price, in writing first", "Independent, no licence sales"],
+    secondary: { label: "Arrange an intro", to: "kontakt", query: { anliegen: "beratung" } },
+    facts: ["AI check €990 net", "Pilot at a fixed price, in writing first", "Independent, no licence sales"],
     media: {
       kind: "svg",
       name: "flow",
@@ -357,17 +357,17 @@ const en: PageDef = {
       lede: "No step obliges you to take the next.",
       items: [
         {
-          name: "Intro call",
+          name: "Intro",
           price: "free",
           unit: "no obligation",
-          p: "A short conversation in which we understand your situation and clarify whether an AI check makes sense.",
-          points: ["30 minutes", "“Not yet” is also a result"],
-          href: { label: "Request a call", to: "kontakt", query: { anliegen: "beratung" } },
+          p: "A short exchange by email or a video call on a Wednesday or Friday evening: we understand your situation and clarify whether an AI check makes sense.",
+          points: ["By email or a 15 to 30-minute video call", "“Not yet” is also a result"],
+          href: { label: "Request an intro", to: "kontakt", query: { anliegen: "beratung" } },
         },
         {
           name: "AI check",
-          price: "from €990 net",
-          p: "90 minutes remote with the people who do the work, plus a short written report. Credited in full against a follow-up order within 60 days.",
+          price: "€990 net",
+          p: "A fixed price: a questionnaire and a written report, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days.",
           points: ["NDA before the analysis", "Report even without a recommendation", "Extended scope at a fixed price"],
           href: { label: "To the AI check", to: "check" },
           featured: true,
@@ -479,7 +479,7 @@ const en: PageDef = {
       },
       {
         q: "What does a pilot cost?",
-        a: "That depends on the workflow. After the AI check we set scope and fixed price in writing before the work begins. The AI check itself costs from €990 net. Credited in full against a follow-up order within 60 days.",
+        a: "That depends on the workflow. After the AI check we set scope and fixed price in writing before the work begins. The AI check itself costs €990 net. Credited in full against a follow-up order within 60 days.",
       },
       {
         q: "What about data protection?",
@@ -491,7 +491,7 @@ const en: PageDef = {
       },
       {
         q: "How long does it take?",
-        a: "The AI check is one 90-minute conversation and a short written report. We set the duration of a pilot in writing together with the fixed price.",
+        a: "For the AI check you fill in a questionnaire of about 20 minutes; you usually receive the written report 10 working days after we receive it. We set the duration of a pilot in writing together with the fixed price.",
       },
       {
         q: "Can we keep our systems?",
@@ -502,7 +502,7 @@ const en: PageDef = {
   cta: {
     label: "AI check",
     h: "Start with the AI check",
-    p: "90 minutes remote plus a short written report, from €990 net. NDA before the analysis, no obligation afterwards.",
+    p: "A questionnaire and a written report for €990 net. NDA before the analysis, no obligation afterwards.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Intro call first", to: "kontakt", query: { anliegen: "beratung" } },
   },
@@ -512,7 +512,7 @@ const en: PageDef = {
       serviceType: "AI consulting",
       description:
         "AI consulting for companies that starts with the workflows: AI check, pilot at a fixed price, operation and expansion. Independent, no licence sales.",
-      offers: [{ name: "AI check", price: 990, from: true }],
+      offers: [{ name: "AI check", price: 990 }],
     },
   },
 };
@@ -522,7 +522,7 @@ const tr: PageDef = {
   meta: {
     title: "Şirketler için YZ danışmanlığı ve otomasyon",
     description:
-      "İş akışlarınızdan başlayan yapay zeka danışmanlığı: YZ Kontrolü 990 €'dan (net), sabit fiyatlı pilot, anlaşmaya göre işletme. Bağımsız, lisans satışı yok.",
+      "İş akışlarınızdan başlayan yapay zeka danışmanlığı: YZ Kontrolü 990 € (net), sabit fiyatlı pilot, anlaşmaya göre işletme. Bağımsız, lisans satışı yok.",
   },
   crumbs: [],
   crumb: "YZ danışmanlığı",
@@ -531,8 +531,8 @@ const tr: PageDef = {
     h1: ["İş akışlarınızdan ", "başlayan", " yapay zeka danışmanlığı"],
     lede: "OpSolid, şirketlerin işlerini yapay zekayla otomatikleştirmesi için danışmanlık verir. Önce işin bugün nasıl yürüdüğünü kaydeder, neyin değer taşıdığına sizinle birlikte karar verir ve günlük işte çalışan bir çözüm kurarız.",
     primary: { label: "YZ Kontrolü'nü inceleyin", to: "check" },
-    secondary: { label: "Tanışma görüşmesi planlayın", to: "kontakt", query: { anliegen: "beratung" } },
-    facts: ["YZ Kontrolü 990 €'dan itibaren (net)", "Sabit fiyatlı pilot, önceden yazılı", "Bağımsız, lisans satışı yok"],
+    secondary: { label: "Tanışma planlayın", to: "kontakt", query: { anliegen: "beratung" } },
+    facts: ["YZ Kontrolü 990 € (net)", "Sabit fiyatlı pilot, önceden yazılı", "Bağımsız, lisans satışı yok"],
     media: {
       kind: "svg",
       name: "flow",
@@ -616,14 +616,14 @@ const tr: PageDef = {
           name: "Tanışma",
           price: "ücretsiz",
           unit: "bağlayıcı değil",
-          p: "Durumunuzu anladığımız ve bir YZ Kontrolü'nün anlamlı olup olmadığını netleştirdiğimiz kısa bir görüşme.",
-          points: ["30 dakika", "“Henüz değil” cevabı da bir sonuçtur"],
-          href: { label: "Görüşme talep edin", to: "kontakt", query: { anliegen: "beratung" } },
+          p: "E-postayla ya da çarşamba veya cuma akşamı görüntülü kısa bir görüşme: durumunuzu anlar, bir YZ Kontrolü'nün anlamlı olup olmadığını netleştiririz.",
+          points: ["E-postayla ya da 15-30 dakika görüntülü", "“Henüz değil” cevabı da bir sonuçtur"],
+          href: { label: "Tanışma talep edin", to: "kontakt", query: { anliegen: "beratung" } },
         },
         {
           name: "YZ Kontrolü",
-          price: "990 €'dan itibaren (net)",
-          p: "İşi yapan kişilerle 90 dakika uzaktan görüşme ve kısa bir yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+          price: "990 € (net)",
+          p: "Sabit fiyat: soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
           points: ["Analizden önce NDA", "Öneri çıkmasa da rapor", "Geniş kapsam sabit fiyatla"],
           href: { label: "YZ Kontrolü'ne gidin", to: "check" },
           featured: true,
@@ -735,7 +735,7 @@ const tr: PageDef = {
       },
       {
         q: "Bir pilotun maliyeti nedir?",
-        a: "İş akışına bağlıdır. YZ Kontrolü'nden sonra, çalışma başlamadan önce kapsamı ve sabit fiyatı yazılı olarak belirleriz. YZ Kontrolü'nün kendisi 990 €'dan itibaren (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+        a: "İş akışına bağlıdır. YZ Kontrolü'nden sonra, çalışma başlamadan önce kapsamı ve sabit fiyatı yazılı olarak belirleriz. YZ Kontrolü'nün kendisi 990 € (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
       },
       {
         q: "Veri koruma nasıl ele alınıyor?",
@@ -747,7 +747,7 @@ const tr: PageDef = {
       },
       {
         q: "Ne kadar sürer?",
-        a: "YZ Kontrolü, 90 dakikalık bir görüşme ile kısa bir yazılı rapordan oluşur. Pilotun süresini sabit fiyatla birlikte yazılı olarak belirleriz.",
+        a: "YZ Kontrolü için yaklaşık 20 dakikalık bir soru formu doldurursunuz; yazılı raporu genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde alırsınız. Pilotun süresini sabit fiyatla birlikte yazılı olarak belirleriz.",
       },
       {
         q: "Mevcut sistemlerimizi koruyabilir miyiz?",
@@ -758,7 +758,7 @@ const tr: PageDef = {
   cta: {
     label: "YZ Kontrolü",
     h: "YZ Kontrolü ile başlayın",
-    p: "90 dakika uzaktan görüşme ve kısa yazılı rapor, 990 €'dan itibaren (net). Analizden önce NDA, sonrasında yükümlülük yok.",
+    p: "Soru formu ve yazılı rapor, 990 € (net). Analizden önce NDA, sonrasında yükümlülük yok.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Önce tanışalım", to: "kontakt", query: { anliegen: "beratung" } },
   },
@@ -768,7 +768,7 @@ const tr: PageDef = {
       serviceType: "Yapay zeka danışmanlığı",
       description:
         "İş akışlarından başlayan şirketler için yapay zeka danışmanlığı: YZ Kontrolü, sabit fiyatlı pilot, işletme ve geliştirme. Bağımsız, lisans satışı yok.",
-      offers: [{ name: "YZ Kontrolü", price: 990, from: true }],
+      offers: [{ name: "YZ Kontrolü", price: 990 }],
     },
   },
 };

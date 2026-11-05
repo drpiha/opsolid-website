@@ -35,7 +35,7 @@ Gates for marketing changes (v7): `npx tsc --noEmit -p .`, `npx next lint --dir 
 
 **Published offers and prices** (owner decision 2026-10-29, live since 2026-10-30). The only prices the site may state, always net (plus VAT, businesses only: "Alle Preise netto zzgl. USt., nur für Unternehmen."), also the only JSON-LD offers:
 
-- KI-Check ab 990 € (the single entry offer; no "Quick-Check", no free pilot checks). The exact price is confirmed in writing after a short pre-call, and the amount is credited in full against a follow-up order within 60 days.
+- KI-Check 990 € netto as a fixed price (owner-approved strategy review, 2026-11-04; before that "ab 990 €"). The single entry offer; no "Quick-Check", no free pilot checks. Written and meeting-free: a questionnaire of about 20 minutes after the order (sent and returned by e-mail; no new database or processor) → a written report (three ideas by priority, risks, data-protection notes, next step), "in der Regel 10 Werktage nach Eingang des Fragebogens" → optionally a 30-minute video call on Wednesday or Friday, 18:30-20:00. The free pre-call is a short e-mail exchange or a 15-30 minute video call in those evening slots. No on-site meetings for consulting; trainings stay online. Unchanged: NDA before the analysis, the report even without a recommendation, and the full credit against a follow-up order within 60 days. The KI-Check page shows a fictional sample report ("Beispiel, fiktiv").
 - Trainings are team packages with included seats plus a per-person surcharge, shown as "Auf Anfrage" until trainers exist:
   - KI-Kompetenz Basis ab 1.790 € (half day, 10 people included, +90 € per person, max 15);
   - Copilot-Praxistag ab 2.900 € (1 day, 10 included, +150 € per person, max 12);

@@ -142,7 +142,7 @@ const de: PageDef = {
       items: [
         {
           h: "Erst den Ablauf klären",
-          p: "Im KI-Check (ab 990 € netto) klären wir in 90 Minuten remote, wo KI in Ihrem Alltag sinnvoll ist, und halten es schriftlich fest. So sehen Sie, welche Schulung Ihrem Team nützt.",
+          p: "Im KI-Check (990 € netto) klären wir schriftlich, per Fragebogen und Bericht, wo KI in Ihrem Alltag sinnvoll ist. So sehen Sie, welche Schulung Ihrem Team nützt.",
           href: { label: "Zum KI-Check", to: "check" },
         },
         {
@@ -350,7 +350,7 @@ const en: PageDef = {
       items: [
         {
           h: "Clarify the workflow first",
-          p: "In the AI check (from €990 net) we clarify in 90 minutes, remotely, where AI makes sense in your daily work and put it in writing. That shows which course will help your team.",
+          p: "In the AI check (€990 net) we clarify in writing, with a questionnaire and a report, where AI makes sense in your daily work. That shows which course will help your team.",
           href: { label: "To the AI check", to: "check" },
         },
         {
@@ -558,7 +558,7 @@ const tr: PageDef = {
       items: [
         {
           h: "Önce iş akışını netleştirin",
-          p: "YZ Kontrolü'nde (990 €'dan itibaren (net)) 90 dakikalık uzaktan görüşmede günlük işinizde YZ'nin nerede anlamlı olduğunu netleştirir ve yazılı olarak toplarız. Böylece hangi eğitimin ekibinize yararlı olacağını görürsünüz.",
+          p: "YZ Kontrolü'nde (990 €, net) soru formu ve raporla günlük işinizde YZ'nin nerede anlamlı olduğunu yazılı olarak netleştiririz. Böylece hangi eğitimin ekibinize yararlı olacağını görürsünüz.",
           href: { label: "YZ Kontrolü'ne gidin", to: "check" },
         },
         {

@@ -48,7 +48,7 @@ const de: PageDef = {
         {
           tag: "1 · Beratung",
           h: "KI-Beratung und KI-Automatisierung",
-          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
+          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
           href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
@@ -139,7 +139,7 @@ const de: PageDef = {
       facts: [
         ["Gründer", "Hasan Dönmez"],
         ["Sitz", "Arnsberg, Sauerland, NRW"],
-        ["Arbeitsweise", "Remote in Deutschland und Europa, vor Ort nach Absprache"],
+        ["Arbeitsweise", "Remote in Deutschland und Europa, schriftlich und per Video"],
         ["Sprachen", "Deutsch, Englisch, Türkisch"],
       ],
       link: linkedin("Hasan Dönmez auf LinkedIn"),
@@ -165,7 +165,7 @@ const de: PageDef = {
       },
       {
         q: "Müssen wir für ein Projekt nach Arnsberg kommen?",
-        a: "Nein. Wir arbeiten remote in Deutschland und Europa, auf Deutsch, Englisch und Türkisch. Termine vor Ort sind nach Absprache möglich.",
+        a: "Nein. Wir arbeiten remote in Deutschland und Europa, auf Deutsch, Englisch und Türkisch, schriftlich und per Video.",
       },
       {
         q: "Welche Branchen beraten Sie?",
@@ -173,7 +173,7 @@ const de: PageDef = {
       },
       {
         q: "Wie beginnt die Zusammenarbeit, und was kostet der Einstieg?",
-        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen. Auf Wunsch folgt der KI-Check ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen, per E-Mail oder kurz per Video. Auf Wunsch folgt der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -199,7 +199,7 @@ const en: PageDef = {
     eyebrow: "About OpSolid",
     h1: ["Consulting that starts with the", "workflow", ""],
     lede: "OpSolid advises companies on automation with AI. We start with the workflow, not with the technology.",
-    primary: { label: "Request an introductory call", to: "kontakt", query: { anliegen: "beratung" } },
+    primary: { label: "Request an intro", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "See the AI check", to: "check" },
     facts: ["Independent of AI vendors", "NDA before the analysis", "Pilot at a fixed price, in writing first"],
     media: {
@@ -222,7 +222,7 @@ const en: PageDef = {
         {
           tag: "1 · Consulting",
           h: "AI consulting and AI automation",
-          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check, from €990 net: 90 minutes remote plus a short written report. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
+          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net: a questionnaire and a written report. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
           href: { label: "To AI consulting", to: "beratung" },
         },
         {
@@ -313,7 +313,7 @@ const en: PageDef = {
       facts: [
         ["Founder", "Hasan Dönmez"],
         ["Based in", "Arnsberg, Sauerland, North Rhine-Westphalia"],
-        ["Way of working", "Remote in Germany and Europe, on site by arrangement"],
+        ["Way of working", "Remote in Germany and Europe, in writing and by video"],
         ["Languages", "German, English, Turkish"],
       ],
       link: linkedin("Hasan Dönmez on LinkedIn"),
@@ -339,7 +339,7 @@ const en: PageDef = {
       },
       {
         q: "Do we have to come to Arnsberg for a project?",
-        a: "No. We work remotely in Germany and Europe, in German, English and Turkish. Meetings on site are possible by arrangement.",
+        a: "No. We work remotely in Germany and Europe, in German, English and Turkish, in writing and by video.",
       },
       {
         q: "Which industries do you advise?",
@@ -347,14 +347,14 @@ const en: PageDef = {
       },
       {
         q: "How does working together begin, and what does the entry point cost?",
-        a: "With a free introductory call, without obligation. If you wish, the AI check follows, from €990 net: 90 minutes remote plus a short written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
+        a: "With a free intro, by email or a short video call, without obligation. If you wish, the AI check follows for €990 net: a questionnaire and a written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
       },
     ],
   },
   cta: {
     label: "Introductory call",
     h: "Start with one workflow",
-    p: "Tell us which workflow is costing you time right now. In an introductory call, we clarify whether an AI check makes sense.",
+    p: "Tell us which workflow is costing you time right now. In a free intro, we clarify whether an AI check makes sense.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "To AI consulting", to: "beratung" },
   },
@@ -396,7 +396,7 @@ const tr: PageDef = {
         {
           tag: "1 · Danışmanlık",
           h: "Yapay zeka danışmanlığı ve otomasyonu",
-          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası, 990 €'dan başlayan (net) YZ Kontrolüdür: 90 dakika uzaktan ve kısa bir yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
+          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net) tutarındaki YZ Kontrolüdür: soru formu ve yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
           href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
@@ -487,7 +487,7 @@ const tr: PageDef = {
       facts: [
         ["Kurucu", "Hasan Dönmez"],
         ["Merkez", "Arnsberg, Sauerland, Kuzey Ren-Vestfalya"],
-        ["Çalışma biçimi", "Almanya ve Avrupa'da uzaktan, anlaşmayla yerinde"],
+        ["Çalışma biçimi", "Almanya ve Avrupa'da uzaktan, yazılı olarak ve görüntülü görüşmeyle"],
         ["Diller", "Almanca, İngilizce, Türkçe"],
       ],
       link: linkedin("Hasan Dönmez, LinkedIn"),
@@ -513,7 +513,7 @@ const tr: PageDef = {
       },
       {
         q: "Proje için Arnsberg'e gelmemiz gerekir mi?",
-        a: "Hayır. Almanya ve Avrupa'da uzaktan, Almanca, İngilizce ve Türkçe çalışıyoruz. Yerinde görüşmeler anlaşmayla mümkündür.",
+        a: "Hayır. Almanya ve Avrupa'da uzaktan, Almanca, İngilizce ve Türkçe, yazılı olarak ve görüntülü görüşmeyle çalışıyoruz.",
       },
       {
         q: "Hangi sektörlere danışmanlık veriyorsunuz?",
@@ -521,14 +521,14 @@ const tr: PageDef = {
       },
       {
         q: "İş birliği nasıl başlar, giriş ne kadar tutar?",
-        a: "Ücretsiz ve bağlayıcı olmayan bir tanışma görüşmesiyle. İsterseniz ardından YZ Kontrolü gelir, 990 €'dan başlar (net): 90 dakika uzaktan ve kısa bir yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
+        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla; e-postayla ya da kısa bir görüntülü görüşmeyle. İsterseniz ardından YZ Kontrolü gelir, 990 € (net): soru formu ve yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
       },
     ],
   },
   cta: {
     label: "Tanışma",
     h: "Tek bir iş akışıyla başlayın",
-    p: "Şu anda hangi iş akışının size zaman kaybettirdiğini yazın. Tanışma görüşmesinde bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz.",
+    p: "Şu anda hangi iş akışının size zaman kaybettirdiğini yazın. Tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },

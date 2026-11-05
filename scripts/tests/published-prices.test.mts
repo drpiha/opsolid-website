@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
 
-// The only prices opsolid.de may state (repo CLAUDE.md, "Published offers"): KI-Check ab 990, KI-Kompetenz
+// The only prices opsolid.de may state (repo CLAUDE.md, "Published offers"): KI-Check 990 (fixed price), KI-Kompetenz
 // 1.790 (+90), Copilot-Praxistag 2.900 (+150), KI-Agenten & Workflow-Automatisierung 5.900 (+290), all net,
 // and the planned OpSo NFC card at 24,90 incl. VAT. A wrong amount in one shared component (the journal CTA
 // said 490 € for months) is what this guards against.

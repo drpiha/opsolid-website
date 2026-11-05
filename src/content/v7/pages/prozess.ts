@@ -1,7 +1,7 @@
 /**
  * Prozessautomatisierung (key "prozess", /ki-beratung/prozessautomatisierung). Includes the internal-tools
  * section (#interne-tools, formerly /interne-tools). German is the source; EN and TR are transcreations.
- * No prices on the page except the published KI-Check "ab 990 €"; the pilot has no number.
+ * No prices on the page except the published KI-Check "990 €" (fixed price since 2026-11-04); the pilot has no number.
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -10,7 +10,7 @@ const de: PageDef = {
   meta: {
     title: "Prozessautomatisierung: Daten nur einmal erfassen",
     description:
-      "Prozessautomatisierung für Unternehmen: Wir messen den Ablauf, bauen einen Pilot zum Festpreis und übergeben ihn mit Dokumentation. KI-Check ab 990 € netto.",
+      "Prozessautomatisierung für Unternehmen: Wir messen den Ablauf, bauen einen Pilot zum Festpreis und übergeben ihn mit Dokumentation. KI-Check für 990 € netto.",
   },
   crumbs: ["beratung"],
   crumb: "Prozessautomatisierung",
@@ -20,7 +20,7 @@ const de: PageDef = {
     lede: "Wir automatisieren wiederkehrende Abläufe zwischen E-Mail, Excel, CRM und ERP: erst messen, wie der Ablauf heute läuft, dann ein Pilot zum Festpreis, dann die Übergabe.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zu den internen Werkzeugen", to: "prozess", hash: "interne-tools" },
-    facts: ["KI-Check ab 990 € netto", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
+    facts: ["KI-Check 990 € netto", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -186,7 +186,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet das?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet ab 990 € netto: 90 Minuten remote plus schriftlicher Kurzbericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Was, wenn sich der Ablauf später ändert?",
@@ -224,7 +224,7 @@ const en: PageDef = {
   meta: {
     title: "Process automation: enter your data only once",
     description:
-      "Process automation for companies: we measure the workflow, build a pilot at a fixed price and hand it over with documentation. AI check from €990 net.",
+      "Process automation for companies: we measure the workflow, build a pilot at a fixed price and hand it over with documentation. AI check for €990 net.",
   },
   crumbs: ["beratung"],
   crumb: "Process automation",
@@ -234,7 +234,7 @@ const en: PageDef = {
     lede: "We automate recurring workflows between email, Excel, CRM and ERP: first measure how the workflow runs today, then a pilot at a fixed price, then the handover.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "On to internal tools", to: "prozess", hash: "interne-tools" },
-    facts: ["AI check from €990 net", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
+    facts: ["AI check €990 net", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -400,7 +400,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost?",
-        a: "The intro call is free and non-binding. The AI check costs from €990 net: 90 minutes remote plus a short written report, NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "The intro is free and non-binding. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
       },
       {
         q: "What if the workflow changes later?",
@@ -438,7 +438,7 @@ const tr: PageDef = {
   meta: {
     title: "Süreç otomasyonu: veriyi yalnızca bir kez girin",
     description:
-      "Şirketler için süreç otomasyonu: iş akışını ölçer, sabit fiyatlı bir pilot kurar ve dokümantasyonla teslim ederiz. YZ Kontrolü 990 €'dan itibaren (net).",
+      "Şirketler için süreç otomasyonu: iş akışını ölçer, sabit fiyatlı bir pilot kurar ve dokümantasyonla teslim ederiz. YZ Kontrolü sabit fiyatla 990 € (net).",
   },
   crumbs: ["beratung"],
   crumb: "Süreç otomasyonu",
@@ -448,7 +448,7 @@ const tr: PageDef = {
     lede: "E-posta, Excel, CRM ve ERP arasında tekrar eden iş akışlarını otomatikleştiriyoruz: önce iş akışının bugün nasıl işlediğini ölçüyor, sonra sabit fiyatlı bir pilot kuruyor, ardından teslim ediyoruz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Şirket içi araçlara geçin", to: "prozess", hash: "interne-tools" },
-    facts: ["YZ Kontrolü 990 €'dan itibaren (net)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
+    facts: ["YZ Kontrolü 990 € (net)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
     media: {
       kind: "svg",
       name: "flow",
@@ -614,7 +614,7 @@ const tr: PageDef = {
       },
       {
         q: "Ücreti ne kadar?",
-        a: "Tanışma görüşmesi ücretsiz ve bağlayıcı değildir. YZ Kontrolü 990 €'dan itibaren (net): 90 dakika uzaktan görüşme ve kısa yazılı rapor, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
       },
       {
         q: "İş akışı sonradan değişirse ne olur?",

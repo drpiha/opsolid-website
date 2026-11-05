@@ -8,8 +8,18 @@ import type { PageKey } from "@/lib/v7-routes";
  */
 const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   kompetenz: "2026-11-02", // Art. 4 answer and EUR-Lex sources
-  agenten: "2026-11-02", // FAQ: what an AI phone assistant is
-  blog: "2026-11-02", // CTA price corrected to ab 990 € with the 60-day credit
+  // 2026-11-04: written, meeting-free KI-Check at a fixed 990 € (questionnaire, report, optional evening call)
+  check: "2026-11-04",
+  home: "2026-11-04",
+  beratung: "2026-11-04",
+  prozess: "2026-11-04",
+  m365: "2026-11-04",
+  agenten: "2026-11-04",
+  anwendungen: "2026-11-04",
+  schulungen: "2026-11-04",
+  projekte: "2026-11-04",
+  ueber: "2026-11-04",
+  blog: "2026-11-04", // CTA: KI-Check 990 € with the 60-day credit
   trainer: "2026-11-04", // trainer pool step, paid trial before the first assignment, seven-day reply
   kontakt: "2026-11-04", // trainer application fields, seven-day reply for applications
 };
