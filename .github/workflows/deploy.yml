@@ -53,6 +53,8 @@ jobs:
         run: node --import tsx --test scripts/tests/redirects.test.mts
       - name: Contact route guard (synthetic, no provider)
         run: node --test scripts/contact-route-guard.test.cjs
+      - name: Trainer acknowledgement rules (synthetic, no provider)
+        run: node --import tsx --test scripts/tests/trainer-ack.test.mts
       - name: No Server Actions on Next 14 (they would expose the RSC DoS advisories)
         run: '! grep -rl "use server" src'
       - name: App-only cutover contracts (synthetic, no Docker or provider)

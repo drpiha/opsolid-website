@@ -40,6 +40,7 @@ function harness({ env = smtpEnv, delivery = async () => ({ ok: true }), realEma
       if (id === '@/lib/email/shell') return load('src/lib/email/shell.ts');
       if (id === '@/lib/contact-guard') return load('src/lib/contact-guard.ts');
       if (id === '@/lib/contact-ack') return load('src/lib/contact-ack.ts');
+      if (id === '@/lib/constants') return load('src/lib/constants.ts');
       if (id === 'react') return { useState(initial) {
         const index = stateIndex++;
         states[index] = componentState[index] === undefined ? initial : componentState[index];
@@ -424,7 +425,7 @@ const ackEnv = { ...smtpEnv, CONTACT_TRAINER_ACK: 'on' };
 const settle = async () => { for (let i = 0; i < 5; i++) await new Promise((resolve) => setImmediate(resolve)); };
 
 test('trainer application with the flag off: one tagged owner mail with all fields, no acknowledgement', async () => {
-  const h = harness();
+  const h = harness({ env: { ...smtpEnv, CONTACT_TRAINER_ACK: 'off' } });
   const response = await h.post(trainerBody);
   await settle();
   assert.equal(response.status, 200);
@@ -451,6 +452,14 @@ test('trainer application with the flag on: owner mail first, then one fixed ack
   assert.equal((await h.post({ ...trainerBody, email: 'Applicant+2@example.test' })).status, 200);
   await settle();
   assert.equal(h.deliveries.length, 3, 'second application from the same mailbox: owner mail only');
+});
+
+test('trainer application without the flag: the acknowledgement is on by default', async () => {
+  const h = harness();
+  assert.equal((await h.post(trainerBody)).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 2);
+  assert.equal(h.deliveries[1].to, 'applicant@example.test');
 });
 
 test('a plain inquiry never triggers the acknowledgement, even with the flag on', async () => {

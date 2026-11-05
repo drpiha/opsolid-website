@@ -1,16 +1,9 @@
 /**
- * About page (v7). Company voice ("wir"), no team-size claims, no years, no employer. Founder name and
- * LinkedIn, location and working languages appear here (and on Contact, footer, JSON-LD) only.
+ * About page (v7). Company voice ("wir"), no team-size claims, no years, no employer. Founder name,
+ * location and working languages appear here (and on Contact, footer, JSON-LD) only. No link to the
+ * founder's personal LinkedIn profile (owner decision 2026-11-05).
  */
-import type { Href, PageDef, PageSet } from "../types";
-
-/**
- * External profile link. Href only models page keys and mailto:/tel:; the renderer emits a plain <a>
- * for any non-page href, so the https URL works at run time. A typed `https:` variant is requested
- * from the shared types owner.
- */
-const LINKEDIN = "https://www.linkedin.com/in/hasanhd/" as const;
-const linkedin = (label: string): Href => ({ label, href: LINKEDIN });
+import type { PageDef, PageSet } from "../types";
 
 const de: PageDef = {
   key: "ueber",
@@ -142,7 +135,6 @@ const de: PageDef = {
         ["Arbeitsweise", "Remote in Deutschland und Europa, schriftlich und per Video"],
         ["Sprachen", "Deutsch, Englisch, Türkisch"],
       ],
-      link: linkedin("Hasan Dönmez auf LinkedIn"),
     },
     {
       t: "text",
@@ -316,7 +308,6 @@ const en: PageDef = {
         ["Way of working", "Remote in Germany and Europe, in writing and by video"],
         ["Languages", "German, English, Turkish"],
       ],
-      link: linkedin("Hasan Dönmez on LinkedIn"),
     },
     {
       t: "text",
@@ -490,7 +481,6 @@ const tr: PageDef = {
         ["Çalışma biçimi", "Almanya ve Avrupa'da uzaktan, yazılı olarak ve görüntülü görüşmeyle"],
         ["Diller", "Almanca, İngilizce, Türkçe"],
       ],
-      link: linkedin("Hasan Dönmez, LinkedIn"),
     },
     {
       t: "text",

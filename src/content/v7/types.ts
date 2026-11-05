@@ -17,7 +17,7 @@ export type { L3, PageKey };
 export type Href =
   | { label: string; to: PageKey; hash?: string; sub?: string; query?: Record<string, string> }
   | { label: string; href: `mailto:${string}` | `tel:${string}` }
-  /** External link (same tab, rel="noopener noreferrer"), e.g. the founder's LinkedIn on the About page. */
+  /** External link (same tab, rel="noopener noreferrer"). */
   | { label: string; href: `https://${string}` };
 
 /** A same-origin image in /public with its intrinsic size. */

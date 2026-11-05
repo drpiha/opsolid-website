@@ -18,6 +18,7 @@ const allowedRuns = [
   'node --import tsx --test scripts/tests/opso-web-account.test.mts',
   'node --import tsx --test scripts/tests/redirects.test.mts',
   'node --test scripts/contact-route-guard.test.cjs',
+  'node --import tsx --test scripts/tests/trainer-ack.test.mts',
   '! grep -rl "use server" src',
   'python3 -B scripts/tests/test_opsolid_app_cutover.py',
   'npm run build',

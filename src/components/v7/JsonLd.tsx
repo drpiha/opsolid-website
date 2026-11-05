@@ -119,7 +119,7 @@ export function sharedNodes(locale: L3): Node[] {
       url: absUrl("ueber", locale),
       worksFor: { "@id": ORG },
       knowsLanguage: ["de", "en", "tr"],
-      sameAs: ["https://www.linkedin.com/in/hasanhd/"],
+      // No sameAs: the founder's personal LinkedIn is not linked (owner decision 2026-11-05).
     },
   ];
 }
