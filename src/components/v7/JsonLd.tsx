@@ -11,23 +11,23 @@ const SITE = `${SITE_CONFIG.url}/#website`;
 const LOGO = { url: `${SITE_CONFIG.url}/img/v7/logo-jsonld.png`, width: 1400, height: 400 };
 
 const ORG_DESC: Record<L3, string> = {
-  de: "OpSolid ist eine unabhängige Beratung für KI-Automatisierung. Wir finden mit Unternehmen die Abläufe, bei denen sich KI und Automatisierung lohnen, bauen die erste Lösung zum Festpreis und bieten KI-Schulungen an. Sitz in Arnsberg (NRW).",
-  en: "OpSolid is an independent AI automation consultancy. With companies, we find the workflows where AI and automation pay off, build the first solution at a fixed price and offer AI training. Based in Arnsberg, Germany.",
-  tr: "OpSolid, bağımsız bir YZ otomasyonu danışmanlığıdır. Şirketlerle birlikte yapay zekâ ve otomasyonun işe yaradığı süreçleri bulur, ilk çözümü sabit fiyatla kurar ve YZ eğitimleri sunar. Merkezi Almanya'nın Arnsberg şehrindedir.",
+  de: "OpSolid organisiert KI-Schulungen für Teams, online und live, mit freiberuflichen Trainerinnen und Trainern im eigenen Namen, und berät Unternehmen unabhängig bei KI-Automatisierung: KI-Check mit Schulungsempfehlung, Pilot zum Festpreis, Betrieb. Sitz in Arnsberg (NRW).",
+  en: "OpSolid organises AI training for teams, online and live, with freelance trainers in its own name, and gives companies independent AI automation consulting: AI check with a training recommendation, pilot at a fixed price, operation. Based in Arnsberg, Germany.",
+  tr: "OpSolid, ekipler için çevrimiçi ve canlı YZ eğitimlerini serbest eğitmenlerle kendi adına düzenler ve şirketlere YZ otomasyonunda bağımsız danışmanlık verir: eğitim önerili YZ Kontrolü, sabit fiyatlı pilot, işletme. Merkezi Almanya'nın Arnsberg şehrindedir.",
 };
 // Same wording as the footer trademark line (content trademarkText) and the About page section.
 const DISAMBIG: Record<L3, string> = {
-  de: "OpSolid ist eine Beratung für KI-Automatisierung aus Arnsberg. OpSolid ist nicht TopSolid (CAD/CAM-Software) und steht in keiner Verbindung dazu.",
-  en: "OpSolid is an AI automation consultancy based in Arnsberg, Germany. It is not TopSolid (CAD/CAM software) and has no connection to it.",
-  tr: "OpSolid, Arnsberg merkezli bir yapay zeka otomasyonu danışmanlığıdır. OpSolid, TopSolid (CAD/CAM yazılımı) ile ilgili değildir ve onunla bağlantısı yoktur.",
+  de: "OpSolid bietet KI-Schulungen und KI-Beratung aus Arnsberg. OpSolid ist nicht TopSolid (CAD/CAM-Software) und steht in keiner Verbindung dazu.",
+  en: "OpSolid offers AI training and AI consulting from Arnsberg, Germany. It is not TopSolid (CAD/CAM software) and has no connection to it.",
+  tr: "OpSolid, Arnsberg merkezli YZ eğitimleri ve YZ danışmanlığı sunar. OpSolid, TopSolid (CAD/CAM yazılımı) ile ilgili değildir ve onunla bağlantısı yoktur.",
 };
 // The firm name of the sole proprietorship, as in the Impressum heading.
 const LEGAL_NAME = "OpSolid, Inh. Hasan Dönmez";
 // Only topics the site itself offers.
 const KNOWS_ABOUT: Record<L3, string[]> = {
-  de: ["KI-Automatisierung", "Prozessautomatisierung", "Microsoft 365 und Copilot", "KI-Assistenten für Telefon und Chat", "KI-Schulungen", "KI-Kompetenz nach Art. 4 KI-Verordnung"],
-  en: ["AI automation", "Process automation", "Microsoft 365 and Copilot", "AI assistants for phone and chat", "AI training", "AI literacy under Article 4 of the EU AI Act"],
-  tr: ["Yapay zeka otomasyonu", "Süreç otomasyonu", "Microsoft 365 ve Copilot", "Telefon ve sohbet için yapay zeka asistanları", "Yapay zeka eğitimleri", "AB Yapay Zeka Tüzüğü 4. madde kapsamında yapay zeka yetkinliği"],
+  de: ["KI-Schulungen", "KI-Kompetenz nach Art. 4 KI-Verordnung", "KI-Automatisierung", "Prozessautomatisierung", "Microsoft 365 und Copilot", "KI-Assistenten für Telefon und Chat"],
+  en: ["AI training", "AI literacy under Article 4 of the EU AI Act", "AI automation", "Process automation", "Microsoft 365 and Copilot", "AI assistants for phone and chat"],
+  tr: ["Yapay zeka eğitimleri", "AB Yapay Zeka Tüzüğü 4. madde kapsamında yapay zeka yetkinliği", "Yapay zeka otomasyonu", "Süreç otomasyonu", "Microsoft 365 ve Copilot", "Telefon ve sohbet için yapay zeka asistanları"],
 };
 const JOB: Record<L3, string> = {
   de: "Gründer von OpSolid, KI-Berater",

@@ -14,7 +14,7 @@ const ADDRESS = `${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode
 const de: PageDef = {
   key: "kontakt",
   meta: {
-    title: "Kontakt: Ablauf schildern, KI-Check anfragen",
+    title: "Kontakt: Schulung oder KI-Check anfragen",
     description:
       "Schreiben Sie uns per Formular, E-Mail oder Telefon, welcher Ablauf Sie bremst und welche Systeme dazugehören. Antwort in der Regel in wenigen Arbeitstagen.",
   },
@@ -25,7 +25,7 @@ const de: PageDef = {
     h1: ["Erzählen Sie uns, welcher Ablauf", "Sie bremst", ""],
     lede: "Drei Sätze genügen: Welcher Ablauf, welche Systeme, was stört heute? Wir antworten persönlich per E-Mail, in der Regel innerhalb weniger Arbeitstage.",
     primary: { label: "Nachricht schreiben", to: "kontakt", hash: "formular" },
-    secondary: { label: "KI-Check ansehen", to: "check" },
+    secondary: { label: "Schulungen ansehen", to: "schulungen" },
     facts: ["NDA vor der Analyse", "Kennenlernen kostenlos und unverbindlich"],
     media: {
       kind: "svg",
@@ -45,9 +45,9 @@ const de: PageDef = {
       h: "Nachricht schreiben",
       lede: "Thema wählen, Ablauf kurz beschreiben: Das genügt für eine erste Antwort.",
       topics: [
+        { value: "schulung", label: "KI-Schulung für mein Team" },
         { value: "ki-check", label: "KI-Check" },
         { value: "beratung", label: "KI-Beratung und KI-Automatisierung" },
-        { value: "schulung", label: "KI-Schulung für mein Team" },
         { value: "trainer", label: "Trainerin oder Trainer werden" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Sonstiges" },
@@ -70,8 +70,8 @@ const de: PageDef = {
           p: "Per E-Mail oder 15 bis 30 Minuten per Video, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Wir sprechen in groben Zügen über Ihren Ablauf; Details folgen nach der NDA. Kostenlos und unverbindlich.",
         },
         {
-          h: "Angebot für den KI-Check",
-          p: "Wenn ein KI-Check sinnvoll ist, erhalten Sie ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse.",
+          h: "Angebot: Schulung oder KI-Check",
+          p: "Für eine Schulung erhalten Sie ein Angebot pro Team mit Termin, Trainerin oder Trainer und Preis. Wenn erst ein KI-Check sinnvoll ist, ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse.",
         },
       ],
     },
@@ -117,7 +117,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet der Einstieg?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto zzgl. USt. als Festpreis, nur für Unternehmen: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Schulungen buchen Sie pro Team, ab 1.790 € netto für einen halben Tag. Der KI-Check kostet 990 € netto zzgl. USt. als Festpreis, nur für Unternehmen: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
       },
       {
         q: "Wann sind Termine möglich?",
@@ -137,7 +137,7 @@ const de: PageDef = {
 const en: PageDef = {
   key: "kontakt",
   meta: {
-    title: "Contact: describe your workflow, request a check",
+    title: "Contact: request training or an AI check",
     description:
       "Write to OpSolid by form, email or phone: which workflow slows you down and which systems are involved. We usually reply within a few working days.",
   },
@@ -148,7 +148,7 @@ const en: PageDef = {
     h1: ["Tell us which workflow", "slows you down", ""],
     lede: "Three sentences are enough: which workflow, which systems, what is wrong today? We reply personally by email, usually within a few working days.",
     primary: { label: "Write a message", to: "kontakt", hash: "formular" },
-    secondary: { label: "See the AI check", to: "check" },
+    secondary: { label: "See the courses", to: "schulungen" },
     facts: ["NDA before the analysis", "Introductory call free and without obligation"],
     media: {
       kind: "svg",
@@ -168,9 +168,9 @@ const en: PageDef = {
       h: "Write a message",
       lede: "Choose a topic, describe your workflow briefly: that is enough for a first reply.",
       topics: [
+        { value: "schulung", label: "AI training for my team" },
         { value: "ki-check", label: "AI check" },
         { value: "beratung", label: "AI consulting and AI automation" },
-        { value: "schulung", label: "AI training for my team" },
         { value: "trainer", label: "Becoming a trainer" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Something else" },
@@ -193,8 +193,8 @@ const en: PageDef = {
           p: "By email, or a 15 to 30-minute video call on a Wednesday or Friday between 18:30 and 20:00 German time. We talk in broad terms about your workflow; details follow once the NDA is signed. Free and without obligation.",
         },
         {
-          h: "A quote for the AI check",
-          p: "If an AI check makes sense, you receive a quote for €990 net, a fixed price: a questionnaire and a written report, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis.",
+          h: "A quote: training or AI check",
+          p: "For training you receive a quote per team with date, trainer and price. If an AI check makes sense first, a quote for €990 net, a fixed price: a questionnaire and a written report with a training recommendation, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis.",
         },
       ],
     },
@@ -240,7 +240,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost to get started?",
-        a: "The intro is free and without obligation. The AI check costs €990 net of VAT, a fixed price, for businesses only: a questionnaire and a written report, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days. You receive the report even if we do not recommend any automation.",
+        a: "The intro is free and without obligation. Training is booked per team, from €1,790 net for a half day. The AI check costs €990 net of VAT, a fixed price, for businesses only: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a course or pilot within 60 days. You receive the report even if we do not recommend any automation.",
       },
       {
         q: "When can we talk?",
@@ -260,7 +260,7 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "kontakt",
   meta: {
-    title: "İletişim: iş akışını anlatın, YZ Kontrolü isteyin",
+    title: "İletişim: eğitim ya da YZ Kontrolü isteyin",
     description:
       "OpSolid'e form, e-posta veya telefonla yazın: hangi iş akışı sizi yavaşlatıyor, hangi sistemler işin içinde. Genellikle birkaç iş günü içinde yanıt veririz.",
   },
@@ -271,7 +271,7 @@ const tr: PageDef = {
     h1: ["Hangi iş akışının", "sizi yavaşlattığını", "anlatın"],
     lede: "Üç cümle yeter: hangi iş akışı, hangi sistemler, bugün ne aksıyor? Size e-postayla bizzat yanıt veririz; genellikle birkaç iş günü içinde.",
     primary: { label: "Mesaj yazın", to: "kontakt", hash: "formular" },
-    secondary: { label: "YZ Kontrolünü görün", to: "check" },
+    secondary: { label: "Eğitimlere bakın", to: "schulungen" },
     facts: ["Analizden önce NDA", "Tanışma görüşmesi ücretsiz ve bağlayıcı değil"],
     media: {
       kind: "svg",
@@ -291,9 +291,9 @@ const tr: PageDef = {
       h: "Mesaj yazın",
       lede: "Konuyu seçin, iş akışınızı kısaca anlatın: ilk yanıt için bu yeterli.",
       topics: [
+        { value: "schulung", label: "Ekibim için YZ eğitimi" },
         { value: "ki-check", label: "YZ Kontrolü" },
         { value: "beratung", label: "Yapay zeka danışmanlığı ve otomasyonu" },
-        { value: "schulung", label: "Ekibim için YZ eğitimi" },
         { value: "trainer", label: "Eğitmen olmak" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Diğer" },
@@ -316,8 +316,8 @@ const tr: PageDef = {
           p: "E-postayla ya da çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında 15-30 dakikalık görüntülü görüşmeyle. İş akışınızı genel hatlarıyla konuşuruz; ayrıntılar NDA'dan sonra gelir. Ücretsizdir ve bağlayıcı değildir.",
         },
         {
-          h: "YZ Kontrolü için teklif",
-          p: "Bir YZ Kontrolü anlamlıysa size 990 € (net, sabit fiyat) tutarında bir teklif sunarız: soru formu ve yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız.",
+          h: "Teklif: eğitim ya da YZ Kontrolü",
+          p: "Eğitim için tarih, eğitmen ve fiyat içeren, ekip başına bir teklif alırsınız. Önce bir YZ Kontrolü anlamlıysa 990 € (net, sabit fiyat) tutarında bir teklif: soru formu ve eğitim önerisi içeren yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız.",
         },
       ],
     },
@@ -363,7 +363,7 @@ const tr: PageDef = {
       },
       {
         q: "Başlamak ne kadar tutar?",
-        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, KDV hariç, sabit fiyat, yalnızca şirketler için): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. Eğitimler ekip başına rezerve edilir, yarım gün için 1.790 €'dan (net) itibaren. YZ Kontrolü 990 € (net, KDV hariç, sabit fiyat, yalnızca şirketler için): soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
       },
       {
         q: "Ne zaman görüşebiliriz?",

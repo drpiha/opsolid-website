@@ -111,7 +111,8 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
     active: pillar === k,
     current: here?.key === k && !here.sub,
   }));
-  const cta = href("kontakt", locale);
+  // The header CTA is the one booking path: the contact form with the training topic pre-selected.
+  const cta = `${href("kontakt", locale)}?anliegen=schulung`;
   const lang = here ? { key: here.key, sub: here.sub } : null;
 
   return (

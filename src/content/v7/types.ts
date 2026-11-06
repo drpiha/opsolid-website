@@ -106,10 +106,18 @@ export type Block =
     })
   /** Use cases by sector: tabs on wide screens, stacked on phones. Ideas are examples, labelled by `tag`. */
   | (SectionBase & { t: "sectors"; tag: string; items: { name: string; /** Short tab label; falls back to `name`. */ tab?: string; h: string; p: string; ideas: string[]; stays: string }[] })
-  /** Training catalogue. "bookable" items carry a published price; "planned" items never show a price. */
+  /**
+   * Training catalogue as a hairline ledger (one row per course). "bookable" items carry a published price;
+   * "planned" items never show a price. `format` is the spec line in a fixed order, tokens joined by " · "
+   * (length and hours · people included and max · online, live, in Ihrem Teams · Teilnahmebescheinigung); the
+   * first token is set in ink, `statusLabel` ("Termin auf Anfrage") closes the line. `price` is the team price
+   * alone ("ab 1.790 €"), `unit` the mono line under it ("netto pro Team"), `arith` the per-person arithmetic at
+   * the included group size as unwrapped lines, always worded as arithmetic ("Rechnerisch 179 € pro Person bei
+   * 10 Personen"), never as a price of its own.
+   */
   | (SectionBase & {
       t: "courses";
-      items: { name: string; status: "bookable" | "planned"; statusLabel: string; format: string; p: string; price?: string; href?: Href }[];
+      items: { name: string; status: "bookable" | "planned"; statusLabel: string; format: string; p: string; price?: string; unit?: string; arith?: string[]; href?: Href }[];
       footnote?: string;
     })
   /** Our own work only, with real screenshots in a frame. */
@@ -176,6 +184,11 @@ export type PageDef = {
     secondary?: Href;
     /** Mono fact line under the hero ("KI-Check 990 € netto · NDA vor der Analyse · Bericht auch ohne Empfehlung"). */
     facts?: string[];
+    /**
+     * Fact strip instead of the fact line: label over value, four columns on desktop and two by two on phones
+     * (the offer's price, format, record and language on the training pages). Takes precedence over `facts`.
+     */
+    strip?: [string, string][];
     /** Right-hand figure. */
     media?: Media;
   };

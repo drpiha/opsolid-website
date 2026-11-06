@@ -8,16 +8,16 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "ueber",
   meta: {
-    title: "Über OpSolid: unabhängige KI-Beratung aus Arnsberg",
+    title: "Über OpSolid: KI-Schulungen und KI-Beratung aus Arnsberg",
     description:
-      "OpSolid ist eine unabhängige Beratung für KI-Automatisierung aus Arnsberg: Angebot, Methode, Grundsätze und Gründer. Nicht zu verwechseln mit TopSolid.",
+      "OpSolid aus Arnsberg organisiert KI-Schulungen für Teams und berät unabhängig bei KI-Automatisierung: Angebot, Methode, Grundsätze, Gründer. Nicht TopSolid.",
   },
   crumbs: [],
   crumb: "Über uns",
   hero: {
     eyebrow: "Über OpSolid",
     h1: ["Beratung, die beim", "Ablauf", "anfängt"],
-    lede: "OpSolid berät Unternehmen bei der Automatisierung mit KI. Wir fangen beim Ablauf an, nicht bei der Technik.",
+    lede: "OpSolid organisiert KI-Schulungen für Teams und berät Unternehmen bei der Automatisierung mit KI. In beidem fangen wir beim Ablauf an, nicht bei der Technik.",
     primary: { label: "Kennenlernen anfragen", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "KI-Check ansehen", to: "check" },
     facts: ["Unabhängig von KI-Anbietern", "NDA vor der Analyse", "Pilot zum Festpreis, vorab schriftlich"],
@@ -36,19 +36,19 @@ const de: PageDef = {
       id: "angebot",
       label: "Angebot",
       note: "Was wir tun, in dieser Reihenfolge.",
-      h: "Drei Bereiche, die Beratung zuerst",
+      h: "Drei Bereiche, die Schulungen zuerst",
       items: [
         {
-          tag: "1 · Beratung",
-          h: "KI-Beratung und KI-Automatisierung",
-          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
-          href: { label: "Zur KI-Beratung", to: "beratung" },
+          tag: "1 · KI-Schulungen",
+          h: "Ihr Team lernt, KI sicher zu nutzen",
+          p: "Online, live in Ihrem eigenen Microsoft Teams, auf Deutsch oder Englisch, gebucht pro Team ab 1.790 € netto. OpSolid organisiert die Schulungen im eigenen Namen: Die Trainerin oder der Trainer ist freiberuflich, von uns ausgewählt und Ihnen vor der Buchung namentlich genannt; Vertrag und Rechnung laufen über OpSolid. Nach der Schulung erhält Ihr Team unsere Teilnahmebescheinigung.",
+          href: { label: "Zu den KI-Schulungen", to: "schulungen" },
         },
         {
-          tag: "2 · KI-Schulungen",
-          h: "Ihr Team lernt, KI sicher zu nutzen",
-          p: "Online, auf Deutsch und Englisch, live für Ihr Team. Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich.",
-          href: { label: "Zu den KI-Schulungen", to: "schulungen" },
+          tag: "2 · Beratung",
+          h: "KI-Beratung und KI-Automatisierung",
+          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, der mit einer Schulungsempfehlung endet. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
+          href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
           tag: "3 · Eigenes Produkt",
@@ -181,16 +181,16 @@ const de: PageDef = {
 const en: PageDef = {
   key: "ueber",
   meta: {
-    title: "About OpSolid: independent AI consulting",
+    title: "About OpSolid: AI training and AI consulting from Arnsberg",
     description:
-      "OpSolid is an independent AI automation consultancy in Arnsberg, Germany: offer, method, principles and founder. Not to be confused with TopSolid (CAD/CAM).",
+      "OpSolid, Arnsberg, Germany: AI training for teams and independent AI automation consulting. Offer, method, principles and founder. Not TopSolid (CAD/CAM).",
   },
   crumbs: [],
   crumb: "About",
   hero: {
     eyebrow: "About OpSolid",
     h1: ["Consulting that starts with the", "workflow", ""],
-    lede: "OpSolid advises companies on automation with AI. We start with the workflow, not with the technology.",
+    lede: "OpSolid organises AI training for teams and advises companies on automation with AI. In both we start with the workflow, not with the technology.",
     primary: { label: "Request an intro", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "See the AI check", to: "check" },
     facts: ["Independent of AI vendors", "NDA before the analysis", "Pilot at a fixed price, in writing first"],
@@ -209,19 +209,19 @@ const en: PageDef = {
       id: "angebot",
       label: "Offer",
       note: "What we do, in this order.",
-      h: "Three areas, consulting first",
+      h: "Three areas, training first",
       items: [
         {
-          tag: "1 · Consulting",
-          h: "AI consulting and AI automation",
-          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net: a questionnaire and a written report. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
-          href: { label: "To AI consulting", to: "beratung" },
+          tag: "1 · AI training",
+          h: "Your team learns to use AI safely",
+          p: "Online, live in your own Microsoft Teams, in English or German, booked per team from €1,790 net. OpSolid organises the training in its own name: the trainer is a freelancer we select and name to you before you book; contract and invoice run through OpSolid. After the course your team receives our participation record.",
+          href: { label: "To AI training", to: "schulungen" },
         },
         {
-          tag: "2 · AI training",
-          h: "Your team learns to use AI safely",
-          p: "Online, in German and English, live for your team. Before you book, we tell you by name who will deliver your training.",
-          href: { label: "To AI training", to: "schulungen" },
+          tag: "2 · Consulting",
+          h: "AI consulting and AI automation",
+          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net: a questionnaire and a written report that ends with a training recommendation. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
+          href: { label: "To AI consulting", to: "beratung" },
         },
         {
           tag: "3 · Our own product",
@@ -354,16 +354,16 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "ueber",
   meta: {
-    title: "OpSolid hakkında: bağımsız YZ danışmanlığı",
+    title: "OpSolid hakkında: Arnsberg'den YZ eğitimleri ve danışmanlığı",
     description:
-      "OpSolid, Arnsberg merkezli bağımsız bir YZ otomasyonu danışmanlığıdır: hizmetler, yöntem, ilkeler ve kurucu. TopSolid (CAD/CAM) ile karıştırılmamalıdır.",
+      "OpSolid, Arnsberg'den ekipler için YZ eğitimleri düzenler ve YZ otomasyonunda bağımsız danışmanlık verir: hizmetler, yöntem, ilkeler, kurucu. TopSolid değildir.",
   },
   crumbs: [],
   crumb: "Hakkımızda",
   hero: {
     eyebrow: "OpSolid hakkında",
     h1: ["İş akışından", "başlayan", "danışmanlık"],
-    lede: "OpSolid, şirketlere yapay zeka ile otomasyon konusunda danışmanlık verir. Teknolojiden değil, iş akışından başlarız.",
+    lede: "OpSolid, ekipler için YZ eğitimleri düzenler ve şirketlere yapay zeka ile otomasyon konusunda danışmanlık verir. İkisinde de teknolojiden değil, iş akışından başlarız.",
     primary: { label: "Tanışma görüşmesi talep edin", to: "kontakt", query: { anliegen: "beratung" } },
     secondary: { label: "YZ Kontrolünü görün", to: "check" },
     facts: ["YZ sağlayıcılarından bağımsız", "Analizden önce NDA", "Sabit fiyatlı pilot, önceden yazılı"],
@@ -382,19 +382,19 @@ const tr: PageDef = {
       id: "angebot",
       label: "Hizmetler",
       note: "Ne yapıyoruz, hangi sırayla.",
-      h: "Üç alan, önce danışmanlık",
+      h: "Üç alan, önce eğitimler",
       items: [
         {
-          tag: "1 · Danışmanlık",
-          h: "Yapay zeka danışmanlığı ve otomasyonu",
-          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net) tutarındaki YZ Kontrolüdür: soru formu ve yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
-          href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
+          tag: "1 · YZ eğitimleri",
+          h: "Ekibiniz yapay zekayı güvenle kullanmayı öğrenir",
+          p: "Çevrimiçi, kendi Microsoft Teams'inizde canlı, Almanca veya İngilizce, ekip başına 1.790 €'dan (net) itibaren. OpSolid eğitimleri kendi adına düzenler: eğitmen, bizim seçtiğimiz ve rezervasyondan önce size adıyla bildirdiğimiz bir serbest çalışandır; sözleşme ve fatura OpSolid üzerinden yürür. Eğitimden sonra ekibiniz katılım belgemizi alır.",
+          href: { label: "YZ eğitimlerine", to: "schulungen" },
         },
         {
-          tag: "2 · YZ eğitimleri",
-          h: "Ekibiniz yapay zekayı güvenle kullanmayı öğrenir",
-          p: "Çevrim içi, Almanca ve İngilizce, ekibiniz için canlı. Eğitmeni rezervasyondan önce size adıyla bildiririz.",
-          href: { label: "YZ eğitimlerine", to: "schulungen" },
+          tag: "2 · Danışmanlık",
+          h: "Yapay zeka danışmanlığı ve otomasyonu",
+          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net) tutarındaki YZ Kontrolüdür: soru formu ve eğitim önerisiyle biten yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
+          href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
           tag: "3 · Kendi ürünümüz",

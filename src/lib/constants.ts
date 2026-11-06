@@ -3,8 +3,8 @@
 // Update these values to customize the brand identity
 // =============================================================================
 
-/** Date of the last substantive content update; drives the visible "Stand:" line. */
-export const SITE_UPDATED_ISO = "2026-10-29";
+/** Date of the last substantive content update; drives the visible "Stand:" line (2026-11-06: trainings lead). */
+export const SITE_UPDATED_ISO = "2026-11-06";
 
 /** "Oktober 2026" / "October 2026" / "Ekim 2026". */
 export function formatStand(locale: string): string {
@@ -15,9 +15,9 @@ export function formatStand(locale: string): string {
 
 export const SITE_CONFIG = {
   name: "OpSolid",
-  tagline: "KI-Automatisierung und KI-Beratung für Unternehmen",
+  tagline: "KI-Schulungen und KI-Beratung für Unternehmen",
   description:
-    "OpSolid berät Unternehmen bei KI-Automatisierung: vom KI-Check über den Pilot zum Festpreis bis zum Betrieb. Dazu KI-Schulungen und OpSo, unser digitales Kartenprodukt.",
+    "OpSolid organisiert KI-Schulungen für Teams, online und live in Ihrem Microsoft Teams, und berät Unternehmen bei KI-Automatisierung: vom KI-Check mit Schulungsempfehlung über den Pilot zum Festpreis bis zum Betrieb. Dazu OpSo, unser digitales Kartenprodukt.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   phone: "+49 176 31020654",
