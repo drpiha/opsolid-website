@@ -40,6 +40,7 @@ function harness({ env = smtpEnv, delivery = async () => ({ ok: true }), realEma
       if (id === '@/lib/email/shell') return load('src/lib/email/shell.ts');
       if (id === '@/lib/contact-guard') return load('src/lib/contact-guard.ts');
       if (id === '@/lib/contact-ack') return load('src/lib/contact-ack.ts');
+      if (id === '@/lib/email/ack-logo') return load('src/lib/email/ack-logo.ts');
       if (id === '@/lib/constants') return load('src/lib/constants.ts');
       if (id === 'react') return { useState(initial) {
         const index = stateIndex++;
@@ -466,6 +467,31 @@ test('trainer application with the flag on: owner mail first, then one fixed ack
   assert.equal((await h.post({ ...trainerBody, email: 'Applicant+2@example.test' })).status, 200);
   await settle();
   assert.equal(h.deliveries.length, 3, 'second application from the same mailbox: owner mail only');
+});
+
+test('the acknowledgement through the real mail client: SMTP embeds the logo, an HTTP provider gets the text brand', async () => {
+  let h = harness({ realEmail: true });
+  assert.equal((await h.post(trainerBody)).status, 200);
+  await settle();
+  assert.equal(h.deliveries.length, 2);
+  const [owner, ack] = h.deliveries;
+  assert.equal(owner.attachments, undefined, 'the owner mail stays without attachments');
+  assert.equal(ack.attachments.length, 1);
+  const [logo] = ack.attachments;
+  assert.equal(logo.contentDisposition, 'inline');
+  assert.equal(logo.contentType, 'image/png');
+  assert.ok(ack.html.includes(`src="cid:${logo.cid}"`));
+  assert.equal(logo.content.subarray(0, 4).toString('hex'), '89504e47');
+  assert.doesNotMatch(ack.html.replace(`cid:${logo.cid}`, ''), /https?:|<a\s|example\.test/);
+
+  h = harness({ realEmail: true, env: { CONTACT_TO_EMAIL: 'inbox@example.test', BREVO_API_KEY: 'synthetic-only' }, httpResponse: () => ({ ok: true, status: 201, json: async () => ({ messageId: 'synthetic' }), text: async () => '' }) });
+  assert.equal((await h.post(trainerBody)).status, 200);
+  await settle();
+  assert.equal(h.requests.length, 2);
+  const sent = JSON.parse(h.requests[1].options.body);
+  assert.doesNotMatch(sent.htmlContent, /cid:|<img\b/);
+  assert.match(sent.htmlContent, />OPSOLID<\/div>/);
+  assert.equal(sent.attachment, undefined);
 });
 
 test('trainer application without the flag: the acknowledgement is on by default', async () => {
