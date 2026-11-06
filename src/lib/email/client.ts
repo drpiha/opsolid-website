@@ -35,6 +35,13 @@ export interface SendEmailInput {
   replyTo?: string;
   /** Extra SMTP/Resend headers (e.g. Message-ID, List-Unsubscribe) */
   headers?: Record<string, string>;
+  /**
+   * Images that travel inside the mail and are referenced from `html` as `cid:<cid>` (no remote request when
+   * the mail is opened). Only the SMTP path embeds them; the HTTP providers send `htmlWithoutInlineImages`.
+   */
+  inlineImages?: { cid: string; filename: string; contentType: string; contentBase64: string }[];
+  /** The body for a provider that cannot embed images. Falls back to `html`. */
+  htmlWithoutInlineImages?: string;
 }
 
 export interface SendEmailResult {
@@ -164,7 +171,7 @@ async function sendViaBrevo(
     sender: { email: sender.email, name: senderName },
     to: [{ email: input.to }],
     subject: input.subject,
-    htmlContent: input.html,
+    htmlContent: input.htmlWithoutInlineImages ?? input.html,
     textContent: input.text,
   };
   if (input.replyTo) body.replyTo = { email: input.replyTo };
@@ -209,7 +216,7 @@ async function sendViaResend(
     from,
     to: [input.to],
     subject: input.subject,
-    html: input.html,
+    html: input.htmlWithoutInlineImages ?? input.html,
     text: input.text,
   };
   if (input.replyTo) body.reply_to = input.replyTo;
@@ -273,6 +280,17 @@ async function sendViaSmtp(
       html: input.html,
       text: input.text,
       headers: input.headers,
+      ...(input.inlineImages?.length
+        ? {
+            attachments: input.inlineImages.map((image) => ({
+              filename: image.filename,
+              content: Buffer.from(image.contentBase64, "base64"),
+              contentType: image.contentType,
+              cid: image.cid,
+              contentDisposition: "inline" as const,
+            })),
+          }
+        : {}),
     });
     return { ok: true, messageId: info.messageId ?? undefined };
   } catch {
