@@ -32,7 +32,8 @@ export function ackSignature(locale: AckLocale): string[] {
   return ["OpSolid, Inh. Hasan Dönmez", `${street} · ${postalCode} ${city}${COUNTRY[locale]}`, `${ADDRESS} · ${SITE}`, LEGAL[locale]];
 }
 
-// The approved texts, word for word; they are only split into paragraphs. DE keeps the German salutation
+// The approved texts, word for word; they are only split into paragraphs. The German close has no comma
+// (DIN 5008; owner decision 2026-11-06). DE keeps the German salutation
 // line; EN and TR keep the greeting and the thanks in one paragraph, exactly as approved. `headline` is the
 // subject in two parts (the second is set in italics), `eyebrow` the small label above it (written in capitals
 // here, because a mail client's text-transform gets the Turkish dotted İ wrong).
@@ -46,7 +47,7 @@ export const ACK_TEXT: Record<AckLocale, { subject: string; eyebrow: string; hea
       "vielen Dank für Ihre Bewerbung. Sie ist bei uns eingegangen. Wir antworten innerhalb von sieben Tagen.",
       "Einsätze entstehen aus Kundenanfragen; wir melden uns, sobald eine Anfrage zu Ihrem Thema passt.",
       "Ihre Angaben verwenden wir nur für die Auswahl von Trainerinnen und Trainern und löschen sie auf Wunsch.",
-      "Freundliche Grüße,",
+      "Freundliche Grüße",
     ],
   },
   en: {

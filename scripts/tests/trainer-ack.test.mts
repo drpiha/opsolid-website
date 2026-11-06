@@ -102,7 +102,7 @@ test("the approved wording is unchanged; it is only split into paragraphs", () =
   const joined = (locale: "de" | "en" | "tr") => ACK_TEXT[locale].lines.join(" ");
   assert.equal(
     joined("de"),
-    "Guten Tag, vielen Dank für Ihre Bewerbung. Sie ist bei uns eingegangen. Wir antworten innerhalb von sieben Tagen. Einsätze entstehen aus Kundenanfragen; wir melden uns, sobald eine Anfrage zu Ihrem Thema passt. Ihre Angaben verwenden wir nur für die Auswahl von Trainerinnen und Trainern und löschen sie auf Wunsch. Freundliche Grüße,",
+    "Guten Tag, vielen Dank für Ihre Bewerbung. Sie ist bei uns eingegangen. Wir antworten innerhalb von sieben Tagen. Einsätze entstehen aus Kundenanfragen; wir melden uns, sobald eine Anfrage zu Ihrem Thema passt. Ihre Angaben verwenden wir nur für die Auswahl von Trainerinnen und Trainern und löschen sie auf Wunsch. Freundliche Grüße",
   );
   assert.equal(
     joined("en"),
