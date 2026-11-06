@@ -1,13 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import {
-  Instrument_Serif,
-  JetBrains_Mono,
-  Plus_Jakarta_Sans,
-  Fira_Code,
-  IBM_Plex_Mono,
-} from "next/font/google";
 import localFont from "next/font/local";
+import { subsetFontVariables } from "./fonts/subset-families";
 import { isV4Path } from "@/lib/v4";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
@@ -35,19 +29,14 @@ const archivo = localFont({
   variable: "--font-archivo",
 });
 
-// Plex Mono: one family; its latin-ext faces (Turkish capitals in the
-// uppercase mono labels) are declared by unicode-range and load on demand.
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-  variable: "--font-plex-mono",
-  weight: ["400", "500"],
-});
+// Every font is a file in this repository: the build makes no request to Google Fonts. IBM Plex Mono (v4 mono
+// labels), Plus Jakarta Sans and Fira Code (v2 app stack), Instrument Serif and JetBrains Mono (app tokens and
+// card templates) are declared per subset in ./fonts/subset-families.ts and joined into --font-plex-mono,
+// --font-v2-body, --font-v2-mono, --font-instrument-serif and --font-jetbrains-mono in globals.css.
 
 // v7 marketing body font, also used by app surfaces: Inter, variable (all weights in one file), self-hosted.
-// inter-latin.woff2 is Google Fonts' own latin subset of Inter v20 (byte-identical to what next/font/google
-// served), preloaded as the LCP text face. The five Turkish letters outside latin (Ğ ğ İ Ş ş; ı is in latin)
+// inter-latin.woff2 is Google Fonts' own latin subset of Inter v20 (byte-identical to the file Google Fonts
+// serves), preloaded as the LCP text face. The five Turkish letters outside latin (Ğ ğ İ Ş ş; ı is in latin)
 // come from inter-tr.woff2, a ~4 KiB Google Fonts text= subset declared by unicode-range, so /tr no longer
 // downloads the 85 KiB latin-ext file. globals.css joins both into --font-inter. Licence: ./fonts/inter-OFL.txt.
 const inter = localFont({
@@ -93,26 +82,6 @@ const geistMono = localFont({
   weight: "400",
 });
 
-// V2 redesign font stack — Plus Jakarta Sans serves both display and body
-// roles (weight contrast carries hierarchy), Fira Code as mono.
-// Loaded site-wide so v2 pages don't pay a font-network round-trip on
-// first paint when toggling the ?preview=v2 gate.
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  preload: false,
-  variable: "--font-v2-body",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-  variable: "--font-v2-mono",
-  weight: ["400", "500"],
-});
-
 // Geist ships as a file in the `geist` npm package. It only serves legacy card
 // templates and app surfaces, so it is declared without preload.
 const geist = localFont({
@@ -121,23 +90,6 @@ const geist = localFont({
   display: "swap",
   preload: false,
   weight: "100 900",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-  variable: "--font-instrument-serif",
-  weight: ["400"],
-  style: ["normal", "italic"],
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-  variable: "--font-jetbrains-mono",
-  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -214,16 +166,12 @@ export default function RootLayout({
 
   const fontClasses = [
     archivo.variable,
-    ibmPlexMono.variable,
     inter.variable,
     interTr.variable,
     fraunces.variable,
     geistMono.variable,
-    instrumentSerif.variable,
-    jetBrainsMono.variable,
     geist.variable,
-    plusJakartaSans.variable,
-    firaCode.variable,
+    subsetFontVariables,
   ]
     .filter(Boolean)
     .join(" ");
