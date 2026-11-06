@@ -92,7 +92,8 @@ test("body has the approved text only: our own address, no applicant text, no li
   assert.match(buildAck("a@b.co", "v7-contact-en").text, /^Hello, thank you for your application\. We have received it and will reply within seven days\./);
   assert.match(buildAck("a@b.co", "v7-contact-tr").text, /^Merhaba, başvurunuz için teşekkür ederiz\. Başvurunuz bize ulaştı; yedi gün içinde yanıt vereceğiz\./);
   assert.equal(buildAck("a@b.co", "v7-contact-tr").subject, "Başvurunuz bize ulaştı");
-  // One signature in every language: name, the Impressum postal address and our inbox (§ 15b GewO).
+  // One signature in every language: name, the Impressum postal address and our inbox (recommended practice
+  // for a sole trader and the owner's decision, not a statutory duty).
   const signature = `OpSolid, Inh. Hasan Dönmez, ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, info@opsolid.de`;
   for (const locale of ["de", "en", "tr"] as const) assert.equal(ACK_TEXT[locale].lines.at(-1), signature);
 });

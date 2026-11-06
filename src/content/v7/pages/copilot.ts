@@ -38,7 +38,7 @@ const de: PageDef = {
       h: "Was der Praxistag umfasst",
       rows: [
         ["Preis", "Ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen), zzgl. USt., nur für Unternehmen. Den Preis für Ihren Umfang nennen wir vorab."],
-        ["Umfang", "1 Tag, 10 Personen inklusive, bis zu 12 Personen"],
+        ["Umfang", "1 Tag (6 Stunden inklusive Pausen, auf Wunsch an zwei halben Tagen), 10 Personen inklusive, bis zu 12 Personen"],
         ["Voraussetzung", "Microsoft 365 Copilot-Lizenz und Microsoft-365-Anmeldung für jede teilnehmende Person"],
         ["Durchführung", "Online live auf Deutsch oder Englisch, per Microsoft Teams oder Zoom; geschlossener Termin für Ihr Team nach Vereinbarung"],
         ["Leitung", "Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich."],
@@ -158,7 +158,7 @@ const de: PageDef = {
       },
       {
         q: "Was bedeutet „ab 2.900 €“?",
-        a: "Der Preis gilt für einen Tag mit 10 Personen; jede weitere Person kostet 150 € (bis 12 Personen). Weicht Ihr Umfang ab, nennen wir den Preis vor der Buchung. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Der Preis gilt für einen Tag mit 10 Personen, rechnerisch 290 € pro Person; jede weitere Person kostet 150 € (bis 12 Personen). Weicht Ihr Umfang ab, nennen wir den Preis vor der Buchung. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Ändern Sie unsere Microsoft-365-Einstellungen?",
@@ -223,7 +223,7 @@ const en: PageDef = {
       h: "What the workshop covers",
       rows: [
         ["Price", "From €2,900 net per team, 10 people included, each additional person €150 (up to 12), plus VAT, businesses only. We name the price for your scope up front."],
-        ["Scope", "1 day, 10 people included, up to 12 people"],
+        ["Scope", "1 day (6 hours including breaks, on request split over two half days), 10 people included, up to 12 people"],
         ["Prerequisite", "A Microsoft 365 Copilot licence and a Microsoft 365 sign-in for every participant"],
         ["Delivery", "Live online in English or German, via Microsoft Teams or Zoom; a closed session for your team, by agreement"],
         ["Led by", "We name the trainer to you before you book."],
@@ -343,7 +343,7 @@ const en: PageDef = {
       },
       {
         q: "What does “from €2,900” mean?",
-        a: "The price covers one day with 10 people; each additional person is €150 (up to 12). If your scope differs, we name the price before you book. All prices net of VAT, businesses only.",
+        a: "The price covers one day with 10 people, which works out at €290 per person; each additional person is €150 (up to 12). If your scope differs, we name the price before you book. All prices net of VAT, businesses only.",
       },
       {
         q: "Will you change our Microsoft 365 settings?",
@@ -408,7 +408,7 @@ const tr: PageDef = {
       h: "Uygulama günü neleri kapsar?",
       rows: [
         ["Fiyat", "Ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi), KDV hariç; yalnızca işletmeler için. Kapsamınıza göre fiyatı önceden bildiririz."],
-        ["Kapsam", "1 gün, 10 kişi dahil, en fazla 12 kişi"],
+        ["Kapsam", "1 gün (molalar dahil 6 saat; isterseniz iki yarım güne bölünür), 10 kişi dahil, en fazla 12 kişi"],
         ["Ön koşul", "Her katılımcı için Microsoft 365 Copilot lisansı ve Microsoft 365 girişi"],
         ["Uygulama", "Almanca veya İngilizce canlı çevrimiçi; anlaşmaya göre Microsoft Teams veya Zoom; ekibinize özel kapalı oturum"],
         ["Yürüten", "Eğitmeni rezervasyondan önce size adıyla bildiririz."],
@@ -528,7 +528,7 @@ const tr: PageDef = {
       },
       {
         q: "“2.900 €'dan itibaren” ne demek?",
-        a: "Fiyat, 10 kişilik bir gün için geçerlidir; her ek kişi 150 €'dur (en fazla 12 kişi). Kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
+        a: "Fiyat, 10 kişilik bir gün için geçerlidir; bu, kişi başı 290 € eder. Her ek kişi 150 €'dur (en fazla 12 kişi). Kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
       },
       {
         q: "Microsoft 365 ayarlarımızı değiştirir misiniz?",

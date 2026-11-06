@@ -122,8 +122,22 @@ test('honeypot is generically accepted without any delivery even when provider i
     assert.equal(response.status, 200);
     assert.deepEqual(await response.json(), { success: true });
     assert.equal(h.deliveries.length, 0);
-    assert.equal(h.logs.length, 0);
+    // One line with the field name only: no value, no sender.
+    assert.equal(JSON.stringify(h.logs), JSON.stringify([['warn', '[contact] honeypot hit', { field: 'website' }]]));
   }
+});
+
+test('the v7 trap field hp_blank works like the website trap, logs once per window and lets a blank trap through', async () => {
+  const h = harness();
+  for (let i = 0; i < 3; i++) {
+    const response = await h.post({ ...valid, hp_blank: 'filled by a bot' });
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), { success: true });
+  }
+  assert.equal(h.deliveries.length, 0);
+  assert.equal(JSON.stringify(h.logs), JSON.stringify([['warn', '[contact] honeypot hit', { field: 'hp_blank' }]]));
+  assert.equal((await h.post({ ...valid, hp_blank: '  ', website: '' })).status, 200);
+  assert.equal(h.deliveries.length, 1);
 });
 
 test('missing destination, missing provider and partial SMTP configuration return503', async () => {

@@ -130,7 +130,7 @@ const de: PageDef = {
         "Wir arbeiten mit Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n und Python, binden CRM und ERP an und hosten bei Bedarf in der EU.",
       ],
       facts: [
-        ["Gründer", "Hasan Dönmez"],
+        ["Gründer und Inhaber", "Hasan Dönmez"],
         ["Sitz", "Arnsberg, Sauerland, NRW"],
         ["Arbeitsweise", "Remote in Deutschland und Europa, schriftlich und per Video"],
         ["Sprachen", "Deutsch, Englisch, Türkisch"],
@@ -303,7 +303,7 @@ const en: PageDef = {
         "We work with Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n and Python, connect CRM and ERP systems, and host in the EU where needed.",
       ],
       facts: [
-        ["Founder", "Hasan Dönmez"],
+        ["Founder and owner", "Hasan Dönmez"],
         ["Based in", "Arnsberg, Sauerland, North Rhine-Westphalia"],
         ["Way of working", "Remote in Germany and Europe, in writing and by video"],
         ["Languages", "German, English, Turkish"],
@@ -476,7 +476,7 @@ const tr: PageDef = {
         "Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n ve Python ile çalışır, CRM ve ERP sistemlerini bağlar, gerektiğinde AB'de barındırırız.",
       ],
       facts: [
-        ["Kurucu", "Hasan Dönmez"],
+        ["Kurucu ve işletme sahibi", "Hasan Dönmez"],
         ["Merkez", "Arnsberg, Sauerland, Kuzey Ren-Vestfalya"],
         ["Çalışma biçimi", "Almanya ve Avrupa'da uzaktan, yazılı olarak ve görüntülü görüşmeyle"],
         ["Diller", "Almanca, İngilizce, Türkçe"],

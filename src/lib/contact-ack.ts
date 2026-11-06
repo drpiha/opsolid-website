@@ -12,7 +12,9 @@ import { SITE_CONFIG } from "@/lib/constants";
 export type AckLocale = "de" | "en" | "tr";
 
 const ADDRESS = "info@opsolid.de";
-// Name and postal address on every business mail to a named recipient (§ 15b GewO), as in the Impressum.
+// Name and postal address on every business mail, as in the Impressum. For a sole trader who is not in the
+// commercial register this is recommended practice (chambers of commerce), not a statutory duty: § 15b GewO,
+// which once required it, was repealed in 2009. The owner keeps the address (decision 2026-11-06).
 const SIGNATURE = `OpSolid, Inh. Hasan Dönmez, ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, ${ADDRESS}`;
 
 // The approved texts, split only where a mail client needs line breaks. DE keeps the German salutation
