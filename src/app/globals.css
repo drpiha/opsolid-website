@@ -17,6 +17,58 @@
     --font-inter: var(--font-inter-tr), var(--font-inter-latin);
   }
 
+  /* App-surface families, self-hosted per subset (src/app/fonts/subset-families.ts). Each line lists the
+     subsets of one family in the order that keeps Google's precedence where ranges overlap (its later
+     @font-face wins, so latin comes first here), then the family's fallback face. The fallback faces carry the
+     metric overrides the Google loader used to generate, so text keeps its size while a font file loads. */
+  :root {
+    --font-plex-mono: var(--font-plex-mono-latin), var(--font-plex-mono-latin-ext), var(--font-plex-mono-vietnamese), var(--font-plex-mono-cyrillic), var(--font-plex-mono-cyrillic-ext), "IBM Plex Mono Fallback";
+    --font-v2-body: var(--font-v2-body-latin), var(--font-v2-body-latin-ext), var(--font-v2-body-vietnamese), var(--font-v2-body-cyrillic-ext), "Plus Jakarta Sans Fallback";
+    --font-v2-mono: var(--font-v2-mono-latin), var(--font-v2-mono-latin-ext), var(--font-v2-mono-symbols2), var(--font-v2-mono-greek), var(--font-v2-mono-greek-ext), var(--font-v2-mono-cyrillic), var(--font-v2-mono-cyrillic-ext), "Fira Code Fallback";
+    --font-instrument-serif: var(--font-instrument-serif-latin), var(--font-instrument-serif-latin-ext), "Instrument Serif Fallback";
+    --font-jetbrains-mono: var(--font-jetbrains-mono-latin), var(--font-jetbrains-mono-latin-ext), var(--font-jetbrains-mono-vietnamese), var(--font-jetbrains-mono-greek), var(--font-jetbrains-mono-cyrillic), var(--font-jetbrains-mono-cyrillic-ext), "JetBrains Mono Fallback";
+  }
+  @font-face {
+    font-family: "IBM Plex Mono Fallback";
+    src: local("Arial");
+    ascent-override: 76.16%;
+    descent-override: 20.43%;
+    line-gap-override: 0.00%;
+    size-adjust: 134.59%;
+  }
+  @font-face {
+    font-family: "Plus Jakarta Sans Fallback";
+    src: local("Arial");
+    ascent-override: 98.88%;
+    descent-override: 21.15%;
+    line-gap-override: 0.00%;
+    size-adjust: 104.98%;
+  }
+  @font-face {
+    font-family: "Fira Code Fallback";
+    src: local("Arial");
+    ascent-override: 73.56%;
+    descent-override: 23.92%;
+    line-gap-override: 0.00%;
+    size-adjust: 134.59%;
+  }
+  @font-face {
+    font-family: "Instrument Serif Fallback";
+    src: local("Times New Roman");
+    ascent-override: 117.94%;
+    descent-override: 36.93%;
+    line-gap-override: 0.00%;
+    size-adjust: 83.94%;
+  }
+  @font-face {
+    font-family: "JetBrains Mono Fallback";
+    src: local("Arial");
+    ascent-override: 75.79%;
+    descent-override: 22.29%;
+    line-gap-override: 0.00%;
+    size-adjust: 134.59%;
+  }
+
   /* Legacy light-mode variables kept for any stragglers still reading them.
      Mapped to current tokens so they stay in sync with the active theme. */
   :root {
