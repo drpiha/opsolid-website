@@ -16,8 +16,8 @@ import { page as schulungen } from "./schulungen";
 import { page as trainer } from "./trainer";
 import { page as ueber } from "./ueber";
 
-/** Every v7 page with a PageDef, in nav order (consulting, trainings, product, company). For llms.txt and share cards. */
-export const PAGE_SETS: PageSet[] = [home, beratung, check, prozess, m365, agenten, anwendungen, schulungen, kompetenz, copilot, trainer, opso, projekte, ueber, kontakt];
+/** Every v7 page with a PageDef, in nav order (trainings, consulting, product, company). For llms.txt and share cards. */
+export const PAGE_SETS: PageSet[] = [home, schulungen, kompetenz, copilot, trainer, beratung, check, prozess, m365, agenten, anwendungen, opso, projekte, ueber, kontakt];
 
 export function pageSet(key: PageKey): PageSet | undefined {
   return PAGE_SETS.find((set) => set.de.key === key);

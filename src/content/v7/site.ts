@@ -5,13 +5,13 @@
 import { SITE_UPDATED_ISO } from "@/lib/constants";
 import type { L3, PageKey } from "@/lib/v7-routes";
 
-/** Primary navigation order (desktop and mobile panel). */
-export const NAV_KEYS: PageKey[] = ["beratung", "schulungen", "opso", "projekte", "ueber", "blog"];
+/** Primary navigation order (desktop and mobile panel): trainings lead (owner decision 2026-11-06). */
+export const NAV_KEYS: PageKey[] = ["schulungen", "beratung", "opso", "projekte", "ueber", "blog"];
 
 /** Footer columns (headings per locale live in SITE_STR.footer). */
 export const FOOTER_COLS: { id: "beratung" | "schulungen" | "opsolid" | "legal"; keys: PageKey[] }[] = [
-  { id: "beratung", keys: ["beratung", "check", "prozess", "m365", "agenten", "anwendungen"] },
   { id: "schulungen", keys: ["schulungen", "kompetenz", "copilot", "trainer"] },
+  { id: "beratung", keys: ["beratung", "check", "prozess", "m365", "agenten", "anwendungen"] },
   { id: "opsolid", keys: ["projekte", "ueber", "blog", "kontakt", "opso"] },
   { id: "legal", keys: ["impressum", "privacy"] },
 ];
@@ -122,7 +122,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     menuClose: "Schließen",
     menuTitle: "Navigation",
     homeAria: "OpSolid, zur Startseite",
-    cta: "KI-Check anfragen",
+    cta: "Schulung anfragen",
     langLabel: "Sprache",
     breadcrumb: "Brotkrumen-Navigation",
     figure: "Abb.",
@@ -130,7 +130,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     videoPause: "Video pausieren",
     videoPlay: "Video abspielen",
     sampleLabel: "Muster",
-    tagline: "KI-Automatisierung für Unternehmen. Erst der Prozess, dann die KI.",
+    tagline: "KI-Schulungen und KI-Beratung für Unternehmen. Erst analysieren, dann schulen.",
     priceNote: "Alle Preise netto zzgl. USt., nur für Unternehmen.",
     topsolid: "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",
     placeLine: "OpSolid · Arnsberg (NRW) · Deutsch, Englisch, Türkisch",
@@ -147,7 +147,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     menuClose: "Close",
     menuTitle: "Navigation",
     homeAria: "OpSolid, back to the home page",
-    cta: "Request an AI check",
+    cta: "Request training",
     langLabel: "Language",
     breadcrumb: "Breadcrumb",
     figure: "Fig.",
@@ -155,7 +155,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     videoPause: "Pause video",
     videoPlay: "Play video",
     sampleLabel: "Sample",
-    tagline: "AI automation for businesses. The process first, then the AI.",
+    tagline: "AI training and AI consulting for businesses. Analyse first, then train.",
     priceNote: "All prices are net of VAT and for businesses only.",
     topsolid: "OpSolid is not TopSolid (CAD/CAM) and has no connection to it.",
     placeLine: "OpSolid · Arnsberg (NRW), Germany · German, English, Turkish",
@@ -172,7 +172,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     menuClose: "Kapat",
     menuTitle: "Gezinti",
     homeAria: "OpSolid, ana sayfaya dön",
-    cta: "YZ Kontrolü talep edin",
+    cta: "Eğitim talep edin",
     langLabel: "Dil",
     breadcrumb: "Gezinti yolu",
     figure: "Şek.",
@@ -180,7 +180,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     videoPause: "Videoyu duraklat",
     videoPlay: "Videoyu oynat",
     sampleLabel: "Örnek",
-    tagline: "Şirketler için yapay zeka otomasyonu. Önce süreç, sonra yapay zeka.",
+    tagline: "Şirketler için YZ eğitimleri ve YZ danışmanlığı. Önce analiz, sonra eğitim.",
     priceNote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
     topsolid: "OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur.",
     placeLine: "OpSolid · Arnsberg (NRW), Almanya · Almanca, İngilizce, Türkçe",

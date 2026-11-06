@@ -106,10 +106,15 @@ export type Block =
     })
   /** Use cases by sector: tabs on wide screens, stacked on phones. Ideas are examples, labelled by `tag`. */
   | (SectionBase & { t: "sectors"; tag: string; items: { name: string; /** Short tab label; falls back to `name`. */ tab?: string; h: string; p: string; ideas: string[]; stays: string }[] })
-  /** Training catalogue. "bookable" items carry a published price; "planned" items never show a price. */
+  /**
+   * Training catalogue as a hairline ledger (one row per course). "bookable" items carry a published price;
+   * "planned" items never show a price. `price` is the team price alone ("ab 1.790 €"), `unit` the mono line
+   * under it ("netto pro Team"), `arith` the per-person arithmetic at the included group size, always worded as
+   * arithmetic ("rechnerisch 179 € pro Person bei 10 Personen"), never as a price of its own.
+   */
   | (SectionBase & {
       t: "courses";
-      items: { name: string; status: "bookable" | "planned"; statusLabel: string; format: string; p: string; price?: string; href?: Href }[];
+      items: { name: string; status: "bookable" | "planned"; statusLabel: string; format: string; p: string; price?: string; unit?: string; arith?: string; href?: Href }[];
       footnote?: string;
     })
   /** Our own work only, with real screenshots in a frame. */

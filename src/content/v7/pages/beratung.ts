@@ -1,5 +1,6 @@
 /**
- * KI-Beratung (flagship hub, direction A "Klarheit"). German is the source; EN and TR are transcreations.
+ * KI-Beratung (pillar 2 since the owner decision of 2026-11-06: trainings lead, the KI-Check is the paid entry and ends
+ * with a training recommendation). German is the source; EN and TR are transcreations.
  * Offer ladder per owner decision 2026-10-29: Kennenlernen (free) → KI-Check 990 € netto (Festpreis since 2026-11-04) → Pilot zum
  * Festpreis (no number) → Betrieb und Ausbau (no number). The sample is a labelled "Muster", not a client report.
  */
@@ -111,8 +112,8 @@ const de: PageDef = {
         {
           name: "KI-Check",
           price: "990 € netto",
-          p: "Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
-          points: ["NDA vor der Analyse", "Bericht auch ohne Empfehlung", "Erweiterter Umfang zum Festpreis"],
+          p: "Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+          points: ["NDA vor der Analyse", "Bericht auch ohne Empfehlung", "Erst analysieren, dann schulen oder pilotieren"],
           href: { label: "Zum KI-Check", to: "check" },
           featured: true,
         },
@@ -223,7 +224,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet ein Pilot?",
-        a: "Das hängt vom Ablauf ab. Nach dem KI-Check legen wir Umfang und Festpreis schriftlich fest, bevor die Arbeit beginnt. Der KI-Check selbst kostet 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+        a: "Das hängt vom Ablauf ab. Nach dem KI-Check legen wir Umfang und Festpreis schriftlich fest, bevor die Arbeit beginnt. Der KI-Check selbst kostet 990 € netto. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
       },
       {
         q: "Wie steht es um den Datenschutz?",
@@ -231,7 +232,7 @@ const de: PageDef = {
       },
       {
         q: "Was, wenn sich nichts lohnt?",
-        a: "Dann steht genau das im Bericht, mit Begründung. Sie erhalten ihn auch dann.",
+        a: "Dann steht genau das im Bericht, mit Begründung. Sie erhalten ihn auch dann, samt der Schulungsempfehlung für Ihr Team, oder dem Hinweis, dass derzeit keine nötig ist.",
       },
       {
         q: "Wie lange dauert es?",
@@ -367,8 +368,8 @@ const en: PageDef = {
         {
           name: "AI check",
           price: "€990 net",
-          p: "A fixed price: a questionnaire and a written report, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days.",
-          points: ["NDA before the analysis", "Report even without a recommendation", "Extended scope at a fixed price"],
+          p: "A fixed price: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a course or pilot within 60 days.",
+          points: ["NDA before the analysis", "Report even without a recommendation", "Analyse first, then train or pilot"],
           href: { label: "To the AI check", to: "check" },
           featured: true,
         },
@@ -479,7 +480,7 @@ const en: PageDef = {
       },
       {
         q: "What does a pilot cost?",
-        a: "That depends on the workflow. After the AI check we set scope and fixed price in writing before the work begins. The AI check itself costs €990 net. Credited in full against a follow-up order within 60 days.",
+        a: "That depends on the workflow. After the AI check we set scope and fixed price in writing before the work begins. The AI check itself costs €990 net. Credited in full against a course or pilot within 60 days.",
       },
       {
         q: "What about data protection?",
@@ -487,7 +488,7 @@ const en: PageDef = {
       },
       {
         q: "What if nothing is worth doing?",
-        a: "Then the report says exactly that, with reasons. You still get the report.",
+        a: "Then the report says exactly that, with reasons. You still get the report, with the training recommendation for your team, or the note that none is needed right now.",
       },
       {
         q: "How long does it take?",
@@ -623,8 +624,8 @@ const tr: PageDef = {
         {
           name: "YZ Kontrolü",
           price: "990 € (net)",
-          p: "Sabit fiyat: soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
-          points: ["Analizden önce NDA", "Öneri çıkmasa da rapor", "Geniş kapsam sabit fiyatla"],
+          p: "Sabit fiyat: soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir.",
+          points: ["Analizden önce NDA", "Öneri çıkmasa da rapor", "Önce analiz, sonra eğitim ya da pilot"],
           href: { label: "YZ Kontrolü'ne gidin", to: "check" },
           featured: true,
         },
@@ -735,7 +736,7 @@ const tr: PageDef = {
       },
       {
         q: "Bir pilotun maliyeti nedir?",
-        a: "İş akışına bağlıdır. YZ Kontrolü'nden sonra, çalışma başlamadan önce kapsamı ve sabit fiyatı yazılı olarak belirleriz. YZ Kontrolü'nün kendisi 990 € (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+        a: "İş akışına bağlıdır. YZ Kontrolü'nden sonra, çalışma başlamadan önce kapsamı ve sabit fiyatı yazılı olarak belirleriz. YZ Kontrolü'nün kendisi 990 € (net). 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir.",
       },
       {
         q: "Veri koruma nasıl ele alınıyor?",
@@ -743,7 +744,7 @@ const tr: PageDef = {
       },
       {
         q: "Hiçbir şey değmezse ne olur?",
-        a: "O zaman rapor tam olarak bunu gerekçesiyle söyler. Raporu yine alırsınız.",
+        a: "O zaman rapor tam olarak bunu gerekçesiyle söyler. Raporu yine alırsınız; ekibiniz için eğitim önerisi ya da şu an gerek olmadığı notuyla birlikte.",
       },
       {
         q: "Ne kadar sürer?",
