@@ -38,7 +38,7 @@ const de: PageDef = {
       h: "Was die Schulung umfasst",
       rows: [
         ["Preis", "Ab 1.790 € netto pro Team, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen), zzgl. USt., nur für Unternehmen"],
-        ["Umfang", "Halber Tag, 10 Personen inklusive, bis zu 15 Personen"],
+        ["Umfang", "Halber Tag (3,5 Stunden inklusive Pause), 10 Personen inklusive, bis zu 15 Personen"],
         ["Durchführung", "Online live auf Deutsch oder Englisch, per Microsoft Teams oder Zoom; geschlossener Termin für Ihr Team nach Vereinbarung"],
         ["Leitung", "Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich."],
         ["Nachweis", "Teilnahmebescheinigung von OpSolid"],
@@ -113,7 +113,7 @@ const de: PageDef = {
       rows: [
         ["Schulung", "KI-Kompetenz Basis"],
         ["Datum", "[Datum]"],
-        ["Dauer", "Halber Tag"],
+        ["Dauer", "Halber Tag (3,5 Stunden)"],
         ["Themen", "Grundlagen, Datenschutz, Regeln"],
         ["Trainerin oder Trainer", "[Name]"],
         ["Teilnehmende Person", "[Name]"],
@@ -135,7 +135,7 @@ const de: PageDef = {
       },
       {
         q: "Gilt der Preis pro Person?",
-        a: "Nein, pro Team: ab 1.790 € netto, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen). Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Nein, pro Team: ab 1.790 € netto, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen). Rechnerisch sind das bei 10 Personen 179 € pro Person. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Können Sie die Beispiele an unser Team anpassen?",
@@ -200,7 +200,7 @@ const en: PageDef = {
       h: "What the course covers",
       rows: [
         ["Price", "From €1,790 net per team, 10 people included, each additional person €90 (up to 15), plus VAT, businesses only"],
-        ["Scope", "Half day, 10 people included, up to 15 people"],
+        ["Scope", "Half day (3.5 hours including a break), 10 people included, up to 15 people"],
         ["Delivery", "Live online in English or German, via Microsoft Teams or Zoom; a closed session for your team, by agreement"],
         ["Led by", "We name the trainer to you before you book."],
         ["Proof", "Participation record from OpSolid"],
@@ -275,7 +275,7 @@ const en: PageDef = {
       rows: [
         ["Course", "AI literacy basics"],
         ["Date", "[date]"],
-        ["Duration", "Half day"],
+        ["Duration", "Half day (3.5 hours)"],
         ["Topics", "Fundamentals, data protection, rules"],
         ["Trainer", "[name]"],
         ["Participant", "[name]"],
@@ -297,7 +297,7 @@ const en: PageDef = {
       },
       {
         q: "Is the price per person?",
-        a: "No, per team: from €1,790 net, 10 people included, each additional person €90 (up to 15). All prices net of VAT, businesses only.",
+        a: "No, per team: from €1,790 net, 10 people included, each additional person €90 (up to 15). With 10 people that works out at €179 per person. All prices net of VAT, businesses only.",
       },
       {
         q: "Can you adapt the examples to our team?",
@@ -362,7 +362,7 @@ const tr: PageDef = {
       h: "Eğitim neleri kapsar?",
       rows: [
         ["Fiyat", "Ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi), KDV hariç; yalnızca işletmeler için"],
-        ["Kapsam", "Yarım gün, 10 kişi dahil, en fazla 15 kişi"],
+        ["Kapsam", "Yarım gün (mola dahil 3,5 saat), 10 kişi dahil, en fazla 15 kişi"],
         ["Uygulama", "Almanca veya İngilizce canlı çevrimiçi; anlaşmaya göre Microsoft Teams veya Zoom; ekibinize özel kapalı oturum"],
         ["Yürüten", "Eğitmeni rezervasyondan önce size adıyla bildiririz."],
         ["Belge", "OpSolid katılım belgesi"],
@@ -437,7 +437,7 @@ const tr: PageDef = {
       rows: [
         ["Eğitim", "YZ Yetkinliği Temel"],
         ["Tarih", "[tarih]"],
-        ["Süre", "Yarım gün"],
+        ["Süre", "Yarım gün (3,5 saat)"],
         ["Konular", "Temeller, veri koruma, kurallar"],
         ["Eğitmen", "[ad]"],
         ["Katılımcı", "[ad]"],
@@ -459,7 +459,7 @@ const tr: PageDef = {
       },
       {
         q: "Fiyat kişi başına mı?",
-        a: "Hayır, ekip başına: 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi). Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
+        a: "Hayır, ekip başına: 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi). 10 kişilik bir ekipte bu, kişi başı 179 € eder. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
       },
       {
         q: "Örnekleri ekibimize uyarlayabilir misiniz?",

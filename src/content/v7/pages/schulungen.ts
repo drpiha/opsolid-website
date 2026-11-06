@@ -94,6 +94,7 @@ const de: PageDef = {
       rows: [
         ["Durchführung", "Online live, per Microsoft Teams oder Zoom nach Absprache"],
         ["Sprache", "Deutsch oder Englisch"],
+        ["Dauer", "Halber Tag: 3,5 Stunden inklusive Pause. Ein Tag: 6 Stunden inklusive Pausen, auf Wunsch an zwei halben Tagen."],
         ["Termine", "Nach Vereinbarung, als geschlossener Termin für Ihr Team"],
         ["Nachweis", "Eigene Teilnahmebescheinigung von OpSolid mit Datum, Dauer, Themen und Trainer"],
         ["Preis", "Pro Team, netto zzgl. USt., nur für Unternehmen"],
@@ -171,7 +172,7 @@ const de: PageDef = {
       },
       {
         q: "Gilt der Preis pro Person?",
-        a: "Nein, pro Team: bei KI-Kompetenz Basis 10 Personen inklusive (jede weitere 90 €, bis 15), beim Copilot-Praxistag 10 inklusive (jede weitere 150 €, bis 12), bei der KI-Agenten-Schulung 8 inklusive (jede weitere 290 €, bis 10). Für größere Teams sprechen Sie uns an.",
+        a: "Nein, pro Team: bei KI-Kompetenz Basis 10 Personen inklusive (jede weitere 90 €, bis 15), beim Copilot-Praxistag 10 inklusive (jede weitere 150 €, bis 12), bei der KI-Agenten-Schulung 8 inklusive (jede weitere 290 €, bis 10). Rechnerisch sind das bei 10 Personen 179 € pro Person (KI-Kompetenz Basis) und 290 € pro Person (Copilot-Praxistag). Für größere Teams sprechen Sie uns an.",
       },
       {
         q: "Wer hält die Schulung?",
@@ -302,6 +303,7 @@ const en: PageDef = {
       rows: [
         ["Delivery", "Live online, via Microsoft Teams or Zoom by agreement"],
         ["Language", "English or German"],
+        ["Duration", "Half day: 3.5 hours including a break. One day: 6 hours including breaks, on request split over two half days."],
         ["Dates", "By agreement, as a closed session for your team"],
         ["Proof", "Our own participation record from OpSolid with date, duration, topics and trainer"],
         ["Price", "Per team, net of VAT, businesses only"],
@@ -379,7 +381,7 @@ const en: PageDef = {
       },
       {
         q: "Is the price per person?",
-        a: "No, per team: AI literacy basics includes 10 people (each additional €90, up to 15), the Copilot workshop 10 (each additional €150, up to 12), the AI agents course 8 (each additional €290, up to 10). For larger teams, please get in touch.",
+        a: "No, per team: AI literacy basics includes 10 people (each additional €90, up to 15), the Copilot workshop 10 (each additional €150, up to 12), the AI agents course 8 (each additional €290, up to 10). With 10 people that works out at €179 per person (AI literacy basics) and €290 per person (Copilot workshop). For larger teams, please get in touch.",
       },
       {
         q: "Who teaches the course?",
@@ -510,6 +512,7 @@ const tr: PageDef = {
       rows: [
         ["Uygulama", "Canlı çevrimiçi; anlaşmaya göre Microsoft Teams veya Zoom"],
         ["Dil", "Almanca veya İngilizce"],
+        ["Süre", "Yarım gün: mola dahil 3,5 saat. Bir gün: molalar dahil 6 saat; isterseniz iki yarım güne bölünür."],
         ["Tarih", "Anlaşmaya göre, ekibinize özel kapalı oturum olarak"],
         ["Belge", "Tarih, süre, konular ve eğitmeni içeren, OpSolid'e ait katılım belgesi"],
         ["Fiyat", "Ekip başına, net (KDV hariç), yalnızca işletmeler için"],
@@ -587,7 +590,7 @@ const tr: PageDef = {
       },
       {
         q: "Fiyat kişi başına mı?",
-        a: "Hayır, ekip başına: YZ Yetkinliği Temel'de 10 kişi dahil (her ek kişi 90 €, en fazla 15), Copilot Uygulama Günü'nde 10 kişi dahil (her ek kişi 150 €, en fazla 12), YZ Ajanları'nda 8 kişi dahil (her ek kişi 290 €, en fazla 10). Daha büyük ekipler için bize yazın.",
+        a: "Hayır, ekip başına: YZ Yetkinliği Temel'de 10 kişi dahil (her ek kişi 90 €, en fazla 15), Copilot Uygulama Günü'nde 10 kişi dahil (her ek kişi 150 €, en fazla 12), YZ Ajanları'nda 8 kişi dahil (her ek kişi 290 €, en fazla 10). 10 kişilik bir ekipte bu, kişi başı 179 € (YZ Yetkinliği Temel) ve 290 € (Copilot Uygulama Günü) eder. Daha büyük ekipler için bize yazın.",
       },
       {
         q: "Eğitimi kim veriyor?",

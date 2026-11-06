@@ -7,7 +7,10 @@ import type { PageKey } from "@/lib/v7-routes";
  * changes, not for titles or punctuation. Pages not listed fall back to SITE_UPDATED_ISO (the v7 relaunch).
  */
 const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
-  kompetenz: "2026-11-02", // Art. 4 answer and EUR-Lex sources
+  // 2026-11-06: per-person arithmetic in the price answers and the hours of a half day and a day
+  kompetenz: "2026-11-06",
+  copilot: "2026-11-06",
+  schulungen: "2026-11-06",
   // 2026-11-04: written, meeting-free KI-Check at a fixed 990 € (questionnaire, report, optional evening call)
   check: "2026-11-04",
   home: "2026-11-04",
@@ -16,11 +19,10 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   m365: "2026-11-04",
   agenten: "2026-11-04",
   anwendungen: "2026-11-04",
-  schulungen: "2026-11-04",
   projekte: "2026-11-04",
   ueber: "2026-11-04",
   blog: "2026-11-04", // CTA: KI-Check 990 € with the 60-day credit
-  trainer: "2026-11-04", // trainer pool step, paid trial before the first assignment, seven-day reply
+  trainer: "2026-11-06", // no trial session: seven-day reply, trainer pool, conversation with a live demo, first assignment paid
   kontakt: "2026-11-04", // trainer application fields, seven-day reply for applications
 };
 

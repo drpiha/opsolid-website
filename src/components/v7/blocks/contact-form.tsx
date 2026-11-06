@@ -142,7 +142,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           email: v.email,
           company: v.company || undefined,
           message: v.message,
-          website: String(f.get("website") ?? ""),
+          hp_blank: String(f.get("hp_blank") ?? ""),
           topics: block.topics.filter((x) => topics.has(x.value)).map((x) => x.label),
           kinds: block.topics.filter((x) => topics.has(x.value)).map((x) => x.value),
           trainer: isTrainer
@@ -313,8 +313,10 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
         </div>
       </div>
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
-        <label htmlFor="f-website">{t.honeypot}</label>
-        <input id="f-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+        {/* Spam trap. Its name must not be a word that browser autofill or a password manager knows: a trap
+            called "website" can be filled from a contact card, and the route then drops a real message. */}
+        <label htmlFor="f-hp">{t.honeypot}</label>
+        <input id="f-hp" name="hp_blank" type="text" tabIndex={-1} autoComplete="off" data-1p-ignore="true" data-lpignore="true" data-form-type="other" />
       </div>
       <div hidden={!isTrainer}>
         <label className="flex min-h-[44px] cursor-pointer items-start gap-3 py-[10px] text-[16px] leading-[1.5] text-[#16191D]">

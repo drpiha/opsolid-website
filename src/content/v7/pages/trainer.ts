@@ -3,6 +3,9 @@
  * transcreations in full key parity. Binding (trainer-roster.md section 5.4 and 4.2): no named trainers,
  * no "our trainers", no day-rate numbers, no employee-like control (freedom of method, own clients,
  * right to decline). No "network in progress" wording; a longer-term partnership is mentioned once.
+ * Selection (owner decision 2026-11-06): no separate trial session, paid or unpaid. Reply within seven days,
+ * trainer pool, then a 30-minute conversation with a short live demo once a matching client request is in
+ * sight; the first assignment is paid like any other.
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -11,7 +14,7 @@ const de: PageDef = {
   meta: {
     title: "Trainer werden: freiberufliche KI-Trainer gesucht",
     description:
-      "OpSolid sucht freiberufliche KI-Trainerinnen und -Trainer für Online-Schulungen auf Deutsch und Englisch. Bezahlte Probesession, Rahmenvertrag, freie Methodik.",
+      "OpSolid sucht freiberufliche KI-Trainerinnen und -Trainer für Online-Schulungen auf Deutsch und Englisch. Auswahl im Gespräch, Rahmenvertrag, freie Methodik.",
   },
   crumbs: ["schulungen"],
   crumb: "Trainer werden",
@@ -21,7 +24,7 @@ const de: PageDef = {
     lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah vermitteln, melden Sie sich.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
-    facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Bezahlte Probesession vor dem ersten Einsatz"],
+    facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Auswahl im Gespräch mit kurzer Live-Demo"],
   },
   blocks: [
     {
@@ -64,7 +67,7 @@ const de: PageDef = {
       h: "Was wir von Ihnen erwarten",
       rows: [
         ["Fachwissen", "Eigene Praxis im gewählten Thema, die Sie live zeigen können"],
-        ["Vermittlung", "Erfahrung in Training oder Erwachsenenbildung und eine kurze Lehrprobe"],
+        ["Vermittlung", "Erfahrung in Training oder Erwachsenenbildung; im Gespräch zeigen Sie eine kurze Live-Demo"],
         ["Sprache", "Deutsch oder Englisch auf hohem Niveau (etwa C1)"],
         ["Datenschutz", "Sie kennen die Grundsätze der DSGVO und gehen mit Kundendaten in KI-Werkzeugen sorgfältig um"],
         ["Selbstständigkeit", "Sie arbeiten freiberuflich oder als Gewerbetreibende, mit eigenem Auftritt"],
@@ -78,7 +81,7 @@ const de: PageDef = {
       note: "Freiberuflich heißt: Sie bestimmen, wie Sie arbeiten.",
       h: "Was wir Ihnen bieten",
       items: [
-        { h: "Bezahlte Probesession", p: "Vor dem ersten Einsatz halten Sie eine Probesession von 90 Minuten, die wir bezahlen." },
+        { h: "Vergütung ab dem ersten Einsatz", p: "Eine gesonderte Probesession gibt es nicht. Ihren ersten Einsatz vergüten wir wie jeden weiteren." },
         { h: "Rahmenvertrag", p: "Die Zusammenarbeit läuft über einen Rahmenvertrag mit Ihnen als selbstständiger Trainerin oder selbstständigem Trainer." },
         { h: "Honorar nach Vereinbarung", p: "Das Honorar vereinbaren wir persönlich und vorab schriftlich." },
         { h: "Freiheit bei der Methode", p: "Wir stimmen Thema und Lernziele mit Ihnen ab. Wie Sie sie erreichen, entscheiden Sie." },
@@ -95,12 +98,21 @@ const de: PageDef = {
       lede: "Nach jedem Schritt entscheiden wir beide, ob es weitergeht.",
       items: [
         { h: "Kurzprofil", p: "Sie schicken uns ein kurzes Profil: Themen, Erfahrung, Sprachen und Ihre Selbstständigkeit. Eine Bewerbungsmappe brauchen wir nicht." },
-        { h: "Gespräch", p: "Wir sprechen online über Ihre Praxis und Ihre Art zu vermitteln. Sie zeigen uns kurz live, wie Sie arbeiten." },
-        { h: "Aufnahme in den Trainerpool", p: "Passt es, nehmen wir Sie in unseren Trainerpool auf. Eine Zusage für Einsätze ist damit nicht verbunden." },
-        { h: "Bezahlte Probesession", p: "Vor dem ersten Einsatz halten Sie eine Probesession von 90 Minuten, die wir bezahlen. Wir planen sie, sobald eine passende Anfrage in Sicht ist." },
         {
-          h: "Rahmenvertrag und erste Schulung",
-          p: "Verlief die Probesession gut, schließen wir den Rahmenvertrag, und Sie übernehmen die Schulung. Danach ist eine längerfristige Partnerschaft möglich.",
+          h: "Rückmeldung und Trainerpool",
+          p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, nehmen wir Sie in unseren Trainerpool auf. Eine Zusage für Einsätze ist damit nicht verbunden.",
+        },
+        {
+          h: "Gespräch mit Live-Demo",
+          p: "Sobald eine passende Kundenanfrage in Sicht ist, sprechen wir 30 Minuten online über Ihre Praxis und Ihre Art zu vermitteln. Sie zeigen uns in einer kurzen Live-Demo, wie Sie arbeiten.",
+        },
+        {
+          h: "Rahmenvertrag",
+          p: "Passt es für beide Seiten, schließen wir den Rahmenvertrag. Jede Schulung vereinbaren wir danach einzeln, und Sie entscheiden, ob Sie sie übernehmen.",
+        },
+        {
+          h: "Erste Schulung",
+          p: "Sie übernehmen die Schulung. Den ersten Einsatz vergüten wir wie jeden weiteren. Danach ist eine längerfristige Partnerschaft möglich.",
         },
       ],
     },
@@ -143,7 +155,7 @@ const de: PageDef = {
   cta: {
     label: "Trainer werden",
     h: "Sie vermitteln KI praxisnah? Schreiben Sie uns",
-    p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, vereinbaren wir ein Gespräch.",
+    p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, nehmen wir Sie in unseren Trainerpool auf.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "KI-Check für Unternehmen", to: "check" },
   },
@@ -154,7 +166,7 @@ const en: PageDef = {
   meta: {
     title: "Become a trainer: freelance AI trainers wanted",
     description:
-      "OpSolid is looking for freelance AI trainers for online courses in English and German. Paid trial session, framework contract and freedom in how you teach.",
+      "OpSolid is looking for freelance AI trainers for online courses in English and German. Selection by conversation, framework contract, freedom in method.",
   },
   crumbs: ["schulungen"],
   crumb: "Become a trainer",
@@ -164,7 +176,7 @@ const en: PageDef = {
     lede: "We are looking for freelance AI trainers for courses in English and German, online and live. If you teach AI in a practical way, get in touch.",
     primary: { label: "Send a short profile", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "How it works", to: "trainer", hash: "ablauf" },
-    facts: ["Freelance", "Online · English and German", "Paid trial session before the first assignment"],
+    facts: ["Freelance", "Online · English and German", "Selection in a conversation with a short live demo"],
   },
   blocks: [
     {
@@ -207,7 +219,7 @@ const en: PageDef = {
       h: "What we expect from you",
       rows: [
         ["Expertise", "Your own practice in the chosen topic, which you can show live"],
-        ["Teaching", "Experience in training or adult education and a short trial lesson"],
+        ["Teaching", "Experience in training or adult education; you show a short live demo in our conversation"],
         ["Language", "English or German at a high level (around C1)"],
         ["Data protection", "You know the principles of GDPR and handle client data in AI tools with care"],
         ["Self-employment", "You work as a freelancer or sole trader, with your own profile"],
@@ -221,7 +233,7 @@ const en: PageDef = {
       note: "Freelance means you decide how you work.",
       h: "What we offer you",
       items: [
-        { h: "Paid trial session", p: "Before your first assignment you run a 90-minute trial session, which we pay for." },
+        { h: "Paid from the first assignment", p: "There is no separate trial session. Your first assignment is paid like any other." },
         { h: "Framework contract", p: "We work together under a framework contract with you as an independent trainer." },
         { h: "Fee by agreement", p: "We agree the fee with you personally and in writing beforehand." },
         { h: "Freedom in method", p: "We agree topic and learning goals with you. How you reach them is up to you." },
@@ -238,12 +250,21 @@ const en: PageDef = {
       lede: "After each step we both decide whether to continue.",
       items: [
         { h: "Short profile", p: "You send us a short profile: topics, experience, languages and your self-employment. We do not need a full application pack." },
-        { h: "Conversation", p: "We talk online about your practice and how you teach. You show us briefly, live, how you work." },
-        { h: "Joining the trainer pool", p: "If it fits, we add you to our trainer pool. This does not promise any assignments." },
-        { h: "Paid trial session", p: "Before your first assignment you run a 90-minute trial session, which we pay for. We plan it as soon as a matching request is in sight." },
         {
-          h: "Framework contract and first course",
-          p: "If the trial session went well, we sign the framework contract and you take on the course. A longer-term partnership can follow.",
+          h: "Reply and trainer pool",
+          p: "We reply within seven days. If your profile fits our topics, we add you to our trainer pool. This does not promise any assignments.",
+        },
+        {
+          h: "Conversation with a live demo",
+          p: "As soon as a matching client request is in sight, we talk online for 30 minutes about your practice and how you teach. You show us in a short live demo how you work.",
+        },
+        {
+          h: "Framework contract",
+          p: "If it fits for both sides, we sign the framework contract. After that we agree each course individually, and you decide whether to take it on.",
+        },
+        {
+          h: "First course",
+          p: "You take on the course. Your first assignment is paid like any other. A longer-term partnership can follow.",
         },
       ],
     },
@@ -286,7 +307,7 @@ const en: PageDef = {
   cta: {
     label: "Become a trainer",
     h: "Do you teach AI in a practical way? Write to us",
-    p: "We reply within seven days. If your profile fits our topics, we arrange a conversation.",
+    p: "We reply within seven days. If your profile fits our topics, we add you to our trainer pool.",
     primary: { label: "Send a short profile", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "AI check for companies", to: "check" },
   },
@@ -297,7 +318,7 @@ const tr: PageDef = {
   meta: {
     title: "Eğitmen olun: serbest YZ eğitmenleri aranıyor",
     description:
-      "OpSolid, Almanca ve İngilizce çevrimiçi eğitimler için serbest çalışan YZ eğitmenleri arıyor. Ücretli deneme oturumu, çerçeve sözleşme, yöntemde özgürlük.",
+      "OpSolid, Almanca ve İngilizce çevrimiçi eğitimler için serbest çalışan YZ eğitmenleri arıyor. Görüşmeyle seçim, çerçeve sözleşme, yöntemde özgürlük.",
   },
   crumbs: ["schulungen"],
   crumb: "Eğitmen olun",
@@ -307,7 +328,7 @@ const tr: PageDef = {
     lede: "Almanca ve İngilizce, çevrimiçi ve canlı eğitimler için serbest çalışan YZ eğitmenleri arıyoruz. YZ'yi uygulamalı anlatıyorsanız bize yazın.",
     primary: { label: "Kısa profil gönderin", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "Süreç nasıl işler", to: "trainer", hash: "ablauf" },
-    facts: ["Serbest çalışan", "Çevrimiçi · Almanca ve İngilizce", "İlk görevden önce ücretli deneme oturumu"],
+    facts: ["Serbest çalışan", "Çevrimiçi · Almanca ve İngilizce", "Kısa canlı gösterimli bir görüşmeyle seçim"],
   },
   blocks: [
     {
@@ -350,7 +371,7 @@ const tr: PageDef = {
       h: "Sizden beklediklerimiz",
       rows: [
         ["Uzmanlık", "Seçtiğiniz konuda, canlı gösterebileceğiniz kendi uygulama deneyiminiz"],
-        ["Aktarım", "Eğitim veya yetişkin eğitimi deneyimi ve kısa bir deneme dersi"],
+        ["Aktarım", "Eğitim veya yetişkin eğitimi deneyimi; görüşmede kısa bir canlı gösterim yaparsınız"],
         ["Dil", "Almanca veya İngilizce, yüksek düzeyde (yaklaşık C1)"],
         ["Veri koruma", "GDPR/DSGVO ilkelerini bilirsiniz ve YZ araçlarında müşteri verileriyle özenle çalışırsınız"],
         ["Serbest çalışma", "Serbest meslek sahibi ya da işletme sahibi olarak, kendi duruşunuzla çalışırsınız"],
@@ -364,7 +385,7 @@ const tr: PageDef = {
       note: "Serbest çalışmak, nasıl çalışacağınıza sizin karar vermeniz demektir.",
       h: "Size ne sunuyoruz?",
       items: [
-        { h: "Ücretli deneme oturumu", p: "İlk görevden önce 90 dakikalık bir deneme oturumu verirsiniz; bunun ücretini biz öderiz." },
+        { h: "İlk görevden itibaren ücret", p: "Ayrı bir deneme oturumu yoktur. İlk görevinizin ücretini diğer görevler gibi öderiz." },
         { h: "Çerçeve sözleşme", p: "İşbirliği, sizinle bağımsız eğitmen olarak yapılan bir çerçeve sözleşme üzerinden yürür." },
         { h: "Anlaşmaya göre ücret", p: "Ücreti sizinle kişisel olarak ve önceden yazılı biçimde belirleriz." },
         { h: "Yöntemde özgürlük", p: "Konuyu ve öğrenme hedeflerini sizinle birlikte belirleriz. Bunlara nasıl ulaşacağınıza siz karar verirsiniz." },
@@ -381,12 +402,21 @@ const tr: PageDef = {
       lede: "Her adımdan sonra birlikte devam edip etmeyeceğimize karar veririz.",
       items: [
         { h: "Kısa profil", p: "Bize kısa bir profil gönderirsiniz: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },
-        { h: "Görüşme", p: "Sizinle çevrimiçi olarak uygulamanız ve anlatım tarzınız hakkında konuşuruz. Nasıl çalıştığınızı kısaca canlı gösterirsiniz." },
-        { h: "Eğitmen havuzuna kabul", p: "Uyuyorsa sizi eğitmen havuzumuza alırız. Bu, görev verileceği anlamına gelmez." },
-        { h: "Ücretli deneme oturumu", p: "İlk görevden önce 90 dakikalık bir deneme oturumu verirsiniz; ücretini biz öderiz. Konunuza uygun bir talep göründüğünde planlarız." },
         {
-          h: "Çerçeve sözleşme ve ilk eğitim",
-          p: "Deneme oturumu iyi geçerse çerçeve sözleşmeyi imzalarız ve eğitimi siz üstlenirsiniz. Ardından uzun vadeli bir ortaklık mümkündür.",
+          h: "Yanıt ve eğitmen havuzu",
+          p: "Yedi gün içinde yanıt veririz. Profiliniz konularımıza uyuyorsa sizi eğitmen havuzumuza alırız. Bu, görev verileceği anlamına gelmez.",
+        },
+        {
+          h: "Canlı gösterimli görüşme",
+          p: "Konunuza uygun bir müşteri talebi göründüğünde sizinle 30 dakika çevrimiçi görüşür, uygulamanızı ve anlatım tarzınızı konuşuruz. Nasıl çalıştığınızı kısa bir canlı gösterimle anlatırsınız.",
+        },
+        {
+          h: "Çerçeve sözleşme",
+          p: "İki taraf için de uygunsa çerçeve sözleşmeyi imzalarız. Ardından her eğitimi ayrı ayrı kararlaştırırız; üstlenip üstlenmeyeceğinize siz karar verirsiniz.",
+        },
+        {
+          h: "İlk eğitim",
+          p: "Eğitimi siz üstlenirsiniz. İlk görevinizin ücretini diğer görevler gibi öderiz. Ardından uzun vadeli bir ortaklık mümkündür.",
         },
       ],
     },
@@ -429,7 +459,7 @@ const tr: PageDef = {
   cta: {
     label: "Eğitmen olun",
     h: "YZ'yi uygulamalı mı anlatıyorsunuz? Bize yazın",
-    p: "Yedi gün içinde yanıt veriyoruz. Profiliniz konularımıza uyuyorsa bir görüşme planlarız.",
+    p: "Yedi gün içinde yanıt veriyoruz. Profiliniz konularımıza uyuyorsa sizi eğitmen havuzumuza alırız.",
     primary: { label: "Kısa profil gönderin", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "İşletmeler için YZ Kontrolü", to: "check" },
   },

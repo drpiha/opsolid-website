@@ -54,6 +54,10 @@ const clients = new Map<string, ClientWindow>();
 let identifiedInFlight = 0;
 let sendWindowStart = 0;
 let sends = 0;
+// Spam-trap fields: "website" (older forms, cached pages) and "hp_blank" (v7 form; a name autofill ignores).
+const TRAP_FIELDS = ["website", "hp_blank"] as const;
+let trapWindowStart = 0;
+let trapHits = 0;
 
 const IP_SHAPE = /^[0-9A-Fa-f:.]{2,45}$/;
 
@@ -137,8 +141,22 @@ export async function POST(req: NextRequest) {
     const body = await readContactBody(req);
     // The honeypot never triggers mail, even if the remaining bot payload is
     // invalid. It uses the same generic accepted response as a delivered form.
-    if (body && typeof body === "object" && !Array.isArray(body) &&
-        "website" in body && typeof body.website === "string" && body.website.trim()) {
+    const trap = body && typeof body === "object" && !Array.isArray(body)
+      ? TRAP_FIELDS.find((field) => {
+          const value = (body as Record<string, unknown>)[field];
+          return typeof value === "string" && value.trim() !== "";
+        })
+      : undefined;
+    if (trap) {
+      // One line per window at most, with the field name only (no value, no sender): enough to tell later
+      // whether a message that "arrived" for a visitor was dropped here.
+      const now = Date.now();
+      if (now - trapWindowStart >= WINDOW_MS || now < trapWindowStart) {
+        trapWindowStart = now;
+        trapHits = 0;
+      }
+      trapHits += 1;
+      if (trapHits === 1) console.warn("[contact] honeypot hit", { field: trap });
       return NextResponse.json({ success: true });
     }
     const parsed = contactSchema.safeParse(body);
