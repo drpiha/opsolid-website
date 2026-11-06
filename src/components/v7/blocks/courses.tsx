@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Section } from "@/components/v7/Section";
 import { LinkTo } from "@/components/v7/LinkTo";
 import { Reveal } from "@/components/v7/Reveal";
@@ -40,17 +41,20 @@ export function CoursesBlock({ block, locale, num }: BlockProps<"courses">) {
               <div className={left}>
                 <p className="f-mono text-[12px] uppercase leading-[1.7] text-[#8A4524]">{String(i + 1).padStart(2, "0")}</p>
                 <h3 className="f-display mt-3 text-balance text-[1.5rem] leading-[1.15] md:text-[1.75rem]">{c.name}</h3>
-                {/* Tokens never break inside; a line breaks only at the spaces around the copper separators. */}
+                {/* Tokens never break inside and carry their copper separator; a line breaks only at the space between tokens. */}
                 <p className="f-mono mt-3 text-[12px] uppercase leading-[1.8] text-[#6B665F]">
-                  <span className="whitespace-nowrap text-[#16191D]">{lead}</span>
-                  {spec.map((s) => (
-                    <span key={s}>
-                      {" "}
-                      <span aria-hidden="true" className="text-[#B5623A]">
-                        ·
-                      </span>{" "}
-                      <span className="whitespace-nowrap">{s}</span>
-                    </span>
+                  {[lead, ...spec].map((s, k, all) => (
+                    <Fragment key={s}>
+                      {k > 0 && " "}
+                      <span className={`whitespace-nowrap ${k === 0 ? "text-[#16191D]" : ""}`}>
+                        {s}
+                        {k < all.length - 1 && (
+                          <span aria-hidden="true" className="text-[#B5623A]">
+                            {" "}·
+                          </span>
+                        )}
+                      </span>
+                    </Fragment>
                   ))}
                 </p>
               </div>
