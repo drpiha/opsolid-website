@@ -3,8 +3,8 @@
 // Update these values to customize the brand identity
 // =============================================================================
 
-/** Date of the last substantive content update; drives the visible "Stand:" line (2026-11-06: trainings lead). */
-export const SITE_UPDATED_ISO = "2026-11-06";
+/** Date of the last substantive content update; drives the visible "Stand:" line (2026-11-07: OpSo iPhone app in the App Store). */
+export const SITE_UPDATED_ISO = "2026-11-07";
 
 /** "Oktober 2026" / "October 2026" / "Ekim 2026". */
 export function formatStand(locale: string): string {

@@ -1,7 +1,7 @@
 /**
- * Projects page (v7). Our own work only: opsolid.de, OpSo (product in test phase), Kutasia (project in
- * development). No client projects, logos or quotes. Status lines follow the build brief (OpSo: Android
- * closed test on Google Play, iPhone submitted to Apple for review, as of 28.10.2026).
+ * Projects page (v7). Our own work only: opsolid.de, OpSo (product: iPhone app in the App Store), Kutasia (project in
+ * development). No client projects, logos or quotes. Status lines follow the build brief (OpSo: iPhone in the App Store
+ * in the EU/EEA, Switzerland and the UK, Android in a closed test on Google Play, as of 07.11.2026).
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -10,7 +10,7 @@ const de: PageDef = {
   meta: {
     title: "Projekte: eigene Arbeit mit klarem Status",
     description:
-      "Unsere eigenen Projekte: opsolid.de im Betrieb, OpSo in der Testphase, Kutasia in Entwicklung. Wir zeigen nur Arbeit, die wir selbst gebaut haben.",
+      "Unsere eigenen Projekte: opsolid.de im Betrieb, OpSo fürs iPhone im App Store, Kutasia in Entwicklung. Wir zeigen nur Arbeit, die wir selbst gebaut haben.",
   },
   crumbs: [],
   crumb: "Projekte",
@@ -47,9 +47,9 @@ const de: PageDef = {
         },
         {
           name: "OpSo",
-          status: "Testphase",
+          status: "Im App Store",
           p: "Unsere digitale Visitenkarte: Profil anlegen, per Link, QR-Code oder NFC teilen, bei Kontakten nachfassen. Zum Produkt gehören die App, das Onboarding und eine Admin-Konsole.",
-          points: ["Android: geschlossener Test bei Google Play", "iPhone: bei Apple zur Prüfung eingereicht (Stand: 28.10.2026)"],
+          points: ["iPhone: im App Store (EU/EWR, Schweiz, Großbritannien)", "Android: geschlossener Test bei Google Play (Stand: 07.11.2026)"],
           img: { src: "/img/v7/opso/screens/02-share.webp", w: 540, h: 960, alt: "OpSo-App: Teilen per QR-Code, NFC oder Link, Bildschirm mit Demo-Daten" },
           frame: "phone",
           href: { label: "OpSo ansehen", to: "opso" },
@@ -90,7 +90,7 @@ const de: PageDef = {
           href: { label: "Zum KI-Check", to: "check" },
         },
         {
-          tag: "Zeigt: ein Produkt bis zur Prüfung",
+          tag: "Zeigt: ein Produkt bis zur Veröffentlichung",
           h: "OpSo",
           p: "Wir kennen den Weg von der Idee bis in die App-Stores: Datenhaltung, Zugriffsrechte, Tests und die Prüfung durch die Plattformen.",
           href: { label: "Zur OpSo-Seite", to: "opso" },
@@ -130,7 +130,7 @@ const de: PageDef = {
       },
       {
         q: "Ist OpSo schon erhältlich?",
-        a: "Noch nicht allgemein. Android: geschlossener Test bei Google Play. iPhone: bei Apple zur Prüfung eingereicht (Stand: 28.10.2026).",
+        a: "Fürs iPhone ja: im App Store in der EU/im EWR, in der Schweiz und in Großbritannien. Android: geschlossener Test bei Google Play (Stand: 07.11.2026).",
       },
       {
         q: "Kann ich Kutasia nutzen oder kaufen?",
@@ -156,7 +156,7 @@ const en: PageDef = {
   meta: {
     title: "Projects: our own work, with a clear status",
     description:
-      "Our own projects: opsolid.de in operation, OpSo in testing, Kutasia in development. We only show work that we built ourselves, each with its current status.",
+      "Our own projects: opsolid.de in operation, OpSo for iPhone in the App Store, Kutasia in development. We only show work that we built ourselves, each with its current status.",
   },
   crumbs: [],
   crumb: "Projects",
@@ -193,9 +193,9 @@ const en: PageDef = {
         },
         {
           name: "OpSo",
-          status: "In testing",
+          status: "In the App Store",
           p: "Our digital business card: create a profile, share it by link, QR code or NFC, follow up with contacts. The product includes the app, the onboarding and an admin console.",
-          points: ["Android: closed test on Google Play", "iPhone: submitted to Apple for review (as of 28 October 2026)"],
+          points: ["iPhone: in the App Store (EU/EEA, Switzerland, UK)", "Android: closed test on Google Play (as of 7 November 2026)"],
           img: { src: "/img/v7/opso/screens/02-share.webp", w: 540, h: 960, alt: "OpSo app (German interface): sharing by QR code, NFC or link, screen with demo data" },
           frame: "phone",
           href: { label: "See OpSo", to: "opso" },
@@ -236,7 +236,7 @@ const en: PageDef = {
           href: { label: "To the AI check", to: "check" },
         },
         {
-          tag: "Shows: a product through review",
+          tag: "Shows: a product through to release",
           h: "OpSo",
           p: "We know the road from an idea to the app stores: data storage, access rights, testing and the platforms' review.",
           href: { label: "To the OpSo page", to: "opso" },
@@ -276,7 +276,7 @@ const en: PageDef = {
       },
       {
         q: "Is OpSo available yet?",
-        a: "Not publicly yet. Android: closed test on Google Play. iPhone: submitted to Apple for review (as of 28 October 2026).",
+        a: "On iPhone, yes: in the App Store in the EU/EEA, Switzerland and the UK. Android: closed test on Google Play (as of 7 November 2026).",
       },
       {
         q: "Can I use or buy Kutasia?",
@@ -302,7 +302,7 @@ const tr: PageDef = {
   meta: {
     title: "Projeler: kendi işlerimiz ve güncel durumları",
     description:
-      "Kendi projelerimiz: opsolid.de yayında, OpSo test aşamasında, Kutasia geliştirme aşamasında. Yalnızca kendi kurduğumuz işleri, güncel durumlarıyla gösteriyoruz.",
+      "Kendi projelerimiz: opsolid.de yayında, OpSo iPhone için App Store'da, Kutasia geliştirme aşamasında. Yalnızca kendi kurduğumuz işleri, güncel durumlarıyla gösteriyoruz.",
   },
   crumbs: [],
   crumb: "Projeler",
@@ -339,9 +339,9 @@ const tr: PageDef = {
         },
         {
           name: "OpSo",
-          status: "Test aşamasında",
+          status: "App Store'da",
           p: "Dijital kartvizitimiz: profil oluşturun, bağlantı, QR kod veya NFC ile paylaşın, kişileri takip edin. Ürüne uygulama, ilk kurulum akışı ve bir yönetim konsolu dahildir.",
-          points: ["Android: Google Play'de kapalı test", "iPhone: Apple'a incelenmek üzere gönderildi (28.10.2026 itibarıyla)"],
+          points: ["iPhone: App Store'da (AB/AEA, İsviçre, Birleşik Krallık)", "Android: Google Play'de kapalı test (07.11.2026 itibarıyla)"],
           img: { src: "/img/v7/opso/screens/02-share.webp", w: 540, h: 960, alt: "OpSo uygulaması (Almanca arayüz): QR kod, NFC veya bağlantıyla paylaşım, demo verileriyle ekran" },
           frame: "phone",
           href: { label: "OpSo'ya göz atın", to: "opso" },
@@ -382,7 +382,7 @@ const tr: PageDef = {
           href: { label: "YZ Kontrolüne", to: "check" },
         },
         {
-          tag: "Gösterir: incelemeye kadar bir ürün",
+          tag: "Gösterir: yayına kadar bir ürün",
           h: "OpSo",
           p: "Fikirden uygulama mağazalarına uzanan yolu biliyoruz: veri saklama, erişim yetkileri, testler ve platformların incelemesi.",
           href: { label: "OpSo sayfasına", to: "opso" },
@@ -422,7 +422,7 @@ const tr: PageDef = {
       },
       {
         q: "OpSo şimdiden edinilebilir mi?",
-        a: "Henüz herkese açık değil. Android: Google Play'de kapalı test. iPhone: Apple'a incelenmek üzere gönderildi (28.10.2026 itibarıyla).",
+        a: "iPhone için evet: AB/AEA, İsviçre ve Birleşik Krallık'ta App Store'da. Android: Google Play'de kapalı test (07.11.2026 itibarıyla).",
       },
       {
         q: "Kutasia'yı kullanabilir ya da satın alabilir miyim?",

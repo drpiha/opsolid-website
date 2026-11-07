@@ -19,7 +19,7 @@ export function ProjectsBlock({ block, locale, num }: BlockProps<"projects">) {
           return (
             <Reveal as="li" key={p.name} className="v7-card grid items-center gap-x-10 gap-y-8 rounded-[24px] border border-[#E3DCD1] bg-white p-5 md:grid-cols-9 md:p-8">
               <div className={`${i % 2 === 1 ? "md:order-2" : ""} md:col-span-4`}>
-                <p className={`${mono} inline-block rounded-full border border-[#B5623A]/50 px-3 py-1 text-[12px] uppercase text-[#8A4524]`}>{p.status}</p>
+                <p className={`${mono} inline-block rounded-full border border-[#B5623A]/50 px-3 py-1 text-[12px] text-[#8A4524]`}>{p.status}</p>
                 <h3 className={`${display} mt-4 text-[1.75rem] leading-[1.1] md:text-[2.25rem]`}>{p.name}</h3>
                 <p className="mt-3 max-w-[44ch] text-[16px] md:text-[17px]">{p.p}</p>
                 {p.points && p.points.length > 0 && (

@@ -53,7 +53,7 @@ const de: PageDef = {
         {
           tag: "3 · Eigenes Produkt",
           h: "OpSo, unsere digitale Visitenkarte",
-          p: "Ein eigenes Produkt, getrennt von der Beratung, in der Testphase: Android im geschlossenen Test bei Google Play, iPhone bei Apple zur Prüfung eingereicht (Stand: 28.10.2026).",
+          p: "Ein eigenes Produkt, getrennt von der Beratung: fürs iPhone im App Store (EU/EWR, Schweiz, Großbritannien), für Android im geschlossenen Test bei Google Play (Stand: 07.11.2026).",
           href: { label: "Zu OpSo", to: "opso" },
         },
       ],
@@ -226,7 +226,7 @@ const en: PageDef = {
         {
           tag: "3 · Our own product",
           h: "OpSo, our digital business card",
-          p: "A product of our own, separate from the consulting, in testing: Android in a closed test on Google Play, iPhone submitted to Apple for review (as of 28 October 2026).",
+          p: "A product of our own, separate from the consulting: on iPhone in the App Store (EU/EEA, Switzerland, UK), on Android in a closed test on Google Play (as of 7 November 2026).",
           href: { label: "To OpSo", to: "opso" },
         },
       ],
@@ -399,7 +399,7 @@ const tr: PageDef = {
         {
           tag: "3 · Kendi ürünümüz",
           h: "OpSo, dijital kartvizitimiz",
-          p: "Danışmanlıktan ayrı, kendi ürünümüz; test aşamasında: Android'de Google Play'de kapalı test, iPhone'da Apple'a incelenmek üzere gönderildi (28.10.2026 itibarıyla).",
+          p: "Danışmanlıktan ayrı, kendi ürünümüz: iPhone için App Store'da (AB/AEA, İsviçre, Birleşik Krallık), Android için Google Play'de kapalı test (07.11.2026 itibarıyla).",
           href: { label: "OpSo'ya", to: "opso" },
         },
       ],

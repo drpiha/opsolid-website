@@ -1,11 +1,15 @@
 /**
- * OpSo page (pillar 3, our own product in test phase). German is the source. This page keeps the owner-approved
+ * OpSo page (pillar 3, our own product: iPhone app in the App Store since 2026-11-05 in the EU/EEA, Switzerland and
+ * the UK; Android in a closed test on Google Play). German is the source. This page keeps the owner-approved
  * "du" voice of the previous OpSo page (PR #53); the rest of the site uses "Sie". Only features that exist now.
  * Images: the app screens are the real screens (demo data) cropped to the screen area from public/img/opso/<locale>/;
  * the four example cards are captures of fictional profiles with AI-generated portraits; the NFC card render is our
  * own 3D concept render (not AI-generated). The planned card price is shown exactly as on the previous page, with its label.
  */
 import type { L3, PageDef, PageSet } from "../types";
+
+/** Public App Store listing (storefronts: EU/EEA, Switzerland, UK). */
+const APP_STORE = "https://apps.apple.com/app/id6826541629" as const;
 
 const APP = (loc: L3, n: string) => `/img/v7/opso/app/${loc}-${n}.webp`;
 const SCREEN = { w: 328, h: 710 } as const;
@@ -25,17 +29,17 @@ const de: PageDef = {
   meta: {
     title: "OpSo: Karte, Kontakte und Follow-up an einem Ort",
     description:
-      "OpSo: kostenlose digitale Visitenkarte mit Kontaktliste und Follow-up. Android: geschlossener Test, iPhone: bei Apple eingereicht. Ohne App für Empfänger.",
+      "OpSo: kostenlose digitale Visitenkarte mit Kontaktliste und Follow-up. iPhone: im App Store, Android: geschlossener Test. Ohne App für Empfänger.",
   },
   crumbs: [],
   crumb: "OpSo",
   hero: {
-    eyebrow: "OpSo · by OpSolid · in der Testphase",
+    eyebrow: "OpSo · by OpSolid",
     h1: ["Karte, Kontakte, Follow-up.", "Wen du triffst, vergisst du nicht", ""],
     lede: "OpSo ist die digitale Visitenkarte mit Kontaktliste. Du teilst deine Karte per QR-Code, NFC oder Link, notierst, wo ihr euch getroffen habt, und fasst rechtzeitig nach.",
-    primary: { label: "Zugang zum Test anfragen", to: "kontakt", query: { anliegen: "opso" } },
-    secondary: { label: "Funktionen ansehen", to: "opso", hash: "funktionen" },
-    facts: ["Heute kostenlos, ohne Werbung", "Empfänger brauchen keine App", "Stand: 28.10.2026"],
+    primary: { label: "Im App Store laden", href: APP_STORE },
+    secondary: { label: "Android-Test anfragen", to: "kontakt", query: { anliegen: "opso" } },
+    facts: ["iPhone: im App Store (EU/EWR, Schweiz, Großbritannien)", "Heute kostenlos, ohne Werbung", "Empfänger brauchen keine App", "Stand: 07.11.2026"],
     media: {
       kind: "image",
       img: { src: APP("de", "02-share"), ...SCREEN, alt: "OpSo-Teilen-Bildschirm mit QR-Code und den Reitern Antippen und NFC-Karte (Demodaten)" },
@@ -215,14 +219,14 @@ const de: PageDef = {
       t: "spec",
       id: "verfuegbarkeit",
       label: "Verfügbarkeit",
-      footnote: "Stand: 28.10.2026.",
+      footnote: "Stand: 07.11.2026.",
       h: "Wo es OpSo gibt",
-      lede: "OpSo ist in der Testphase. Android: geschlossener Test bei Google Play. iPhone: bei Apple zur Prüfung eingereicht (Stand: 28.10.2026).",
-      cta: { label: "Zugang zum Test anfragen", to: "kontakt", query: { anliegen: "opso" } },
+      lede: "Fürs iPhone gibt es OpSo im App Store, in der EU/im EWR, in der Schweiz und in Großbritannien. Für Android läuft ein geschlossener Test bei Google Play.",
+      cta: { label: "Zugang zum Android-Test anfragen", to: "kontakt", query: { anliegen: "opso" } },
       rows: [
+        ["iPhone", "Kostenlos im App Store, erhältlich in der EU/im EWR, in der Schweiz und in Großbritannien."],
         ["Android", "Geschlossener Test bei Google Play, nur für eingeladene Tester; einen öffentlichen Store-Link gibt es noch nicht. Schreib uns, wir nehmen dich auf."],
-        ["iPhone", "Ein Termin für den App Store steht noch nicht fest."],
-        ["Im Browser", "Jede veröffentlichte Karte öffnet sich schon jetzt im Browser, auch auf dem iPhone."],
+        ["Im Browser", "Jede veröffentlichte Karte öffnet sich im Browser, auch ohne App."],
         ["Eigene Domain", "Noch nicht. Karten werden unter opso.cc veröffentlicht."],
       ],
     },
@@ -253,7 +257,7 @@ const de: PageDef = {
       },
       {
         q: "Gibt es OpSo fürs iPhone?",
-        a: "Noch nicht im Store. Die iPhone-Version ist bei Apple zur Prüfung eingereicht (Stand: 28.10.2026). Deine Karte kann jeder mit iPhone trotzdem im Browser öffnen.",
+        a: "Ja. OpSo ist kostenlos im App Store, in der EU/im EWR, in der Schweiz und in Großbritannien (Stand: 07.11.2026). Deine Karte öffnet jeder mit iPhone auch ohne App im Browser.",
       },
       {
         q: "Was passiert mit meinen Daten?",
@@ -264,15 +268,16 @@ const de: PageDef = {
   cta: {
     label: "OpSo",
     h: "Probier OpSo aus",
-    p: "Schreib uns kurz, wir nehmen dich in den Android-Test auf.",
-    primary: { label: "Zugang zum Test anfragen", to: "kontakt", query: { anliegen: "opso" } },
-    secondary: { label: "KI-Check für Unternehmen", to: "check" },
+    p: "Fürs iPhone lädst du OpSo im App Store (EU/EWR, Schweiz, Großbritannien). Für Android schreib uns kurz, wir nehmen dich in den Test auf.",
+    primary: { label: "Im App Store laden", href: APP_STORE },
+    secondary: { label: "Android-Test anfragen", to: "kontakt", query: { anliegen: "opso" } },
   },
   schema: {
     software: {
       name: "OpSo",
-      description: "Digitale Visitenkarte mit Kontaktliste und Follow-up. Karte teilen per QR-Code, NFC oder Link; Empfänger brauchen keine App. In der Testphase.",
-      os: ["Android"],
+      description: "Digitale Visitenkarte mit Kontaktliste und Follow-up. Karte teilen per QR-Code, NFC oder Link; Empfänger brauchen keine App. iPhone-App im App Store, Android im geschlossenen Test.",
+      os: ["iOS", "Android"],
+      installUrl: APP_STORE,
       category: "BusinessApplication",
     },
   },
@@ -283,17 +288,17 @@ const en: PageDef = {
   meta: {
     title: "OpSo: your card, contacts and follow-up",
     description:
-      "OpSo is the free digital business card with contacts and follow-up. Android: closed test, iPhone: submitted to Apple. Recipients need no app. By OpSolid.",
+      "OpSo is the free digital business card with contacts and follow-up. iPhone: in the App Store, Android: closed test. Recipients need no app. By OpSolid.",
   },
   crumbs: [],
   crumb: "OpSo",
   hero: {
-    eyebrow: "OpSo · by OpSolid · in test phase",
+    eyebrow: "OpSo · by OpSolid",
     h1: ["Card, contacts, follow-up.", "You won’t forget who you met", ""],
     lede: "OpSo is the digital business card with a contact list. You share your card by QR code, NFC or link, note where you met, and follow up in time.",
-    primary: { label: "Request test access", to: "kontakt", query: { anliegen: "opso" } },
-    secondary: { label: "See the features", to: "opso", hash: "funktionen" },
-    facts: ["Free today, no ads", "Recipients need no app", "As of 28 Oct 2026"],
+    primary: { label: "Download on the App Store", href: APP_STORE },
+    secondary: { label: "Request Android test access", to: "kontakt", query: { anliegen: "opso" } },
+    facts: ["iPhone: in the App Store (EU/EEA, Switzerland, UK)", "Free today, no ads", "Recipients need no app", "As of 7 Nov 2026"],
     media: {
       kind: "image",
       img: { src: APP("en", "02-share"), ...SCREEN, alt: "OpSo share screen with QR code and the tabs Tap and NFC card (demo data)" },
@@ -470,14 +475,14 @@ const en: PageDef = {
       t: "spec",
       id: "verfuegbarkeit",
       label: "Availability",
-      footnote: "As of 28 Oct 2026.",
+      footnote: "As of 7 Nov 2026.",
       h: "Where to get OpSo",
-      lede: "OpSo is in its test phase. Android: closed test on Google Play. iPhone: submitted to Apple for review (as of 28 Oct 2026).",
-      cta: { label: "Request test access", to: "kontakt", query: { anliegen: "opso" } },
+      lede: "On iPhone, OpSo is in the App Store in the EU/EEA, Switzerland and the UK. On Android, it is in a closed test on Google Play.",
+      cta: { label: "Request Android test access", to: "kontakt", query: { anliegen: "opso" } },
       rows: [
+        ["iPhone", "Free in the App Store, available in the EU/EEA, Switzerland and the UK."],
         ["Android", "Closed test on Google Play, open to invited testers only; there is no public store link yet. Write to us and we will add you."],
-        ["iPhone", "There is no App Store date yet."],
-        ["In the browser", "Any published card already opens in a browser, on an iPhone too."],
+        ["In the browser", "Any published card opens in a browser, no app needed."],
         ["Own domain", "Not yet. Cards are published at opso.cc."],
       ],
     },
@@ -508,7 +513,7 @@ const en: PageDef = {
       },
       {
         q: "Can I get OpSo on my iPhone?",
-        a: "Not in the store yet. The iPhone version has been submitted to Apple for review (as of 28 Oct 2026). Anyone with an iPhone can still open your card in the browser.",
+        a: "Yes. OpSo is free in the App Store in the EU/EEA, Switzerland and the UK (as of 7 Nov 2026). Anyone with an iPhone can also open your card in the browser without the app.",
       },
       {
         q: "What happens to my data?",
@@ -519,15 +524,16 @@ const en: PageDef = {
   cta: {
     label: "OpSo",
     h: "Try OpSo",
-    p: "Write to us and we will add you to the Android test.",
-    primary: { label: "Request test access", to: "kontakt", query: { anliegen: "opso" } },
-    secondary: { label: "AI check for companies", to: "check" },
+    p: "On iPhone, get OpSo from the App Store (EU/EEA, Switzerland, UK). On Android, write to us and we will add you to the test.",
+    primary: { label: "Download on the App Store", href: APP_STORE },
+    secondary: { label: "Request Android test access", to: "kontakt", query: { anliegen: "opso" } },
   },
   schema: {
     software: {
       name: "OpSo",
-      description: "Digital business card with a contact list and follow-up. Share your card by QR code, NFC or link; recipients need no app. In test phase.",
-      os: ["Android"],
+      description: "Digital business card with a contact list and follow-up. Share your card by QR code, NFC or link; recipients need no app. iPhone app in the App Store, Android in a closed test.",
+      os: ["iOS", "Android"],
+      installUrl: APP_STORE,
       category: "BusinessApplication",
     },
   },
@@ -538,17 +544,17 @@ const tr: PageDef = {
   meta: {
     title: "OpSo: kartın, kişilerin ve takibin tek yerde",
     description:
-      "OpSo, kişi listesi ve takip özelliği olan ücretsiz dijital kartvizit. Android: kapalı test, iPhone: Apple’a gönderildi. Karşı tarafın uygulaması gerekmez.",
+      "OpSo, kişi listesi ve takip özelliği olan ücretsiz dijital kartvizit. iPhone: App Store’da, Android: kapalı test. Karşı tarafın uygulaması gerekmez.",
   },
   crumbs: [],
   crumb: "OpSo",
   hero: {
-    eyebrow: "OpSo · OpSolid’den · test aşamasında",
+    eyebrow: "OpSo · OpSolid’den",
     h1: ["Kart, kişiler, takip.", "Tanıştığın insanı unutmazsın", ""],
     lede: "OpSo, kişi listesi olan dijital kartvizit. Kartını karekod, NFC ya da bağlantıyla paylaşırsın, nerede tanıştığını not edersin ve zamanında takip edersin.",
-    primary: { label: "Test erişimi iste", to: "kontakt", query: { anliegen: "opso" } },
-    secondary: { label: "Özelliklere bak", to: "opso", hash: "funktionen" },
-    facts: ["Bugün ücretsiz, reklamsız", "Karşı tarafın uygulaması gerekmez", "Durum: 28.10.2026"],
+    primary: { label: "App Store’dan indir", href: APP_STORE },
+    secondary: { label: "Android test erişimi iste", to: "kontakt", query: { anliegen: "opso" } },
+    facts: ["iPhone: App Store’da (AB/AEA, İsviçre, Birleşik Krallık)", "Bugün ücretsiz, reklamsız", "Karşı tarafın uygulaması gerekmez", "Durum: 07.11.2026"],
     media: {
       kind: "image",
       img: { src: APP("tr", "02-share"), ...SCREEN, alt: "Karekod ile Dokun ve NFC kart sekmelerini gösteren OpSo paylaşma ekranı (demo veri)" },
@@ -729,14 +735,14 @@ const tr: PageDef = {
       t: "spec",
       id: "verfuegbarkeit",
       label: "Uygulama durumu",
-      footnote: "Durum: 28.10.2026.",
+      footnote: "Durum: 07.11.2026.",
       h: "OpSo’yu nereden alırsın",
-      lede: "OpSo test aşamasında. Android: Google Play’de kapalı test. iPhone: Apple’a inceleme için gönderildi (durum: 28.10.2026).",
-      cta: { label: "Test erişimi iste", to: "kontakt", query: { anliegen: "opso" } },
+      lede: "iPhone için OpSo App Store’da: AB/AEA, İsviçre ve Birleşik Krallık’ta. Android’de Google Play’de kapalı test sürüyor.",
+      cta: { label: "Android test erişimi iste", to: "kontakt", query: { anliegen: "opso" } },
       rows: [
+        ["iPhone", "App Store’da ücretsiz; AB/AEA, İsviçre ve Birleşik Krallık’ta indirilebilir."],
         ["Android", "Google Play’de kapalı test, yalnızca davetli test kullanıcılarına açık; henüz herkese açık bir mağaza bağlantısı yok. Bize yaz, seni ekleyelim."],
-        ["iPhone", "App Store için henüz bir tarih yok."],
-        ["Tarayıcıda", "Yayınlanmış her kart şimdiden tarayıcıda açılır, iPhone’da da."],
+        ["Tarayıcıda", "Yayınlanmış her kart tarayıcıda açılır, uygulama gerekmez."],
         ["Kendi alan adın", "Henüz değil. Kartlar opso.cc altında yayınlanır."],
       ],
     },
@@ -767,7 +773,7 @@ const tr: PageDef = {
       },
       {
         q: "OpSo’yu iPhone’umda kullanabilir miyim?",
-        a: "Henüz mağazada değil. iPhone sürümü Apple’a inceleme için gönderildi (durum: 28.10.2026). iPhone’u olan herkes kartını yine de tarayıcıda açabilir.",
+        a: "Evet. OpSo App Store’da ücretsiz: AB/AEA, İsviçre ve Birleşik Krallık’ta (durum: 07.11.2026). iPhone’u olan herkes kartını uygulama olmadan tarayıcıda da açabilir.",
       },
       {
         q: "Verilerime ne olur?",
@@ -778,15 +784,16 @@ const tr: PageDef = {
   cta: {
     label: "OpSo",
     h: "OpSo’yu dene",
-    p: "Bize kısaca yaz, seni Android testine ekleyelim.",
-    primary: { label: "Test erişimi iste", to: "kontakt", query: { anliegen: "opso" } },
-    secondary: { label: "Şirketler için YZ Kontrolü", to: "check" },
+    p: "iPhone için OpSo’yu App Store’dan indir (AB/AEA, İsviçre, Birleşik Krallık). Android için bize kısaca yaz, seni teste ekleyelim.",
+    primary: { label: "App Store’dan indir", href: APP_STORE },
+    secondary: { label: "Android test erişimi iste", to: "kontakt", query: { anliegen: "opso" } },
   },
   schema: {
     software: {
       name: "OpSo",
-      description: "Kişi listesi ve takip özelliği olan dijital kartvizit. Kartını karekod, NFC ya da bağlantıyla paylaş; karşı tarafın uygulaması gerekmez. Test aşamasında.",
-      os: ["Android"],
+      description: "Kişi listesi ve takip özelliği olan dijital kartvizit. Kartını karekod, NFC ya da bağlantıyla paylaş; karşı tarafın uygulaması gerekmez. iPhone uygulaması App Store’da, Android kapalı testte.",
+      os: ["iOS", "Android"],
+      installUrl: APP_STORE,
       category: "BusinessApplication",
     },
   },
