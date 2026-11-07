@@ -170,7 +170,7 @@ const de: PageDef = {
         {
           tag: "Eigene Arbeit",
           h: "OpSo",
-          p: "Für OpSo, unser eigenes Produkt in der Testphase, haben wir Dashboard, Onboarding und Admin-Konsole selbst entwickelt.",
+          p: "Für OpSo, unser eigenes Produkt mit iPhone-App im App Store, haben wir Dashboard, Onboarding und Admin-Konsole selbst entwickelt.",
           href: { label: "Unsere Projekte", to: "projekte" },
         },
       ],
@@ -384,7 +384,7 @@ const en: PageDef = {
         {
           tag: "Our own work",
           h: "OpSo",
-          p: "For OpSo, our own product in its test phase, we built the dashboard, onboarding and admin console ourselves.",
+          p: "For OpSo, our own product with an iPhone app in the App Store, we built the dashboard, onboarding and admin console ourselves.",
           href: { label: "Our projects", to: "projekte" },
         },
       ],
@@ -598,7 +598,7 @@ const tr: PageDef = {
         {
           tag: "Kendi çalışmamız",
           h: "OpSo",
-          p: "Test aşamasındaki kendi ürünümüz OpSo için dashboard'u, ilk kurulum akışını ve yönetim konsolunu kendimiz geliştirdik.",
+          p: "iPhone uygulaması App Store'da olan kendi ürünümüz OpSo için dashboard'u, ilk kurulum akışını ve yönetim konsolunu kendimiz geliştirdik.",
           href: { label: "Projelerimiz", to: "projekte" },
         },
       ],

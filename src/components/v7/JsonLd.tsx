@@ -222,6 +222,7 @@ export function JsonLd({ page, locale, crumbs }: { page: PageDef; locale: L3; cr
       description: s.software.description,
       operatingSystem: s.software.os.join(", "),
       applicationCategory: s.software.category,
+      ...(s.software.installUrl ? { installUrl: s.software.installUrl } : {}),
       publisher: { "@id": ORG },
       url,
     });

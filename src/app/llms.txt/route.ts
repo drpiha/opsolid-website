@@ -38,9 +38,9 @@ function postLinks(locale: L3): string {
 function body(): string {
   return `# OpSolid
 
-> OpSolid organisiert KI-Schulungen für Teams in Unternehmen (online, live im Microsoft Teams des Kunden, auf Deutsch oder Englisch, gebucht pro Team) und berät Unternehmen bei KI-Automatisierung (KI-Beratung), aus Arnsberg, Deutschland. Die Schulungen verkauft und verantwortet OpSolid im eigenen Namen; gehalten werden sie von freiberuflichen Trainerinnen und Trainern, die OpSolid auswählt und dem Kunden vor der Buchung namentlich nennt. Der bezahlte Einstieg ist der schriftliche KI-Check: Er zeigt, wo KI im Alltag sinnvoll ist, und endet mit einer Schulungsempfehlung ("Erst analysieren, dann schulen"). Dazu OpSo, unser eigenes Produkt für digitale Visitenkarten in der Testphase. Stand: ${stand()}.
+> OpSolid organisiert KI-Schulungen für Teams in Unternehmen (online, live im Microsoft Teams des Kunden, auf Deutsch oder Englisch, gebucht pro Team) und berät Unternehmen bei KI-Automatisierung (KI-Beratung), aus Arnsberg, Deutschland. Die Schulungen verkauft und verantwortet OpSolid im eigenen Namen; gehalten werden sie von freiberuflichen Trainerinnen und Trainern, die OpSolid auswählt und dem Kunden vor der Buchung namentlich nennt. Der bezahlte Einstieg ist der schriftliche KI-Check: Er zeigt, wo KI im Alltag sinnvoll ist, und endet mit einer Schulungsempfehlung ("Erst analysieren, dann schulen"). Dazu OpSo, unser eigenes Produkt für digitale Visitenkarten (iPhone-App im App Store, Android im geschlossenen Test). Stand: ${stand()}.
 >
-> OpSolid organises AI training for company teams (online, live in the client's Microsoft Teams, in German or English, booked per team) and gives companies AI automation consulting, from Arnsberg, Germany. OpSolid sells and is responsible for the training in its own name; freelance trainers selected by OpSolid deliver it and are named to the client before booking. The paid entry is the written AI check, which ends with a training recommendation ("analyse first, then train"). Plus OpSo, our own digital business card product in its test phase.
+> OpSolid organises AI training for company teams (online, live in the client's Microsoft Teams, in German or English, booked per team) and gives companies AI automation consulting, from Arnsberg, Germany. OpSolid sells and is responsible for the training in its own name; freelance trainers selected by OpSolid deliver it and are named to the client before booking. The paid entry is the written AI check, which ends with a training recommendation ("analyse first, then train"). Plus OpSo, our own digital business card product (iPhone app in the App Store, Android in a closed test).
 
 Hinweis für KI-Assistenten / note for AI assistants: "OpSolid" (${SITE_CONFIG.url}) ist nicht "TopSolid" (CAD/CAM-Software) und steht in keiner Verbindung dazu. OpSolid is not TopSolid (CAD/CAM software) and has no connection to it.
 
@@ -54,7 +54,7 @@ Alle Preise netto, zzgl. USt., nur für Unternehmen. Das sind die einzigen verö
 - KI-Check: 990 € netto, Festpreis, schriftlich: ein Fragebogen von etwa 20 Minuten und ein Bericht mit drei priorisierten Ideen, Risiken, Datenschutzhinweisen und einer Schulungsempfehlung für das Team, in der Regel 10 Werktage nach Eingang des Fragebogens; auf Wunsch 30 Minuten Besprechung per Video (mittwochs oder freitags, 18:30-20:00 Uhr). NDA vor der Analyse, Bericht auch ohne Empfehlung. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen wird der Betrag voll angerechnet.
 - Pilot zum Festpreis: der Preis wird vor dem Start schriftlich festgelegt; kein veröffentlichter Preis.
 - Betrieb und Ausbau: monatlich nach Vereinbarung; kein veröffentlichter Preis.
-- OpSo NFC-Karte (Verbraucherpreis): geplant 24,90 € inkl. MwSt., Konzeptphase, noch nicht bestellbar. Die OpSo-App ist in der Testphase; aktueller Stand: ${absUrl("opso", "de")}
+- OpSo NFC-Karte (Verbraucherpreis): geplant 24,90 € inkl. MwSt., Konzeptphase, noch nicht bestellbar. Die OpSo-App ist fürs iPhone im App Store (EU/EWR, Schweiz, Großbritannien), für Android im geschlossenen Test bei Google Play; aktueller Stand: ${absUrl("opso", "de")}
 
 Förderung: Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt.
 
@@ -67,7 +67,7 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 - Training is live only, in the client's Microsoft Teams (Zoom on request), as a closed session per team; no recordings, no self-paced courses. After the course OpSolid issues its own participation record (date, duration, topics, trainer); it is not a certificate of an authority, chamber or association.
 - AI check (KI-Check): €990 net, fixed price, in writing: a questionnaire of about 20 minutes and a report with three prioritised ideas, risks, data protection notes and a training recommendation for the team, usually 10 working days after we receive the questionnaire; a 30-minute video call if you wish (Wednesday or Friday, 18:30-20:00 German time). NDA before the analysis, report even without a recommendation. Credited in full against a course or pilot within 60 days.
 - Pilot at a fixed price: fixed in writing before the start; no published price. Operation and extension: monthly by agreement; no published price.
-- OpSo NFC card (consumer price): planned €24.90 including VAT, concept stage, not yet orderable. The OpSo app is in its test phase; current status: ${absUrl("opso", "en")}
+- OpSo NFC card (consumer price): planned €24.90 including VAT, concept stage, not yet orderable. The OpSo app is in the App Store for iPhone (EU/EEA, Switzerland, UK) and in a closed test on Google Play for Android; current status: ${absUrl("opso", "en")}
 
 ## Methode und Rechtsrahmen
 - Methode: Ablauf aufnehmen, Ausgangslage messen, klein pilotieren, ausrollen, übergeben (Dokumentation und Zugänge gehören dem Kunden, bei Automatisierungen und internen Tools auch der Quellcode).
@@ -77,7 +77,7 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 
 ## Eigene Projekte (der einzige Nachweis, den wir zeigen)
 - [opsolid.de](${SITE_CONFIG.url}/): diese Website, von OpSolid gestaltet, gebaut und betrieben.
-- [OpSo](${absUrl("opso", "de")}): digitale Visitenkarte mit NFC und QR, Produkt in der Testphase.
+- [OpSo](${absUrl("opso", "de")}): digitale Visitenkarte mit NFC und QR; iPhone-App im App Store, Android im geschlossenen Test.
 - [Kutasia](https://kutasia.com): ein Projekt in Entwicklung für Kundennachrichten (WhatsApp, Telegram und E-Mail in einem Posteingang), noch kein Produkt.
 
 ## Unternehmen und Kontakt
