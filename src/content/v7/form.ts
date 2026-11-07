@@ -54,8 +54,19 @@ export type FormText = {
   sending: string;
   ok: string;
   okH: string;
-  /** Fallback shown on any failure, including the 503 when mail delivery is not configured: [before, after] around the address. */
-  fallback: [string, string];
+  /**
+   * Shown when a send fails (src/lib/contact-feedback.ts picks one). `{mail}` becomes the mailto link to `mail`,
+   * `{wait}` the wait from `waitMinutes`. Typed values stay in the form after any failure.
+   */
+  failH: string;
+  /** 429: the per-network lock, the in-flight cap or the global send cap of /api/contact; worded neutrally for all three. */
+  failBusy: string;
+  /** 400, 413, 415: the server rejected the content. */
+  failInvalid: string;
+  /** 503, any other error, or no answer at all. */
+  failDown: string;
+  /** [one minute, n minutes] for `{wait}`; the second contains `{n}`. */
+  waitMinutes: [string, string];
   errName: string;
   errEmail: string;
   errMessage: string;
@@ -116,7 +127,14 @@ export const FORM: Record<L3, FormText> = {
     sending: "Wird gesendet …",
     okH: "Nachricht angekommen",
     ok: "Danke, Ihre Nachricht ist angekommen. Wir antworten in der Regel innerhalb weniger Arbeitstage.",
-    fallback: ["Die Nachricht konnte nicht gesendet werden. Bitte schreiben Sie direkt an ", "."],
+    failH: "Nicht gesendet",
+    failBusy:
+      "Gerade kamen viele Nachrichten kurz hintereinander an. Zum Schutz vor Spam nimmt das Formular für kurze Zeit keine weiteren an. Ihre Eingaben bleiben erhalten. Bitte senden Sie in {wait} erneut oder schreiben Sie direkt an {mail}.",
+    failInvalid:
+      "Die Nachricht wurde nicht angenommen. Ihre Eingaben bleiben erhalten. Bitte prüfen Sie Ihre Angaben und senden Sie erneut. Besteht das Problem weiterhin, schreiben Sie direkt an {mail}.",
+    failDown:
+      "Die Nachricht konnte gerade nicht gesendet werden. Ihre Eingaben bleiben erhalten. Bitte versuchen Sie es in ein paar Minuten erneut oder schreiben Sie direkt an {mail}.",
+    waitMinutes: ["einer Minute", "{n} Minuten"],
     errName: "Bitte geben Sie Ihren Namen an.",
     errEmail: "Bitte geben Sie eine gültige E-Mail-Adresse an.",
     errMessage: "Bitte schreiben Sie kurz, worum es geht.",
@@ -175,7 +193,14 @@ export const FORM: Record<L3, FormText> = {
     sending: "Sending …",
     okH: "Message received",
     ok: "Thank you, your message has arrived. We usually reply within a few working days.",
-    fallback: ["Your message could not be sent. Please write directly to ", "."],
+    failH: "Not sent",
+    failBusy:
+      "Many messages arrived in a short time, so the form is pausing briefly to keep out spam. Nothing you typed has been lost. Please send again in {wait} or write directly to {mail}.",
+    failInvalid:
+      "The message was not accepted. Nothing you typed has been lost. Please check your details and send again. If the problem persists, write directly to {mail}.",
+    failDown:
+      "The message could not be sent just now. Nothing you typed has been lost. Please try again in a few minutes or write directly to {mail}.",
+    waitMinutes: ["about a minute", "{n} minutes"],
     errName: "Please enter your name.",
     errEmail: "Please enter a valid email address.",
     errMessage: "Please tell us briefly what it is about.",
@@ -234,7 +259,14 @@ export const FORM: Record<L3, FormText> = {
     sending: "Gönderiliyor …",
     okH: "Mesajınız ulaştı",
     ok: "Teşekkürler, mesajınız ulaştı. Genellikle birkaç iş günü içinde yanıt veriyoruz.",
-    fallback: ["Mesajınız gönderilemedi. Lütfen doğrudan ", " adresine yazın."],
+    failH: "Gönderilmedi",
+    failBusy:
+      "Kısa sürede çok sayıda mesaj geldi; form, spama karşı koruma için kısa bir süre yeni mesaj almıyor. Girdiğiniz bilgiler korundu. Lütfen {wait} sonra yeniden gönderin ya da doğrudan {mail} adresine yazın.",
+    failInvalid:
+      "Mesajınız kabul edilmedi. Girdiğiniz bilgiler korundu. Lütfen bilgilerinizi kontrol edip yeniden gönderin. Sorun sürerse doğrudan {mail} adresine yazın.",
+    failDown:
+      "Mesajınız şu an gönderilemedi. Girdiğiniz bilgiler korundu. Lütfen birkaç dakika sonra yeniden deneyin ya da doğrudan {mail} adresine yazın.",
+    waitMinutes: ["1 dakika", "{n} dakika"],
     errName: "Lütfen adınızı girin.",
     errEmail: "Lütfen geçerli bir e-posta adresi girin.",
     errMessage: "Lütfen konunuzu kısaca yazın.",

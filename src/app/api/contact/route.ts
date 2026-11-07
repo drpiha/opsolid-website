@@ -39,7 +39,11 @@ const tooMany = (retryAfter: number) => NextResponse.json(
 // share the process-wide contactLimiter quota exactly as before, so made-up
 // headers cannot multiply that budget. All of this is per process.
 const WINDOW_MS = 10 * 60_000;
-const CLIENT_MAX_ATTEMPTS = 5; // per client and window, junk included
+// Per client and window, junk included: at most 10 attempts per network per 10 minutes (about one a minute on
+// average; the in-flight cap below still allows short bursts). One "client" is one public IPv4 or one IPv6 /64, so
+// a household or an office shares it; 5 locked out a visitor who corrected and resent a few times (2026-11-07).
+// The 429 carries Retry-After, and the form names the wait.
+const CLIENT_MAX_ATTEMPTS = 10;
 const CLIENT_MAX_IN_FLIGHT = 2;
 const CLIENT_MAX_KEYS = 10_000; // hard memory bound; oldest window evicted first
 const IDENTIFIED_MAX_IN_FLIGHT = 16; // all identified clients together
