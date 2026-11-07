@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FORM } from "@/content/v7/form";
 import type { BlockOf } from "@/content/v7/types";
 import { href, type L3 } from "@/lib/v7-routes";
+import { sendFailure, type SendFailure } from "@/lib/contact-feedback";
 
 const mono = "font-[family-name:var(--font-geist-mono),ui-monospace,monospace] tracking-[0.02em]";
 const label = `${mono} mb-2 block text-[12px] uppercase text-[#6B665F]`;
@@ -37,9 +38,11 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
   // Trainer applications (anliegen=trainer) get structured fields; every other topic keeps the plain form.
   const isTrainer = topics.has("trainer");
   const [state, setState] = useState<"idle" | "sending" | "ok" | "err">("idle");
+  const [fail, setFail] = useState<SendFailure>({ kind: "down" });
   const [errs, setErrs] = useState<Partial<Record<Field, boolean>>>({});
   const [sentTrainer, setSentTrainer] = useState(false);
   const okRef = useRef<HTMLDivElement>(null);
+  const failRef = useRef<HTMLDivElement>(null);
   const errText: Record<Field, string> = {
     name: t.errName,
     email: t.errEmail,
@@ -64,7 +67,10 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
 
   useEffect(() => {
     if (state === "ok") okRef.current?.focus();
-  }, [state]);
+    // The notice sits under the button; on a phone it can open below the fold. Bring it into view without
+    // moving focus, so the visitor can correct a field and send again straight away.
+    if (state === "err") failRef.current?.scrollIntoView({ block: "nearest" });
+  }, [state, fail]);
 
   // "trainer" is an application, not an inquiry topic, so it is chosen on its own.
   const toggle = (v: string) => {
@@ -133,9 +139,14 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
       return;
     }
     setState("sending");
+    let res: Response;
+    // A request that hangs ends as the "down" notice instead of leaving the button on "sending".
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), 20_000);
     try {
-      const res = await fetch("/api/contact", {
+      res = await fetch("/api/contact", {
         method: "POST",
+        signal: abort.signal,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: v.name,
@@ -158,17 +169,41 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           source: `v7-contact-${locale}`,
         }),
       });
-      // 503 (mail delivery not configured), 429 (rate limit) and any other failure all show the same fallback.
-      setState(res.ok ? "ok" : "err");
-      if (res.ok) {
-        form.reset();
-        setTopics(new Set());
-        setTTopics(new Set());
-        setSentTrainer(isTrainer);
-      }
     } catch {
+      setFail(sendFailure(null, null));
       setState("err");
+      return;
+    } finally {
+      clearTimeout(timer);
     }
+    // 429 (rate limit), 400 (content rejected) and 503 or anything else (delivery) each get their own message;
+    // the typed values stay in the form for every failure.
+    if (!res.ok) {
+      setFail(sendFailure(res.status, res.headers.get("Retry-After")));
+      setState("err");
+      return;
+    }
+    form.reset();
+    setTopics(new Set());
+    setTTopics(new Set());
+    setSentTrainer(isTrainer);
+    setState("ok");
+  };
+
+  // The failure text with {wait} filled in and {mail} as the mailto link.
+  const failText = () => {
+    const raw = fail.kind === "busy" ? t.failBusy : fail.kind === "invalid" ? t.failInvalid : t.failDown;
+    const wait = fail.kind === "busy" ? (fail.minutes === 1 ? t.waitMinutes[0] : t.waitMinutes[1].replace("{n}", String(fail.minutes))) : "";
+    const [before, after = ""] = raw.replace("{wait}", wait).split("{mail}");
+    return (
+      <>
+        {before}
+        <a className="font-medium text-[#8A4524] underline underline-offset-4" href={`mailto:${t.mail}`}>
+          {t.mail}
+        </a>
+        {after}
+      </>
+    );
   };
 
   const mark = (k: Field, help?: string) => ({
@@ -348,17 +383,15 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
             {state === "sending" ? t.sending : isTrainer ? tt.send : t.send}
           </button>
         </div>
-        <p role="alert" className="text-[16px] font-medium text-[#A12A1B]">
+        {/* Always mounted, so screen readers announce the notice when it appears. */}
+        <div role="alert">
           {state === "err" ? (
-            <span>
-              {t.fallback[0]}
-              <a className="underline underline-offset-4" href={`mailto:${t.mail}`}>
-                {t.mail}
-              </a>
-              {t.fallback[1]}
-            </span>
+            <div ref={failRef} className="scroll-mb-6 rounded-[24px] border border-[#A12A1B] bg-white p-5 md:p-8">
+              <p className={`${mono} text-[12px] uppercase text-[#A12A1B]`}>{t.failH}</p>
+              <p className="mt-3 max-w-[62ch] text-[17px] leading-[1.6] text-[#16191D] [text-wrap:pretty] md:text-[18px]">{failText()}</p>
+            </div>
           ) : null}
-        </p>
+        </div>
       </div>
       <p className="text-[14px] leading-[1.6] text-[#6B665F]" hidden={isTrainer || undefined}>
         {t.consent}{" "}
