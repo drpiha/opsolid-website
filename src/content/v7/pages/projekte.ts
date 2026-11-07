@@ -1,7 +1,7 @@
 /**
  * Projects page (v7). Our own work only: opsolid.de, OpSo (product: iPhone app in the App Store), Kutasia (project in
- * development). No client projects, logos or quotes. Status lines follow the build brief (OpSo: Android
- * iPhone in the App Store in the EU/EEA, Switzerland and the UK, Android in a closed test on Google Play, as of 07.11.2026).
+ * development). No client projects, logos or quotes. Status lines follow the build brief (OpSo: iPhone in the App Store
+ * in the EU/EEA, Switzerland and the UK, Android in a closed test on Google Play, as of 07.11.2026).
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -90,7 +90,7 @@ const de: PageDef = {
           href: { label: "Zum KI-Check", to: "check" },
         },
         {
-          tag: "Zeigt: ein Produkt bis in den App Store",
+          tag: "Zeigt: ein Produkt bis zur Veröffentlichung",
           h: "OpSo",
           p: "Wir kennen den Weg von der Idee bis in die App-Stores: Datenhaltung, Zugriffsrechte, Tests und die Prüfung durch die Plattformen.",
           href: { label: "Zur OpSo-Seite", to: "opso" },
@@ -236,7 +236,7 @@ const en: PageDef = {
           href: { label: "To the AI check", to: "check" },
         },
         {
-          tag: "Shows: a product all the way to the App Store",
+          tag: "Shows: a product through to release",
           h: "OpSo",
           p: "We know the road from an idea to the app stores: data storage, access rights, testing and the platforms' review.",
           href: { label: "To the OpSo page", to: "opso" },
@@ -382,7 +382,7 @@ const tr: PageDef = {
           href: { label: "YZ Kontrolüne", to: "check" },
         },
         {
-          tag: "Gösterir: App Store'a kadar bir ürün",
+          tag: "Gösterir: yayına kadar bir ürün",
           h: "OpSo",
           p: "Fikirden uygulama mağazalarına uzanan yolu biliyoruz: veri saklama, erişim yetkileri, testler ve platformların incelemesi.",
           href: { label: "OpSo sayfasına", to: "opso" },
