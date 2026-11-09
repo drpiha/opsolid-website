@@ -32,7 +32,7 @@ export function LangHint({ suggest }: { suggest: "en" | "tr" }) {
     }
   };
   return (
-    <div className="border-b border-[#E3DCD1] bg-[#EFE9E0]" lang={t.lang}>
+    <div className="border-b border-[#E3DCD1] bg-[#EFE9E0]" lang={t.lang} data-nosnippet>
       <div className={`${wrap} flex min-h-[44px] items-center justify-between gap-4 py-1 text-[14px] leading-[1.4]`}>
         <p>
           {t.text}{" "}

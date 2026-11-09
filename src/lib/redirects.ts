@@ -17,6 +17,9 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/agents": "/ki-beratung/ki-agenten",
   // Internal tools are a section of the process-automation page. The fragment is client-side only.
   "/interne-tools": "/ki-beratung/prozessautomatisierung#interne-tools",
+  // Short German guesses for the two main pages (their public slugs are /ki-schulungen and /ki-beratung).
+  "/schulungen": "/ki-schulungen",
+  "/beratung": "/ki-beratung",
   // Website subscriptions are no longer offered (owner, 2026-10-27); the work samples live on /projekte.
   "/websites": "/projekte",
 

@@ -30,6 +30,8 @@ test("v4 service pages 301 into the consulting pillar", () => {
     "/agents": "/ki-beratung/ki-agenten",
     "/interne-tools": "/ki-beratung/prozessautomatisierung#interne-tools",
     "/websites": "/projekte",
+    "/schulungen": "/ki-schulungen",
+    "/beratung": "/ki-beratung",
   };
   for (const [from, to] of Object.entries(map)) {
     assert.equal(getRetiredRedirectTarget(from), to, from);
