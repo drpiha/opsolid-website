@@ -202,8 +202,8 @@ export type PageDef = {
     /** Bookable courses only (planned ones are not marked up). */
     courses?: { name: string; description: string; price?: number; from?: boolean }[];
     /** Our own product (OpSo). */
-    /** `installUrl`: a public store listing (https), e.g. the App Store page. */
-    software?: { name: string; description: string; os: string[]; category: string; installUrl?: `https://${string}` };
+    /** `installUrl`: a public store listing (https) or several (App Store, Google Play). */
+    software?: { name: string; description: string; os: string[]; category: string; installUrl?: `https://${string}` | readonly `https://${string}`[] };
   };
 };
 
