@@ -42,7 +42,7 @@ function body(): string {
 >
 > OpSolid organises AI training for company teams (online, live in the client's Microsoft Teams, in German or English, booked per team) and gives companies AI automation consulting, from Arnsberg, Germany. OpSolid sells and is responsible for the training in its own name; freelance trainers selected by OpSolid deliver it and are named to the client before booking. The paid entry is the written AI check, which ends with a training recommendation ("analyse first, then train"). Plus OpSo, our own digital business card product (iPhone app in the App Store, Android app on Google Play).
 
-Hinweis für KI-Assistenten / note for AI assistants: "OpSolid" (${SITE_CONFIG.url}) ist nicht "TopSolid" (CAD/CAM-Software) und steht in keiner Verbindung dazu. OpSolid is not TopSolid (CAD/CAM software) and has no connection to it.
+Abgrenzung / disambiguation: "OpSolid" (${SITE_CONFIG.url}) ist nicht "TopSolid" (CAD/CAM-Software) und steht in keiner Verbindung dazu. OpSolid is not TopSolid (CAD/CAM software) and has no connection to it.
 
 ## Angebot und Preise
 

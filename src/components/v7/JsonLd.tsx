@@ -51,7 +51,7 @@ function offer(o: { name?: string; price: number; from?: boolean }) {
     ...(o.name ? { name: o.name } : {}),
     priceCurrency: "EUR",
     ...(o.from ? {} : { price: o.price }),
-    eligibleCustomerType: "https://schema.org/Business",
+    eligibleCustomerType: "http://purl.org/goodrelations/v1#Business",
     priceSpecification: {
       "@type": "UnitPriceSpecification",
       priceCurrency: "EUR",
@@ -210,7 +210,7 @@ export function JsonLd({ page, locale, crumbs }: { page: PageDef; locale: L3; cr
       description: c.description,
       provider: { "@id": ORG },
       inLanguage: ["de", "en"],
-      courseMode: "online",
+      hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", inLanguage: ["de", "en"] },
       ...(c.price !== undefined ? { offers: [offer({ price: c.price, from: c.from })] } : {}),
     });
   });

@@ -191,7 +191,7 @@ const de: PageDef = {
       media: {
         kind: "image",
         img: {
-          src: "/img/v7/opso/render-hero.jpg",
+          src: "/img/v7/opso/render-hero.webp",
           w: 1600,
           h: 1200,
           alt: "Konzept-Render einer mattschwarzen NFC-Visitenkarte mit kupferfarbener Folienprägung, vorne das Logo, hinten QR-Code und Beispielname",
@@ -450,7 +450,7 @@ const en: PageDef = {
       media: {
         kind: "image",
         img: {
-          src: "/img/v7/opso/render-hero.jpg",
+          src: "/img/v7/opso/render-hero.webp",
           w: 1600,
           h: 1200,
           alt: "Concept render of a matte-black NFC business card with copper foil, logo on the front, QR code and sample name on the back",
@@ -710,7 +710,7 @@ const tr: PageDef = {
       media: {
         kind: "image",
         img: {
-          src: "/img/v7/opso/render-hero.jpg",
+          src: "/img/v7/opso/render-hero.webp",
           w: 1600,
           h: 1200,
           alt: "Bakır folyolu mat siyah bir NFC kartvizitin konsept görseli: önde logo, arkada karekod ve örnek ad",
