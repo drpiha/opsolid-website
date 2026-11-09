@@ -53,7 +53,7 @@ const de: PageDef = {
         {
           tag: "3 · Eigenes Produkt",
           h: "OpSo, unsere digitale Visitenkarte",
-          p: "Ein eigenes Produkt, getrennt von der Beratung: fürs iPhone im App Store (EU/EWR, Schweiz, Großbritannien), für Android im geschlossenen Test bei Google Play (Stand: 07.11.2026).",
+          p: "Ein eigenes Produkt, getrennt von der Beratung: fürs iPhone im App Store, für Android bei Google Play; noch nicht in den USA und der Türkei (Stand: 09.11.2026).",
           href: { label: "Zu OpSo", to: "opso" },
         },
       ],
@@ -226,7 +226,7 @@ const en: PageDef = {
         {
           tag: "3 · Our own product",
           h: "OpSo, our digital business card",
-          p: "A product of our own, separate from the consulting: on iPhone in the App Store (EU/EEA, Switzerland, UK), on Android in a closed test on Google Play (as of 7 November 2026).",
+          p: "A product of our own, separate from the consulting: on iPhone in the App Store, on Android on Google Play; not yet in the USA and Turkey (as of 9 November 2026).",
           href: { label: "To OpSo", to: "opso" },
         },
       ],
@@ -399,7 +399,7 @@ const tr: PageDef = {
         {
           tag: "3 · Kendi ürünümüz",
           h: "OpSo, dijital kartvizitimiz",
-          p: "Danışmanlıktan ayrı, kendi ürünümüz: iPhone için App Store'da (AB/AEA, İsviçre, Birleşik Krallık), Android için Google Play'de kapalı test (07.11.2026 itibarıyla).",
+          p: "Danışmanlıktan ayrı, kendi ürünümüz: iPhone için App Store'da, Android için Google Play'de; ABD ve Türkiye'de henüz yok (09.11.2026 itibarıyla).",
           href: { label: "OpSo'ya", to: "opso" },
         },
       ],

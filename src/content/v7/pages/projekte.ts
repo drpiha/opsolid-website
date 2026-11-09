@@ -1,7 +1,7 @@
 /**
- * Projects page (v7). Our own work only: opsolid.de, OpSo (product: iPhone app in the App Store), Kutasia (project in
+ * Projects page (v7). Our own work only: opsolid.de, OpSo (product: iPhone app in the App Store, Android on Google Play), Kutasia (project in
  * development). No client projects, logos or quotes. Status lines follow the build brief (OpSo: iPhone in the App Store
- * in the EU/EEA, Switzerland and the UK, Android in a closed test on Google Play, as of 07.11.2026).
+ * in the App Store and on Google Play, not yet in the USA and Turkey, as of 09.11.2026).
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -49,7 +49,7 @@ const de: PageDef = {
           name: "OpSo",
           status: "Im App Store",
           p: "Unsere digitale Visitenkarte: Profil anlegen, per Link, QR-Code oder NFC teilen, bei Kontakten nachfassen. Zum Produkt gehören die App, das Onboarding und eine Admin-Konsole.",
-          points: ["iPhone: im App Store (EU/EWR, Schweiz, Großbritannien)", "Android: geschlossener Test bei Google Play (Stand: 07.11.2026)"],
+          points: ["iPhone: im App Store", "Android: bei Google Play (Stand: 09.11.2026). Noch nicht in den USA und der Türkei"],
           img: { src: "/img/v7/opso/screens/02-share.webp", w: 540, h: 960, alt: "OpSo-App: Teilen per QR-Code, NFC oder Link, Bildschirm mit Demo-Daten" },
           frame: "phone",
           href: { label: "OpSo ansehen", to: "opso" },
@@ -130,7 +130,7 @@ const de: PageDef = {
       },
       {
         q: "Ist OpSo schon erhältlich?",
-        a: "Fürs iPhone ja: im App Store in der EU/im EWR, in der Schweiz und in Großbritannien. Android: geschlossener Test bei Google Play (Stand: 07.11.2026).",
+        a: "Ja. Fürs iPhone im App Store, für Android bei Google Play. Kostenlos. Noch nicht in den USA und der Türkei (Stand: 09.11.2026).",
       },
       {
         q: "Kann ich Kutasia nutzen oder kaufen?",
@@ -195,7 +195,7 @@ const en: PageDef = {
           name: "OpSo",
           status: "In the App Store",
           p: "Our digital business card: create a profile, share it by link, QR code or NFC, follow up with contacts. The product includes the app, the onboarding and an admin console.",
-          points: ["iPhone: in the App Store (EU/EEA, Switzerland, UK)", "Android: closed test on Google Play (as of 7 November 2026)"],
+          points: ["iPhone: in the App Store", "Android: on Google Play (as of 9 November 2026). Not yet in the USA and Turkey"],
           img: { src: "/img/v7/opso/screens/02-share.webp", w: 540, h: 960, alt: "OpSo app (German interface): sharing by QR code, NFC or link, screen with demo data" },
           frame: "phone",
           href: { label: "See OpSo", to: "opso" },
@@ -276,7 +276,7 @@ const en: PageDef = {
       },
       {
         q: "Is OpSo available yet?",
-        a: "On iPhone, yes: in the App Store in the EU/EEA, Switzerland and the UK. Android: closed test on Google Play (as of 7 November 2026).",
+        a: "Yes. On iPhone in the App Store, on Android on Google Play. Free. Not yet in the USA and Turkey (as of 9 November 2026).",
       },
       {
         q: "Can I use or buy Kutasia?",
@@ -341,7 +341,7 @@ const tr: PageDef = {
           name: "OpSo",
           status: "App Store'da",
           p: "Dijital kartvizitimiz: profil oluşturun, bağlantı, QR kod veya NFC ile paylaşın, kişileri takip edin. Ürüne uygulama, ilk kurulum akışı ve bir yönetim konsolu dahildir.",
-          points: ["iPhone: App Store'da (AB/AEA, İsviçre, Birleşik Krallık)", "Android: Google Play'de kapalı test (07.11.2026 itibarıyla)"],
+          points: ["iPhone: App Store'da", "Android: Google Play'de (09.11.2026 itibarıyla). ABD ve Türkiye'de henüz yok"],
           img: { src: "/img/v7/opso/screens/02-share.webp", w: 540, h: 960, alt: "OpSo uygulaması (Almanca arayüz): QR kod, NFC veya bağlantıyla paylaşım, demo verileriyle ekran" },
           frame: "phone",
           href: { label: "OpSo'ya göz atın", to: "opso" },
@@ -422,7 +422,7 @@ const tr: PageDef = {
       },
       {
         q: "OpSo şimdiden edinilebilir mi?",
-        a: "iPhone için evet: AB/AEA, İsviçre ve Birleşik Krallık'ta App Store'da. Android: Google Play'de kapalı test (07.11.2026 itibarıyla).",
+        a: "Evet. iPhone için App Store'da, Android için Google Play'de. Ücretsiz. ABD ve Türkiye'de henüz yok (09.11.2026 itibarıyla).",
       },
       {
         q: "Kutasia'yı kullanabilir ya da satın alabilir miyim?",
