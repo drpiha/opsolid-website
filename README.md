@@ -176,7 +176,7 @@ booking notifications:
 | `CALCOM_WEBHOOK_SECRET` | Webhook dogrulama sifresi | `my-secret-key` |
 | `TELEGRAM_BOT_TOKEN` | BotFather'dan alinan token | `712345:AAHfiq...` |
 | `TELEGRAM_CHAT_ID` | Telegram chat ID | `123456789` |
-| `WHATSAPP_PHONE` | WhatsApp telefon numarasi | `4917631020654` |
+| `WHATSAPP_PHONE` | WhatsApp telefon numarasi | `49XXXXXXXXXXX` |
 | `WHATSAPP_CALLMEBOT_APIKEY` | CallMeBot API key | `1234567` |
 | `BREVO_API_KEY` / `RESEND_API_KEY` | E-posta saglayicisi (biri yeterli) | |
 | `SMTP_HOST` | SMTP sunucu (saglayici yoksa) | `smtp.gmail.com` |

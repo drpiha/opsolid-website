@@ -87,12 +87,10 @@ export function sharedNodes(locale: L3): Node[] {
       description: ORG_DESC[locale],
       disambiguatingDescription: DISAMBIG[locale],
       email: SITE_CONFIG.email,
-      telephone: SITE_CONFIG.phone,
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer service",
         email: SITE_CONFIG.email,
-        telephone: SITE_CONFIG.phone,
         availableLanguage: ["de", "en", "tr"],
         url: absUrl("kontakt", locale),
       },

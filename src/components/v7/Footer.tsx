@@ -61,9 +61,6 @@ export function V7Footer({ locale }: { locale: L3 }) {
               <a href={`mailto:${SITE_CONFIG.email}`} className="inline-flex min-h-[44px] items-center text-[#F6F2EC] underline decoration-[#B5623A] underline-offset-[6px]">
                 {SITE_CONFIG.email}
               </a>
-              <a href={`tel:${SITE_CONFIG.phone.replace(/\s/g, "")}`} className="inline-flex min-h-[44px] items-center text-[#F6F2EC]/90 hover:text-white">
-                {SITE_CONFIG.phone}
-              </a>
             </p>
           </div>
           <nav aria-label={t.footerNav} className="grid grid-cols-2 gap-x-6 gap-y-10 md:col-span-8 md:grid-cols-4">

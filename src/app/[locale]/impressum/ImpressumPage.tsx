@@ -2,15 +2,15 @@ import type { ReactNode } from "react";
 import { contents } from "@/content";
 import { LegalLayout } from "@/components/v7/LegalPage";
 import { LABEL } from "@/content/v7/site";
-import { href } from "@/lib/v7-routes";
+import { absUrl, href } from "@/lib/v7-routes";
 import type { L3 } from "@/lib/v7-routes";
 import { SITE_CONFIG } from "@/lib/constants";
 
 // Server-rendered from the content data: no client content bundle on this route.
-const LABELS: Record<L3, { legal: string; notice: string; owner: string; email: string; phone: string; phoneTr: string }> = {
-  de: { legal: "Rechtliches", notice: "Hinweis", owner: "Inhaber, Einzelunternehmen", email: "E-Mail", phone: "Tel.", phoneTr: "Tel. (TR)" },
-  en: { legal: "Legal", notice: "Notice", owner: "owner, sole proprietorship", email: "Email", phone: "Phone", phoneTr: "Phone (TR)" },
-  tr: { legal: "Yasal", notice: "Not", owner: "sahibi, şahıs işletmesi", email: "E-posta", phone: "Tel.", phoneTr: "Tel. (TR)" },
+const LABELS: Record<L3, { legal: string; notice: string; owner: string; email: string; form: string }> = {
+  de: { legal: "Rechtliches", notice: "Hinweis", owner: "Inhaber, Einzelunternehmen", email: "E-Mail", form: "Kontaktformular" },
+  en: { legal: "Legal", notice: "Notice", owner: "owner, sole proprietorship", email: "Email", form: "Contact form" },
+  tr: { legal: "Yasal", notice: "Not", owner: "sahibi, şahıs işletmesi", email: "E-posta", form: "İletişim formu" },
 };
 
 export function ImpressumPage({ locale }: { locale: L3 }) {
@@ -44,15 +44,9 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
             {SITE_CONFIG.email}
           </a>
           <br />
-          {L.phone}:{" "}
-          <a href="tel:+4917631020654" >
-            +49 176 31020654
-          </a>
-          <br />
-          {L.phoneTr}:{" "}
-          <a href="tel:+905335717885" >
-            +90 533 571 78 85
-          </a>
+          {/* No phone since 2026-11-11 (owner): the form is the second fast channel next to email (§ 5 DDG; ECJ C-298/07). */}
+          {L.form}:{" "}
+          <a href={href("kontakt", locale)}>{absUrl("kontakt", locale).replace(/^https:\/\//, "")}</a>
         </p>
       ),
     },

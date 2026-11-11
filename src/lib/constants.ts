@@ -20,17 +20,10 @@ export const SITE_CONFIG = {
     "OpSolid organisiert KI-Schulungen für Teams, online und live in Ihrem Microsoft Teams, und berät Unternehmen bei KI-Automatisierung: vom KI-Check mit Schulungsempfehlung über den Pilot zum Festpreis bis zum Betrieb. Dazu OpSo, unser digitales Kartenprodukt.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
-  phone: "+49 176 31020654",
   /**
-   * WhatsApp Business reach for product inquiries (esp. OpSo Smart custom-card
-   * requests). Two numbers so customers reach us on their local channel:
-   * a Turkish line and the German mobile. Stored in E.164; render via
-   * `waLink()` in src/lib/contact-channels.ts.
+   * No phone number on the site since 2026-11-11 (owner's decision): contact runs through the form and
+   * info@. The Impressum names the form as the second fast channel next to email (§ 5 DDG; ECJ C-298/07).
    */
-  whatsapp: {
-    tr: "+90 533 571 78 85",
-    de: "+49 176 31020654",
-  },
   address: {
     street: "Stolte Ley 12",
     postalCode: "59759",

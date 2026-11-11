@@ -47,17 +47,12 @@ export interface ContactChannel {
 }
 
 /**
- * The ordered list of contact channels for a product inquiry. Pass `prefill`
- * to pre-type a WhatsApp/email message (e.g. "OpSo Smart — özel tasarım
- * talebi"). The order is intentional: WhatsApp first (fastest), then phone,
- * then email.
+ * The contact channels for a product inquiry. Since 2026-11-11 (owner's decision) the site shows no phone or
+ * WhatsApp number, so this is email only; the WhatsApp and phone kinds stay in the type for the locale labels.
+ * Pass `prefill` to pre-type the email subject (e.g. "OpSo Smart — özel tasarım talebi").
  */
 export function getContactChannels(prefill?: string): ContactChannel[] {
-  const wa = SITE_CONFIG.whatsapp;
   return [
-    { kind: "whatsappTr", value: wa.tr, href: waLink(wa.tr, prefill) },
-    { kind: "whatsappDe", value: wa.de, href: waLink(wa.de, prefill) },
-    { kind: "phone", value: SITE_CONFIG.phone, href: telLink(SITE_CONFIG.phone) },
     {
       kind: "email",
       value: SITE_CONFIG.email,
