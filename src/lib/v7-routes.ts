@@ -27,7 +27,6 @@ export type PageKey =
   | "copilot"
   | "trainer"
   | "opso"
-  | "projekte"
   | "ueber"
   | "kontakt"
   | "blog"
@@ -48,7 +47,6 @@ export const ROUTE: Record<PageKey, string> = {
   copilot: "/ki-schulungen/copilot-praxistag",
   trainer: "/ki-schulungen/trainer",
   opso: "/opso",
-  projekte: "/projekte",
   ueber: "/ueber-uns",
   kontakt: "/contact",
   blog: "/blog",
@@ -78,7 +76,6 @@ export const SLUG: Record<PageKey, Record<L3, string>> = {
   copilot: { de: "/ki-schulungen/copilot-praxistag", en: "/ai-training/copilot-workshop", tr: "/yapay-zeka-egitimleri/copilot-uygulama-gunu" },
   trainer: { de: "/ki-schulungen/trainer", en: "/ai-training/trainers", tr: "/yapay-zeka-egitimleri/egitmenler" },
   opso: { de: "/opso", en: "/opso", tr: "/opso" },
-  projekte: { de: "/projekte", en: "/projects", tr: "/projeler" },
   ueber: { de: "/ueber-uns", en: "/about", tr: "/hakkimizda" },
   kontakt: { de: "/contact", en: "/contact", tr: "/iletisim" },
   blog: { de: "/blog", en: "/blog", tr: "/blog" },

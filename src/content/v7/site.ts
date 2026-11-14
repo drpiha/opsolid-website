@@ -5,14 +5,17 @@
 import { SITE_UPDATED_ISO } from "@/lib/constants";
 import type { L3, PageKey } from "@/lib/v7-routes";
 
-/** Primary navigation order (desktop and mobile panel): trainings lead (owner decision 2026-11-06). */
-export const NAV_KEYS: PageKey[] = ["schulungen", "beratung", "opso", "projekte", "ueber", "blog"];
+/**
+ * Primary navigation order (desktop and mobile panel): trainings lead (owner decision 2026-11-06). OpSo lives in
+ * the footer and on About, and the projects page is retired (owner, 2026-11-14: the site must not list itself).
+ */
+export const NAV_KEYS: PageKey[] = ["schulungen", "beratung", "ueber", "blog"];
 
 /** Footer columns (headings per locale live in SITE_STR.footer). */
 export const FOOTER_COLS: { id: "beratung" | "schulungen" | "opsolid" | "legal"; keys: PageKey[] }[] = [
   { id: "schulungen", keys: ["schulungen", "kompetenz", "copilot", "trainer"] },
   { id: "beratung", keys: ["beratung", "check", "prozess", "m365", "agenten", "anwendungen"] },
-  { id: "opsolid", keys: ["projekte", "ueber", "blog", "kontakt", "opso"] },
+  { id: "opsolid", keys: ["ueber", "blog", "kontakt", "opso"] },
   { id: "legal", keys: ["impressum", "privacy"] },
 ];
 
@@ -31,7 +34,6 @@ export const LABEL: Record<L3, Record<PageKey, string>> = {
     copilot: "Copilot-Praxistag",
     trainer: "Trainer werden",
     opso: "OpSo",
-    projekte: "Projekte",
     ueber: "Über uns",
     kontakt: "Kontakt",
     blog: "Journal",
@@ -51,7 +53,6 @@ export const LABEL: Record<L3, Record<PageKey, string>> = {
     copilot: "Copilot workshop",
     trainer: "Become a trainer",
     opso: "OpSo",
-    projekte: "Projects",
     ueber: "About us",
     kontakt: "Contact",
     blog: "Journal",
@@ -71,7 +72,6 @@ export const LABEL: Record<L3, Record<PageKey, string>> = {
     copilot: "Copilot Uygulama Günü",
     trainer: "Eğitmen olun",
     opso: "OpSo",
-    projekte: "Projeler",
     ueber: "Hakkımızda",
     kontakt: "İletişim",
     blog: "Notlar",
@@ -82,9 +82,9 @@ export const LABEL: Record<L3, Record<PageKey, string>> = {
 
 /** Short label for the primary navigation. */
 export const NAV_LABEL: Record<L3, Partial<Record<PageKey, string>>> = {
-  de: { beratung: "Beratung", schulungen: "Schulungen", opso: "OpSo", projekte: "Projekte", ueber: "Über uns", blog: "Journal" },
-  en: { beratung: "Consulting", schulungen: "Training", opso: "OpSo", projekte: "Projects", ueber: "About", blog: "Journal" },
-  tr: { beratung: "Danışmanlık", schulungen: "Eğitimler", opso: "OpSo", projekte: "Projeler", ueber: "Hakkımızda", blog: "Notlar" },
+  de: { beratung: "Beratung", schulungen: "Schulungen", ueber: "Über uns", blog: "Journal" },
+  en: { beratung: "Consulting", schulungen: "Training", ueber: "About", blog: "Journal" },
+  tr: { beratung: "Danışmanlık", schulungen: "Eğitimler", ueber: "Hakkımızda", blog: "Notlar" },
 };
 
 export type SiteStrings = {
@@ -105,7 +105,6 @@ export type SiteStrings = {
   sampleLabel: string;
   tagline: string;
   priceNote: string;
-  topsolid: string;
   placeLine: string;
   stand: string;
   footer: Record<"beratung" | "schulungen" | "opsolid" | "legal", string>;
@@ -132,7 +131,6 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     sampleLabel: "Muster",
     tagline: "KI-Schulungen und KI-Beratung für Unternehmen. Erst analysieren, dann schulen.",
     priceNote: "Alle Preise netto zzgl. USt., nur für Unternehmen.",
-    topsolid: "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",
     placeLine: "OpSolid · Arnsberg (NRW) · Deutsch, Englisch, Türkisch",
     stand: "Stand",
     footer: { beratung: "Beratung", schulungen: "Schulungen", opsolid: "OpSolid", legal: "Rechtliches" },
@@ -157,7 +155,6 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     sampleLabel: "Sample",
     tagline: "AI training and AI consulting for businesses. Analyse first, then train.",
     priceNote: "All prices are net of VAT and for businesses only.",
-    topsolid: "OpSolid is not TopSolid (CAD/CAM) and has no connection to it.",
     placeLine: "OpSolid · Arnsberg (NRW), Germany · German, English, Turkish",
     stand: "Updated",
     footer: { beratung: "Consulting", schulungen: "Training", opsolid: "OpSolid", legal: "Legal" },
@@ -182,7 +179,6 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     sampleLabel: "Örnek",
     tagline: "Şirketler için YZ eğitimleri ve YZ danışmanlığı. Önce analiz, sonra eğitim.",
     priceNote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
-    topsolid: "OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur.",
     placeLine: "OpSolid · Arnsberg (NRW), Almanya · Almanca, İngilizce, Türkçe",
     stand: "Güncelleme",
     footer: { beratung: "Danışmanlık", schulungen: "Eğitimler", opsolid: "OpSolid", legal: "Yasal" },

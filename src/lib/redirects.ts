@@ -20,8 +20,23 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   // Short German guesses for the two main pages (their public slugs are /ki-schulungen and /ki-beratung).
   "/schulungen": "/ki-schulungen",
   "/beratung": "/ki-beratung",
-  // Website subscriptions are no longer offered (owner, 2026-10-27); the work samples live on /projekte.
-  "/websites": "/projekte",
+  // Website subscriptions are no longer offered (owner, 2026-10-27).
+  "/websites": "/ueber-uns",
+
+  // The projects page is retired (owner, 2026-11-14: the site must not list itself as a project). One key per
+  // locale's former public slug; About now carries the one line on our own product.
+  "/projekte": "/ueber-uns",
+  "/projects": "/ueber-uns",
+  "/projeler": "/ueber-uns",
+
+  // Six short Journal posts from February-March 2026 were retired on 2026-11-14 (thin, generic). Their slugs were
+  // the same in every locale, and the blog slug is /blog in de, en and tr.
+  "/blog/workflow-automation-fundamentals": "/ki-beratung/prozessautomatisierung",
+  "/blog/5-signs-your-business-needs-process-automation": "/ki-beratung/prozessautomatisierung",
+  "/blog/connecting-crm-erp-the-integration-playbook": "/ki-beratung/prozessautomatisierung",
+  "/blog/choosing-the-right-automation-architecture": "/ki-beratung/prozessautomatisierung",
+  "/blog/ai-chatbots-vs-rule-based-bots": "/ki-beratung/ki-agenten",
+  "/blog/whatsapp-business-automation-guide": "/ki-beratung/ki-agenten",
 
   // Top-level info pages
   "/solutions": "/ki-beratung",
@@ -35,9 +50,9 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/ueber-mich": "/ueber-uns",
 
   // Legacy product hub ("Neun Produkte") and the Kutasia product page: Kutasia is a project in
-  // development, not a product (owner, 2026-10); it is shown on the projects page.
+  // development, not a product (owner, 2026-10); its nearest topic is the AI assistants page.
   "/products": "/ki-beratung",
-  "/products/kutasia": "/projekte",
+  "/products/kutasia": "/ki-beratung/ki-agenten",
 
   // Former single-agent product pages (removed 2026-10, v4 cleanup) and their older aliases → the
   // agents page; the automation page → process automation. The route folders no longer exist, so

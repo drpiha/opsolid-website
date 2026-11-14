@@ -12,7 +12,6 @@ const V4_FIRST_SEGMENTS = new Set([
   "ki-beratung",
   "ki-schulungen",
   "opso",
-  "projekte",
   "ueber-uns",
   "contact",
   "blog",
@@ -21,11 +20,9 @@ const V4_FIRST_SEGMENTS = new Set([
   // EN / TR public slugs (middleware rewrites them to the folders above)
   "ai-automation-consulting",
   "ai-training",
-  "projects",
   "about",
   "yapay-zeka-danismanligi",
   "yapay-zeka-egitimleri",
-  "projeler",
   "hakkimizda",
   "iletisim",
   // Retired v4 paths: they 301 in middleware, listed so a stray render still gets the marketing shell
@@ -36,6 +33,10 @@ const V4_FIRST_SEGMENTS = new Set([
   "microsoft-365-automatisierung",
   "interne-tools",
   "ai-automation-check",
+  // Retired projects page (2026-11-14), all three former slugs
+  "projekte",
+  "projects",
+  "projeler",
 ]);
 
 /**

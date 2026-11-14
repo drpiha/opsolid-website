@@ -145,58 +145,6 @@ export const content = {
         date: "2026-07-07",
         modified: "2026-11-02",
       },
-      {
-        slug: "workflow-automation-fundamentals",
-        title: "Workflow Automation Fundamentals: What Actually Matters",
-        seoTitle: "Workflow Automation: What Actually Matters",
-        excerpt:
-          "What keeps a workflow automation running in production - error handling, data sovereignty, observability and exit cost - whichever engine you pick.",
-        category: "automation",
-        date: "2026-03-15",
-      },
-      {
-        slug: "5-signs-your-business-needs-process-automation",
-        title: "5 Signs Your Business Needs Process Automation",
-        excerpt:
-          "Is your team spending too much time on manual work? Here are the key indicators that it's time to invest in automation.",
-        category: "operations",
-        date: "2026-03-08",
-      },
-      {
-        slug: "connecting-crm-erp-the-integration-playbook",
-        title: "Connecting CRM and ERP: An Overview",
-        excerpt:
-          "A practical overview of synchronising your CRM and ERP systems - reducing data silos and creating a single source of truth.",
-        category: "integration",
-        date: "2026-02-28",
-      },
-      {
-        slug: "ai-chatbots-vs-rule-based-bots",
-        title: "AI Chatbots vs. Rule-Based Bots: Which One Do You Need?",
-        seoTitle: "AI Chatbots vs. Rule-Based Bots: Which Fits?",
-        excerpt:
-          "Understanding the difference between AI-powered and rule-based chatbots, and when each approach makes sense for your business.",
-        category: "ai",
-        date: "2026-02-20",
-      },
-      {
-        slug: "choosing-the-right-automation-architecture",
-        title:
-          "Choosing the Right Automation Architecture for Your Business",
-        seoTitle: "Choosing the Right Automation Architecture",
-        excerpt:
-          "Choosing between point-to-point integrations, a central orchestration layer and hybrid models - by volume, compliance and team size, not vendor pitch.",
-        category: "automation",
-        date: "2026-02-12",
-      },
-      {
-        slug: "whatsapp-business-automation-guide",
-        title: "WhatsApp Business Automation: An Overview",
-        excerpt:
-          "How to automate customer communication on WhatsApp - from order confirmations to support bots - without losing the personal touch.",
-        category: "automation",
-        date: "2026-02-05",
-      },
     ],
   },
 

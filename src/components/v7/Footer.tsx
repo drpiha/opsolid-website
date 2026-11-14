@@ -87,7 +87,6 @@ export function V7Footer({ locale }: { locale: L3 }) {
         </div>
         <div className="mt-16 space-y-1 border-t border-[#F6F2EC]/15 pt-6 text-[13px] leading-[1.6] text-[#C9C2B8]">
           <p>{t.priceNote}</p>
-          <p>{t.topsolid}</p>
           <p>{t.placeLine}</p>
           <p>
             {t.stand}: {standDate(locale)}
