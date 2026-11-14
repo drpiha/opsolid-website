@@ -1,7 +1,8 @@
 /**
  * About page (v7). Company voice ("wir"), no team-size claims, no years, no employer. Founder name,
  * location and working languages appear here (and on Contact, footer, JSON-LD) only. No link to the
- * founder's personal LinkedIn profile (owner decision 2026-11-05).
+ * founder's personal LinkedIn profile (owner decision 2026-11-05). Training leads (owner, 2026-11-14); the TopSolid
+ * disambiguation is one FAQ item (plus JSON-LD), not a section; OpSo is one row without status dates.
  */
 import type { PageDef, PageSet } from "../types";
 
@@ -10,17 +11,17 @@ const de: PageDef = {
   meta: {
     title: "Über OpSolid: KI-Schulungen und KI-Beratung aus Arnsberg",
     description:
-      "OpSolid aus Arnsberg organisiert KI-Schulungen für Teams und berät unabhängig bei KI-Automatisierung: Angebot, Methode, Grundsätze, Gründer. Nicht TopSolid.",
+      "OpSolid aus Arnsberg organisiert KI-Schulungen für Teams und berät unabhängig bei KI-Automatisierung: Angebot, Methode, Grundsätze und der Gründer.",
   },
   crumbs: [],
   crumb: "Über uns",
   hero: {
     eyebrow: "Über OpSolid",
-    h1: ["Beratung, die beim", "Ablauf", "anfängt"],
+    h1: ["Schulung und Beratung, die beim", "Ablauf", "anfangen"],
     lede: "OpSolid organisiert KI-Schulungen für Teams und berät Unternehmen bei der Automatisierung mit KI. In beidem fangen wir beim Ablauf an, nicht bei der Technik.",
-    primary: { label: "Kennenlernen anfragen", to: "kontakt", query: { anliegen: "beratung" } },
+    primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "KI-Check ansehen", to: "check" },
-    facts: ["Unabhängig von KI-Anbietern", "NDA vor der Analyse", "Pilot zum Festpreis, vorab schriftlich"],
+    facts: ["Unabhängig von KI-Anbietern", "Trainer vor der Buchung namentlich genannt", "Umfang und Preis vorab schriftlich"],
     media: {
       kind: "svg",
       name: "squares",
@@ -53,7 +54,7 @@ const de: PageDef = {
         {
           tag: "3 · Eigenes Produkt",
           h: "OpSo, unsere digitale Visitenkarte",
-          p: "Ein eigenes Produkt, getrennt von der Beratung: fürs iPhone im App Store, für Android bei Google Play; noch nicht in den USA und der Türkei (Stand: 09.11.2026).",
+          p: "Unsere eigene App für digitale Visitenkarten, getrennt von Schulung und Beratung: kostenlos im App Store und bei Google Play, in der EU, der Schweiz und Großbritannien. App, Webkarten und Verwaltung haben wir selbst entwickelt.",
           href: { label: "Zu OpSo", to: "opso" },
         },
       ],
@@ -63,7 +64,7 @@ const de: PageDef = {
       id: "methode",
       label: "Methode",
       note: "Fünf Schritte vom Gespräch bis zur Übergabe.",
-      h: "So arbeiten wir",
+      h: "So arbeiten wir in der Beratung",
       lede: "Jeder Schritt hat ein Ergebnis, und nach jedem entscheiden Sie neu.",
       items: [
         {
@@ -92,14 +93,14 @@ const de: PageDef = {
       t: "statement",
       id: "leitsatz",
       label: "Leitsatz",
-      text: "Wir verkaufen keine KI-Lizenzen",
+      text: "Wir empfehlen, was auf Ihren Systemen aufbaut",
     },
     {
       t: "principles",
       id: "grundsaetze",
       label: "Grundsätze",
       note: "Woran Sie uns messen können.",
-      h: "Vier Grundsätze für jedes Projekt",
+      h: "Vier Grundsätze für jede Zusammenarbeit",
       items: [
         {
           h: "Bei den Menschen anfangen",
@@ -136,25 +137,11 @@ const de: PageDef = {
         ["Sprachen", "Deutsch, Englisch, Türkisch"],
       ],
     },
-    {
-      t: "text",
-      id: "abgrenzung",
-      label: "Abgrenzung",
-      note: "Eine Verwechslung ausschließen.",
-      h: "OpSolid ist nicht TopSolid",
-      paras: [
-        "Die Namen klingen ähnlich, aber OpSolid steht in keiner Verbindung zu TopSolid (CAD/CAM-Software). Wir beraten zu KI und zur Automatisierung von Abläufen in Unternehmen und entwickeln keine Konstruktions- oder Fertigungssoftware.",
-      ],
-    },
   ],
   faq: {
     label: "Häufige Fragen",
     h: "Häufige Fragen zu OpSolid",
     items: [
-      {
-        q: "Verkaufen Sie KI-Lizenzen oder Software von Anbietern?",
-        a: "Nein. Wir sind unabhängig und empfehlen, was auf den Systemen aufbaut, die Sie bereits nutzen.",
-      },
       {
         q: "Müssen wir für ein Projekt nach Arnsberg kommen?",
         a: "Nein. Wir arbeiten remote in Deutschland und Europa, auf Deutsch, Englisch und Türkisch, schriftlich und per Video.",
@@ -164,17 +151,21 @@ const de: PageDef = {
         a: "Dienstleistung, Gastronomie und Hotellerie, Handel und Praxen, ohne Gesundheitsdaten.",
       },
       {
+        q: "Hat OpSolid etwas mit TopSolid zu tun?",
+        a: "Nein. Die Namen klingen ähnlich, aber OpSolid steht in keiner Verbindung zu TopSolid (CAD/CAM-Software). Wir schulen und beraten zu KI und entwickeln keine Konstruktions- oder Fertigungssoftware.",
+      },
+      {
         q: "Wie beginnt die Zusammenarbeit, und was kostet der Einstieg?",
         a: "Mit einem kostenlosen, unverbindlichen Kennenlernen, per E-Mail oder kurz per Video. Auf Wunsch folgt der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
   cta: {
-    label: "Kennenlernen",
-    h: "Mit einem Ablauf anfangen",
-    p: "Schreiben Sie uns, welcher Ablauf Sie gerade Zeit kostet. Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist.",
-    primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
-    secondary: { label: "Zur KI-Beratung", to: "beratung" },
+    label: "Anfrage",
+    h: "Womit sollen wir anfangen?",
+    p: "Schreiben Sie uns kurz, ob es um eine Schulung für Ihr Team oder um einen Ablauf geht. Wir empfehlen den passenden Einstieg und nennen den Preis.",
+    primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
+    secondary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
   },
 };
 
@@ -183,17 +174,17 @@ const en: PageDef = {
   meta: {
     title: "About OpSolid: AI training and AI consulting from Arnsberg",
     description:
-      "OpSolid, Arnsberg, Germany: AI training for teams and independent AI automation consulting. Offer, method, principles and founder. Not TopSolid (CAD/CAM).",
+      "OpSolid, Arnsberg, Germany: AI training for teams and independent AI automation consulting. Offer, method, principles and the founder behind it.",
   },
   crumbs: [],
   crumb: "About",
   hero: {
     eyebrow: "About OpSolid",
-    h1: ["Consulting that starts with the", "workflow", ""],
+    h1: ["Training and consulting that start with the", "workflow", ""],
     lede: "OpSolid organises AI training for teams and advises companies on automation with AI. In both we start with the workflow, not with the technology.",
-    primary: { label: "Request an intro", to: "kontakt", query: { anliegen: "beratung" } },
+    primary: { label: "Request a course", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the AI check", to: "check" },
-    facts: ["Independent of AI vendors", "NDA before the analysis", "Pilot at a fixed price, in writing first"],
+    facts: ["Independent of AI vendors", "Trainer named before you book", "Scope and price in writing first"],
     media: {
       kind: "svg",
       name: "squares",
@@ -226,7 +217,7 @@ const en: PageDef = {
         {
           tag: "3 · Our own product",
           h: "OpSo, our digital business card",
-          p: "A product of our own, separate from the consulting: on iPhone in the App Store, on Android on Google Play; not yet in the USA and Turkey (as of 9 November 2026).",
+          p: "Our own app for digital business cards, separate from training and consulting: free in the App Store and on Google Play in the EU, Switzerland and the UK. We built the app, the web cards and the admin tools ourselves.",
           href: { label: "To OpSo", to: "opso" },
         },
       ],
@@ -236,7 +227,7 @@ const en: PageDef = {
       id: "methode",
       label: "Method",
       note: "Five steps from the first call to handover.",
-      h: "How we work",
+      h: "How we work in consulting",
       lede: "Every step has a result, and after each one you decide again.",
       items: [
         {
@@ -265,14 +256,14 @@ const en: PageDef = {
       t: "statement",
       id: "leitsatz",
       label: "Key point",
-      text: "We do not sell AI licences",
+      text: "We recommend what builds on the systems you already use",
     },
     {
       t: "principles",
       id: "grundsaetze",
       label: "Principles",
       note: "What you can hold us to.",
-      h: "Four principles for every project",
+      h: "Four principles for every engagement",
       items: [
         {
           h: "Start with the people",
@@ -309,25 +300,11 @@ const en: PageDef = {
         ["Languages", "German, English, Turkish"],
       ],
     },
-    {
-      t: "text",
-      id: "abgrenzung",
-      label: "Not to be confused",
-      note: "Avoiding a mix-up.",
-      h: "OpSolid is not TopSolid",
-      paras: [
-        "The names sound alike, but OpSolid has no connection to TopSolid (CAD/CAM software). We advise companies on AI and on automating their workflows, and we do not develop design or manufacturing software.",
-      ],
-    },
   ],
   faq: {
     label: "Frequently asked questions",
     h: "Frequently asked questions about OpSolid",
     items: [
-      {
-        q: "Do you sell AI licences or vendor software?",
-        a: "No. We are independent and recommend what builds on the systems you already use.",
-      },
       {
         q: "Do we have to come to Arnsberg for a project?",
         a: "No. We work remotely in Germany and Europe, in German, English and Turkish, in writing and by video.",
@@ -337,17 +314,21 @@ const en: PageDef = {
         a: "Services, hospitality, retail and practices, without health data.",
       },
       {
+        q: "Is OpSolid related to TopSolid?",
+        a: "No. The names sound alike, but OpSolid has no connection to TopSolid (CAD/CAM software). We train and advise on AI and do not develop design or manufacturing software.",
+      },
+      {
         q: "How does working together begin, and what does the entry point cost?",
         a: "With a free intro, by email or a short video call, without obligation. If you wish, the AI check follows for €990 net: a questionnaire and a written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
       },
     ],
   },
   cta: {
-    label: "Introductory call",
-    h: "Start with one workflow",
-    p: "Tell us which workflow is costing you time right now. In a free intro, we clarify whether an AI check makes sense.",
-    primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
-    secondary: { label: "To AI consulting", to: "beratung" },
+    label: "Enquiry",
+    h: "Where should we start?",
+    p: "Tell us briefly whether you need a course for your team or help with a workflow. We recommend the right starting point and name the price.",
+    primary: { label: "Request a course", to: "kontakt", query: { anliegen: "schulung" } },
+    secondary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
   },
 };
 
@@ -356,17 +337,17 @@ const tr: PageDef = {
   meta: {
     title: "OpSolid hakkında: Arnsberg'den YZ eğitimleri ve danışmanlığı",
     description:
-      "OpSolid, Arnsberg'den ekipler için YZ eğitimleri düzenler ve YZ otomasyonunda bağımsız danışmanlık verir: hizmetler, yöntem, ilkeler, kurucu. TopSolid değildir.",
+      "OpSolid, Arnsberg'den ekipler için YZ eğitimleri düzenler ve YZ otomasyonunda bağımsız danışmanlık verir: hizmetler, yöntem, ilkeler ve kurucusu.",
   },
   crumbs: [],
   crumb: "Hakkımızda",
   hero: {
     eyebrow: "OpSolid hakkında",
-    h1: ["İş akışından", "başlayan", "danışmanlık"],
+    h1: ["İş akışından", "başlayan", "eğitim ve danışmanlık"],
     lede: "OpSolid, ekipler için YZ eğitimleri düzenler ve şirketlere yapay zeka ile otomasyon konusunda danışmanlık verir. İkisinde de teknolojiden değil, iş akışından başlarız.",
-    primary: { label: "Tanışma görüşmesi talep edin", to: "kontakt", query: { anliegen: "beratung" } },
+    primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "YZ Kontrolünü görün", to: "check" },
-    facts: ["YZ sağlayıcılarından bağımsız", "Analizden önce NDA", "Sabit fiyatlı pilot, önceden yazılı"],
+    facts: ["YZ sağlayıcılarından bağımsız", "Eğitmen rezervasyondan önce adıyla bildirilir", "Kapsam ve fiyat önceden yazılı"],
     media: {
       kind: "svg",
       name: "squares",
@@ -399,7 +380,7 @@ const tr: PageDef = {
         {
           tag: "3 · Kendi ürünümüz",
           h: "OpSo, dijital kartvizitimiz",
-          p: "Danışmanlıktan ayrı, kendi ürünümüz: iPhone için App Store'da, Android için Google Play'de; ABD ve Türkiye'de henüz yok (09.11.2026 itibarıyla).",
+          p: "Eğitim ve danışmanlıktan ayrı, dijital kartvizit için kendi uygulamamız: AB, İsviçre ve Birleşik Krallık'ta App Store ve Google Play'de ücretsiz. Uygulamayı, web kartlarını ve yönetim araçlarını kendimiz geliştirdik.",
           href: { label: "OpSo'ya", to: "opso" },
         },
       ],
@@ -409,7 +390,7 @@ const tr: PageDef = {
       id: "methode",
       label: "Yöntem",
       note: "İlk görüşmeden teslime beş adım.",
-      h: "Nasıl çalışıyoruz?",
+      h: "Danışmanlıkta nasıl çalışırız?",
       lede: "Her adımın bir sonucu vardır; her adımdan sonra yeniden siz karar verirsiniz.",
       items: [
         {
@@ -438,14 +419,14 @@ const tr: PageDef = {
       t: "statement",
       id: "leitsatz",
       label: "Ana fikir",
-      text: "Yapay zeka lisansı satmıyoruz",
+      text: "Mevcut sistemlerinizin üzerine kurulanı öneririz",
     },
     {
       t: "principles",
       id: "grundsaetze",
       label: "İlkeler",
       note: "Bizi nelerle ölçebilirsiniz.",
-      h: "Her projede dört ilke",
+      h: "Her iş birliğinde dört ilke",
       items: [
         {
           h: "İnsanlardan başlamak",
@@ -482,25 +463,11 @@ const tr: PageDef = {
         ["Diller", "Almanca, İngilizce, Türkçe"],
       ],
     },
-    {
-      t: "text",
-      id: "abgrenzung",
-      label: "Ayrım",
-      note: "Karışıklığı önlemek için.",
-      h: "OpSolid, TopSolid değildir",
-      paras: [
-        "Adlar birbirine benziyor, ancak OpSolid'in TopSolid (CAD/CAM yazılımı) ile bir bağlantısı yoktur. Şirketlere yapay zeka ve iş akışı otomasyonu konusunda danışmanlık veririz; tasarım ya da üretim yazılımı geliştirmeyiz.",
-      ],
-    },
   ],
   faq: {
     label: "Sık sorulan sorular",
     h: "OpSolid hakkında sık sorulan sorular",
     items: [
-      {
-        q: "YZ lisansı ya da sağlayıcı yazılımı satıyor musunuz?",
-        a: "Hayır. Bağımsızız; zaten kullandığınız sistemlerin üzerine kurulabilecek olanı öneririz.",
-      },
       {
         q: "Proje için Arnsberg'e gelmemiz gerekir mi?",
         a: "Hayır. Almanya ve Avrupa'da uzaktan, Almanca, İngilizce ve Türkçe, yazılı olarak ve görüntülü görüşmeyle çalışıyoruz.",
@@ -510,17 +477,21 @@ const tr: PageDef = {
         a: "Hizmet sektörü, yeme-içme ve konaklama, perakende ve muayenehaneler; sağlık verisi olmadan.",
       },
       {
+        q: "OpSolid'in TopSolid ile bir ilgisi var mı?",
+        a: "Hayır. Adlar birbirine benziyor, ancak OpSolid'in TopSolid (CAD/CAM yazılımı) ile bir bağlantısı yoktur. Yapay zekâ konusunda eğitim ve danışmanlık veririz; tasarım ya da üretim yazılımı geliştirmeyiz.",
+      },
+      {
         q: "İş birliği nasıl başlar, giriş ne kadar tutar?",
         a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla; e-postayla ya da kısa bir görüntülü görüşmeyle. İsterseniz ardından YZ Kontrolü gelir, 990 € (net): soru formu ve yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
       },
     ],
   },
   cta: {
-    label: "Tanışma",
-    h: "Tek bir iş akışıyla başlayın",
-    p: "Şu anda hangi iş akışının size zaman kaybettirdiğini yazın. Tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz.",
-    primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
-    secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
+    label: "Talep",
+    h: "Nereden başlayalım?",
+    p: "Ekibiniz için bir eğitim mi, yoksa bir iş akışı için destek mi istediğinizi kısaca yazın. Uygun başlangıcı önerir ve fiyatı bildiririz.",
+    primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
+    secondary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
   },
 };
 

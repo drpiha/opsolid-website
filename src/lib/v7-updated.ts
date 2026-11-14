@@ -14,12 +14,14 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // hours), the Schulungen hub names the organiser model and live-only delivery, the KI-Check is framed
   // "Erst analysieren, dann schulen" and its report ends with a training recommendation; the 60-day credit applies
   // to a training or a pilot. About and Contact follow the new order.
-  home: "2026-11-09",
+  // 2026-11-14: site clean-up (owner): no OpSo or own-work section on Home, the projects page retired (301 to About),
+  // About and Contact lead with training, the hero says "live an Ihren Aufgaben" instead of "in Ihrem Teams".
+  home: "2026-11-14",
   schulungen: "2026-11-06",
   check: "2026-11-06",
   beratung: "2026-11-06",
-  ueber: "2026-11-09",
-  kontakt: "2026-11-06",
+  ueber: "2026-11-14",
+  kontakt: "2026-11-14",
   // 2026-11-06: per-person arithmetic in the price answers and the hours of a half day and a day
   kompetenz: "2026-11-06",
   copilot: "2026-11-06",
@@ -28,8 +30,8 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   m365: "2026-11-04",
   agenten: "2026-11-04",
   anwendungen: "2026-11-04",
-  projekte: "2026-11-09",
-  // 2026-11-14: the first two training posts (cost, Art. 4) in the list; before that 2026-11-04: CTA KI-Check 990 € with the 60-day credit
+  // 2026-11-14: the first two training posts (cost, Art. 4) in the list, the six short posts of Feb-Mar 2026 retired and
+  // the list framed around training; before that 2026-11-04: CTA KI-Check 990 € with the 60-day credit
   blog: "2026-11-14",
   trainer: "2026-11-06", // no trial session: seven-day reply, trainer pool, conversation with a live demo, first assignment paid
 };

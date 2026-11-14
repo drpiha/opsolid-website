@@ -75,10 +75,8 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 - Datenschutz (DSGVO) wird von Anfang an mitgedacht; die abschließende Bewertung liegt bei Ihrem Datenschutzbeauftragten oder Ihrer Rechtsberatung.
 - KI-Verordnung (AI Act), Art. 4: Unternehmen, die KI einsetzen, ergreifen Maßnahmen, um die KI-Kompetenz ihrer Beschäftigten zu fördern (gilt seit dem 2. Februar 2025; neu gefasst durch die Verordnung (EU) 2026/1744, in Kraft seit dem 27. Juli 2026). Eine Schulung mit Teilnahmebescheinigung ist eine nachvollziehbare Maßnahme; ein Zertifikat ist nicht vorgeschrieben. Wir stellen eine eigene Teilnahmebescheinigung aus. Wir geben keine Rechtsberatung. Quellen: [Verordnung (EU) 2024/1689](${AI_ACT}), [Verordnung (EU) 2026/1744](${OMNIBUS}).
 
-## Eigene Projekte (der einzige Nachweis, den wir zeigen)
-- [opsolid.de](${SITE_CONFIG.url}/): diese Website, von OpSolid gestaltet, gebaut und betrieben.
-- [OpSo](${absUrl("opso", "de")}): digitale Visitenkarte mit NFC und QR; iPhone-App im App Store, Android-App bei Google Play.
-- [Kutasia](https://kutasia.com): ein Projekt in Entwicklung für Kundennachrichten (WhatsApp, Telegram und E-Mail in einem Posteingang), noch kein Produkt.
+## Eigenes Produkt
+- [OpSo](${absUrl("opso", "de")}): digitale Visitenkarte mit NFC und QR, von OpSolid entwickelt; iPhone-App im App Store, Android-App bei Google Play.
 
 ## Unternehmen und Kontakt
 - OpSolid, Inh. Hasan Dönmez (Einzelunternehmen), ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland. Gründer: Hasan Dönmez.

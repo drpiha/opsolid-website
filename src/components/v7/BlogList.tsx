@@ -32,22 +32,23 @@ export const BLOG_T: Record<
     min: string;
     more: Href;
     cat: Record<string, string>;
+    /** CTA under posts outside the "training" category (the list page itself ends with the training CTA). */
     cta: PageDef["cta"];
-    /** Posts in the "training" category end with a link to the training hub and the training CTA instead. */
+    /** Posts in the "training" category, and the list page, end with a link to the training hub and the training CTA. */
     training: { more: Href; cta: PageDef["cta"] };
   }
 > = {
   de: {
     eyebrow: "Journal",
-    h1: ["Automatisierung und KI", "in der Praxis"],
-    lede: "Kurze Texte dazu, was im Alltag funktioniert und im laufenden Betrieb zählt.",
-    title: "Journal: Automatisierung und KI in der Praxis",
-    desc: "Das OpSolid Journal: kurze Texte zu KI-Automatisierung, Integration und Betrieb. Was im Alltag funktioniert und worauf Unternehmen achten sollten.",
+    h1: ["KI im Unternehmen:", "Schulung und Regeln"],
+    lede: "Kurze Texte zu KI-Schulungen, zur KI-Verordnung und dazu, was im Arbeitsalltag zählt.",
+    title: "Journal: KI-Schulung und KI-Regeln im Unternehmen",
+    desc: "Das OpSolid Journal: kurze Texte zu KI-Schulungen, ihren Kosten und der KI-Verordnung (Art. 4). Was Unternehmen wissen sollten, bevor sie ihr Team schulen.",
     frame: "Beiträge",
     frameNote: "Neueste zuerst.",
     read: "Lesen",
     min: "Min.",
-    more: { label: "Zur KI-Beratung", to: "beratung" },
+    more: { label: "Zu den KI-Schulungen", to: "schulungen" },
     cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb", training: "Schulung" },
     cta: {
       label: "KI-Check",
@@ -69,15 +70,15 @@ export const BLOG_T: Record<
   },
   en: {
     eyebrow: "Journal",
-    h1: ["Automation and AI", "in practice"],
-    lede: "Short texts on what works in daily business and what matters once a system is in use.",
-    title: "Journal: automation and AI in practice",
-    desc: "The OpSolid journal: short texts on AI automation, integration and operations. What works in daily business and what companies should look out for.",
+    h1: ["AI at work:", "training and rules"],
+    lede: "Short texts on AI training, the EU AI Act and what matters in daily work.",
+    title: "Journal: AI training and AI rules at work",
+    desc: "The OpSolid journal: short texts on AI training, what it costs and the EU AI Act (Article 4). What companies should know before they train their team.",
     frame: "Entries",
     frameNote: "Newest first.",
     read: "Read",
     min: "min",
-    more: { label: "To AI consulting", to: "beratung" },
+    more: { label: "To AI training", to: "schulungen" },
     cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations", training: "Training" },
     cta: {
       label: "AI check",
@@ -99,15 +100,15 @@ export const BLOG_T: Record<
   },
   tr: {
     eyebrow: "Notlar",
-    h1: ["Uygulamada otomasyon ve YZ:", "sahadan notlar"],
-    lede: "Günlük işte neyin işe yaradığını ve sistem kullanıma girdikten sonra nelerin önemli olduğunu anlatan kısa yazılar.",
-    title: "Notlar: uygulamada otomasyon ve YZ",
-    desc: "OpSolid notları: YZ otomasyonu, entegrasyon ve işletme üzerine kısa yazılar. Günlük işte neyin işe yaradığı ve şirketlerin nelere dikkat etmesi gerektiği.",
+    h1: ["İş yerinde YZ:", "eğitim ve kurallar"],
+    lede: "YZ eğitimleri, AB Yapay Zekâ Tüzüğü ve günlük işte nelerin önemli olduğu üzerine kısa yazılar.",
+    title: "Notlar: iş yerinde YZ eğitimi ve kuralları",
+    desc: "OpSolid notları: YZ eğitimleri, maliyetleri ve AB Yapay Zekâ Tüzüğü (Madde 4) üzerine kısa yazılar. Şirketlerin ekibini eğitmeden önce bilmesi gerekenler.",
     frame: "Yazılar",
     frameNote: "En yeni üstte.",
     read: "Oku",
     min: "dk",
-    more: { label: "Yapay zeka danışmanlığına", to: "beratung" },
+    more: { label: "YZ eğitimlerine", to: "schulungen" },
     cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "İşletme", training: "Eğitim" },
     cta: {
       label: "YZ Kontrolü",
@@ -180,7 +181,7 @@ export function BlogList({ locale }: { locale: L3 }) {
             </div>
           </Frame>
         </section>
-        <CtaBand cta={t.cta} locale={locale} />
+        <CtaBand cta={t.training.cta} locale={locale} />
         <JsonLdGraph nodes={[...sharedNodes(locale), ...webPageNodes({ key: "blog", locale, name: t.title, description: t.desc, crumbs })]} />
       </div>
     </MotionRoot>

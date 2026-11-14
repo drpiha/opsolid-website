@@ -1,4 +1,5 @@
 import type { BlockProps } from "@/content/v7/types";
+import { LinkTo } from "../LinkTo";
 import { Reveal } from "../Reveal";
 import { wrap } from "../ui";
 
@@ -6,9 +7,10 @@ import { wrap } from "../ui";
  * The one break from the section template: a full-bleed ink band carrying the page's key sentence in
  * display type. Not numbered, not a quote (no marks, no attribution). A copper hairline and a faint
  * nested-squares outline (the brand mark, decoration only) are its only ornaments. A final full stop is
- * dropped so it sets like a headline.
+ * dropped so it sets like a headline. An optional `cta` sets one underlined link on the ink, styled like the
+ * secondary link of the CTA band.
  */
-export function StatementBlock({ block }: BlockProps<"statement">) {
+export function StatementBlock({ block, locale }: BlockProps<"statement">) {
   const text = block.text.trim().replace(/\.$/, "");
   return (
     <section id={block.id} aria-label={block.label} className="on-ink relative mt-28 overflow-hidden bg-[#16191D] text-[#F6F2EC] md:mt-40">
@@ -31,6 +33,15 @@ export function StatementBlock({ block }: BlockProps<"statement">) {
             {text}
           </p>
           {block.note && <p className="f-mono mt-10 max-w-[56ch] text-[12px] uppercase leading-[1.8] text-[#C9C2B8] md:mt-14">{block.note}</p>}
+          {block.cta && (
+            <LinkTo
+              link={block.cta}
+              locale={locale}
+              className="mt-8 inline-flex min-h-[44px] items-center text-[16px] text-[#F6F2EC] underline decoration-[#B5623A] underline-offset-[6px] hover:decoration-[#E3B79C] md:mt-10"
+            >
+              {block.cta.label}
+            </LinkTo>
+          )}
         </Reveal>
       </div>
     </section>

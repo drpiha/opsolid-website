@@ -109,7 +109,7 @@ export type Block =
   /**
    * Training catalogue as a hairline ledger (one row per course). "bookable" items carry a published price;
    * "planned" items never show a price. `format` is the spec line in a fixed order, tokens joined by " · "
-   * (length and hours · people included and max · online, live, in Ihrem Teams · Teilnahmebescheinigung); the
+   * (length and hours · people included and max; format and certificate live in the hero strip); the
    * first token is set in ink, `statusLabel` ("Termin auf Anfrage") closes the line. `price` is the team price
    * alone ("ab 1.790 €"), `unit` the mono line under it ("netto pro Team"), `arith` the per-person arithmetic at
    * the included group size as unwrapped lines, always worded as arithmetic ("Rechnerisch 179 € pro Person bei
@@ -156,9 +156,9 @@ export type Block =
   /**
    * The one break from the section template per page: a full-bleed ink band with the page's single most
    * important sentence in display type (our own statement, never a quote). Not numbered; `label` names the
-   * band for screen readers; `note` is an optional short mono line under it.
+   * band for screen readers; `note` is an optional short mono line under it, `cta` an optional link on the ink.
    */
-  | { t: "statement"; id: string; label: string; text: string; note?: string };
+  | { t: "statement"; id: string; label: string; text: string; note?: string; cta?: Href };
 
 export type BlockType = Block["t"];
 export type BlockOf<T extends BlockType> = Extract<Block, { t: T }>;

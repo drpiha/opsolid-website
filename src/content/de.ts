@@ -144,59 +144,6 @@ export const content: Content = {
         date: "2026-07-07",
         modified: "2026-11-02",
       },
-      {
-        slug: "workflow-automation-fundamentals",
-        title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
-        seoTitle: "Workflow-Automatisierung: Was im Betrieb zählt",
-        excerpt:
-          "Was eine Automatisierung im laufenden Betrieb trägt: Fehlerbehandlung, Datenhoheit, Nachvollziehbarkeit und Ausstiegskosten - unabhängig vom Werkzeug.",
-        category: "automation",
-        date: "2026-03-15",
-      },
-      {
-        slug: "5-signs-your-business-needs-process-automation",
-        title: "5 Anzeichen, dass Ihr Unternehmen Prozessautomatisierung braucht",
-        seoTitle: "Prozessautomatisierung: 5 Anzeichen für Bedarf",
-        excerpt:
-          "Verbringt Ihr Team zu viel Zeit mit manueller Arbeit? Hier sind die wichtigsten Indikatoren, dass es Zeit ist, in Automatisierung zu investieren.",
-        category: "operations",
-        date: "2026-03-08",
-      },
-      {
-        slug: "connecting-crm-erp-the-integration-playbook",
-        title: "CRM und ERP verbinden: ein Überblick",
-        excerpt:
-          "Ein praktischer Überblick zur Synchronisierung Ihrer CRM- und ERP-Systeme - Datensilos abbauen und eine zentrale Datenquelle schaffen.",
-        category: "integration",
-        date: "2026-02-28",
-      },
-      {
-        slug: "ai-chatbots-vs-rule-based-bots",
-        title: "KI-Chatbots vs. regelbasierte Bots: Was brauchen Sie?",
-        seoTitle: "KI-Chatbots oder regelbasierte Bots?",
-        excerpt:
-          "Den Unterschied zwischen KI-gestützten und regelbasierten Chatbots verstehen - und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
-        category: "ai",
-        date: "2026-02-20",
-      },
-      {
-        slug: "choosing-the-right-automation-architecture",
-        title:
-          "Die richtige Automatisierungsarchitektur für Ihr Unternehmen wählen",
-        seoTitle: "Die richtige Automatisierungsarchitektur wählen",
-        excerpt:
-          "Direkte Schnittstellen, zentrale Orchestrierung oder hybrid? Entscheiden Sie nach Volumen, Compliance und Teamgröße, nicht nach Verkaufsargumenten.",
-        category: "automation",
-        date: "2026-02-12",
-      },
-      {
-        slug: "whatsapp-business-automation-guide",
-        title: "WhatsApp-Business-Automatisierung: ein Überblick",
-        excerpt:
-          "So automatisieren Sie Kundenkommunikation über WhatsApp - von Bestellbestätigungen bis zu Support-Bots - ohne die persönliche Note zu verlieren.",
-        category: "automation",
-        date: "2026-02-05",
-      },
     ],
   },
 

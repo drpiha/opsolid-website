@@ -48,7 +48,7 @@ test("publicToInternal: EN/TR slugs rewrite to the German route folder, own fold
   assert.equal(R.publicToInternal("tr", "/yapay-zeka-danismanligi/yz-kontrolu"), "/ki-beratung/ki-check");
   assert.equal(R.publicToInternal("en", "/about"), "/ueber-uns");
   assert.equal(R.publicToInternal("tr", "/iletisim"), "/contact");
-  assert.equal(R.publicToInternal("en", "/projects"), "/projekte");
+  assert.equal(R.publicToInternal("en", "/ai-training/ai-literacy"), "/ki-schulungen/ki-kompetenz");
   // same slug in every locale → no rewrite
   assert.equal(R.publicToInternal("en", "/opso"), null);
   assert.equal(R.publicToInternal("en", "/blog"), null);
@@ -100,7 +100,7 @@ test("every rewrite/redirect pair is stable: foreign → own slug → internal r
 test("internalToPublic: internal German paths become the locale's public path", () => {
   assert.equal(R.internalToPublic("en", "/ki-beratung"), "/ai-automation-consulting");
   assert.equal(R.internalToPublic("tr", "/ueber-uns"), "/hakkimizda");
-  assert.equal(R.internalToPublic("de", "/projekte"), "/projekte");
+  assert.equal(R.internalToPublic("de", "/ueber-uns"), "/ueber-uns");
   assert.equal(R.internalToPublic("en", "/ki-beratung/prozessautomatisierung#interne-tools"), "/ai-automation-consulting/process-automation#interne-tools");
   assert.equal(R.internalToPublic("en", "/"), "/");
   assert.equal(R.internalToPublic("en", "/something-else"), "/something-else");
@@ -133,7 +133,7 @@ test("isV4Path knows every public marketing first segment and still excludes app
   const marketing = [
     "/", "/de", "/en", "/de/ki-beratung", "/en/ai-automation-consulting/ai-check", "/tr/yapay-zeka-danismanligi",
     "/en/ai-training", "/tr/yapay-zeka-egitimleri", "/en/projects", "/tr/projeler", "/en/about", "/tr/hakkimizda",
-    "/tr/iletisim", "/de/projekte", "/de/ueber-uns", "/en/contact", "/en/blog/x", "/de/impressum", "/en/opso",
+    "/tr/iletisim", "/de/ueber-uns", "/en/contact", "/en/blog/x", "/de/impressum", "/en/opso",
     "/en/no-such-page",
   ];
   for (const p of marketing) assert.equal(V4.isV4Path(p), true, p);
@@ -158,7 +158,8 @@ test("every opsolid.de URL in llms.txt is a current public page or journal post"
   for (const l of R.L3_LOCALES) for (const p of contents[l].blog.posts) valid.add(R.absUrl("blog", l, `/${p.slug}`));
   const urls = (txt.match(/https:\/\/opsolid\.de[^\s)\]>,]*/g) ?? []).map((u) => u.replace(/[.;:]+$/, ""));
   const pageUrls = urls.map((u) => (u === "https://opsolid.de" ? "https://opsolid.de/" : u)).filter((u) => !/\.(txt|xml|png|jpg|svg|ico)$/.test(u));
-  assert.ok(pageUrls.length > 60);
+  // 14 sitemap pages and 3 journal posts per locale since the 2026-11-14 clean-up, plus a few inline links
+  assert.ok(pageUrls.length > 50);
   for (const u of pageUrls) assert.ok(valid.has(u), `llms.txt links a URL that is not a public page: ${u}`);
 });
 
@@ -168,7 +169,7 @@ test("llms.txt follows the llmstxt.org shape and states only the published price
   for (const h of ["## Seiten (Deutsch)", "## Pages (English)", "## Sayfalar (Türkçe)", "## Journal", "## Optional"]) assert.ok(txt.includes(`\n${h}\n`), h);
   // every page entry is a Markdown link with a note
   const links = txt.split("\n").filter((l) => l.startsWith("- [") && l.includes("](https://opsolid.de"));
-  assert.ok(links.length >= 45 + 21, `${links.length} link lines`);
+  assert.ok(links.length >= 42 + 9, `${links.length} link lines`);
   for (const l of links) assert.match(l, /^- \[[^\]]+\]\(https:\/\/opsolid\.de[^)]*\)(: .+)?$/);
   assert.ok(!/[–—]/.test(txt), "no en or em dash");
   for (const p of ["990 €", "1.790 €", "2.900 €", "5.900 €", "€990", "€1,790", "€2,900", "€5,900", "24,90 €"]) assert.ok(txt.includes(p), p);

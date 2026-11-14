@@ -14,14 +14,14 @@ const de: PageDef = {
   meta: {
     title: "Kontakt: Schulung oder KI-Check anfragen",
     description:
-      "Schreiben Sie uns per Formular oder E-Mail, welcher Ablauf Sie bremst und welche Systeme dazugehören. Antwort in der Regel in wenigen Arbeitstagen.",
+      "Schreiben Sie uns per Formular oder E-Mail: eine Schulung für Ihr Team oder ein Ablauf, der Zeit kostet. Wir antworten in der Regel in wenigen Arbeitstagen.",
   },
   crumbs: [],
   crumb: "Kontakt",
   hero: {
     eyebrow: "Kontakt",
-    h1: ["Erzählen Sie uns, welcher Ablauf", "Sie bremst", ""],
-    lede: "Drei Sätze genügen: Welcher Ablauf, welche Systeme, was stört heute? Wir antworten persönlich per E-Mail, in der Regel innerhalb weniger Arbeitstage.",
+    h1: ["Schulung oder Ablauf: Erzählen Sie uns,", "worum es geht", ""],
+    lede: "Drei Sätze genügen: Welches Team soll geschult werden, oder welcher Ablauf kostet Zeit? Wir antworten persönlich per E‑Mail, in der Regel innerhalb weniger Arbeitstage.",
     primary: { label: "Nachricht schreiben", to: "kontakt", hash: "formular" },
     secondary: { label: "Schulungen ansehen", to: "schulungen" },
     facts: ["NDA vor der Analyse", "Kennenlernen kostenlos und unverbindlich"],
@@ -136,14 +136,14 @@ const en: PageDef = {
   meta: {
     title: "Contact: request training or an AI check",
     description:
-      "Write to OpSolid by form or email: which workflow slows you down and which systems are involved. We usually reply within a few working days.",
+      "Write to OpSolid by form or email: a course for your team or a workflow that costs you time. We usually reply within a few working days.",
   },
   crumbs: [],
   crumb: "Contact",
   hero: {
     eyebrow: "Contact",
-    h1: ["Tell us which workflow", "slows you down", ""],
-    lede: "Three sentences are enough: which workflow, which systems, what is wrong today? We reply personally by email, usually within a few working days.",
+    h1: ["A course or a workflow: tell us", "what you need", ""],
+    lede: "Three sentences are enough: which team needs training, or which workflow costs you time? We reply personally by email, usually within a few working days.",
     primary: { label: "Write a message", to: "kontakt", hash: "formular" },
     secondary: { label: "See the courses", to: "schulungen" },
     facts: ["NDA before the analysis", "Introductory call free and without obligation"],
@@ -258,14 +258,14 @@ const tr: PageDef = {
   meta: {
     title: "İletişim: eğitim ya da YZ Kontrolü isteyin",
     description:
-      "OpSolid'e form ya da e-postayla yazın: hangi iş akışı sizi yavaşlatıyor, hangi sistemler işin içinde. Genellikle birkaç iş günü içinde yanıt veririz.",
+      "OpSolid'e form ya da e-postayla yazın: ekibiniz için bir eğitim ya da zaman kaybettiren bir iş akışı. Genellikle birkaç iş günü içinde yanıt veririz.",
   },
   crumbs: [],
   crumb: "İletişim",
   hero: {
     eyebrow: "İletişim",
-    h1: ["Hangi iş akışının", "sizi yavaşlattığını", "anlatın"],
-    lede: "Üç cümle yeter: hangi iş akışı, hangi sistemler, bugün ne aksıyor? Size e-postayla bizzat yanıt veririz; genellikle birkaç iş günü içinde.",
+    h1: ["Eğitim mi, iş akışı mı:", "neye ihtiyacınız", "olduğunu anlatın"],
+    lede: "Üç cümle yeter: hangi ekip eğitim alacak ya da hangi iş akışı zaman kaybettiriyor? Size e‑postayla bizzat yanıt veririz; genellikle birkaç iş günü içinde.",
     primary: { label: "Mesaj yazın", to: "kontakt", hash: "formular" },
     secondary: { label: "Eğitimlere bakın", to: "schulungen" },
     facts: ["Analizden önce NDA", "Tanışma görüşmesi ücretsiz ve bağlayıcı değil"],
