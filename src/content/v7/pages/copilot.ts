@@ -8,9 +8,9 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "copilot",
   meta: {
-    title: "Microsoft 365 Copilot Schulung: Praxistag",
+    title: "Microsoft 365 Copilot Schulung für Mitarbeiter",
     description:
-      "Microsoft 365 Copilot Praxistag: 1 Tag, online live, ab 2.900 € netto pro Team (10 Personen inklusive, bis 12). Copilot in Outlook, Teams, Word, Excel.",
+      "Copilot-Schulung für Mitarbeitende: 1 Tag, online live, ab 2.900 € netto pro Team (10 Personen inklusive, bis 12). Copilot in Outlook, Teams, Word, Excel.",
   },
   crumbs: ["schulungen"],
   crumb: "Copilot-Praxistag",

@@ -8,9 +8,9 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "kompetenz",
   meta: {
-    title: "KI-Kompetenz Schulung: Basis für Ihr Team, online",
+    title: "KI-Schulung für Mitarbeiter: KI-Kompetenz Basis",
     description:
-      "KI-Kompetenz Basis: halber Tag, online live, ab 1.790 € netto pro Team (10 Personen inklusive, bis 15). Grundlagen, Risiken, Datenschutz, mit Bescheinigung.",
+      "KI-Schulung für Mitarbeitende: halber Tag, online live, ab 1.790 € netto pro Team (10 Personen inklusive, bis 15). Grundlagen, Risiken, Datenschutz.",
   },
   crumbs: ["schulungen"],
   crumb: "KI-Kompetenz",

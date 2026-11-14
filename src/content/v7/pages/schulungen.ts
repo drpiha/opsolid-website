@@ -10,9 +10,9 @@ import type { PageDef, PageSet } from "../types";
 const de: PageDef = {
   key: "schulungen",
   meta: {
-    title: "KI-Schulungen für Teams: live in Ihrem Teams, pro Team",
+    title: "KI-Schulungen für Mitarbeiter: live, pro Team",
     description:
-      "KI-Schulungen für Ihr Team, live in Ihrem Microsoft Teams: KI-Kompetenz Basis ab 1.790 €, Copilot-Praxistag ab 2.900 € netto pro Team. Mit Bescheinigung.",
+      "KI-Schulungen für Mitarbeitende, live in Ihrem Teams: KI-Kompetenz Basis ab 1.790 €, Copilot-Praxistag ab 2.900 € netto pro Team. Mit Bescheinigung.",
   },
   crumbs: [],
   crumb: "KI-Schulungen",
