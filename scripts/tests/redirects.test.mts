@@ -205,3 +205,84 @@ test("geo lookup timeout, network error, non-200 or bad payload → country unkn
   assert.equal(await lookupCountryViaApi("u", 50, json(200, { country: "tr" })), "TR");
   clearTimeout(keepAlive);
 });
+
+// --- journal posts with their own slug per locale (training posts, 2026-11-14) ---
+import * as slugsMod from "../../src/lib/blog-slugs.ts";
+const B: typeof import("../../src/lib/blog-slugs.ts") = (slugsMod as any).LOCALIZED_POSTS ? (slugsMod as any) : (slugsMod as any).default;
+
+async function blogContents(): Promise<Record<"de" | "en" | "tr", { blog: { posts: { slug: string }[] } }>> {
+  const m: any = await import("../../src/content/index.ts");
+  return (m.contents ?? m.default.contents) as any;
+}
+
+test("every localized post slug is unique and is that locale's slug in the post list", async () => {
+  const contents = await blogContents();
+  const seen = new Set<string>();
+  for (const row of B.LOCALIZED_POSTS) {
+    for (const l of R.L3_LOCALES) {
+      assert.ok(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(row[l]), `${l}: ${row[l]} is a plain ASCII slug`);
+      assert.ok(!seen.has(row[l]), `${row[l]} is used twice`);
+      seen.add(row[l]);
+      assert.ok(contents[l].blog.posts.some((p) => p.slug === row[l]), `${l} lists ${row[l]}`);
+    }
+  }
+  // every post exists in all three locales: each locale's slug maps to a post of the other locales
+  for (const l of R.L3_LOCALES) {
+    assert.equal(contents[l].blog.posts.length, contents.en.blog.posts.length, `${l} has as many posts as en`);
+    for (const p of contents[l].blog.posts) {
+      for (const o of R.L3_LOCALES) assert.ok(contents[o].blog.posts.some((q) => q.slug === B.postSlugIn(p.slug, o)), `${l}/${p.slug} exists in ${o}`);
+    }
+  }
+});
+
+test("a post under another locale's slug 301s to this locale's slug; own slugs and other paths pass", () => {
+  assert.equal(B.foreignPostTarget("en", "/blog/was-kostet-eine-ki-schulung"), "/blog/what-does-ai-training-cost");
+  assert.equal(B.foreignPostTarget("de", "/blog/what-does-ai-training-cost"), "/blog/was-kostet-eine-ki-schulung");
+  assert.equal(B.foreignPostTarget("tr", "/blog/ki-schulung-pflicht-ai-act-artikel-4/"), "/blog/yapay-zeka-egitimi-zorunlu-mu-ai-act-madde-4");
+  assert.equal(B.foreignPostTarget("de", "/blog/was-kostet-eine-ki-schulung"), null);
+  assert.equal(B.foreignPostTarget("de", "/blog/workflow-automation-fundamentals"), null);
+  assert.equal(B.foreignPostTarget("en", "/blog"), null);
+  assert.equal(B.foreignPostTarget("en", "/ai-training"), null);
+  assert.equal(B.foreignPostTarget("en", "/blog/was-kostet-eine-ki-schulung/extra"), null);
+  // the target is this locale's own slug, so it never redirects again (no chains, no loops)
+  for (const row of B.LOCALIZED_POSTS) {
+    for (const l of R.L3_LOCALES) {
+      for (const from of R.L3_LOCALES) {
+        const t = B.foreignPostTarget(l, `/blog/${row[from]}`);
+        assert.equal(t, from === l ? null : `/blog/${row[l]}`);
+        if (t) assert.equal(B.foreignPostTarget(l, t), null);
+      }
+    }
+  }
+});
+
+test("the language switch and hreflang map a localized post to its twin; shared slugs stay", () => {
+  assert.equal(B.postSubIn("/was-kostet-eine-ki-schulung", "tr"), "/yapay-zeka-egitimi-ne-kadar-tutar");
+  assert.equal(B.postSubIn("/workflow-automation-fundamentals", "de"), "/workflow-automation-fundamentals");
+  assert.equal(B.postSubIn("", "en"), "");
+  const alt = R.alternates("blog", B.postSubs("ki-schulung-pflicht-ai-act-artikel-4"));
+  assert.deepEqual(alt, {
+    de: "https://opsolid.de/de/blog/ki-schulung-pflicht-ai-act-artikel-4",
+    en: "https://opsolid.de/en/blog/is-ai-training-mandatory-ai-act-article-4",
+    tr: "https://opsolid.de/tr/blog/yapay-zeka-egitimi-zorunlu-mu-ai-act-madde-4",
+    "x-default": "https://opsolid.de/de/blog/ki-schulung-pflicht-ai-act-artikel-4",
+  });
+  assert.equal(R.alternates("blog", "/post").tr, "https://opsolid.de/tr/blog/post");
+});
+
+test("the sitemap lists each localized post once per locale under its own slug, with reciprocal hreflang", async () => {
+  const m: any = await import("../../src/app/sitemap.ts");
+  const sitemap = (m.default?.default ?? m.default) as () => { url: string; alternates?: { languages?: Record<string, string> } }[];
+  const entries = sitemap();
+  const urls = entries.map((e) => e.url);
+  assert.equal(new Set(urls).size, urls.length, "no duplicate URLs");
+  for (const row of B.LOCALIZED_POSTS) {
+    for (const l of R.L3_LOCALES) {
+      const url = `https://opsolid.de/${l}/blog/${row[l]}`;
+      const e = entries.find((x) => x.url === url);
+      assert.ok(e, url);
+      for (const o of R.L3_LOCALES) assert.equal(e!.alternates?.languages?.[o], `https://opsolid.de/${o}/blog/${row[o]}`);
+      for (const o of R.L3_LOCALES) if (o !== l) assert.ok(!urls.includes(`https://opsolid.de/${l}/blog/${row[o]}`), `no ${l} URL with the ${o} slug`);
+    }
+  }
+});

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/v7/Logo";
 import { LABEL, LANG_NAME, LANG_SHORT, NAV_KEYS, NAV_LABEL, SITE_STR } from "@/content/v7/site";
+import { postSubIn } from "@/lib/blog-slugs";
 import { href, keyForPublicPath, L3_LOCALES, type L3, type PageKey } from "@/lib/v7-routes";
 import { LangHint } from "./LangHint";
 import { wrap } from "./ui";
@@ -37,7 +38,8 @@ function Lang({ locale, current, sub, className = "" }: { locale: L3; current: L
   return (
     <div role="group" aria-label={t.langLabel} className={`flex items-center ${className}`}>
       {L3_LOCALES.map((l) => {
-        const target = sub ? href(sub.key, l, { sub: sub.sub }) : href("home", l);
+        // A journal post can have its own slug per locale: switch to the same post under that locale's slug.
+        const target = sub ? href(sub.key, l, { sub: sub.key === "blog" ? postSubIn(sub.sub, l) : sub.sub }) : href("home", l);
         const active = l === locale;
         return (
           <Link

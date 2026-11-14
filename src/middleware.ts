@@ -7,6 +7,7 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import type { L3 } from "@/lib/v7-routes";
+import { foreignPostTarget } from "@/lib/blog-slugs";
 import { lookupCountryViaApi, resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
 import { canonicalPathname, isDeadAppPath } from "@/lib/url-hygiene";
@@ -434,7 +435,7 @@ export async function middleware(req: NextRequest) {
     const { locale } = resolution;
     const url = req.nextUrl.clone();
     if (isL3(locale)) {
-      const slug = foreignSlugTarget(locale, pathname);
+      const slug = foreignSlugTarget(locale, pathname) ?? foreignPostTarget(locale, pathname);
       url.pathname = withLocalePrefix(locale, slug ?? pathname);
     } else {
       url.pathname = `/${locale}${pathname}`;
@@ -467,7 +468,7 @@ export async function middleware(req: NextRequest) {
   // the English copy with lang="es" / dir="rtl": send them to the /en page
   // (its public slug). Card surfaces (/c/*) never reach this (excluded by the matcher).
   if (isPartialLocale && isV4Path(pathname)) {
-    const slug = foreignSlugTarget("en", pathWithoutLocale);
+    const slug = foreignSlugTarget("en", pathWithoutLocale) ?? foreignPostTarget("en", pathWithoutLocale);
     const url = req.nextUrl.clone();
     url.pathname = withLocalePrefix("en", slug ?? pathWithoutLocale);
     const response = NextResponse.redirect(url, 301);
@@ -493,7 +494,8 @@ export async function middleware(req: NextRequest) {
   if (isL3(firstSegment)) {
     // A v7 page path that belongs to another locale (/en/ki-beratung, /tr/ai-training) → 301 to this
     // locale's own public slug.
-    const foreign = foreignSlugTarget(firstSegment, pathWithoutLocale);
+    // The same for a journal post under another locale's slug (/en/blog/was-kostet-eine-ki-schulung).
+    const foreign = foreignSlugTarget(firstSegment, pathWithoutLocale) ?? foreignPostTarget(firstSegment, pathWithoutLocale);
     if (foreign !== null) {
       const url = req.nextUrl.clone();
       url.pathname = withLocalePrefix(firstSegment, foreign);

@@ -116,6 +116,25 @@ export const content = {
   blog: {
     posts: [
       {
+        // Training posts (2026-11-14) have their own slug per locale: src/lib/blog-slugs.ts.
+        slug: "what-does-ai-training-cost",
+        title: "What Does AI Training or Copilot Training Cost for Your Team?",
+        seoTitle: "What Does AI or Copilot Training Cost?",
+        excerpt:
+          "What AI training for employees costs: price per person or per team, what drives the amount, and what our courses cost, from €1,790 net per team.",
+        category: "training",
+        date: "2026-11-14",
+      },
+      {
+        slug: "is-ai-training-mandatory-ai-act-article-4",
+        title: "Is AI Training Mandatory? AI Act Article 4 After the 2026 Amendment",
+        seoTitle: "Is AI Training Mandatory? AI Act Article 4",
+        excerpt:
+          "Article 4 of the AI Act requires measures for AI literacy, but no specific training and no certificate. What applies since the 2026 amendment.",
+        category: "training",
+        date: "2026-11-14",
+      },
+      {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
         title: "EU AI Act and the Digital Omnibus: Where the Law Stands",
         // <title> when the heading is too long for search results (≤ 50 chars; the layout adds " | OpSolid").

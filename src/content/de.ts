@@ -116,6 +116,25 @@ export const content: Content = {
   blog: {
     posts: [
       {
+        // Training posts (2026-11-14) have their own slug per locale: src/lib/blog-slugs.ts.
+        slug: "was-kostet-eine-ki-schulung",
+        title: "Was kostet eine KI-Schulung oder Copilot-Schulung für Ihr Team?",
+        seoTitle: "Was kostet eine KI- oder Copilot-Schulung?",
+        excerpt:
+          "Was eine KI-Schulung für Mitarbeiter kostet: Preis pro Person oder pro Team, wovon der Betrag abhängt und was unsere Schulungen ab 1.790 € netto kosten.",
+        category: "training",
+        date: "2026-11-14",
+      },
+      {
+        slug: "ki-schulung-pflicht-ai-act-artikel-4",
+        title: "Ist eine KI-Schulung Pflicht? AI Act Artikel 4 nach der Änderung 2026",
+        seoTitle: "Ist eine KI-Schulung Pflicht? AI Act Artikel 4",
+        excerpt:
+          "Art. 4 der KI-Verordnung verlangt Maßnahmen zur KI-Kompetenz, aber keine bestimmte Schulung und kein Zertifikat. Was seit der Änderung 2026 gilt.",
+        category: "training",
+        date: "2026-11-14",
+      },
+      {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
         title: "EU-KI-Verordnung und Digital-Omnibus: Wo der Rechtsstand heute liegt",
         seoTitle: "EU-KI-Verordnung und Digital-Omnibus: Rechtsstand",
