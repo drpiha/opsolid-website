@@ -1,7 +1,7 @@
 /**
- * About page (v7). Company voice ("wir"), no team-size claims, no years, no employer. Founder name,
- * location and working languages appear here (and on Contact, footer, JSON-LD) only. No link to the
- * founder's personal LinkedIn profile (owner decision 2026-11-05). Training leads (owner, 2026-11-14); the TopSolid
+ * About page (v7). Company voice ("wir"), no team-size claims, no years, no employer. Location and
+ * working languages appear here (and on Contact, footer, JSON-LD) only. No founder name or photo
+ * (owner decision 2026-11-14; the legal name stays in the Impressum). Training leads (owner, 2026-11-14); the TopSolid
  * disambiguation is one FAQ item (plus JSON-LD), not a section; OpSo is one row without status dates.
  */
 import type { PageDef, PageSet } from "../types";
@@ -11,7 +11,7 @@ const de: PageDef = {
   meta: {
     title: "Über OpSolid: KI-Schulungen und KI-Beratung aus Arnsberg",
     description:
-      "OpSolid aus Arnsberg organisiert KI-Schulungen für Teams und berät unabhängig bei KI-Automatisierung: Angebot, Methode, Grundsätze und der Gründer.",
+      "OpSolid aus Arnsberg organisiert KI-Schulungen für Teams und berät unabhängig bei KI-Automatisierung: Angebot, Methode, Grundsätze und Arbeitsweise.",
   },
   crumbs: [],
   crumb: "Über uns",
@@ -123,15 +123,14 @@ const de: PageDef = {
     {
       t: "about",
       id: "menschen",
-      label: "Menschen",
-      note: "Gründer, Ort, Arbeitsweise.",
-      h: "Wer hinter OpSolid steht",
+      label: "Hintergrund",
+      note: "Methode, Ort, Sprachen.",
+      h: "Woher unsere Methode kommt",
       lede: "Unsere Methode stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen.",
       paras: [
         "Wir arbeiten mit Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n und Python, binden CRM und ERP an und hosten bei Bedarf in der EU.",
       ],
       facts: [
-        ["Gründer und Inhaber", "Hasan Dönmez"],
         ["Sitz", "Arnsberg, Sauerland, NRW"],
         ["Arbeitsweise", "Remote in Deutschland und Europa, schriftlich und per Video"],
         ["Sprachen", "Deutsch, Englisch, Türkisch"],
@@ -174,7 +173,7 @@ const en: PageDef = {
   meta: {
     title: "About OpSolid: AI training and AI consulting from Arnsberg",
     description:
-      "OpSolid, Arnsberg, Germany: AI training for teams and independent AI automation consulting. Offer, method, principles and the founder behind it.",
+      "OpSolid, Arnsberg, Germany: AI training for teams and independent AI automation consulting. Offer, method, principles and our way of working.",
   },
   crumbs: [],
   crumb: "About",
@@ -286,15 +285,14 @@ const en: PageDef = {
     {
       t: "about",
       id: "menschen",
-      label: "People",
-      note: "Founder, place, way of working.",
-      h: "Who is behind OpSolid",
+      label: "Background",
+      note: "Method, place, languages.",
+      h: "Where our method comes from",
       lede: "Our method comes from IT project management, digitalisation and process optimisation in the day-to-day operations of companies.",
       paras: [
         "We work with Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n and Python, connect CRM and ERP systems, and host in the EU where needed.",
       ],
       facts: [
-        ["Founder and owner", "Hasan Dönmez"],
         ["Based in", "Arnsberg, Sauerland, North Rhine-Westphalia"],
         ["Way of working", "Remote in Germany and Europe, in writing and by video"],
         ["Languages", "German, English, Turkish"],
@@ -337,7 +335,7 @@ const tr: PageDef = {
   meta: {
     title: "OpSolid hakkında: Arnsberg'den YZ eğitimleri ve danışmanlığı",
     description:
-      "OpSolid, Arnsberg'den ekipler için YZ eğitimleri düzenler ve YZ otomasyonunda bağımsız danışmanlık verir: hizmetler, yöntem, ilkeler ve kurucusu.",
+      "OpSolid, Arnsberg'den ekipler için YZ eğitimleri düzenler ve YZ otomasyonunda bağımsız danışmanlık verir: hizmetler, yöntem, ilkeler ve çalışma biçimi.",
   },
   crumbs: [],
   crumb: "Hakkımızda",
@@ -449,15 +447,14 @@ const tr: PageDef = {
     {
       t: "about",
       id: "menschen",
-      label: "İnsanlar",
-      note: "Kurucu, yer, çalışma biçimi.",
-      h: "OpSolid'in arkasında kim var?",
+      label: "Arka plan",
+      note: "Yöntem, yer, diller.",
+      h: "Yöntemimiz nereden geliyor?",
       lede: "Yöntemimiz, şirketlerin günlük işleyişi içinde yürütülen BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından doğdu.",
       paras: [
         "Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n ve Python ile çalışır, CRM ve ERP sistemlerini bağlar, gerektiğinde AB'de barındırırız.",
       ],
       facts: [
-        ["Kurucu ve işletme sahibi", "Hasan Dönmez"],
         ["Merkez", "Arnsberg, Sauerland, Kuzey Ren-Vestfalya"],
         ["Çalışma biçimi", "Almanya ve Avrupa'da uzaktan, yazılı olarak ve görüntülü görüşmeyle"],
         ["Diller", "Almanca, İngilizce, Türkçe"],
