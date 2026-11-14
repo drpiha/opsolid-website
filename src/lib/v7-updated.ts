@@ -29,7 +29,8 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   agenten: "2026-11-04",
   anwendungen: "2026-11-04",
   projekte: "2026-11-09",
-  blog: "2026-11-04", // CTA: KI-Check 990 € with the 60-day credit
+  // 2026-11-14: the first two training posts (cost, Art. 4) in the list; before that 2026-11-04: CTA KI-Check 990 € with the 60-day credit
+  blog: "2026-11-14",
   trainer: "2026-11-06", // no trial session: seven-day reply, trainer pool, conversation with a live demo, first assignment paid
 };
 
