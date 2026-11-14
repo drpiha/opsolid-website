@@ -1,15 +1,10 @@
-import { content as en } from "../en";
-// Blog post metadata from content files
-export function getPostBySlug(slug: string) {
-  return en.blog.posts.find((p) => p.slug === slug) || null;
-}
+import { postSlugIn } from "../../lib/blog-slugs";
+import { trainingArticles } from "./training";
 
-export function getAllSlugs(): string[] {
-  return en.blog.posts.map((p) => p.slug);
-}
-
-// Full article content stored as HTML strings per locale
-// To add a new article: add the slug key with HTML content for each language
+// Post metadata (slug, title, excerpt, dates) lives in the content bundles (src/content/{en,de,tr}.ts, blog.posts).
+// Full article content stored as HTML strings per locale, keyed by the post's English slug.
+// To add a new article: add the slug key with HTML content for each language. A post with its own slug per locale
+// also needs a row in src/lib/blog-slugs.ts.
 const articles: Record<string, Record<string, string>> = {
   "workflow-automation-fundamentals": {
     en: `<p>Workflow automation has moved from a luxury to a necessity for growing businesses. But the discussion is too often framed around which platform or tool to pick - when the real question is which engineering fundamentals make a workflow survive in production.</p>
@@ -464,10 +459,10 @@ const shortArticles: Record<string, Record<string, string>> = {
 };
 
 // Merge all articles
-Object.assign(articles, shortArticles);
+Object.assign(articles, shortArticles, trainingArticles);
 
 export function getPostContent(slug: string, locale: string = "en"): string {
-  const post = articles[slug];
+  const post = articles[slug] ?? articles[postSlugIn(slug, "en")];
   if (!post) {
     return `<p>This article is coming soon. Check back later for the full content.</p>`;
   }

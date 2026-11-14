@@ -113,6 +113,25 @@ export const content: Content = {
   blog: {
     posts: [
       {
+        // Training posts (2026-11-14) have their own slug per locale: src/lib/blog-slugs.ts.
+        slug: "yapay-zeka-egitimi-ne-kadar-tutar",
+        title: "Ekibiniz için yapay zeka veya Copilot eğitimi ne kadar tutar?",
+        seoTitle: "Yapay zeka veya Copilot eğitimi ne kadar tutar?",
+        excerpt:
+          "Çalışanlar için yapay zeka eğitiminin maliyeti: kişi başı ya da ekip başı fiyat, tutarı neyin belirlediği ve 1.790 €'dan (net) başlayan ekip fiyatlarımız.",
+        category: "training",
+        date: "2026-11-14",
+      },
+      {
+        slug: "yapay-zeka-egitimi-zorunlu-mu-ai-act-madde-4",
+        title: "Yapay zeka eğitimi zorunlu mu? 2026 değişikliğinden sonra AI Act 4. madde",
+        seoTitle: "Yapay zeka eğitimi zorunlu mu? AI Act 4. madde",
+        excerpt:
+          "AI Act'in 4. maddesi yapay zeka okuryazarlığı için önlem ister; belirli bir eğitim ya da sertifika istemez. 2026 değişikliğinden bu yana neyin geçerli olduğu.",
+        category: "training",
+        date: "2026-11-14",
+      },
+      {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
         title: "AB Yapay Zeka Yasası ve Dijital Omnibus: güncel hukuki durum",
         seoTitle: "AB Yapay Zeka Yasası ve Omnibus: güncel durum",

@@ -114,13 +114,17 @@ export function absUrl(key: PageKey, locale: L3, sub = ""): string {
   return `${SITE_CONFIG.url}${href(key, locale, { sub })}`;
 }
 
-/** Reciprocal hreflang map for one page; x-default is the German version. */
-export function alternates(key: PageKey, sub = ""): Record<L3 | "x-default", string> {
+/**
+ * Reciprocal hreflang map for one page; x-default is the German version. `sub` is one child path for all
+ * locales, or one per locale (journal posts with localized slugs, src/lib/blog-slugs.ts).
+ */
+export function alternates(key: PageKey, sub: string | Record<L3, string> = ""): Record<L3 | "x-default", string> {
+  const s = (l: L3) => (typeof sub === "string" ? sub : sub[l]);
   return {
-    de: absUrl(key, "de", sub),
-    en: absUrl(key, "en", sub),
-    tr: absUrl(key, "tr", sub),
-    "x-default": absUrl(key, "de", sub),
+    de: absUrl(key, "de", s("de")),
+    en: absUrl(key, "en", s("en")),
+    tr: absUrl(key, "tr", s("tr")),
+    "x-default": absUrl(key, "de", s("de")),
   };
 }
 

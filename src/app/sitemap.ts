@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { content as en } from "@/content/en";
+import { postSubs } from "@/lib/blog-slugs";
 import { L3_LOCALES, PAGE_KEYS, absUrl, alternates } from "@/lib/v7-routes";
 import { pageUpdated, postUpdated } from "@/lib/v7-updated";
 
@@ -10,7 +11,8 @@ import { pageUpdated, postUpdated } from "@/lib/v7-updated";
  * priority/changefreq, so only a real lastModified is emitted: the page's last substantive change
  * (src/lib/v7-updated.ts), the same date as its WebPage.dateModified. Redirecting URLs never appear here.
  *
- * Blog posts: the same post slug exists in all three locales (key "blog", sub "/<slug>").
+ * Blog posts: every post exists in all three locales (key "blog", sub "/<slug>"); most share one slug, the
+ * training posts have one per locale (src/lib/blog-slugs.ts).
  */
 const EXCLUDED = new Set(["impressum", "privacy"]);
 
@@ -29,11 +31,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   for (const post of en.blog.posts) {
-    const sub = `/${post.slug}`;
-    const languages = alternates("blog", sub);
+    const subs = postSubs(post.slug);
+    const languages = alternates("blog", subs);
     const lastModified = day(postUpdated(post));
     for (const loc of L3_LOCALES) {
-      entries.push({ url: absUrl("blog", loc, sub), lastModified, alternates: { languages } });
+      entries.push({ url: absUrl("blog", loc, subs[loc]), lastModified, alternates: { languages } });
     }
   }
 

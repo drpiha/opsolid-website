@@ -17,23 +17,24 @@ export function shareImage(locale: L3, key: PageKey, sub: string, alt: string) {
  * home at "/"), reciprocal hreflang with x-default → German, Open Graph and Twitter cards.
  * `title` must NOT include the brand: the root layout template appends " | OpSolid"
  * (use `absoluteTitle` for the home pages, whose title starts with the brand).
- * `sub` is a child path under the page (blog posts: "/my-post").
+ * `sub` is a child path under the page (blog posts: "/my-post"), or one per locale for posts with localized slugs.
  */
 export function v7Metadata(
   rawLocale: string | undefined,
   key: PageKey,
   meta: { title: string; description: string },
-  opts?: { sub?: string; absoluteTitle?: boolean; noindex?: boolean; ogType?: "website" | "article" },
+  opts?: { sub?: string | Record<L3, string>; absoluteTitle?: boolean; noindex?: boolean; ogType?: "website" | "article" },
 ): Metadata {
   const locale = pickLocale(rawLocale) as L3;
-  const sub = opts?.sub ?? "";
+  const subs = opts?.sub ?? "";
+  const sub = typeof subs === "string" ? subs : subs[locale];
   const canonical = absUrl(key, locale, sub);
   const others = (Object.keys(OG_LOCALE) as L3[]).filter((l) => l !== locale).map((l) => OG_LOCALE[l]);
   const image = shareImage(locale, key, sub, meta.title);
   return {
     title: opts?.absoluteTitle ? { absolute: meta.title } : meta.title,
     description: meta.description,
-    alternates: { canonical, languages: alternates(key, sub) },
+    alternates: { canonical, languages: alternates(key, subs) },
     openGraph: {
       title: meta.title,
       description: meta.description,
