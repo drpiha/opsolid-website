@@ -5,7 +5,6 @@ import { pageUpdated } from "@/lib/v7-updated";
 import type { Crumb } from "./Breadcrumbs";
 
 const ORG = `${SITE_CONFIG.url}/#organization`;
-const PERSON = `${SITE_CONFIG.url}/#person`;
 const SITE = `${SITE_CONFIG.url}/#website`;
 /** Raster logo on a plain porcelain background (public/img/v7/logo-jsonld.png). */
 const LOGO = { url: `${SITE_CONFIG.url}/img/v7/logo-jsonld.png`, width: 1400, height: 400 };
@@ -28,11 +27,6 @@ const KNOWS_ABOUT: Record<L3, string[]> = {
   de: ["KI-Schulungen", "KI-Kompetenz nach Art. 4 KI-Verordnung", "KI-Automatisierung", "Prozessautomatisierung", "Microsoft 365 und Copilot", "KI-Assistenten für Telefon und Chat"],
   en: ["AI training", "AI literacy under Article 4 of the EU AI Act", "AI automation", "Process automation", "Microsoft 365 and Copilot", "AI assistants for phone and chat"],
   tr: ["Yapay zeka eğitimleri", "AB Yapay Zeka Tüzüğü 4. madde kapsamında yapay zeka yetkinliği", "Yapay zeka otomasyonu", "Süreç otomasyonu", "Microsoft 365 ve Copilot", "Telefon ve sohbet için yapay zeka asistanları"],
-};
-const JOB: Record<L3, string> = {
-  de: "Gründer von OpSolid, KI-Berater",
-  en: "Founder of OpSolid, AI consultant",
-  tr: "OpSolid kurucusu, YZ danışmanı",
 };
 // Same value as the Impressum (content impressum.sections.vatIdText); keep the two in step.
 const VAT_ID = "DE462227107";
@@ -63,7 +57,7 @@ function offer(o: { name?: string; price: number; from?: boolean }) {
 
 type Node = Record<string, unknown>;
 
-/** The shared nodes every graph carries in full: the website, the organization and its founder. */
+/** The shared nodes every graph carries in full: the website and the organization (no founder Person node: owner decision 2026-11-14). */
 export function sharedNodes(locale: L3): Node[] {
   return [
     {
@@ -106,18 +100,7 @@ export function sharedNodes(locale: L3): Node[] {
       vatID: VAT_ID,
       areaServed: AREA_SERVED,
       knowsLanguage: ["de", "en", "tr"],
-      founder: { "@id": PERSON },
       // No Organization sameAs yet: add the company profile URLs here once they exist (LinkedIn page, Google Business Profile).
-    },
-    {
-      "@type": "Person",
-      "@id": PERSON,
-      name: "Hasan Dönmez",
-      jobTitle: JOB[locale],
-      url: absUrl("ueber", locale),
-      worksFor: { "@id": ORG },
-      knowsLanguage: ["de", "en", "tr"],
-      // No sameAs: the founder's personal LinkedIn is not linked (owner decision 2026-11-05).
     },
   ];
 }

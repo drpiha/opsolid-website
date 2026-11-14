@@ -138,7 +138,7 @@ export type Block =
   | (SectionBase & { t: "gallery"; frame: Frame; tag?: string; items: { img: Img; caption: string }[] })
   /** A full-width figure band (video or image). */
   | (SectionBase & { t: "media"; media: Media })
-  /** About block: paragraphs and a fact list (place, languages, founder). */
+  /** About block: paragraphs and a fact list (place, way of working, languages). */
   | (SectionBase & { t: "about"; paras: string[]; facts: [string, string][]; link?: Href })
   /** Scripted assistant demo without audio, visibly labelled (`chip`, `disclaimer`). */
   | (SectionBase & {

@@ -5,7 +5,7 @@
  * the paid entry whose report ends with a training recommendation. No OpSo or own-work section (owner,
  * 2026-11-14: the site must not list itself; OpSo lives in the footer and on About). Each fact is said once in
  * its place (format and certificate in the hero strip, the "no certificate required" line in the FAQ). German
- * is the source; no founder name or location outside About/Contact/footer, no trainer names, no certificate
+ * is the source; no founder name anywhere, no location outside About/Contact/footer, no trainer names, no certificate
  * claims beyond our own Teilnahmebescheinigung.
  */
 import type { PageDef, PageSet } from "../types";

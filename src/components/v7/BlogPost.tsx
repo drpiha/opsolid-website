@@ -24,7 +24,7 @@ const L: Record<L3, { read: string; min: string; by: string; prev: string; next:
 };
 
 /**
- * BlogPosting + WebPage + BreadcrumbList, with the full website, organization and founder nodes. The author is
+ * BlogPosting + WebPage + BreadcrumbList, with the full website and organization nodes. The author is
  * the organization, as the visible byline says ("Von OpSolid").
  */
 function BlogPostLd({ locale, slug, crumbs, post }: { locale: L3; slug: string; crumbs: Crumb[]; post: { title: string; excerpt: string; date: string; modified?: string; category: string } }) {
