@@ -33,6 +33,8 @@ export const BLOG_T: Record<
     more: Href;
     cat: Record<string, string>;
     cta: PageDef["cta"];
+    /** Posts in the "training" category end with a link to the training hub and the training CTA instead. */
+    training: { more: Href; cta: PageDef["cta"] };
   }
 > = {
   de: {
@@ -46,13 +48,23 @@ export const BLOG_T: Record<
     read: "Lesen",
     min: "Min.",
     more: { label: "Zur KI-Beratung", to: "beratung" },
-    cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb" },
+    cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb", training: "Schulung" },
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
       p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
       primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Den KI-Check ansehen", to: "check" },
+    },
+    training: {
+      more: { label: "Zu den KI-Schulungen", to: "schulungen" },
+      cta: {
+        label: "Schulung anfragen",
+        h: "Welches Team soll sicherer mit KI arbeiten?",
+        p: "Schreiben Sie uns kurz zu Team, Aufgaben und Sprache. Wir empfehlen die passende Schulung und nennen den Preis pro Team.",
+        primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
+        secondary: { label: "Erst analysieren: zum KI-Check", to: "check" },
+      },
     },
   },
   en: {
@@ -66,13 +78,23 @@ export const BLOG_T: Record<
     read: "Read",
     min: "min",
     more: { label: "To AI consulting", to: "beratung" },
-    cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations" },
+    cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations", training: "Training" },
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
       p: "In a free intro, without obligation, we clarify whether an AI check makes sense. The AI check costs €990 net and is credited in full against a follow-up order within 60 days.",
       primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "See the AI check", to: "check" },
+    },
+    training: {
+      more: { label: "To AI training", to: "schulungen" },
+      cta: {
+        label: "Request training",
+        h: "Which team should work with AI more safely?",
+        p: "Tell us briefly about your team, tasks and language. We recommend the right course and name the price per team.",
+        primary: { label: "Request training", to: "kontakt", query: { anliegen: "schulung" } },
+        secondary: { label: "Analyse first: to the AI check", to: "check" },
+      },
     },
   },
   tr: {
@@ -86,13 +108,23 @@ export const BLOG_T: Record<
     read: "Oku",
     min: "dk",
     more: { label: "Yapay zeka danışmanlığına", to: "beratung" },
-    cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "İşletme" },
+    cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "İşletme", training: "Eğitim" },
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
       p: "Ücretsiz ve bağlayıcı olmayan tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolünün ücreti 990 € (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
       primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolünü görün", to: "check" },
+    },
+    training: {
+      more: { label: "YZ eğitimlerine", to: "schulungen" },
+      cta: {
+        label: "Eğitim talep edin",
+        h: "Hangi ekip YZ ile daha güvenle çalışmalı?",
+        p: "Ekibiniz, görevleriniz ve dil hakkında kısaca yazın. Size uygun eğitimi önerir ve ekip başına fiyatı bildiririz.",
+        primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
+        secondary: { label: "Önce analiz: YZ Kontrolü'ne gidin", to: "check" },
+      },
     },
   },
 };

@@ -82,6 +82,7 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
     { name: post.title, path: href("blog", locale, { sub: `/${slug}` }) },
   ];
   const mins = getReadMinutes(slug, locale);
+  const end = post.category === "training" ? t.training : t;
   return (
     <MotionRoot>
       <div className="v7">
@@ -106,8 +107,8 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
               <Prose>{body ? <div dangerouslySetInnerHTML={{ __html: body }} /> : <p>{post.excerpt}</p>}</Prose>
             </article>
             <div className="mt-14">
-              <LinkTo link={t.more} locale={locale} className={linkDeep}>
-                {t.more.label}
+              <LinkTo link={end.more} locale={locale} className={linkDeep}>
+                {end.more.label}
                 <span aria-hidden="true">→</span>
               </LinkTo>
             </div>
@@ -134,7 +135,7 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
             </Frame>
           </nav>
         )}
-        <CtaBand cta={t.cta} locale={locale} />
+        <CtaBand cta={end.cta} locale={locale} />
         <BlogPostLd locale={locale} slug={slug} crumbs={crumbs} post={post} />
       </div>
     </MotionRoot>
