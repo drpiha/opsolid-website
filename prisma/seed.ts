@@ -16,7 +16,7 @@ const FOUNDER_CARD = {
   templateId: 1,
   contactName: "Hasan Dönmez",
   contactEmail: "info@kutasia.com",
-  contactPhone: "+49 176 31020654",
+  contactPhone: "", // no phone published since 2026-11-11 (owner)
   brandPrimaryHex: "#C27940",
   brandAccentHex: "#1F2530",
   cardData: {
@@ -25,8 +25,6 @@ const FOUNDER_CARD = {
     position: "IT Project Manager",
     company: "OpSolid",
     email: "info@kutasia.com",
-    phone: "+49 176 31020654",
-    whatsapp: "+49 176 31020654",
     website: "https://opsolid.de",
     bio: "Praktische Automatisierung & KI-Systeme für den Mittelstand. Ich plane, baue und betreibe maßgeschneiderte Workflows, die Ihre operativen Prozesse beschleunigen.",
     bookingUrl: "https://cal.com/solidra/discovery-call",

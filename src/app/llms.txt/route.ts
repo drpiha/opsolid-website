@@ -83,7 +83,7 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 ## Unternehmen und Kontakt
 - OpSolid, Inh. Hasan Dönmez (Einzelunternehmen), ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland. Gründer: Hasan Dönmez.
 - Arbeitsweise: remote in Deutschland und Europa, schriftlich und per Video. Sprachen: Deutsch, Englisch, Türkisch.
-- Kontakt: ${SITE_CONFIG.email}, ${SITE_CONFIG.phone}, ${absUrl("kontakt", "de")}
+- Kontakt: ${SITE_CONFIG.email}, Kontaktformular: ${absUrl("kontakt", "de")}
 
 ## Seiten (Deutsch)
 ${pageLinks("de")}

@@ -7,8 +7,6 @@ import { SITE_CONFIG } from "@/lib/constants";
 import type { PageDef, PageSet } from "../types";
 
 const MAIL = SITE_CONFIG.email;
-const PHONE = SITE_CONFIG.phone;
-const TEL = `tel:${PHONE.replace(/\s/g, "")}` as const;
 const ADDRESS = `${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}`;
 
 const de: PageDef = {
@@ -16,7 +14,7 @@ const de: PageDef = {
   meta: {
     title: "Kontakt: Schulung oder KI-Check anfragen",
     description:
-      "Schreiben Sie uns per Formular, E-Mail oder Telefon, welcher Ablauf Sie bremst und welche Systeme dazugehören. Antwort in der Regel in wenigen Arbeitstagen.",
+      "Schreiben Sie uns per Formular oder E-Mail, welcher Ablauf Sie bremst und welche Systeme dazugehören. Antwort in der Regel in wenigen Arbeitstagen.",
   },
   crumbs: [],
   crumb: "Kontakt",
@@ -79,11 +77,10 @@ const de: PageDef = {
       t: "rows",
       id: "direkt",
       label: "Direkt",
-      note: "Wenn Sie lieber schreiben oder anrufen.",
+      note: "Wenn Sie lieber direkt schreiben.",
       h: "Direkter Kontakt",
       items: [
         { h: "E-Mail", p: MAIL, href: { label: "E-Mail schreiben", href: `mailto:${MAIL}` } },
-        { h: "Telefon", p: PHONE, href: { label: "Anrufen", href: TEL } },
         { h: "Anschrift", p: `${ADDRESS}, ${SITE_CONFIG.address.country}` },
         { h: "Arbeitsweise", p: "Remote in Deutschland und Europa, schriftlich und per Video. Sprachen: Deutsch, Englisch, Türkisch." },
       ],
@@ -139,7 +136,7 @@ const en: PageDef = {
   meta: {
     title: "Contact: request training or an AI check",
     description:
-      "Write to OpSolid by form, email or phone: which workflow slows you down and which systems are involved. We usually reply within a few working days.",
+      "Write to OpSolid by form or email: which workflow slows you down and which systems are involved. We usually reply within a few working days.",
   },
   crumbs: [],
   crumb: "Contact",
@@ -202,11 +199,10 @@ const en: PageDef = {
       t: "rows",
       id: "direkt",
       label: "Direct",
-      note: "If you prefer to write or call.",
+      note: "If you prefer to write directly.",
       h: "Direct contact",
       items: [
         { h: "Email", p: MAIL, href: { label: "Write an email", href: `mailto:${MAIL}` } },
-        { h: "Phone", p: PHONE, href: { label: "Call us", href: TEL } },
         { h: "Address", p: `${ADDRESS}, Germany` },
         { h: "Way of working", p: "Remote in Germany and Europe, in writing and by video. Languages: German, English, Turkish." },
       ],
@@ -262,7 +258,7 @@ const tr: PageDef = {
   meta: {
     title: "İletişim: eğitim ya da YZ Kontrolü isteyin",
     description:
-      "OpSolid'e form, e-posta veya telefonla yazın: hangi iş akışı sizi yavaşlatıyor, hangi sistemler işin içinde. Genellikle birkaç iş günü içinde yanıt veririz.",
+      "OpSolid'e form ya da e-postayla yazın: hangi iş akışı sizi yavaşlatıyor, hangi sistemler işin içinde. Genellikle birkaç iş günü içinde yanıt veririz.",
   },
   crumbs: [],
   crumb: "İletişim",
@@ -325,11 +321,10 @@ const tr: PageDef = {
       t: "rows",
       id: "direkt",
       label: "Doğrudan",
-      note: "Yazmayı ya da aramayı tercih ederseniz.",
+      note: "Doğrudan yazmayı tercih ederseniz.",
       h: "Doğrudan iletişim",
       items: [
         { h: "E-posta", p: MAIL, href: { label: "E-posta yazın", href: `mailto:${MAIL}` } },
-        { h: "Telefon", p: PHONE, href: { label: "Arayın", href: TEL } },
         { h: "Adres", p: `${ADDRESS}, Almanya` },
         { h: "Çalışma biçimi", p: "Almanya ve Avrupa'da uzaktan, yazılı olarak ve görüntülü görüşmeyle. Diller: Almanca, İngilizce, Türkçe." },
       ],

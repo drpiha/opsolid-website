@@ -81,9 +81,6 @@ function AppFooter() {
               <a className="v4-footer-mail" href={`mailto:${SITE_CONFIG.email}`}>
                 {SITE_CONFIG.email}
               </a>
-              <a className="v4-footer-tel" href={`tel:${SITE_CONFIG.phone.replace(/\s/g, "")}`}>
-                {SITE_CONFIG.phone}
-              </a>
             </p>
           </div>
           <div className="v4-footer-cols">
