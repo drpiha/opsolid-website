@@ -116,8 +116,7 @@ const de: PageDef = {
           name: "Klären",
           h: "Aufgaben und Grenzen",
           p: "Im KI-Check klären wir, ob ein Assistent zu Ihrem Ablauf passt, was er beantworten soll und was er nicht entscheiden darf.",
-          result: "Ein schriftlicher Bericht mit Aufgaben, Grenzen und dem Punkt, an dem übergeben wird.",
-          meta: "KI-Check 990 € netto",
+          result: "Ein schriftlicher Bericht mit Aufgaben, Grenzen und dem Punkt, an dem übergeben wird. KI-Check 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
         },
         {
           name: "Datenschutz",
@@ -315,8 +314,7 @@ const en: PageDef = {
           name: "Clarify",
           h: "Tasks and limits",
           p: "In the AI check we clarify whether an assistant fits your workflow, what it should answer and what it must not decide.",
-          result: "A written report with tasks, limits and the point at which it hands over.",
-          meta: "AI check €990 net",
+          result: "A written report with tasks, limits and the point at which it hands over. AI check €990 net, fixed price. Credited in full against a follow-up order within 60 days.",
         },
         {
           name: "Data protection",
@@ -514,8 +512,7 @@ const tr: PageDef = {
           name: "Netleştirme",
           h: "Görevler ve sınırlar",
           p: "YZ Kontrolünde bir asistanın iş akışınıza uyup uymadığını, neyi yanıtlaması gerektiğini ve neye karar veremeyeceğini netleştiriyoruz.",
-          result: "Görevleri, sınırları ve devrettiği noktayı içeren yazılı bir rapor.",
-          meta: "YZ Kontrolü 990 € (net)",
+          result: "Görevleri, sınırları ve devrettiği noktayı içeren yazılı bir rapor. YZ Kontrolü 990 € (net), sabit fiyat. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
         },
         {
           name: "Veri koruma",

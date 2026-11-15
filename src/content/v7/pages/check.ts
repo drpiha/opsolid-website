@@ -8,6 +8,8 @@
  * The sample report is a fictional company ("Hausverwaltung Kranich"), labelled as such, with no results.
  */
 import type { PageDef, PageSet } from "../types";
+import { CHECK } from "../offers";
+import { SITE_STR } from "../site";
 
 const de: PageDef = {
   key: "check",
@@ -25,6 +27,7 @@ const de: PageDef = {
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Ablauf ansehen", to: "check", hash: "ablauf" },
     facts: ["KI-Check 990 € netto, Festpreis", "Fragebogen und schriftlicher Bericht", "NDA vor der Analyse", "Endet mit einer Schulungsempfehlung"],
+    stripNote: `${SITE_STR.de.priceNote} ${CHECK.de.credit}`,
     media: {
       kind: "svg",
       name: "squares",
@@ -320,6 +323,7 @@ const en: PageDef = {
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See how it works", to: "check", hash: "ablauf" },
     facts: ["AI check €990 net, fixed price", "Questionnaire and written report", "NDA before the analysis", "Ends with a training recommendation"],
+    stripNote: `${SITE_STR.en.priceNote} ${CHECK.en.credit}`,
     media: {
       kind: "svg",
       name: "squares",
@@ -615,6 +619,7 @@ const tr: PageDef = {
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Süreci görün", to: "check", hash: "ablauf" },
     facts: ["YZ Kontrolü 990 € (net), sabit fiyat", "Soru formu ve yazılı rapor", "Analizden önce NDA", "Bir eğitim önerisiyle biter"],
+    stripNote: `${SITE_STR.tr.priceNote} ${CHECK.tr.credit}`,
     media: {
       kind: "svg",
       name: "squares",

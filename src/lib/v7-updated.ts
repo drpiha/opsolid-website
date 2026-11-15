@@ -10,7 +10,8 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // 2026-11-15: design C "Werkstatt" (owner decision 81). New pages Produkte (decision 72) and the KI-Agenten course
   // page (decision 73); the consulting page "KI-Assistenten" moved to /ki-beratung/ki-assistenten; OpSo without the
   // NFC card price (decision 78); contact reply "innerhalb von 2 Werktagen" (decision 79); Home and the Schulungen hub
-  // rebuilt; the trainer page without "vermitteln". Package I sets the final date to the merge day.
+  // rebuilt; the trainer page without "vermitteln"; KI-Check price note and credit under the hero facts; copilot and
+  // prozess without "geprüft".
   produkte: "2026-11-15",
   workflows: "2026-11-15",
   // 2026-11-09: OpSo Android app public on Google Play (EU/EEA, Switzerland, UK), links and status updated; before that
@@ -24,15 +25,15 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // About and Contact lead with training, the hero says "live an Ihren Aufgaben" instead of "in Ihrem Teams".
   home: "2026-11-15",
   schulungen: "2026-11-15",
-  check: "2026-11-06",
+  check: "2026-11-15",
   beratung: "2026-11-15",
   ueber: "2026-11-15",
   kontakt: "2026-11-15",
   // 2026-11-06: per-person arithmetic in the price answers and the hours of a half day and a day
   kompetenz: "2026-11-06",
-  copilot: "2026-11-06",
+  copilot: "2026-11-15",
   // 2026-11-04: written, meeting-free KI-Check at a fixed 990 € (questionnaire, report, optional evening call)
-  prozess: "2026-11-07",
+  prozess: "2026-11-15",
   m365: "2026-11-04",
   agenten: "2026-11-15",
   anwendungen: "2026-11-04",

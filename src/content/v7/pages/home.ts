@@ -11,12 +11,9 @@
  * no location, team size, on-site wording, founder or trainer names; every sample, render and screen labelled.
  */
 import { CHECK, OFFERS, PLANNED, type CourseKey } from "../offers";
+import { APP_STORE, PLAY } from "./opso";
 import type { Block, PageDef, PageSet } from "../types";
 import type { L3 } from "@/lib/v7-routes";
-
-/** The public store listings (the same URLs as pages/opso.ts; package I may switch these to imports from there). */
-const APP_STORE = "https://apps.apple.com/app/id6826541629" as const;
-const PLAY = "https://play.google.com/store/apps/details?id=de.opsolid.verso" as const;
 
 const W = "/img/v7/werkstatt";
 

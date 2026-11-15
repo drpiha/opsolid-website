@@ -43,7 +43,7 @@ const de: PageDef = {
         },
         {
           tag: "Alltag",
-          h: "KI im Arbeitsalltag",
+          h: "Generative KI im Büro",
           p: "ChatGPT, Claude und Gemini im Büro: Anfragen formulieren, Ergebnisse prüfen, eigene Abläufe entwickeln.",
         },
         {
@@ -195,7 +195,7 @@ const en: PageDef = {
         },
         {
           tag: "Daily work",
-          h: "AI in daily work",
+          h: "Generative AI in the office",
           p: "ChatGPT, Claude and Gemini in the office: asking well, checking results, developing your own workflows.",
         },
         {
@@ -347,7 +347,7 @@ const tr: PageDef = {
         },
         {
           tag: "Günlük iş",
-          h: "Günlük işte YZ",
+          h: "Ofiste üretken YZ",
           p: "Ofiste ChatGPT, Claude ve Gemini: iyi istek yazmak, sonuçları kontrol etmek, kendi iş akışlarını geliştirmek.",
         },
         {

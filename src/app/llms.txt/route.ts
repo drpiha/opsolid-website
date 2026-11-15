@@ -79,7 +79,7 @@ All prices net, plus VAT, for businesses only. These are the only published busi
 - [OpSo](${absUrl("opso", "de")}): digitale Visitenkarte mit NFC und QR, von OpSolid entwickelt; iPhone-App im App Store, Android-App bei Google Play.
 
 ## Unternehmen und Kontakt
-- OpSolid, Inh. Hasan Dönmez, ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland.
+- OpSolid, ${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}, Deutschland.
 - Arbeitsweise: remote in Deutschland und Europa, schriftlich und per Video. Sprachen: Deutsch, Englisch, Türkisch.
 - Kontakt: ${SITE_CONFIG.email}, Kontaktformular: ${absUrl("kontakt", "de")}
 

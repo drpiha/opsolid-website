@@ -22,7 +22,7 @@ const KIND_TAG: Record<string, string> = {
 };
 const TRAINER_TOPIC_LABEL = {
   copilot: "Microsoft 365 Copilot",
-  alltag: "KI im Arbeitsalltag",
+  alltag: "Generative KI im Büro",
   automatisierung: "Workflow-Automatisierung",
   grundlagen: "KI-Kompetenz, Datenschutz und Regeln",
 } as const;

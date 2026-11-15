@@ -326,8 +326,9 @@ html[data-v4] .wk-facts-dl dd { font-weight: 540; }
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   html[data-v4] body { font-size: 1rem; }
+  /* auto hyphenation only for words of 10+ letters: "assistant" moves to the next line instead of "as-sistant" */
   html[data-v4] .wk-d1,
-  html[data-v4] .wk-d2 { font-stretch: 108%; hyphens: auto; }
+  html[data-v4] .wk-d2 { font-stretch: 108%; hyphens: auto; hyphenate-limit-chars: 10 4 4; }
   html[data-v4] .wk-d1 { font-size: 2.75rem; }
   html[data-v4] .wk-d2 { font-size: 1.75rem; }
   html[data-v4] .wk-h3 { font-size: 1.3125rem; }

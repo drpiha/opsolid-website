@@ -124,6 +124,8 @@ export const content = {
           "What AI training for employees costs: price per person or per team, what drives the amount, and what our courses cost, from €1,790 net per team.",
         category: "training",
         date: "2026-11-14",
+        // 2026-11-15: format and price-model wording without on-site training or "Festpreis" (site rules 1 and 2)
+        modified: "2026-11-15",
       },
       {
         slug: "is-ai-training-mandatory-ai-act-article-4",

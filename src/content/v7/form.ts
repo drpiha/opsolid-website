@@ -89,7 +89,7 @@ export const FORM: Record<L3, FormText> = {
     topicsHelp: "Mindestens ein Thema, Mehrfachauswahl möglich.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
-      ["alltag", "KI im Arbeitsalltag"],
+      ["alltag", "Generative KI im Büro"],
       ["automatisierung", "Workflow-Automatisierung"],
       ["grundlagen", "KI-Kompetenz, Datenschutz und Regeln"],
     ],
@@ -156,7 +156,7 @@ export const FORM: Record<L3, FormText> = {
     topicsHelp: "Pick at least one; more than one is fine.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
-      ["alltag", "AI in daily work"],
+      ["alltag", "Generative AI in the office"],
       ["automatisierung", "Workflow automation"],
       ["grundlagen", "AI literacy, data protection and rules"],
     ],
@@ -223,7 +223,7 @@ export const FORM: Record<L3, FormText> = {
     topicsHelp: "En az bir konu seçin; birden fazla seçebilirsiniz.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
-      ["alltag", "Günlük işte YZ"],
+      ["alltag", "Ofiste üretken YZ"],
       ["automatisierung", "İş akışı otomasyonu"],
       ["grundlagen", "YZ yetkinliği, veri koruma ve kurallar"],
     ],

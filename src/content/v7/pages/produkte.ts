@@ -424,7 +424,15 @@ const tr: PageDef = {
     ],
   },
   blocks: trBlocks,
-  schema: { software: OPSO_SOFTWARE.tr },
+  /* The OpSo page speaks in its owner-approved "sen" voice; this page uses the company "siz" voice, so the TR
+     description is written neutrally here instead of reusing the OpSo text. */
+  schema: {
+    software: {
+      ...OPSO_SOFTWARE.tr,
+      description:
+        "Kişi listesi ve takip özelliği olan dijital kartvizit. Kart karekod, NFC ya da bağlantıyla paylaşılır; alıcının uygulama yüklemesi gerekmez. iPhone uygulaması App Store’da, Android uygulaması Google Play’de.",
+    },
+  },
 };
 
 export const page: PageSet = { de, en, tr };

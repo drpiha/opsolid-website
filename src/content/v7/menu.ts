@@ -9,7 +9,7 @@
  * - The four planned courses (PLANNED) appear only in the Schulungen group, in their fixed order, with "geplant"
  *   and "Interesse vormerken" (contact form, ?anliegen=vormerken). No duration, price, date or page of their own.
  * - Kutasia: one descriptive line (override A), "in Entwicklung", "noch nicht erhältlich"; no price, no picture,
- *   no external link, no "buchen", no "Pilotphase". The OpSo NFC-Karte: "in Vorbereitung", no price (decision 78).
+ *   no external link, no "buchen", no pilot-stage wording. The OpSo NFC-Karte: "in Vorbereitung", no price (decision 78).
  * - No on-site wording, no place names, no team size, no dashes in copy.
  */
 import { OFFERS, CHECK, PLANNED } from "./offers";
