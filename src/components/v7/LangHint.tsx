@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HINT } from "@/content/v7/site";
-import { href } from "@/lib/v7-routes";
+import { href, keyForPublicPath } from "@/lib/v7-routes";
 import { wrap } from "./ui";
 
 const KEY = "opsolid-lang-hint";
@@ -10,10 +11,17 @@ const KEY = "opsolid-lang-hint";
 /**
  * Small dismissible line on the German home only: "This page is also available in English / Türkçe".
  * Shown when the middleware passes x-opsolid-suggest (en | tr). Never a redirect. The dismissal lives in
- * sessionStorage (per-visitor convenience); the line renders without it.
+ * sessionStorage (per-visitor convenience); the line renders without it. The header lives in the persistent
+ * locale layout, so the hint hides itself after a client navigation away from the German home.
  */
 export function LangHint({ suggest }: { suggest: "en" | "tr" }) {
+  const pathname = usePathname();
   const [gone, setGone] = useState(false);
+  const [away, setAway] = useState(false);
+  useEffect(() => {
+    const here = keyForPublicPath(window.location.pathname);
+    setAway(!(here?.key === "home" && here.locale === "de" && !here.sub));
+  }, [pathname]);
   useEffect(() => {
     try {
       if (window.sessionStorage.getItem(KEY) === "1") setGone(true);
@@ -21,7 +29,7 @@ export function LangHint({ suggest }: { suggest: "en" | "tr" }) {
       /* storage unavailable */
     }
   }, []);
-  if (gone) return null;
+  if (gone || away) return null;
   const t = HINT[suggest];
   const close = () => {
     setGone(true);

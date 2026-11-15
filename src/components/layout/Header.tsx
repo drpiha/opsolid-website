@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
@@ -9,7 +9,6 @@ import { AccountMenu } from "@/components/layout/AccountMenu";
 import { isV4Path } from "@/lib/v4";
 import { stripLocaleFromPath, withLocale } from "@/lib/i18n";
 import { Logo } from "@/components/v7/Logo";
-import { V7Header } from "@/components/v7/Header";
 import { href as pageHref, type L3 as V7Locale } from "@/lib/v7-routes";
 import { LABEL, NAV_KEYS, NAV_LABEL } from "@/content/v7/site";
 
@@ -232,16 +231,12 @@ function AppHeader() {
 }
 
 /**
- * Marketing paths (isV4Path) render the v7 header; app surfaces keep theirs. The decision follows the client
- * pathname so a soft navigation between the two kinds swaps the header. `publicPath` and `suggest` come from
- * the request headers x-public-path / x-opsolid-suggest (set by the middleware) via the locale layout.
+ * Marketing paths (isV4Path) render the `marketing` slot: the server-rendered Werkstatt header
+ * (components/v7/shell/SiteHeader), built in the locale layout; app surfaces keep theirs. The decision follows the
+ * client pathname so a soft navigation between the two kinds swaps the header.
  */
-export function Header({ publicPath = "/", suggest = "" }: { publicPath?: string; suggest?: "en" | "tr" | "" }) {
+export function Header({ marketing }: { marketing?: ReactNode }) {
   const pathname = usePathname();
-  const { locale } = useLocale();
-  if (isV4Path(pathname)) {
-    const l: V7Locale = locale === "de" || locale === "tr" ? locale : "en";
-    return <V7Header locale={l} publicPath={publicPath} suggest={suggest} />;
-  }
+  if (isV4Path(pathname) && marketing) return <>{marketing}</>;
   return <AppHeader />;
 }

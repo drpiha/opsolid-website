@@ -2,11 +2,11 @@
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { FxToggle } from "@/components/layout/FxToggle";
 import { SITE_CONFIG, formatStand } from "@/lib/constants";
 import { Logo } from "@/components/v7/Logo";
-import { V7Footer } from "@/components/v7/Footer";
 import { isV4Path } from "@/lib/v4";
 
 type L3 = { de: string; en: string; tr: string };
@@ -118,10 +118,9 @@ function AppFooter() {
   );
 }
 
-/** Marketing paths render the v7 footer on ink; app surfaces keep the old one. */
-export function Footer() {
+/** Marketing paths render the `marketing` slot (components/v7/shell/SiteFooter, server-rendered); app surfaces keep the old one. */
+export function Footer({ marketing }: { marketing?: ReactNode }) {
   const pathname = usePathname();
-  const { locale } = useLocale();
-  if (isV4Path(pathname)) return <V7Footer locale={locale === "de" || locale === "tr" ? locale : "en"} />;
+  if (isV4Path(pathname) && marketing) return <>{marketing}</>;
   return <AppFooter />;
 }

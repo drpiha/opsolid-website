@@ -6,18 +6,11 @@ import { SITE_UPDATED_ISO } from "@/lib/constants";
 import type { L3, PageKey } from "@/lib/v7-routes";
 
 /**
- * Primary navigation order (desktop and mobile panel): trainings lead (owner decision 2026-11-06). OpSo lives in
- * the footer and on About, and the projects page is retired (owner, 2026-11-14: the site must not list itself).
+ * Top items of the primary navigation (owner decision 71): Schulungen, Beratung, Produkte, Unternehmen. The
+ * marketing header builds its four mega menus from src/content/v7/menu.ts; the app header (components/layout)
+ * still reads these keys and labels. "ueber" is the hub of the Unternehmen group.
  */
-export const NAV_KEYS: PageKey[] = ["schulungen", "beratung", "ueber", "blog"];
-
-/** Footer columns (headings per locale live in SITE_STR.footer). */
-export const FOOTER_COLS: { id: "beratung" | "schulungen" | "opsolid" | "legal"; keys: PageKey[] }[] = [
-  { id: "schulungen", keys: ["schulungen", "kompetenz", "copilot", "trainer"] },
-  { id: "beratung", keys: ["beratung", "check", "prozess", "m365", "agenten", "anwendungen"] },
-  { id: "opsolid", keys: ["ueber", "blog", "kontakt", "opso"] },
-  { id: "legal", keys: ["impressum", "privacy"] },
-];
+export const NAV_KEYS: PageKey[] = ["schulungen", "beratung", "produkte", "ueber"];
 
 /** Full page label (breadcrumbs and footer). */
 export const LABEL: Record<L3, Record<PageKey, string>> = {
@@ -88,9 +81,9 @@ export const LABEL: Record<L3, Record<PageKey, string>> = {
 
 /** Short label for the primary navigation. */
 export const NAV_LABEL: Record<L3, Partial<Record<PageKey, string>>> = {
-  de: { beratung: "Beratung", schulungen: "Schulungen", ueber: "Über uns", blog: "Journal" },
-  en: { beratung: "Consulting", schulungen: "Training", ueber: "About", blog: "Journal" },
-  tr: { beratung: "Danışmanlık", schulungen: "Eğitimler", ueber: "Hakkımızda", blog: "Notlar" },
+  de: { schulungen: "Schulungen", beratung: "Beratung", produkte: "Produkte", ueber: "Unternehmen" },
+  en: { schulungen: "Training", beratung: "Consulting", produkte: "Products", ueber: "Company" },
+  tr: { schulungen: "Eğitimler", beratung: "Danışmanlık", produkte: "Ürünler", ueber: "Kurumsal" },
 };
 
 export type SiteStrings = {
@@ -99,7 +92,12 @@ export type SiteStrings = {
   footerNav: string;
   menuOpen: string;
   menuClose: string;
-  menuTitle: string;
+  /** Accessible name of a top item's chevron button; "{label}" is replaced by the item label. */
+  chev: string;
+  /** Accessible name of the phone menu (a second nav landmark). */
+  mnavAria: string;
+  /** Link to the footer navigation, shown instead of the menu button when JavaScript is off (phones). */
+  noJsMenu: string;
   homeAria: string;
   cta: string;
   langLabel: string;
@@ -113,7 +111,7 @@ export type SiteStrings = {
   priceNote: string;
   placeLine: string;
   stand: string;
-  footer: Record<"beratung" | "schulungen" | "opsolid" | "legal", string>;
+  footer: Record<"schulungen" | "beratung" | "produkte" | "unternehmen" | "legal", string>;
   fx: { label: string; on: string; off: string; sys: string };
   contactLabel: string;
 };
@@ -125,7 +123,9 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     footerNav: "Fußzeile",
     menuOpen: "Menü",
     menuClose: "Schließen",
-    menuTitle: "Navigation",
+    chev: "Untermenü {label}",
+    mnavAria: "Navigation für kleine Bildschirme",
+    noJsMenu: "Menü",
     homeAria: "OpSolid, zur Startseite",
     cta: "Schulung anfragen",
     langLabel: "Sprache",
@@ -139,7 +139,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     priceNote: "Alle Preise netto zzgl. USt., nur für Unternehmen.",
     placeLine: "OpSolid · Arnsberg (NRW) · Deutsch, Englisch, Türkisch",
     stand: "Stand",
-    footer: { beratung: "Beratung", schulungen: "Schulungen", opsolid: "OpSolid", legal: "Rechtliches" },
+    footer: { schulungen: "Schulungen", beratung: "Beratung", produkte: "Produkte", unternehmen: "Unternehmen", legal: "Rechtliches" },
     fx: { label: "Hintergrundvideo", on: "An", off: "Aus", sys: "Aus (Systemeinstellung: weniger Bewegung)" },
     contactLabel: "Kontakt",
   },
@@ -149,7 +149,9 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     footerNav: "Footer",
     menuOpen: "Menu",
     menuClose: "Close",
-    menuTitle: "Navigation",
+    chev: "Submenu {label}",
+    mnavAria: "Navigation for small screens",
+    noJsMenu: "Menu",
     homeAria: "OpSolid, back to the home page",
     cta: "Request training",
     langLabel: "Language",
@@ -163,7 +165,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     priceNote: "All prices are net of VAT and for businesses only.",
     placeLine: "OpSolid · Arnsberg (NRW), Germany · German, English, Turkish",
     stand: "Updated",
-    footer: { beratung: "Consulting", schulungen: "Training", opsolid: "OpSolid", legal: "Legal" },
+    footer: { schulungen: "Training", beratung: "Consulting", produkte: "Products", unternehmen: "Company", legal: "Legal" },
     fx: { label: "Background video", on: "On", off: "Off", sys: "Off (system setting: reduced motion)" },
     contactLabel: "Contact",
   },
@@ -173,7 +175,9 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     footerNav: "Alt bilgi",
     menuOpen: "Menü",
     menuClose: "Kapat",
-    menuTitle: "Gezinti",
+    chev: "{label} alt menüsü",
+    mnavAria: "Küçük ekranlar için gezinti",
+    noJsMenu: "Menü",
     homeAria: "OpSolid, ana sayfaya dön",
     cta: "Eğitim talep edin",
     langLabel: "Dil",
@@ -187,7 +191,7 @@ export const SITE_STR: Record<L3, SiteStrings> = {
     priceNote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
     placeLine: "OpSolid · Arnsberg (NRW), Almanya · Almanca, İngilizce, Türkçe",
     stand: "Güncelleme",
-    footer: { beratung: "Danışmanlık", schulungen: "Eğitimler", opsolid: "OpSolid", legal: "Yasal" },
+    footer: { schulungen: "Eğitimler", beratung: "Danışmanlık", produkte: "Ürünler", unternehmen: "Kurumsal", legal: "Yasal" },
     fx: { label: "Arka plan videosu", on: "Açık", off: "Kapalı", sys: "Kapalı (sistem ayarı: az hareket)" },
     contactLabel: "İletişim",
   },

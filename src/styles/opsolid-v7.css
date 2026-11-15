@@ -82,21 +82,11 @@ html[data-v4] [class*="before:text-[11px]"]::before { font-size: 12px; }
   .v7-ar { aspect-ratio: var(--arp, var(--ar)); }
 }
 
-/* Full-screen mobile menu: a native modal <dialog>. */
-.v7-menu { margin: 0; padding: 0; border: 0; width: 100%; max-width: none; height: 100%; max-height: none; background: var(--wk-paper); color: var(--wk-text); }
-.v7-menu::backdrop { background: rgba(20, 23, 27, 0.4); }
-.v7-menu:not([open]) { display: none; }
-.v7-menu[open] { display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; }
-html:has(.v7-menu[open]) { overflow: hidden; }
-
 /* A hero with the fact strip hands over to its first section sooner on phones: the strip already carries the
    offer, so the section hairline follows at 64 px instead of 112 px. Desktop keeps the section rhythm. */
 @media (max-width: 767px) {
   html[data-v4] .v7-hero-strip + .v7-still > section { margin-top: 3rem; }
 }
-
-/* Header ground: opaque porcelain, no glass. */
-.v7-header { background: var(--wk-paper); padding-top: env(safe-area-inset-top, 0px); }
 
 /* Legacy element rules (tokens.css) colour h1-h4 and p with --ink-*. Inside v7 they inherit instead, so
    text on the ink panel stays light. Zero-specificity scope: same weight as the element rules, loaded later. */
