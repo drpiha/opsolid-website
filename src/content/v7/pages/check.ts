@@ -204,7 +204,7 @@ const de: PageDef = {
       items: [
         {
           h: "Sie suchen einen messbaren ersten Schritt",
-          p: "Statt eines großen Plattformprojekts wollen Sie wissen, welcher einzelne Ablauf sich zuerst lohnt.",
+          p: "Statt eines großen IT-Projekts wollen Sie wissen, welcher einzelne Ablauf sich zuerst lohnt.",
         },
         {
           h: "Ihr Team nutzt KI schon, ohne Regeln",
@@ -499,7 +499,7 @@ const en: PageDef = {
       items: [
         {
           h: "You want a measurable first step",
-          p: "Instead of a large platform project, you want to know which single workflow is worth doing first.",
+          p: "Instead of a large IT project, you want to know which single workflow is worth doing first.",
         },
         {
           h: "Your team already uses AI, without rules",
@@ -794,7 +794,7 @@ const tr: PageDef = {
       items: [
         {
           h: "Ölçülebilir bir ilk adım arıyorsunuz",
-          p: "Büyük bir platform projesi yerine, hangi tek iş akışının önce değdiğini bilmek istiyorsunuz.",
+          p: "Büyük bir BT projesi yerine, hangi tek iş akışının önce değdiğini bilmek istiyorsunuz.",
         },
         {
           h: "Ekibiniz YZ'yi kullanıyor, ama kural yok",

@@ -51,7 +51,7 @@ const de: PageDef = {
           area: "Belege & Rechnungen",
           h: "Belege auslesen und zuordnen",
           before: "Rechnungen und Lieferscheine werden abgetippt und von Hand abgelegt.",
-          after: "Die Angaben werden ausgelesen, geprüft und dort eingetragen, wo sie hingehören.",
+          after: "Die Angaben werden ausgelesen, kontrolliert und dort eingetragen, wo sie hingehören.",
           human: "Auffälligkeiten und Abweichungen prüft eine Person.",
         },
         {

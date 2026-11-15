@@ -197,7 +197,7 @@ const de: PageDef = {
       items: [
         {
           h: "Unabhängig",
-          p: "Wir verkaufen keine KI-Lizenzen und keine Software. Wir empfehlen, was zu Ihnen passt, auch das, was Sie schon haben.",
+          p: "Wir verkaufen keine KI-Lizenzen. Wir empfehlen, was zu Ihnen passt, auch das, was Sie schon haben.",
         },
         {
           h: "Der Mensch entscheidet",
@@ -453,7 +453,7 @@ const en: PageDef = {
       items: [
         {
           h: "Independent",
-          p: "We do not sell AI licences or software. We recommend what fits you, including what you already have.",
+          p: "We do not sell AI licences. We recommend what suits you, including what you already have.",
         },
         {
           h: "People decide",
@@ -709,7 +709,7 @@ const tr: PageDef = {
       items: [
         {
           h: "Bağımsızız",
-          p: "YZ lisansı ya da yazılım satmayız. Size uyanı öneririz; elinizde zaten olanı da.",
+          p: "YZ lisansı satmayız. Size uyanı öneririz; zaten sahip olduklarınızı da.",
         },
         {
           h: "Kararı insan verir",
