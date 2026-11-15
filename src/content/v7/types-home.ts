@@ -1,6 +1,7 @@
 /**
- * Home page block types (design C "Werkstatt"). Initial shapes by the foundation; package P1 refines this file
- * and registers every member in src/components/v7/blocks/registry-home.ts (tsc fails otherwise).
+ * Home page block types (design C "Werkstatt", package P1). Every member is registered in
+ * src/components/v7/blocks/registry-home.ts (tsc fails otherwise). The section `label` is the solid Etikett over
+ * the H2 of doors; check and products show their own `etikett` in its place (prototype C).
  */
 import type { Chip, Href, Img, Picture, SectionBase } from "./types";
 
@@ -31,6 +32,8 @@ export type Door = {
 /** The two drawn pieces on the home hero bench: a sample exercise and a sample participation record. */
 export type HomeBench = {
   ariaLabel: string;
+  /** Parts of `hero.lede` set in the light text colour (the three ways); each must occur in the lede verbatim. */
+  ledeStrong?: string[];
   exercise: {
     etikett: string;
     ariaLabel: string;
