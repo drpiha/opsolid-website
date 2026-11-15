@@ -1,1 +1,169 @@
-/* Werkstatt Schulungen hub and course page styles (package P2 owns this file). */
+/* Werkstatt Schulungen hub and KI-Agenten course page (package P2). Ported from the prototype styles.css
+   (session 382-399, Schulungen 585-627, third pass 932-985, responsive 1052-1159 and 1223-1235), prefixed wk-
+   and scoped to html[data-v4]. Shared pieces (hero picture, run ledger, soon list, table base) live in
+   sections.css and blocks.css; this file adds the catalog cards, the drawn pieces, the format section, the
+   run art crops and the price table variant. */
+
+/* ---------- hero picture: the copper table shows while the render loads ---------- */
+html[data-v4] .wk-hero-pic img[src*="desk-agenda"] { background: #a8532c; }
+/* hero fact values break at their own soft hyphens only ("Eigene / Teilnahme- / bescheinigung", not "Teil- / nahmebeschei- / gung") */
+html[data-v4] .wk-page-hero .wk-fact-v { hyphens: manual; }
+/* the jump pills stand alone as in the prototype; the nav keeps its accessible name (only the hub uses jump) */
+html[data-v4] .wk-jump .wk-jump-label { display: none; }
+
+/* the app token sheet (opsolid-tokens.css) sets every h3 in Geist with an app ink colour; these h3 are Archivo
+   (and Geist would be one more 70 kB font download before the LCP) */
+html[data-v4] .wk-kurs h3,
+html[data-v4] .wk-run-step.has-art h3 { font-family: var(--wk-sans); color: inherit; }
+
+/* ---------- catalog: rate cards with a drawn piece ---------- */
+html[data-v4] .wk-kurse { display: grid; gap: 30px; }
+html[data-v4] .wk-kurs { background: var(--wk-paper); color: var(--wk-text); border: 1.5px solid var(--wk-ink); border-radius: var(--wk-r-2); box-shadow: 6px 6px 0 var(--wk-ink); display: grid; grid-template-columns: minmax(0, 5.6fr) minmax(0, 6.4fr); scroll-margin-top: calc(var(--wk-header-h) + 24px); }
+html[data-v4] .wk-kurs-main { padding: 32px 36px 30px; display: grid; gap: 14px; align-content: start; justify-items: start; min-width: 0; }
+html[data-v4] .wk-kurs h3 { font-stretch: 114%; font-weight: 660; font-size: var(--wk-fs-5); letter-spacing: -0.022em; line-height: 1.04; text-wrap: balance; hyphens: manual; }
+html[data-v4] .wk-kurs-main p { color: var(--wk-muted); max-width: 30em; }
+html[data-v4] .wk-kurs-facts { width: 100%; margin-top: 4px; border-top: 1px solid var(--wk-line-2); font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.4; }
+html[data-v4] .wk-kurs-facts li { padding: 8px 0; border-bottom: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-kurs-pic { margin: 0; min-width: 0; padding: 32px 36px 22px; border-left: 1.5px solid var(--wk-ink); background: var(--wk-sheet); border-radius: 0 var(--wk-r-2) 0 0; display: grid; gap: 18px; grid-template-rows: 1fr auto; align-items: center; }
+html[data-v4] .wk-kurs-pic figcaption { align-self: end; }
+html[data-v4] .wk-kurs-foot { grid-column: 1 / -1; border-top: 1.5px solid var(--wk-ink); padding: 16px 36px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px 28px; }
+html[data-v4] .wk-kurs-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; min-width: 0; }
+html[data-v4] .wk-kurs-price .wk-price-fig { font-size: 2.75rem; white-space: nowrap; }
+html[data-v4] .wk-kurs-price .wk-mono { color: var(--wk-muted); }
+html[data-v4] .wk-kurs-go { display: flex; align-items: center; gap: 10px 24px; white-space: nowrap; }
+html[data-v4] .wk-kurse-note { margin-top: 22px; color: var(--wk-muted); }
+
+/* sample timetable (KI-Kompetenz Basis) */
+html[data-v4] .wk-plan { display: grid; gap: 8px; }
+html[data-v4] .wk-plan-bar { display: flex; gap: 3px; height: 46px; }
+html[data-v4] .wk-plan-bar i { font-style: normal; min-width: 0; background: var(--wk-ink); color: var(--wk-text-d); border-radius: 4px; display: grid; place-items: center; font-family: var(--wk-mono); font-size: 0.75rem; }
+html[data-v4] .wk-plan-bar i.is-break { background: repeating-linear-gradient(135deg, var(--wk-line-2) 0 1.5px, transparent 1.5px 6px); box-shadow: inset 0 0 0 1px var(--wk-line-2); }
+html[data-v4] .wk-plan-ends { display: flex; justify-content: space-between; font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+html[data-v4] .wk-plan-list { counter-reset: wk-p; display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; margin-top: 8px; font-size: var(--wk-fs-1); font-weight: 540; line-height: 1.3; }
+html[data-v4] .wk-plan-list li { counter-increment: wk-p; display: grid; grid-template-columns: 20px 1fr; gap: 6px; padding: 8px 0; border-bottom: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-plan-list li::before { content: counter(wk-p); font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-copper-deep); padding-top: 2px; }
+
+/* the day in six blocks (Copilot-Praxistag) */
+html[data-v4] .wk-blocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+html[data-v4] .wk-blocks li { border: 1px solid var(--wk-line-2); border-radius: 6px; padding: 10px 12px 12px; display: grid; gap: 2px; align-content: start; background: var(--wk-paper); font-size: 0.875rem; line-height: 1.3; }
+html[data-v4] .wk-blocks .wk-blocks-no { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-copper-deep); margin-bottom: 4px; }
+html[data-v4] .wk-blocks b { font-weight: 640; }
+html[data-v4] .wk-blocks span:last-child { color: var(--wk-muted); font-size: var(--wk-fs-0); }
+
+/* workflow schema (KI-Agenten) */
+html[data-v4] .wk-wf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding-block: 12px; counter-reset: wk-w; }
+html[data-v4] .wk-wf > div { position: relative; border: 1.5px solid var(--wk-ink); border-radius: 8px; padding: 12px 12px 14px; display: grid; gap: 4px; align-content: start; background: var(--wk-paper); font-size: 0.875rem; line-height: 1.25; counter-increment: wk-w; }
+html[data-v4] .wk-wf > div + div::before { content: ""; position: absolute; right: 100%; top: 50%; width: 24px; height: 1.5px; background: var(--wk-ink); }
+html[data-v4] .wk-wf > div + div::after { content: ""; position: absolute; right: calc(100% + 2px); top: calc(50% - 3.5px); width: 7px; height: 7px; border-top: 1.5px solid var(--wk-ink); border-right: 1.5px solid var(--wk-ink); transform: rotate(45deg); }
+html[data-v4] .wk-wf span { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+html[data-v4] .wk-wf b { font-weight: 640; hyphens: auto; }
+html[data-v4] .wk-wf .is-ai { border-color: var(--wk-copper-deep); }
+html[data-v4] .wk-wf .is-ai span { color: var(--wk-copper-deep); }
+html[data-v4] .wk-wf .is-key { background: var(--wk-ink); color: var(--wk-text-d); }
+html[data-v4] .wk-wf .is-key span { color: var(--wk-copper-lite); }
+
+/* ---------- format: copy and ticks, the live session schema ---------- */
+html[data-v4] .wk-format-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: center; }
+html[data-v4] .wk-format-copy { display: grid; gap: 22px; justify-items: start; min-width: 0; }
+html[data-v4] .wk-format-copy .wk-lede { color: var(--wk-muted-d); }
+html[data-v4] .wk-format-copy .wk-ticks { gap: 12px; }
+html[data-v4] .wk-format-copy .wk-ticks li { color: var(--wk-text-d); line-height: 1.45; hyphens: manual; }
+html[data-v4] .wk-format-copy .wk-ticks b { color: var(--wk-text-d); font-weight: 620; }
+html[data-v4] .wk-format-pic { min-width: 0; }
+html[data-v4] .wk-format-pic figure { margin: 0; display: grid; gap: 14px; }
+html[data-v4] .wk-format-pic .wk-ui { box-shadow: 0 34px 90px -34px rgba(181, 98, 58, 0.6), var(--wk-shadow-sheet-d); }
+html[data-v4] .wk-session-ui .wk-ui-body { padding: 0; display: block; }
+html[data-v4] .wk-session-ui .wk-ui-bar > span:first-child { min-width: 0; }
+html[data-v4] .wk-session-ui .wk-ui-bar > span:last-child { white-space: nowrap; }
+html[data-v4] .wk-session { display: grid; grid-template-columns: 1fr 132px; gap: 10px; padding: 12px; background: var(--wk-ink-3); }
+html[data-v4] .wk-screen { background: var(--wk-sheet); border-radius: 8px; padding: 16px 18px; display: grid; gap: 9px; align-content: start; min-height: 196px; }
+html[data-v4] .wk-screen .wk-ui-label { margin: 0; }
+html[data-v4] .wk-screen-h { font-stretch: 110%; font-weight: 660; font-size: 1.0625rem; line-height: 1.2; }
+html[data-v4] .wk-screen ol { display: grid; gap: 7px; counter-reset: wk-s; }
+html[data-v4] .wk-screen li { counter-increment: wk-s; display: grid; grid-template-columns: 20px 1fr; gap: 8px; color: var(--wk-muted); }
+html[data-v4] .wk-screen li::before { content: counter(wk-s); font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-copper-deep); padding-top: 2px; }
+html[data-v4] .wk-screen li b { color: var(--wk-text); font-weight: 560; }
+html[data-v4] .wk-screen .wk-prompt { margin-top: 4px; }
+html[data-v4] .wk-tiles { display: grid; gap: 8px; align-content: start; }
+html[data-v4] .wk-tile { background: var(--wk-ink); color: var(--wk-text-d); border-radius: 8px; height: 42px; display: flex; align-items: center; gap: 8px; padding: 0 9px; font-family: var(--wk-mono); font-size: 0.75rem; }
+html[data-v4] .wk-tile .wk-ava { background: var(--wk-ink-3); color: var(--wk-text-d); width: 24px; height: 24px; }
+html[data-v4] .wk-tile.is-lead { outline: 1.5px solid var(--wk-copper-lite); outline-offset: -1.5px; }
+html[data-v4] .wk-tile.is-lead .wk-ava,
+html[data-v4] .wk-chat.is-lead .wk-ava { background: var(--wk-copper); color: #fff; }
+html[data-v4] .wk-tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+html[data-v4] .wk-tile-grid .wk-ava { width: 100%; height: 34px; border-radius: 8px; background: var(--wk-ink); color: var(--wk-muted-d); }
+html[data-v4] .wk-tiles-n { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted-d); text-align: center; }
+html[data-v4] .wk-chat { grid-column: 1 / -1; background: var(--wk-ink); color: var(--wk-text-d); border-radius: 8px; padding: 9px 12px; display: flex; gap: 9px; align-items: center; }
+html[data-v4] .wk-chat .wk-ava { background: var(--wk-ink-3); color: var(--wk-text-d); }
+html[data-v4] .wk-chat.is-lead { margin-left: 28px; outline: 1.5px solid var(--wk-copper-lite); outline-offset: -1.5px; }
+
+/* ---------- run steps: the crop in the art card ---------- */
+html[data-v4] .wk-run-crop { flex: none; width: 96px; height: 75px; object-fit: cover; border-radius: 4px; box-shadow: 0 0 0 1px var(--wk-ink); }
+html[data-v4] .wk-run-art .wk-run-art-k { display: flex; margin-bottom: 4px; }
+html[data-v4] .wk-run-art > div { min-width: 0; }
+html[data-v4] .wk-run-art b { hyphens: manual; }
+html[data-v4] .wk-run + .wk-steps-note { margin-top: 32px; }
+
+/* ---------- price table (variant "prices") with the phone list ---------- */
+html[data-v4] .wk-ptable tbody th { white-space: normal; }
+html[data-v4] .wk-plist { display: none; }
+html[data-v4] .wk-prices-note { margin-top: 28px; color: var(--wk-muted); max-width: 70em; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1180px) {
+  html[data-v4] .wk-format-grid { gap: 40px; }
+  html[data-v4] .wk-kurs-main,
+  html[data-v4] .wk-kurs-pic,
+  html[data-v4] .wk-kurs-foot { padding-inline: 26px; }
+  html[data-v4] .wk-wf { gap: 18px; }
+  html[data-v4] .wk-wf > div + div::before { width: 18px; }
+}
+
+@media (max-width: 960px) {
+  html[data-v4] .wk-kurse { gap: 22px; }
+  html[data-v4] .wk-kurs { grid-template-columns: 1fr; box-shadow: 4px 4px 0 var(--wk-ink); }
+  html[data-v4] .wk-kurs-main { padding: 22px 18px 18px; gap: 12px; }
+  html[data-v4] .wk-kurs h3 { font-size: 1.625rem; font-stretch: 108%; }
+  html[data-v4] .wk-kurs-pic { border-left: 0; border-top: 1.5px solid var(--wk-ink); border-radius: 0; padding: 18px 18px 16px; gap: 14px; }
+  html[data-v4] .wk-kurs-foot { padding: 14px 18px 18px; gap: 12px 16px; grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  html[data-v4] .wk-kurs-price { gap: 2px 14px; }
+  html[data-v4] .wk-kurs-price .wk-price-fig { font-size: 2.125rem; }
+  html[data-v4] .wk-kurs-go { justify-self: stretch; width: 100%; flex-direction: column-reverse; align-items: stretch; gap: 4px; }
+  html[data-v4] .wk-kurs-go .wk-btn { width: 100%; }
+  html[data-v4] .wk-kurs-go .wk-tlink { justify-content: center; }
+  html[data-v4] .wk-plan-list { grid-template-columns: 1fr; font-size: 0.9375rem; }
+  html[data-v4] .wk-plan-bar { height: 40px; }
+  html[data-v4] .wk-blocks { grid-template-columns: 1fr 1fr; }
+  html[data-v4] .wk-wf { grid-template-columns: 1fr 1fr; gap: 16px; padding-block: 0; }
+  html[data-v4] .wk-wf > div + div::before,
+  html[data-v4] .wk-wf > div + div::after { display: none; }
+  html[data-v4] .wk-wf span::before { content: counter(wk-w) " · "; }
+
+  html[data-v4] .wk-format-grid { grid-template-columns: 1fr; gap: 28px; }
+  html[data-v4] .wk-format-copy { gap: 16px; }
+  html[data-v4] .wk-session { grid-template-columns: 1fr; }
+  html[data-v4] .wk-screen { min-height: 0; padding: 14px; }
+  html[data-v4] .wk-screen .wk-prompt,
+  html[data-v4] .wk-chat.is-lead { display: none; }
+  html[data-v4] .wk-tiles { grid-template-columns: auto 1fr; align-items: center; gap: 8px; }
+  html[data-v4] .wk-tile.is-lead { height: 34px; }
+  html[data-v4] .wk-tile-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  html[data-v4] .wk-tile-grid .wk-ava { height: 30px; }
+  html[data-v4] .wk-tiles-n,
+  html[data-v4] .wk-session-rest { display: none; }
+
+  html[data-v4] .wk-run-crop { width: 72px; height: 56px; }
+  html[data-v4] .wk-run-art { gap: 14px; }
+
+  html[data-v4] .wk-ptable-wrap { display: none; }
+  html[data-v4] .wk-plist { display: grid; border-top: 2px solid var(--wk-text); }
+  html[data-v4] .wk-plist li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; align-items: start; padding: 16px 0 18px; border-bottom: 1px solid var(--wk-line-2); }
+  html[data-v4] .wk-pl-what { display: grid; gap: 6px; min-width: 0; }
+  html[data-v4] .wk-pl-what b { font-stretch: 108%; font-weight: 660; font-size: 1.125rem; line-height: 1.2; hyphens: manual; }
+  html[data-v4] .wk-pl-what .wk-mono,
+  html[data-v4] .wk-pl-price .wk-mono { color: var(--wk-muted); font-size: 0.75rem; }
+  html[data-v4] .wk-pl-price { display: grid; gap: 6px; justify-items: end; text-align: right; }
+  html[data-v4] .wk-pl-price .wk-big { font-stretch: 112%; font-weight: 640; font-size: 1.5rem; line-height: 1.1; letter-spacing: -0.02em; white-space: nowrap; }
+  html[data-v4] .wk-pl-price .wk-mono { max-width: 9.5em; color: var(--wk-copper-deep); }
+  html[data-v4] .wk-prices-note { margin-top: 20px; }
+}
