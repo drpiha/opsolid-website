@@ -52,7 +52,7 @@ const de: PageDef = {
           href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
-          tag: "3 · Eigenes Produkt",
+          tag: "3 · Eigene Produkte",
           h: "OpSo, unsere digitale Visitenkarte",
           p: "Unsere eigene App für digitale Visitenkarten, getrennt von Schulung und Beratung: kostenlos im App Store und bei Google Play, in der EU, der Schweiz und Großbritannien. App, Webkarten und Verwaltung haben wir selbst entwickelt.",
           href: { label: "Zu OpSo", to: "opso" },
@@ -214,7 +214,7 @@ const en: PageDef = {
           href: { label: "To AI consulting", to: "beratung" },
         },
         {
-          tag: "3 · Our own product",
+          tag: "3 · Our own products",
           h: "OpSo, our digital business card",
           p: "Our own app for digital business cards, separate from training and consulting: free in the App Store and on Google Play in the EU, Switzerland and the UK. We built the app, the web cards and the admin tools ourselves.",
           href: { label: "To OpSo", to: "opso" },
@@ -376,7 +376,7 @@ const tr: PageDef = {
           href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
-          tag: "3 · Kendi ürünümüz",
+          tag: "3 · Kendi ürünlerimiz",
           h: "OpSo, dijital kartvizitimiz",
           p: "Eğitim ve danışmanlıktan ayrı, dijital kartvizit için kendi uygulamamız: AB, İsviçre ve Birleşik Krallık'ta App Store ve Google Play'de ücretsiz. Uygulamayı, web kartlarını ve yönetim araçlarını kendimiz geliştirdik.",
           href: { label: "OpSo'ya", to: "opso" },

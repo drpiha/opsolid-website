@@ -21,7 +21,7 @@ const de: PageDef = {
   hero: {
     eyebrow: "Trainer werden · freiberuflich · online",
     h1: ["Freiberufliche ", "KI-Trainerinnen und -Trainer", " gesucht"],
-    lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah vermitteln, melden Sie sich.",
+    lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah schulen, melden Sie sich.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
     facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Auswahl im Gespräch mit kurzer Live-Demo"],
@@ -67,7 +67,7 @@ const de: PageDef = {
       h: "Was wir von Ihnen erwarten",
       rows: [
         ["Fachwissen", "Eigene Praxis im gewählten Thema, die Sie live zeigen können"],
-        ["Vermittlung", "Erfahrung in Training oder Erwachsenenbildung; im Gespräch zeigen Sie eine kurze Live-Demo"],
+        ["Didaktik", "Erfahrung in Training oder Erwachsenenbildung; im Gespräch zeigen Sie eine kurze Live-Demo"],
         ["Sprache", "Deutsch oder Englisch auf hohem Niveau (etwa C1)"],
         ["Datenschutz", "Sie kennen die Grundsätze der DSGVO und gehen mit Kundendaten in KI-Werkzeugen sorgfältig um"],
         ["Selbstständigkeit", "Sie arbeiten freiberuflich oder als Gewerbetreibende, mit eigenem Auftritt"],
@@ -104,7 +104,7 @@ const de: PageDef = {
         },
         {
           h: "Gespräch mit Live-Demo",
-          p: "Sobald eine passende Kundenanfrage in Sicht ist, sprechen wir 30 Minuten online über Ihre Praxis und Ihre Art zu vermitteln. Sie zeigen uns in einer kurzen Live-Demo, wie Sie arbeiten.",
+          p: "Sobald eine passende Kundenanfrage in Sicht ist, sprechen wir 30 Minuten online über Ihre Praxis und Ihre Art zu schulen. Sie zeigen uns in einer kurzen Live-Demo, wie Sie arbeiten.",
         },
         {
           h: "Rahmenvertrag",
@@ -154,7 +154,7 @@ const de: PageDef = {
   },
   cta: {
     label: "Trainer werden",
-    h: "Sie vermitteln KI praxisnah? Schreiben Sie uns",
+    h: "Sie schulen KI praxisnah? Schreiben Sie uns",
     p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, nehmen wir Sie in unseren Trainerpool auf.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "KI-Check für Unternehmen", to: "check" },
@@ -371,7 +371,7 @@ const tr: PageDef = {
       h: "Sizden beklediklerimiz",
       rows: [
         ["Uzmanlık", "Seçtiğiniz konuda, canlı gösterebileceğiniz kendi uygulama deneyiminiz"],
-        ["Aktarım", "Eğitim veya yetişkin eğitimi deneyimi; görüşmede kısa bir canlı gösterim yaparsınız"],
+        ["Öğretim", "Eğitim veya yetişkin eğitimi deneyimi; görüşmede kısa bir canlı gösterim yaparsınız"],
         ["Dil", "Almanca veya İngilizce, yüksek düzeyde (yaklaşık C1)"],
         ["Veri koruma", "GDPR/DSGVO ilkelerini bilirsiniz ve YZ araçlarında müşteri verileriyle özenle çalışırsınız"],
         ["Serbest çalışma", "Serbest meslek sahibi ya da işletme sahibi olarak, kendi duruşunuzla çalışırsınız"],

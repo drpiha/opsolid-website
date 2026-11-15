@@ -1,42 +1,42 @@
 import Image from "next/image";
 import { Section } from "@/components/v7/Section";
 import { BrowserFrame } from "@/components/v7/frames/Browser";
-import { PhoneFrame } from "@/components/v7/frames/Phone";
 import type { BlockProps } from "@/content/v7/types";
+import { Etikett } from "../werkstatt/Etikett";
+import { PhoneShot } from "../werkstatt/PhoneShot";
 
-const FIG = { de: "Abb.", en: "Fig.", tr: "Şek." } as const;
-const mono = "f-mono";
-
-/** Scroll-snap row of frames. The scroller is focusable (arrow keys scroll) and labelled; no autoplay, no library. */
+/**
+ * A scroll-snap row of real screens in design C: phones in the .wk-ph frame (or a browser frame), a short caption
+ * under each, and one Etikett under the row that says what the pictures are (`tag`, rule 6: "App-Screens ·
+ * unbearbeitet, Demodaten", "Beispiel · Musterkarten, ..."). No "Abb." numbering. The scroller is focusable (arrow
+ * keys scroll) and labelled; no autoplay, no library.
+ */
 export function GalleryBlock({ block, locale, num }: BlockProps<"gallery">) {
   const phone = block.frame === "phone";
-  const itemW = phone ? "w-[58vw] max-w-[230px]" : "w-[82vw] max-w-[620px]";
   return (
-    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale}>
-      {block.tag && <p className={`${mono} mt-8 inline-block rounded-full border border-wk-copper/50 px-3 py-1 text-[12px] text-wk-copper-deep`}>{block.tag}</p>}
-      <div
-        role="region"
-        aria-label={block.h}
-        tabIndex={0}
-        className="-mx-4 mt-8 overflow-x-auto scroll-smooth px-4 pb-6 [scroll-padding-inline:1rem] [scrollbar-color:#B5623A_#E3DCD1] [scrollbar-width:thin] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wk-copper-deep md:mx-0 md:px-0 motion-reduce:scroll-auto"
-      >
-        <ul className="flex w-max snap-x snap-mandatory gap-5 md:gap-8">
-          {block.items.map((it, i) => (
-            <li key={`${it.img.src}-${i}`} className={`${itemW} shrink-0 snap-start`}>
-              <figure>
-                {block.frame === "browser" && <BrowserFrame img={it.img} sizes="(min-width: 768px) 620px, 82vw" />}
-                {phone && <PhoneFrame img={it.img} sizes="230px" />}
-                {block.frame === "none" && (
-                  <Image src={it.img.src} alt={it.img.alt} width={it.img.w} height={it.img.h} sizes="(min-width: 768px) 620px, 82vw" className="h-auto w-full rounded-[16px] border border-wk-line" />
-                )}
-                <figcaption className={`${mono} mt-4 border-t border-wk-line pt-3 text-[12px] leading-[1.6] text-wk-muted`}>
-                  <span className="mr-2 text-wk-copper-deep">{FIG[locale]} {Number(num) || num}.{i + 1}</span>
-                  {it.caption}
-                </figcaption>
-              </figure>
-            </li>
-          ))}
-        </ul>
+    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale} className="has-gallery">
+      <div className={`wk-gallery${phone ? " is-phone" : " is-wide"}`}>
+        <div role="region" aria-label={block.h} tabIndex={0} className="wk-gallery-scroll">
+          <ul className="wk-gallery-row">
+            {block.items.map((it, i) => (
+              <li key={`${it.img.src}-${i}`}>
+                <figure>
+                  {phone && <PhoneShot img={it.img} sizes="(max-width: 960px) 150px, 200px" />}
+                  {block.frame === "browser" && <BrowserFrame img={it.img} sizes="(min-width: 768px) 620px, 82vw" />}
+                  {block.frame === "none" && (
+                    <Image src={it.img.src} alt={it.img.alt} width={it.img.w} height={it.img.h} sizes="(min-width: 768px) 620px, 82vw" className="wk-gallery-img" />
+                  )}
+                  <figcaption>{it.caption}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {block.tag && (
+          <Etikett as="p" className="wk-gallery-etikett">
+            {block.tag}
+          </Etikett>
+        )}
       </div>
     </Section>
   );
