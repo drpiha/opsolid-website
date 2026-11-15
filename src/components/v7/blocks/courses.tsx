@@ -1,9 +1,13 @@
 import { Fragment } from "react";
 import { Section } from "@/components/v7/Section";
-import { LinkTo } from "@/components/v7/LinkTo";
+import Link from "next/link";
+import { LinkTo, resolveHref } from "@/components/v7/LinkTo";
 import { Reveal } from "@/components/v7/Reveal";
-import { linkDeep } from "@/components/v7/ui";
+import { btnPrimary, linkDeep } from "@/components/v7/ui";
+import { ChipTag } from "@/components/v7/werkstatt/Chip";
+import { Etikett } from "@/components/v7/werkstatt/Etikett";
 import type { BlockProps } from "@/content/v7/types";
+import { soft } from "@/lib/soft-hyphen";
 
 /** Sets every amount ("179 €", "€179", "1.790 €") of a mono line in copper-deep; the words stay ink. */
 function amounts(line: string) {
@@ -26,7 +30,108 @@ function amounts(line: string) {
  * mono lines with the amounts in copper. On phones the price block sits right under the spec line, before the
  * description. block.footnote is the terms line under the ledger; block.note goes to the section's left column.
  */
+/** "ab 1.790 €" / "from €1,790": the leading word is set small and raised; TR ("1.790 €'dan") has none. */
+function priceParts(price: string): [string | null, string] {
+  const m = /^(ab|from)\s+(.+)$/i.exec(price);
+  return m ? [m[1], m[2]] : [null, price];
+}
+
+/**
+ * The C ledger (`variant: "ledger"`, home): one linked row per bookable course on a 2 px rule (track tag with the
+ * duration bars, name and one line, the spec lines, the team price with unit and arithmetic), then the one quiet
+ * dashed row of planned courses (names only, "geplant", "Interesse vormerken"; rule 5), then the terms line with
+ * the price note beside the button to the hub.
+ */
+function Ledger({ block, locale, num }: BlockProps<"courses">) {
+  const rows = block.items.filter((c) => c.status === "bookable" && c.price);
+  const planned = block.items.filter((c) => c.status === "planned");
+  return (
+    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} ground={block.ground} mat={block.mat} locale={locale}>
+      <div className="wk-ledger">
+        {rows.map((c) => {
+          const [ab, fig] = priceParts(c.price ?? "");
+          const [first, ...rest] = c.spec ?? [];
+          const body = (
+            <>
+              <div className="wk-ledger-track">
+                {c.tag && <Etikett solid>{c.tag}</Etikett>}
+                {c.bars && (
+                  <span className="wk-dur" aria-hidden="true">
+                    {Array.from({ length: c.bars }, (_, i) => (
+                      <i key={i} />
+                    ))}
+                  </span>
+                )}
+              </div>
+              <div className="wk-ledger-what">
+                <h3>{soft(c.name)}</h3>
+                {c.p && <p>{c.p}</p>}
+              </div>
+              <div className="wk-ledger-spec">
+                {first && <b>{first}</b>}
+                {rest.map((s) => (
+                  <span key={s} className="wk-mono">
+                    {s}
+                  </span>
+                ))}
+              </div>
+              <div className="wk-ledger-price">
+                <span className="wk-price-fig">
+                  {ab && <small>{ab}</small>}
+                  {fig}
+                </span>
+                {c.unit && <span className="wk-mono">{c.unit}</span>}
+                {c.arith?.map((a) => (
+                  <span key={a} className="wk-mono wk-arith">
+                    {a}
+                  </span>
+                ))}
+              </div>
+            </>
+          );
+          return c.href ? (
+            <Link key={c.name} id={c.id} className="wk-ledger-row" href={resolveHref(c.href, locale)}>
+              {body}
+            </Link>
+          ) : (
+            <div key={c.name} id={c.id} className="wk-ledger-row">
+              {body}
+            </div>
+          );
+        })}
+      </div>
+      {block.soon && planned.length > 0 && (
+        <div className="wk-soon" id={block.soon.id}>
+          <div className="wk-soon-head">
+            <Etikett>{block.soon.label}</Etikett>
+            <ChipTag chip={{ kind: "plan", text: block.soon.chip }} />
+            <LinkTo link={block.soon.link} locale={locale} className={`${linkDeep} v7-link`}>
+              {block.soon.link.label}
+            </LinkTo>
+          </div>
+          <ul className="wk-soon-list">
+            {planned.map((c) => (
+              <li key={c.name}>
+                <b>{c.name}</b>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <div className="wk-ledger-note">
+        {block.footnote && <p className="wk-mono">{block.footnote}</p>}
+        {block.cta && (
+          <LinkTo link={block.cta} locale={locale} className={`${btnPrimary} v7-link`}>
+            {block.cta.label}
+          </LinkTo>
+        )}
+      </div>
+    </Section>
+  );
+}
+
 export function CoursesBlock({ block, locale, num }: BlockProps<"courses">) {
+  if (block.variant === "ledger") return <Ledger block={block} locale={locale} num={num} />;
   return (
     <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale}>
       <ol className="mt-12 border-t border-wk-ink md:mt-16">
