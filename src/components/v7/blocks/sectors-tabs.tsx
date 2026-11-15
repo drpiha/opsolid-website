@@ -6,10 +6,7 @@ import type { L3 } from "@/lib/v7-routes";
 
 const STAYS: Record<L3, string> = { de: "Bleibt beim Menschen", en: "Stays with people", tr: "İnsanda kalır" };
 
-const mono = "f-mono";
-const display = "f-display";
-
-/** Tabs on md+ (roving tabindex, arrows, Home/End), stacked cards on phones. */
+/** Tabs as outlined pills from 961 px (roving tabindex, arrows, Home/End), the panel on a sheet; stacked sheets on phones. */
 export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; locale: L3 }) {
   const uid = useId();
   const [sel, setSel] = useState(0);
@@ -31,8 +28,8 @@ export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; local
   };
 
   return (
-    <div className="mt-10 md:mt-14">
-      <div role="tablist" aria-label={block.h} className="hidden flex-wrap gap-x-8 gap-y-1 border-b border-wk-line md:flex">
+    <div className="wk-sectors">
+      <div role="tablist" aria-label={block.h} className="wk-sector-tabs">
         {block.items.map((s, i) => (
           <button
             key={s.name}
@@ -47,16 +44,14 @@ export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; local
             tabIndex={sel === i ? 0 : -1}
             onClick={() => setSel(i)}
             onKeyDown={(e) => onKey(e, i)}
-            className={`${mono} -mb-px min-h-[48px] border-b-2 py-2 text-[12px] transition-colors ${
-              sel === i ? "border-wk-copper text-wk-copper-deep" : "border-transparent text-wk-muted hover:text-wk-ink"
-            }`}
+            className="wk-pill"
           >
             {s.tab ?? s.name}
           </button>
         ))}
       </div>
 
-      <div className="mt-0 space-y-4 md:mt-10 md:space-y-0">
+      <div className="wk-sector-panels">
         {block.items.map((s, i) => (
           <div
             key={s.name}
@@ -64,25 +59,23 @@ export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; local
             id={`${uid}-p${i}`}
             aria-labelledby={`${uid}-t${i}`}
             tabIndex={0}
-            className={`rounded-[24px] border border-wk-line bg-wk-sheet p-5 md:rounded-none md:border-0 md:bg-transparent md:p-0 ${sel === i ? "" : "md:hidden"}`}
+            className={`wk-card wk-sector-panel${sel === i ? " is-on" : ""}`}
           >
-            <p className={`${mono} text-[12px] text-wk-copper-deep md:hidden`}>{s.name}</p>
-            <div className="mt-3 grid gap-x-10 gap-y-8 md:mt-0 md:grid-cols-9">
-              <div className="md:col-span-5">
-                <h3 className={`${display} text-balance text-[1.5rem] leading-[1.15] md:text-[2rem]`}>{s.h}</h3>
-                <p className="mt-4 max-w-[52ch]">{s.p}</p>
-                <p className="mt-6 border-l border-wk-copper pl-5 text-[16px] leading-[1.6]">
-                  <span className={`${mono} mb-1 block text-[12px] text-wk-copper-deep`}>{STAYS[locale]}</span>
-                  {s.stays}
-                </p>
+            <p className="wk-ledger-no wk-sector-name">{s.name}</p>
+            <div className="wk-sector-grid">
+              <div>
+                <h3 className="wk-card-h">{s.h}</h3>
+                <p className="wk-muted mt-4 max-w-[52ch]">{s.p}</p>
+                <div className="wk-sector-stays">
+                  <span className="wk-etikett is-solid">{STAYS[locale]}</span>
+                  <p>{s.stays}</p>
+                </div>
               </div>
-              <div className="md:col-span-4">
-                <p className={`${mono} inline-block rounded-full border border-wk-copper/50 px-3 py-1 text-[12px] text-wk-copper-deep`}>{block.tag}</p>
-                <ul className="mt-4 divide-y divide-wk-line border-y border-wk-line">
+              <div>
+                <span className="wk-etikett">{block.tag}</span>
+                <ul className="wk-sector-ideas">
                   {s.ideas.map((idea) => (
-                    <li key={idea} className="py-3 text-[16px]">
-                      {idea}
-                    </li>
+                    <li key={idea}>{idea}</li>
                   ))}
                 </ul>
               </div>

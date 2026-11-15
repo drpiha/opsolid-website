@@ -98,6 +98,64 @@ html[data-v4] .wk-langhint a { text-decoration: underline; text-underline-offset
 html[data-v4] .wk-langhint button { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: var(--wk-r-2); background: transparent; color: var(--wk-text); }
 html[data-v4] .wk-langhint button:hover { background: var(--wk-sheet); }
 
+/* ---------- frame additions (package Fb2) ---------- */
+/* section frame: more air for a dense section after a dense one; the closing link; a full-width H2 */
+html[data-v4] .wk-sec.is-airy { padding-top: calc(var(--wk-sec) + 24px); }
+html[data-v4] .wk-sec-cta { margin-top: 40px; }
+html[data-v4] .wk-sec-head.is-wide { max-width: none; }
+html[data-v4] .wk-sec-head.is-stack .wk-sec-head-lede { max-width: 40em; }
+html[data-v4] .wk-sec-head-main .wk-d2 { max-width: 22ch; }
+html[data-v4] .wk-sec-head-main .wk-sec-note { margin-top: -10px; }
+html[data-v4] .wk-faq-side .wk-d2 { font-size: clamp(1.75rem, 2.6vw, 2.375rem); }
+html[data-v4] .wk-sec-head.is-wide .wk-sec-head-main .wk-d2 { max-width: none; }
+
+/* page hero variants: the picture hero draws its mat on the left (under the copy), the text hero on the right */
+html[data-v4] .wk-page-hero.has-pic.wk-mat { --mat-mask: linear-gradient(100deg, #000 0%, transparent 46%); }
+html[data-v4] .wk-page-hero.is-light { border-bottom: 1px solid var(--wk-line); }
+html[data-v4] .wk-page-hero.is-light.has-strip { border-bottom: 0; }
+html[data-v4] .wk-page-hero.is-text .wk-page-hero-grid { grid-template-columns: minmax(0, 1fr); padding-block: 44px 64px; }
+html[data-v4] .wk-page-hero.is-text .wk-page-hero-copy { max-width: 52rem; }
+html[data-v4] .wk-page-hero .wk-lede { max-width: 36em; }
+html[data-v4] .wk-page-hero-copy > .wk-etikett { margin-top: -4px; }
+html[data-v4] .wk-page-hero.is-plain.is-small .wk-d1 { font-size: clamp(2.25rem, 3.6vw, 3.25rem); line-height: 1.02; }
+html[data-v4] .wk-page-hero-grid:has(.wk-hero-pic) { padding-bottom: 40px; }
+html[data-v4] .wk-hero-pic figcaption { justify-self: start; }
+html[data-v4] .wk-hero-media { justify-self: end; width: 100%; max-width: 460px; }
+html[data-v4] .wk-media { margin: 0; display: grid; gap: 12px; min-width: 0; }
+html[data-v4] .wk-media-cap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+
+/* the mono fact line under a hero without a strip: a ruler and square-marked facts */
+html[data-v4] .wk-hero-facts { display: flex; flex-wrap: wrap; gap: 10px 28px; padding: 18px 0 30px; border-top: 1px solid var(--wk-line-2); font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; color: var(--wk-muted); }
+html[data-v4] .wk-hero-facts li { display: inline-flex; align-items: flex-start; gap: 9px; }
+html[data-v4] .wk-hero-facts li::before { content: ""; flex: none; width: 7px; height: 7px; margin-top: 5px; border-radius: 2px; background: var(--wk-copper); }
+html[data-v4] .wk-on-ink .wk-hero-facts { border-top-color: var(--wk-line-d2); color: var(--wk-muted-d); }
+html[data-v4] .wk-on-ink .wk-hero-facts li::before { background: var(--wk-copper-lite); }
+html[data-v4] .wk-page-hero.is-text:has(.wk-hero-facts) .wk-page-hero-grid { padding-bottom: 44px; }
+
+/* index rows under the hero (Produkte): kind, name, status chip, arrow; refined by produkte.css */
+html[data-v4] .wk-hero-index { border-top: 2px solid currentColor; margin-bottom: 40px; }
+html[data-v4] .wk-hero-index-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 5fr) auto 24px; gap: 16px; align-items: center; min-height: 64px; padding: 12px 0; border-bottom: 1px solid var(--wk-line-2); text-decoration: none; }
+html[data-v4] .wk-on-ink .wk-hero-index-row { border-bottom-color: var(--wk-line-d2); }
+html[data-v4] .wk-hero-index-k { font-family: var(--wk-mono); font-size: var(--wk-fs-0); color: var(--wk-muted); }
+html[data-v4] .wk-on-ink .wk-hero-index-k { color: var(--wk-muted-d); }
+html[data-v4] .wk-hero-index-name { font-stretch: 112%; font-weight: 660; font-size: var(--wk-fs-3); line-height: 1.15; }
+html[data-v4] .wk-hero-index-row:hover .wk-hero-index-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+/* long-form frame (journal, legal): label column over a 2 px rule */
+html[data-v4] .wk-frame { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 24px 48px; padding-top: 22px; border-top: 2px solid var(--wk-text); }
+
+/* FAQ question inside the summary keeps the summary type */
+html[data-v4] .wk-faq-q { font: inherit; letter-spacing: inherit; margin: 0; overflow-wrap: break-word; }
+html[data-v4] .wk-on-ink .wk-faq { border-top-color: var(--wk-text-d); }
+html[data-v4] .wk-on-ink .wk-faq details { border-bottom-color: var(--wk-line-d2); }
+html[data-v4] .wk-on-ink .wk-faq-a,
+html[data-v4] .wk-on-ink .wk-faq-side p { color: var(--wk-muted-d); }
+
+/* CTA band: the solid Etikett square in paper (copper on copper-deep is not visible) */
+html[data-v4] .wk-cta-band .wk-etikett.is-solid::before { background: var(--wk-text-d); border-color: var(--wk-text-d); }
+html[data-v4] .wk-cta-band .wk-tlink { color: var(--wk-text-d); }
+html[data-v4] .wk-cta-band .wk-d2 { max-width: 20ch; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   /* phone hero: the picture comes after the copy and before the jump pills, so the first screen shows it */
@@ -138,4 +196,18 @@ html[data-v4] .wk-langhint button:hover { background: var(--wk-sheet); }
 @media (min-width: 600px) and (max-width: 960px) {
   html[data-v4] .wk-page-hero-grid .wk-hero-pic { align-self: flex-end; width: 560px; margin-left: 0; }
   html[data-v4] .wk-page-hero-grid .wk-hero-pic img { border-radius: var(--wk-r-3) 0 0 var(--wk-r-3); }
+}
+
+@media (max-width: 960px) {
+  html[data-v4] .wk-sec.is-airy { padding-top: calc(var(--wk-sec) + 12px); }
+  html[data-v4] .wk-sec-cta { margin-top: 28px; }
+  html[data-v4] .wk-page-hero.is-text .wk-page-hero-grid { padding-block: 16px 32px; }
+  html[data-v4] .wk-page-hero.is-plain.is-small .wk-d1 { font-size: 2rem; }
+  html[data-v4] .wk-hero-media { max-width: 260px; align-self: center; }
+  html[data-v4] .wk-page-hero.has-strip .wk-hero-media { max-width: 200px; }
+  html[data-v4] .wk-hero-facts { flex-direction: column; gap: 8px; padding: 14px 0 22px; }
+  html[data-v4] .wk-hero-index-row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  html[data-v4] .wk-hero-index-k { grid-column: 1 / -1; }
+  html[data-v4] .wk-hero-index-go { display: none; }
+  html[data-v4] .wk-frame { grid-template-columns: 1fr; gap: 16px; }
 }

@@ -16,7 +16,7 @@ const TOOLBAR = 52;
 export function BrowserFrame({ img, url, className = "", sizes = "(min-width: 1024px) 720px, 100vw" }: { img: Img; url?: string; className?: string; sizes?: string }) {
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-[12px] border border-wk-line-2 bg-wk-sheet shadow-[0_24px_30px_-18px_rgba(22,25,29,0.22)] [container-type:inline-size] ${className}`}
+      className={`relative w-full overflow-hidden rounded-[12px] border border-wk-line-2 bg-wk-sheet shadow-[var(--wk-shadow-sheet)] [container-type:inline-size] ${className}`}
       style={{ aspectRatio: `${W} / ${H}` }}
     >
       <div
@@ -25,13 +25,12 @@ export function BrowserFrame({ img, url, className = "", sizes = "(min-width: 10
         style={{ height: `${(TOOLBAR / H) * 100}%` }}
       >
         <span className="flex gap-[0.9cqw]">
-          <i className="block h-[1.5cqw] w-[1.5cqw] rounded-full bg-wk-line-2" />
-          <i className="block h-[1.5cqw] w-[1.5cqw] rounded-full bg-wk-line-2" />
-          <i className="block h-[1.5cqw] w-[1.5cqw] rounded-full bg-wk-line-2" />
+          <i className="block h-[1.5cqw] w-[1.5cqw] rounded-[2.5px] bg-wk-line-2" />
+          <i className="block h-[1.5cqw] w-[1.5cqw] rounded-[2.5px] bg-wk-line-2" />
+          <i className="block h-[1.5cqw] w-[1.5cqw] rounded-[2.5px] bg-wk-line-2" />
         </span>
         <span
-          className="mx-auto flex h-[62%] w-[46%] items-center justify-center rounded-full bg-wk-sheet font-mono text-[max(8px,1.5cqw)] leading-none text-wk-muted"
-          style={{ fontFamily: "var(--font-plex-mono), ui-monospace, monospace" }}
+          className="f-mono mx-auto flex h-[62%] w-[46%] items-center justify-center rounded-[6px] bg-wk-sheet text-[max(8px,1.5cqw)] leading-none text-wk-muted"
         >
           {url ?? ""}
         </span>

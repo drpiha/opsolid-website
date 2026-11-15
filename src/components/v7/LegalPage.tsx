@@ -1,18 +1,23 @@
 import type { ReactNode } from "react";
+import type { L3 } from "@/lib/v7-routes";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
 import { MotionRoot } from "./MotionRoot";
 import { Prose } from "./Prose";
 import { wrap } from "./ui";
+import { Etikett } from "./werkstatt/Etikett";
 
-const rise = (ms: number) => ({ ["--d" as string]: `${ms}ms` });
-
-/** Short page hero without buttons or figure: eyebrow with copper rule, H1 and an optional lede. Used by the journal, legal pages and the 404. */
+/**
+ * Short page hero without buttons or figure (design C page hero on paper with the mat): breadcrumbs, the eyebrow as a
+ * solid Etikett, H1 and an optional lede. Used by the journal, the legal pages and the 404.
+ */
 export function PlainHero({
   eyebrow,
   h1,
   lede,
   small,
   id = "hero-h",
+  crumbs,
+  locale,
   children,
 }: {
   eyebrow: ReactNode;
@@ -20,30 +25,23 @@ export function PlainHero({
   lede?: string;
   small?: boolean;
   id?: string;
+  /** Breadcrumbs inside the copy column (inner pages); `locale` names their nav. */
+  crumbs?: Crumb[];
+  locale?: L3;
   children?: ReactNode;
 }) {
   return (
-    <section aria-labelledby={id} className={`${wrap} pb-4 pt-10 md:pt-20`}>
-      <div className="grid gap-x-8 md:grid-cols-12">
-        <div className="md:col-span-10">
-          <p className="f-mono flex max-w-[64ch] items-start gap-3 text-[12px] leading-[1.6] text-wk-copper-deep md:text-[13px]">
-            <span aria-hidden="true" className="mt-[0.8em] h-px w-8 shrink-0 bg-wk-copper" />
-            <span>{eyebrow}</span>
-          </p>
-          <h1
-            id={id}
-            className={`v7-rise f-display mt-8 leading-[1.05] tracking-[-0.02em] text-wk-ink ${
-              small ? "text-[clamp(2rem,4.4vw,3.75rem)]" : "text-[clamp(2.25rem,5.4vw,5.25rem)]"
-            }`}
-            style={rise(80)}
-          >
+    <section aria-labelledby={id} className={`wk-page-hero wk-mat is-light is-text is-plain${small ? " is-small" : ""}`}>
+      <div className={`${wrap} wk-page-hero-grid`}>
+        <div className="wk-page-hero-copy">
+          {crumbs && locale && <Breadcrumbs crumbs={crumbs} locale={locale} />}
+          <Etikett solid as="p">
+            {eyebrow}
+          </Etikett>
+          <h1 id={id} className="wk-d1">
             {h1}
           </h1>
-          {lede && (
-            <p className="v7-rise mt-9 max-w-[38rem] text-[18px] leading-[1.6] text-wk-ink md:text-[20px]" style={rise(160)}>
-              {lede}
-            </p>
-          )}
+          {lede && <p className="wk-lede">{lede}</p>}
           {children}
         </div>
       </div>
@@ -51,17 +49,22 @@ export function PlainHero({
   );
 }
 
-/** Content frame in the v7 section language: top hairline with a copper tick, mono label on the left, content on the right. */
+/**
+ * Content frame of the long-form pages (journal, legal): the mono label as an Etikett in a narrow left column over a
+ * 2 px top rule, the content on the right at its own measure. Kept as a two-column frame on purpose: these pages
+ * read as documents, and the label column carries their running head.
+ */
 export function Frame({ label, note, children, className = "" }: { label: string; note?: ReactNode; children: ReactNode; className?: string }) {
   return (
     <div className={`${wrap} ${className}`}>
-      <div className="relative grid gap-x-8 gap-y-8 border-t border-wk-line pt-6 md:grid-cols-12">
-        <span aria-hidden="true" className="absolute -top-px left-0 h-px w-14 bg-wk-copper" />
-        <div className="md:col-span-3">
-          <p className="f-mono text-[12px] leading-[1.7] text-wk-muted">{label}</p>
-          {note && <div className="mt-3 hidden max-w-[24ch] text-[14px] leading-[1.5] text-wk-muted md:block">{note}</div>}
+      <div className="wk-frame">
+        <div className="wk-frame-head">
+          <Etikett solid as="p">
+            {label}
+          </Etikett>
+          {note && <div className="wk-sec-note mt-3 hidden md:block">{note}</div>}
         </div>
-        <div className="min-w-0 md:col-span-9">{children}</div>
+        <div className="min-w-0">{children}</div>
       </div>
     </div>
   );
@@ -70,8 +73,10 @@ export function Frame({ label, note, children, className = "" }: { label: string
 /** Notice box on legal pages (the existing hint text, unchanged). */
 export function Notice({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div role="note" aria-label={label} className="mb-12 max-w-[68ch] rounded-[16px] border border-wk-line bg-wk-sheet px-5 py-4 text-[15px] leading-[1.6] text-wk-ink">
-      <p className="f-mono mb-2 text-[12px] text-wk-copper-deep">{label}</p>
+    <div role="note" aria-label={label} className="mb-12 max-w-[68ch] rounded-[10px] border border-wk-line bg-wk-sheet px-5 py-4 text-[15px] leading-[1.6]">
+      <Etikett as="p" className="mb-2">
+        {label}
+      </Etikett>
       <p>{children}</p>
     </div>
   );
@@ -79,7 +84,7 @@ export function Notice({ label, children }: { label: string; children: ReactNode
 
 /** Legal prose: the headings are smaller than in journal posts. */
 export const LEGAL_PROSE =
-  "[&_h2]:!mt-12 [&_h2]:!text-[1.375rem] md:[&_h2]:!text-[1.625rem] [&_h3]:!mt-7 [&_h3]:!text-[1.125rem] md:[&_h3]:!text-[1.25rem] [&_section+section]:mt-14 [&_section+section]:border-t [&_section+section]:border-wk-line [&_section+section]:pt-2 [&_p]:break-words";
+  "[&_h2]:!mt-12 [&_h2]:!text-[1.375rem] md:[&_h2]:!text-[1.625rem] [&_h3]:!mt-7 [&_h3]:!text-[1.125rem] md:[&_h3]:!text-[1.25rem] [&_section+section]:mt-14 [&_section+section]:border-t [&_section+section]:border-wk-line-2 [&_section+section]:pt-2 [&_p]:break-words";
 
 /** Layout of Impressum and Datenschutz: breadcrumb, small hero, legal prose, "Stand" line. */
 export function LegalLayout({
@@ -108,13 +113,12 @@ export function LegalLayout({
   return (
     <MotionRoot>
       <div className="v7 pb-24 md:pb-40">
-        <Breadcrumbs crumbs={crumbs} locale={_locale} />
-        <PlainHero eyebrow={eyebrow} h1={title} lede={subtitle} small />
-        <div className="mt-16 md:mt-24">
+        <PlainHero eyebrow={eyebrow} h1={title} lede={subtitle} small crumbs={crumbs} locale={_locale} />
+        <div className="mt-12 md:mt-20">
           <Frame label={frameLabel}>
             <Notice label={noticeLabel}>{notice}</Notice>
             <Prose className={LEGAL_PROSE}>{children}</Prose>
-            {stand && <p className="f-mono mt-14 border-t border-wk-line pt-5 text-[12px] text-wk-muted">{stand}</p>}
+            {stand && <p className="f-mono mt-14 border-t border-wk-line-2 pt-5 text-[13px] text-wk-muted">{stand}</p>}
           </Frame>
         </div>
       </div>

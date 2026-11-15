@@ -2,38 +2,32 @@ import type { BlockProps } from "@/content/v7/types";
 import type { L3 } from "@/lib/v7-routes";
 import { Reveal } from "../Reveal";
 import { Section } from "../Section";
-import { mono } from "../ui";
+import { Etikett } from "../werkstatt/Etikett";
 
 const SOURCES: Record<L3, string> = { de: "Quellen", en: "Sources", tr: "Kaynaklar" };
 
-/** Plain paragraphs, optionally closed by a line of primary sources (legal sections). */
+/** Plain paragraphs at a 44em measure, optionally closed by the primary sources as a mono list (legal sections). */
 export function TextBlock({ block: b, locale, num }: BlockProps<"text">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
-      <div className="mt-8 max-w-[62ch] space-y-5 md:mt-10">
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale} airy={b.airy}>
+      <div className="wk-text">
         {b.paras.map((p, i) => (
-          <Reveal as="p" key={i} delay={i * 0.04} className="text-wk-ink">
+          <Reveal as="p" key={i} delay={i * 0.04}>
             {p}
           </Reveal>
         ))}
       </div>
       {b.sources && (
-        <div className="mt-10 max-w-[62ch] border-t border-wk-line pt-5">
-          <p className={mono}>{SOURCES[locale]}</p>
-          {b.sources.asOf && <p className={`${mono} mt-1`}>{b.sources.asOf}</p>}
-          <ul className="mt-3 text-[15px] leading-[1.45]">
+        <div className="wk-sources">
+          <Etikett as="p">{SOURCES[locale]}</Etikett>
+          {b.sources.asOf && <p className="wk-mono wk-muted mt-1">{b.sources.asOf}</p>}
+          <ul>
             {b.sources.items.map((s) => (
               <li key={s.href}>
                 {/* One 44 px target per source; the arrow marks the link as leaving the site. */}
-                <a
-                  href={s.href}
-                  rel="noopener"
-                  className="group inline-flex min-h-[44px] items-center gap-2 py-1 text-wk-copper-deep underline decoration-wk-copper/60 underline-offset-[3px] transition-colors hover:decoration-wk-copper-deep"
-                >
+                <a href={s.href} rel="noopener" className="wk-tlink">
                   {s.label}
-                  <span aria-hidden="true" className="text-[12px] no-underline transition-transform group-hover:-translate-y-px group-hover:translate-x-px motion-reduce:transition-none">
-                    ↗
-                  </span>
+                  <span aria-hidden="true">↗</span>
                 </a>
               </li>
             ))}

@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import type { Block, BlockProps, BlockType, Ground, PageDef } from "@/content/v7/types";
 import type { L3 } from "@/lib/v7-routes";
-import { Breadcrumbs, crumbsFor } from "./Breadcrumbs";
+import { crumbsFor } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
 import { FaqSection } from "./FaqSection";
 import { Hero } from "./Hero";
@@ -90,22 +90,28 @@ function renderBlock(block: Block, locale: L3, num: string) {
   return <Component key={block.id} block={block} locale={locale} num={num} />;
 }
 
+/** The ground the FAQ takes: the next step of the paper/sheet alternation after the page blocks. */
+function faqGround(blocks: Block[]): Ground {
+  let g: Ground | undefined;
+  for (const b of blocks) if (b.t !== "statement") g = b.ground;
+  return g === "paper" ? "sheet" : "paper";
+}
+
 /**
- * Renders one PageDef: breadcrumbs (inner pages), hero, numbered blocks with their grounds, FAQ, the `after` blocks,
- * the CTA band (only when the page sets `cta`) and the JSON-LD graph.
+ * Renders one PageDef: hero (with the breadcrumbs inside on inner pages), the blocks with their grounds, FAQ, the
+ * `after` blocks, the CTA band (only when the page sets `cta`) and the JSON-LD graph.
  */
 export function V7Page({ page, locale }: { page: PageDef; locale: L3 }) {
   const home = page.key === "home";
   const crumbs = crumbsFor(page, locale);
   const blocks = withGrounds(page.blocks);
   const sections = blocks.filter((b) => b.t !== "statement").length;
-  const after = withGrounds(page.after ?? [], sections);
+  const after = withGrounds(page.after ?? [], sections + (page.faq ? 1 : 0));
   return (
     <MotionRoot>
       <div className="v7">
         <RevealObserver />
-        {!home && <Breadcrumbs crumbs={crumbs} locale={locale} />}
-        <Hero hero={page.hero} locale={locale} home={home} />
+        <Hero hero={page.hero} locale={locale} home={home} crumbs={crumbs} />
         {blocks.map((block, i) => {
           const el = renderBlock(block, locale, sectionNum(blocks, i));
           // The first block under the hero never reveals (the page opens complete).
@@ -117,7 +123,7 @@ export function V7Page({ page, locale }: { page: PageDef; locale: L3 }) {
             el
           );
         })}
-        {page.faq && <FaqSection faq={page.faq} locale={locale} />}
+        {page.faq && <FaqSection faq={page.faq} locale={locale} ground={faqGround(blocks)} />}
         {after.map((block, i) => renderBlock(block, locale, String(sections + Number(sectionNum(after, i))).padStart(2, "0")))}
         {page.cta && <CtaBand cta={page.cta} locale={locale} />}
         <JsonLd page={page} locale={locale} crumbs={crumbs} />

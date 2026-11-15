@@ -3,7 +3,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { L3 } from "@/lib/v7-routes";
 import { placeLabels } from "./fit";
 
-const COPPER = "#B5623A";
+// C strokes: copper-deep lines, sheet nodes with an ink ring, the last node filled in copper; labels in Plex Mono.
+const LINE = "var(--wk-copper-deep)";
+const NODE = "var(--wk-sheet)";
+const RING = "var(--wk-ink)";
+const LAST = "var(--wk-copper)";
+const LABEL = "var(--wk-muted)";
 const LABELS: Record<L3, readonly string[]> = {
   de: ["Eingang", "Regeln", "Entwurf", "Mensch"],
   en: ["Input", "Rules", "Draft", "Person"],
@@ -19,9 +24,9 @@ export function Flow({ alt, locale, labels: custom }: { alt: string; locale: L3;
     <svg viewBox="0 0 372 84" className="h-auto w-full" role="img" aria-label={alt}>
       <motion.path
         d="M44 30H328"
-        stroke={COPPER}
         strokeWidth="1"
         fill="none"
+        style={{ stroke: LINE }}
         initial={{ pathLength: 0 }}
         whileInView={{ pathLength: 1 }}
         viewport={{ once: true }}
@@ -29,8 +34,8 @@ export function Flow({ alt, locale, labels: custom }: { alt: string; locale: L3;
       />
       {XS.map((x, i) => (
         <g key={x}>
-          <rect x={x - 8} y={22} width={16} height={16} rx={5} fill={i === 3 ? COPPER : "#F6F2EC"} stroke={COPPER} strokeWidth="1" />
-          <text x={labels[i].x} y={64} textAnchor="middle" fill="#6B665F" fontSize={labels[i].fs} style={{ fontFamily: "var(--font-plex-mono), monospace", letterSpacing: "0.02em" }}>
+          <rect x={x - 8} y={22} width={16} height={16} rx={5} strokeWidth="1.25" style={{ fill: i === 3 ? LAST : NODE, stroke: i === 3 ? LAST : RING }} />
+          <text x={labels[i].x} y={64} textAnchor="middle" fontSize={labels[i].fs} style={{ fill: LABEL, fontFamily: "var(--wk-mono)" }}>
             {labels[i].text}
           </text>
         </g>

@@ -4,15 +4,18 @@ import { soft } from "@/lib/soft-hyphen";
 import type { L3 } from "@/lib/v7-routes";
 import { LinkTo } from "./LinkTo";
 import { Reveal } from "./Reveal";
+import { Etikett } from "./werkstatt/Etikett";
 import { h2, linkDeep, wrap } from "./ui";
 
 /**
- * Section frame: top hairline with a 56 px copper tick, a left mono column ("01 Label" + one-line note)
- * and the content on the right (H2, answer-first lede, children, optional link).
+ * Section frame of design C "Werkstatt": a full-width band on its ground (paper, sheet, bench, slate, ink, char),
+ * optionally with the mat texture, and the section head (`.wk-sec-head`): Etikett with the label, the optional note
+ * line under it and the H2 on the left, the answer-first lede on the right, aligned to the bottom. No label column, no copper tick
+ * and no visible section number any more (`num` is kept for the blocks' props and ignored here). Children run below
+ * the head inside the wrap; `cta` closes the section with a text link.
  */
 export function Section({
   id,
-  num,
   label,
   note,
   h,
@@ -22,10 +25,13 @@ export function Section({
   children,
   wide,
   airy,
-  ground,
+  ground = "paper",
   mat,
+  stack,
+  className,
 }: {
   id: string;
+  /** Kept for the block props; the C frame shows no section number. */
   num?: string;
   label: string;
   note?: string;
@@ -34,54 +40,53 @@ export function Section({
   cta?: Href;
   locale: L3;
   children?: ReactNode;
+  /** The H2 may run the full head width (media bands). */
   wide?: boolean;
+  /** A dense section after another dense one: more space above. */
   airy?: boolean;
-  /** Section ground, resolved by V7Page (explicit block.ground, else alternating paper and sheet). Styled by the C frame. */
+  /** Section ground, resolved by V7Page (explicit block.ground, else alternating paper and sheet). */
   ground?: Ground;
   /** Mat texture: true for the default mask, or a CSS mask image. */
   mat?: boolean | string;
+  /** Head in one column (H2 over lede) instead of the two-column split. */
+  stack?: boolean;
+  className?: string;
 }) {
+  const style = typeof mat === "string" ? ({ ["--mat-mask" as string]: mat } as CSSProperties) : undefined;
+  const one = stack || !lede;
   return (
     <section
       id={id}
       aria-labelledby={`${id}-h`}
       data-ground={ground}
       data-mat={mat ? "" : undefined}
-      style={typeof mat === "string" ? ({ ["--mat-mask" as string]: mat } as CSSProperties) : undefined}
-      className={`${airy ? "mt-28 md:mt-52" : "mt-24 md:mt-40"} scroll-mt-20`}
+      style={style}
+      className={`wk-sec wk-on-${ground}${mat ? " wk-mat" : ""}${airy ? " is-airy" : ""}${className ? ` ${className}` : ""}`}
     >
       <div className={wrap}>
-        <div className="relative grid gap-x-8 gap-y-8 border-t border-wk-line pt-6 md:grid-cols-12">
-          <span aria-hidden="true" className="absolute -top-px left-0 h-px w-14 bg-wk-copper" />
-          <div className="md:col-span-3">
-            <p className="f-mono text-[12px] leading-[1.7] text-wk-muted">
-              {num && <span className="mr-3 text-wk-copper-deep">{num}</span>}
-              {label}
-            </p>
-            {note && <p className="mt-3 hidden max-w-[24ch] text-[14px] leading-[1.5] text-wk-muted md:block">{note}</p>}
+        <div className={`wk-sec-head${one ? " is-stack" : ""}${wide ? " is-wide" : ""}`}>
+          <div className="wk-sec-head-main">
+            <Etikett solid>{label}</Etikett>
+            {note && <p className="wk-sec-note">{note}</p>}
+            <h2 id={`${id}-h`} className={h2}>
+              {soft(h)}
+            </h2>
           </div>
-          <div className="min-w-0 md:col-span-9">
+          {lede && (
             <Reveal>
-              <h2 id={`${id}-h`} className={`${h2} ${wide ? "" : "max-w-[20ch]"}`}>
-                {soft(h)}
-              </h2>
+              <p className="wk-sec-head-lede">{lede}</p>
             </Reveal>
-            {lede && (
-              <Reveal delay={0.06}>
-                <p className="mt-6 max-w-[58ch] text-wk-ink">{lede}</p>
-              </Reveal>
-            )}
-            {children}
-            {cta && (
-              <div className="mt-10">
-                <LinkTo link={cta} locale={locale} className={linkDeep}>
-                  {cta.label}
-                  <span aria-hidden="true">→</span>
-                </LinkTo>
-              </div>
-            )}
-          </div>
+          )}
         </div>
+        {children}
+        {cta && (
+          <div className="wk-sec-cta">
+            <LinkTo link={cta} locale={locale} className={`${linkDeep} v7-link`}>
+              {cta.label}
+              <span aria-hidden="true">→</span>
+            </LinkTo>
+          </div>
+        )}
       </div>
     </section>
   );

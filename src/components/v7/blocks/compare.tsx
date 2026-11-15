@@ -1,32 +1,28 @@
 import type { BlockProps } from "@/content/v7/types";
 import { Reveal } from "../Reveal";
 import { Section } from "../Section";
+import { Etikett } from "../werkstatt/Etikett";
 
-/** One task before and after (an example, labelled by `tag`). */
+/** One task before and after: two sheets side by side, labelled by the block's Etikett (`tag`, an example). */
 export function CompareBlock({ block: b, locale, num }: BlockProps<"compare">) {
   const col = (side: "before" | "after") => {
     const c = b[side];
     const after = side === "after";
     return (
-      <Reveal delay={after ? 0.1 : 0} className={`rounded-[24px] border p-6 md:p-8 ${after ? "border-wk-copper/50 bg-wk-sheet" : "border-wk-line bg-wk-paper-2/60"}`}>
-        <h3 className={`f-mono text-[12px] font-normal ${after ? "text-wk-copper-deep" : "text-wk-muted"}`}>{c.h}</h3>
-        <ul className="mt-5 space-y-3">
+      <Reveal delay={after ? 0.08 : 0} className={`wk-card wk-compare-col${after ? " is-after" : ""}`}>
+        <h3 className="wk-compare-h">{c.h}</h3>
+        <ul className={after ? "wk-ticks" : "wk-dashes"}>
           {c.items.map((it) => (
-            <li key={it} className="flex gap-3 text-wk-ink">
-              <span aria-hidden="true" className={`mt-[0.7em] h-px w-4 shrink-0 ${after ? "bg-wk-copper" : "bg-wk-muted"}`} />
-              <span>{it}</span>
-            </li>
+            <li key={it}>{it}</li>
           ))}
         </ul>
       </Reveal>
     );
   };
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
-      {b.tag && (
-        <p className="f-mono mt-6 inline-block rounded-full border border-wk-copper/50 px-3 py-1 text-[12px] text-wk-copper-deep">{b.tag}</p>
-      )}
-      <div className="mt-8 grid gap-4 md:mt-10 md:grid-cols-2">
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale} airy={b.airy}>
+      {b.tag && <Etikett as="p">{b.tag}</Etikett>}
+      <div className="wk-compare">
         {col("before")}
         {col("after")}
       </div>

@@ -7,7 +7,7 @@ import { LABEL } from "@/content/v7/site";
 import type { Cta, Href } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
-import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
+import type { Crumb } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
 import { JsonLdGraph, sharedNodes, webPageNodes } from "./JsonLd";
 import { Frame, PlainHero } from "./LegalPage";
@@ -146,27 +146,26 @@ export function BlogList({ locale }: { locale: L3 }) {
   return (
     <MotionRoot>
       <div className="v7">
-        <Breadcrumbs crumbs={crumbs} locale={locale} />
-        <PlainHero eyebrow={t.eyebrow} h1={<>{t.h1[0]} <em className="not-italic text-wk-copper-deep">{t.h1[1]}</em></>} lede={t.lede} />
-        <section id="beitraege" aria-label={t.frame} className="mt-20 scroll-mt-20 md:mt-32">
+        <PlainHero eyebrow={t.eyebrow} h1={`${t.h1[0]} ${t.h1[1]}`} lede={t.lede} crumbs={crumbs} locale={locale} />
+        <section id="beitraege" aria-label={t.frame} className="wk-sec">
           <Frame label={t.frame} note={t.frameNote}>
-            <ul className="border-t border-wk-ink">
+            <ul>
               {posts.map((p, i) => (
-                <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-wk-line py-8 md:grid-cols-9 md:py-10">
-                  <p className="f-mono text-[12px] leading-[1.7] text-wk-muted md:col-span-3">
+                <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-wk-line-2 py-8 transition-colors hover:bg-[color-mix(in_srgb,var(--wk-copper)_6%,transparent)] md:grid-cols-[11rem_minmax(0,1fr)] md:py-10">
+                  <p className="f-mono text-[13px] leading-[1.6] text-wk-muted">
                     <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
                     <span className="mt-1 block text-wk-copper-deep">
-                      {t.cat[p.category] ?? p.category} <span className="text-wk-copper-deep">·</span> {getReadMinutes(p.slug, locale)} {t.min}
+                      {t.cat[p.category] ?? p.category} · {getReadMinutes(p.slug, locale)} {t.min}
                     </span>
                   </p>
-                  <div className="md:col-span-6">
-                    <h2 className="f-display text-[1.5rem] leading-[1.15] md:text-[1.875rem]">
+                  <div className="min-w-0">
+                    <h2 className="wk-h3 md:text-[1.875rem]">
                       <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
                         {soft(p.title)}
                       </Link>
                     </h2>
-                    <p className="mt-3 text-wk-ink">{p.excerpt}</p>
-                    <p aria-hidden="true" className="mt-3 text-[16px] font-medium text-wk-copper-deep">
+                    <p className="mt-3 max-w-[60ch] text-wk-muted">{p.excerpt}</p>
+                    <p aria-hidden="true" className="mt-3 text-[16px] font-semibold text-wk-copper-deep">
                       {t.read} →
                     </p>
                   </div>
@@ -174,7 +173,7 @@ export function BlogList({ locale }: { locale: L3 }) {
               ))}
             </ul>
             <div className="mt-10">
-              <LinkTo link={t.more} locale={locale} className={linkDeep}>
+              <LinkTo link={t.more} locale={locale} className={`${linkDeep} v7-link`}>
                 {t.more.label}
                 <span aria-hidden="true">→</span>
               </LinkTo>

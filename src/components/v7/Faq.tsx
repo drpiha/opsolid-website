@@ -1,52 +1,39 @@
 "use client";
-import { useId, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import type { Faq as FaqData } from "@/content/v7/types";
 
 /**
- * Accessible accordion: real buttons with aria-expanded/aria-controls, one open at a time, first open.
- * Every answer stays in the server HTML (crawlers and the FAQPage markup see the same text); a closed
- * panel collapses to zero height through a grid-rows transition and is hidden from assistive tech.
+ * The C FAQ list (.wk-faq): native <details>/<summary> rows with the plus/minus square, one open at a time. Every
+ * answer stays in the server HTML (crawlers and the FAQPage markup see the same text) and the rows work before
+ * hydration and without JS. The server HTML has every row closed; after mount, from 961 px wide, the first answer
+ * opens (phones keep all closed, so the questions read as one list). Clicks are routed through React state so the
+ * one-open rule holds.
  */
 export function FaqList({ items }: { items: FaqData["items"] }) {
-  const [open, setOpen] = useState<number | null>(0);
-  const uid = useId();
+  const [open, setOpen] = useState<number | null>(null);
+  useEffect(() => {
+    try {
+      if (window.matchMedia("(min-width: 961px)").matches) setOpen(0);
+    } catch {
+      /* no matchMedia: keep all closed */
+    }
+  }, []);
+  const toggle = (i: number) => (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setOpen((cur) => (cur === i ? null : i));
+  };
   return (
-    <div className="border-t border-wk-line">
-      {items.map((it, i) => {
-        const isOpen = open === i;
-        return (
-          <div key={it.q} className="border-b border-wk-line">
-            <h3>
-              <button
-                type="button"
-                id={`${uid}-b${i}`}
-                aria-expanded={isOpen}
-                aria-controls={`${uid}-p${i}`}
-                onClick={() => setOpen(isOpen ? null : i)}
-                className="group flex min-h-[64px] w-full items-center justify-between gap-6 py-4 text-left"
-              >
-                <span className="f-display text-[22px] leading-[1.2] transition-colors duration-200 group-hover:text-wk-copper-deep motion-reduce:transition-none md:text-[26px]">{it.q}</span>
-                <svg aria-hidden="true" viewBox="0 0 20 20" className={`size-5 shrink-0 text-wk-copper transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} fill="none">
-                  <path d="M4 7.5l6 6 6-6" stroke="currentColor" strokeWidth="1.5" />
-                </svg>
-              </button>
-            </h3>
-            <div
-              id={`${uid}-p${i}`}
-              role="region"
-              aria-labelledby={`${uid}-b${i}`}
-              aria-hidden={!isOpen}
-              className={`grid transition-[grid-template-rows,opacity,visibility] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-                isOpen ? "visible grid-rows-[1fr] opacity-100" : "invisible grid-rows-[0fr] opacity-0"
-              }`}
-            >
-              <div className="overflow-hidden">
-                <p className="max-w-[60ch] pb-6 text-wk-ink">{it.a}</p>
-              </div>
-            </div>
+    <div className="wk-faq">
+      {items.map((it, i) => (
+        <details key={it.q} open={open === i}>
+          <summary onClick={toggle(i)}>
+            <h3 className="wk-faq-q">{it.q}</h3>
+          </summary>
+          <div className="wk-faq-a">
+            <p>{it.a}</p>
           </div>
-        );
-      })}
+        </details>
+      ))}
     </div>
   );
 }

@@ -2,16 +2,21 @@ import type { BlockProps } from "@/content/v7/types";
 import { Reveal } from "../Reveal";
 import { Section } from "../Section";
 
-/** Plain numbered steps as a hairline ledger. */
+/**
+ * Plain numbered steps as a ledger (.wk-run): 40 px copper-deep squares on a 2 px top rule. `variant: "run"` with
+ * the per-step art card ("Sie erhalten" plus a crop) is added by package P2.
+ */
 export function StepsBlock({ block: b, locale, num }: BlockProps<"steps">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
-      <ol className="mt-12 border-t border-wk-ink md:mt-16">
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale} airy={b.airy}>
+      <ol className="wk-run">
         {b.items.map((it, i) => (
-          <Reveal as="li" key={it.h} delay={i * 0.05} className="grid gap-x-8 gap-y-2 border-b border-wk-line py-7 md:grid-cols-9 md:py-9">
-            <span className="f-mono text-[12px] text-wk-copper-deep md:col-span-1 md:pt-2">{String(i + 1).padStart(2, "0")}</span>
-            <h3 className="f-display text-[1.375rem] leading-[1.2] md:col-span-4 md:text-[1.75rem]">{it.h}</h3>
-            <p className="text-wk-ink md:col-span-4">{it.p}</p>
+          <Reveal as="li" key={it.h} delay={i * 0.05} className="wk-run-step">
+            <span className="wk-step-no" aria-hidden="true" />
+            <div className="wk-run-text">
+              <h3>{it.h}</h3>
+              <p>{it.p}</p>
+            </div>
           </Reveal>
         ))}
       </ol>

@@ -7,6 +7,7 @@ import { PhoneFrame } from "./frames/Phone";
 import { Flow } from "./figures/Flow";
 import { Squares } from "./figures/Squares";
 import { VideoFigure } from "./VideoFigure";
+import { Etikett } from "./werkstatt/Etikett";
 
 function Poster({ img, portrait, priority }: { img: Img; portrait?: Img; priority?: boolean }) {
   return (
@@ -27,26 +28,33 @@ function Poster({ img, portrait, priority }: { img: Img; portrait?: Img; priorit
   );
 }
 
+/** The label word the Etikett starts with, per kind of figure (rule 6: every schema and screen says what it is). */
+const KIND: Record<L3, { svg: string; screen: string }> = {
+  de: { svg: "Schema", screen: "App-Screen" },
+  en: { svg: "Schema", screen: "App screen" },
+  tr: { svg: "Şema", screen: "Uygulama ekranı" },
+};
+/** A caption that already names its kind ("Schema · ...", "Konzept-Render ...") gets no second label. */
+const NAMED = /^(schema|şema|render|konzept|concept|muster|beispiel|example|sample|örnek|app|uygulama|foto|photo)/i;
+
 /**
- * One figure with an editorial caption ("Abb. 1.1 Text · KI-generiert"). Handles the SVG figures, images
- * (plain, browser or phone frame) and the poster-first video slot. The aspect ratio is reserved up front.
+ * One figure with its Etikett under it (design C): "Schema · <caption>" for the drawn figures, "App-Screen ·
+ * <caption>" for framed screens, plus the "KI-generiert" chip for AI-made media. The old "Abb. x.y" numbering is no
+ * longer shown (`fig` stays in the data). Handles the SVG figures, images (plain, browser or phone frame) and the
+ * poster-first video slot. The aspect ratio is reserved up front.
  */
 export function MediaFigure({ media, locale, className = "", priority }: { media: Media; locale: L3; className?: string; priority?: boolean }) {
   const t = SITE_STR[locale];
   const ai = media.kind !== "svg" && media.ai;
-  const caption = media.caption || media.fig || ai ? (
-    <figcaption className="f-mono mt-2 border-t border-wk-line pt-3 text-[12px] leading-[1.6] text-wk-muted">
-      {media.fig && (
-        <span className="mr-2 text-wk-copper-deep">
-          {t.figure} {media.fig}
-        </span>
-      )}
-      {media.caption}
-      {ai && (
-        <span className="ml-2 whitespace-nowrap rounded-full border border-wk-copper/50 px-2 py-0.5 text-[12px] text-wk-copper-deep">{t.aiLabel}</span>
-      )}
-    </figcaption>
-  ) : null;
+  const kind = media.kind === "svg" ? KIND[locale].svg : media.kind === "image" && media.frame && media.frame !== "none" ? KIND[locale].screen : "";
+  const text = media.caption ? (kind && !NAMED.test(media.caption.trim()) ? `${kind} · ${media.caption}` : media.caption) : kind;
+  const caption =
+    text || ai ? (
+      <figcaption className="wk-media-cap">
+        {text && <Etikett>{text}</Etikett>}
+        {ai && <span className="wk-chip is-note">{t.aiLabel}</span>}
+      </figcaption>
+    ) : null;
 
   let body: React.ReactNode;
   if (media.kind === "svg") {
@@ -57,7 +65,7 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
     else if (media.frame === "phone") body = <div className="mx-auto w-[min(240px,62%)]"><PhoneFrame img={media.img} sizes={sizes} /></div>;
     else
       body = (
-        <div className="overflow-hidden rounded-[20px] border border-wk-line bg-wk-sheet">
+        <div className="overflow-hidden rounded-[10px] border border-wk-line bg-wk-sheet">
           <Image src={media.img.src} width={media.img.w} height={media.img.h} alt={media.img.alt} sizes={sizes} priority={priority} className="h-auto w-full" />
         </div>
       );
@@ -65,7 +73,7 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
     const { poster, posterPortrait } = media;
     body = (
       <div
-        className="v7-ar relative overflow-hidden rounded-[20px] border border-wk-line bg-wk-paper-2"
+        className="v7-ar relative overflow-hidden rounded-[10px] border border-wk-line bg-wk-paper-2"
         style={{ ["--ar" as string]: `${poster.w} / ${poster.h}`, ["--arp" as string]: posterPortrait ? `${posterPortrait.w} / ${posterPortrait.h}` : undefined }}
       >
         <VideoFigure
@@ -81,7 +89,7 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
   }
 
   return (
-    <figure className={className}>
+    <figure className={`wk-media${className ? ` ${className}` : ""}`}>
       {body}
       {caption}
     </figure>

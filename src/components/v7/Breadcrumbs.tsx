@@ -2,7 +2,6 @@ import Link from "next/link";
 import { LABEL, SITE_STR } from "@/content/v7/site";
 import type { PageDef } from "@/content/v7/types";
 import { href, type L3, type PageKey } from "@/lib/v7-routes";
-import { wrap } from "./ui";
 
 export type Crumb = { name: string; path: string; key?: PageKey };
 
@@ -15,28 +14,19 @@ export function crumbsFor(page: PageDef, locale: L3): Crumb[] {
   ];
 }
 
-export function Breadcrumbs({ crumbs, locale }: { crumbs: Crumb[]; locale: L3 }) {
+/**
+ * C crumbs: mono 13 px, "/" separators drawn by CSS (.wk-crumbs in sections.css), 44 px link targets. Rendered
+ * inside the hero copy column (HeroStandard, PlainHero), so they carry no wrap of their own.
+ */
+export function Breadcrumbs({ crumbs, locale, className }: { crumbs: Crumb[]; locale: L3; className?: string }) {
   return (
-    <nav aria-label={SITE_STR[locale].breadcrumb} className={`${wrap} pt-3 md:pt-5`}>
-      <ol className="f-mono flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] leading-[1.7] text-wk-muted">
+    <nav aria-label={SITE_STR[locale].breadcrumb} className={className}>
+      <ol className="wk-crumbs">
         {crumbs.map((c, i) => {
           const last = i === crumbs.length - 1;
           return (
-            <li key={c.path} className="flex items-center gap-2">
-              {last ? (
-                <span aria-current="page" className="text-wk-ink">
-                  {c.name}
-                </span>
-              ) : (
-                <Link href={c.path} className="inline-flex min-h-[44px] min-w-[24px] items-center underline md:min-h-[28px] decoration-wk-copper/40 underline-offset-4 hover:text-wk-ink hover:decoration-wk-copper-deep">
-                  {c.name}
-                </Link>
-              )}
-              {!last && (
-                <span aria-hidden="true" className="text-wk-copper-deep">
-                  /
-                </span>
-              )}
+            <li key={c.path}>
+              {last ? <span aria-current="page">{c.name}</span> : <Link href={c.path}>{c.name}</Link>}
             </li>
           );
         })}

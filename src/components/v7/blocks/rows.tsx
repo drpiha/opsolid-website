@@ -5,29 +5,29 @@ import { Reveal } from "../Reveal";
 import { Section } from "../Section";
 import { linkDeep } from "../ui";
 
-/** Hairline ledger of rows, optionally linked, optionally with a real screenshot of our own work. */
+/** Hairline ledger of rows on a 2 px top rule; the tag is a chip; optionally linked; optionally a real screenshot of our own work. */
 export function RowsBlock({ block: b, locale, num }: BlockProps<"rows">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
-      <ul className="mt-12 border-t border-wk-ink md:mt-16">
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale} airy={b.airy}>
+      <ul className="wk-ledger">
         {b.items.map((it, i) => (
-          <Reveal as="li" key={it.h} delay={i * 0.05} className="v7-card grid gap-x-8 gap-y-4 border-b border-wk-line py-8 md:grid-cols-9 md:py-10">
-            <div className="md:col-span-4">
-              {it.tag && <p className="f-mono mb-3 text-[12px] text-wk-copper-deep">{it.tag}</p>}
-              <h3 className="f-display text-[1.5rem] leading-[1.15] md:text-[1.875rem]">{it.h}</h3>
+          <Reveal as="li" key={it.h} delay={i * 0.05} className={`wk-ledger-line wk-row${it.img ? " has-img" : ""}`}>
+            <div className="wk-row-head">
+              {it.tag && <span className="wk-chip is-note">{it.tag}</span>}
+              <h3 className="wk-row-h">{it.h}</h3>
             </div>
-            <div className={it.img ? "md:col-span-3" : "md:col-span-5"}>
-              <p className="text-wk-ink">{it.p}</p>
+            <div className="wk-row-body">
+              <p className="wk-muted">{it.p}</p>
               {it.href && (
-                <LinkTo link={it.href} locale={locale} className={`${linkDeep} mt-3`}>
+                <LinkTo link={it.href} locale={locale} className={`${linkDeep} v7-link`}>
                   {it.href.label}
                   <span aria-hidden="true">→</span>
                 </LinkTo>
               )}
             </div>
             {it.img && (
-              <div className="overflow-hidden rounded-[14px] border border-wk-line bg-wk-sheet md:col-span-2">
-                <Image src={it.img.src} width={it.img.w} height={it.img.h} alt={it.img.alt} sizes="(min-width: 768px) 20vw, 100vw" className="h-auto w-full" />
+              <div className="wk-row-img">
+                <Image src={it.img.src} width={it.img.w} height={it.img.h} alt={it.img.alt} sizes="(min-width: 961px) 240px, 100vw" className="h-auto w-full" />
               </div>
             )}
           </Reveal>
