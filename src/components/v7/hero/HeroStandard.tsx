@@ -1,4 +1,5 @@
 import type { PageDef } from "@/content/v7/types";
+import { SITE_STR } from "@/content/v7/site";
 import type { L3 } from "@/lib/v7-routes";
 import { soft } from "@/lib/soft-hyphen";
 import { Breadcrumbs, type Crumb } from "../Breadcrumbs";
@@ -10,6 +11,11 @@ import { Etikett } from "../werkstatt/Etikett";
 import { FactsStrip } from "../werkstatt/FactsStrip";
 import { WkPicture } from "../werkstatt/WkPicture";
 import { h1Text } from "./h1";
+
+/** Rule 1: every price group carries the price note. A hero fact line or strip that names a euro amount gets
+ * SITE_STR.priceNote unless the page set its own `stripNote` or the facts already say it. */
+const hasPrice = (xs: string[]) => xs.some((x) => x.includes("€"));
+const saysNote = (xs: string[]) => xs.some((x) => /USt\.|of VAT|KDV/.test(x));
 
 const arrow = (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -27,6 +33,11 @@ const arrow = (
 export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; locale: L3; crumbs?: Crumb[] }) {
   const ink = hero.tone === "ink";
   const strip = hero.strip && hero.strip.length > 0 ? hero.strip : null;
+  const priceNote = SITE_STR[locale].priceNote;
+  const stripVals = strip ? strip.map(([, v]) => v) : [];
+  const stripNote = hero.stripNote ?? (hasPrice(stripVals) && !saysNote(stripVals) ? priceNote : undefined);
+  const facts = hero.facts ?? [];
+  const factsNote = hasPrice(facts) && !saysNote(facts) ? priceNote : null;
   const pic = hero.picture;
   const side = pic ? "pic" : hero.media ? "media" : "none";
   return (
@@ -108,17 +119,17 @@ export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; 
 
       {strip ? (
         <div className={wrap}>
-          <FactsStrip items={strip} note={hero.stripNote} tone={ink ? "dark" : "light"} />
+          <FactsStrip items={strip} note={stripNote} tone={ink ? "dark" : "light"} />
         </div>
       ) : (
-        hero.facts &&
-        hero.facts.length > 0 && (
+        facts.length > 0 && (
           <div className={wrap}>
-            <ul className="wk-hero-facts">
-              {hero.facts.map((f) => (
+            <ul className={`wk-hero-facts${factsNote ? " has-note" : ""}`}>
+              {facts.map((f) => (
                 <li key={f}>{f}</li>
               ))}
             </ul>
+            {factsNote && <p className="wk-hero-facts-note">{factsNote}</p>}
           </div>
         )
       )}

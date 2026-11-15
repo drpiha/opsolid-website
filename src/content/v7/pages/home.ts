@@ -118,7 +118,7 @@ const de: PageDef = {
         },
         {
           name: "Bescheinigung",
-          h: "Teilnahmebescheinigung",
+          h: "Teilnahme\u00ADbescheinigung",
           p: "Wir stellen sie nach der Schulung aus, mit Datum, Dauer, Themen und Trainer.",
           result: "Eine nachvollziehbare Maßnahme für Ihre Unterlagen.",
           meta: "für Ihre Dokumentation",

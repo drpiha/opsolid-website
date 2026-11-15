@@ -482,7 +482,7 @@ const tr: PageDef = {
         },
         {
           name: "Teslim",
-          h: "Dokümantasyon",
+          h: "Doküman\u00ADtasyon",
           p: "Akışları, listeleri ve yetkileri BT biriminizin bakımını yapabileceği şekilde belgeliyoruz. İsterseniz çözümü sonrasında da biz yürütürüz.",
           result: "Her akış belgelenmiştir ve sorumlu bir kişisi vardır.",
           meta: "işletme aylık, anlaşmaya göre",

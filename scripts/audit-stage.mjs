@@ -67,14 +67,20 @@ const PATHS = {
   workflows: "/ki-schulungen/ki-agenten",
   kompetenz: "/ki-schulungen/ki-kompetenz",
   copilot: "/ki-schulungen/copilot-praxistag",
+  trainer: "/ki-schulungen/trainer",
   beratung: "/ki-beratung",
   check: "/ki-beratung/ki-check",
+  prozess: "/ki-beratung/prozessautomatisierung",
+  m365: "/ki-beratung/microsoft-365",
   agenten: "/ki-beratung/ki-assistenten",
+  anwendungen: "/ki-beratung/anwendungsfaelle",
   produkte: "/produkte",
   opso: "/opso",
   about: "/ueber-uns",
   contact: "/contact",
   blog: "/blog",
+  impressum: "/impressum",
+  privacy: "/privacy",
 };
 const PAGES = opt("pages", Object.keys(PATHS).join(",")).split(",");
 /** The public path of a PATHS entry in one locale ("/" for the German home, "/en/ai-training/ai-agents", …). */

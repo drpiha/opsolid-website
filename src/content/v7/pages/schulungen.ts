@@ -147,7 +147,7 @@ const de: PageDef = {
         { h: "Anfrage", p: "Sie schildern Team, Aufgaben und Vorwissen. Wir empfehlen die passende Schulung und nennen den Preis." },
         { h: "Trainerin oder Trainer", p: "Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich." },
         { h: "Inhalte und Termin", p: "Wir stimmen Beispiele, Sprache, Teilnehmerzahl und Termin mit Ihnen ab, damit die Schulung zu Ihrem Alltag passt." },
-        { h: "Teilnahmebescheinigung", p: "Nach der Schulung erhalten Sie die Bescheinigung für Ihre Unterlagen." },
+        { h: "Teilnahme\u00ADbescheinigung", p: "Nach der Schulung erhalten Sie die Bescheinigung für Ihre Unterlagen." },
       ],
     },
     {

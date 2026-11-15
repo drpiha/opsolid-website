@@ -45,35 +45,38 @@ export function MegaPanel({ group, locale }: { group: MenuGroup; locale: L3 }) {
       <div className="wk-mega-cols" style={style}>
         {group.cols.map((col, i) => {
           const hid = `mh-${group.key}-${i}`;
+          // Head and body sit on a subgrid of .wk-mega-cols (shell.css), so the head rules line up when a head wraps.
           return (
             <div key={hid} className={`wk-mega-col${col.style ? ` is-${col.style}` : ""}`}>
               <p className="wk-mega-h" id={hid}>
                 {col.h}
               </p>
-              <ul aria-labelledby={hid} className={col.style === "mini" ? "wk-mega-mini" : "wk-mega-list"}>
-                {col.items.map((item) => (
-                  <li key={item.label}>
-                    {col.style === "mini" ? (
-                      <MenuLink to={item.to} locale={locale}>
-                        {item.label}
-                      </MenuLink>
-                    ) : (
-                      <MegaItem item={item} locale={locale} />
-                    )}
-                  </li>
-                ))}
-              </ul>
-              {col.after && (
-                <MenuLink to={col.after.to} locale={locale} className="wk-mega-plan">
-                  {col.after.chip && <ChipTag chip={col.after.chip} />}
-                  <span>{col.after.label}</span>
-                </MenuLink>
-              )}
-              {col.note && (
-                <p className="wk-mega-colnote">
-                  <ChipTag chip={col.note} />
-                </p>
-              )}
+              <div className="wk-mega-colbody">
+                <ul aria-labelledby={hid} className={col.style === "mini" ? "wk-mega-mini" : "wk-mega-list"}>
+                  {col.items.map((item) => (
+                    <li key={item.label}>
+                      {col.style === "mini" ? (
+                        <MenuLink to={item.to} locale={locale}>
+                          {item.label}
+                        </MenuLink>
+                      ) : (
+                        <MegaItem item={item} locale={locale} />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                {col.after && (
+                  <MenuLink to={col.after.to} locale={locale} className="wk-mega-plan">
+                    {col.after.chip && <ChipTag chip={col.after.chip} />}
+                    <span>{col.after.label}</span>
+                  </MenuLink>
+                )}
+                {col.note && (
+                  <p className="wk-mega-colnote">
+                    <ChipTag chip={col.note} />
+                  </p>
+                )}
+              </div>
             </div>
           );
         })}

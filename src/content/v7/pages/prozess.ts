@@ -510,7 +510,7 @@ const tr: PageDef = {
           name: "Ölçme",
           h: "İş akışını kayda almak ve ölçmek",
           p: "İşi yapan kişilerle bir atölye. İş akışının gerçekte nasıl işlediğini kaydediyoruz: devir noktaları, araçlar, veriler ve istisnalar.",
-          result: "Ekibinizin kontrol edebileceği bir başlangıç durumu ve nelerin otomatikleştirileceğine, nelerin bilerek elle kalacağına dair karar.",
+          result: "Ekibinizin kontrol edebileceği bir başlangıç durumu ve nelerin otomatikleştiri\u00ADleceğine, nelerin bilerek elle kalacağına dair karar.",
           meta: "YZ Kontrolü içinde",
         },
         {
@@ -529,7 +529,7 @@ const tr: PageDef = {
         },
         {
           name: "Teslim",
-          h: "Dokümantasyon ve kaynak kod",
+          h: "Doküman\u00ADtasyon ve kaynak kod",
           p: "Dokümantasyon, erişimler ve varsa kaynak kod ekibinize geçer. Nelerin teslim edileceğini başlamadan önce yazılı olarak belirleriz. İsterseniz çözümü sonrasında da biz yürütürüz.",
           result: "Ekibiniz, iş akışını kendisi işletmek için gereken her şeyi alır.",
           meta: "işletme aylık, anlaşmaya göre",

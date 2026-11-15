@@ -31,7 +31,7 @@ export const content: Content = {
         "Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE462227107",
       responsibleContent:
         "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (Medienstaatsvertrag, vormals § 55 RStV)",
-      disputeResolution: "Verbraucherstreitbeilegung",
+      disputeResolution: "Verbraucher\u00ADstreit\u00ADbeilegung",
       disputeResolutionText:
         "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).",
       liabilityContent: "Haftung für Inhalte",

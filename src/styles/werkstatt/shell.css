@@ -101,7 +101,11 @@ html[data-v4] .wk-nav-item.is-open .wk-mega-col:nth-child(3) { transition-delay:
 html[data-v4] .wk-nav-item.is-open .wk-mega-feature { transition-delay: 120ms; }
 
 html[data-v4] .wk-mega-inner { display: grid; grid-template-columns: minmax(0, 1fr) 328px; gap: 0 40px; padding-top: 32px; }
-html[data-v4] .wk-mega-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; padding-bottom: 28px; align-content: start; }
+html[data-v4] .wk-mega-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto 1fr; gap: 0 32px; padding-bottom: 28px; align-content: start; }
+/* Each column spans the two rows (head, body) as a subgrid: a head that wraps to two lines (EN "Implementation after the
+   AI check") pushes every head rule down to the same line. Without subgrid support the columns simply stack as before. */
+html[data-v4] .wk-mega-col { grid-row: span 2; display: grid; grid-template-rows: subgrid; align-content: start; }
+html[data-v4] .wk-mega-col > .wk-mega-h { align-self: end; }
 html[data-v4] .wk-mega-h { font-family: var(--wk-mono); font-weight: 400; font-size: var(--wk-fs-0); line-height: 1.4; color: var(--wk-muted); padding-bottom: 10px; border-bottom: 1px solid var(--wk-line-2); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
 html[data-v4] .wk-mega-h::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--line-l, var(--wk-copper)); flex: none; }
 html[data-v4] .wk-mega-item { display: block; min-height: 44px; text-decoration: none; color: var(--wk-text); padding: 11px 10px 12px; margin-inline: -10px; border-radius: var(--wk-r-2); transition: background-color var(--wk-t-micro); }
@@ -176,7 +180,7 @@ html[data-v4] .wk-foot-contact .wk-etikett { margin-bottom: 4px; }
 html[data-v4] .wk-foot-col h2,
 html[data-v4] .wk-foot-legal h2 { font-family: var(--wk-mono); font-weight: 400; font-size: var(--wk-fs-0); line-height: 1.4; letter-spacing: 0; color: var(--wk-muted); }
 html[data-v4] .wk-foot-col h2 { padding-bottom: 10px; border-bottom: 1px solid var(--wk-line-2); margin-bottom: 8px; }
-html[data-v4] .wk-foot-col a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--wk-text); font-size: var(--wk-fs-1); line-height: 1.3; gap: 2px 8px; flex-wrap: wrap; transition: color var(--wk-t-micro); }
+html[data-v4] .wk-foot-col a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--wk-text); font-size: var(--wk-fs-1); line-height: 1.5; gap: 2px 8px; flex-wrap: wrap; transition: color var(--wk-t-micro); }
 html[data-v4] .wk-foot-col a:hover { color: var(--wk-copper-deep); }
 html[data-v4] .wk-foot-col a:hover span { text-decoration: underline; text-underline-offset: 4px; }
 html[data-v4] .wk-foot-col a small { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); white-space: nowrap; }
@@ -260,6 +264,7 @@ html[data-v4] .wk-callbar { display: none; }
   html[data-v4] .wk-mnav-all { margin-top: 4px; font-size: var(--wk-fs-1); color: var(--wk-text); }
   html[data-v4] .wk-mnav-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 12px; }
   html[data-v4] .wk-mnav-foot .wk-tlink { font-size: var(--wk-fs-1); color: var(--wk-text); }
+  html[data-v4] .wk-mnav-foot .wk-lang-l a { min-width: 48px; }
   html[data-v4] .wk-mnav-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 96; padding: 12px var(--wk-gut) calc(12px + env(safe-area-inset-bottom, 0px)); background: var(--wk-paper); border-top: 1px solid var(--wk-line-2); visibility: hidden; }
   html[data-v4] .wk-mnav.is-open .wk-mnav-cta { visibility: visible; }
   html[data-v4] .wk-mnav-cta .wk-btn { width: 100%; }

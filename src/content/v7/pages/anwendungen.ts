@@ -16,7 +16,7 @@ const de: PageDef = {
   crumb: "Anwendungsfälle",
   hero: {
     eyebrow: "Anwendungsfälle · Beispiele nach Branche",
-    h1: ["Anwendungsfälle, die im ", "Alltag", " tragen"],
+    h1: ["Anwendungs\u00ADfälle, die im ", "Alltag", " tragen"],
     lede: "So kann KI-Automatisierung in vier Branchen aussehen: Dienstleistung, Gastronomie und Hotellerie, Handel sowie Praxen. Zu jedem Beispiel gehört, was beim Menschen bleibt.",
     primary: { label: "KI-Check ansehen", to: "check" },
     secondary: { label: "Anwendungsfall besprechen", to: "kontakt", query: { anliegen: "beratung" } },
