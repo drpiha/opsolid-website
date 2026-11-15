@@ -16,6 +16,18 @@
 /* The first block under the hero never reveals: the page opens complete. */
 html[data-v4] .v7-still .v7-reveal { opacity: 1; transform: none; }
 
+/* ---------- Figure draw (Flow, Squares): a CSS stroke draw, once; no framer-motion ---------- */
+/* The paths carry pathLength="1", so a dash of 1 covers the whole line and the offset runs from 1 to 0. Squares
+   draws on load with a stagger (--delay); Flow (.wk-draw-view) is held by RevealObserver while it starts below the
+   fold and draws when it scrolls in. Reduced motion and no JS show the finished drawing. */
+@keyframes wk-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes wk-draw-fade { from { stroke-dashoffset: 1; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-v4] .wk-draw { stroke-dasharray: 1 1; animation: wk-draw var(--dur, 1.2s) cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) both; }
+  html[data-v4] .wk-draw.is-fade { animation-name: wk-draw-fade; }
+  html[data-v4] .wk-draw-view.v7-pre:not(.v7-in) .wk-draw { animation: none; stroke-dashoffset: 1; }
+}
+
 /* ---------- Micro-interactions (one set) ---------- */
 /* Arrow nudge: the trailing arrow (a glyph span or an svg) moves 4 px on hover and keyboard focus. */
 html[data-v4] .v7-link > [aria-hidden="true"]:last-child { display: inline-block; }

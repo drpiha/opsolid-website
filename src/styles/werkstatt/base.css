@@ -37,6 +37,11 @@ html[data-v4] .on-ink :focus-visible { outline-color: var(--wk-copper-lite); }
 html[data-v4] .wk-mega :focus-visible { outline-color: var(--wk-copper-deep); }
 
 /* ---------- type roles ---------- */
+/* The app token sheet (opsolid-tokens.css) sets every h1 to h4 in Geist with an app ink colour. Marketing headings
+   are Archivo and take the colour of their ground, so Geist (70 kB) is never fetched on a marketing page. The
+   selector weighs exactly one element (0,0,1): it beats the app rule by source order (this file loads after
+   globals.css) and every class rule or utility still wins over it. */
+:where(html[data-v4]) :is(h1, h2, h3, h4, h5, h6) { font-family: var(--wk-sans); color: inherit; }
 /* Display face: Archivo, one upright variable file (wght 400-800, wdth 100-118 %). Sizes come from the role
    classes below or from the component. No italic and no light weight exist. */
 html[data-v4] .f-display,
@@ -298,7 +303,8 @@ html[data-v4] .wk-facts-row.is-3 { grid-template-columns: repeat(3, minmax(0, 1f
 html[data-v4] .wk-fact { padding: 22px 24px 30px 0; display: grid; gap: 6px; align-content: start; }
 html[data-v4] .wk-fact + .wk-fact { padding-left: 24px; border-left: 1px solid var(--wk-line-d); }
 html[data-v4] .wk-fact-k { font-size: var(--wk-fs-0); font-stretch: 110%; font-weight: 540; color: var(--wk-muted-d); }
-html[data-v4] .wk-fact-v { font-weight: 600; font-size: 1.1875rem; line-height: 1.25; font-stretch: 106%; }
+/* fact values break at their own soft hyphens only ("Eigene / Teilnahme- / bescheinigung", not "Teil- / nahmebeschei- / gung") */
+html[data-v4] .wk-fact-v { font-weight: 600; font-size: 1.1875rem; line-height: 1.25; font-stretch: 106%; hyphens: manual; }
 html[data-v4] .wk-fact a { display: grid; gap: 8px; justify-items: start; text-decoration: none; }
 html[data-v4] .wk-fact a .wk-fact-v { font-size: 1.5rem; font-stretch: 114%; font-weight: 660; letter-spacing: -0.015em; }
 html[data-v4] .wk-fact a:hover .wk-fact-v { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--wk-copper-lite); }

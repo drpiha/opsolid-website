@@ -22,15 +22,15 @@ html[data-v4] .wk-crumbs { display: flex; flex-wrap: wrap; align-items: center; 
 html[data-v4] .wk-crumbs li { display: inline-flex; align-items: center; gap: 8px; }
 html[data-v4] .wk-crumbs li + li::before { content: "/"; color: var(--wk-muted); }
 html[data-v4] .wk-on-ink .wk-crumbs li + li::before { color: var(--wk-muted-d); }
-html[data-v4] .wk-crumbs a { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; }
-html[data-v4] .wk-crumbs a:hover { color: var(--wk-text); text-decoration: underline; text-underline-offset: 4px; }
+/* crumb links are underlined as in the prototype (the current page is plain text); hover darkens them */
+html[data-v4] .wk-crumbs a { min-height: 44px; display: inline-flex; align-items: center; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+html[data-v4] .wk-crumbs a:hover { color: var(--wk-text); }
 html[data-v4] .wk-on-ink .wk-crumbs a:hover { color: var(--wk-text-d); }
 html[data-v4] .wk-crumbs [aria-current] { color: var(--wk-text); }
 html[data-v4] .wk-on-ink .wk-crumbs [aria-current] { color: var(--wk-text-d); }
 
 /* jump pills (in-page links under the hero copy) */
 html[data-v4] .wk-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-html[data-v4] .wk-jump-label { font-family: var(--wk-mono); font-size: var(--wk-fs-0); color: var(--wk-muted); margin-right: 4px; }
 html[data-v4] .wk-jump a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--wk-r-2); border: 1.5px solid var(--wk-line-2); text-decoration: none; font-size: var(--wk-fs-1); font-weight: 540; transition: border-color var(--wk-t-micro), background-color var(--wk-t-micro); }
 html[data-v4] .wk-jump a:hover { border-color: var(--wk-text); background: var(--wk-sheet); }
 html[data-v4] .wk-on-ink .wk-jump a { border-color: var(--wk-line-d2); }
@@ -206,8 +206,8 @@ html[data-v4] .wk-cta-band .wk-d2 { max-width: 20ch; }
   html[data-v4] .wk-sec-cta { margin-top: 28px; }
   html[data-v4] .wk-page-hero.is-text .wk-page-hero-grid { padding-block: 16px 32px; }
   html[data-v4] .wk-page-hero.is-plain.is-small .wk-d1 { font-size: 2rem; }
-  html[data-v4] .wk-hero-media { max-width: 260px; align-self: center; }
-  html[data-v4] .wk-page-hero.has-strip .wk-hero-media { max-width: 200px; }
+  /* phones: the drawn figure takes the text width (its mono stage labels stay at 10 px or more at 390) */
+  html[data-v4] .wk-hero-media { width: 100%; max-width: 420px; align-self: center; }
   html[data-v4] .wk-hero-facts { flex-direction: column; gap: 8px; padding: 14px 0 22px; }
   html[data-v4] .wk-hero-facts.has-note { padding-bottom: 8px; }
   html[data-v4] .wk-hero-facts-note { padding-bottom: 22px; }

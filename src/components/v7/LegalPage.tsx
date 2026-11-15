@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import type { L3 } from "@/lib/v7-routes";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
-import { MotionRoot } from "./MotionRoot";
 import { Prose } from "./Prose";
 import { wrap } from "./ui";
 import { Etikett } from "./werkstatt/Etikett";
@@ -111,17 +110,15 @@ export function LegalLayout({
   children: ReactNode;
 }) {
   return (
-    <MotionRoot>
-      <div className="v7 pb-24 md:pb-40">
-        <PlainHero eyebrow={eyebrow} h1={title} lede={subtitle} small crumbs={crumbs} locale={_locale} />
-        <div className="mt-12 md:mt-20">
-          <Frame label={frameLabel}>
-            <Notice label={noticeLabel}>{notice}</Notice>
-            <Prose className={LEGAL_PROSE}>{children}</Prose>
-            {stand && <p className="f-mono mt-14 border-t border-wk-line-2 pt-5 text-[13px] text-wk-muted">{stand}</p>}
-          </Frame>
-        </div>
+    <div className="v7 pb-24 md:pb-40">
+      <PlainHero eyebrow={eyebrow} h1={title} lede={subtitle} small crumbs={crumbs} locale={_locale} />
+      <div className="mt-12 md:mt-20">
+        <Frame label={frameLabel}>
+          <Notice label={noticeLabel}>{notice}</Notice>
+          <Prose className={LEGAL_PROSE}>{children}</Prose>
+          {stand && <p className="f-mono mt-14 border-t border-wk-line-2 pt-5 text-[13px] text-wk-muted">{stand}</p>}
+        </Frame>
       </div>
-    </MotionRoot>
+    </div>
   );
 }

@@ -278,5 +278,7 @@ html[data-v4] .wk-callbar { display: none; }
   html[data-v4] .wk-foot-top { gap: 24px; }
   html[data-v4] .wk-foot-brand { gap: 8px; }
   html[data-v4] .wk-foot-nav { grid-template-columns: 1fr 1fr; gap: 22px 20px; }
+  /* a link that wraps to two lines keeps clear space to its neighbours (the 44 px minimum alone leaves none) */
+  html[data-v4] .wk-foot-col a { padding-block: 8px; line-height: 1.35; }
   html[data-v4] .wk-foot-bottom { margin-top: 20px; padding-top: 12px; flex-direction: column; align-items: flex-start; gap: 8px; }
 }

@@ -1,5 +1,4 @@
-"use client";
-import { motion, useReducedMotion } from "framer-motion";
+import type { CSSProperties } from "react";
 import type { L3 } from "@/lib/v7-routes";
 import { placeLabels } from "./fit";
 
@@ -16,22 +15,16 @@ const LABELS: Record<L3, readonly string[]> = {
 };
 const XS = [36, 136, 236, 336];
 
-/** Small hairline flow: input, rules, draft, person. Draws once when it enters the viewport. */
+/**
+ * Small hairline flow: input, rules, draft, person. The line draws once when it enters the viewport: a CSS draw
+ * (.wk-draw in opsolid-v7-motion.css; RevealObserver holds it until the figure scrolls in). Server component, no
+ * framer-motion. Reduced motion and no JS show the drawn line.
+ */
 export function Flow({ alt, locale, labels: custom }: { alt: string; locale: L3; labels?: readonly string[] }) {
-  const reduce = useReducedMotion();
   const labels = placeLabels(custom ?? LABELS[locale], XS, 372, 11);
   return (
-    <svg viewBox="0 0 372 84" className="h-auto w-full" role="img" aria-label={alt}>
-      <motion.path
-        d="M44 30H328"
-        strokeWidth="1"
-        fill="none"
-        style={{ stroke: LINE }}
-        initial={{ pathLength: 0 }}
-        whileInView={{ pathLength: 1 }}
-        viewport={{ once: true }}
-        transition={reduce ? { duration: 0 } : { duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      />
+    <svg viewBox="0 0 372 84" className="wk-draw-view h-auto w-full" role="img" aria-label={alt}>
+      <path d="M44 30H328" pathLength={1} strokeWidth="1" fill="none" className="wk-draw" style={{ stroke: LINE, ["--dur" as string]: "1.2s" } as CSSProperties} />
       {XS.map((x, i) => (
         <g key={x}>
           <rect x={x - 8} y={22} width={16} height={16} rx={5} strokeWidth="1.25" style={{ fill: i === 3 ? LAST : NODE, stroke: i === 3 ? LAST : RING }} />

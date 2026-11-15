@@ -6,18 +6,9 @@ import { isV4Path } from "@/lib/v4";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
 import "./globals.css";
-// Loaded after globals.css (which pulls in the legacy v4 marketing CSS) so the v7 base wins at equal specificity.
-import "../styles/opsolid-v7.css";
-import "../styles/opsolid-v7-motion.css";
-// Werkstatt (design C, owner decision 81): tokens, base, shell, sections, blocks, then the page files.
-import "../styles/werkstatt/tokens.css";
-import "../styles/werkstatt/base.css";
-import "../styles/werkstatt/shell.css";
-import "../styles/werkstatt/sections.css";
-import "../styles/werkstatt/blocks.css";
-import "../styles/werkstatt/home.css";
-import "../styles/werkstatt/hub.css";
-import "../styles/werkstatt/produkte.css";
+// Marketing CSS, one import chain (src/styles/werkstatt/index.css): the v7 base and motion, then Werkstatt
+// (design C, owner decision 81). Loaded after globals.css (which pulls in the legacy v4 CSS) so it wins at equal specificity.
+import "../styles/werkstatt/index.css";
 
 // Werkstatt (design C): Archivo (display + body, variable width axis) and IBM Plex Mono (labels) serve the
 // marketing site. Archivo is the only preloaded face (the LCP text on the home page); the other families

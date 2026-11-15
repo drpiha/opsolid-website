@@ -6,15 +6,6 @@
 
 /* ---------- hero picture: the copper table shows while the render loads ---------- */
 html[data-v4] .wk-hero-pic img[src*="desk-agenda"] { background: #a8532c; }
-/* hero fact values break at their own soft hyphens only ("Eigene / Teilnahme- / bescheinigung", not "Teil- / nahmebeschei- / gung") */
-html[data-v4] .wk-page-hero .wk-fact-v { hyphens: manual; }
-/* the jump pills stand alone as in the prototype; the nav keeps its accessible name (only the hub uses jump) */
-html[data-v4] .wk-jump .wk-jump-label { display: none; }
-
-/* the app token sheet (opsolid-tokens.css) sets every h3 in Geist with an app ink colour; these h3 are Archivo
-   (and Geist would be one more 70 kB font download before the LCP) */
-html[data-v4] .wk-kurs h3,
-html[data-v4] .wk-run-step.has-art h3 { font-family: var(--wk-sans); color: inherit; }
 
 /* ---------- catalog: rate cards with a drawn piece ---------- */
 html[data-v4] .wk-kurse { display: grid; gap: 30px; }
@@ -41,7 +32,7 @@ html[data-v4] .wk-plan-bar i.is-break { background: repeating-linear-gradient(13
 html[data-v4] .wk-plan-ends { display: flex; justify-content: space-between; font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
 html[data-v4] .wk-plan-list { counter-reset: wk-p; display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; margin-top: 8px; font-size: var(--wk-fs-1); font-weight: 540; line-height: 1.3; }
 html[data-v4] .wk-plan-list li { counter-increment: wk-p; display: grid; grid-template-columns: 20px 1fr; gap: 6px; padding: 8px 0; border-bottom: 1px dashed var(--wk-line-2); }
-html[data-v4] .wk-plan-list li::before { content: counter(wk-p); font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-copper-deep); padding-top: 2px; }
+html[data-v4] .wk-plan-list li::before { content: counter(wk-p); font-family: var(--wk-mono); font-weight: 400; font-size: 0.75rem; color: var(--wk-copper-deep); padding-top: 2px; }
 
 /* the day in six blocks (Copilot-Praxistag) */
 html[data-v4] .wk-blocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }

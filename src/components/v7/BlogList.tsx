@@ -12,7 +12,6 @@ import { CtaBand } from "./CtaBand";
 import { JsonLdGraph, sharedNodes, webPageNodes } from "./JsonLd";
 import { Frame, PlainHero } from "./LegalPage";
 import { LinkTo } from "./LinkTo";
-import { MotionRoot } from "./MotionRoot";
 import { Reveal } from "./Reveal";
 import { linkDeep } from "./ui";
 
@@ -144,45 +143,43 @@ export function BlogList({ locale }: { locale: L3 }) {
     { name: LABEL[locale].blog, path: href("blog", locale), key: "blog" },
   ];
   return (
-    <MotionRoot>
-      <div className="v7">
-        <PlainHero eyebrow={t.eyebrow} h1={`${t.h1[0]} ${t.h1[1]}`} lede={t.lede} crumbs={crumbs} locale={locale} />
-        <section id="beitraege" aria-label={t.frame} className="wk-sec">
-          <Frame label={t.frame} note={t.frameNote}>
-            <ul>
-              {posts.map((p, i) => (
-                <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-wk-line-2 py-8 transition-colors hover:bg-[color-mix(in_srgb,var(--wk-copper)_6%,transparent)] md:grid-cols-[11rem_minmax(0,1fr)] md:py-10">
-                  <p className="f-mono text-[13px] leading-[1.6] text-wk-muted">
-                    <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
-                    <span className="mt-1 block text-wk-copper-deep">
-                      {t.cat[p.category] ?? p.category} · {getReadMinutes(p.slug, locale)} {t.min}
-                    </span>
+    <div className="v7">
+      <PlainHero eyebrow={t.eyebrow} h1={`${t.h1[0]} ${t.h1[1]}`} lede={t.lede} crumbs={crumbs} locale={locale} />
+      <section id="beitraege" aria-label={t.frame} className="wk-sec">
+        <Frame label={t.frame} note={t.frameNote}>
+          <ul>
+            {posts.map((p, i) => (
+              <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-wk-line-2 py-8 transition-colors hover:bg-[color-mix(in_srgb,var(--wk-copper)_6%,transparent)] md:grid-cols-[11rem_minmax(0,1fr)] md:py-10">
+                <p className="f-mono text-[13px] leading-[1.6] text-wk-muted">
+                  <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
+                  <span className="mt-1 block text-wk-copper-deep">
+                    {t.cat[p.category] ?? p.category} · {getReadMinutes(p.slug, locale)} {t.min}
+                  </span>
+                </p>
+                <div className="min-w-0">
+                  <h2 className="wk-h3 md:text-[1.875rem]">
+                    <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
+                      {soft(p.title)}
+                    </Link>
+                  </h2>
+                  <p className="mt-3 max-w-[60ch] text-wk-muted">{p.excerpt}</p>
+                  <p aria-hidden="true" className="mt-3 text-[16px] font-semibold text-wk-copper-deep">
+                    {t.read} →
                   </p>
-                  <div className="min-w-0">
-                    <h2 className="wk-h3 md:text-[1.875rem]">
-                      <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
-                        {soft(p.title)}
-                      </Link>
-                    </h2>
-                    <p className="mt-3 max-w-[60ch] text-wk-muted">{p.excerpt}</p>
-                    <p aria-hidden="true" className="mt-3 text-[16px] font-semibold text-wk-copper-deep">
-                      {t.read} →
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </ul>
-            <div className="mt-10">
-              <LinkTo link={t.more} locale={locale} className={`${linkDeep} v7-link`}>
-                {t.more.label}
-                <span aria-hidden="true">→</span>
-              </LinkTo>
-            </div>
-          </Frame>
-        </section>
-        <CtaBand cta={t.training.cta} locale={locale} />
-        <JsonLdGraph nodes={[...sharedNodes(locale), ...webPageNodes({ key: "blog", locale, name: t.title, description: t.desc, crumbs })]} />
-      </div>
-    </MotionRoot>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
+          <div className="mt-10">
+            <LinkTo link={t.more} locale={locale} className={`${linkDeep} v7-link`}>
+              {t.more.label}
+              <span aria-hidden="true">→</span>
+            </LinkTo>
+          </div>
+        </Frame>
+      </section>
+      <CtaBand cta={t.training.cta} locale={locale} />
+      <JsonLdGraph nodes={[...sharedNodes(locale), ...webPageNodes({ key: "blog", locale, name: t.title, description: t.desc, crumbs })]} />
+    </div>
   );
 }

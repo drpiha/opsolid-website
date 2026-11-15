@@ -275,7 +275,7 @@ export type PageDef = {
     jump?: { label: string; links: Href[] };
     /** Linked index rows under the hero (Produkte: name, kind and status chip per product). */
     index?: { k: string; name: string; chip: Chip; to: Href }[];
-    /** Mono line under the fact strip (the price note). */
+    /** Mono line under the fact strip or the fact line (the price note); wins over the automatic SITE_STR.priceNote. */
     stripNote?: string;
     bench?: HomeBench;
     /** Mono fact line under the hero ("KI-Check 990 € netto · NDA vor der Analyse · Bericht auch ohne Empfehlung"). */

@@ -11,7 +11,6 @@ import { CtaBand } from "./CtaBand";
 import { JsonLdGraph, sharedNodes } from "./JsonLd";
 import { Frame, PlainHero } from "./LegalPage";
 import { LinkTo } from "./LinkTo";
-import { MotionRoot } from "./MotionRoot";
 import { Prose } from "./Prose";
 import { linkDeep } from "./ui";
 
@@ -84,59 +83,57 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
   const mins = getReadMinutes(slug, locale);
   const end = post.category === "training" ? t.training : t;
   return (
-    <MotionRoot>
-      <div className="v7">
-        <PlainHero
-          small
-          crumbs={crumbs}
-          locale={locale}
-          eyebrow={
-            <>
-              <time dateTime={post.date}>{fmtDate(post.date, locale)}</time> · {t.cat[post.category] ?? post.category} · {l.read} {mins} {l.min}
-            </>
-          }
-          h1={post.title}
-          lede={post.excerpt}
-        >
-          <p className="f-mono text-[13px] text-wk-muted">{l.by}</p>
-        </PlainHero>
-        <div className="mt-12 md:mt-20">
-          <Frame label={l.body}>
-            <article>
-              <Prose>{body ? <div dangerouslySetInnerHTML={{ __html: body }} /> : <p>{post.excerpt}</p>}</Prose>
-            </article>
-            <div className="mt-14">
-              <LinkTo link={end.more} locale={locale} className={`${linkDeep} v7-link`}>
-                {end.more.label}
-                <span aria-hidden="true">→</span>
-              </LinkTo>
-            </div>
-          </Frame>
-        </div>
-        {(prev || next) && (
-          <nav aria-label={l.nav} className="mb-24 mt-16 md:mb-36 md:mt-24">
-            <Frame label={l.nav}>
-              <ul className="grid gap-x-8 md:grid-cols-2">
-                {[
-                  { p: prev, label: `← ${l.prev}` },
-                  { p: next, label: `${l.next} →` },
-                ].map(({ p, label }, i) => (
-                  <li key={i} className={`border-b border-wk-line-2 ${i === 1 ? "md:text-right" : ""}`}>
-                    {p && (
-                      <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="block py-6">
-                        <span className="f-mono text-[13px] text-wk-copper-deep">{label}</span>
-                        <span className="wk-h3 mt-2 block text-[1.25rem]">{p.title}</span>
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </Frame>
-          </nav>
-        )}
-        <CtaBand cta={end.cta} locale={locale} />
-        <BlogPostLd locale={locale} slug={slug} crumbs={crumbs} post={post} />
+    <div className="v7">
+      <PlainHero
+        small
+        crumbs={crumbs}
+        locale={locale}
+        eyebrow={
+          <>
+            <time dateTime={post.date}>{fmtDate(post.date, locale)}</time> · {t.cat[post.category] ?? post.category} · {l.read} {mins} {l.min}
+          </>
+        }
+        h1={post.title}
+        lede={post.excerpt}
+      >
+        <p className="f-mono text-[13px] text-wk-muted">{l.by}</p>
+      </PlainHero>
+      <div className="mt-12 md:mt-20">
+        <Frame label={l.body}>
+          <article>
+            <Prose>{body ? <div dangerouslySetInnerHTML={{ __html: body }} /> : <p>{post.excerpt}</p>}</Prose>
+          </article>
+          <div className="mt-14">
+            <LinkTo link={end.more} locale={locale} className={`${linkDeep} v7-link`}>
+              {end.more.label}
+              <span aria-hidden="true">→</span>
+            </LinkTo>
+          </div>
+        </Frame>
       </div>
-    </MotionRoot>
+      {(prev || next) && (
+        <nav aria-label={l.nav} className="mb-24 mt-16 md:mb-36 md:mt-24">
+          <Frame label={l.nav}>
+            <ul className="grid gap-x-8 md:grid-cols-2">
+              {[
+                { p: prev, label: `← ${l.prev}` },
+                { p: next, label: `${l.next} →` },
+              ].map(({ p, label }, i) => (
+                <li key={i} className={`border-b border-wk-line-2 ${i === 1 ? "md:text-right" : ""}`}>
+                  {p && (
+                    <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="block py-6">
+                      <span className="f-mono text-[13px] text-wk-copper-deep">{label}</span>
+                      <span className="wk-h3 mt-2 block text-[1.25rem]">{p.title}</span>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </Frame>
+        </nav>
+      )}
+      <CtaBand cta={end.cta} locale={locale} />
+      <BlogPostLd locale={locale} slug={slug} crumbs={crumbs} post={post} />
+    </div>
   );
 }

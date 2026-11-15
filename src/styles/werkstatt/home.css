@@ -358,9 +358,3 @@ html[data-v4] .wk-on-ink .wk-form :focus-visible { outline-color: var(--wk-coppe
   html[data-v4] .wk-contact-next { display: none; }
 }
 
-/* The app stylesheet (opsolid-tokens.css) sets h3 in Geist; every heading of the home blocks and of the process
-   line is Archivo (and Geist is then never fetched on these pages). */
-html[data-v4] .wk-door-body h3,
-html[data-v4] .wk-ledger-row h3,
-html[data-v4] .wk-step h3,
-html[data-v4] .wk-products-app { font-family: var(--wk-sans); }

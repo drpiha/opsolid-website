@@ -1,12 +1,19 @@
 import Image from "next/image";
 import type { BlockProps } from "@/content/v7/types";
+import { SITE_STR } from "@/content/v7/site";
 import { LinkTo } from "../LinkTo";
 import { Reveal } from "../Reveal";
 import { Section } from "../Section";
 import { linkDeep } from "../ui";
 
-/** Hairline ledger of rows on a 2 px top rule; the tag is a chip; optionally linked; optionally a real screenshot of our own work. */
+const EURO = /€/;
+
+/**
+ * Hairline ledger of rows on a 2 px top rule; the tag is a chip; optionally linked; optionally a real screenshot of
+ * our own work. Rule 1: when a row names a euro amount, the price note follows the rows (as in the process block).
+ */
 export function RowsBlock({ block: b, locale, num }: BlockProps<"rows">) {
+  const priced = b.items.some((it) => [it.tag, it.h, it.p, it.href?.label].some((x) => x && EURO.test(x)));
   return (
     <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale} airy={b.airy}>
       <ul className="wk-ledger">
@@ -33,6 +40,7 @@ export function RowsBlock({ block: b, locale, num }: BlockProps<"rows">) {
           </Reveal>
         ))}
       </ul>
+      {priced && <p className="wk-foot-note">{SITE_STR[locale].priceNote}</p>}
     </Section>
   );
 }

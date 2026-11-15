@@ -13,7 +13,7 @@ import { WkPicture } from "../werkstatt/WkPicture";
 import { h1Text } from "./h1";
 
 /** Rule 1: every price group carries the price note. A hero fact line or strip that names a euro amount gets
- * SITE_STR.priceNote unless the page set its own `stripNote` or the facts already say it. */
+ * SITE_STR.priceNote unless the page set its own `stripNote` (it serves the fact line too) or the facts already say it. */
 const hasPrice = (xs: string[]) => xs.some((x) => x.includes("€"));
 const saysNote = (xs: string[]) => xs.some((x) => /USt\.|of VAT|KDV/.test(x));
 
@@ -37,7 +37,7 @@ export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; 
   const stripVals = strip ? strip.map(([, v]) => v) : [];
   const stripNote = hero.stripNote ?? (hasPrice(stripVals) && !saysNote(stripVals) ? priceNote : undefined);
   const facts = hero.facts ?? [];
-  const factsNote = hasPrice(facts) && !saysNote(facts) ? priceNote : null;
+  const factsNote = hero.stripNote ?? (hasPrice(facts) && !saysNote(facts) ? priceNote : null);
   const pic = hero.picture;
   const side = pic ? "pic" : hero.media ? "media" : "none";
   return (
@@ -72,10 +72,8 @@ export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; 
             </div>
           )}
           {hero.jump && hero.jump.links.length > 0 && (
+            // The jump pills stand alone as in the prototype; the nav keeps its accessible name.
             <nav className="wk-jump" aria-label={hero.jump.label}>
-              <span className="wk-jump-label" aria-hidden="true">
-                {hero.jump.label}
-              </span>
               {hero.jump.links.map((l) => (
                 <LinkTo key={l.label} link={l} locale={locale}>
                   {l.label}

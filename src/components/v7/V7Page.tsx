@@ -6,7 +6,6 @@ import { CtaBand } from "./CtaBand";
 import { FaqSection } from "./FaqSection";
 import { Hero } from "./Hero";
 import { JsonLd } from "./JsonLd";
-import { MotionRoot } from "./MotionRoot";
 import { RevealObserver } from "./RevealObserver";
 import { AboutBlock } from "./blocks/about";
 import { CompareBlock } from "./blocks/compare";
@@ -108,26 +107,24 @@ export function V7Page({ page, locale }: { page: PageDef; locale: L3 }) {
   const sections = blocks.filter((b) => b.t !== "statement").length;
   const after = withGrounds(page.after ?? [], sections + (page.faq ? 1 : 0));
   return (
-    <MotionRoot>
-      <div className="v7">
-        <RevealObserver />
-        <Hero hero={page.hero} locale={locale} home={home} crumbs={crumbs} />
-        {blocks.map((block, i) => {
-          const el = renderBlock(block, locale, sectionNum(blocks, i));
-          // The first block under the hero never reveals (the page opens complete).
-          return i === 0 ? (
-            <div key={block.id} className="v7-still contents">
-              {el}
-            </div>
-          ) : (
-            el
-          );
-        })}
-        {page.faq && <FaqSection faq={page.faq} locale={locale} ground={faqGround(blocks)} />}
-        {after.map((block, i) => renderBlock(block, locale, String(sections + Number(sectionNum(after, i))).padStart(2, "0")))}
-        {page.cta && <CtaBand cta={page.cta} locale={locale} />}
-        <JsonLd page={page} locale={locale} crumbs={crumbs} />
-      </div>
-    </MotionRoot>
+    <div className="v7">
+      <RevealObserver />
+      <Hero hero={page.hero} locale={locale} home={home} crumbs={crumbs} />
+      {blocks.map((block, i) => {
+        const el = renderBlock(block, locale, sectionNum(blocks, i));
+        // The first block under the hero never reveals (the page opens complete).
+        return i === 0 ? (
+          <div key={block.id} className="v7-still contents">
+            {el}
+          </div>
+        ) : (
+          el
+        );
+      })}
+      {page.faq && <FaqSection faq={page.faq} locale={locale} ground={faqGround(blocks)} />}
+      {after.map((block, i) => renderBlock(block, locale, String(sections + Number(sectionNum(after, i))).padStart(2, "0")))}
+      {page.cta && <CtaBand cta={page.cta} locale={locale} />}
+      <JsonLd page={page} locale={locale} crumbs={crumbs} />
+    </div>
   );
 }
