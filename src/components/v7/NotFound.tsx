@@ -37,7 +37,7 @@ export function NotFound({ locale }: { locale: L3 }) {
   return (
     <MotionRoot>
       <div className="v7 pb-24 md:pb-40" lang={locale}>
-        <PlainHero eyebrow={c.eyebrow} h1={<>{c.h1[0]} <em className="font-light italic text-[#B5623A]">{c.h1[1]}</em></>} lede={c.lede}>
+        <PlainHero eyebrow={c.eyebrow} h1={<>{c.h1[0]} <em className="not-italic text-wk-copper">{c.h1[1]}</em></>} lede={c.lede}>
           <div className="v7-rise mt-10" style={{ ["--d" as string]: "240ms" }}>
             <Link href={href("home", locale)} className={btnPrimary}>
               {c.home}
@@ -45,12 +45,12 @@ export function NotFound({ locale }: { locale: L3 }) {
           </div>
         </PlainHero>
         <nav aria-label={c.more} className={`${wrap} mt-16 md:mt-24`}>
-          <ul className="max-w-[44rem] border-t border-[#16191D]">
+          <ul className="max-w-[44rem] border-t border-wk-ink">
             {LINKS.map((k) => (
-              <li key={k} className="border-b border-[#E3DCD1]">
+              <li key={k} className="border-b border-wk-line">
                 <Link href={href(k, locale)} className="group flex min-h-[44px] items-center justify-between gap-4 py-5">
                   <span className="f-display text-[1.375rem] leading-[1.2] md:text-[1.625rem]">{LABEL[locale][k]}</span>
-                  <span aria-hidden="true" className="text-[#8A4524] transition-transform group-hover:translate-x-1">
+                  <span aria-hidden="true" className="text-wk-copper-deep transition-transform group-hover:translate-x-1">
                     →
                   </span>
                 </Link>

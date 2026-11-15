@@ -11,11 +11,11 @@ export function FaqList({ items }: { items: FaqData["items"] }) {
   const [open, setOpen] = useState<number | null>(0);
   const uid = useId();
   return (
-    <div className="border-t border-[#E3DCD1]">
+    <div className="border-t border-wk-line">
       {items.map((it, i) => {
         const isOpen = open === i;
         return (
-          <div key={it.q} className="border-b border-[#E3DCD1]">
+          <div key={it.q} className="border-b border-wk-line">
             <h3>
               <button
                 type="button"
@@ -25,8 +25,8 @@ export function FaqList({ items }: { items: FaqData["items"] }) {
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="group flex min-h-[64px] w-full items-center justify-between gap-6 py-4 text-left"
               >
-                <span className="f-display text-[22px] leading-[1.2] transition-colors duration-200 group-hover:text-[#8A4524] motion-reduce:transition-none md:text-[26px]">{it.q}</span>
-                <svg aria-hidden="true" viewBox="0 0 20 20" className={`size-5 shrink-0 text-[#B5623A] transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} fill="none">
+                <span className="f-display text-[22px] leading-[1.2] transition-colors duration-200 group-hover:text-wk-copper-deep motion-reduce:transition-none md:text-[26px]">{it.q}</span>
+                <svg aria-hidden="true" viewBox="0 0 20 20" className={`size-5 shrink-0 text-wk-copper transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} fill="none">
                   <path d="M4 7.5l6 6 6-6" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
               </button>
@@ -41,7 +41,7 @@ export function FaqList({ items }: { items: FaqData["items"] }) {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="max-w-[60ch] pb-6 text-[#16191D]">{it.a}</p>
+                <p className="max-w-[60ch] pb-6 text-wk-ink">{it.a}</p>
               </div>
             </div>
           </div>

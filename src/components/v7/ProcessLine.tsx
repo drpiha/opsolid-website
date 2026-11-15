@@ -15,8 +15,8 @@ const L: Record<L3, { step: string; result: string }> = {
 
 function StepNode({ active }: { active: boolean }) {
   return (
-    <span className="absolute left-0 top-[6px] grid size-[24px] place-items-center rounded-[8px] border border-[#B5623A] bg-[#F6F2EC]" aria-hidden="true">
-      <span className={`block size-[10px] rounded-[3px] bg-[#B5623A] transition-transform duration-300 ${active ? "scale-100" : "scale-0"}`} />
+    <span className="absolute left-0 top-[6px] grid size-[24px] place-items-center rounded-[8px] border border-wk-copper bg-wk-paper" aria-hidden="true">
+      <span className={`block size-[10px] rounded-[3px] bg-wk-copper transition-transform duration-300 ${active ? "scale-100" : "scale-0"}`} />
     </span>
   );
 }
@@ -34,20 +34,20 @@ function StepRow({ s, n, total, last, locale }: { s: Step; n: number; total: num
       <StepNode active={active} />
       <div className="grid gap-8 md:grid-cols-12 md:gap-x-8">
         <Reveal className="md:col-span-6">
-          <p className="f-mono text-[12px] uppercase text-[#6B665F]">
+          <p className="f-mono text-[12px] text-wk-muted">
             {t.step} {String(n).padStart(2, "0")}
           </p>
           <h3 className="f-display mt-2 text-[30px] leading-[1.1] md:text-[36px]">{s.h}</h3>
-          {s.meta && <p className="f-mono mt-3 inline-block rounded-full border border-[#B5623A]/50 px-3 py-1 text-[13px] text-[#8A4524]">{s.meta}</p>}
-          <p className="mt-4 text-[#16191D]">{s.p}</p>
+          {s.meta && <p className="f-mono mt-3 inline-block rounded-full border border-wk-copper/50 px-3 py-1 text-[13px] text-wk-copper-deep">{s.meta}</p>}
+          <p className="mt-4 text-wk-ink">{s.p}</p>
         </Reveal>
         <Reveal className="md:col-span-6" delay={0.1}>
-          <div className="rounded-[5px] border border-l-[3px] border-[#E3DCD1] border-l-[#8A4524] p-5 md:p-6">
-            <div className="mb-4 flex items-center justify-between gap-3 border-b border-[#E3DCD1] pb-3">
-              <span className="f-mono text-[12px] uppercase text-[#6B665F]">
+          <div className="rounded-[5px] border border-l-[3px] border-wk-line border-l-wk-copper-deep p-5 md:p-6">
+            <div className="mb-4 flex items-center justify-between gap-3 border-b border-wk-line pb-3">
+              <span className="f-mono text-[12px] text-wk-muted">
                 {n}/{total} · {s.name}
               </span>
-              <span className="f-mono text-[12px] uppercase text-[#8A4524]">{t.result}</span>
+              <span className="f-mono text-[12px] text-wk-copper-deep">{t.result}</span>
             </div>
             <p className="f-display text-[22px] leading-[1.25] md:text-[26px]">{s.result}</p>
           </div>

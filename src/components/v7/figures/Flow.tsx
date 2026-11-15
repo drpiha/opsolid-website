@@ -30,7 +30,7 @@ export function Flow({ alt, locale, labels: custom }: { alt: string; locale: L3;
       {XS.map((x, i) => (
         <g key={x}>
           <rect x={x - 8} y={22} width={16} height={16} rx={5} fill={i === 3 ? COPPER : "#F6F2EC"} stroke={COPPER} strokeWidth="1" />
-          <text x={labels[i].x} y={64} textAnchor="middle" fill="#6B665F" fontSize={labels[i].fs} style={{ fontFamily: "var(--font-geist-mono), monospace", letterSpacing: "0.02em" }}>
+          <text x={labels[i].x} y={64} textAnchor="middle" fill="#6B665F" fontSize={labels[i].fs} style={{ fontFamily: "var(--font-plex-mono), monospace", letterSpacing: "0.02em" }}>
             {labels[i].text}
           </text>
         </g>

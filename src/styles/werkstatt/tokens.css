@@ -1,0 +1,118 @@
+/* Werkstatt (design C, owner decision 81): tokens of the marketing surface.
+   Scoped to html[data-v4] like opsolid-v7.css; app surfaces never see them. Every solid colour also has an
+   RGB channel triple (--wk-<name>-rgb) so the Tailwind colours wk-* (tailwind.config.ts) take opacity
+   modifiers. Source: the :root block of the prototype styles.css, with the wk- prefix. The old A variables
+   (--porcelain, --paper, --ink, ...) stay as aliases in opsolid-v7.css. */
+
+html[data-v4] {
+  /* colour: grounds */
+  --wk-ink-rgb: 20 23 27;
+  --wk-ink: #14171b;
+  --wk-ink-2-rgb: 27 31 37;
+  --wk-ink-2: #1b1f25;
+  --wk-ink-3-rgb: 39 44 52;
+  --wk-ink-3: #272c34;
+  --wk-char-rgb: 39 37 35;
+  --wk-char: #272523; /* warm charcoal of the OpSo renders (Produkte) */
+  --wk-paper-rgb: 243 240 234;
+  --wk-paper: #f3f0ea; /* page ground */
+  --wk-paper-2-rgb: 232 228 220;
+  --wk-paper-2: #e8e4dc; /* the bench */
+  --wk-sheet-rgb: 252 251 248;
+  --wk-sheet: #fcfbf8; /* a sheet lying on the bench: raised surfaces, documents */
+  --wk-slate-rgb: 220 226 228;
+  --wk-slate: #dce2e4; /* Beratung */
+  --wk-slate-deep-rgb: 46 71 86;
+  --wk-slate-deep: #2e4756;
+
+  /* colour: copper. --wk-copper is graphic only (squares, rules, underlines), never text. */
+  --wk-copper-rgb: 181 98 58;
+  --wk-copper: #b5623a;
+  --wk-copper-deep-rgb: 147 72 31;
+  --wk-copper-deep: #93481f; /* copper as text on light grounds (AA) */
+  --wk-copper-lite-rgb: 229 156 114;
+  --wk-copper-lite: #e59c72; /* copper as text on dark grounds (AA) */
+
+  /* colour: text */
+  --wk-text-rgb: 20 23 27;
+  --wk-text: #14171b;
+  --wk-muted-rgb: 85 90 98;
+  --wk-muted: #555a62;
+  --wk-text-d-rgb: 243 240 234;
+  --wk-text-d: #f3f0ea; /* text on dark grounds */
+  --wk-muted-d-rgb: 167 172 180;
+  --wk-muted-d: #a7acb4;
+  --wk-control-rgb: 125 122 116;
+  --wk-control: #7d7a74; /* form field borders (3:1 floor, 4.28:1 on white) */
+  --wk-error-rgb: 161 42 27;
+  --wk-error: #a12a1b;
+
+  /* colour: lines (decorative separators only; not for meaningful borders) */
+  --wk-line: rgba(20, 23, 27, 0.14);
+  --wk-line-2: rgba(20, 23, 27, 0.34);
+  --wk-line-d: rgba(243, 240, 234, 0.14);
+  --wk-line-d2: rgba(243, 240, 234, 0.3);
+
+  /* door marks (decision 77): Schulungen copper, Beratung slate, Produkte charcoal, Unternehmen ink */
+  --wk-line-schulungen: var(--wk-copper);
+  --wk-line-beratung: var(--wk-slate-deep);
+  --wk-line-produkte: var(--wk-char);
+  --wk-line-unternehmen: var(--wk-ink);
+  --wk-line-schulungen-d: var(--wk-copper-lite);
+  --wk-line-beratung-d: #9fb7c4;
+  --wk-line-produkte-d: #c9c2b8;
+  --wk-line-unternehmen-d: var(--wk-text-d);
+
+  /* type: families (next/font variables from src/app/layout.tsx and globals.css) */
+  --wk-sans: var(--font-archivo), "Helvetica Neue", Arial, system-ui, sans-serif;
+  --wk-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* type: scale (13 15 17 21 26 34 46 64 88 px) */
+  --wk-fs-0: 0.8125rem;
+  --wk-fs-1: 0.9375rem;
+  --wk-fs-2: 1.0625rem;
+  --wk-fs-3: 1.3125rem;
+  --wk-fs-4: 1.625rem;
+  --wk-fs-5: 2.125rem;
+  --wk-fs-6: 2.875rem;
+  --wk-fs-7: 4rem;
+  --wk-fs-8: 5.5rem;
+
+  /* space and shape */
+  --wk-wrap: 1240px;
+  --wk-gut: 40px;
+  --wk-sec: 108px;
+  --wk-header-h: 72px;
+  /* distance from the wrap edge to the viewport edge: pictures that bleed out of the wrap use it */
+  --wk-bleed: calc(max(0px, (100vw - 1320px) / 2) + var(--wk-gut));
+  --wk-r-1: 4px;
+  --wk-r-2: 10px;
+  --wk-r-3: 18px;
+  --wk-shadow-sheet: 0 1px 0 rgba(20, 23, 27, 0.05), 0 18px 34px -18px rgba(20, 23, 27, 0.35), 0 44px 70px -40px rgba(20, 23, 27, 0.35);
+  --wk-shadow-sheet-d: 0 2px 0 rgba(0, 0, 0, 0.3), 0 30px 60px -24px rgba(0, 0, 0, 0.7);
+
+  /* motion */
+  --wk-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --wk-ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --wk-t-micro: 160ms;
+  --wk-t-ui: 240ms;
+  --wk-t-scene: 700ms;
+}
+
+/* small laptops and tablets in landscape */
+@media (max-width: 1180px) {
+  html[data-v4] {
+    --wk-gut: 28px;
+    --wk-sec: 96px;
+  }
+}
+
+/* phones and tablets: one column everywhere (the JS uses the same 960/961 split) */
+@media (max-width: 960px) {
+  html[data-v4] {
+    --wk-gut: 20px;
+    --wk-sec: 48px;
+    --wk-header-h: 60px;
+    --wk-fs-3: 1.125rem;
+  }
+}

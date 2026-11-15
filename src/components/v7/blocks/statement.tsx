@@ -13,11 +13,11 @@ import { wrap } from "../ui";
 export function StatementBlock({ block, locale }: BlockProps<"statement">) {
   const text = block.text.trim().replace(/\.$/, "");
   return (
-    <section id={block.id} aria-label={block.label} className="on-ink relative mt-28 overflow-hidden bg-[#16191D] text-[#F6F2EC] md:mt-40">
+    <section id={block.id} aria-label={block.label} className="on-ink relative mt-28 overflow-hidden bg-wk-ink text-wk-text-d md:mt-40">
       <svg
         aria-hidden="true"
         viewBox="0 0 320 320"
-        className="pointer-events-none absolute -bottom-24 -right-20 hidden w-[520px] text-[#B5623A] md:block lg:-right-10 lg:w-[600px]"
+        className="pointer-events-none absolute -bottom-24 -right-20 hidden w-[520px] text-wk-copper md:block lg:-right-10 lg:w-[600px]"
         fill="none"
         stroke="currentColor"
       >
@@ -27,17 +27,17 @@ export function StatementBlock({ block, locale }: BlockProps<"statement">) {
         <rect x="91" y="91" width="138" height="138" rx="24" strokeOpacity="0.1" />
       </svg>
       <div className={`${wrap} relative py-20 md:py-36`}>
-        <span aria-hidden="true" className="block h-px w-14 bg-[#B5623A]" />
+        <span aria-hidden="true" className="block h-px w-14 bg-wk-copper" />
         <Reveal>
-          <p className="f-display mt-10 max-w-[19ch] text-balance text-[clamp(2.125rem,9vw,2.75rem)] font-light leading-[1.06] tracking-[-0.018em] md:mt-14 md:max-w-[17ch] md:text-[clamp(3.5rem,5.6vw,5rem)] md:leading-[1.03]">
+          <p className="f-display mt-10 max-w-[19ch] text-balance text-[clamp(2.125rem,9vw,2.75rem)] leading-[1.06] tracking-[-0.018em] md:mt-14 md:max-w-[17ch] md:text-[clamp(3.5rem,5.6vw,5rem)] md:leading-[1.03]">
             {text}
           </p>
-          {block.note && <p className="f-mono mt-10 max-w-[56ch] text-[12px] uppercase leading-[1.8] text-[#C9C2B8] md:mt-14">{block.note}</p>}
+          {block.note && <p className="f-mono mt-10 max-w-[56ch] text-[12px] leading-[1.8] text-wk-muted-d md:mt-14">{block.note}</p>}
           {block.cta && (
             <LinkTo
               link={block.cta}
               locale={locale}
-              className="mt-8 inline-flex min-h-[44px] items-center text-[16px] text-[#F6F2EC] underline decoration-[#B5623A] underline-offset-[6px] hover:decoration-[#E3B79C] md:mt-10"
+              className="mt-8 inline-flex min-h-[44px] items-center text-[16px] text-wk-text-d underline decoration-wk-copper underline-offset-[6px] hover:decoration-wk-copper-lite md:mt-10"
             >
               {block.cta.label}
             </LinkTo>

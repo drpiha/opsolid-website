@@ -38,21 +38,21 @@ export function Hero({ hero, locale, home }: { hero: PageDef["hero"]; locale: L3
     <section aria-labelledby="hero-h" className={`${wrap} pb-4 pt-10 md:pt-20 ${strip ? "v7-hero-strip" : ""}`}>
       <div className="grid gap-x-8 gap-y-8 md:grid-cols-12 md:gap-y-14 lg:items-center">
         <div className={hero.media ? "md:col-span-8 lg:col-span-7" : "md:col-span-10"}>
-          <p className="f-mono flex max-w-[64ch] items-start gap-3 text-[12px] uppercase leading-[1.6] text-[#8A4524] md:text-[13px]">
-            <span aria-hidden="true" className="mt-[0.8em] h-px w-8 shrink-0 bg-[#B5623A]" />
+          <p className="f-mono flex max-w-[64ch] items-start gap-3 text-[12px] leading-[1.6] text-wk-copper-deep md:text-[13px]">
+            <span aria-hidden="true" className="mt-[0.8em] h-px w-8 shrink-0 bg-wk-copper" />
             {hero.eyebrow}
           </p>
           <h1
             id="hero-h"
-            className={`f-display mt-8 font-light leading-[1] tracking-[-0.025em] text-[#16191D] text-[clamp(2.75rem,12.5vw,3.4rem)] md:leading-[1.03] md:tracking-[-0.02em] ${
+            className={`f-display mt-8 leading-[1] tracking-[-0.025em] text-wk-ink text-[clamp(2.75rem,12.5vw,3.4rem)] md:leading-[1.03] md:tracking-[-0.02em] ${
               home ? "md:text-[clamp(2.5rem,6.8vw,6.5rem)]" : "md:text-[clamp(2.25rem,5.4vw,5.25rem)]"
             }`}
           >
             {pre}
-            {em && <em className="font-light italic text-[#B5623A]">{em}</em>}
+            {em && <em className="not-italic text-wk-copper">{em}</em>}
             {post}
           </h1>
-          <p className="v7-lede mt-9 max-w-[38rem] text-[18px] leading-[1.6] text-[#16191D] md:text-[20px]">
+          <p className="v7-lede mt-9 max-w-[38rem] text-[18px] leading-[1.6] text-wk-ink md:text-[20px]">
             {hero.lede}
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
@@ -79,19 +79,19 @@ export function Hero({ hero, locale, home }: { hero: PageDef["hero"]; locale: L3
       </div>
 
       {strip ? (
-        <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-7 border-t border-[#E3DCD1] pt-6 md:mt-20 md:grid-cols-4 md:gap-x-8">
+        <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-7 border-t border-wk-line pt-6 md:mt-20 md:grid-cols-4 md:gap-x-8">
           {strip.map(([label, value]) => (
             <div key={label}>
-              <dt className="f-mono text-[12px] uppercase leading-[1.7] text-[#6B665F]">{label}</dt>
-              <dd className="mt-1 text-[17px] leading-[1.45] text-[#16191D] [hyphens:manual] md:text-[18px]">{value}</dd>
+              <dt className="f-mono text-[12px] leading-[1.7] text-wk-muted">{label}</dt>
+              <dd className="mt-1 text-[17px] leading-[1.45] text-wk-ink [hyphens:manual] md:text-[18px]">{value}</dd>
             </div>
           ))}
         </dl>
       ) : hero.facts && hero.facts.length > 0 && (
-        <p className="f-mono mt-16 border-t border-[#E3DCD1] pt-5 text-[12px] leading-[1.9] text-[#6B665F] md:mt-24 md:text-[13px]">
+        <p className="f-mono mt-16 border-t border-wk-line pt-5 text-[12px] leading-[1.9] text-wk-muted md:mt-24 md:text-[13px]">
           {hero.facts.map((f, i) => (
             <span key={f}>
-              {i > 0 && <span className="mx-1.5 text-[#8A4524]">·</span>}
+              {i > 0 && <span className="mx-1.5 text-wk-copper-deep">·</span>}
               {f}
             </span>
           ))}

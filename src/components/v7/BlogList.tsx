@@ -147,16 +147,16 @@ export function BlogList({ locale }: { locale: L3 }) {
     <MotionRoot>
       <div className="v7">
         <Breadcrumbs crumbs={crumbs} locale={locale} />
-        <PlainHero eyebrow={t.eyebrow} h1={<>{t.h1[0]} <em className="font-light italic text-[#8A4524]">{t.h1[1]}</em></>} lede={t.lede} />
+        <PlainHero eyebrow={t.eyebrow} h1={<>{t.h1[0]} <em className="not-italic text-wk-copper-deep">{t.h1[1]}</em></>} lede={t.lede} />
         <section id="beitraege" aria-label={t.frame} className="mt-20 scroll-mt-20 md:mt-32">
           <Frame label={t.frame} note={t.frameNote}>
-            <ul className="border-t border-[#16191D]">
+            <ul className="border-t border-wk-ink">
               {posts.map((p, i) => (
-                <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-[#E3DCD1] py-8 md:grid-cols-9 md:py-10">
-                  <p className="f-mono text-[12px] uppercase leading-[1.7] text-[#6B665F] md:col-span-3">
+                <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-wk-line py-8 md:grid-cols-9 md:py-10">
+                  <p className="f-mono text-[12px] leading-[1.7] text-wk-muted md:col-span-3">
                     <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
-                    <span className="mt-1 block text-[#8A4524]">
-                      {t.cat[p.category] ?? p.category} <span className="text-[#8A4524]">·</span> {getReadMinutes(p.slug, locale)} {t.min}
+                    <span className="mt-1 block text-wk-copper-deep">
+                      {t.cat[p.category] ?? p.category} <span className="text-wk-copper-deep">·</span> {getReadMinutes(p.slug, locale)} {t.min}
                     </span>
                   </p>
                   <div className="md:col-span-6">
@@ -165,8 +165,8 @@ export function BlogList({ locale }: { locale: L3 }) {
                         {soft(p.title)}
                       </Link>
                     </h2>
-                    <p className="mt-3 text-[#16191D]">{p.excerpt}</p>
-                    <p aria-hidden="true" className="mt-3 text-[16px] font-medium text-[#8A4524]">
+                    <p className="mt-3 text-wk-ink">{p.excerpt}</p>
+                    <p aria-hidden="true" className="mt-3 text-[16px] font-medium text-wk-copper-deep">
                       {t.read} →
                     </p>
                   </div>

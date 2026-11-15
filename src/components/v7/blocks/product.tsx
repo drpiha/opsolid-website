@@ -16,19 +16,19 @@ export function ProductBlock({ block: b, locale, num }: BlockProps<"product">) {
         <div className="lg:col-span-4">
           <Reveal>
             <h3 className="f-display text-[1.75rem] leading-[1.15] md:text-[2.25rem]">{b.name}</h3>
-            <p className="mt-5 text-[#16191D]">{b.p}</p>
+            <p className="mt-5 text-wk-ink">{b.p}</p>
             <ul className="mt-6 space-y-2.5 text-[16px]">
               {b.points.map((p) => (
                 <li key={p} className="flex gap-3">
-                  <span aria-hidden="true" className="mt-[0.8em] h-px w-3 shrink-0 bg-[#B5623A]" />
+                  <span aria-hidden="true" className="mt-[0.8em] h-px w-3 shrink-0 bg-wk-copper" />
                   <span>{p}</span>
                 </li>
               ))}
             </ul>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="mt-8 border-l border-[#B5623A] pl-5 text-[16px] leading-[1.6] text-[#16191D]">
-              <span className="f-mono mb-1 block text-[12px] uppercase text-[#8A4524]">{STATUS[locale]}</span>
+            <p className="mt-8 border-l border-wk-copper pl-5 text-[16px] leading-[1.6] text-wk-ink">
+              <span className="f-mono mb-1 block text-[12px] text-wk-copper-deep">{STATUS[locale]}</span>
               {b.status}
             </p>
             {b.href && (

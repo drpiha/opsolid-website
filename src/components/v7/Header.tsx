@@ -52,8 +52,8 @@ function Lang({ locale, current, sub, className = "" }: { locale: L3; current: L
             title={LANG_NAME[l]}
             aria-current={active ? "true" : undefined}
             onClick={() => rememberLocale(l)}
-            className={`f-mono inline-flex min-h-[44px] min-w-[40px] items-center justify-center rounded-[10px] px-2 text-[12px] uppercase ${
-              active ? "text-[#16191D] underline decoration-[#B5623A] decoration-2 underline-offset-[6px]" : "text-[#6B665F] hover:text-[#16191D]"
+            className={`f-mono inline-flex min-h-[44px] min-w-[40px] items-center justify-center rounded-[10px] px-2 text-[12px] ${
+              active ? "text-wk-ink underline decoration-wk-copper decoration-2 underline-offset-[6px]" : "text-wk-muted hover:text-wk-ink"
             }`}
           >
             {LANG_SHORT[l]}
@@ -119,9 +119,9 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
 
   return (
     <>
-      <header className="v7 v7-header sticky top-0 z-50 border-b border-[#E3DCD1]">
+      <header className="v7 v7-header sticky top-0 z-50 border-b border-wk-line">
         <div className={`${wrap} flex h-16 items-center justify-between gap-4 md:h-[72px]`}>
-          <Link href={href("home", locale)} aria-label={t.homeAria} onClick={() => { if (locale === "de") rememberLocale("de"); }} className="flex min-h-[44px] shrink-0 items-center text-[#16191D] [&_svg]:h-[22px] [&_svg]:w-auto md:[&_svg]:h-[24px]">
+          <Link href={href("home", locale)} aria-label={t.homeAria} onClick={() => { if (locale === "de") rememberLocale("de"); }} className="flex min-h-[44px] shrink-0 items-center text-wk-ink [&_svg]:h-[22px] [&_svg]:w-auto md:[&_svg]:h-[24px]">
             <Logo />
           </Link>
 
@@ -131,7 +131,7 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
                 key={n.key}
                 href={n.url}
                 aria-current={n.current ? "page" : undefined}
-                className={`relative inline-flex min-h-[44px] items-center text-[15px] text-[#16191D] after:absolute after:bottom-2 after:left-0 after:h-px after:w-full after:origin-left after:bg-[#B5623A] after:transition-transform after:duration-200 hover:after:scale-x-100 ${
+                className={`relative inline-flex min-h-[44px] items-center text-[15px] text-wk-ink after:absolute after:bottom-2 after:left-0 after:h-px after:w-full after:origin-left after:bg-wk-copper after:transition-transform after:duration-200 hover:after:scale-x-100 ${
                   n.active ? "after:scale-x-100" : "after:scale-x-0"
                 }`}
               >
@@ -144,7 +144,7 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
             <Lang locale={pageLocale} current={locale} sub={lang} className="hidden lg:flex" />
             <Link
               href={cta}
-              className="hidden min-h-[44px] items-center rounded-[14px] border border-[#16191D] px-5 text-[15px] font-medium text-[#16191D] transition-colors duration-150 hover:bg-[#16191D] hover:text-[#F6F2EC] lg:inline-flex"
+              className="hidden min-h-[44px] items-center rounded-[14px] border border-wk-ink px-5 text-[15px] font-medium text-wk-ink transition-colors duration-150 hover:bg-wk-ink hover:text-wk-text-d lg:inline-flex"
             >
               {t.cta}
             </Link>
@@ -155,7 +155,7 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
               aria-haspopup="dialog"
               aria-controls="v7-menu"
               onClick={() => setOpen(true)}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-[14px] border border-[#E3DCD1] bg-white px-4 text-[15px] font-medium text-[#16191D] lg:hidden"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-[14px] border border-wk-line bg-wk-sheet px-4 text-[15px] font-medium text-wk-ink lg:hidden"
             >
               <span>{t.menuOpen}</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -166,15 +166,15 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
         </div>
 
         <dialog id="v7-menu" ref={dlg} className="v7-menu" aria-label={t.menuTitle} onClose={onClose}>
-          <div className={`${wrap} flex h-16 shrink-0 items-center justify-between border-b border-[#E3DCD1]`}>
-            <Link href={href("home", locale)} aria-label={t.homeAria} onClick={() => setOpen(false)} className="flex min-h-[44px] items-center text-[#16191D] [&_svg]:h-[22px] [&_svg]:w-auto">
+          <div className={`${wrap} flex h-16 shrink-0 items-center justify-between border-b border-wk-line`}>
+            <Link href={href("home", locale)} aria-label={t.homeAria} onClick={() => setOpen(false)} className="flex min-h-[44px] items-center text-wk-ink [&_svg]:h-[22px] [&_svg]:w-auto">
               <Logo />
             </Link>
             <button
               ref={closeBtn}
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-[14px] border border-[#E3DCD1] bg-white px-4 text-[15px] font-medium text-[#16191D]"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-[14px] border border-wk-line bg-wk-sheet px-4 text-[15px] font-medium text-wk-ink"
             >
               <span>{t.menuClose}</span>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -190,10 +190,10 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
                     href={n.url}
                     onClick={() => setOpen(false)}
                     aria-current={n.current ? "page" : undefined}
-                    className={`f-display flex min-h-[56px] items-center justify-between border-b border-[#E3DCD1] text-[26px] leading-none ${n.active ? "text-[#8A4524]" : ""}`}
+                    className={`f-display flex min-h-[56px] items-center justify-between border-b border-wk-line text-[26px] leading-none ${n.active ? "text-wk-copper-deep" : ""}`}
                   >
                     {n.label}
-                    <span aria-hidden="true" className="text-[#B5623A]">→</span>
+                    <span aria-hidden="true" className="text-wk-copper">→</span>
                   </Link>
                 </li>
               ))}
@@ -202,7 +202,7 @@ export function V7Header({ locale, publicPath, suggest }: { locale: L3; publicPa
               <Link
                 href={cta}
                 onClick={() => setOpen(false)}
-                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-[16px] bg-[#16191D] px-7 text-[16px] font-medium text-[#F6F2EC]"
+                className="inline-flex min-h-[52px] w-full items-center justify-center rounded-[16px] bg-wk-ink px-7 text-[16px] font-medium text-wk-text-d"
               >
                 {t.cta}
               </Link>

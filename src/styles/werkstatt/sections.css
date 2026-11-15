@@ -1,0 +1,141 @@
+/* Werkstatt sections: the parts of the page frame every marketing page shares (inner page hero with
+   breadcrumbs, jump pills and the bleeding picture, the statement band, the FAQ, the closing copper band,
+   the language hint). Ported from the prototype styles.css (Schulungen page base, faq, cta band; third
+   pass merged into single rules), prefixed wk- and scoped to html[data-v4]. The home bench hero lives in
+   home.css (P1); the Produkte hero in produkte.css (P3). */
+
+/* ---------- inner page hero ---------- */
+html[data-v4] .wk-page-hero { position: relative; overflow: clip; background: var(--wk-paper); color: var(--wk-text); }
+html[data-v4] .wk-page-hero.wk-mat { --mat-mask: linear-gradient(100deg, transparent 0%, #000 46%); }
+html[data-v4] .wk-page-hero.wk-on-ink { background: var(--wk-ink); color: var(--wk-text-d); }
+html[data-v4] .wk-page-hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: center; padding-block: 44px 52px; }
+html[data-v4] .wk-page-hero-copy { display: grid; gap: 24px; justify-items: start; min-width: 0; }
+html[data-v4] .wk-page-hero .wk-d1 { font-size: clamp(2.75rem, 4.3vw, 3.875rem); line-height: 0.98; letter-spacing: -0.026em; }
+html[data-v4] .wk-page-hero .wk-lede { color: var(--wk-muted); }
+html[data-v4] .wk-page-hero.wk-on-ink .wk-lede,
+html[data-v4] .wk-page-hero.wk-on-ink .wk-crumbs { color: var(--wk-muted-d); }
+html[data-v4] .wk-page-hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
+html[data-v4] .wk-page-hero .wk-facts { position: relative; }
+
+/* breadcrumbs: mono, "/" separators, 44 px targets */
+html[data-v4] .wk-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.3; color: var(--wk-muted); }
+html[data-v4] .wk-crumbs li { display: inline-flex; align-items: center; gap: 8px; }
+html[data-v4] .wk-crumbs li + li::before { content: "/"; color: var(--wk-muted); }
+html[data-v4] .wk-on-ink .wk-crumbs li + li::before { color: var(--wk-muted-d); }
+html[data-v4] .wk-crumbs a { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; }
+html[data-v4] .wk-crumbs a:hover { color: var(--wk-text); text-decoration: underline; text-underline-offset: 4px; }
+html[data-v4] .wk-on-ink .wk-crumbs a:hover { color: var(--wk-text-d); }
+html[data-v4] .wk-crumbs [aria-current] { color: var(--wk-text); }
+html[data-v4] .wk-on-ink .wk-crumbs [aria-current] { color: var(--wk-text-d); }
+
+/* jump pills (in-page links under the hero copy) */
+html[data-v4] .wk-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+html[data-v4] .wk-jump-label { font-family: var(--wk-mono); font-size: var(--wk-fs-0); color: var(--wk-muted); margin-right: 4px; }
+html[data-v4] .wk-jump a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--wk-r-2); border: 1.5px solid var(--wk-line-2); text-decoration: none; font-size: var(--wk-fs-1); font-weight: 540; transition: border-color var(--wk-t-micro), background-color var(--wk-t-micro); }
+html[data-v4] .wk-jump a:hover { border-color: var(--wk-text); background: var(--wk-sheet); }
+html[data-v4] .wk-on-ink .wk-jump a { border-color: var(--wk-line-d2); }
+html[data-v4] .wk-on-ink .wk-jump a:hover { border-color: var(--wk-text-d); background: var(--wk-ink-2); }
+
+/* the hero picture bleeds out of the wrap to the right edge (the hero clips the overflow) */
+html[data-v4] .wk-hero-pic { margin: 0; margin-right: calc(-1 * var(--wk-bleed)); max-width: calc(100% + var(--wk-bleed)); display: grid; gap: 12px; min-width: 0; }
+html[data-v4] .wk-hero-pic picture { display: block; }
+html[data-v4] .wk-hero-pic img { display: block; width: 100%; height: clamp(440px, 36vw, 660px); object-fit: cover; object-position: 100% 100%; border-radius: var(--wk-r-3) 0 0 var(--wk-r-3); background: var(--wk-paper-2); box-shadow: 0 40px 70px -44px rgba(20, 23, 27, 0.7); }
+html[data-v4] .wk-hero-media { min-width: 0; }
+
+/* ---------- statement band (ink, mat) ---------- */
+html[data-v4] .wk-statement { background: var(--wk-ink); color: var(--wk-text-d); padding-block: var(--wk-sec); }
+html[data-v4] .wk-statement-s { font-family: var(--wk-sans); font-stretch: 116%; font-weight: 660; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.024em; max-width: 22ch; text-wrap: balance; }
+html[data-v4] .wk-statement-note { display: flex; align-items: flex-start; gap: 10px; margin-top: 36px; max-width: 56ch; font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.5; color: var(--wk-muted-d); }
+html[data-v4] .wk-statement-note::before { content: ""; flex: none; width: 9px; height: 9px; margin-top: 5px; border-radius: 2.5px; background: var(--wk-copper-lite); }
+
+/* ---------- FAQ: sticky side column, plus/minus squares ---------- */
+html[data-v4] .wk-faq-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; align-items: start; }
+html[data-v4] .wk-faq-side { position: sticky; top: calc(var(--wk-header-h) + 32px); display: grid; gap: 18px; justify-items: start; }
+html[data-v4] .wk-faq-side p { color: var(--wk-muted); font-size: var(--wk-fs-1); max-width: 26em; }
+html[data-v4] .wk-faq { border-top: 2px solid var(--wk-text); }
+html[data-v4] .wk-faq details { border-bottom: 1px solid var(--wk-line-2); }
+html[data-v4] .wk-faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr 28px; gap: 16px; align-items: center; min-height: 68px; padding: 14px 0; font-weight: 620; font-size: var(--wk-fs-3); line-height: 1.25; font-stretch: 106%; transition: color var(--wk-t-micro); }
+html[data-v4] .wk-faq summary::-webkit-details-marker { display: none; }
+html[data-v4] .wk-faq summary::after {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1.5px solid var(--wk-line-2);
+  background:
+    linear-gradient(var(--wk-text), var(--wk-text)) center / 12px 1.5px no-repeat,
+    linear-gradient(var(--wk-text), var(--wk-text)) center / 1.5px 12px no-repeat;
+  transition: background-size var(--wk-t-ui) var(--wk-ease-out), border-color var(--wk-t-ui);
+}
+html[data-v4] .wk-faq details[open] summary::after { background-size: 12px 1.5px, 1.5px 0; border-color: var(--wk-copper-deep); }
+html[data-v4] .wk-faq summary:hover { color: var(--wk-copper-deep); }
+html[data-v4] .wk-faq-a { padding: 0 44px 24px 0; color: var(--wk-muted); max-width: 44em; }
+html[data-v4] .wk-faq-a p + p { margin-top: 0.75em; }
+
+/* ---------- closing copper band ---------- */
+html[data-v4] .wk-cta-band { position: relative; overflow: clip; background: var(--wk-copper-deep); color: var(--wk-text-d); padding-block: 88px; }
+html[data-v4] .wk-cta-band.wk-mat { --mat-major: rgba(20, 23, 27, 0.16); --mat-minor: rgba(20, 23, 27, 0.07); --mat-mask: linear-gradient(90deg, transparent 30%, #000 100%); }
+html[data-v4] .wk-cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 48px; align-items: end; }
+html[data-v4] .wk-cta-grid p { margin-top: 18px; max-width: 34em; color: var(--wk-text-d); }
+html[data-v4] .wk-cta-actions { display: grid; gap: 8px; justify-items: end; }
+/* band text is paper only: muted-d and copper-lite fail AA on copper-deep */
+html[data-v4] .wk-cta-band .wk-etikett { color: var(--wk-text-d); }
+html[data-v4] .wk-cta-band .wk-tlink:hover { color: #fff; text-decoration-thickness: 2px; }
+html[data-v4] .wk-cta-band :focus-visible { outline-color: var(--wk-text-d); }
+/* with a picture: the render is the band, a gradient keeps the copy on copper */
+html[data-v4] .wk-cta-band.has-pic { padding-block: 104px; }
+html[data-v4] .wk-cta-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 46%; }
+html[data-v4] .wk-cta-band.has-pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #8a431c 0%, #8a431c 38%, rgba(138, 67, 28, 0.86) 52%, rgba(138, 67, 28, 0) 78%); }
+html[data-v4] .wk-cta-band.has-pic .wk-cta-grid { grid-template-columns: minmax(0, 6.2fr) minmax(0, 5.8fr); align-items: start; }
+html[data-v4] .wk-cta-band.has-pic .wk-cta-actions { grid-column: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; justify-items: start; }
+html[data-v4] .wk-cta-cap { position: absolute; z-index: 1; right: var(--wk-bleed); bottom: 16px; padding: 5px 8px; border-radius: 3px; background: rgba(20, 23, 27, 0.8); font-size: 0.75rem; }
+html[data-v4] .wk-cta-band .wk-etikett.wk-cta-cap { color: var(--wk-text-d); }
+
+/* ---------- language hint (German home, suggested en/tr) ---------- */
+html[data-v4] .wk-langhint { background: var(--wk-paper-2); color: var(--wk-text); border-bottom: 1px solid var(--wk-line); font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; }
+html[data-v4] .wk-langhint-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; }
+html[data-v4] .wk-langhint a { text-decoration: underline; text-underline-offset: 4px; }
+html[data-v4] .wk-langhint button { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: var(--wk-r-2); background: transparent; color: var(--wk-text); }
+html[data-v4] .wk-langhint button:hover { background: var(--wk-sheet); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  /* phone hero: the picture comes after the copy and before the jump pills, so the first screen shows it */
+  html[data-v4] .wk-page-hero-grid { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding-block: 16px 28px; }
+  html[data-v4] .wk-page-hero-grid .wk-page-hero-copy { display: contents; }
+  html[data-v4] .wk-page-hero-grid .wk-page-hero-copy > * + * { margin-top: 18px; }
+  html[data-v4] .wk-page-hero-grid .wk-hero-pic,
+  html[data-v4] .wk-page-hero-grid .wk-hero-media { order: 2; margin-top: 22px; }
+  html[data-v4] .wk-page-hero-grid .wk-jump { order: 3; margin-top: 20px; }
+  html[data-v4] .wk-page-hero .wk-d1 { font-size: 2.5rem; line-height: 0.98; }
+  html[data-v4] .wk-page-hero-cta { gap: 4px 24px; }
+  html[data-v4] .wk-page-hero-cta .wk-btn { width: 100%; }
+  html[data-v4] .wk-jump a { font-size: 0.875rem; padding: 0 12px; }
+  html[data-v4] .wk-hero-pic { margin-inline: calc(-1 * var(--wk-gut)); max-width: none; gap: 10px; }
+  html[data-v4] .wk-hero-pic img { height: auto; border-radius: 0; box-shadow: none; }
+  html[data-v4] .wk-hero-pic .wk-etikett { margin-inline: var(--wk-gut); }
+
+  html[data-v4] .wk-statement-note { margin-top: 24px; }
+
+  html[data-v4] .wk-faq-grid { grid-template-columns: 1fr; gap: 32px; }
+  html[data-v4] .wk-faq-side { position: static; }
+  html[data-v4] .wk-faq summary { font-size: 1.0625rem; min-height: 60px; }
+  html[data-v4] .wk-faq-a { padding-right: 0; font-size: 0.9375rem; }
+
+  html[data-v4] .wk-cta-band { padding-block: 56px; }
+  html[data-v4] .wk-cta-grid { grid-template-columns: 1fr; gap: 24px; }
+  html[data-v4] .wk-cta-actions { justify-items: stretch; }
+  html[data-v4] .wk-cta-actions .wk-btn { width: 100%; }
+  html[data-v4] .wk-cta-actions .wk-tlink { justify-content: center; }
+  html[data-v4] .wk-cta-band.has-pic { padding-block: 0 44px; }
+  html[data-v4] .wk-cta-band.has-pic::after { display: none; }
+  html[data-v4] .wk-cta-pic img { position: static; height: 236px; object-position: 50% 50%; margin-bottom: 36px; }
+  html[data-v4] .wk-cta-cap { right: auto; left: var(--wk-gut); top: 196px; bottom: auto; }
+  html[data-v4] .wk-cta-band.has-pic .wk-cta-grid { grid-template-columns: 1fr; }
+  html[data-v4] .wk-cta-band.has-pic .wk-cta-actions { display: grid; justify-items: stretch; }
+}
+/* tablets: the hero picture keeps its phone cut but does not grow to the full width */
+@media (min-width: 600px) and (max-width: 960px) {
+  html[data-v4] .wk-page-hero-grid .wk-hero-pic { align-self: flex-end; width: 560px; margin-left: 0; }
+  html[data-v4] .wk-page-hero-grid .wk-hero-pic img { border-radius: var(--wk-r-3) 0 0 var(--wk-r-3); }
+}

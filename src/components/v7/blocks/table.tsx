@@ -8,11 +8,11 @@ export function TableBlock({ block: b, locale, num }: BlockProps<"table">) {
     <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <Reveal className="mt-10 md:mt-14">
         <table className="w-full border-collapse text-left text-[16px]">
-          <caption className="f-mono mb-4 text-left text-[12px] uppercase text-[#6B665F]">{b.caption}</caption>
+          <caption className="f-mono mb-4 text-left text-[12px] text-wk-muted">{b.caption}</caption>
           <thead className="max-md:sr-only">
-            <tr className="border-b border-[#16191D]">
+            <tr className="border-b border-wk-ink">
               {b.cols.map((c) => (
-                <th key={c} scope="col" className="f-mono py-3 pr-6 text-[12px] font-normal uppercase text-[#6B665F]">
+                <th key={c} scope="col" className="f-mono py-3 pr-6 text-[12px] font-normal text-wk-muted">
                   {c}
                 </th>
               ))}
@@ -20,13 +20,13 @@ export function TableBlock({ block: b, locale, num }: BlockProps<"table">) {
           </thead>
           <tbody>
             {b.rows.map((r) => (
-              <tr key={r[0]} className="border-b border-[#E3DCD1] max-md:block max-md:py-4">
+              <tr key={r[0]} className="border-b border-wk-line max-md:block max-md:py-4">
                 {r.map((cell, j) => (
                   <td
                     key={j}
                     data-label={b.cols[j]}
-                    className={`py-4 pr-6 align-top max-md:block max-md:py-1 max-md:before:font-[family-name:var(--font-geist-mono)] max-md:before:block max-md:before:text-[12px] max-md:before:uppercase max-md:before:text-[#6B665F] max-md:before:content-[attr(data-label)] ${
-                      j === 0 ? "f-display text-[1.25rem] leading-[1.25] md:text-[1.375rem]" : "text-[#16191D]"
+                    className={`py-4 pr-6 align-top max-md:block max-md:py-1 max-md:before:font-[family-name:var(--font-plex-mono)] max-md:before:block max-md:before:text-[12px] max-md:before:text-wk-muted max-md:before:content-[attr(data-label)] ${
+                      j === 0 ? "f-display text-[1.25rem] leading-[1.25] md:text-[1.375rem]" : "text-wk-ink"
                     }`}
                   >
                     {cell}
@@ -36,7 +36,7 @@ export function TableBlock({ block: b, locale, num }: BlockProps<"table">) {
             ))}
           </tbody>
         </table>
-        {b.footnote && <p className="mt-5 max-w-[64ch] text-[14px] leading-[1.6] text-[#6B665F]">{b.footnote}</p>}
+        {b.footnote && <p className="mt-5 max-w-[64ch] text-[14px] leading-[1.6] text-wk-muted">{b.footnote}</p>}
       </Reveal>
     </Section>
   );

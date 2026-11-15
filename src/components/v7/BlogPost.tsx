@@ -97,7 +97,7 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
           h1={post.title}
           lede={post.excerpt}
         >
-          <p className="v7-rise f-mono mt-8 text-[12px] uppercase text-[#6B665F]" style={{ ["--d" as string]: "240ms" }}>
+          <p className="v7-rise f-mono mt-8 text-[12px] text-wk-muted" style={{ ["--d" as string]: "240ms" }}>
             {l.by}
           </p>
         </PlainHero>
@@ -117,15 +117,15 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
         {(prev || next) && (
           <nav aria-label={l.nav} className="mt-16 md:mt-24">
             <Frame label={l.nav}>
-              <ul className="grid gap-x-8 border-t border-[#16191D] md:grid-cols-2">
+              <ul className="grid gap-x-8 border-t border-wk-ink md:grid-cols-2">
                 {[
                   { p: prev, label: `← ${l.prev}` },
                   { p: next, label: `${l.next} →` },
                 ].map(({ p, label }, i) => (
-                  <li key={i} className={`border-b border-[#E3DCD1] ${i === 1 ? "md:text-right" : ""}`}>
+                  <li key={i} className={`border-b border-wk-line ${i === 1 ? "md:text-right" : ""}`}>
                     {p && (
                       <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="block py-6">
-                        <span className="f-mono text-[12px] uppercase text-[#8A4524]">{label}</span>
+                        <span className="f-mono text-[12px] text-wk-copper-deep">{label}</span>
                         <span className="f-display mt-2 block text-[1.25rem] leading-[1.2]">{p.title}</span>
                       </Link>
                     )}

@@ -9,11 +9,20 @@ import "./globals.css";
 // Loaded after globals.css (which pulls in the legacy v4 marketing CSS) so the v7 base wins at equal specificity.
 import "../styles/opsolid-v7.css";
 import "../styles/opsolid-v7-motion.css";
+// Werkstatt (design C, owner decision 81): tokens, base, shell, sections, blocks, then the page files.
+import "../styles/werkstatt/tokens.css";
+import "../styles/werkstatt/base.css";
+import "../styles/werkstatt/shell.css";
+import "../styles/werkstatt/sections.css";
+import "../styles/werkstatt/blocks.css";
+import "../styles/werkstatt/home.css";
+import "../styles/werkstatt/hub.css";
+import "../styles/werkstatt/produkte.css";
 
-// v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
-// serve the marketing site. The legacy families below still serve app
-// surfaces (cards, dashboard) but are not preloaded.
-// Archivo is self-hosted as one preloaded file, pre-instanced to the axis
+// Werkstatt (design C): Archivo (display + body, variable width axis) and IBM Plex Mono (labels) serve the
+// marketing site. Archivo is the only preloaded face (the LCP text on the home page); the other families
+// below serve app surfaces (cards, dashboard), the OG card renderer and mail templates and are not preloaded.
+// Archivo is self-hosted as one file, pre-instanced to the axis
 // ranges the v4 CSS uses (wght 400–800, wdth 100–118 %) and subset to latin
 // plus the Turkish letters (Ğ ğ İ Ş ş; ı is in latin) and the punctuation the
 // copy uses, so de, en and tr all paint from the same ~57 kB file. Built from
@@ -25,7 +34,7 @@ const archivo = localFont({
   style: "normal",
   declarations: [{ prop: "font-stretch", value: "100% 118%" }],
   display: "swap",
-  preload: false,
+  preload: true,
   variable: "--font-archivo",
 });
 
@@ -34,16 +43,17 @@ const archivo = localFont({
 // card templates) are declared per subset in ./fonts/subset-families.ts and joined into --font-plex-mono,
 // --font-v2-body, --font-v2-mono, --font-instrument-serif and --font-jetbrains-mono in globals.css.
 
-// v7 marketing body font, also used by app surfaces: Inter, variable (all weights in one file), self-hosted.
-// inter-latin.woff2 is Google Fonts' own latin subset of Inter v20 (byte-identical to the file Google Fonts
-// serves), preloaded as the LCP text face. The five Turkish letters outside latin (Ğ ğ İ Ş ş; ı is in latin)
-// come from inter-tr.woff2, a ~4 KiB Google Fonts text= subset declared by unicode-range, so /tr no longer
-// downloads the 85 KiB latin-ext file. globals.css joins both into --font-inter. Licence: ./fonts/inter-OFL.txt.
+// App-surface body font (the A marketing body face until the Werkstatt port): Inter, variable (all weights in
+// one file), self-hosted. inter-latin.woff2 is Google Fonts' own latin subset of Inter v20 (byte-identical to
+// the file Google Fonts serves); not preloaded since the marketing pages moved to Archivo. The five Turkish
+// letters outside latin (Ğ ğ İ Ş ş; ı is in latin) come from inter-tr.woff2, a ~4 KiB Google Fonts text=
+// subset declared by unicode-range, so /tr no longer downloads the 85 KiB latin-ext file. globals.css joins both into --font-inter. Licence: ./fonts/inter-OFL.txt.
 const inter = localFont({
   src: "./fonts/inter-latin.woff2",
   weight: "100 900",
   style: "normal",
   display: "swap",
+  preload: false,
   variable: "--font-inter-latin",
 });
 const interTr = localFont({
@@ -57,7 +67,8 @@ const interTr = localFont({
   variable: "--font-inter-tr",
 });
 
-// v7 display face: Fraunces as two pre-instanced static files (weight 300, normal + italic, SOFT 50, WONK 0,
+// Former A display face, now only used by the OG card renderer (src/lib/og-card.tsx) and app templates, so it
+// is not preloaded: Fraunces as two pre-instanced static files (weight 300, normal + italic, SOFT 50, WONK 0,
 // one display optical size of 72), subset to latin + latin-ext and the punctuation the copy uses, as WOFF.
 // ~63 KiB for both styles together (the old variable Google files were ~146 KiB, ~290 KiB with latin-ext
 // on /tr). Built from google/fonts ofl/fraunces with fontTools (varLib.instancer, then subset); licence in
@@ -68,10 +79,11 @@ const fraunces = localFont({
     { path: "./fonts/fraunces-300-italic.woff", weight: "300", style: "italic" },
   ],
   display: "swap",
+  preload: false,
   variable: "--font-fraunces",
 });
 
-// v7 mono labels (eyebrows, figure captions): Geist Mono, static weight 400, latin + latin-ext (~13 KiB).
+// Former A mono face (the marketing labels use IBM Plex Mono since the Werkstatt port): Geist Mono, static weight 400, latin + latin-ext (~13 KiB).
 // Subset from the geist package's GeistMono-Variable.ttf, instanced at wght 400. Not preloaded: labels are
 // never the LCP, so they should not compete with the display and body faces.
 const geistMono = localFont({
@@ -140,16 +152,17 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    // Marketing surface (v7): porcelain browser chrome in both UA schemes.
-    { media: "(prefers-color-scheme: light)", color: "#F6F2EC" },
-    { media: "(prefers-color-scheme: dark)", color: "#F6F2EC" },
+    // Marketing surface (Werkstatt): paper browser chrome in both UA schemes.
+    { media: "(prefers-color-scheme: light)", color: "#F3F0EA" },
+    { media: "(prefers-color-scheme: dark)", color: "#F3F0EA" },
   ],
 };
 
 // Applied inline in <head> before hydration so the first paint already has
-// the correct palette — avoids flash-of-wrong-theme. Mirrors
+// the correct palette — avoids flash-of-wrong-theme. It also sets html.wk-js first, so the Werkstatt menus
+// run in JS mode from the first paint and the no-JS CSS (html:not(.wk-js)) applies only without JS. Mirrors
 // src/context/ThemeContext.tsx (DEFAULT_THEME = "light", key = "opsolid-theme").
-const NO_FLASH_THEME_SCRIPT = `(function(){try{if(document.documentElement.hasAttribute('data-v4')){document.documentElement.setAttribute('data-theme','light');return;}var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
+const NO_FLASH_THEME_SCRIPT = `document.documentElement.classList.add('wk-js');(function(){try{if(document.documentElement.hasAttribute('data-v4')){document.documentElement.setAttribute('data-theme','light');return;}var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
 
 export default function RootLayout({
   children,

@@ -6,13 +6,13 @@ import type { BlockOf } from "@/content/v7/types";
 import { href, type L3 } from "@/lib/v7-routes";
 import { sendFailure, type SendFailure } from "@/lib/contact-feedback";
 
-const mono = "font-[family-name:var(--font-geist-mono),ui-monospace,monospace] tracking-[0.02em]";
-const label = `${mono} mb-2 block text-[12px] uppercase text-[#6B665F]`;
+const mono = "f-mono";
+const label = `${mono} mb-2 block text-[12px] text-wk-muted`;
 // Control and chip borders are #8F877C: 3.5:1 on paper and 3.2:1 on porcelain (WCAG 1.4.11 needs 3:1).
 const control =
-  "block min-h-[52px] w-full rounded-[16px] border border-[#8F877C] bg-white px-4 py-3 text-[17px] text-[#16191D] placeholder:text-[#6B665F] aria-[invalid=true]:border-[#A12A1B]";
+  "block min-h-[52px] w-full rounded-[16px] border border-wk-control bg-wk-sheet px-4 py-3 text-[17px] text-wk-ink placeholder:text-wk-muted aria-[invalid=true]:border-wk-error";
 const chip =
-  "inline-flex min-h-[44px] items-center rounded-full border border-[#8F877C] bg-white px-4 text-[16px] transition-colors peer-checked:border-[#16191D] peer-checked:bg-[#16191D] peer-checked:text-[#F6F2EC] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#8A4524]";
+  "inline-flex min-h-[44px] items-center rounded-full border border-wk-control bg-wk-sheet px-4 text-[16px] transition-colors peer-checked:border-wk-ink peer-checked:bg-wk-ink peer-checked:text-wk-text-d peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-wk-copper-deep";
 
 type Field = "name" | "email" | "message" | "ttopics" | "languages" | "region" | "link" | "consent";
 // Page order, so focus goes to the first invalid field the visitor sees.
@@ -198,7 +198,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
     return (
       <>
         {before}
-        <a className="font-medium text-[#8A4524] underline underline-offset-4" href={`mailto:${t.mail}`}>
+        <a className="font-medium text-wk-copper-deep underline underline-offset-4" href={`mailto:${t.mail}`}>
           {t.mail}
         </a>
         {after}
@@ -212,20 +212,20 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
   });
   const err = (k: Field) =>
     errs[k] ? (
-      <p className="mt-2 text-[15px] font-medium text-[#A12A1B]" id={`f-${k}-err`}>
+      <p className="mt-2 text-[15px] font-medium text-wk-error" id={`f-${k}-err`}>
         {errText[k]}
       </p>
     ) : null;
   const help = (id: string, text: string) => (
-    <p id={id} className="mt-2 text-[14px] leading-[1.5] text-[#6B665F]">
+    <p id={id} className="mt-2 text-[14px] leading-[1.5] text-wk-muted">
       {text}
     </p>
   );
 
   if (state === "ok") {
     return (
-      <div ref={okRef} tabIndex={-1} role="status" className="mt-10 rounded-[24px] border border-[#8A4524] bg-white p-6 md:mt-14 md:p-8">
-        <p className={`${mono} text-[12px] uppercase text-[#8A4524]`}>{sentTrainer ? tt.okH : t.okH}</p>
+      <div ref={okRef} tabIndex={-1} role="status" className="mt-10 rounded-[24px] border border-wk-copper-deep bg-wk-sheet p-6 md:mt-14 md:p-8">
+        <p className={`${mono} text-[12px] text-wk-copper-deep`}>{sentTrainer ? tt.okH : t.okH}</p>
         <p className="mt-3 max-w-[52ch] text-[18px]">{sentTrainer ? tt.ok : t.ok}</p>
       </div>
     );
@@ -235,7 +235,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
   // The trainer blocks stay mounted and are only hidden, so typed values survive switching the topic back and forth.
   return (
     <form onSubmit={submit} onInput={recheck} noValidate className="mt-10 max-w-[720px] space-y-7 md:mt-14">
-      {block.intro && <p className="text-[#16191D]">{block.intro}</p>}
+      {block.intro && <p className="text-wk-ink">{block.intro}</p>}
       <div>
         <label htmlFor="f-name" className={label}>
           {t.name}
@@ -277,10 +277,10 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
       <div
         role={isTrainer ? "group" : undefined}
         aria-labelledby={isTrainer ? "f-trainer-h" : undefined}
-        className={isTrainer ? "space-y-7 border-l-2 border-[#B5623A] pl-5 md:pl-7" : "space-y-7"}
+        className={isTrainer ? "space-y-7 border-l-2 border-wk-copper pl-5 md:pl-7" : "space-y-7"}
       >
         <div hidden={!isTrainer} className="space-y-7" data-testid="trainer-fields">
-          <p id="f-trainer-h" className={`${mono} text-[12px] uppercase text-[#8A4524]`}>
+          <p id="f-trainer-h" className={`${mono} text-[12px] text-wk-copper-deep`}>
             {tt.group}
           </p>
           <fieldset className="m-0 border-0 p-0" aria-describedby={errs.ttopics ? "f-ttopics-h f-ttopics-err" : "f-ttopics-h"}>
@@ -354,18 +354,18 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
         <input id="f-hp" name="hp_blank" type="text" tabIndex={-1} autoComplete="off" data-1p-ignore="true" data-lpignore="true" data-form-type="other" />
       </div>
       <div hidden={!isTrainer}>
-        <label className="flex min-h-[44px] cursor-pointer items-start gap-3 py-[10px] text-[16px] leading-[1.5] text-[#16191D]">
+        <label className="flex min-h-[44px] cursor-pointer items-start gap-3 py-[10px] text-[16px] leading-[1.5] text-wk-ink">
           <input
             type="checkbox"
             name="consent"
             required
             aria-invalid={errs.consent ? true : undefined}
             aria-describedby={errs.consent ? "f-consent-err" : undefined}
-            className="mt-[3px] h-5 w-5 shrink-0 cursor-pointer accent-[#16191D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8A4524]"
+            className="mt-[3px] h-5 w-5 shrink-0 cursor-pointer accent-wk-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wk-copper-deep"
           />
           <span>
             {tt.consent}{" "}
-            <a className="whitespace-nowrap text-[#8A4524] underline underline-offset-4" href={href("privacy", locale, { hash: "bewerbungen" })} target="_blank" rel="noopener">
+            <a className="whitespace-nowrap text-wk-copper-deep underline underline-offset-4" href={href("privacy", locale, { hash: "bewerbungen" })} target="_blank" rel="noopener">
               {tt.consentLink}
               <span className="sr-only"> {tt.newTab}</span>
             </a>
@@ -378,7 +378,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
           <button
             type="submit"
             aria-disabled={state === "sending" || undefined}
-            className="inline-flex min-h-[52px] items-center justify-center rounded-[16px] bg-[#16191D] px-7 text-[16px] font-medium text-[#F6F2EC] transition-colors duration-150 hover:bg-[#8A4524] aria-disabled:opacity-70"
+            className="inline-flex min-h-[52px] items-center justify-center rounded-[16px] bg-wk-ink px-7 text-[16px] font-medium text-wk-text-d transition-colors duration-150 hover:bg-wk-copper-deep aria-disabled:opacity-70"
           >
             {state === "sending" ? t.sending : isTrainer ? tt.send : t.send}
           </button>
@@ -386,16 +386,16 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
         {/* Always mounted, so screen readers announce the notice when it appears. */}
         <div role="alert">
           {state === "err" ? (
-            <div ref={failRef} className="scroll-mb-6 rounded-[24px] border border-[#A12A1B] bg-white p-5 md:p-8">
-              <p className={`${mono} text-[12px] uppercase text-[#A12A1B]`}>{t.failH}</p>
-              <p className="mt-3 max-w-[62ch] text-[17px] leading-[1.6] text-[#16191D] [text-wrap:pretty] md:text-[18px]">{failText()}</p>
+            <div ref={failRef} className="scroll-mb-6 rounded-[24px] border border-wk-error bg-wk-sheet p-5 md:p-8">
+              <p className={`${mono} text-[12px] text-wk-error`}>{t.failH}</p>
+              <p className="mt-3 max-w-[62ch] text-[17px] leading-[1.6] text-wk-ink [text-wrap:pretty] md:text-[18px]">{failText()}</p>
             </div>
           ) : null}
         </div>
       </div>
-      <p className="text-[14px] leading-[1.6] text-[#6B665F]" hidden={isTrainer || undefined}>
+      <p className="text-[14px] leading-[1.6] text-wk-muted" hidden={isTrainer || undefined}>
         {t.consent}{" "}
-        <a className="text-[#8A4524] underline underline-offset-4" href={href("privacy", locale)}>
+        <a className="text-wk-copper-deep underline underline-offset-4" href={href("privacy", locale)}>
           {t.privacy}
         </a>
         .

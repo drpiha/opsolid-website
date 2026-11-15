@@ -3,7 +3,7 @@ import { LinkTo } from "@/components/v7/LinkTo";
 import { linkDeep } from "@/components/v7/ui";
 import type { BlockProps } from "@/content/v7/types";
 
-const mono = "font-[family-name:var(--font-geist-mono),ui-monospace,monospace] tracking-[0.02em]";
+const mono = "f-mono";
 
 export function AboutBlock({ block, locale, num }: BlockProps<"about">) {
   return (
@@ -21,10 +21,10 @@ export function AboutBlock({ block, locale, num }: BlockProps<"about">) {
             </LinkTo>
           )}
         </div>
-        <dl className="border-t border-[#16191D] lg:col-span-4">
+        <dl className="border-t border-wk-ink lg:col-span-4">
           {block.facts.map(([k, v]) => (
-            <div key={k} className="grid gap-x-6 gap-y-1 border-b border-[#E3DCD1] py-4 sm:grid-cols-3">
-              <dt className={`${mono} text-[12px] uppercase leading-[1.8] text-[#6B665F]`}>{k}</dt>
+            <div key={k} className="grid gap-x-6 gap-y-1 border-b border-wk-line py-4 sm:grid-cols-3">
+              <dt className={`${mono} text-[12px] leading-[1.8] text-wk-muted`}>{k}</dt>
               <dd className="text-[16px] sm:col-span-2">{v}</dd>
             </div>
           ))}

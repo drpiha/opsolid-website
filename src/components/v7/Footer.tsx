@@ -31,7 +31,7 @@ function FxSwitch({ locale }: { locale: L3 }) {
     }
     window.dispatchEvent(new Event(FX_EVENT));
   };
-  const cls = "inline-flex min-h-[44px] items-center text-[14px] text-[#F6F2EC]/90";
+  const cls = "inline-flex min-h-[44px] items-center text-[14px] text-wk-text-d/90";
   if (reduced) {
     return (
       <span role="status" className={cls}>
@@ -40,7 +40,7 @@ function FxSwitch({ locale }: { locale: L3 }) {
     );
   }
   return (
-    <button type="button" onClick={toggle} aria-pressed={!off} className={`${cls} text-left hover:text-white hover:underline hover:decoration-[#B5623A] hover:underline-offset-4`}>
+    <button type="button" onClick={toggle} aria-pressed={!off} className={`${cls} text-left hover:text-white hover:underline hover:decoration-wk-copper hover:underline-offset-4`}>
       {t.label}: <b className="ml-1 font-medium">{off ? t.off : t.on}</b>
     </button>
   );
@@ -49,16 +49,16 @@ function FxSwitch({ locale }: { locale: L3 }) {
 export function V7Footer({ locale }: { locale: L3 }) {
   const t = SITE_STR[locale];
   return (
-    <footer className="v7 on-ink bg-[#16191D] text-[#F6F2EC]">
+    <footer className="v7 on-ink bg-wk-ink text-wk-text-d">
       <div className={`${wrap} py-14 md:py-20`}>
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <Link href={href("home", locale)} aria-label={t.homeAria} className="inline-flex min-h-[44px] items-center text-[#F6F2EC] [&_svg]:h-[24px] [&_svg]:w-auto">
+            <Link href={href("home", locale)} aria-label={t.homeAria} className="inline-flex min-h-[44px] items-center text-wk-text-d [&_svg]:h-[24px] [&_svg]:w-auto">
               <Logo />
             </Link>
-            <p className="mt-4 max-w-[30ch] text-[15px] leading-[1.6] text-[#C9C2B8]">{t.tagline}</p>
+            <p className="mt-4 max-w-[30ch] text-[15px] leading-[1.6] text-wk-muted-d">{t.tagline}</p>
             <p className="mt-5 flex flex-col text-[15px]">
-              <a href={`mailto:${SITE_CONFIG.email}`} className="inline-flex min-h-[44px] items-center text-[#F6F2EC] underline decoration-[#B5623A] underline-offset-[6px]">
+              <a href={`mailto:${SITE_CONFIG.email}`} className="inline-flex min-h-[44px] items-center text-wk-text-d underline decoration-wk-copper underline-offset-[6px]">
                 {SITE_CONFIG.email}
               </a>
             </p>
@@ -66,11 +66,11 @@ export function V7Footer({ locale }: { locale: L3 }) {
           <nav aria-label={t.footerNav} className="grid grid-cols-2 gap-x-6 gap-y-10 md:col-span-8 md:grid-cols-4">
             {FOOTER_COLS.map((col) => (
               <div key={col.id}>
-                <h2 className="f-mono text-[12px] font-normal uppercase text-[#E3B79C]">{t.footer[col.id]}</h2>
+                <h2 className="f-mono text-[12px] font-normal text-wk-copper-lite">{t.footer[col.id]}</h2>
                 <ul className="mt-4 space-y-0.5">
                   {col.keys.map((k) => (
                     <li key={k}>
-                      <Link href={href(k, locale)} className="inline-flex min-h-[44px] items-center text-[15px] text-[#F6F2EC]/90 hover:text-white hover:underline hover:decoration-[#B5623A] hover:underline-offset-4">
+                      <Link href={href(k, locale)} className="inline-flex min-h-[44px] items-center text-[15px] text-wk-text-d/90 hover:text-white hover:underline hover:decoration-wk-copper hover:underline-offset-4">
                         {LABEL[locale][k]}
                       </Link>
                     </li>
@@ -85,7 +85,7 @@ export function V7Footer({ locale }: { locale: L3 }) {
             ))}
           </nav>
         </div>
-        <div className="mt-16 space-y-1 border-t border-[#F6F2EC]/15 pt-6 text-[13px] leading-[1.6] text-[#C9C2B8]">
+        <div className="mt-16 space-y-1 border-t border-wk-text-d/15 pt-6 text-[13px] leading-[1.6] text-wk-muted-d">
           <p>{t.priceNote}</p>
           <p>{t.placeLine}</p>
           <p>

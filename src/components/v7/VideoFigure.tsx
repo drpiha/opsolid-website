@@ -132,7 +132,7 @@ export function VideoFigure({
             aria-label={pauseLabel}
             title={paused ? playLabel : pauseLabel}
             onClick={toggle}
-            className="absolute bottom-3 right-3 z-10 grid size-11 place-items-center rounded-full border border-[#E3DCD1] bg-[#F6F2EC] text-[#16191D] transition-colors hover:bg-white"
+            className="absolute bottom-3 right-3 z-10 grid size-11 place-items-center rounded-full border border-wk-line bg-wk-paper text-wk-ink transition-colors hover:bg-wk-sheet"
           >
             {paused ? (
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true"><path d="M3 1.5v11l9-5.5z" /></svg>

@@ -32,15 +32,15 @@ export function LangHint({ suggest }: { suggest: "en" | "tr" }) {
     }
   };
   return (
-    <div className="border-b border-[#E3DCD1] bg-[#EFE9E0]" lang={t.lang} data-nosnippet>
+    <div className="border-b border-wk-line bg-wk-paper-2" lang={t.lang} data-nosnippet>
       <div className={`${wrap} flex min-h-[44px] items-center justify-between gap-4 py-1 text-[14px] leading-[1.4]`}>
         <p>
           {t.text}{" "}
-          <Link href={href("home", suggest)} hrefLang={t.lang} className="font-medium text-[#8A4524] underline decoration-[#B5623A]/50 underline-offset-4">
+          <Link href={href("home", suggest)} hrefLang={t.lang} className="font-medium text-wk-copper-deep underline decoration-wk-copper/50 underline-offset-4">
             {t.link}
           </Link>
         </p>
-        <button type="button" onClick={close} aria-label={t.dismiss} className="grid size-11 shrink-0 place-items-center rounded-full text-[#16191D] hover:bg-white/70">
+        <button type="button" onClick={close} aria-label={t.dismiss} className="grid size-11 shrink-0 place-items-center rounded-full text-wk-ink hover:bg-wk-sheet/70">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.5" />
           </svg>

@@ -18,22 +18,22 @@ export function crumbsFor(page: PageDef, locale: L3): Crumb[] {
 export function Breadcrumbs({ crumbs, locale }: { crumbs: Crumb[]; locale: L3 }) {
   return (
     <nav aria-label={SITE_STR[locale].breadcrumb} className={`${wrap} pt-3 md:pt-5`}>
-      <ol className="f-mono flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] uppercase leading-[1.7] text-[#6B665F]">
+      <ol className="f-mono flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] leading-[1.7] text-wk-muted">
         {crumbs.map((c, i) => {
           const last = i === crumbs.length - 1;
           return (
             <li key={c.path} className="flex items-center gap-2">
               {last ? (
-                <span aria-current="page" className="text-[#16191D]">
+                <span aria-current="page" className="text-wk-ink">
                   {c.name}
                 </span>
               ) : (
-                <Link href={c.path} className="inline-flex min-h-[44px] min-w-[24px] items-center underline md:min-h-[28px] decoration-[#B5623A]/40 underline-offset-4 hover:text-[#16191D] hover:decoration-[#8A4524]">
+                <Link href={c.path} className="inline-flex min-h-[44px] min-w-[24px] items-center underline md:min-h-[28px] decoration-wk-copper/40 underline-offset-4 hover:text-wk-ink hover:decoration-wk-copper-deep">
                   {c.name}
                 </Link>
               )}
               {!last && (
-                <span aria-hidden="true" className="text-[#8A4524]">
+                <span aria-hidden="true" className="text-wk-copper-deep">
                   /
                 </span>
               )}

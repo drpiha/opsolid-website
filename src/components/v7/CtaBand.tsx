@@ -15,17 +15,17 @@ export function CtaBand({ cta, locale }: { cta: Cta; locale: L3 }) {
   const words = cta.h.trim().split(/\s+/);
   const last = words.pop() ?? "";
   return (
-    <div id="cta" className="on-ink mt-24 scroll-mt-16 bg-[#16191D] text-[#F6F2EC] md:mt-40">
+    <div id="cta" className="on-ink mt-24 scroll-mt-16 bg-wk-ink text-wk-text-d md:mt-40">
       <section aria-labelledby="cta-h" className={`${wrap} py-20 md:py-36`}>
         <Reveal>
-          <p className="f-mono flex items-center gap-3 text-[12px] uppercase text-[#E3B79C]">
-            <span aria-hidden="true" className="h-px w-8 bg-[#B5623A]" />
+          <p className="f-mono flex items-center gap-3 text-[12px] text-wk-copper-lite">
+            <span aria-hidden="true" className="h-px w-8 bg-wk-copper" />
             {cta.label}
           </p>
           <h2 id="cta-h" className="f-display mt-8 max-w-[18ch] text-balance text-[clamp(2.25rem,5.6vw,5rem)] leading-[1.05] tracking-[-0.015em]">
-            {words.join(" ")} <em className="italic text-[#D98C65]">{last}</em>
+            {words.join(" ")} <em className="not-italic text-wk-copper-lite">{last}</em>
           </h2>
-          <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.6] text-[#C9C2B8]">{cta.p}</p>
+          <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.6] text-wk-muted-d">{cta.p}</p>
           <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-5">
             <LinkTo link={cta.primary} locale={locale} className={btnOnInk}>
               {cta.primary.label}
@@ -35,7 +35,7 @@ export function CtaBand({ cta, locale }: { cta: Cta; locale: L3 }) {
               <LinkTo
                 link={cta.secondary}
                 locale={locale}
-                className="inline-flex min-h-[44px] items-center text-[16px] text-[#F6F2EC] underline decoration-[#B5623A] underline-offset-[6px] hover:decoration-[#E3B79C]"
+                className="inline-flex min-h-[44px] items-center text-[16px] text-wk-text-d underline decoration-wk-copper underline-offset-[6px] hover:decoration-wk-copper-lite"
               >
                 {cta.secondary.label}
               </LinkTo>

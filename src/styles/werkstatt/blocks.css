@@ -1,0 +1,229 @@
+/* Werkstatt blocks: shared pieces of the content blocks in src/components/v7/blocks (ledgers, the course
+   ledger with its planned row, process steps, numbered run, rate cards, the C table, spec lists, sheet
+   cards, pills, labelled figures, the contact form). Ported from the prototype styles.css (ledger, ablauf,
+   run, ptable, contact form; third pass merged into single rules), prefixed wk- and scoped to
+   html[data-v4]. Page-only pieces live in home.css (P1), hub.css (P2) and produkte.css (P3). */
+
+/* ---------- ledger: 2 px top rule, hairline rows ---------- */
+html[data-v4] .wk-ledger { border-top: 2px solid var(--wk-text); }
+html[data-v4] .wk-on-ink .wk-ledger,
+html[data-v4] .wk-on-char .wk-ledger { border-top-color: var(--wk-text-d); }
+html[data-v4] .wk-ledger-line { padding: 24px 0 26px; border-bottom: 1px solid var(--wk-line-2); }
+html[data-v4] .wk-on-ink .wk-ledger-line,
+html[data-v4] .wk-on-char .wk-ledger-line { border-bottom-color: var(--wk-line-d2); }
+html[data-v4] .wk-ledger-no { font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; color: var(--wk-copper-deep); }
+html[data-v4] .wk-on-ink .wk-ledger-no,
+html[data-v4] .wk-on-char .wk-ledger-no { color: var(--wk-copper-lite); }
+
+/* course ledger (courses block): name, track, spec, price */
+html[data-v4] .wk-ledger-row { position: relative; display: grid; grid-template-columns: 1.8fr 3.7fr 2.5fr 4fr; gap: 24px; align-items: start; padding: 30px 0 32px; border-bottom: 1px solid var(--wk-line-2); color: inherit; text-decoration: none; transition: background-color var(--wk-t-micro); }
+html[data-v4] a.wk-ledger-row:hover { background: color-mix(in srgb, var(--wk-copper) 6%, transparent); }
+html[data-v4] a.wk-ledger-row:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--wk-copper); }
+html[data-v4] .wk-ledger-row h3 { font-stretch: 114%; font-weight: 660; font-size: var(--wk-fs-4); line-height: 1.08; letter-spacing: -0.018em; }
+html[data-v4] .wk-ledger-what p { color: var(--wk-muted); margin-top: 10px; max-width: 28em; }
+html[data-v4] .wk-ledger-track { padding-top: 7px; display: grid; gap: 12px; justify-items: start; align-content: start; }
+html[data-v4] .wk-dur { display: flex; gap: 3px; }
+html[data-v4] .wk-dur i { display: block; width: 18px; height: 10px; border-radius: 2px; background: var(--wk-text); }
+html[data-v4] .wk-ledger-spec { display: grid; gap: 6px; padding-top: 6px; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-ledger-spec .wk-mono { color: var(--wk-muted); }
+html[data-v4] .wk-ledger-price { display: grid; gap: 6px; justify-items: end; text-align: right; }
+html[data-v4] .wk-ledger-price .wk-mono { color: var(--wk-muted); }
+html[data-v4] .wk-ledger-price .wk-arith { color: var(--wk-copper-deep); }
+html[data-v4] .wk-ledger-note { margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 32px; }
+html[data-v4] .wk-ledger-note .wk-mono { color: var(--wk-muted); }
+
+/* planned courses: one quiet dashed row ("geplant", no duration, price or date) */
+html[data-v4] .wk-soon { margin-top: 40px; display: grid; grid-template-columns: 1.8fr 10.2fr; gap: 24px; align-items: start; }
+html[data-v4] .wk-soon-head { display: grid; gap: 8px; justify-items: start; align-content: start; }
+html[data-v4] .wk-soon-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px dashed var(--wk-line-2); border-radius: var(--wk-r-2); }
+html[data-v4] .wk-soon-list li { padding: 18px; display: grid; gap: 10px; align-content: start; justify-items: start; }
+html[data-v4] .wk-soon-list li + li { border-left: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-soon-list b { font-weight: 600; line-height: 1.25; color: var(--wk-muted); }
+html[data-v4] .wk-soon-list span { color: var(--wk-muted); font-size: var(--wk-fs-1); line-height: 1.4; }
+html[data-v4] .wk-soon.is-page { margin-top: 56px; }
+html[data-v4] .wk-soon.is-page .wk-soon-list b { color: var(--wk-text); }
+
+/* ---------- process steps: a line with numbered squares (ink ground by default on home) ---------- */
+html[data-v4] .wk-steps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); counter-reset: wk-st; }
+html[data-v4] .wk-steps::before { content: ""; position: absolute; left: 0; right: 0; top: 110px; height: 1px; background: var(--wk-line-2); }
+html[data-v4] .wk-steps.is-plain::before { top: 24px; }
+html[data-v4] .wk-on-ink .wk-steps::before,
+html[data-v4] .wk-on-char .wk-steps::before { background: var(--wk-line-d2); }
+html[data-v4] .wk-step { position: relative; padding-right: 32px; counter-increment: wk-st; }
+html[data-v4] .wk-step-pic { height: 86px; display: flex; align-items: flex-end; }
+/* a small cut-out of a piece the site shows elsewhere, in place of a line icon */
+html[data-v4] .wk-crop { display: block; flex: none; width: 96px; height: 75px; object-fit: cover; border: 1px solid var(--wk-ink); border-radius: var(--wk-r-1); background: var(--wk-sheet); }
+html[data-v4] .wk-on-ink .wk-crop { border-color: rgba(243, 240, 234, 0.42); }
+html[data-v4] .wk-step-no { position: relative; z-index: 1; margin-top: 10px; width: 28px; height: 28px; border-radius: 8px; background: var(--wk-ink); border: 1.5px solid var(--wk-copper-lite); color: var(--wk-copper-lite); display: grid; place-items: center; font-family: var(--wk-mono); font-size: 0.75rem; }
+html[data-v4] .wk-step-no:empty::before { content: counter(wk-st); }
+html[data-v4] .wk-step h3 { margin-top: 20px; font-stretch: 112%; font-weight: 640; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.012em; }
+html[data-v4] .wk-step p { margin-top: 10px; color: var(--wk-muted); font-size: var(--wk-fs-1); line-height: 1.5; }
+html[data-v4] .wk-on-ink .wk-step p,
+html[data-v4] .wk-on-char .wk-step p { color: var(--wk-muted-d); }
+html[data-v4] .wk-step .wk-etikett { margin-top: 14px; }
+html[data-v4] .wk-steps-note { margin-top: 40px; }
+/* the one scroll moment: the line draws itself, the numbers follow (.is-seen set by a small observer) */
+@media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
+  html.wk-js[data-v4] .wk-steps[data-seen]::before { transform: scaleX(0); transform-origin: left; transition: transform 1100ms var(--wk-ease-io); }
+  html.wk-js[data-v4] .wk-steps[data-seen].is-seen::before { transform: none; }
+  html.wk-js[data-v4] .wk-steps[data-seen] .wk-step-no { opacity: 0; transform: scale(0.7); transition: opacity 300ms var(--wk-ease-out), transform 300ms var(--wk-ease-out), border-color 300ms; }
+  html.wk-js[data-v4] .wk-steps[data-seen].is-seen .wk-step-no { opacity: 1; transform: none; }
+  html.wk-js[data-v4] .wk-steps[data-seen].is-seen .wk-step:nth-child(2) .wk-step-no { transition-delay: 260ms; }
+  html.wk-js[data-v4] .wk-steps[data-seen].is-seen .wk-step:nth-child(3) .wk-step-no { transition-delay: 520ms; }
+  html.wk-js[data-v4] .wk-steps[data-seen].is-seen .wk-step:nth-child(4) .wk-step-no { transition-delay: 780ms; }
+}
+
+/* ---------- numbered run (steps block): 40 px copper-deep squares on a ledger ---------- */
+html[data-v4] .wk-run { display: grid; counter-reset: wk-st; border-top: 2px solid var(--wk-text); }
+html[data-v4] .wk-run-step { counter-increment: wk-st; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 32px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--wk-line-2); }
+html[data-v4] .wk-run-step.has-art { grid-template-columns: 64px minmax(0, 5fr) minmax(0, 5fr); align-items: center; }
+html[data-v4] .wk-run-step .wk-step-no { margin: 0; width: 40px; height: 40px; border-radius: 10px; background: var(--wk-paper-2); border-color: var(--wk-copper-deep); color: var(--wk-copper-deep); font-size: var(--wk-fs-1); }
+html[data-v4] .wk-run-step h3 { font-stretch: 112%; font-weight: 660; font-size: var(--wk-fs-4); line-height: 1.1; letter-spacing: -0.015em; }
+html[data-v4] .wk-run-step p { color: var(--wk-muted); margin-top: 10px; max-width: 30em; }
+html[data-v4] .wk-run-art { display: flex; align-items: center; gap: 18px; background: var(--wk-sheet); border-radius: var(--wk-r-2); padding: 18px 20px; box-shadow: var(--wk-shadow-sheet); }
+html[data-v4] .wk-run-art b { display: block; font-weight: 620; }
+html[data-v4] .wk-run-art span { color: var(--wk-muted); font-size: var(--wk-fs-1); }
+
+/* square number (principles, form next steps) */
+html[data-v4] .wk-sq-no { flex: none; width: 28px; height: 28px; border-radius: 8px; border: 1.5px solid var(--wk-copper-deep); color: var(--wk-copper-deep); display: grid; place-items: center; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1; }
+html[data-v4] .wk-on-ink .wk-sq-no,
+html[data-v4] .wk-on-char .wk-sq-no { border-color: var(--wk-copper-lite); color: var(--wk-copper-lite); }
+
+/* ---------- rate card (offers): ink border with a hard offset shadow ---------- */
+html[data-v4] .wk-rate { background: var(--wk-sheet); color: var(--wk-text); border: 1.5px solid var(--wk-ink); border-radius: var(--wk-r-2); box-shadow: 6px 6px 0 var(--wk-ink); }
+html[data-v4] .wk-rate-foot { border-top: 1.5px solid var(--wk-ink); }
+
+/* sheet card (examples, compare): a sheet lying on the ground, with its Etikett */
+html[data-v4] .wk-card { background: var(--wk-sheet); color: var(--wk-text); border: 1px solid var(--wk-line); border-radius: var(--wk-r-2); box-shadow: var(--wk-shadow-sheet); }
+html[data-v4] .wk-on-sheet .wk-card { background: #fff; }
+
+/* outlined pill (tabs, filters); the selected one is ink */
+html[data-v4] .wk-pill { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--wk-r-2); border: 1.5px solid var(--wk-line-2); background: transparent; color: var(--wk-text); font-size: var(--wk-fs-1); font-weight: 540; text-decoration: none; transition: border-color var(--wk-t-micro), background-color var(--wk-t-micro), color var(--wk-t-micro); }
+html[data-v4] .wk-pill:hover { border-color: var(--wk-text); }
+html[data-v4] .wk-pill[aria-selected="true"],
+html[data-v4] .wk-pill[aria-current],
+html[data-v4] .wk-pill.is-on { background: var(--wk-ink); border-color: var(--wk-ink); color: var(--wk-text-d); }
+
+/* labelled figure: picture or drawing, its Etikett under it */
+html[data-v4] .wk-figure { margin: 0; display: grid; gap: 12px; min-width: 0; }
+html[data-v4] .wk-figure img { display: block; width: 100%; height: auto; border-radius: var(--wk-r-2); }
+
+/* ---------- C table: mono heads on a 2 px rule ---------- */
+html[data-v4] .wk-table-wrap { overflow-x: auto; }
+html[data-v4] .wk-table { width: 100%; border-collapse: collapse; font-size: var(--wk-fs-2); }
+html[data-v4] .wk-table caption { text-align: left; }
+html[data-v4] .wk-table th,
+html[data-v4] .wk-table td { text-align: left; padding: 18px 16px 18px 0; border-bottom: 1px solid var(--wk-line-2); vertical-align: baseline; }
+html[data-v4] .wk-table thead th { font-family: var(--wk-mono); font-weight: 400; font-size: var(--wk-fs-0); color: var(--wk-muted); border-bottom: 2px solid var(--wk-text); padding-block: 0 12px; }
+html[data-v4] .wk-table tbody th { font-weight: 660; font-stretch: 110%; font-size: 1.1875rem; }
+html[data-v4] .wk-table .r { text-align: right; padding-right: 0; }
+html[data-v4] .wk-table .wk-big { font-stretch: 116%; font-weight: 640; font-size: 1.625rem; letter-spacing: -0.02em; white-space: nowrap; }
+
+/* ---------- spec list: mono keys, dashed rules ---------- */
+html[data-v4] .wk-spec { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); border-top: 2px solid var(--wk-text); }
+html[data-v4] .wk-spec dt,
+html[data-v4] .wk-spec dd { padding: 14px 0; border-bottom: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-spec dt { font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; color: var(--wk-muted); padding-top: 17px; padding-right: 24px; }
+html[data-v4] .wk-spec dd { font-weight: 500; }
+
+/* ---------- contact form: a sheet card ---------- */
+html[data-v4] .wk-form { position: relative; background: var(--wk-sheet); color: var(--wk-text); border-radius: 6px; padding: 36px 36px 30px; box-shadow: var(--wk-shadow-sheet); }
+html[data-v4] .wk-on-ink .wk-form,
+html[data-v4] .wk-on-char .wk-form { box-shadow: var(--wk-shadow-sheet-d); }
+html[data-v4] .wk-form .wk-etikett { color: var(--wk-muted); }
+html[data-v4] .wk-form .wk-etikett.is-solid::before { background: var(--wk-copper); border-color: var(--wk-copper); }
+html[data-v4] .wk-form-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 16px; padding-bottom: 18px; border-bottom: 1px solid var(--wk-line-2); margin-bottom: 24px; }
+html[data-v4] .wk-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+html[data-v4] .wk-field { display: grid; gap: 6px; align-content: start; min-width: 0; }
+html[data-v4] .wk-field.is-wide { grid-column: 1 / -1; }
+html[data-v4] .wk-field label,
+html[data-v4] .wk-field legend { font-weight: 600; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-field-hint { font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.4; color: var(--wk-muted); }
+html[data-v4] .wk-field input:not([type="checkbox"]):not([type="radio"]),
+html[data-v4] .wk-field select,
+html[data-v4] .wk-field textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  background: #fff;
+  color: var(--wk-text);
+  border: 1.5px solid var(--wk-control);
+  border-radius: var(--wk-r-2);
+  font: inherit;
+  transition: border-color var(--wk-t-micro), box-shadow var(--wk-t-micro);
+}
+html[data-v4] .wk-field textarea { min-height: 104px; resize: vertical; line-height: 1.45; }
+html[data-v4] .wk-field input:not([type="checkbox"]):not([type="radio"]):hover,
+html[data-v4] .wk-field select:hover,
+html[data-v4] .wk-field textarea:hover { border-color: var(--wk-text); }
+html[data-v4] .wk-field input:not([type="checkbox"]):not([type="radio"]):focus-visible,
+html[data-v4] .wk-field select:focus-visible,
+html[data-v4] .wk-field textarea:focus-visible { outline: 0; border-color: var(--wk-copper-deep); box-shadow: 0 0 0 3px color-mix(in srgb, var(--wk-copper) 30%, transparent); }
+html[data-v4] .wk-field [aria-invalid="true"] { border-color: var(--wk-error); }
+html[data-v4] .wk-field-error { font-size: var(--wk-fs-1); color: var(--wk-error); }
+html[data-v4] .wk-check { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--wk-ink); }
+html[data-v4] .wk-form-foot { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+html[data-v4] .wk-form-foot .wk-mono { color: var(--wk-muted); max-width: 26em; }
+html[data-v4] .wk-form-status { margin-top: 16px; padding: 12px 14px; border-radius: var(--wk-r-2); background: var(--wk-paper-2); font-size: var(--wk-fs-1); }
+html[data-v4] .wk-form-status.is-error { background: color-mix(in srgb, var(--wk-error) 8%, #fff); color: var(--wk-error); }
+html[data-v4] .wk-form-status[hidden] { display: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1180px) {
+  html[data-v4] .wk-ledger-row { gap: 20px; }
+}
+@media (max-width: 960px) {
+  html[data-v4] .wk-ledger-line { padding: 18px 0 20px; }
+  html[data-v4] .wk-ledger-row { grid-template-columns: 1fr; gap: 8px; padding: 20px 0 22px; }
+  html[data-v4] .wk-ledger-row h3 { font-size: 1.375rem; }
+  html[data-v4] .wk-ledger-what p { display: none; }
+  html[data-v4] .wk-ledger-track { grid-template-columns: auto 1fr; align-items: center; padding: 0; }
+  html[data-v4] .wk-ledger-spec { padding-top: 0; gap: 2px; font-size: 0.875rem; }
+  html[data-v4] .wk-ledger-spec .wk-chip { display: none; }
+  html[data-v4] .wk-ledger-price { justify-items: start; text-align: left; gap: 2px; margin-top: 4px; }
+  html[data-v4] .wk-ledger-note .wk-btn { width: 100%; }
+  html[data-v4] .wk-soon { grid-template-columns: 1fr; gap: 12px; margin-top: 28px; }
+  html[data-v4] .wk-soon-head { grid-template-columns: auto 1fr; align-items: center; gap: 0 12px; }
+  html[data-v4] .wk-soon-head .wk-tlink { grid-column: 1 / -1; }
+  html[data-v4] .wk-soon-list { grid-template-columns: 1fr 1fr; }
+  html[data-v4] .wk-soon-list li { padding: 14px; gap: 8px; }
+  html[data-v4] .wk-soon-list li + li { border-left: 0; }
+  html[data-v4] .wk-soon-list li:nth-child(even) { border-left: 1px dashed var(--wk-line-2); }
+  html[data-v4] .wk-soon-list li:nth-child(n + 3) { border-top: 1px dashed var(--wk-line-2); }
+  html[data-v4] .wk-soon-list b { font-size: 0.9375rem; }
+  html[data-v4] .wk-soon.is-page { margin-top: 36px; }
+  html[data-v4] .wk-soon.is-page .wk-soon-list { grid-template-columns: 1fr; }
+  html[data-v4] .wk-soon.is-page .wk-soon-list li,
+  html[data-v4] .wk-soon.is-page .wk-soon-list li:nth-child(even) { border-left: 0; }
+  html[data-v4] .wk-soon.is-page .wk-soon-list li + li { border-top: 1px dashed var(--wk-line-2); }
+
+  html[data-v4] .wk-steps { grid-template-columns: 1fr; }
+  html[data-v4] .wk-steps::before,
+  html[data-v4] .wk-steps.is-plain::before { left: 13px; right: auto; top: 6px; bottom: 6px; width: 1px; height: auto; }
+  html[data-v4] .wk-step { display: grid; grid-template-columns: 28px 1fr 72px; gap: 0 16px; padding: 0 0 22px; align-content: start; min-height: 78px; }
+  html[data-v4] .wk-step:last-child { padding-bottom: 0; }
+  html[data-v4] .wk-step-pic { grid-column: 3; grid-row: 1 / span 2; height: auto; align-items: flex-start; }
+  html[data-v4] .wk-crop { width: 72px; height: 56px; }
+  html[data-v4] .wk-step-no { grid-column: 1; grid-row: 1; margin: 0; }
+  html[data-v4] .wk-step h3 { grid-column: 2; grid-row: 1; margin: 2px 0 0; font-size: 1.0625rem; }
+  html[data-v4] .wk-step p { grid-column: 2; font-size: 0.9375rem; margin-top: 6px; }
+  html[data-v4] .wk-step .wk-etikett { grid-column: 2; margin-top: 6px; }
+  html[data-v4] .wk-steps-note { margin-top: 26px; }
+
+  html[data-v4] .wk-run-step,
+  html[data-v4] .wk-run-step.has-art { grid-template-columns: 40px 1fr; gap: 12px 16px; padding: 24px 0; align-items: start; }
+  html[data-v4] .wk-run-step h3 { font-size: 1.25rem; }
+  html[data-v4] .wk-run-art { grid-column: 1 / -1; padding: 14px 16px; }
+
+  html[data-v4] .wk-rate { box-shadow: 4px 4px 0 var(--wk-ink); }
+
+  html[data-v4] .wk-spec { grid-template-columns: 1fr; }
+  html[data-v4] .wk-spec dt { padding: 14px 0 0; border-bottom: 0; }
+  html[data-v4] .wk-spec dd { padding-top: 4px; }
+
+  html[data-v4] .wk-form { padding: 22px 18px 20px; }
+  html[data-v4] .wk-form-grid { grid-template-columns: 1fr; gap: 14px; }
+  html[data-v4] .wk-field textarea { min-height: 84px; }
+  html[data-v4] .wk-form-foot .wk-btn { width: 100%; }
+}

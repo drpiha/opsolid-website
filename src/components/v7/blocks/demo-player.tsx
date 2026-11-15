@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { BlockOf } from "@/content/v7/types";
 
-const mono = "font-[family-name:var(--font-geist-mono),ui-monospace,monospace] tracking-[0.02em]";
+const mono = "f-mono";
 const BARS = 28;
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
@@ -66,15 +66,15 @@ export function DemoPlayer({ block }: { block: BlockOf<"demo"> }) {
   };
 
   return (
-    <div className="mt-10 overflow-hidden rounded-[24px] border border-[#E3DCD1] bg-white md:mt-14">
+    <div className="mt-10 overflow-hidden rounded-[24px] border border-wk-line bg-wk-sheet md:mt-14">
       <style dangerouslySetInnerHTML={{ __html: "@keyframes v7bar{0%,100%{transform:scaleY(.14)}50%{transform:scaleY(1)}}@media (prefers-reduced-motion:no-preference){.v7-bars[data-on=true] i{animation:v7bar 1.1s ease-in-out infinite}}" }} />
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E3DCD1] p-4 md:p-5">
-        <p className={`${mono} rounded-full border border-[#B5623A]/50 px-3 py-1 text-[12px] uppercase text-[#8A4524]`}>{block.chip}</p>
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-wk-line p-4 md:p-5">
+        <p className={`${mono} rounded-full border border-wk-copper/50 px-3 py-1 text-[12px] text-wk-copper-deep`}>{block.chip}</p>
         <button
           type="button"
           onClick={run}
           disabled={state === "running"}
-          className="inline-flex min-h-[44px] items-center justify-center rounded-[16px] bg-[#16191D] px-6 text-[15px] font-medium text-[#F6F2EC] transition-colors hover:bg-[#8A4524] disabled:cursor-default disabled:opacity-60 disabled:hover:bg-[#16191D]"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-[16px] bg-wk-ink px-6 text-[15px] font-medium text-wk-text-d transition-colors hover:bg-wk-copper-deep disabled:cursor-default disabled:opacity-60 disabled:hover:bg-wk-ink"
         >
           {state === "running" ? "…" : state === "done" ? block.again : block.play}
         </button>
@@ -84,7 +84,7 @@ export function DemoPlayer({ block }: { block: BlockOf<"demo"> }) {
         {Array.from({ length: BARS }, (_, i) => (
           <i
             key={i}
-            className={`block h-8 w-[3px] origin-center rounded-full ${speaking === "agent" ? "bg-[#B5623A]" : "bg-[#CFC6B8]"}`}
+            className={`block h-8 w-[3px] origin-center rounded-full ${speaking === "agent" ? "bg-wk-copper" : "bg-wk-line-2"}`}
             style={{ transform: "scaleY(.14)", animationDelay: `${((i * 97) % 700) / 1000}s` }}
           />
         ))}
@@ -93,14 +93,14 @@ export function DemoPlayer({ block }: { block: BlockOf<"demo"> }) {
       <div ref={box} aria-hidden="true" className="max-h-[360px] min-h-[160px] space-y-3 overflow-y-auto px-4 pb-5 md:px-6">
         {lines.map((l, i) => (
           <p key={i} className={`flex max-w-[52ch] flex-col gap-1 text-[16px] ${l.agent ? "" : "ml-auto items-end text-right"}`}>
-            <b className={`${mono} text-[12px] font-normal uppercase ${l.agent ? "text-[#8A4524]" : "text-[#6B665F]"}`}>{l.who}</b>
-            <span className={`rounded-[16px] px-4 py-2.5 ${l.agent ? "bg-[#F6F2EC]" : "border border-[#E3DCD1]"}`}>{l.text}</span>
+            <b className={`${mono} text-[12px] font-normal ${l.agent ? "text-wk-copper-deep" : "text-wk-muted"}`}>{l.who}</b>
+            <span className={`rounded-[16px] px-4 py-2.5 ${l.agent ? "bg-wk-paper" : "border border-wk-line"}`}>{l.text}</span>
           </p>
         ))}
       </div>
 
       <p className="sr-only">{block.sr}</p>
-      <p className="border-t border-[#E3DCD1] p-4 text-[14px] leading-[1.6] text-[#6B665F] md:px-5">{block.disclaimer}</p>
+      <p className="border-t border-wk-line p-4 text-[14px] leading-[1.6] text-wk-muted md:px-5">{block.disclaimer}</p>
     </div>
   );
 }

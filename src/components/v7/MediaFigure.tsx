@@ -35,15 +35,15 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
   const t = SITE_STR[locale];
   const ai = media.kind !== "svg" && media.ai;
   const caption = media.caption || media.fig || ai ? (
-    <figcaption className="f-mono mt-2 border-t border-[#E3DCD1] pt-3 text-[12px] uppercase leading-[1.6] text-[#6B665F]">
+    <figcaption className="f-mono mt-2 border-t border-wk-line pt-3 text-[12px] leading-[1.6] text-wk-muted">
       {media.fig && (
-        <span className="mr-2 text-[#8A4524]">
+        <span className="mr-2 text-wk-copper-deep">
           {t.figure} {media.fig}
         </span>
       )}
       {media.caption}
       {ai && (
-        <span className="ml-2 whitespace-nowrap rounded-full border border-[#B5623A]/50 px-2 py-0.5 text-[12px] text-[#8A4524]">{t.aiLabel}</span>
+        <span className="ml-2 whitespace-nowrap rounded-full border border-wk-copper/50 px-2 py-0.5 text-[12px] text-wk-copper-deep">{t.aiLabel}</span>
       )}
     </figcaption>
   ) : null;
@@ -57,7 +57,7 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
     else if (media.frame === "phone") body = <div className="mx-auto w-[min(240px,62%)]"><PhoneFrame img={media.img} sizes={sizes} /></div>;
     else
       body = (
-        <div className="overflow-hidden rounded-[20px] border border-[#E3DCD1] bg-white">
+        <div className="overflow-hidden rounded-[20px] border border-wk-line bg-wk-sheet">
           <Image src={media.img.src} width={media.img.w} height={media.img.h} alt={media.img.alt} sizes={sizes} priority={priority} className="h-auto w-full" />
         </div>
       );
@@ -65,7 +65,7 @@ export function MediaFigure({ media, locale, className = "", priority }: { media
     const { poster, posterPortrait } = media;
     body = (
       <div
-        className="v7-ar relative overflow-hidden rounded-[20px] border border-[#E3DCD1] bg-[#EFE9E0]"
+        className="v7-ar relative overflow-hidden rounded-[20px] border border-wk-line bg-wk-paper-2"
         style={{ ["--ar" as string]: `${poster.w} / ${poster.h}`, ["--arp" as string]: posterPortrait ? `${posterPortrait.w} / ${posterPortrait.h}` : undefined }}
       >
         <VideoFigure

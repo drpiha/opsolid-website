@@ -51,14 +51,14 @@ export function Section({
       className={`${airy ? "mt-28 md:mt-52" : "mt-24 md:mt-40"} scroll-mt-20`}
     >
       <div className={wrap}>
-        <div className="relative grid gap-x-8 gap-y-8 border-t border-[#E3DCD1] pt-6 md:grid-cols-12">
-          <span aria-hidden="true" className="absolute -top-px left-0 h-px w-14 bg-[#B5623A]" />
+        <div className="relative grid gap-x-8 gap-y-8 border-t border-wk-line pt-6 md:grid-cols-12">
+          <span aria-hidden="true" className="absolute -top-px left-0 h-px w-14 bg-wk-copper" />
           <div className="md:col-span-3">
-            <p className="f-mono text-[12px] uppercase leading-[1.7] text-[#6B665F]">
-              {num && <span className="mr-3 text-[#8A4524]">{num}</span>}
+            <p className="f-mono text-[12px] leading-[1.7] text-wk-muted">
+              {num && <span className="mr-3 text-wk-copper-deep">{num}</span>}
               {label}
             </p>
-            {note && <p className="mt-3 hidden max-w-[24ch] text-[14px] leading-[1.5] text-[#6B665F] md:block">{note}</p>}
+            {note && <p className="mt-3 hidden max-w-[24ch] text-[14px] leading-[1.5] text-wk-muted md:block">{note}</p>}
           </div>
           <div className="min-w-0 md:col-span-9">
             <Reveal>
@@ -68,7 +68,7 @@ export function Section({
             </Reveal>
             {lede && (
               <Reveal delay={0.06}>
-                <p className="mt-6 max-w-[58ch] text-[#16191D]">{lede}</p>
+                <p className="mt-6 max-w-[58ch] text-wk-ink">{lede}</p>
               </Reveal>
             )}
             {children}
