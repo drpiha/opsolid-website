@@ -28,12 +28,12 @@ function amounts(line: string) {
  */
 export function CoursesBlock({ block, locale, num }: BlockProps<"courses">) {
   return (
-    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} locale={locale}>
+    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale}>
       <ol className="mt-12 border-t border-[#16191D] md:mt-16">
         {block.items.map((c, i) => {
           const bookable = c.status === "bookable";
           const priced = bookable && !!c.price;
-          const [lead, ...rest] = c.format.split(" · ");
+          const [lead, ...rest] = (c.format ?? "").split(" · ");
           const spec = [...rest, c.statusLabel].filter(Boolean);
           const left = priced ? "md:col-span-5" : "md:col-span-9";
           return (

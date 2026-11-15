@@ -22,7 +22,7 @@ export function CompareBlock({ block: b, locale, num }: BlockProps<"compare">) {
     );
   };
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       {b.tag && (
         <p className="f-mono mt-6 inline-block rounded-full border border-[#B5623A]/50 px-3 py-1 text-[12px] uppercase text-[#8A4524]">{b.tag}</p>
       )}

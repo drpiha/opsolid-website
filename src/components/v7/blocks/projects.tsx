@@ -12,7 +12,7 @@ const display = "font-[family-name:var(--font-fraunces),Georgia,serif] font-ligh
 
 export function ProjectsBlock({ block, locale, num }: BlockProps<"projects">) {
   return (
-    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} locale={locale}>
+    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale}>
       <ul className="mt-10 space-y-6 md:mt-14 md:space-y-8">
         {block.items.map((p, i) => {
           const phone = p.frame === "phone";

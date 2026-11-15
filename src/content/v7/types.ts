@@ -1,5 +1,5 @@
 /**
- * v7 marketing page model (relaunch 2026-10-29, direction A "Klarheit").
+ * v7 marketing page model (relaunch 2026-10-29; design C "Werkstatt" since 2026-11-15, owner decision 81).
  *
  * One module per page, src/content/v7/pages/<key>.ts, exports `page: PageSet` with de, en and tr in
  * full key parity (same blocks, same item counts, same ids). German is the source; en/tr are
@@ -7,8 +7,34 @@
  * number, client, quote or claim here that the build brief does not allow.
  */
 import type { L3, PageKey } from "@/lib/v7-routes";
+import type { HomeBench, HomeBlock } from "./types-home";
+import type { HubBlock } from "./types-hub";
+import type { ProdukteBlock } from "./types-produkte";
 
 export type { L3, PageKey };
+
+/** Section ground (C "Werkstatt"): the surface a section sits on. V7Page alternates paper and sheet unless a block sets one. */
+export type Ground = "paper" | "sheet" | "ink" | "bench" | "slate" | "char";
+
+/** A status or price chip: "live" (available), "plan" (in preparation / planned), "note" (a neutral tag such as "Journal"). */
+export type Chip = { kind: "live" | "plan" | "note"; text: string };
+
+/**
+ * A labelled raster picture from /public (renders, desk documents). `etikett` is the visible label every picture
+ * carries (rule 6: "Render · Muster-Agenda"). `srcSet` and `mobile` feed a native <picture> (the image optimizer is
+ * off); `priority` only for the one hero picture that is the LCP element.
+ */
+export type Picture = {
+  src: string;
+  w: number;
+  h: number;
+  alt: string;
+  etikett: string;
+  srcSet?: { src: string; w: number }[];
+  sizes?: string;
+  mobile?: { src: string; w: number; h: number };
+  priority?: boolean;
+};
 
 /**
  * A link to a v7 page by key (localized automatically), or a raw mailto:/tel: href.
@@ -48,10 +74,10 @@ export type Media =
       ai: boolean;
     };
 
-type SectionBase = {
+export type SectionBase = {
   /** Anchor, unique per page, [a-z0-9-]. */
   id: string;
-  /** Mono label in the left column ("Vorgehen"). The renderer numbers sections 01, 02, … */
+  /** Short label of the section (the Etikett over the H2, "Vorgehen"). */
   label: string;
   /** One short line under the label. */
   note?: string;
@@ -62,13 +88,19 @@ type SectionBase = {
   cta?: Href;
   /** One step more space above: a dense section that follows another dense section. */
   airy?: boolean;
+  /** Section ground; omitted: V7Page alternates paper and sheet from the first block. */
+  ground?: Ground;
+  /** The mat texture behind the section: true for the default mask, or a CSS mask image (a gradient). */
+  mat?: boolean | string;
 };
 
-export type Block =
+/** The block types every package shares. Page packages add their own unions (types-home, types-hub, types-produkte). */
+export type CoreBlock =
   /** Situations / pain points: 3 to 6 short cards. */
   | (SectionBase & { t: "situations"; items: { h: string; p: string }[] })
   /** The signature process line: exactly 4 steps, each with its tangible result. */
-  | (SectionBase & { t: "process"; steps: { name: string; h: string; p: string; result: string; meta?: string }[] })
+  /** `etikett` names the step crops in one line; a step `crop` is a decorative cut-out of a labelled sample (alt ""). */
+  | (SectionBase & { t: "process"; steps: { name: string; h: string; p: string; result: string; meta?: string; crop?: Img }[]; etikett?: string })
   /** Example scenarios, always labelled by `tag` ("Beispiel-Szenario"): before, after, the human step. */
   | (SectionBase & { t: "examples"; tag: string; items: { area: string; h: string; before: string; after: string; human: string; href?: Href }[] })
   /** Principles / commitments: 3 to 6 numbered items. */
@@ -82,12 +114,26 @@ export type Block =
     })
   /** Hairline ledger of rows, optionally linked, optionally with a real screenshot of our own work. */
   | (SectionBase & { t: "rows"; items: { h: string; p: string; tag?: string; href?: Href; img?: Img }[] })
-  /** Plain numbered steps. */
-  | (SectionBase & { t: "steps"; items: { h: string; p: string }[] })
+  /** Plain numbered steps. `variant: "run"` adds an art card per step (crop plus "Sie erhalten" text). */
+  | (SectionBase & {
+      t: "steps";
+      variant?: "run";
+      etikett?: string;
+      items: { h: string; p: string; art?: { crop: Img; label: string; h: string; p: string } }[];
+    })
   /** One task before and after (an example, labelled by `tag`). */
   | (SectionBase & { t: "compare"; tag?: string; before: { h: string; items: string[] }; after: { h: string; items: string[] } })
   /** A table (rate card, comparison). */
-  | (SectionBase & { t: "table"; caption: string; cols: string[]; rows: string[][]; footnote?: string })
+  /** `variant: "prices"` renders `list` instead of the table on phones. */
+  | (SectionBase & {
+      t: "table";
+      caption: string;
+      cols: string[];
+      rows: string[][];
+      footnote?: string;
+      variant?: "prices";
+      list?: { what: string; meta: string; price: string; unit: string }[];
+    })
   /** Key-value list (scope, format, duration, group size). */
   | (SectionBase & { t: "spec"; rows: [string, string][]; footnote?: string })
   /** Plain paragraphs; legal sections close with their primary sources (EUR-Lex) and the date they were checked. */
@@ -117,21 +163,40 @@ export type Block =
    */
   | (SectionBase & {
       t: "courses";
-      items: { name: string; status: "bookable" | "planned"; statusLabel: string; format: string; p: string; price?: string; unit?: string; arith?: string[]; href?: Href }[];
+      /** "ledger": the C home ledger (track tag, duration bars, spec lines, planned row). */
+      variant?: "ledger";
+      items: {
+        name: string;
+        status: "bookable" | "planned";
+        statusLabel: string;
+        /** Optional in the ledger variant (planned rows carry only the name). */
+        format?: string;
+        p?: string;
+        price?: string;
+        unit?: string;
+        arith?: string[];
+        href?: Href;
+        id?: string;
+        tag?: string;
+        bars?: 1 | 2 | 4;
+        spec?: string[];
+      }[];
       footnote?: string;
+      /** The one quiet row of planned courses (rule 5): label, "geplant" chip and the "Interesse vormerken" link. */
+      soon?: { id: string; label: string; chip: string; link: Href };
     })
   /** Our own work only, with real screenshots in a frame. */
   | (SectionBase & { t: "projects"; items: { name: string; status: string; p: string; points?: string[]; img: Img; frame: Frame; href?: Href }[] })
-  /** Teaser for our own product (OpSo). */
+  /** Teaser for our own product (OpSo). No prices (decision 78). `compact`: one line without media (Kutasia). */
   | (SectionBase & {
       t: "product";
       name: string;
       status: string;
       p: string;
       points: string[];
-      /** A labelled price line (e.g. a planned price), shown apart from the points. */
-      price?: { label: string; value: string };
-      media: Media;
+      media?: Media;
+      chip?: Chip;
+      compact?: boolean;
       href?: Href;
     })
   /** Gallery of real screens with captions. */
@@ -139,7 +204,7 @@ export type Block =
   /** A full-width figure band (video or image). */
   | (SectionBase & { t: "media"; media: Media })
   /** About block: paragraphs and a fact list (place, way of working, languages). */
-  | (SectionBase & { t: "about"; paras: string[]; facts: [string, string][]; link?: Href })
+  | (SectionBase & { t: "about"; paras: string[]; facts: [string, string][]; link?: Href; links?: Href[]; picture?: Picture })
   /** Scripted assistant demo without audio, visibly labelled (`chip`, `disclaimer`). */
   | (SectionBase & {
       t: "demo";
@@ -152,7 +217,14 @@ export type Block =
       script: { who: string; agent: boolean; text: string; ms: number }[];
     })
   /** The contact form (POST /api/contact). Field labels live in src/content/v7/form.ts. */
-  | (SectionBase & { t: "form"; topics: { value: string; label: string }[]; intro?: string })
+  | (SectionBase & {
+      t: "form";
+      topics: { value: string; label: string }[];
+      intro?: string;
+      /** "home": copy column with a mail aside and the "Was danach passiert" list next to the form. */
+      variant?: "home";
+      aside?: { mailLabel: string; mail: string; next?: { h: string; items: string[] } };
+    })
   /**
    * The one break from the section template per page: a full-bleed ink band with the page's single most
    * important sentence in display type (our own statement, never a quote). Not numbered; `label` names the
@@ -160,12 +232,22 @@ export type Block =
    */
   | { t: "statement"; id: string; label: string; text: string; note?: string; cta?: Href };
 
+/** Every block a page can use. A package that adds a member to its own union registers it in its own registry. */
+export type Block = CoreBlock | HomeBlock | HubBlock | ProdukteBlock;
+
 export type BlockType = Block["t"];
 export type BlockOf<T extends BlockType> = Extract<Block, { t: T }>;
-/** Props of every block component in src/components/v7/blocks/<t>.tsx. `num` is the section number ("01"). */
+/**
+ * Props of every block component in src/components/v7/blocks/<t>.tsx. `num` is the section number ("01").
+ * V7Page resolves the ground before rendering, so `block.ground` is set on every section block it passes.
+ */
 export type BlockProps<T extends BlockType> = { block: BlockOf<T>; locale: L3; num: string };
 
-export type Faq = { label: string; h: string; items: { q: string; a: string }[] };
+/** `aside`: one line next to the FAQ heading (for example a mail link sentence). */
+export type Faq = { label: string; h: string; aside?: string; items: { q: string; a: string }[] };
+
+/** The closing CTA band of a page. `pic`: a labelled picture fill behind the band. */
+export type Cta = { label: string; h: string; p: string; primary: Href; secondary?: Href; pic?: Picture };
 
 export type PageDef = {
   key: PageKey;
@@ -180,8 +262,22 @@ export type PageDef = {
     /** [pre, emphasised, post]: the middle part is set in italic copper. Use "" for unused parts. */
     h1: [string, string, string];
     lede: string;
-    primary: Href;
+    /** Omitted on pages without a primary action (Produkte). */
+    primary?: Href;
     secondary?: Href;
+    /** "bench": the home hero with the drawn bench pieces (hero/HeroBench.tsx, data in `bench`). */
+    art?: "bench";
+    /** Hero ground: light (default, paper with the mat) or ink. */
+    tone?: "light" | "ink";
+    /** Labelled picture in the right column (bleeds to the edge); takes precedence over `media`. */
+    picture?: Picture;
+    /** Jump pills to sections of the page. */
+    jump?: { label: string; links: Href[] };
+    /** Linked index rows under the hero (Produkte: name, kind and status chip per product). */
+    index?: { k: string; name: string; chip: Chip; to: Href }[];
+    /** Mono line under the fact strip (the price note). */
+    stripNote?: string;
+    bench?: HomeBench;
     /** Mono fact line under the hero ("KI-Check 990 € netto · NDA vor der Analyse · Bericht auch ohne Empfehlung"). */
     facts?: string[];
     /**
@@ -194,7 +290,10 @@ export type PageDef = {
   };
   blocks: Block[];
   faq?: Faq;
-  cta: { label: string; h: string; p: string; primary: Href; secondary?: Href };
+  /** Blocks after the FAQ (the home contact form). */
+  after?: Block[];
+  /** The closing CTA band; omitted: no band (home closes with its form, Produkte with its last section). */
+  cta?: Cta;
   /** Structured data beyond the defaults (Organization, WebPage, BreadcrumbList, FAQPage when visible). */
   schema?: {
     /** Service with offers; offers only for published prices. */

@@ -4,7 +4,7 @@ import { content as en } from "@/content/en";
 import { content as tr } from "@/content/tr";
 import { getReadMinutes } from "@/content/blog";
 import { LABEL } from "@/content/v7/site";
-import type { Href, PageDef } from "@/content/v7/types";
+import type { Cta, Href } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
 import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
@@ -33,9 +33,9 @@ export const BLOG_T: Record<
     more: Href;
     cat: Record<string, string>;
     /** CTA under posts outside the "training" category (the list page itself ends with the training CTA). */
-    cta: PageDef["cta"];
+    cta: Cta;
     /** Posts in the "training" category, and the list page, end with a link to the training hub and the training CTA. */
-    training: { more: Href; cta: PageDef["cta"] };
+    training: { more: Href; cta: Cta };
   }
 > = {
   de: {

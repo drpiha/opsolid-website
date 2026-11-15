@@ -8,7 +8,7 @@ export function SampleBlock({ block: b, locale, num }: BlockProps<"sample">) {
   const pad = b.mark.length > 8 ? "sm:pr-36 md:pr-44" : "sm:pr-24";
   const meta = b.meta.split(" · ");
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <Reveal className="mt-10 md:mt-14">
         <div className="relative max-w-[720px] rounded-[18px] border border-[#E3DCD1] bg-white p-5 shadow-[0_1px_0_rgba(22,25,29,0.04),0_24px_44px_-28px_rgba(22,25,29,0.28)] md:p-8">
           <span className="f-mono mb-3 inline-block rotate-[-2deg] rounded-md border border-[#8A4524] px-2 py-0.5 text-[12px] uppercase text-[#8A4524] sm:absolute sm:right-5 sm:top-5 sm:mb-0 sm:rotate-[4deg] md:right-8 md:top-7">

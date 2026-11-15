@@ -56,10 +56,12 @@ export function Hero({ hero, locale, home }: { hero: PageDef["hero"]; locale: L3
             {hero.lede}
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">
-            <LinkTo link={hero.primary} locale={locale} className={btnPrimary}>
-              {hero.primary.label}
-              {arrow}
-            </LinkTo>
+            {hero.primary && (
+              <LinkTo link={hero.primary} locale={locale} className={btnPrimary}>
+                {hero.primary.label}
+                {arrow}
+              </LinkTo>
+            )}
             {hero.secondary && (
               <LinkTo link={hero.secondary} locale={locale} className={linkDeep}>
                 {hero.secondary.label}

@@ -4,7 +4,7 @@
  * "du" voice of the previous OpSo page (PR #53); the rest of the site uses "Sie". Only features that exist now.
  * Images: the app screens are the real screens (demo data) cropped to the screen area from public/img/opso/<locale>/;
  * the four example cards are captures of fictional profiles with AI-generated portraits; the NFC card render is our
- * own 3D concept render (not AI-generated). The planned card price is shown exactly as on the previous page, with its label.
+ * own 3D concept render (not AI-generated). The NFC card shows no price anywhere (owner decision 78, 2026-11-15).
  */
 import type { L3, PageDef, PageSet } from "../types";
 
@@ -186,7 +186,6 @@ const de: PageDef = {
         "Mattschwarze Karte im Standardformat",
         "Separater Einmalkauf, kein Abonnement",
       ],
-      price: { label: "Geplanter Einführungspreis", value: "24,90 € inklusive MwSt., Versand wird separat berechnet" },
       href: { label: "NFC-Karte anfragen", to: "kontakt", query: { anliegen: "opso" } },
       media: {
         kind: "image",
@@ -445,7 +444,6 @@ const en: PageDef = {
         "Matte-black, standard-size card",
         "Separate one-time purchase, not a subscription",
       ],
-      price: { label: "Planned launch price", value: "€24.90 including VAT, shipping charged separately" },
       href: { label: "Ask about the NFC card", to: "kontakt", query: { anliegen: "opso" } },
       media: {
         kind: "image",
@@ -705,7 +703,6 @@ const tr: PageDef = {
         "Standart ölçülerde mat siyah kart",
         "Abonelikten ayrı, tek seferlik satın alma",
       ],
-      price: { label: "Planlanan tanıtım fiyatı", value: "24,90 €, KDV dahil, kargo ayrıca ücretlendirilir" },
       href: { label: "NFC kart hakkında bilgi al", to: "kontakt", query: { anliegen: "opso" } },
       media: {
         kind: "image",

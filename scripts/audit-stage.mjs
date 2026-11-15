@@ -4,7 +4,11 @@
  *
  *   node scripts/audit-stage.mjs                       # hero-scene guard, all pages, 1280/1440/1920/390
  *   node scripts/audit-stage.mjs --headings            # headline-fit guard only (fast), de/en/tr
- *   node scripts/audit-stage.mjs --pages home,agents --sizes 1440x900 --shots /tmp/shots
+ *   node scripts/audit-stage.mjs --pages home,agenten --sizes 1440x900 --shots /tmp/shots
+ *
+ * Pages are named by their current public German slug (PATHS); each locale opens that page's own public slug
+ * through href() of src/lib/v7-routes.ts, so --headings really covers the EN and TR pages. The script re-runs itself
+ * under `node --import tsx` when plain node cannot load the TypeScript route table.
  *
  * Environment: BASE (default http://localhost:3000), CHROMIUM_PATH (default: the first existing of
  * /opt/pw-browsers/chromium, the macOS Google Chrome app, /usr/bin/chromium, /usr/bin/google-chrome).
@@ -19,13 +23,30 @@
  *
  * Also fails on horizontal scroll and console errors. Exit code 1 on any failure.
  */
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+
+const args = process.argv.slice(2);
+
+// The route table is TypeScript with "@/..." imports: load it through tsx (re-run once under `node --import tsx`).
+let R;
+try {
+  const mod = await import("../src/lib/v7-routes.ts");
+  R = mod.PAGE_KEYS ? mod : mod.default;
+} catch (err) {
+  if (process.env.AUDIT_STAGE_TSX) throw err;
+  const run = spawnSync(process.execPath, ["--import", "tsx", fileURLToPath(import.meta.url), ...args], {
+    stdio: "inherit",
+    env: { ...process.env, AUDIT_STAGE_TSX: "1" },
+  });
+  process.exit(run.status ?? 1);
+}
 
 const require = createRequire(import.meta.url);
 const puppeteer = require("puppeteer-core");
 
-const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
 const opt = (n, d) => {
   const i = args.indexOf(`--${n}`);
@@ -39,22 +60,30 @@ const LOCALES = opt("locales", HEADINGS_ONLY ? "de,en,tr" : "de").split(",");
 const SIZES = opt("sizes", HEADINGS_ONLY ? "360x740,390x844,768x1024,1280x720,1440x900,1920x1080" : "1280x720,1440x900,1920x1080,390x844")
   .split(",")
   .map((s) => s.split("x").map(Number));
+// Current public German slugs (decision 73: the consulting page lives at /ki-beratung/ki-assistenten).
 const PATHS = {
   home: "",
-  agents: "/agents",
-  websites: "/websites",
-  leistungen: "/leistungen",
-  "ki-beratung": "/ki-beratung",
-  prozess: "/prozessautomatisierung",
-  m365: "/microsoft-365-automatisierung",
-  interne: "/interne-tools",
   schulungen: "/ki-schulungen",
-  check: "/ai-automation-check",
+  workflows: "/ki-schulungen/ki-agenten",
+  kompetenz: "/ki-schulungen/ki-kompetenz",
+  copilot: "/ki-schulungen/copilot-praxistag",
+  beratung: "/ki-beratung",
+  check: "/ki-beratung/ki-check",
+  agenten: "/ki-beratung/ki-assistenten",
+  produkte: "/produkte",
+  opso: "/opso",
   about: "/ueber-uns",
   contact: "/contact",
   blog: "/blog",
 };
 const PAGES = opt("pages", Object.keys(PATHS).join(",")).split(",");
+/** The public path of a PATHS entry in one locale ("/" for the German home, "/en/ai-training/ai-agents", …). */
+function pathFor(pg, loc) {
+  if (!(pg in PATHS)) throw new Error(`unknown page "${pg}"; known: ${Object.keys(PATHS).join(", ")}`);
+  const hit = R.keyForPublicPath(`/de${PATHS[pg]}`);
+  if (!hit) throw new Error(`${pg}: "${PATHS[pg]}" is not a public German slug`);
+  return R.href(hit.key, loc);
+}
 
 const exe =
   process.env.CHROMIUM_PATH ||
@@ -81,7 +110,7 @@ for (const loc of LOCALES) {
       p.on("console", (m) => {
         if (m.type() === "error") errs.push("console: " + m.text().slice(0, 140));
       });
-      await p.goto(`${BASE}/${loc}${PATHS[pg]}?debug`, { waitUntil: "load", timeout: 90000 });
+      await p.goto(`${BASE}${pathFor(pg, loc)}?debug`, { waitUntil: "load", timeout: 90000 });
 
       // headline fit: no h1/h2 may need a mid-word break
       const tight = await p.evaluate(() =>

@@ -1,4 +1,4 @@
-import type { PageDef } from "@/content/v7/types";
+import type { Cta } from "@/content/v7/types";
 import type { L3 } from "@/lib/v7-routes";
 import { LinkTo } from "./LinkTo";
 import { Reveal } from "./Reveal";
@@ -11,7 +11,7 @@ const arrow = (
 );
 
 /** The one dark ink panel of a page. The last word of the headline is set in light copper italic. */
-export function CtaBand({ cta, locale }: { cta: PageDef["cta"]; locale: L3 }) {
+export function CtaBand({ cta, locale }: { cta: Cta; locale: L3 }) {
   const words = cta.h.trim().split(/\s+/);
   const last = words.pop() ?? "";
   return (

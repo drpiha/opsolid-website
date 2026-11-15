@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import type { Href } from "@/content/v7/types";
+import type { CSSProperties, ReactNode } from "react";
+import type { Ground, Href } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
 import type { L3 } from "@/lib/v7-routes";
 import { LinkTo } from "./LinkTo";
@@ -22,6 +22,8 @@ export function Section({
   children,
   wide,
   airy,
+  ground,
+  mat,
 }: {
   id: string;
   num?: string;
@@ -34,9 +36,20 @@ export function Section({
   children?: ReactNode;
   wide?: boolean;
   airy?: boolean;
+  /** Section ground, resolved by V7Page (explicit block.ground, else alternating paper and sheet). Styled by the C frame. */
+  ground?: Ground;
+  /** Mat texture: true for the default mask, or a CSS mask image. */
+  mat?: boolean | string;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-h`} className={`${airy ? "mt-28 md:mt-52" : "mt-24 md:mt-40"} scroll-mt-20`}>
+    <section
+      id={id}
+      aria-labelledby={`${id}-h`}
+      data-ground={ground}
+      data-mat={mat ? "" : undefined}
+      style={typeof mat === "string" ? ({ ["--mat-mask" as string]: mat } as CSSProperties) : undefined}
+      className={`${airy ? "mt-28 md:mt-52" : "mt-24 md:mt-40"} scroll-mt-20`}
+    >
       <div className={wrap}>
         <div className="relative grid gap-x-8 gap-y-8 border-t border-[#E3DCD1] pt-6 md:grid-cols-12">
           <span aria-hidden="true" className="absolute -top-px left-0 h-px w-14 bg-[#B5623A]" />

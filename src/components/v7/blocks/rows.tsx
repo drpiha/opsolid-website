@@ -8,7 +8,7 @@ import { linkDeep } from "../ui";
 /** Hairline ledger of rows, optionally linked, optionally with a real screenshot of our own work. */
 export function RowsBlock({ block: b, locale, num }: BlockProps<"rows">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <ul className="mt-12 border-t border-[#16191D] md:mt-16">
         {b.items.map((it, i) => (
           <Reveal as="li" key={it.h} delay={i * 0.05} className="v7-card grid gap-x-8 gap-y-4 border-b border-[#E3DCD1] py-8 md:grid-cols-9 md:py-10">

@@ -4,12 +4,12 @@ import { join } from "node:path";
 import test from "node:test";
 
 // The only prices opsolid.de may state (repo CLAUDE.md, "Published offers"): KI-Check 990 (fixed price), KI-Kompetenz
-// 1.790 (+90), Copilot-Praxistag 2.900 (+150), KI-Agenten & Workflow-Automatisierung 5.900 (+290), all net,
-// and the planned OpSo NFC card at 24,90 incl. VAT. A wrong amount in one shared component (the journal CTA
-// said 490 € for months) is what this guards against.
+// 1.790 (+90), Copilot-Praxistag 2.900 (+150), KI-Agenten & Workflow-Automatisierung 5.900 (+290), all net.
+// The OpSo NFC card shows no price (owner decision 78, 2026-11-15). A wrong amount in one shared component (the
+// journal CTA said 490 € for months) is what this guards against.
 // Owner decision 2026-11-06: the price answers also state the arithmetic per person at the included group
 // size, 1.790 / 10 = 179 and 2.900 / 10 = 290 (290 is already the KI-Agenten surcharge).
-const ALLOWED = new Set(["990", "1790", "90", "2900", "150", "5900", "290", "24.90", "179"]);
+const ALLOWED = new Set(["990", "1790", "90", "2900", "150", "5900", "290", "179"]);
 const ROOTS = ["src/content/v7", "src/content/blog", "src/components/v7", "src/app/llms.txt"];
 const AMOUNT = /€\s?(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)|(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s?(?:€|EUR\b)/g;
 

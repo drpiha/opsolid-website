@@ -5,7 +5,7 @@ import { Section } from "../Section";
 /** Key-value list (scope, format, duration, group size). */
 export function SpecBlock({ block: b, locale, num }: BlockProps<"spec">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <Reveal>
         <dl className="mt-10 divide-y divide-[#E3DCD1] border-y border-[#16191D] md:mt-14">
           {b.rows.map(([k, v]) => (

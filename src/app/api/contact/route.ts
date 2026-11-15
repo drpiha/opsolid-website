@@ -15,6 +15,7 @@ const KIND_TAG: Record<string, string> = {
   "ki-check": "KI-Check",
   beratung: "Beratung",
   schulung: "Schulung",
+  vormerken: "Vormerken",
   trainer: "Trainer",
   opso: "OpSo",
   sonstiges: "Sonstiges",

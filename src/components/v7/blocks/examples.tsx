@@ -15,7 +15,7 @@ const L: Record<L3, { before: string; after: string; human: string }> = {
 export function ExamplesBlock({ block: b, locale, num }: BlockProps<"examples">) {
   const t = L[locale];
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <p className="f-mono mt-6 inline-block rounded-full border border-[#B5623A]/50 px-3 py-1 text-[12px] uppercase text-[#8A4524]">{b.tag}</p>
       <ul className="mt-10 border-t border-[#16191D] md:mt-14">
         {b.items.map((it, i) => (

@@ -11,10 +11,10 @@ const R: typeof import("../../src/lib/v7-routes.ts") = (v7 as any).PAGE_KEYS ? (
 
 test("removed single-agent product pages 301 straight to the AI assistants page, automation to process automation", () => {
   for (const s of AGENT_PAGES) {
-    assert.equal(getRetiredRedirectTarget(`/products/${s}`), "/ki-beratung/ki-agenten");
-    assert.equal(getRetiredRedirectTarget(`/products/${s}/`), "/ki-beratung/ki-agenten");
+    assert.equal(getRetiredRedirectTarget(`/products/${s}`), "/ki-beratung/ki-assistenten");
+    assert.equal(getRetiredRedirectTarget(`/products/${s}/`), "/ki-beratung/ki-assistenten");
     // the route folders are gone, so deeper links land there too
-    assert.equal(getRetiredRedirectTarget(`/products/${s}/demo`), "/ki-beratung/ki-agenten");
+    assert.equal(getRetiredRedirectTarget(`/products/${s}/demo`), "/ki-beratung/ki-assistenten");
   }
   assert.equal(getRetiredRedirectTarget("/products/custom-automation"), "/ki-beratung/prozessautomatisierung");
   // prefix matching must not catch a sibling slug
@@ -27,7 +27,7 @@ test("v4 service pages 301 into the consulting pillar", () => {
     "/ai-automation-check": "/ki-beratung/ki-check",
     "/prozessautomatisierung": "/ki-beratung/prozessautomatisierung",
     "/microsoft-365-automatisierung": "/ki-beratung/microsoft-365",
-    "/agents": "/ki-beratung/ki-agenten",
+    "/agents": "/ki-beratung/ki-assistenten",
     "/interne-tools": "/ki-beratung/prozessautomatisierung#interne-tools",
     "/websites": "/ueber-uns",
     "/schulungen": "/ki-schulungen",
@@ -38,7 +38,7 @@ test("v4 service pages 301 into the consulting pillar", () => {
     assert.equal(getRetiredRedirectTarget(`${from}/`), to, `${from}/`);
   }
   // prefix rule: /agents/x lands on the AI assistants page
-  assert.equal(getRetiredRedirectTarget("/agents/x"), "/ki-beratung/ki-agenten");
+  assert.equal(getRetiredRedirectTarget("/agents/x"), "/ki-beratung/ki-assistenten");
   assert.equal(getRetiredRedirectTarget("/websites/anything"), "/ueber-uns");
 });
 
@@ -57,8 +57,8 @@ test("the six retired Journal posts 301 to the page on the same topic; live post
     "/blog/5-signs-your-business-needs-process-automation": "/ki-beratung/prozessautomatisierung",
     "/blog/connecting-crm-erp-the-integration-playbook": "/ki-beratung/prozessautomatisierung",
     "/blog/choosing-the-right-automation-architecture": "/ki-beratung/prozessautomatisierung",
-    "/blog/ai-chatbots-vs-rule-based-bots": "/ki-beratung/ki-agenten",
-    "/blog/whatsapp-business-automation-guide": "/ki-beratung/ki-agenten",
+    "/blog/ai-chatbots-vs-rule-based-bots": "/ki-beratung/ki-assistenten",
+    "/blog/whatsapp-business-automation-guide": "/ki-beratung/ki-assistenten",
   };
   for (const [from, to] of Object.entries(map)) {
     assert.equal(getRetiredRedirectTarget(from), to, from);
@@ -85,7 +85,7 @@ test("older pages land on the current pages in one hop", () => {
   assert.equal(getRetiredRedirectTarget("/about/team"), null);
   assert.equal(getRetiredRedirectTarget("/products"), "/ki-beratung");
   assert.equal(getRetiredRedirectTarget("/products/"), "/ki-beratung");
-  assert.equal(getRetiredRedirectTarget("/products/kutasia"), "/ki-beratung/ki-agenten");
+  assert.equal(getRetiredRedirectTarget("/products/kutasia"), "/ki-beratung/ki-assistenten");
   assert.equal(getRetiredRedirectTarget("/solutions"), "/ki-beratung");
   assert.equal(getRetiredRedirectTarget("/use-cases"), "/ki-beratung/anwendungsfaelle");
   assert.equal(getRetiredRedirectTarget("/faq"), "/contact");
@@ -96,6 +96,39 @@ test("older pages land on the current pages in one hop", () => {
   // the OpSo flow under /products/digital-card/* keeps working (the gallery is retired, see above)
   assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks"), null);
   assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks/abc"), null);
+});
+
+test("decision 73: the consulting page moved to ki-assistenten", () => {
+  // the former DE and EN slugs of the consulting page 301 in one hop to its new route
+  assert.equal(getRetiredRedirectTarget("/ki-beratung/ki-agenten"), "/ki-beratung/ki-assistenten");
+  assert.equal(getRetiredRedirectTarget("/ki-beratung/ki-agenten/"), "/ki-beratung/ki-assistenten");
+  assert.equal(getRetiredRedirectTarget("/ai-automation-consulting/ai-agents"), "/ki-beratung/ki-assistenten");
+  // the new course page and the new consulting slugs are live, not retired
+  assert.equal(getRetiredRedirectTarget("/ki-schulungen/ki-agenten"), null);
+  assert.equal(getRetiredRedirectTarget("/ai-training/ai-agents"), null);
+  assert.equal(getRetiredRedirectTarget("/yapay-zeka-egitimleri/yz-ajanlari"), null);
+  assert.equal(getRetiredRedirectTarget("/ki-beratung/ki-assistenten"), null);
+  assert.equal(getRetiredRedirectTarget("/ai-automation-consulting/ai-assistants"), null);
+  assert.equal(getRetiredRedirectTarget("/yapay-zeka-danismanligi/yz-asistanlari"), null);
+  // the retired target converts to each locale's public slug (the TR slug did not change)
+  assert.equal(R.internalToPublic("de", "/ki-beratung/ki-assistenten"), "/ki-beratung/ki-assistenten");
+  assert.equal(R.internalToPublic("en", "/ki-beratung/ki-assistenten"), "/ai-automation-consulting/ai-assistants");
+  assert.equal(R.internalToPublic("tr", "/ki-beratung/ki-assistenten"), "/yapay-zeka-danismanligi/yz-asistanlari");
+  // the course page is rewritten from its EN and TR slugs and never redirected away
+  assert.equal(R.publicToInternal("en", "/ai-training/ai-agents"), "/ki-schulungen/ki-agenten");
+  assert.equal(R.publicToInternal("tr", "/yapay-zeka-egitimleri/yz-ajanlari"), "/ki-schulungen/ki-agenten");
+  assert.equal(R.foreignSlugTarget("de", "/ki-schulungen/ki-agenten"), null);
+  // under /tr the old German consulting slug is no page of any locale any more: only the retired 301 catches it
+  assert.equal(R.foreignSlugTarget("tr", "/ki-beratung/ki-agenten"), null);
+  assert.equal(R.foreignSlugTarget("en", "/ki-beratung/ki-assistenten"), "/ai-automation-consulting/ai-assistants");
+});
+
+test("the Produkte page is live in every locale and /products stays an exact-only retired key", () => {
+  for (const p of ["/produkte", "/our-products", "/urunler"]) assert.equal(getRetiredRedirectTarget(p), null, p);
+  assert.equal(R.publicToInternal("en", "/our-products"), "/produkte");
+  assert.equal(R.publicToInternal("tr", "/urunler"), "/produkte");
+  assert.equal(getRetiredRedirectTarget("/products"), "/ki-beratung");
+  assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks"), null);
 });
 
 test("object prototype names are not retired routes", () => {
@@ -121,7 +154,8 @@ test("every retired target is a live v7 route (no chains, no dead ends)", () => 
 });
 
 test("a retired target converts to one public hop per locale", () => {
-  assert.equal(R.internalToPublic("en", "/ki-beratung/ki-agenten"), "/ai-automation-consulting/ai-agents");
+  assert.equal(R.internalToPublic("en", "/ki-beratung/ki-assistenten"), "/ai-automation-consulting/ai-assistants");
+  assert.equal(R.internalToPublic("tr", "/ki-beratung/ki-assistenten"), "/yapay-zeka-danismanligi/yz-asistanlari");
   assert.equal(R.internalToPublic("tr", "/ueber-uns"), "/hakkimizda");
   assert.equal(R.internalToPublic("en", "/ki-beratung/prozessautomatisierung#interne-tools"), "/ai-automation-consulting/process-automation#interne-tools");
   assert.equal(R.internalToPublic("de", "/ki-beratung"), "/ki-beratung");

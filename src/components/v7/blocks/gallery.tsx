@@ -12,7 +12,7 @@ export function GalleryBlock({ block, locale, num }: BlockProps<"gallery">) {
   const phone = block.frame === "phone";
   const itemW = phone ? "w-[58vw] max-w-[230px]" : "w-[82vw] max-w-[620px]";
   return (
-    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} locale={locale}>
+    <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale}>
       {block.tag && <p className={`${mono} mt-8 inline-block rounded-full border border-[#B5623A]/50 px-3 py-1 text-[12px] uppercase text-[#8A4524]`}>{block.tag}</p>}
       <div
         role="region"

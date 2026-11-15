@@ -5,7 +5,7 @@ import { Section } from "../Section";
 /** Plain numbered steps as a hairline ledger. */
 export function StepsBlock({ block: b, locale, num }: BlockProps<"steps">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <ol className="mt-12 border-t border-[#16191D] md:mt-16">
         {b.items.map((it, i) => (
           <Reveal as="li" key={it.h} delay={i * 0.05} className="grid gap-x-8 gap-y-2 border-b border-[#E3DCD1] py-7 md:grid-cols-9 md:py-9">

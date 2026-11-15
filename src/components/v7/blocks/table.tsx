@@ -5,7 +5,7 @@ import { Section } from "../Section";
 /** A table (rate card, comparison). On phones every row stacks with its column names. */
 export function TableBlock({ block: b, locale, num }: BlockProps<"table">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <Reveal className="mt-10 md:mt-14">
         <table className="w-full border-collapse text-left text-[16px]">
           <caption className="f-mono mb-4 text-left text-[12px] uppercase text-[#6B665F]">{b.caption}</caption>

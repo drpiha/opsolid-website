@@ -25,7 +25,9 @@ export type PageKey =
   | "schulungen"
   | "kompetenz"
   | "copilot"
+  | "workflows"
   | "trainer"
+  | "produkte"
   | "opso"
   | "ueber"
   | "kontakt"
@@ -40,12 +42,16 @@ export const ROUTE: Record<PageKey, string> = {
   check: "/ki-beratung/ki-check",
   prozess: "/ki-beratung/prozessautomatisierung",
   m365: "/ki-beratung/microsoft-365",
-  agenten: "/ki-beratung/ki-agenten",
+  // Decision 73 (2026-11-15): the consulting page moved from /ki-beratung/ki-agenten (301 in src/lib/redirects.ts).
+  agenten: "/ki-beratung/ki-assistenten",
   anwendungen: "/ki-beratung/anwendungsfaelle",
   schulungen: "/ki-schulungen",
   kompetenz: "/ki-schulungen/ki-kompetenz",
   copilot: "/ki-schulungen/copilot-praxistag",
+  // The KI-Agenten & Workflow-Automatisierung course page (decision 73); not the consulting page `agenten`.
+  workflows: "/ki-schulungen/ki-agenten",
   trainer: "/ki-schulungen/trainer",
+  produkte: "/produkte",
   opso: "/opso",
   ueber: "/ueber-uns",
   kontakt: "/contact",
@@ -65,7 +71,11 @@ export const SLUG: Record<PageKey, Record<L3, string>> = {
     tr: "/yapay-zeka-danismanligi/surec-otomasyonu",
   },
   m365: { de: "/ki-beratung/microsoft-365", en: "/ai-automation-consulting/microsoft-365", tr: "/yapay-zeka-danismanligi/microsoft-365" },
-  agenten: { de: "/ki-beratung/ki-agenten", en: "/ai-automation-consulting/ai-agents", tr: "/yapay-zeka-danismanligi/yz-asistanlari" },
+  agenten: {
+    de: "/ki-beratung/ki-assistenten",
+    en: "/ai-automation-consulting/ai-assistants",
+    tr: "/yapay-zeka-danismanligi/yz-asistanlari",
+  },
   anwendungen: {
     de: "/ki-beratung/anwendungsfaelle",
     en: "/ai-automation-consulting/use-cases",
@@ -74,7 +84,10 @@ export const SLUG: Record<PageKey, Record<L3, string>> = {
   schulungen: { de: "/ki-schulungen", en: "/ai-training", tr: "/yapay-zeka-egitimleri" },
   kompetenz: { de: "/ki-schulungen/ki-kompetenz", en: "/ai-training/ai-literacy", tr: "/yapay-zeka-egitimleri/yz-yetkinligi" },
   copilot: { de: "/ki-schulungen/copilot-praxistag", en: "/ai-training/copilot-workshop", tr: "/yapay-zeka-egitimleri/copilot-uygulama-gunu" },
+  workflows: { de: "/ki-schulungen/ki-agenten", en: "/ai-training/ai-agents", tr: "/yapay-zeka-egitimleri/yz-ajanlari" },
   trainer: { de: "/ki-schulungen/trainer", en: "/ai-training/trainers", tr: "/yapay-zeka-egitimleri/egitmenler" },
+  // EN "/products" is taken by the app area (src/app/[locale]/products) and is a retired exact-only key.
+  produkte: { de: "/produkte", en: "/our-products", tr: "/urunler" },
   opso: { de: "/opso", en: "/opso", tr: "/opso" },
   ueber: { de: "/ueber-uns", en: "/about", tr: "/hakkimizda" },
   kontakt: { de: "/contact", en: "/contact", tr: "/iletisim" },

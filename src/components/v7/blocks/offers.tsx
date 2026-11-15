@@ -8,7 +8,7 @@ import { linkDeep } from "../ui";
 export function OffersBlock({ block: b, locale, num }: BlockProps<"offers">) {
   const cols = b.items.length >= 3 && b.items.length !== 4 ? "lg:grid-cols-3" : "";
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <ol className={`mt-12 grid items-stretch gap-4 sm:grid-cols-2 md:mt-16 ${cols}`}>
         {b.items.map((it, i) => (
           <Reveal

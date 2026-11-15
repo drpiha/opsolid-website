@@ -1,5 +1,5 @@
 /**
- * KI-Assistenten für Telefon und Chat (key "agenten", /ki-beratung/ki-agenten). One kind of automation that the
+ * KI-Assistenten für Telefon und Chat (key "agenten", /ki-beratung/ki-assistenten). One kind of automation that the
  * consulting delivers, not a product line. Scripted demo (ported from the v4 agents demo), no audio, no provider.
  * No price is published ("Preis nach dem KI-Check, schriftlich"). German is the source; EN and TR are transcreations.
  */

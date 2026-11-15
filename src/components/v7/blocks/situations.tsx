@@ -5,7 +5,7 @@ import { Section } from "../Section";
 /** Situations / pain points: numbered S.1, S.2 … hairline ledger. */
 export function SituationsBlock({ block: b, locale, num }: BlockProps<"situations">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <ul className="mt-12 divide-y divide-[#E3DCD1] border-y border-[#E3DCD1] md:mt-16">
         {b.items.map((it, i) => (
           <Reveal as="li" key={it.h} delay={i * 0.06} className="grid gap-x-8 gap-y-2 py-7 md:grid-cols-9 md:py-9">

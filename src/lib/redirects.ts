@@ -14,7 +14,13 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/ai-automation-check": "/ki-beratung/ki-check",
   "/prozessautomatisierung": "/ki-beratung/prozessautomatisierung",
   "/microsoft-365-automatisierung": "/ki-beratung/microsoft-365",
-  "/agents": "/ki-beratung/ki-agenten",
+  "/agents": "/ki-beratung/ki-assistenten",
+  // Decision 73 (2026-11-15): the consulting page "KI-Assistenten" moved to /ki-beratung/ki-assistenten (EN
+  // /ai-automation-consulting/ai-assistants; the TR slug yz-asistanlari is unchanged). Its former DE and EN slugs
+  // are no longer live in any locale. The new course page /ki-schulungen/ki-agenten (EN /ai-training/ai-agents)
+  // does not start with either key.
+  "/ki-beratung/ki-agenten": "/ki-beratung/ki-assistenten",
+  "/ai-automation-consulting/ai-agents": "/ki-beratung/ki-assistenten",
   // Internal tools are a section of the process-automation page. The fragment is client-side only.
   "/interne-tools": "/ki-beratung/prozessautomatisierung#interne-tools",
   // Short German guesses for the two main pages (their public slugs are /ki-schulungen and /ki-beratung).
@@ -35,8 +41,8 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/blog/5-signs-your-business-needs-process-automation": "/ki-beratung/prozessautomatisierung",
   "/blog/connecting-crm-erp-the-integration-playbook": "/ki-beratung/prozessautomatisierung",
   "/blog/choosing-the-right-automation-architecture": "/ki-beratung/prozessautomatisierung",
-  "/blog/ai-chatbots-vs-rule-based-bots": "/ki-beratung/ki-agenten",
-  "/blog/whatsapp-business-automation-guide": "/ki-beratung/ki-agenten",
+  "/blog/ai-chatbots-vs-rule-based-bots": "/ki-beratung/ki-assistenten",
+  "/blog/whatsapp-business-automation-guide": "/ki-beratung/ki-assistenten",
 
   // Top-level info pages
   "/solutions": "/ki-beratung",
@@ -52,20 +58,20 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   // Legacy product hub ("Neun Produkte") and the Kutasia product page: Kutasia is a project in
   // development, not a product (owner, 2026-10); its nearest topic is the AI assistants page.
   "/products": "/ki-beratung",
-  "/products/kutasia": "/ki-beratung/ki-agenten",
+  "/products/kutasia": "/ki-beratung/ki-assistenten",
 
   // Former single-agent product pages (removed 2026-10, v4 cleanup) and their older aliases → the
   // agents page; the automation page → process automation. The route folders no longer exist, so
   // sub-paths redirect too.
-  "/products/chatbot": "/ki-beratung/ki-agenten",
-  "/products/lead-qualifier": "/ki-beratung/ki-agenten",
-  "/products/digital-reception": "/ki-beratung/ki-agenten",
-  "/products/voice-agent": "/ki-beratung/ki-agenten",
-  "/products/whatsapp-agent": "/ki-beratung/ki-agenten",
-  "/products/chatbot-agent": "/ki-beratung/ki-agenten",
-  "/products/email-agent": "/ki-beratung/ki-agenten",
-  "/products/booking-agent": "/ki-beratung/ki-agenten",
-  "/products/lead-qualifier-agent": "/ki-beratung/ki-agenten",
+  "/products/chatbot": "/ki-beratung/ki-assistenten",
+  "/products/lead-qualifier": "/ki-beratung/ki-assistenten",
+  "/products/digital-reception": "/ki-beratung/ki-assistenten",
+  "/products/voice-agent": "/ki-beratung/ki-assistenten",
+  "/products/whatsapp-agent": "/ki-beratung/ki-assistenten",
+  "/products/chatbot-agent": "/ki-beratung/ki-assistenten",
+  "/products/email-agent": "/ki-beratung/ki-assistenten",
+  "/products/booking-agent": "/ki-beratung/ki-assistenten",
+  "/products/lead-qualifier-agent": "/ki-beratung/ki-assistenten",
   "/products/custom-automation": "/ki-beratung/prozessautomatisierung",
 
   // v3: legacy web-card entry points → OpSo. Exact only: /card/edit/*,

@@ -8,10 +8,10 @@ import { linkDeep } from "../ui";
 
 const STATUS: Record<L3, string> = { de: "Status", en: "Status", tr: "Durum" };
 
-/** Teaser for our own product (OpSo): name, honest status, points and a figure. No offers. */
+/** Teaser for our own product (OpSo): name, honest status, points and an optional figure. No offers, no prices (decision 78). */
 export function ProductBlock({ block: b, locale, num }: BlockProps<"product">) {
   return (
-    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} locale={locale}>
+    <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale}>
       <div className="mt-10 grid gap-x-10 gap-y-14 md:mt-14 lg:grid-cols-9">
         <div className="lg:col-span-4">
           <Reveal>
@@ -25,12 +25,6 @@ export function ProductBlock({ block: b, locale, num }: BlockProps<"product">) {
                 </li>
               ))}
             </ul>
-            {b.price && (
-              <p className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-t border-[#E3DCD1] pt-5 text-[16px]">
-                <span className="f-mono text-[12px] uppercase text-[#6B665F]">{b.price.label}</span>
-                <span className="f-mono text-[15px] text-[#8A4524]">{b.price.value}</span>
-              </p>
-            )}
           </Reveal>
           <Reveal delay={0.08}>
             <p className="mt-8 border-l border-[#B5623A] pl-5 text-[16px] leading-[1.6] text-[#16191D]">
@@ -47,9 +41,11 @@ export function ProductBlock({ block: b, locale, num }: BlockProps<"product">) {
             )}
           </Reveal>
         </div>
-        <Reveal className="lg:col-span-5" delay={0.1}>
-          <MediaFigure media={b.media} locale={locale} />
-        </Reveal>
+        {b.media && (
+          <Reveal className="lg:col-span-5" delay={0.1}>
+            <MediaFigure media={b.media} locale={locale} />
+          </Reveal>
+        )}
       </div>
     </Section>
   );
