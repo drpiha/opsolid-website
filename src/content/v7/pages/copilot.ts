@@ -116,7 +116,7 @@ const de: PageDef = {
           h: "Auswertungen vorbereiten",
           before: "Formeln und Auswertungen entstehen mühsam von Hand.",
           after: "Copilot erklärt Daten, schlägt Formeln vor und bereitet Auswertungen vor.",
-          human: "Ergebnisse werden gegen die Quelldaten geprüft.",
+          human: "Ergebnisse werden gegen die Quelldaten kontrolliert.",
         },
       ],
     },
