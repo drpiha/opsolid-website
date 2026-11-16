@@ -6,7 +6,7 @@
  * 52 px toolbar); the 12 KB SVG artwork is replaced by plain CSS so the frame stays light, themeable
  * and free of duplicate SVG ids. Screenshots are same-origin files rendered with next/image.
  */
-import Image from "next/image";
+import { Img as Image } from "@/components/v7/Img";
 import type { Img } from "@/content/v7/types";
 
 const W = 1203;

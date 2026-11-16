@@ -6,7 +6,7 @@
  * https://github.com/magicuidesign/magicui); since the Werkstatt port only the plain CSS frame is left.
  * Same-origin screenshots via next/image.
  */
-import Image from "next/image";
+import { Img as Image } from "@/components/v7/Img";
 import type { Img } from "@/content/v7/types";
 
 export function PhoneFrame({ img, className = "", sizes = "(min-width: 1024px) 240px, 60vw" }: { img: Img; className?: string; sizes?: string }) {

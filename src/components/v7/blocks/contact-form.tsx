@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { FORM } from "@/content/v7/form";
+import type { FormText } from "@/content/v7/form";
 import type { BlockOf } from "@/content/v7/types";
 import { href, type L3 } from "@/lib/v7-routes";
 import { sendFailure, type SendFailure } from "@/lib/contact-feedback";
@@ -27,8 +27,8 @@ const EMAIL = /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][
 const isValid = (k: Field, v: string) =>
   k === "email" ? EMAIL.test(v.trim()) : k === "link" ? v.trim() === "" || LINK.test(normLink(v.trim())) : v.trim().length > 0;
 
-export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale: L3 }) {
-  const t = FORM[locale];
+/** `t` is the form copy of this locale, passed by the server block (FormBlock) so the client bundle carries no copy. */
+export function ContactForm({ block, locale, t }: { block: BlockOf<"form">; locale: L3; t: FormText }) {
   const tt = t.trainer;
   const [topics, setTopics] = useState<Set<string>>(new Set());
   const [tTopics, setTTopics] = useState<Set<string>>(new Set());

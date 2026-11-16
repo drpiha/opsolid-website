@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { MenuGroup } from "@/content/v7/menu";
 import { SITE_STR } from "@/content/v7/site";
 import { href, type L3 } from "@/lib/v7-routes";
@@ -13,7 +12,7 @@ export function NavItem({ group, locale, active, current }: { group: MenuGroup; 
   const id = `mega-${group.key}`;
   return (
     <li className="wk-nav-item" data-line={group.line}>
-      <Link
+      <a
         className="wk-nav-link"
         href={href(group.hub, locale)}
         data-group={group.key}
@@ -22,7 +21,7 @@ export function NavItem({ group, locale, active, current }: { group: MenuGroup; 
         aria-current={current ? "page" : undefined}
       >
         {group.label}
-      </Link>
+      </a>
       <button type="button" className="wk-nav-chev" aria-expanded="false" aria-controls={id} aria-label={SITE_STR[locale].chev.replace("{label}", group.label)}>
         <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
           <path d="M1.5 3.5 5 7l3.5-3.5" />

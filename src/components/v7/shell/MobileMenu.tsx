@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { MenuCol, MenuGroup, MenuItem } from "@/content/v7/menu";
 import { SITE_STR } from "@/content/v7/site";
 import { LinkTo, resolveHref } from "@/components/v7/LinkTo";
@@ -99,9 +98,9 @@ export function MobileMenu({ groups, locale, publicPath, activeGroup }: { groups
         </a>
       </div>
       <div className="wk-mnav-cta">
-        <Link className="wk-btn wk-btn-ink" href={resolveHref({ label: t.cta, to: "kontakt", query: { anliegen: "schulung" } }, locale)}>
+        <a className="wk-btn wk-btn-ink" href={resolveHref({ label: t.cta, to: "kontakt", query: { anliegen: "schulung" } }, locale)}>
           {t.cta}
-        </Link>
+        </a>
       </div>
     </nav>
   );

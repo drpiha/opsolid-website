@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getPostContent, getReadMinutes } from "@/content/blog";
 import { LABEL } from "@/content/v7/site";
 import { SITE_CONFIG } from "@/lib/constants";
@@ -121,10 +120,10 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
               ].map(({ p, label }, i) => (
                 <li key={i} className={`border-b border-wk-line-2 ${i === 1 ? "md:text-right" : ""}`}>
                   {p && (
-                    <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="block py-6">
+                    <a href={href("blog", locale, { sub: `/${p.slug}` })} className="block py-6">
                       <span className="f-mono text-[13px] text-wk-copper-deep">{label}</span>
                       <span className="wk-h3 mt-2 block text-[1.25rem]">{p.title}</span>
-                    </Link>
+                    </a>
                   )}
                 </li>
               ))}

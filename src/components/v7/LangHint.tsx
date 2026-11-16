@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HINT } from "@/content/v7/site";
@@ -44,9 +43,9 @@ export function LangHint({ suggest }: { suggest: "en" | "tr" }) {
       <div className={`${wrap} wk-langhint-row`}>
         <p>
           {t.text}{" "}
-          <Link href={href("home", suggest)} hrefLang={t.lang}>
+          <a href={href("home", suggest)} hrefLang={t.lang}>
             {t.link}
-          </Link>
+          </a>
         </p>
         <button type="button" onClick={close} aria-label={t.dismiss}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

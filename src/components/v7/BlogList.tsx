@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { content as de } from "@/content/de";
 import { content as en } from "@/content/en";
 import { content as tr } from "@/content/tr";
@@ -182,9 +181,9 @@ export function BlogList({ locale }: { locale: L3 }) {
                 </p>
                 <div className="min-w-0">
                   <h2 className="wk-h3 md:text-[1.875rem]">
-                    <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
+                    <a href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
                       {soft(p.title)}
-                    </Link>
+                    </a>
                   </h2>
                   <p className="mt-3 max-w-[60ch] text-wk-muted">{p.excerpt}</p>
                   <p aria-hidden="true" className="mt-3 text-[16px] font-semibold text-wk-copper-deep">

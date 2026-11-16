@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img as Image } from "@/components/v7/Img";
 import { Section } from "@/components/v7/Section";
 import { LinkTo } from "@/components/v7/LinkTo";
 import { Reveal } from "@/components/v7/Reveal";

@@ -199,7 +199,6 @@ html[data-v4] .wk-callbar { display: none; }
   html[data-v4] .wk-header-row { gap: 12px; }
   html[data-v4] .wk-nav-link { padding-left: 10px; }
   html[data-v4] .wk-nav-link::after { left: 10px; }
-  html[data-v4] .wk-lang { display: none; }
   html[data-v4] .wk-mega-inner { grid-template-columns: minmax(0, 1fr) 280px; gap: 0 28px; }
   html[data-v4] .wk-mega-cols { gap: 0 24px; }
   html[data-v4] .wk-mega-item.has-thumb { grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
@@ -210,6 +209,16 @@ html[data-v4] .wk-callbar { display: none; }
   html[data-v4] .wk-mega-pic.is-agenda .wk-mini-blatt-list li { grid-template-columns: 38px 1fr; gap: 6px; padding: 4px 0; font-size: 0.75rem; }
   html[data-v4] .wk-mega-pic.is-agenda .wk-mini-blatt-time { font-size: 0.75rem; }
   html[data-v4] .wk-foot-top { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* 961-1180: the language links stay in the bar in a compact form (28 px wide targets without a gap, 44 px high, so
+   WCAG 2.5.8 holds) instead of disappearing; the side group closes up so at least 40 px stay between the last nav
+   chevron and "DE" in the widest locale (de) at 961 px. */
+@media (min-width: 961px) and (max-width: 1180px) {
+  html[data-v4] .wk-header-side { gap: 8px; }
+  html[data-v4] .wk-lang { gap: 0; }
+  html[data-v4] .wk-lang a { min-width: 28px; }
+  html[data-v4] .wk-header-cta { padding: 0 16px; }
 }
 
 /* ---------- phones and tablets (<= 960 px) ---------- */

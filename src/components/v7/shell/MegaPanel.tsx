@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img as Image } from "@/components/v7/Img";
 import type { CSSProperties } from "react";
 import type { MenuGroup, MenuItem } from "@/content/v7/menu";
 import { LinkTo } from "@/components/v7/LinkTo";

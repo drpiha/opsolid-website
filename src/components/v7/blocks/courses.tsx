@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { Section } from "@/components/v7/Section";
-import Link from "next/link";
 import { LinkTo, resolveHref } from "@/components/v7/LinkTo";
 import { Reveal } from "@/components/v7/Reveal";
 import { btnPrimary, linkDeep } from "@/components/v7/ui";
@@ -90,9 +89,9 @@ function Ledger({ block, locale, num }: BlockProps<"courses">) {
             </>
           );
           return c.href ? (
-            <Link key={c.name} id={c.id} className="wk-ledger-row" href={resolveHref(c.href, locale)}>
+            <a key={c.name} id={c.id} className="wk-ledger-row" href={resolveHref(c.href, locale)}>
               {body}
-            </Link>
+            </a>
           ) : (
             <div key={c.name} id={c.id} className="wk-ledger-row">
               {body}

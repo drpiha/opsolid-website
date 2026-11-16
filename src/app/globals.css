@@ -12,7 +12,8 @@
    sections) lives in opsolid-site.css. */
 @import "../styles/opsolid-tokens.css";
 @import "../styles/opsolid-v4.css";
-@import "../styles/font-vars.css";
+/* The font variables (src/styles/font-vars.css) come from the marketing sheet, which the root layout loads on every
+   route; importing them here as well made them a separate shared stylesheet request on every page. */
 
 @layer base {
   /* Legacy light-mode variables kept for any stragglers still reading them.

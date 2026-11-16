@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LABEL, SITE_STR } from "@/content/v7/site";
 import type { PageDef } from "@/content/v7/types";
 import { href, type L3, type PageKey } from "@/lib/v7-routes";
@@ -26,7 +25,7 @@ export function Breadcrumbs({ crumbs, locale, className }: { crumbs: Crumb[]; lo
           const last = i === crumbs.length - 1;
           return (
             <li key={c.path}>
-              {last ? <span aria-current="page">{c.name}</span> : <Link href={c.path}>{c.name}</Link>}
+              {last ? <span aria-current="page">{c.name}</span> : <a href={c.path}>{c.name}</a>}
             </li>
           );
         })}

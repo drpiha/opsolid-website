@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Logo } from "@/components/v7/Logo";
 import { LinkTo } from "@/components/v7/LinkTo";
 import { Etikett } from "@/components/v7/werkstatt/Etikett";
@@ -23,9 +22,9 @@ export function SiteFooter({ locale, publicPath }: { locale: L3; publicPath: str
         <div className="wk-wrap">
           <div className="wk-foot-top">
             <div className="wk-foot-brand">
-              <Link className="wk-logo" href={href("home", locale)} aria-label={t.homeAria} data-remember={locale === "de" ? "de" : undefined}>
+              <a className="wk-logo" href={href("home", locale)} aria-label={t.homeAria} data-remember={locale === "de" ? "de" : undefined}>
                 <Logo />
-              </Link>
+              </a>
               <p>{t.tagline}</p>
               <address className="wk-foot-contact">
                 <Etikett>{t.contactLabel}</Etikett>

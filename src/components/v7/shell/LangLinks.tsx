@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { LANG_NAME, LANG_SHORT, SITE_STR } from "@/content/v7/site";
@@ -25,10 +24,9 @@ export function LangLinks({ locale, publicPath, className }: { locale: L3; publi
       {L3_LOCALES.map((l) => {
         const target = here ? href(here.key, l, { sub: here.key === "blog" ? postSubIn(here.sub, l) : here.sub }) : href("home", l);
         return (
-          <Link
+          <a
             key={l}
             href={target}
-            prefetch={false}
             hrefLang={l}
             lang={l}
             // The accessible name is the visible "DE"/"EN"/"TR" (WCAG 2.5.3 label in name); the full name is a tooltip.
@@ -37,7 +35,7 @@ export function LangLinks({ locale, publicPath, className }: { locale: L3; publi
             onClick={() => rememberLocale(l)}
           >
             {LANG_SHORT[l]}
-          </Link>
+          </a>
         );
       })}
     </div>

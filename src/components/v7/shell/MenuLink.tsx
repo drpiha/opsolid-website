@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import type { Target } from "@/content/v7/menu";
 import { resolveHref } from "@/components/v7/LinkTo";
@@ -9,18 +8,13 @@ export function targetUrl(t: Target, locale: L3): string {
   return "to" in t ? resolveHref({ label: "", ...t }, locale) : t.href;
 }
 
-/** A menu link: next/link for pages, a plain anchor for mail. */
+/**
+ * A menu link: a plain anchor for pages (localized URL) and for mail. Marketing pages navigate as documents: no
+ * next/link, so its client code (about 11 kB gz, two requests) does not load before the first paint.
+ */
 export function MenuLink({ to, locale, className, children }: { to: Target; locale: L3; className?: string; children: ReactNode }) {
-  const url = targetUrl(to, locale);
-  if ("to" in to) {
-    return (
-      <Link href={url} className={className}>
-        {children}
-      </Link>
-    );
-  }
   return (
-    <a href={url} className={className}>
+    <a href={targetUrl(to, locale)} className={className}>
       {children}
     </a>
   );

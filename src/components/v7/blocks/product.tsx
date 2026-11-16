@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img as Image } from "@/components/v7/Img";
 import type { BlockProps } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
 import { LinkTo } from "../LinkTo";

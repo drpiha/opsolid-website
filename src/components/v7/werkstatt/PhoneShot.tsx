@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Img as Image } from "@/components/v7/Img";
 import type { Img } from "@/content/v7/types";
 
 /** An unedited app screen cut to a phone (.wk-ph: radius 28 px, 1 px ink ring). The caller adds the Etikett ("App-Screen"). */

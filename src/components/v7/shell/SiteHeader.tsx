@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Logo } from "@/components/v7/Logo";
 import { LangHint } from "@/components/v7/LangHint";
 import { resolveHref } from "@/components/v7/LinkTo";
@@ -30,9 +29,9 @@ export function SiteHeader({ locale, publicPath, suggest }: { locale: L3; public
       <header className="v7 wk-header" data-header data-pillar={JSON.stringify(PILLAR)}>
         <div className="wk-wrap wk-header-row">
           {/* A click on the German logo stores "de", so an earlier en/tr choice does not send "/" elsewhere. */}
-          <Link className="wk-logo" href={href("home", locale)} aria-label={t.homeAria} data-remember={locale === "de" ? "de" : undefined}>
+          <a className="wk-logo" href={href("home", locale)} aria-label={t.homeAria} data-remember={locale === "de" ? "de" : undefined}>
             <Logo />
-          </Link>
+          </a>
           <nav className="wk-nav" aria-label={t.mainNav}>
             <ul className="wk-nav-list">
               {groups.map((g) => (
@@ -42,9 +41,9 @@ export function SiteHeader({ locale, publicPath, suggest }: { locale: L3; public
           </nav>
           <div className="wk-header-side">
             <LangLinks locale={locale} publicPath={publicPath} className="wk-lang" />
-            <Link className="wk-btn wk-btn-light wk-btn-sm wk-header-cta" href={cta}>
+            <a className="wk-btn wk-btn-light wk-btn-sm wk-header-cta" href={cta}>
               {t.cta}
-            </Link>
+            </a>
             <button type="button" className="wk-menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="wk-mnav">
               <span className="t-open">{t.menuOpen}</span>
               <span className="t-close">{t.menuClose}</span>

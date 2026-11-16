@@ -29,6 +29,11 @@ const archivo = localFont({
   declarations: [{ prop: "font-stretch", value: "100% 118%" }],
   display: "swap",
   preload: true,
+  // The fallback is "Archivo Fallback" (src/styles/font-vars.css): Arial faces matched by font-stretch, so a heading
+  // set at 112-116 % wraps like Archivo while the file is still loading (with one Arial face the home h1 set in two
+  // lines instead of three and the hero moved by 42 px when Archivo arrived: CLS 0.29 under applied throttling).
+  adjustFontFallback: false,
+  fallback: ["Archivo Fallback"],
   variable: "--font-archivo",
 });
 

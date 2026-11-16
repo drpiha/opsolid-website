@@ -4,6 +4,7 @@ import { Etikett } from "@/components/v7/werkstatt/Etikett";
 import { HomeSection } from "@/components/v7/werkstatt/home/HomeSection";
 import type { BlockProps } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
+import { FORM } from "@/content/v7/form";
 import { ContactForm } from "./contact-form";
 
 /**
@@ -42,14 +43,14 @@ export function FormBlock({ block, locale, num }: BlockProps<"form">) {
               </div>
             )}
           </div>
-          <ContactForm block={block} locale={locale} />
+          <ContactForm block={block} locale={locale} t={FORM[locale]} />
         </div>
       </HomeSection>
     );
   }
   return (
     <Section id={block.id} num={num} label={block.label} note={block.note} h={block.h} lede={block.lede} cta={block.cta} ground={block.ground} mat={block.mat} locale={locale}>
-      <ContactForm block={block} locale={locale} />
+      <ContactForm block={block} locale={locale} t={FORM[locale]} />
     </Section>
   );
 }
