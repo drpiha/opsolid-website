@@ -49,10 +49,13 @@ export function WaySchema({
     );
   }
 
-  const xs = [48, 176, 304, 432];
+  // R4: the wide schema has room for a whole word, so a label split at a hyphen for the card ("Bescheini-\ngung") is
+  // joined again; the stations sit a little left so the last label clears the edge of the 480-unit sheet.
+  const xs = [52, 168, 284, 400];
+  const wide = (s: string) => s.replace(/-\n(?=[a-zäöüß])/, "").split("\n");
   return (
     <svg viewBox="0 0 480 176" role="img" aria-label={ariaLabel} className={cls}>
-      <line x1="48" y1="72" x2="432" y2="72" stroke="var(--wk-copper-deep)" strokeWidth="1.5" />
+      <line x1={xs[0]} y1="72" x2={xs[3]} y2="72" stroke="var(--wk-copper-deep)" strokeWidth="1.5" />
       {xs.map((x, i) => (
         <g key={x}>
           <rect
@@ -65,7 +68,7 @@ export function WaySchema({
             stroke={i === 3 ? "var(--wk-copper)" : "var(--wk-ink)"}
             strokeWidth="1.5"
           />
-          {lines(labels[i]).map((line, j) => (
+          {wide(labels[i]).map((line, j) => (
             <text key={j} x={x} y={112 + j * 18} textAnchor="middle" fill="var(--wk-text)" fontSize="15" fontWeight={600} style={{ fontFamily: "var(--wk-sans)" }}>
               {line}
             </text>

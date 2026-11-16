@@ -91,8 +91,8 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <h2>What do our AI training courses cost?</h2>
 <p>We offer training as team packages, always live online, as a closed session for your team, in English or German. After each course your team receives our participation record.</p>
 <ul>
-<li><strong>AI literacy basics:</strong> half day (3.5 hours), from €1,790 net per team, 10 people included, each additional person €90, up to 15. €179 per person with 10 people.</li>
-<li><strong>Microsoft 365 Copilot workshop:</strong> 1 day (6 hours), from €2,900 net per team, 10 people included, each additional person €150, up to 12. €290 per person with 10 people.</li>
+<li><strong>AI literacy basics:</strong> half day (3.5 hours), from €1,790 net per team, 10 people included, each additional person €90, up to 15. Works out at €179 per person with 10 people.</li>
+<li><strong>Microsoft 365 Copilot workshop:</strong> 1 day (6 hours), from €2,900 net per team, 10 people included, each additional person €150, up to 12. Works out at €290 per person with 10 people.</li>
 <li><strong>AI agents &amp; workflow automation:</strong> 2 days, from €5,900 net per team, 8 people included, each additional person €290, up to 10.</li>
 </ul>
 <p>"From" means the price applies to the scope described; if yours differs, we name the price before booking. We also name the trainer before booking. Contract and invoice run through OpSolid. All prices are net of VAT and for businesses only.</p>

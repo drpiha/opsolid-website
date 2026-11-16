@@ -378,3 +378,9 @@ html[data-v4] .wk-door.is-produkte .wk-door-pic .wk-etikett { right: 10px; botto
 @media (min-width: 961px) and (max-width: 1180px) {
   html[data-v4] .wk-bench { right: calc(var(--wk-gut) + 14px); transform: scale(0.72); }
 }
+
+/* R4: on narrow doors the questionnaire's Etikett stays on one line (smaller, it may reach left of the picture
+   column, where the door's text column ends higher) */
+@media (max-width: 1180px) {
+  html[data-v4] .wk-door.is-beratung .wk-door-pic .wk-etikett { max-width: none; white-space: nowrap; padding: 4px 6px; font-size: 0.6875rem; }
+}

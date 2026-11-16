@@ -178,7 +178,7 @@ const de: PageDef = {
           tone: "produkte",
           etikett: "Produkte",
           h: "Eigene Software, selbst betrieben",
-          p: "OpSo ist live, Kutasia in Entwicklung und noch nicht erhältlich.",
+          p: "OpSo ist live, als App für iPhone und Android.",
           chip: { kind: "live", text: "OpSo · kostenlos" },
           link: { label: "Alle Produkte", to: "produkte" },
           art: {
@@ -585,7 +585,7 @@ const en: PageDef = {
           tone: "produkte",
           etikett: "Products",
           h: "Our own software, run by us",
-          p: "OpSo is live, Kutasia is in development and not yet available.",
+          p: "OpSo is live, as an app for iPhone and Android.",
           chip: { kind: "live", text: "OpSo · free" },
           link: { label: "All products", to: "produkte" },
           art: {
@@ -992,7 +992,7 @@ const tr: PageDef = {
           tone: "produkte",
           etikett: "Ürünler",
           h: "Kendi yazılımımız, kendimiz işletiyoruz",
-          p: "OpSo yayında, Kutasia geliştiriliyor ve henüz satışta değil.",
+          p: "OpSo yayında: iPhone ve Android için bir uygulama.",
           chip: { kind: "live", text: "OpSo · ücretsiz" },
           link: { label: "Tüm ürünler", to: "produkte" },
           art: {
@@ -1128,8 +1128,8 @@ const tr: PageDef = {
         chip: { kind: "live", text: "yayında · ücretsiz" },
         p: "Kişi listesi ve takip özellikli dijital kartvizit. iPhone ve Android için ücretsiz.",
         stores: [
-          { label: "App Store’dan indir", href: APP_STORE },
-          { label: "Google Play’den indir", href: PLAY },
+          { label: "App Store’dan indirin", href: APP_STORE },
+          { label: "Google Play’den indirin", href: PLAY },
         ],
         all: { label: "Tüm ürünler", to: "produkte" },
       },

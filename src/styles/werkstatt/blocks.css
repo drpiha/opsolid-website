@@ -422,3 +422,9 @@ html[data-v4] .wk-sample-rows > div { grid-template-columns: 1fr; gap: 6px; }
   html[data-v4] .wk-figure.is-bleed-left figcaption,
   html[data-v4] .wk-figure.is-bleed-right figcaption { margin-inline: var(--wk-gut); }
 }
+
+/* R4: on desktop a fact value moves a long compound to its own line instead of breaking it at its soft hyphen
+   ("Eigene / Teilnahmebescheinigung"); below 1181 px, where the cells get narrow, the soft hyphen stays a break point */
+@media (min-width: 1181px) {
+  html[data-v4] .wk-fact-v { hyphens: none; }
+}

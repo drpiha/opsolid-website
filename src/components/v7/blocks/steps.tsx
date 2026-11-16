@@ -10,9 +10,11 @@ const EURO = /€/;
 /**
  * Crops drawn in SVG at the size of the raster crops (288 x 224, shown at 96 x 75): decoration, the Etikett line under
  * the steps names them (design review R3). "katalog": the catalog cut on one course row, as the crop-katalog picture
- * is cut on the first two; "angebot": a sample offer sheet with its title, text lines and a stamp.
+ * is cut on the first two; "angebot": a sample offer sheet with its title, text lines and a stamp; "termin": the corner
+ * of a live session window (bar, shared screen, neutral participant tiles; R4, so the KI-Agenten page shows no German
+ * picture text on EN and TR); "bescheinigung": the head of a participation record in the page language.
  */
-function DrawnCrop({ kind, lines = [] }: { kind: "katalog" | "angebot"; lines?: string[] }) {
+function DrawnCrop({ kind, lines = [] }: { kind: "katalog" | "angebot" | "termin" | "bescheinigung"; lines?: string[] }) {
   const mono = { fontFamily: "var(--wk-mono)" };
   const sans = { fontFamily: "var(--wk-sans)", fontStretch: "112%" };
   return (
@@ -31,6 +33,39 @@ function DrawnCrop({ kind, lines = [] }: { kind: "katalog" | "angebot"; lines?: 
           ))}
           <path d="M16 156H288" stroke="var(--wk-line-2)" strokeWidth="1.5" />
           <rect x="16" y="182" width="150" height="12" rx="3" fill="var(--wk-line)" />
+        </>
+      ) : kind === "termin" ? (
+        <>
+          <rect x="0" y="0" width="288" height="34" fill="var(--wk-ink)" />
+          <circle cx="20" cy="17" r="5" fill="var(--wk-copper)" />
+          <text x="34" y="23" fontSize="15" fill="var(--wk-text-d)" style={mono}>
+            {lines[0]}
+          </text>
+          <rect x="16" y="50" width="164" height="158" rx="4" fill="#fff" stroke="var(--wk-line-2)" strokeWidth="1.5" />
+          <text x="30" y="84" fontSize="19" fontWeight="700" fill="var(--wk-ink)" style={sans}>
+            {lines[1]}
+          </text>
+          {[104, 124, 144].map((y, i) => (
+            <rect key={y} x="30" y={y} width={130 - i * 22} height="8" rx="3" fill="var(--wk-line-2)" />
+          ))}
+          <rect x="30" y="170" width="120" height="22" rx="4" fill="none" stroke="var(--wk-copper-deep)" strokeWidth="2" />
+          {[0, 1, 2].map((r) =>
+            [0, 1].map((c) => <rect key={`${r}${c}`} x={194 + c * 42} y={50 + r * 54} width="36" height="46" rx="4" fill="var(--wk-paper-2)" stroke="var(--wk-line-2)" strokeWidth="1.5" />),
+          )}
+        </>
+      ) : kind === "bescheinigung" ? (
+        <>
+          <rect x="34" y="20" width="220" height="230" rx="4" fill="#fff" stroke="var(--wk-line-2)" strokeWidth="1.5" />
+          {lines.slice(0, 2).map((l, i) => (
+            <text key={l} x="54" y={62 + i * 28} fontSize="22" fontWeight="700" fill="var(--wk-ink)" style={sans}>
+              {l}
+            </text>
+          ))}
+          <path d="M54 110H234" stroke="var(--wk-copper)" strokeWidth="3" />
+          {[132, 154, 176].map((y, i) => (
+            <rect key={y} x="54" y={y} width={150 - i * 24} height="9" rx="3" fill="var(--wk-line-2)" />
+          ))}
+          <rect x="196" y="164" width="38" height="38" rx="19" fill="none" stroke="var(--wk-copper-deep)" strokeWidth="2.5" />
         </>
       ) : (
         <>

@@ -302,7 +302,10 @@ html[data-v4] .wk-hero-flow-row li { padding: 10px 8px 8px; font-family: var(--w
 html[data-v4] .wk-hero-flow-row li:nth-child(even) { border-left: 1px dashed var(--wk-line); }
 html[data-v4] .wk-hero-flow-row li:nth-child(n + 3) { border-top: 1px dashed var(--wk-line); }
 html[data-v4] .wk-hero-flow-k { display: block; margin-bottom: 2px; color: var(--wk-muted); }
+/* R4: in the two-by-two row each cell names its node, so the labels under the dots would say it twice */
+html[data-v4] .wk-hero-flow svg text { display: none; }
 @container (min-width: 400px) {
+  html[data-v4] .wk-hero-flow svg text { display: inline; }
   html[data-v4] .wk-hero-flow-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   html[data-v4] .wk-hero-flow-row li { padding: 10px 3px 2px; font-size: 0.6875rem; text-align: center; }
   html[data-v4] .wk-hero-flow-row li + li { border-left: 1px dashed var(--wk-line); }
@@ -319,6 +322,9 @@ html[data-v4] .v7[data-door="beratung"] {
   --wk-copper: var(--wk-slate-deep);
   --wk-copper-deep: var(--wk-slate-deep);
   --wk-copper-lite: var(--wk-line-beratung-d);
+  --wk-copper-rgb: var(--wk-slate-deep-rgb);
+  --wk-copper-deep-rgb: var(--wk-slate-deep-rgb);
+  --wk-copper-lite-rgb: 159 183 196;
 }
 /* R3: Produkte pages mark in charcoal, Unternehmen pages (About, Trainer, Journal, Kontakt) in ink, the same token swap
    as Beratung (design review R3 fix 3, rules audit S4). Charcoal and ink as text pass AA on paper, sheet and bench. */
@@ -340,6 +346,7 @@ html[data-v4] .v7[data-door="unternehmen"] {
 }
 /* on the dark grounds of these pages (the charcoal Produkte hero, ink sections) a charcoal or ink mark would vanish:
    there the graphic marks take the light door tone */
+html[data-v4] .v7[data-door="beratung"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-beratung-d); --wk-copper-rgb: 159 183 196; }
 html[data-v4] .v7[data-door="produkte"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-produkte-d); --wk-copper-rgb: 201 194 184; }
 html[data-v4] .v7[data-door="unternehmen"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-unternehmen-d); --wk-copper-rgb: var(--wk-text-d-rgb); }
 /* kept in copper: the closing CTA band (the Schulungen action) and the Schulungen card of the Produkte "why" section */

@@ -338,12 +338,12 @@ const en: PageDef = {
       t: "process",
       id: "ablauf",
       label: "Process",
-      h: "From the preliminary call to a decision",
+      h: "From the intro to a decision",
       lede: "After each step you know where you stand.",
       steps: [
         {
           name: "Preparation",
-          h: "Preliminary call and NDA",
+          h: "Intro and NDA",
           p: "We briefly clarify goals and workflows, by email or in a 15 to 30-minute video call on a Wednesday or Friday evening. Then we sign the NDA.",
           result: "Scope and fixed price are set in writing.",
           meta: "free, before the analysis",
@@ -567,7 +567,7 @@ const en: PageDef = {
       },
       {
         q: "When can we talk?",
-        a: "The preliminary call and the review of the report take place by video, on Wednesdays or Fridays between 18:30 and 20:00 German time. Everything else we settle by email.",
+        a: "The intro and the review of the report take place by video, on Wednesdays or Fridays between 18:30 and 20:00 German time. Everything else we settle by email.",
       },
     ],
   },
@@ -626,12 +626,12 @@ const tr: PageDef = {
       t: "process",
       id: "ablauf",
       label: "Süreç",
-      h: "Ön görüşmeden karara",
+      h: "Tanışmadan karara",
       lede: "Her adımdan sonra nerede olduğunuzu bilirsiniz.",
       steps: [
         {
           name: "Hazırlık",
-          h: "Ön görüşme ve NDA",
+          h: "Tanışma ve NDA",
           p: "Hedefleri ve iş akışlarını kısaca netleştiririz: e-postayla ya da çarşamba veya cuma akşamı 15-30 dakikalık görüntülü görüşmeyle. Ardından NDA'yı imzalarız.",
           result: "Kapsam ve sabit fiyat yazılı olarak belli.",
           meta: "ücretsiz, analizden önce",
@@ -855,7 +855,7 @@ const tr: PageDef = {
       },
       {
         q: "Ne zaman görüşebiliriz?",
-        a: "Ön görüşme ve raporun değerlendirilmesi görüntülü olarak, çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında yapılır. Diğer her şeyi e-postayla netleştiririz.",
+        a: "Tanışma ve raporun değerlendirilmesi görüntülü olarak, çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında yapılır. Diğer her şeyi e-postayla netleştiririz.",
       },
     ],
   },

@@ -14,8 +14,6 @@ import { SITE_STR } from "../site";
 import { page as hub } from "./schulungen";
 import type { Block, L3, PageDef, PageSet } from "../types";
 
-const CROP = "/img/v7/werkstatt/crop";
-const crop = (n: string) => ({ src: `${CROP}/crop-${n}.webp`, w: 288, h: 224, alt: "" });
 
 /**
  * The Ablauf of this course (design review R2): not the hub's run, which shows the KI-Kompetenz agenda. Four steps from
@@ -47,12 +45,12 @@ const RUN: Record<L3, Block> = {
       {
         h: "Zwei Tage live",
         p: "Ein geschlossener Termin nur für Ihr Team, live in Ihrem eigenen Microsoft Teams. Geübt wird mit Beispieldaten, nie mit echten Kundendaten.",
-        art: { crop: crop("termin"), label: "Sie erhalten", h: "Die Schulung", p: "Ihr Team hat KI-Agenten und Workflows an eigenen Abläufen geübt." },
+        art: { draw: "termin", lines: ["Live · Microsoft Teams", "KI-Agenten"], label: "Sie erhalten", h: "Die Schulung", p: "Ihr Team hat KI-Agenten und Workflows an eigenen Abläufen geübt." },
       },
       {
         h: "Bescheinigung",
         p: "Wir stellen sie nach der Schulung aus, mit Datum, Dauer, Themen und Trainer.",
-        art: { crop: crop("bescheinigung"), label: "Sie erhalten", h: "Teilnahme\u00ADbescheinigung", p: "Eine nachvollziehbare Maßnahme für Ihre Unterlagen." },
+        art: { draw: "bescheinigung", lines: ["Teilnahme-", "bescheinigung"], label: "Sie erhalten", h: "Teilnahme\u00ADbescheinigung", p: "Eine nachvollziehbare Maßnahme für Ihre Unterlagen." },
       },
     ],
   },
@@ -79,12 +77,12 @@ const RUN: Record<L3, Block> = {
       {
         h: "Two days live",
         p: "A closed session just for your team, live in your own Microsoft Teams. We practise with sample data, never with real customer data.",
-        art: { crop: crop("termin"), label: "You receive", h: "The course", p: "Your team has practised AI agents and workflows on its own processes." },
+        art: { draw: "termin", lines: ["Live · Microsoft Teams", "AI agents"], label: "You receive", h: "The course", p: "Your team has practised AI agents and workflows on its own processes." },
       },
       {
         h: "Record",
         p: "We issue it after the course, with date, duration, topics and trainer.",
-        art: { crop: crop("bescheinigung"), label: "You receive", h: "Participation record", p: "A traceable measure for your files." },
+        art: { draw: "bescheinigung", lines: ["Participation", "record"], label: "You receive", h: "Participation record", p: "A traceable measure for your files." },
       },
     ],
   },
@@ -111,12 +109,12 @@ const RUN: Record<L3, Block> = {
       {
         h: "İki gün canlı",
         p: "Yalnızca ekibinize özel kapalı bir oturum, kendi Microsoft Teams'inizde canlı. Örnek verilerle çalışılır, asla gerçek müşteri verisiyle değil.",
-        art: { crop: crop("termin"), label: "Alacağınız", h: "Eğitim", p: "Ekibiniz YZ ajanlarını ve iş akışlarını kendi süreçleri üzerinde çalıştı." },
+        art: { draw: "termin", lines: ["Canlı · Microsoft Teams", "YZ Ajanları"], label: "Alacağınız", h: "Eğitim", p: "Ekibiniz YZ ajanlarını ve iş akışlarını kendi süreçleri üzerinde çalıştı." },
       },
       {
         h: "Belge",
         p: "Eğitimden sonra düzenleriz: tarih, süre, konular ve eğitmen bilgisiyle.",
-        art: { crop: crop("bescheinigung"), label: "Alacağınız", h: "Katılım belgesi", p: "Kayıtlarınız için izlenebilir bir önlem." },
+        art: { draw: "bescheinigung", lines: ["Katılım", "belgesi"], label: "Alacağınız", h: "Katılım belgesi", p: "Kayıtlarınız için izlenebilir bir önlem." },
       },
     ],
   },

@@ -6,7 +6,15 @@ export function Fragebogen({ title, sub, q, options, ariaLabel }: { title: strin
   return (
     <div role="img" aria-label={ariaLabel} className="wk-blatt wk-bogen">
       <div className="wk-bogen-head" aria-hidden="true">
-        <p className="wk-blatt-title">{title}</p>
+        {/* a hyphenated word ("KI-Check") never splits at its hyphen (design review R3 fix 1) */}
+        <p className="wk-blatt-title">
+          {title.split(" ").map((w, i) => (
+            <span key={i}>
+              {i > 0 && " "}
+              {w.includes("-") ? <span className="whitespace-nowrap">{w}</span> : w}
+            </span>
+          ))}
+        </p>
         <p className="wk-blatt-sub">{sub}</p>
       </div>
       <p className="wk-bogen-q" aria-hidden="true">

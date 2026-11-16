@@ -184,6 +184,8 @@ html[data-v4] .wk-foot-col a { display: flex; align-items: center; min-height: 4
 html[data-v4] .wk-foot-col a:hover { color: var(--wk-copper-deep); }
 html[data-v4] .wk-foot-col a:hover span { text-decoration: underline; text-underline-offset: 4px; }
 html[data-v4] .wk-foot-col a small { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+/* R4: a link with a status line that wraps (OpSo NFC-Karte · in Vorbereitung) keeps clear space to the next link */
+html[data-v4] .wk-foot-col a:has(small) { padding-block: 6px 10px; line-height: 1.35; }
 html[data-v4] .wk-foot-bottom { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--wk-line-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; align-items: center; }
 html[data-v4] .wk-foot-note { color: var(--wk-muted); }
 html[data-v4] .wk-foot-legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; }

@@ -124,7 +124,7 @@ export type CoreBlock =
        * "katalog" = the catalog cut on one course row (`lines`: column head, then the course name in up to two lines),
        * "angebot" = a sample offer sheet (`lines`: its title).
        */
-      items: { h: string; p: string; art?: { crop?: Img; draw?: "katalog" | "angebot"; lines?: string[]; label: string; h: string; p: string } }[];
+      items: { h: string; p: string; art?: { crop?: Img; draw?: "katalog" | "angebot" | "termin" | "bescheinigung"; lines?: string[]; label: string; h: string; p: string } }[];
     })
   /** One task before and after (an example, labelled by `tag`). */
   | (SectionBase & { t: "compare"; tag?: string; before: { h: string; items: string[] }; after: { h: string; items: string[] } })
