@@ -30,7 +30,7 @@ test("app folders without an index page and unknown children are dead; real app 
     assert.equal(M.isDeadAppPath(p), false, p);
   }
   // marketing pages, other app folders and the root are never touched
-  for (const p of ["/", "/ki-beratung", "/card-preview", "/opso", "/dashboard", "/discover", "/contact"]) {
+  for (const p of ["/", "/ki-beratung", "/card-preview", "/opso", "/dashboard", "/discover", "/contact", "/kontakt", "/datenschutz"]) {
     assert.equal(M.isDeadAppPath(p), false, p);
   }
 });

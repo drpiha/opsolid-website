@@ -88,11 +88,11 @@ test("older pages land on the current pages in one hop", () => {
   assert.equal(getRetiredRedirectTarget("/products/kutasia"), "/ki-beratung/ki-assistenten");
   assert.equal(getRetiredRedirectTarget("/solutions"), "/ki-beratung");
   assert.equal(getRetiredRedirectTarget("/use-cases"), "/ki-beratung/anwendungsfaelle");
-  assert.equal(getRetiredRedirectTarget("/faq"), "/contact");
-  assert.equal(getRetiredRedirectTarget("/kontakt"), "/contact");
-  assert.equal(R.internalToPublic("de", "/contact"), "/contact");
-  assert.equal(R.internalToPublic("tr", "/contact"), "/iletisim");
-  assert.equal(getRetiredRedirectTarget("/pricing"), "/contact");
+  assert.equal(getRetiredRedirectTarget("/faq"), "/kontakt");
+  assert.equal(R.internalToPublic("de", "/kontakt"), "/kontakt");
+  assert.equal(R.internalToPublic("en", "/kontakt"), "/contact");
+  assert.equal(R.internalToPublic("tr", "/kontakt"), "/iletisim");
+  assert.equal(getRetiredRedirectTarget("/pricing"), "/kontakt");
   // the OpSo flow under /products/digital-card/* keeps working (the gallery is retired, see above)
   assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks"), null);
   assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks/abc"), null);
@@ -167,6 +167,7 @@ test("working routes are never redirected", () => {
   for (const p of [
     "/card/edit/abc", "/card/manage/abc", "/card/new/step", "/products/digital-card/thanks",
     "/c/slug", "/login", "/dashboard/cards", "/opso", "/ki-schulungen", "/ueber-uns", "/ki-beratung", "/about", "/contact",
+    "/kontakt", "/datenschutz", "/privacy", "/iletisim",
   ]) {
     assert.equal(getRetiredRedirectTarget(p), null, p);
   }
@@ -346,4 +347,36 @@ test("the sitemap lists each localized post once per locale under its own slug, 
       for (const o of R.L3_LOCALES) if (o !== l) assert.ok(!urls.includes(`https://opsolid.de/${l}/blog/${row[o]}`), `no ${l} URL with the ${o} slug`);
     }
   }
+});
+
+test("decision 80: German slugs /kontakt and /datenschutz, old German URLs 301 in one hop", () => {
+  // /kontakt is a live slug now: never a retired key (it would loop)
+  assert.equal(getRetiredRedirectTarget("/kontakt"), null);
+  assert.equal(getRetiredRedirectTarget("/datenschutz"), null);
+  // the retired keys that pointed at the contact page land on the new German folder, one hop per locale
+  for (const key of ["/faq", "/pricing"]) {
+    const target = getRetiredRedirectTarget(key);
+    assert.equal(target, "/kontakt", key);
+    assert.equal(R.internalToPublic("de", target!), "/kontakt", key);
+    assert.equal(R.internalToPublic("en", target!), "/contact", key);
+    assert.equal(R.internalToPublic("tr", target!), "/iletisim", key);
+  }
+  // /de/contact and /de/privacy are the EN slugs under /de: foreignSlugTarget sends them to the German slugs
+  assert.equal(R.foreignSlugTarget("de", "/contact"), "/kontakt");
+  assert.equal(R.foreignSlugTarget("de", "/privacy"), "/datenschutz");
+  assert.equal(R.foreignSlugTarget("en", "/kontakt"), "/contact");
+  assert.equal(R.foreignSlugTarget("en", "/datenschutz"), "/privacy");
+  assert.equal(R.foreignSlugTarget("tr", "/kontakt"), "/iletisim");
+  assert.equal(R.foreignSlugTarget("tr", "/datenschutz"), "/privacy");
+  // EN and TR keep their slugs and render the German folders
+  assert.equal(R.foreignSlugTarget("en", "/contact"), null);
+  assert.equal(R.foreignSlugTarget("en", "/privacy"), null);
+  assert.equal(R.foreignSlugTarget("tr", "/iletisim"), null);
+  assert.equal(R.foreignSlugTarget("tr", "/privacy"), null);
+  assert.equal(R.publicToInternal("en", "/contact"), "/kontakt");
+  assert.equal(R.publicToInternal("en", "/privacy"), "/datenschutz");
+  assert.equal(R.publicToInternal("tr", "/privacy"), "/datenschutz");
+  assert.equal(R.href("kontakt", "de"), "/de/kontakt");
+  assert.equal(R.href("privacy", "de"), "/de/datenschutz");
+  assert.equal(R.href("kontakt", "de", { hash: "formular" }), "/de/kontakt#formular");
 });

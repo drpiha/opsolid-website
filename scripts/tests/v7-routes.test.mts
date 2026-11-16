@@ -29,6 +29,17 @@ test("decisions 72 and 73: Produkte page, KI-Agenten course page, consulting pag
   assert.equal(R.href("agenten", "de"), "/de/ki-beratung/ki-assistenten");
   assert.equal(R.href("agenten", "en"), "/en/ai-automation-consulting/ai-assistants");
   assert.equal(R.href("agenten", "tr"), "/tr/yapay-zeka-danismanligi/yz-asistanlari");
+  // decision 80: German slugs for contact and privacy; EN and TR keep theirs
+  assert.equal(R.href("kontakt", "de"), "/de/kontakt");
+  assert.equal(R.href("kontakt", "en"), "/en/contact");
+  assert.equal(R.href("kontakt", "tr"), "/tr/iletisim");
+  assert.equal(R.href("privacy", "de"), "/de/datenschutz");
+  assert.equal(R.href("privacy", "en"), "/en/privacy");
+  assert.equal(R.href("privacy", "tr"), "/tr/privacy");
+  assert.equal(R.alternates("kontakt").de, "https://opsolid.de/de/kontakt");
+  assert.equal(R.alternates("kontakt")["x-default"], "https://opsolid.de/de/kontakt");
+  assert.equal(R.keyForPublicPath("/de/kontakt")?.key, "kontakt");
+  assert.equal(R.keyForPublicPath("/de/datenschutz")?.key, "privacy");
   assert.equal(R.publicToInternal("en", "/our-products"), "/produkte");
   assert.equal(R.publicToInternal("tr", "/urunler"), "/produkte");
   assert.equal(R.publicToInternal("de", "/produkte"), null);
@@ -74,12 +85,15 @@ test("publicToInternal: EN/TR slugs rewrite to the German route folder, own fold
   assert.equal(R.publicToInternal("en", "/ai-automation-consulting/"), "/ki-beratung");
   assert.equal(R.publicToInternal("tr", "/yapay-zeka-danismanligi/yz-kontrolu"), "/ki-beratung/ki-check");
   assert.equal(R.publicToInternal("en", "/about"), "/ueber-uns");
-  assert.equal(R.publicToInternal("tr", "/iletisim"), "/contact");
+  assert.equal(R.publicToInternal("tr", "/iletisim"), "/kontakt");
   assert.equal(R.publicToInternal("en", "/ai-training/ai-literacy"), "/ki-schulungen/ki-kompetenz");
   // same slug in every locale → no rewrite
   assert.equal(R.publicToInternal("en", "/opso"), null);
   assert.equal(R.publicToInternal("en", "/blog"), null);
-  assert.equal(R.publicToInternal("en", "/contact"), null);
+  // decision 80: the German folder is /kontakt, so the EN slug /contact rewrites to it
+  assert.equal(R.publicToInternal("en", "/contact"), "/kontakt");
+  assert.equal(R.publicToInternal("en", "/privacy"), "/datenschutz");
+  assert.equal(R.publicToInternal("de", "/kontakt"), null);
   assert.equal(R.publicToInternal("de", "/ki-beratung"), null);
   // children of identical slugs and unknown paths pass through
   assert.equal(R.publicToInternal("en", "/blog/post"), null);
@@ -93,7 +107,11 @@ test("foreignSlugTarget: another locale's slug or the German folder 301s to the 
   assert.equal(R.foreignSlugTarget("tr", "/ai-training"), "/yapay-zeka-egitimleri");
   assert.equal(R.foreignSlugTarget("de", "/about"), "/ueber-uns");
   assert.equal(R.foreignSlugTarget("tr", "/contact"), "/iletisim");
-  assert.equal(R.foreignSlugTarget("de", "/iletisim"), "/contact");
+  assert.equal(R.foreignSlugTarget("de", "/iletisim"), "/kontakt");
+  assert.equal(R.foreignSlugTarget("de", "/contact"), "/kontakt");
+  assert.equal(R.foreignSlugTarget("de", "/privacy"), "/datenschutz");
+  assert.equal(R.foreignSlugTarget("en", "/kontakt"), "/contact");
+  assert.equal(R.foreignSlugTarget("en", "/datenschutz"), "/privacy");
   assert.equal(R.foreignSlugTarget("en", "/ueber-uns"), "/about");
   assert.equal(R.foreignSlugTarget("en", "/ki-beratung/ki-check/"), "/ai-automation-consulting/ai-check");
   // own slugs, shared slugs, unknown paths and the home do not redirect
@@ -160,7 +178,7 @@ test("isV4Path knows every public marketing first segment and still excludes app
   const marketing = [
     "/", "/de", "/en", "/de/ki-beratung", "/en/ai-automation-consulting/ai-check", "/tr/yapay-zeka-danismanligi",
     "/en/ai-training", "/tr/yapay-zeka-egitimleri", "/en/projects", "/tr/projeler", "/en/about", "/tr/hakkimizda",
-    "/tr/iletisim", "/de/ueber-uns", "/en/contact", "/en/blog/x", "/de/impressum", "/en/opso",
+    "/tr/iletisim", "/de/ueber-uns", "/en/contact", "/de/kontakt", "/de/datenschutz", "/en/privacy", "/tr/privacy", "/en/blog/x", "/de/impressum", "/en/opso",
     "/en/no-such-page",
   ];
   for (const p of marketing) assert.equal(V4.isV4Path(p), true, p);

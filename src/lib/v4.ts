@@ -14,11 +14,14 @@ const V4_FIRST_SEGMENTS = new Set([
   "produkte",
   "opso",
   "ueber-uns",
-  "contact",
+  "kontakt",
   "blog",
   "impressum",
+  "datenschutz",
+  // EN / TR public slugs (middleware rewrites them to the folders above); "contact" and "privacy" were the
+  // German folders before decision 80 and stay the EN slugs (TR keeps "privacy")
+  "contact",
   "privacy",
-  // EN / TR public slugs (middleware rewrites them to the folders above)
   "ai-automation-consulting",
   "ai-training",
   "our-products",

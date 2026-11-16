@@ -46,9 +46,9 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
 
   // Top-level info pages
   "/solutions": "/ki-beratung",
-  "/faq": "/contact",
-  // The German word people type; the contact page's slug is /contact in de and en, /iletisim in tr.
-  "/kontakt": "/contact",
+  "/faq": "/kontakt",
+  // No "/kontakt" key: it is the live German contact slug since decision 80 (2026-11-15). The old German URL
+  // /de/contact (the EN slug) 301s to /de/kontakt through foreignSlugTarget, as /de/privacy does to /de/datenschutz.
   "/use-cases": "/ki-beratung/anwendungsfaelle",
 
   // Former /about → /ueber-mich → /ueber-uns. NOTE: no "/about" key: the EN public slug of the About
@@ -86,7 +86,7 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
 
   // Pricing removed from IA (2026-05-18 redesign Round 0 — we don't
   // advertise prices on the marketing site). Inbound links 301 to contact.
-  "/pricing": "/contact",
+  "/pricing": "/kontakt",
 };
 
 /**

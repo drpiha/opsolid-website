@@ -54,10 +54,11 @@ export const ROUTE: Record<PageKey, string> = {
   produkte: "/produkte",
   opso: "/opso",
   ueber: "/ueber-uns",
-  kontakt: "/contact",
+  // Decision 80 (2026-11-15): German slugs; the old /de/contact and /de/privacy 301 via foreignSlugTarget.
+  kontakt: "/kontakt",
   blog: "/blog",
   impressum: "/impressum",
-  privacy: "/privacy",
+  privacy: "/datenschutz",
 };
 
 /** Public path per locale, without the locale prefix ("" = the locale home). */
@@ -90,10 +91,10 @@ export const SLUG: Record<PageKey, Record<L3, string>> = {
   produkte: { de: "/produkte", en: "/our-products", tr: "/urunler" },
   opso: { de: "/opso", en: "/opso", tr: "/opso" },
   ueber: { de: "/ueber-uns", en: "/about", tr: "/hakkimizda" },
-  kontakt: { de: "/contact", en: "/contact", tr: "/iletisim" },
+  kontakt: { de: "/kontakt", en: "/contact", tr: "/iletisim" },
   blog: { de: "/blog", en: "/blog", tr: "/blog" },
   impressum: { de: "/impressum", en: "/impressum", tr: "/impressum" },
-  privacy: { de: "/privacy", en: "/privacy", tr: "/privacy" },
+  privacy: { de: "/datenschutz", en: "/privacy", tr: "/privacy" },
 };
 
 export const PAGE_KEYS = Object.keys(ROUTE) as PageKey[];

@@ -3,7 +3,7 @@ import { content as de } from "@/content/de";
 import { content as en } from "@/content/en";
 import { content as tr } from "@/content/tr";
 import { getReadMinutes } from "@/content/blog";
-import { LABEL } from "@/content/v7/site";
+import { LABEL, SITE_STR } from "@/content/v7/site";
 import type { Cta, Href } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
@@ -170,6 +170,8 @@ export function BlogList({ locale }: { locale: L3 }) {
               </Reveal>
             ))}
           </ul>
+          {/* Rule 1: an excerpt that names a price gets the price note on the list page (the excerpt itself stays the post's meta description). */}
+          {posts.some((p) => p.excerpt.includes("€")) && <p className="wk-foot-note mt-6">{SITE_STR[locale].priceNote}</p>}
           <div className="mt-10">
             <LinkTo link={t.more} locale={locale} className={`${linkDeep} v7-link`}>
               {t.more.label}

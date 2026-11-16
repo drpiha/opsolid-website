@@ -77,10 +77,10 @@ const PATHS = {
   produkte: "/produkte",
   opso: "/opso",
   about: "/ueber-uns",
-  contact: "/contact",
+  contact: "/kontakt",
   blog: "/blog",
   impressum: "/impressum",
-  privacy: "/privacy",
+  privacy: "/datenschutz",
 };
 const PAGES = opt("pages", Object.keys(PATHS).join(",")).split(",");
 /** The public path of a PATHS entry in one locale ("/" for the German home, "/en/ai-training/ai-agents", …). */

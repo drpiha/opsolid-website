@@ -65,6 +65,7 @@ Public locales are `de`, `en`, `tr`. **Language follows the visitor's COUNTRY, n
 - The middleware rewrites a public EN/TR slug to its `ROUTE` folder and sets `x-public-path` (the URL the browser shows) next to `x-pathname` (internal). A path that belongs to another locale gets a 301 to the right slug.
 - Retired URLs (old v4 pages, `/websites`, …) 301 in **one hop** to the public slug of the request locale (`src/lib/redirects.ts`); no chains, no loops. `www.opsolid.de` 301s to the apex.
 - All internal marketing links use `href()` / an `Href` with `to`; never hand-write `/de/...`. Changing a slug needs a 301 and a test in `scripts/tests/`.
+- Contact and privacy (decision 80, 2026-11-15): German slugs and route folders `/kontakt` and `/datenschutz`; EN keeps `/contact` and `/privacy`, TR `/iletisim` and `/privacy`. The old German URLs `/de/contact` and `/de/privacy` are EN slugs under `/de` and 301 in one hop through `foreignSlugTarget`; `/kontakt` is therefore not a retired key, and `/faq` and `/pricing` point at `/kontakt`. App pages that still hard-code `/contact` or `/privacy` (app footer, `FinalCTA`, `CustomRequestSection`, the card edit and manage pages) reach the page through that 301.
 
 ### Marketing page model (v7)
 
