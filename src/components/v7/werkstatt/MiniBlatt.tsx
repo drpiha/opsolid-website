@@ -17,7 +17,8 @@ export function MiniBlatt({
   title: string;
   sub: string;
   stamp: string;
-  items: { time?: string; text: string }[];
+  /** `note`: a second, muted line under the text (hero lists). */
+  items: { time?: string; text: string; note?: string }[];
   rotate?: number;
   ariaLabel: string;
   className?: string;
@@ -40,7 +41,14 @@ export function MiniBlatt({
         {items.map((it, i) => (
           <li key={i}>
             {it.time && <span className="wk-mini-blatt-time">{it.time}</span>}
-            <span>{it.text}</span>
+            {it.note ? (
+              <span>
+                <b>{it.text}</b>
+                <small>{it.note}</small>
+              </span>
+            ) : (
+              <span>{it.text}</span>
+            )}
           </li>
         ))}
       </ul>

@@ -12,8 +12,10 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // NFC card price (decision 78); contact reply "innerhalb von 2 Werktagen" (decision 79); Home and the Schulungen hub
   // rebuilt; the trainer page without "vermitteln"; KI-Check price note and credit under the hero facts; copilot and
   // prozess without "geprüft".
-  produkte: "2026-11-15",
-  workflows: "2026-11-15",
+  // 2026-11-16 (design review R2): Produkte names Kutasia only in the hero index (no section); the KI-Agenten course page
+  // has its own Ablauf and answers the price question for this course only.
+  produkte: "2026-11-16",
+  workflows: "2026-11-16",
   // 2026-11-09: OpSo Android app public on Google Play (EU/EEA, Switzerland, UK), links and status updated; before that
   // 2026-11-07: iPhone app in the App Store; the status changed on the OpSo page and on Home, About and Projekte.
   opso: "2026-11-15",

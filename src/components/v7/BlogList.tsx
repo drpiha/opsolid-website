@@ -9,6 +9,8 @@ import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
 import type { Crumb } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
+import { HeroObject } from "./hero/HeroObject";
+import { liste } from "@/content/v7/hero-objects";
 import { JsonLdGraph, sharedNodes, webPageNodes } from "./JsonLd";
 import { Frame, PlainHero } from "./LegalPage";
 import { LinkTo } from "./LinkTo";
@@ -31,6 +33,8 @@ export const BLOG_T: Record<
     min: string;
     more: Href;
     cat: Record<string, string>;
+    /** Etikett of the hero sheet with the three newest titles (design review R2). */
+    neu: string;
     /** CTA under posts outside the "training" category (the list page itself ends with the training CTA). */
     cta: Cta;
     /** Posts in the "training" category, and the list page, end with a link to the training hub and the training CTA. */
@@ -49,6 +53,7 @@ export const BLOG_T: Record<
     min: "Min.",
     more: { label: "Zu den KI-Schulungen", to: "schulungen" },
     cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb", training: "Schulung" },
+    neu: "Neu im Journal",
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
@@ -79,6 +84,7 @@ export const BLOG_T: Record<
     min: "min",
     more: { label: "To AI training", to: "schulungen" },
     cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations", training: "Training" },
+    neu: "New in the journal",
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
@@ -109,6 +115,7 @@ export const BLOG_T: Record<
     min: "dk",
     more: { label: "YZ eğitimlerine", to: "schulungen" },
     cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "İşletme", training: "Eğitim" },
+    neu: "Notlar'da yeni",
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
@@ -144,7 +151,24 @@ export function BlogList({ locale }: { locale: L3 }) {
   ];
   return (
     <div className="v7">
-      <PlainHero eyebrow={t.eyebrow} h1={`${t.h1[0]} ${t.h1[1]}`} lede={t.lede} crumbs={crumbs} locale={locale} />
+      <PlainHero
+        eyebrow={t.eyebrow}
+        h1={`${t.h1[0]} ${t.h1[1]}`}
+        lede={t.lede}
+        crumbs={crumbs}
+        locale={locale}
+        aside={
+          // The three newest real titles on a sheet (design review R2); decorative, hidden on phones (the list follows).
+          <HeroObject
+            o={liste(
+              t.neu,
+              { title: t.frame, sub: t.frameNote, stamp: t.eyebrow },
+              posts.slice(0, 3).map((p) => ({ text: p.title, note: `${fmtDate(p.date, locale)} · ${t.cat[p.category] ?? p.category}` })),
+              { phone: false },
+            )}
+          />
+        }
+      />
       <section id="beitraege" aria-label={t.frame} className="wk-sec">
         <Frame label={t.frame} note={t.frameNote}>
           <ul>

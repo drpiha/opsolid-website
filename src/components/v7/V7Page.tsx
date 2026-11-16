@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { Block, BlockProps, BlockType, Ground, PageDef } from "@/content/v7/types";
 import type { L3 } from "@/lib/v7-routes";
+import { PILLAR } from "@/content/v7/menu";
 import { crumbsFor } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
 import { FaqSection } from "./FaqSection";
@@ -107,7 +108,8 @@ export function V7Page({ page, locale }: { page: PageDef; locale: L3 }) {
   const sections = blocks.filter((b) => b.t !== "statement").length;
   const after = withGrounds(page.after ?? [], sections + (page.faq ? 1 : 0));
   return (
-    <div className="v7">
+    // data-door: the door mark of the page's group (decision 77); Beratung pages swap copper for slate in CSS.
+    <div className="v7" data-door={PILLAR[page.key]}>
       <RevealObserver />
       <Hero hero={page.hero} locale={locale} home={home} crumbs={crumbs} />
       {blocks.map((block, i) => {

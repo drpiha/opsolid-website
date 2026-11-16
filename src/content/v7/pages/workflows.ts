@@ -2,15 +2,123 @@
  * KI-Agenten & Workflow-Automatisierung, the course page (key "workflows", /ki-schulungen/ki-agenten; owner decision
  * 73, 2026-11-15). Not the consulting page "KI-Assistenten" (key "agenten", /ki-beratung/ki-assistenten).
  *
- * Built by package P2 (PLAN 6.3) from the hub parts: light hero with the flow schema, spec, the run steps shared with
- * the hub (RUN_STEPS), the two other routes moved from the hub, three hub FAQ items, the CTA band. Only the
+ * Built by package P2 (PLAN 6.3) from the hub parts: light hero with the flow schema (the only hero that keeps it),
+ * spec, this course's own run (RUN, design review R2), the two other routes moved from the hub, three FAQ items (the
+ * price answer for this course only, R2), the CTA band. Only the
  * live facts of this course: 2 Tage, 8 Personen inklusive, bis 10, jede weitere Person 290 €, ab 5.900 € netto pro
  * Team, live online, Deutsch oder Englisch, agenda agreed with the team beforehand. No hours, no topic list and no
  * per-person figure (rule 1). German is the source; EN and TR are transcreations.
  */
 import { SITE_STR } from "../site";
-import { RUN_STEPS, page as hub } from "./schulungen";
-import type { PageDef, PageSet } from "../types";
+import { page as hub } from "./schulungen";
+import type { Block, L3, PageDef, PageSet } from "../types";
+
+const CROP = "/img/v7/werkstatt/crop";
+const crop = (n: string) => ({ src: `${CROP}/crop-${n}.webp`, w: 288, h: 224, alt: "" });
+
+/**
+ * The Ablauf of this course (design review R2): not the hub's run, which shows the KI-Kompetenz agenda. Four steps from
+ * the live facts of this page (agenda agreed with the team beforehand, two days live in Microsoft Teams, the
+ * Teilnahmebescheinigung); the second step shows the course's own drawn flow instead of an agenda crop.
+ */
+const RUN: Record<L3, Block> = {
+  de: {
+    t: "steps",
+    variant: "run",
+    id: "ablauf",
+    label: "Ablauf",
+    h: "Von der Anfrage zu den zwei Tagen",
+    lede: "Die Agenda der zwei Tage stimmen wir vorab mit Ihrem Team ab.",
+    ground: "bench",
+    etikett: "Ausschnitte · Preisliste, zwei Schemas, Muster-Bescheinigung",
+    items: [
+      {
+        h: "Anfrage",
+        p: "Sie schildern uns per Formular Team, Abläufe und Sprache. Drei Sätze genügen.",
+        art: { crop: crop("katalog"), label: "Sie erhalten", h: "Unsere Empfehlung", p: "Wir empfehlen die passende Schulung und nennen den Preis pro Team." },
+      },
+      {
+        h: "Agenda abstimmen",
+        p: "Die Agenda der zwei Tage stimmen wir vorab mit Ihrem Team ab, an Abläufen aus Ihrem Alltag. Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich.",
+        art: { draw: "flow", label: "Sie erhalten", h: "Schriftliches Angebot", p: "Ein schriftliches Angebot pro Team. Vertrag und Rechnung laufen über OpSolid." },
+      },
+      {
+        h: "Zwei Tage live",
+        p: "Ein geschlossener Termin nur für Ihr Team, live in Ihrem eigenen Microsoft Teams. Geübt wird mit Beispieldaten, nie mit echten Kundendaten.",
+        art: { crop: crop("termin"), label: "Sie erhalten", h: "Die Schulung", p: "Ihr Team hat KI-Agenten und Workflows an eigenen Abläufen geübt." },
+      },
+      {
+        h: "Bescheinigung",
+        p: "Wir stellen sie nach der Schulung aus, mit Datum, Dauer, Themen und Trainer.",
+        art: { crop: crop("bescheinigung"), label: "Sie erhalten", h: "Teilnahme\u00ADbescheinigung", p: "Eine nachvollziehbare Maßnahme für Ihre Unterlagen." },
+      },
+    ],
+  },
+  en: {
+    t: "steps",
+    variant: "run",
+    id: "ablauf",
+    label: "Process",
+    h: "From enquiry to the two days",
+    lede: "We agree the agenda for the two days with your team beforehand.",
+    ground: "bench",
+    etikett: "Cut-outs · price list, two schemas, sample record",
+    items: [
+      {
+        h: "Enquiry",
+        p: "Tell us via the form about your team, workflows and language. Three sentences are enough.",
+        art: { crop: crop("katalog"), label: "You receive", h: "Our recommendation", p: "We recommend the right course and name the price per team." },
+      },
+      {
+        h: "Agree the agenda",
+        p: "We agree the agenda for the two days with your team beforehand, based on workflows from your daily work. We name the trainer to you before you book.",
+        art: { draw: "flow", label: "You receive", h: "Written offer", p: "A written offer per team. Contract and invoice run through OpSolid." },
+      },
+      {
+        h: "Two days live",
+        p: "A closed session just for your team, live in your own Microsoft Teams. We practise with sample data, never with real customer data.",
+        art: { crop: crop("termin"), label: "You receive", h: "The course", p: "Your team has practised AI agents and workflows on its own processes." },
+      },
+      {
+        h: "Record",
+        p: "We issue it after the course, with date, duration, topics and trainer.",
+        art: { crop: crop("bescheinigung"), label: "You receive", h: "Participation record", p: "A traceable measure for your files." },
+      },
+    ],
+  },
+  tr: {
+    t: "steps",
+    variant: "run",
+    id: "ablauf",
+    label: "Süreç",
+    h: "Talepten iki güne",
+    lede: "İki günün programını ekibinizle önceden birlikte belirleriz.",
+    ground: "bench",
+    etikett: "Kesitler · fiyat listesi, iki şema, örnek belge",
+    items: [
+      {
+        h: "Talep",
+        p: "Formla ekibinizi, iş akışlarınızı ve dili anlatırsınız. Üç cümle yeter.",
+        art: { crop: crop("katalog"), label: "Alacağınız", h: "Önerimiz", p: "Size uygun eğitimi önerir ve ekip başına fiyatı bildiririz." },
+      },
+      {
+        h: "Programı belirleme",
+        p: "İki günün programını, günlük işinizden iş akışlarıyla ekibinizle önceden birlikte belirleriz. Eğitmeni rezervasyondan önce size adıyla bildiririz.",
+        art: { draw: "flow", label: "Alacağınız", h: "Yazılı teklif", p: "Ekip başına yazılı bir teklif. Sözleşme ve fatura OpSolid üzerinden yürür." },
+      },
+      {
+        h: "İki gün canlı",
+        p: "Yalnızca ekibinize özel kapalı bir oturum, kendi Microsoft Teams'inizde canlı. Örnek verilerle çalışılır, asla gerçek müşteri verisiyle değil.",
+        art: { crop: crop("termin"), label: "Alacağınız", h: "Eğitim", p: "Ekibiniz YZ ajanlarını ve iş akışlarını kendi süreçleri üzerinde çalıştı." },
+      },
+      {
+        h: "Belge",
+        p: "Eğitimden sonra düzenleriz: tarih, süre, konular ve eğitmen bilgisiyle.",
+        art: { crop: crop("bescheinigung"), label: "Alacağınız", h: "Katılım belgesi", p: "Kayıtlarınız için izlenebilir bir önlem." },
+      },
+    ],
+  },
+};
 
 const de: PageDef = {
   key: "workflows",
@@ -24,7 +132,7 @@ const de: PageDef = {
   crumb: "KI-Agenten",
   hero: {
     eyebrow: "KI-Schulungen · online und live",
-    h1: ["KI-Agenten & Workflow-Automatisierung:", "zwei Tage", " an Ihren Abläufen"],
+    h1: ["KI-Agenten & Workflows:", "zwei Tage", " an Ihren Abläufen"],
     lede: "KI-Agenten und automatisierte Workflows aufbauen, geübt an Abläufen aus Ihrem Alltag. Die Agenda der zwei Tage stimmen wir vorab mit Ihrem Team ab.",
     primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Alle Schulungen und Preise", to: "schulungen", hash: "preise" },
@@ -64,7 +172,7 @@ const de: PageDef = {
       ],
       footnote: SITE_STR.de.priceNote,
     },
-    RUN_STEPS.de,
+    RUN.de,
     {
       t: "rows",
       ground: "paper",
@@ -89,7 +197,7 @@ const de: PageDef = {
   faq: {
     label: hub.de.faq!.label,
     h: hub.de.faq!.h,
-    items: ["Gilt der Preis pro Person?", "Bekommen wir ein Zertifikat?", "Gibt es eine Aufzeichnung?"].map((q) => hub.de.faq!.items.find((it) => it.q === q)!),
+    items: ["Gilt der Preis pro Person?", "Bekommen wir ein Zertifikat?", "Gibt es eine Aufzeichnung?"].map((q) => (q === "Gilt der Preis pro Person?" ? { q, a: `Nein, pro Team: ab 5.900 € netto pro Team, 8 Personen inklusive, jede weitere Person 290 €, bis 10 Personen. Für mehrere Gruppen sprechen Sie uns an. ${SITE_STR.de.priceNote}` } : hub.de.faq!.items.find((it) => it.q === q)!)),
   },
   cta: {
     label: "Schulung anfragen",
@@ -122,7 +230,7 @@ const en: PageDef = {
   crumb: "AI agents & workflows",
   hero: {
     eyebrow: "AI training · online and live",
-    h1: ["AI agents & workflow automation:", "two days", " on your own workflows"],
+    h1: ["AI agents & workflows:", "two days", " on your own processes"],
     lede: "Build AI agents and automated workflows, practised on processes from your daily work. We agree the agenda for the two days with your team beforehand.",
     primary: { label: "Request training", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "All courses and prices", to: "schulungen", hash: "preise" },
@@ -162,7 +270,7 @@ const en: PageDef = {
       ],
       footnote: SITE_STR.en.priceNote,
     },
-    RUN_STEPS.en,
+    RUN.en,
     {
       t: "rows",
       ground: "paper",
@@ -187,7 +295,7 @@ const en: PageDef = {
   faq: {
     label: hub.en.faq!.label,
     h: hub.en.faq!.h,
-    items: ["Is the price per person?", "Do we get a certificate?", "Is there a recording?"].map((q) => hub.en.faq!.items.find((it) => it.q === q)!),
+    items: ["Is the price per person?", "Do we get a certificate?", "Is there a recording?"].map((q) => (q === "Is the price per person?" ? { q, a: `No, per team: from €5,900 net per team, 8 people included, each additional person €290, up to 10 people. For several groups, please get in touch. ${SITE_STR.en.priceNote}` } : hub.en.faq!.items.find((it) => it.q === q)!)),
   },
   cta: {
     label: "Request training",
@@ -220,7 +328,7 @@ const tr: PageDef = {
   crumb: "YZ Ajanları ve İş Akışları",
   hero: {
     eyebrow: "YZ eğitimleri · çevrimiçi ve canlı",
-    h1: ["YZ Ajanları ve İş Akışı Otomasyonu:", "iki gün", ", kendi süreçlerinizde"],
+    h1: ["YZ Ajanları ve İş Akışları:", "iki gün", ", kendi süreçlerinizde"],
     lede: "YZ ajanlarını ve otomatik iş akışlarını kurma; günlük işinizdeki süreçler üzerinde uygulamalı. İki günün programını ekibinizle önceden birlikte belirleriz.",
     primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Tüm eğitimler ve fiyatlar", to: "schulungen", hash: "preise" },
@@ -260,7 +368,7 @@ const tr: PageDef = {
       ],
       footnote: SITE_STR.tr.priceNote,
     },
-    RUN_STEPS.tr,
+    RUN.tr,
     {
       t: "rows",
       ground: "paper",
@@ -285,7 +393,7 @@ const tr: PageDef = {
   faq: {
     label: hub.tr.faq!.label,
     h: hub.tr.faq!.h,
-    items: ["Fiyat kişi başına mı?", "Sertifika alıyor muyuz?", "Kayıt var mı?"].map((q) => hub.tr.faq!.items.find((it) => it.q === q)!),
+    items: ["Fiyat kişi başına mı?", "Sertifika alıyor muyuz?", "Kayıt var mı?"].map((q) => (q === "Fiyat kişi başına mı?" ? { q, a: `Hayır, ekip başına: ekip başına 5.900 €'dan itibaren (net), 8 kişi dahil, her ek kişi 290 €, en fazla 10 kişi. Birden fazla grup için bize yazın. ${SITE_STR.tr.priceNote}` } : hub.tr.faq!.items.find((it) => it.q === q)!)),
   },
   cta: {
     label: "Eğitim talep edin",

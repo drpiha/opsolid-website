@@ -216,3 +216,104 @@ html[data-v4] .wk-cta-band .wk-d2 { max-width: 20ch; }
   html[data-v4] .wk-hero-index-go { display: none; }
   html[data-v4] .wk-frame { grid-template-columns: 1fr; gap: 16px; }
 }
+
+/* ---------- R2: the page's own object in the hero (HeroObject) ---------- */
+/* One drawn piece per inner page, lying on the mat at a small angle, two register marks, its Etikett under it. */
+html[data-v4] .wk-hero-obj { position: relative; justify-self: end; width: 100%; max-width: 468px; margin: 0; display: grid; gap: 16px; padding: 14px 6px 0 18px; }
+html[data-v4] .wk-hero-obj figcaption { justify-self: start; }
+html[data-v4] .wk-hero-obj .wk-reg.tr { right: -10px; top: -4px; }
+html[data-v4] .wk-hero-obj .wk-reg.bl { left: 2px; bottom: 30px; }
+html[data-v4] .wk-hero-obj-piece { position: relative; min-width: 0; transform: rotate(var(--obj-a, -1.2deg)); }
+html[data-v4] .wk-hero-obj .wk-blatt { box-shadow: var(--wk-shadow-sheet); }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-v4] .wk-hero-obj-piece { animation: wk-obj-lay var(--wk-t-scene) var(--wk-ease-out) 120ms both; }
+}
+@keyframes wk-obj-lay { from { opacity: 0; transform: translate(18px, -10px) rotate(2.5deg); } to { opacity: 1; transform: rotate(var(--obj-a, -1.2deg)); } }
+
+/* fragebogen: the home door sheet, here at reading size */
+html[data-v4] .wk-hero-obj .wk-bogen { position: relative; left: auto; top: auto; width: min(100%, 380px); margin-left: auto; padding: 24px 26px 34px; transform: none; }
+html[data-v4] .wk-hero-obj .wk-bogen .wk-blatt-title { font-size: 1.25rem; }
+html[data-v4] .wk-hero-obj .wk-bogen .wk-blatt-sub { font-size: 0.75rem; }
+html[data-v4] .wk-hero-obj .wk-bogen-q { margin-top: 16px; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-hero-obj .wk-bogen-a { gap: 10px; margin-top: 14px; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-hero-obj .wk-bogen-a li { grid-template-columns: 15px 1fr; }
+html[data-v4] .wk-hero-obj .wk-bogen-a li::before { width: 14px; height: 14px; }
+html[data-v4] .wk-hero-obj.is-fragebogen { --obj-a: 2deg; }
+
+/* report: the sample KI-Check report excerpt with the blank sheet behind it */
+html[data-v4] .wk-hero-obj .wk-report { position: relative; padding: 8px 0 0 22px; }
+html[data-v4] .wk-hero-obj .wk-report-sheet { width: 100%; padding: 24px 26px 20px; transform: none; }
+html[data-v4] .wk-hero-obj .wk-report-back { top: 22px; }
+html[data-v4] .wk-hero-obj.is-report { --obj-a: 1.2deg; }
+
+/* vergleich: one sample workflow by hand and automated, numbered rows side by side */
+html[data-v4] .wk-vgl { padding: 22px 22px 20px; font-size: 0.8125rem; line-height: 1.38; }
+html[data-v4] .wk-vgl .wk-blatt-sub { line-height: 1.4; }
+html[data-v4] .wk-vgl-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+html[data-v4] .wk-vgl-h { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-vgl-cols .is-after .wk-vgl-h { color: var(--wk-copper-deep); border-bottom-style: solid; border-bottom-color: var(--wk-copper-deep); }
+html[data-v4] .wk-vgl ol { display: grid; gap: 8px; counter-reset: wk-v; }
+html[data-v4] .wk-vgl li { counter-increment: wk-v; display: grid; grid-template-columns: 16px 1fr; gap: 4px; }
+html[data-v4] .wk-vgl li::before { content: counter(wk-v); font-family: var(--wk-mono); font-size: 0.6875rem; color: var(--wk-muted); padding-top: 2px; }
+html[data-v4] .wk-vgl .is-after li { font-weight: 540; }
+html[data-v4] .wk-vgl .is-after li::before { color: var(--wk-copper-deep); }
+
+/* gespraech: a UI window with the scripted sample conversation */
+html[data-v4] .wk-talk { width: min(100%, 440px); margin-left: auto; }
+html[data-v4] .wk-talk .wk-ui-bar > span:first-child b { margin-right: 6px; }
+html[data-v4] .wk-talk .wk-ui-body { gap: 10px; }
+html[data-v4] .wk-talk-line { max-width: 88%; padding: 9px 12px 10px; border-radius: 8px; border: 1px solid var(--wk-line); background: var(--wk-paper); }
+html[data-v4] .wk-talk-line .wk-ui-label { margin-bottom: 4px; }
+html[data-v4] .wk-talk-line.is-ai { border-color: color-mix(in srgb, var(--wk-copper) 45%, transparent); background: color-mix(in srgb, var(--wk-copper) 5%, #fff); }
+html[data-v4] .wk-talk-line:not(.is-ai) { justify-self: end; }
+html[data-v4] .wk-talk-foot { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+
+/* liste: a small sheet with numbered or ticked lines (checklist, steps, titles) */
+html[data-v4] .wk-hero-obj .wk-hero-list { width: min(100%, 420px); margin-left: auto; padding: 22px 24px 24px; font-size: 0.9375rem; }
+html[data-v4] .wk-hero-list .wk-blatt-title { font-size: 1.125rem; }
+html[data-v4] .wk-hero-list .wk-blatt-sub { font-size: 0.75rem; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list { gap: 0; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list li { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px dashed var(--wk-line); line-height: 1.35; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list li:has(> .wk-mini-blatt-time) { grid-template-columns: 26px minmax(0, 1fr); }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-time { font-size: 0.75rem; color: var(--wk-copper-deep); padding-top: 2px; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list b { display: block; font-weight: 600; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list small { display: block; margin-top: 2px; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.4; color: var(--wk-muted); }
+html[data-v4] .wk-hero-list.is-check .wk-mini-blatt-list li { grid-template-columns: 16px 1fr; gap: 12px; }
+html[data-v4] .wk-hero-list.is-check .wk-mini-blatt-list li::before { content: ""; width: 14px; height: 14px; margin-top: 3px; border-radius: 3px; border: 1.5px solid var(--wk-copper-deep); background: linear-gradient(var(--wk-copper-deep), var(--wk-copper-deep)) center / 6px 6px no-repeat; }
+html[data-v4] .wk-hero-obj.is-liste { --obj-a: 1.4deg; }
+
+/* zeitplan and bloecke: the hub catalog pieces on a sheet of their own */
+html[data-v4] .wk-hero-sheet { padding: 22px 22px 20px; }
+html[data-v4] .wk-hero-sheet .wk-plan-list { font-size: 0.875rem; }
+html[data-v4] .wk-hero-sheet .wk-blocks li { padding: 9px 10px 10px; font-size: 0.8125rem; }
+
+/* way: the drawn way schema on a sheet */
+html[data-v4] .wk-hero-way { padding: 28px 18px 18px; }
+html[data-v4] .wk-hero-obj.is-way { --obj-a: -0.8deg; }
+
+/* ---------- R2: door marks on inner pages (decision 77) ---------- */
+/* Beratung pages: the copper graphics (squares, nodes, ticks, stamps, figure strokes, the closing band) turn slate.
+   Text in these tokens keeps AA: slate-deep on paper and slate, #9fb7c4 on ink and charcoal. Header and footer sit
+   outside .v7 and keep their own marks. */
+html[data-v4] .v7[data-door="beratung"] {
+  --wk-copper: var(--wk-slate-deep);
+  --wk-copper-deep: var(--wk-slate-deep);
+  --wk-copper-lite: var(--wk-line-beratung-d);
+}
+/* Produkte hero ground: charcoal, not ink (the ink rule above has the same weight, so it is restated here). */
+html[data-v4] .wk-page-hero.wk-on-char { background: var(--wk-char); }
+/* the cell that is a product's only line on the page (Kutasia) is an anchor under the sticky header */
+html[data-v4] .wk-hero-index > li[id] { scroll-margin-top: calc(var(--wk-header-h) + 24px); }
+
+@media (max-width: 960px) {
+  html[data-v4] .wk-page-hero-grid .wk-hero-obj { order: 2; margin-top: 26px; align-self: center; max-width: 420px; padding: 10px 4px 0 10px; }
+  html[data-v4] .wk-page-hero-grid .wk-hero-obj.is-deco { display: none; }
+  /* page h1s break only at spaces, hard hyphens and their soft() stems: auto hyphenation set "Unterneh-/men" although
+     the word fits the line (npm run audit:headings guards against overflow). Section h2s keep auto hyphenation: a
+     long compound such as "Teilnahmebescheinigung" does not fit 360 px without it. */
+  html[data-v4] .wk-page-hero .wk-d1 { hyphens: manual; }
+  html[data-v4] .wk-hero-obj .wk-reg.tr { right: -4px; }
+  html[data-v4] .wk-vgl-cols { gap: 12px; }
+  html[data-v4] .wk-hero-obj .wk-report-sheet { padding: 20px 18px 16px; }
+}

@@ -4,6 +4,7 @@
  * no health data. No numbers, savings or client claims.
  */
 import type { PageDef, PageSet } from "../types";
+import { blockOf, liste } from "../hero-objects";
 
 const de: PageDef = {
   key: "anwendungen",
@@ -21,14 +22,6 @@ const de: PageDef = {
     primary: { label: "KI-Check ansehen", to: "check" },
     secondary: { label: "Anwendungsfall besprechen", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["Beispiele, keine Kundenprojekte", "Praxen: nur organisatorische Abläufe"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Branche, Ablauf, Entwurf, Freigabe",
-      caption: "Von der Branche zur Freigabe: Jedes Beispiel endet bei einem Menschen.",
-      fig: "0.1",
-      labels: ["Branche", "Ablauf", "Entwurf", "Freigabe"],
-    },
   },
   blocks: [
     {
@@ -200,14 +193,6 @@ const en: PageDef = {
     primary: { label: "See the AI check", to: "check" },
     secondary: { label: "Discuss a use case", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["Examples, not client projects", "Practices: organisational workflows only"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: sector, workflow, draft, approval",
-      caption: "From sector to approval: every example ends with a person.",
-      fig: "0.1",
-      labels: ["Sector", "Workflow", "Draft", "Approval"],
-    },
   },
   blocks: [
     {
@@ -379,14 +364,6 @@ const tr: PageDef = {
     primary: { label: "YZ Kontrolü'nü inceleyin", to: "check" },
     secondary: { label: "Bir kullanım örneğini görüşün", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["Örnekler, müşteri projesi değil", "Muayenehaneler: yalnızca idari iş akışları"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: sektör, akış, taslak, onay",
-      caption: "Sektörden onaya: Her örnek bir insanla biter.",
-      fig: "0.1",
-      labels: ["Sektör", "Akış", "Taslak", "Onay"],
-    },
   },
   blocks: [
     {
@@ -541,5 +518,15 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the page's four sector examples as a list sheet (labelled as ideas, not client projects). */
+for (const [d, stamp] of [
+  [de, "Beispiel"],
+  [en, "Example"],
+  [tr, "Örnek"],
+] as const) {
+  const b = blockOf(d, "sectors", "branchen");
+  d.hero.object = liste(b.tag ?? b.label, { title: b.h, sub: b.label, stamp }, b.items.map((it) => ({ text: it.name, note: it.h })), { numbered: true });
+}
 
 export const page: PageSet = { de, en, tr };

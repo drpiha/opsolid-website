@@ -1,8 +1,9 @@
 /**
  * Produkte (key "produkte", /produkte, EN /our-products, TR /urunler; owner decision 72, 2026-11-15): our own
  * products and where they stand. OpSo is live; the OpSo NFC card is "in Vorbereitung" with no price anywhere
- * (decision 78); Kutasia is "in Entwicklung" and "noch nicht erhältlich" with one descriptive sentence (lead
- * override A) and no price, link, picture, "buchen" or pilot wording. Company voice ("Sie" or neutral); the OpSo page
+ * (decision 78); Kutasia appears once, as the hero index cell (id "kutasia", the target of the menu and footer links):
+ * name, "Posteingang mit KI-Antwortvorschlägen", "noch nicht erhältlich"; no section, price, link, picture, "buchen"
+ * or pilot wording (design review R2). Company voice ("Sie" or neutral); the OpSo page
  * keeps its own "du". Prices appear only in the closing "why" cards, with the price note (rule 1).
  *
  * Pictures: the OpSo NFC renders (public/img/v7/werkstatt/render, own 3D renders, labelled "Render") and the
@@ -41,7 +42,8 @@ function phones(loc: L3, alts: [string, string, string], captions: [string, stri
   }));
 }
 
-const nfcImg = (alt: string) => ({ src: `${RENDER}/render-linea-1120.webp`, w: 1120, h: 840, alt });
+/* The NFC section shows the Clara Weber pair (render-hero), so no render repeats the hero's Maya Collins card. */
+const nfcImg = (alt: string) => ({ src: `${RENDER}/render-hero-960.webp`, w: 960, h: 720, alt });
 
 /* ---------------------------------------------------------------- de */
 
@@ -85,24 +87,11 @@ const deBlocks: Block[] = [
     points: [],
     media: {
       kind: "image",
-      img: nfcImg("Zwei OpSo NFC-Karten in mattem Schwarz: eine mit Kupferzeichen und Kupferlinie, eine mit QR-Code und dem Beispielnamen Maya Collins"),
+      img: nfcImg("Zwei OpSo NFC-Karten in mattem Schwarz mit Kupferprägung: eine stehend mit OpSolid-Zeichen, eine liegend mit QR-Code und dem Beispielnamen Clara Weber"),
       caption: "Render · OpSo NFC-Karte, Name als Beispiel",
     },
     href: { label: "NFC-Karte anfragen", to: "kontakt", query: { anliegen: "opso" } },
     ground: "char",
-  },
-  {
-    t: "product",
-    id: "kutasia",
-    label: "In Entwicklung",
-    h: "Kutasia",
-    name: "Kutasia",
-    p: "Ein gemeinsamer Posteingang für Kundenanfragen aus Chat und E-Mail, mit KI-Antwortvorschlägen, die Ihr Team prüft und freigibt. Kutasia ist in Entwicklung und noch nicht erhältlich.",
-    chip: { kind: "plan", text: "in Entwicklung" },
-    status: "",
-    points: [],
-    compact: true,
-    ground: "slate",
   },
   {
     t: "why",
@@ -136,17 +125,17 @@ const deBlocks: Block[] = [
 const de: PageDef = {
   key: "produkte",
   meta: {
-    title: "Produkte: OpSo, OpSo NFC-Karte und Kutasia",
+    title: "Produkte: OpSo und die OpSo NFC-Karte",
     description:
-      "OpSo, die digitale Visitenkarte von OpSolid, ist kostenlos für iPhone und Android. NFC-Karte in Vorbereitung, Kutasia in Entwicklung, noch nicht erhältlich.",
+      "OpSo, die digitale Visitenkarte von OpSolid, ist kostenlos für iPhone und Android. Die OpSo NFC-Karte ist in Vorbereitung. Unsere eigenen Produkte im Überblick.",
   },
   crumbs: [],
   crumb: "Produkte",
   hero: {
     eyebrow: "Eigene Produkte",
     h1: ["Was wir selbst ", "bauen", " und betreiben"],
-    lede: "Drei eigene Produkte und ihr Stand: OpSo ist live, die OpSo NFC-Karte in Vorbereitung, Kutasia in Entwicklung und noch nicht erhältlich.",
-    tone: "ink",
+    lede: "Unsere eigenen Produkte und ihr Stand: OpSo ist live, die OpSo NFC-Karte ist in Vorbereitung.",
+    tone: "char",
     picture: heroPic(
       "Vier OpSo NFC-Karten in mattem Schwarz: zwei mit dem OpSolid-Zeichen in Kupfer, zwei mit QR-Code und Beispielnamen",
       "Render · OpSo NFC-Karten, Namen als Beispiel",
@@ -163,7 +152,7 @@ const de: PageDef = {
         k: "Posteingang mit KI-Antwortvorschlägen",
         name: "Kutasia",
         chip: { kind: "plan", text: "noch nicht erhältlich" },
-        to: { label: "Kutasia", to: "produkte", hash: "kutasia" },
+        id: "kutasia",
       },
     ],
   },
@@ -213,24 +202,11 @@ const enBlocks: Block[] = [
     points: [],
     media: {
       kind: "image",
-      img: nfcImg("Two OpSo NFC cards in matte black: one with a copper mark and a copper line, one with a QR code and the sample name Maya Collins"),
+      img: nfcImg("Two OpSo NFC cards in matt black with copper embossing: one standing with the OpSolid mark, one lying flat with a QR code and the sample name Clara Weber"),
       caption: "Render · OpSo NFC card, sample name",
     },
     href: { label: "Ask about the NFC card", to: "kontakt", query: { anliegen: "opso" } },
     ground: "char",
-  },
-  {
-    t: "product",
-    id: "kutasia",
-    label: "In development",
-    h: "Kutasia",
-    name: "Kutasia",
-    p: "A shared inbox for customer enquiries from chat and email, with AI reply suggestions that your team reviews and approves. Kutasia is in development and not yet available.",
-    chip: { kind: "plan", text: "in development" },
-    status: "",
-    points: [],
-    compact: true,
-    ground: "slate",
   },
   {
     t: "why",
@@ -264,17 +240,17 @@ const enBlocks: Block[] = [
 const en: PageDef = {
   key: "produkte",
   meta: {
-    title: "Products: OpSo, OpSo NFC card and Kutasia",
+    title: "Products: OpSo and the OpSo NFC card",
     description:
-      "OpSo, the digital business card from OpSolid, is free for iPhone and Android. The NFC card is in preparation; Kutasia is in development, not yet available.",
+      "OpSo, the digital business card from OpSolid, is free for iPhone and Android. The OpSo NFC card is in preparation. An overview of our own products.",
   },
   crumbs: [],
   crumb: "Products",
   hero: {
     eyebrow: "Our own products",
     h1: ["What we ", "build", " and run ourselves"],
-    lede: "Three products of our own and where they stand: OpSo is live, the OpSo NFC card is in preparation, Kutasia is in development and not yet available.",
-    tone: "ink",
+    lede: "Our own products and where they stand: OpSo is live, the OpSo NFC card is in preparation.",
+    tone: "char",
     picture: heroPic(
       "Four OpSo NFC cards in matte black: two with the OpSolid mark in copper, two with a QR code and sample names",
       "Render · OpSo NFC cards, sample names",
@@ -291,7 +267,7 @@ const en: PageDef = {
         k: "Inbox with AI reply suggestions",
         name: "Kutasia",
         chip: { kind: "plan", text: "not yet available" },
-        to: { label: "Kutasia", to: "produkte", hash: "kutasia" },
+        id: "kutasia",
       },
     ],
   },
@@ -341,24 +317,11 @@ const trBlocks: Block[] = [
     points: [],
     media: {
       kind: "image",
-      img: nfcImg("Mat siyah iki OpSo NFC kartı: birinde bakır işaret ve bakır çizgi, diğerinde karekod ve örnek isim Maya Collins"),
+      img: nfcImg("Bakır kabartmalı mat siyah iki OpSo NFC kartı: biri OpSolid işaretiyle ayakta, diğeri karekod ve Clara Weber örnek adıyla yatay"),
       caption: "Render · OpSo NFC kartı, isim örnek",
     },
     href: { label: "NFC kart hakkında bilgi alın", to: "kontakt", query: { anliegen: "opso" } },
     ground: "char",
-  },
-  {
-    t: "product",
-    id: "kutasia",
-    label: "Geliştiriliyor",
-    h: "Kutasia",
-    name: "Kutasia",
-    p: "Sohbet ve e-postadan gelen müşteri taleplerini tek bir ortak gelen kutusunda toplar; YZ yanıt önerilerini ekibiniz kontrol eder ve onaylar. Kutasia geliştirme aşamasındadır ve henüz satışta değildir.",
-    chip: { kind: "plan", text: "geliştiriliyor" },
-    status: "",
-    points: [],
-    compact: true,
-    ground: "slate",
   },
   {
     t: "why",
@@ -392,17 +355,17 @@ const trBlocks: Block[] = [
 const tr: PageDef = {
   key: "produkte",
   meta: {
-    title: "Ürünler: OpSo, OpSo NFC kartı ve Kutasia",
+    title: "Ürünler: OpSo ve OpSo NFC kartı",
     description:
-      "OpSo, OpSolid'in dijital kartvizitidir; iPhone ve Android için ücretsiz. NFC kartı hazırlanıyor, Kutasia geliştiriliyor ve henüz satışta değil.",
+      "OpSo, OpSolid'in dijital kartvizitidir; iPhone ve Android için ücretsizdir. OpSo NFC kartı hazırlanıyor. Kendi ürünlerimize genel bir bakış.",
   },
   crumbs: [],
   crumb: "Ürünler",
   hero: {
     eyebrow: "Kendi ürünlerimiz",
     h1: ["Kendimiz ", "geliştirip", " işlettiklerimiz"],
-    lede: "Kendi üç ürünümüz ve durumları: OpSo yayında, OpSo NFC kartı hazırlanıyor, Kutasia geliştiriliyor ve henüz satışta değil.",
-    tone: "ink",
+    lede: "Kendi ürünlerimiz ve durumları: OpSo yayında, OpSo NFC kartı hazırlanıyor.",
+    tone: "char",
     picture: heroPic(
       "Mat siyah dört OpSo NFC kartı: ikisinde bakır renkli OpSolid işareti, ikisinde karekod ve örnek isimler",
       "Render · OpSo NFC kartları, isimler örnek",
@@ -419,7 +382,7 @@ const tr: PageDef = {
         k: "YZ yanıt önerili gelen kutusu",
         name: "Kutasia",
         chip: { kind: "plan", text: "henüz satışta değil" },
-        to: { label: "Kutasia", to: "produkte", hash: "kutasia" },
+        id: "kutasia",
       },
     ],
   },

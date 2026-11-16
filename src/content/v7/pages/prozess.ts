@@ -4,6 +4,7 @@
  * No prices on the page except the published KI-Check "990 €" (fixed price since 2026-11-04); the pilot has no number.
  */
 import type { PageDef, PageSet } from "../types";
+import { vergleich } from "../hero-objects";
 
 const de: PageDef = {
   key: "prozess",
@@ -22,14 +23,6 @@ const de: PageDef = {
     secondary: { label: "Zu den internen Werkzeugen", to: "prozess", hash: "interne-tools" },
     stripNote: "Alle Preise netto zzgl. USt., nur für Unternehmen. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
     facts: ["KI-Check 990 € netto, Festpreis", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Messen, Pilot, Einführung, Übergabe",
-      caption: "Erst messen, dann bauen, am Ende die Übergabe.",
-      fig: "0.1",
-      labels: ["Messen", "Pilot", "Einführung", "Übergabe"],
-    },
   },
   blocks: [
     {
@@ -237,14 +230,6 @@ const en: PageDef = {
     secondary: { label: "On to internal tools", to: "prozess", hash: "interne-tools" },
     stripNote: "All prices are net of VAT and for businesses only. Credited in full against a follow-up order within 60 days.",
     facts: ["AI check €990 net, fixed price", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: measure, pilot, rollout, handover",
-      caption: "Measure first, then build, then hand over.",
-      fig: "0.1",
-      labels: ["Measure", "Pilot", "Rollout", "Handover"],
-    },
   },
   blocks: [
     {
@@ -452,14 +437,6 @@ const tr: PageDef = {
     secondary: { label: "Şirket içi araçlara geçin", to: "prozess", hash: "interne-tools" },
     stripNote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
     facts: ["YZ Kontrolü 990 € (net, sabit fiyat)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: ölçme, pilot, canlı, teslim",
-      caption: "Önce ölçülür, sonra kurulur, sonunda teslim edilir.",
-      fig: "0.1",
-      labels: ["Ölçme", "Pilot", "Canlı", "Teslim"],
-    },
   },
   blocks: [
     {
@@ -649,5 +626,10 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the page's own before/after example as a drawn sheet. */
+de.hero.object = vergleich(de, "vorher-nachher", "Beispiel · Ablauf", "Beispiel");
+en.hero.object = vergleich(en, "vorher-nachher", "Example · workflow", "Example");
+tr.hero.object = vergleich(tr, "vorher-nachher", "Örnek · iş akışı", "Örnek");
 
 export const page: PageSet = { de, en, tr };

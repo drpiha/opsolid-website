@@ -5,6 +5,7 @@
  * disambiguation is one FAQ item (plus JSON-LD), not a section; OpSo is one row without status dates.
  */
 import type { PageDef, PageSet } from "../types";
+import { WAY } from "../menu";
 
 const de: PageDef = {
   key: "ueber",
@@ -22,14 +23,6 @@ const de: PageDef = {
     primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "KI-Check ansehen", to: "check" },
     facts: ["Unabhängig von KI-Anbietern", "Trainer vor der Buchung namentlich genannt", "Umfang und Preis vorab schriftlich"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Aufnahme, Messung, Pilot, Übergabe",
-      caption: "Aufnehmen, messen, pilotieren, übergeben.",
-      fig: "0.1",
-      labels: ["Aufnahme", "Messung", "Pilot", "Übergabe"],
-    },
   },
   blocks: [
     {
@@ -184,14 +177,6 @@ const en: PageDef = {
     primary: { label: "Request a course", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the AI check", to: "check" },
     facts: ["Independent of AI vendors", "Trainer named before you book", "Scope and price in writing first"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: intake, baseline, pilot, handover",
-      caption: "Map, measure, pilot, hand over.",
-      fig: "0.1",
-      labels: ["Intake", "Baseline", "Pilot", "Handover"],
-    },
   },
   blocks: [
     {
@@ -346,14 +331,6 @@ const tr: PageDef = {
     primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "YZ Kontrolünü görün", to: "check" },
     facts: ["YZ sağlayıcılarından bağımsız", "Eğitmen rezervasyondan önce adıyla bildirilir", "Kapsam ve fiyat önceden yazılı"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: kayıt, ölçüm, pilot, teslim",
-      caption: "Kaydet, ölç, pilotla, teslim et.",
-      fig: "0.1",
-      labels: ["Kayıt", "Ölçüm", "Pilot", "Teslim"],
-    },
   },
   blocks: [
     {
@@ -491,5 +468,11 @@ const tr: PageDef = {
     secondary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
   },
 };
+
+/* R2: the hero object, the "Arbeitsweise" way schema of the Unternehmen card. */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as const) {
+  const w = WAY[loc];
+  d.hero.object = { kind: "way", labels: w.labels, base: w.base, ariaLabel: w.ariaLabel, etikett: w.etikett };
+}
 
 export const page: PageSet = { de, en, tr };

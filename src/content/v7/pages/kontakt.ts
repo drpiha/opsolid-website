@@ -6,6 +6,7 @@
  */
 import { SITE_CONFIG } from "@/lib/constants";
 import type { PageDef, PageSet } from "../types";
+import { blockOf, frag, liste } from "../hero-objects";
 
 const MAIL = SITE_CONFIG.email;
 const ADDRESS = `${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}`;
@@ -26,14 +27,6 @@ const de: PageDef = {
     primary: { label: "Nachricht schreiben", to: "kontakt", hash: "formular" },
     secondary: { label: "Schulungen ansehen", to: "schulungen" },
     facts: ["NDA vor der Analyse", "Kennenlernen kostenlos und unverbindlich"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Nachricht, Antwort, Gespräch, Angebot",
-      caption: "Von Ihrer Nachricht zum Angebot: Nach jedem Schritt entscheiden Sie.",
-      fig: "0.1",
-      labels: ["Nachricht", "Antwort", "Gespräch", "Angebot"],
-    },
   },
   blocks: [
     {
@@ -149,14 +142,6 @@ const en: PageDef = {
     primary: { label: "Write a message", to: "kontakt", hash: "formular" },
     secondary: { label: "See the courses", to: "schulungen" },
     facts: ["NDA before the analysis", "Introductory call free and without obligation"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: message, reply, call, quote",
-      caption: "From your message to a quote: you decide after every step.",
-      fig: "0.1",
-      labels: ["Message", "Reply", "Call", "Quote"],
-    },
   },
   blocks: [
     {
@@ -272,14 +257,6 @@ const tr: PageDef = {
     primary: { label: "Mesaj yazın", to: "kontakt", hash: "formular" },
     secondary: { label: "Eğitimlere bakın", to: "schulungen" },
     facts: ["Analizden önce NDA", "Tanışma görüşmesi ücretsiz ve bağlayıcı değil"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: mesaj, yanıt, görüşme, teklif",
-      caption: "Mesajınızdan teklife: Her adımdan sonra siz karar verirsiniz.",
-      fig: "0.1",
-      labels: ["Mesaj", "Yanıt", "Görüşme", "Teklif"],
-    },
   },
   blocks: [
     {
@@ -378,5 +355,21 @@ const tr: PageDef = {
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },
 };
+
+/* R2: the hero object, the live "Was nach Ihrer Nachricht passiert" steps as a schema sheet (verbatim notes). */
+const KONTAKT_NOTES: Record<"de" | "en" | "tr", [string, string, string]> = {
+  de: ["Vieles klären wir schon schriftlich.", "15 bis 30 Minuten per Video", "Angebot pro Team"],
+  en: ["Much of it we settle in writing.", "15 to 30-minute video call", "a quote per team"],
+  tr: ["Çoğu konuyu yazılı olarak netleştiririz.", "15-30 dakikalık görüntülü görüşme", "ekip başına bir teklif"],
+};
+for (const [loc, d, etikett, stamp] of [
+  ["de", de, "Schema · nach Ihrer Anfrage", "Schema"],
+  ["en", en, "Schema · after your enquiry", "Schema"],
+  ["tr", tr, "Şema · talebinizden sonra", "Şema"],
+] as const) {
+  const b = blockOf(d, "steps", "ablauf");
+  const notes = KONTAKT_NOTES[loc];
+  d.hero.object = liste(etikett, { title: b.h, sub: b.note ?? b.label, stamp }, b.items.map((it, i) => ({ text: it.h, note: frag(it.p, notes[i]) })), { numbered: true });
+}
 
 export const page: PageSet = { de, en, tr };

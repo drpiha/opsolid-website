@@ -10,6 +10,8 @@
 import type { PageDef, PageSet } from "../types";
 import { CHECK } from "../offers";
 import { SITE_STR } from "../site";
+import { page as home } from "./home";
+import { report } from "../hero-objects";
 
 const de: PageDef = {
   key: "check",
@@ -28,14 +30,6 @@ const de: PageDef = {
     secondary: { label: "Ablauf ansehen", to: "check", hash: "ablauf" },
     facts: ["KI-Check 990 € netto, Festpreis", "Fragebogen und schriftlicher Bericht", "NDA vor der Analyse", "Endet mit einer Schulungsempfehlung"],
     stripNote: `${SITE_STR.de.priceNote} ${CHECK.de.credit}`,
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Betrieb, Abläufe, Bericht, Schulung",
-      caption: "Vom ganzen Betrieb zum Bericht und zur passenden Schulung.",
-      fig: "0.1",
-      labels: ["Betrieb", "Abläufe", "Bericht", "Schulung"],
-    },
   },
   blocks: [
     {
@@ -324,14 +318,6 @@ const en: PageDef = {
     secondary: { label: "See how it works", to: "check", hash: "ablauf" },
     facts: ["AI check €990 net, fixed price", "Questionnaire and written report", "NDA before the analysis", "Ends with a training recommendation"],
     stripNote: `${SITE_STR.en.priceNote} ${CHECK.en.credit}`,
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: business, workflows, report, training",
-      caption: "From the whole business to the report and the right course.",
-      fig: "0.1",
-      labels: ["Business", "Workflows", "Report", "Training"],
-    },
   },
   blocks: [
     {
@@ -620,14 +606,6 @@ const tr: PageDef = {
     secondary: { label: "Süreci görün", to: "check", hash: "ablauf" },
     facts: ["YZ Kontrolü 990 € (net), sabit fiyat", "Soru formu ve yazılı rapor", "Analizden önce NDA", "Bir eğitim önerisiyle biter"],
     stripNote: `${SITE_STR.tr.priceNote} ${CHECK.tr.credit}`,
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: işletme, akışlar, rapor, eğitim",
-      caption: "Bütün işletmeden rapora ve uygun eğitime.",
-      fig: "0.1",
-      labels: ["İşletme", "Akışlar", "Rapor", "Eğitim"],
-    },
   },
   blocks: [
     {
@@ -898,5 +876,8 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the excerpt of the fictional sample report (the live sample company of the home check section). */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as const) d.hero.object = report(home[loc]);
 
 export const page: PageSet = { de, en, tr };

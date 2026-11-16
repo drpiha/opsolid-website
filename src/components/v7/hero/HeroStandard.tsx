@@ -11,6 +11,7 @@ import { Etikett } from "../werkstatt/Etikett";
 import { FactsStrip } from "../werkstatt/FactsStrip";
 import { WkPicture } from "../werkstatt/WkPicture";
 import { h1Text } from "./h1";
+import { HeroObject } from "./HeroObject";
 
 /** Rule 1: every price group carries the price note. A hero fact line or strip that names a euro amount gets
  * SITE_STR.priceNote unless the page set its own `stripNote` (it serves the fact line too) or the facts already say it. */
@@ -31,7 +32,8 @@ const arrow = (
  * `stripNote`) or the mono fact line (`facts`).
  */
 export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; locale: L3; crumbs?: Crumb[] }) {
-  const ink = hero.tone === "ink";
+  const char = hero.tone === "char";
+  const ink = hero.tone === "ink" || char;
   const strip = hero.strip && hero.strip.length > 0 ? hero.strip : null;
   const priceNote = SITE_STR[locale].priceNote;
   const stripVals = strip ? strip.map(([, v]) => v) : [];
@@ -39,11 +41,11 @@ export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; 
   const facts = hero.facts ?? [];
   const factsNote = hero.stripNote ?? (hasPrice(facts) && !saysNote(facts) ? priceNote : null);
   const pic = hero.picture;
-  const side = pic ? "pic" : hero.media ? "media" : "none";
+  const side = pic ? "pic" : hero.object ? "obj" : hero.media ? "media" : "none";
   return (
     <section
       aria-labelledby="hero-h"
-      className={`wk-page-hero wk-mat ${ink ? "wk-on-ink" : "is-light"}${side === "pic" ? " has-pic" : ""}${side === "none" ? " is-text" : ""}${strip ? " has-strip" : ""}`}
+      className={`wk-page-hero wk-mat ${char ? "wk-on-ink wk-on-char" : ink ? "wk-on-ink" : "is-light"}${side === "pic" ? " has-pic" : ""}${side === "obj" ? " has-obj" : ""}${side === "none" ? " is-text" : ""}${strip ? " has-strip" : ""}`}
     >
       <div className={`${wrap} wk-page-hero-grid`}>
         <div className="wk-page-hero-copy">
@@ -89,7 +91,8 @@ export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; 
             <Etikett as="figcaption">{pic.etikett}</Etikett>
           </figure>
         )}
-        {!pic && hero.media && (
+        {side === "obj" && hero.object && <HeroObject o={hero.object} />}
+        {side === "media" && hero.media && (
           <div className="wk-hero-media v7-rise" style={{ ["--d" as string]: "200ms" }}>
             <MediaFigure media={hero.media} locale={locale} priority />
           </div>
@@ -99,18 +102,29 @@ export function HeroStandard({ hero, locale, crumbs }: { hero: PageDef["hero"]; 
       {hero.index && hero.index.length > 0 && (
         <div className={wrap}>
           <ul className="wk-hero-index">
-            {hero.index.map((row) => (
-              <li key={row.name}>
-                <LinkTo link={row.to} locale={locale} className="wk-hero-index-row">
-                  <span className="wk-hero-index-k">{row.k}</span>
-                  <span className="wk-hero-index-name">{row.name}</span>
-                  <ChipTag chip={row.chip} />
-                  <span className="wk-hero-index-go" aria-hidden="true">
-                    →
-                  </span>
-                </LinkTo>
-              </li>
-            ))}
+            {hero.index.map((row) =>
+              row.to ? (
+                <li key={row.name} id={row.id}>
+                  <LinkTo link={row.to} locale={locale} className="wk-hero-index-row">
+                    <span className="wk-hero-index-k">{row.k}</span>
+                    <span className="wk-hero-index-name">{row.name}</span>
+                    <ChipTag chip={row.chip} />
+                    <span className="wk-hero-index-go" aria-hidden="true">
+                      →
+                    </span>
+                  </LinkTo>
+                </li>
+              ) : (
+                // A product shown only here (Kutasia, rule 1): the cell itself is the anchor, without a link.
+                <li key={row.name} id={row.id} className="is-still">
+                  <div className="wk-hero-index-row">
+                    <span className="wk-hero-index-k">{row.k}</span>
+                    <span className="wk-hero-index-name">{row.name}</span>
+                    <ChipTag chip={row.chip} />
+                  </div>
+                </li>
+              ),
+            )}
           </ul>
         </div>
       )}

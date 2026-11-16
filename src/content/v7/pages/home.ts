@@ -184,7 +184,7 @@ const de: PageDef = {
           art: {
             kind: "phone",
             img: { src: "/img/v7/opso/app/de-06-contacts.webp", w: 328, h: 710, alt: "OpSo App: Kontaktliste mit Lead-Status, Demodaten" },
-            etikett: "App-Screen · unbearbeitet, Demodaten",
+            etikett: "App-Screen · Demodaten",
           },
         },
       ],
@@ -591,7 +591,7 @@ const en: PageDef = {
           art: {
             kind: "phone",
             img: { src: "/img/v7/opso/app/en-06-contacts.webp", w: 328, h: 710, alt: "OpSo app: contact list with lead status, demo data" },
-            etikett: "App screen · unedited, demo data",
+            etikett: "App screen · demo data",
           },
         },
       ],
@@ -998,7 +998,7 @@ const tr: PageDef = {
           art: {
             kind: "phone",
             img: { src: "/img/v7/opso/app/tr-06-contacts.webp", w: 328, h: 710, alt: "OpSo uygulaması: potansiyel müşteri durumlu kişi listesi, demo veri" },
-            etikett: "Uygulama ekranı · düzenlenmemiş, demo veri",
+            etikett: "Uygulama ekranı · demo veri",
           },
         },
       ],

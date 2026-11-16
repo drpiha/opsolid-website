@@ -654,6 +654,13 @@ function build(l: L3): MenuGroup[] {
   ];
 }
 
+/** The "Arbeitsweise" way schema of the Unternehmen card; the About hero shows the same piece (design review R2). */
+export const WAY: Record<L3, { labels: [string, string, string, string]; base: string; ariaLabel: string; etikett: string }> = {
+  de: { labels: COPY.de.u.way, base: COPY.de.u.wayBase, ariaLabel: COPY.de.u.wayAria, etikett: COPY.de.u.etikett },
+  en: { labels: COPY.en.u.way, base: COPY.en.u.wayBase, ariaLabel: COPY.en.u.wayAria, etikett: COPY.en.u.etikett },
+  tr: { labels: COPY.tr.u.way, base: COPY.tr.u.wayBase, ariaLabel: COPY.tr.u.wayAria, etikett: COPY.tr.u.etikett },
+};
+
 export const MENU: Record<L3, MenuGroup[]> = { de: build("de"), en: build("en"), tr: build("tr") };
 
 function footer(l: L3): { cols: FooterCol[]; legal: FooterLink[] } {

@@ -4,6 +4,9 @@
  * trainings.md section 1. The sample certificate is labelled "Muster" and carries placeholders only.
  */
 import type { PageDef, PageSet } from "../types";
+import { page as hub } from "./schulungen";
+import { kursBlatt } from "../hero-objects";
+import type { L3 } from "../types";
 
 const de: PageDef = {
   key: "kompetenz",
@@ -21,14 +24,6 @@ const de: PageDef = {
     primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Agenda ansehen", to: "kompetenz", hash: "agenda" },
     facts: ["Ab 1.790 € netto pro Team", "Halber Tag · 10 Personen inklusive, bis 15", "Deutsch oder Englisch"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Grundlagen, Grenzen, Regeln, Nachweis",
-      caption: "Von den Grundlagen über die Grenzen zu den Regeln.",
-      fig: "0.1",
-      labels: ["Grundlagen", "Grenzen", "Regeln", "Nachweis"],
-    },
   },
   blocks: [
     {
@@ -183,14 +178,6 @@ const en: PageDef = {
     primary: { label: "Request training", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the agenda", to: "kompetenz", hash: "agenda" },
     facts: ["From €1,790 net per team", "Half day · 10 people included, up to 15", "English or German"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: basics, limits, rules, record",
-      caption: "From the basics, through the limits, to the rules.",
-      fig: "0.1",
-      labels: ["Basics", "Limits", "Rules", "Record"],
-    },
   },
   blocks: [
     {
@@ -345,14 +332,6 @@ const tr: PageDef = {
     primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Programa bakın", to: "kompetenz", hash: "agenda" },
     facts: ["Ekip başına 1.790 €'dan itibaren (net)", "Yarım gün · 10 kişi dahil, en fazla 15", "Almanca veya İngilizce"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: temeller, sınırlar, kurallar, belge",
-      caption: "Temellerden sınırlara, oradan kurallara.",
-      fig: "0.1",
-      labels: ["Temeller", "Sınırlar", "Kurallar", "Belge"],
-    },
   },
   blocks: [
     {
@@ -490,5 +469,13 @@ const tr: PageDef = {
     ],
   },
 };
+
+/* R2: the hero object, the sample timetable of the hub catalog card on a sheet of its own. */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as [L3, PageDef][]) {
+  const cat = hub[loc].blocks.find((b) => b.t === "catalog");
+  const item = cat && cat.t === "catalog" ? cat.items.find((it) => it.id === "grundlagen") : undefined;
+  if (!item) throw new Error("kompetenz: no catalog card on the hub");
+  d.hero.object = kursBlatt(item.art, item.name, item.facts[0], item.art.etikett.split(" · ")[0]);
+}
 
 export const page: PageSet = { de, en, tr };

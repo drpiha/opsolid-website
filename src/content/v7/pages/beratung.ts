@@ -5,6 +5,8 @@
  * Festpreis (no number) → Betrieb und Ausbau (no number). The sample is a labelled "Muster", not a client report.
  */
 import type { PageDef, PageSet } from "../types";
+import { page as home } from "./home";
+import { fragebogen } from "../hero-objects";
 
 const de: PageDef = {
   key: "beratung",
@@ -23,13 +25,6 @@ const de: PageDef = {
     secondary: { label: "Kennenlernen vereinbaren", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["KI-Check 990 € netto, Festpreis", "Pilot zum Festpreis, vorab schriftlich", "Unabhängig, ohne Lizenzverkauf"],
     stripNote: "Alle Preise netto zzgl. USt., nur für Unternehmen. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze: ein Ablauf von der Anfrage über Prüfung und Entwurf zur Freigabe durch eine Person",
-      caption: "Erst der Ablauf, dann das Werkzeug. Die Freigabe bleibt bei Ihnen.",
-      fig: "0.1",
-    },
   },
   blocks: [
     {
@@ -280,13 +275,6 @@ const en: PageDef = {
     secondary: { label: "Arrange an intro", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["AI check €990 net, fixed price", "Pilot at a fixed price, in writing first", "Independent, no licence sales"],
     stripNote: "All prices are net of VAT and for businesses only. Credited in full against a follow-up order within 60 days.",
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch: a flow from an enquiry through review and draft to approval by a person",
-      caption: "Process first, tool second. Approval stays with you.",
-      fig: "0.1",
-    },
   },
   blocks: [
     {
@@ -537,13 +525,6 @@ const tr: PageDef = {
     secondary: { label: "Tanışma planlayın", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["YZ Kontrolü 990 € (net, sabit fiyat)", "Sabit fiyatlı pilot, önceden yazılı", "Bağımsız, lisans satışı yok"],
     stripNote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Çizim: bir talepten inceleme ve taslak aşamalarından geçerek bir kişinin onayına uzanan akış",
-      caption: "Önce süreç, sonra araç. Onay sizde kalır.",
-      fig: "0.1",
-    },
   },
   blocks: [
     {
@@ -776,5 +757,8 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the sample questionnaire of the home Beratung door. */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as const) d.hero.object = fragebogen(home[loc], loc);
 
 export const page: PageSet = { de, en, tr };

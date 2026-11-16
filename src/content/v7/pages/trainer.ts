@@ -8,6 +8,7 @@
  * sight; the first assignment is paid like any other.
  */
 import type { PageDef, PageSet } from "../types";
+import { blockOf, frag, liste } from "../hero-objects";
 
 const de: PageDef = {
   key: "trainer",
@@ -20,7 +21,8 @@ const de: PageDef = {
   crumb: "Trainer werden",
   hero: {
     eyebrow: "Trainer werden · freiberuflich · online",
-    h1: ["Freiberufliche ", "KI-Trainerinnen und -Trainer", " gesucht"],
+    // "\u00A0-\u2060": "-Trainer" stays with "und" and its hyphen never ends a line (design review R2).
+    h1: ["Freiberufliche ", "KI-Trainerinnen und\u00A0-\u2060Trainer", " gesucht"],
     lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah schulen, melden Sie sich.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
@@ -464,5 +466,21 @@ const tr: PageDef = {
     secondary: { label: "İşletmeler için YZ Kontrolü", to: "check" },
   },
 };
+
+/* R2: the hero object, the page's own five steps as a schema sheet; every note is a verbatim part of the step text. */
+const TRAINER_NOTES: Record<"de" | "en" | "tr", [string, string, string, string, string]> = {
+  de: ["Eine Bewerbungsmappe brauchen wir nicht.", "Wir antworten innerhalb von sieben Tagen.", "30 Minuten online", "Jede Schulung vereinbaren wir danach einzeln", "Den ersten Einsatz vergüten wir wie jeden weiteren."],
+  en: ["We do not need a full application pack.", "We reply within seven days.", "online for 30 minutes", "we agree each course individually", "Your first assignment is paid like any other."],
+  tr: ["Tam bir başvuru dosyasına gerek yok.", "Yedi gün içinde yanıt veririz.", "30 dakika çevrimiçi", "her eğitimi ayrı ayrı kararlaştırırız", "İlk görevinizin ücretini diğer görevler gibi öderiz."],
+};
+for (const [loc, d, etikett, stamp] of [
+  ["de", de, "Schema · so arbeiten wir mit Trainerinnen und Trainern", "Schema"],
+  ["en", en, "Schema · how we work with trainers", "Schema"],
+  ["tr", tr, "Şema · eğitmenlerle nasıl çalışıyoruz", "Şema"],
+] as const) {
+  const b = blockOf(d, "steps", "ablauf");
+  const notes = TRAINER_NOTES[loc];
+  d.hero.object = liste(etikett, { title: b.h, sub: b.note ?? b.label, stamp }, b.items.map((it, i) => ({ text: it.h, note: frag(it.p, notes[i]) })), { numbered: true });
+}
 
 export const page: PageSet = { de, en, tr };

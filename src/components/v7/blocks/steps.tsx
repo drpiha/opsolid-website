@@ -7,6 +7,17 @@ import { Etikett } from "../werkstatt/Etikett";
 
 const EURO = /€/;
 
+/** The drawn four-node flow (input, AI agent, your team, filing) at crop size: decoration, the Etikett line names it. */
+const flowThumb = (
+  <svg className="wk-run-crop wk-run-draw" viewBox="0 0 96 75" aria-hidden="true">
+    <path d="M14 34h68" stroke="var(--wk-copper-deep)" strokeWidth="1.5" fill="none" />
+    {[14, 37, 60, 82].map((x, i) => (
+      <rect key={x} x={x - 7} y={27} width={14} height={14} rx={4} fill={i === 1 ? "var(--wk-copper)" : i === 2 ? "var(--wk-ink)" : "var(--wk-sheet)"} stroke={i === 1 ? "var(--wk-copper)" : "var(--wk-ink)"} strokeWidth="1.5" />
+    ))}
+    <path d="M8 56h80" stroke="var(--wk-line-2)" strokeWidth="1" strokeDasharray="2 3" fill="none" />
+  </svg>
+);
+
 /**
  * Plain numbered steps as a ledger (.wk-run): 40 px copper-deep squares on a 2 px top rule. `variant: "run"` (hub and
  * course page) adds an art card per step: a decorative crop of a labelled sample (alt ""), the "Sie erhalten" Etikett,
@@ -28,15 +39,19 @@ export function StepsBlock({ block: b, locale, num }: BlockProps<"steps">) {
             </div>
             {run && it.art && (
               <div className="wk-run-art">
-                <Image
-                  className="wk-run-crop"
-                  src={it.art.crop.src}
-                  alt={it.art.crop.alt}
-                  width={it.art.crop.w}
-                  height={it.art.crop.h}
-                  sizes="96px"
-                  decoding="async"
-                />
+                {it.art.crop ? (
+                  <Image
+                    className="wk-run-crop"
+                    src={it.art.crop.src}
+                    alt={it.art.crop.alt}
+                    width={it.art.crop.w}
+                    height={it.art.crop.h}
+                    sizes="96px"
+                    decoding="async"
+                  />
+                ) : (
+                  it.art.draw === "flow" && flowThumb
+                )}
                 <div>
                   <Etikett className="wk-run-art-k">{it.art.label}</Etikett>
                   <b>{it.art.h}</b>

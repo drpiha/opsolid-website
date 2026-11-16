@@ -18,6 +18,7 @@ export function PlainHero({
   crumbs,
   locale,
   children,
+  aside,
 }: {
   eyebrow: ReactNode;
   h1: ReactNode;
@@ -28,9 +29,11 @@ export function PlainHero({
   crumbs?: Crumb[];
   locale?: L3;
   children?: ReactNode;
+  /** The drawn object in the right column (the Journal list, design review R2); without it the hero is one column. */
+  aside?: ReactNode;
 }) {
   return (
-    <section aria-labelledby={id} className={`wk-page-hero wk-mat is-light is-text is-plain${small ? " is-small" : ""}`}>
+    <section aria-labelledby={id} className={`wk-page-hero wk-mat is-light${aside ? " has-obj" : " is-text"} is-plain${small ? " is-small" : ""}`}>
       <div className={`${wrap} wk-page-hero-grid`}>
         <div className="wk-page-hero-copy">
           {crumbs && locale && <Breadcrumbs crumbs={crumbs} locale={locale} />}
@@ -43,6 +46,7 @@ export function PlainHero({
           {lede && <p className="wk-lede">{lede}</p>}
           {children}
         </div>
+        {aside}
       </div>
     </section>
   );

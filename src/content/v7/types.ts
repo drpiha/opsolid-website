@@ -8,7 +8,7 @@
  */
 import type { L3, PageKey } from "@/lib/v7-routes";
 import type { HomeBench, HomeBlock } from "./types-home";
-import type { HubBlock } from "./types-hub";
+import type { CourseArt, HubBlock } from "./types-hub";
 import type { ProdukteBlock } from "./types-produkte";
 
 export type { L3, PageKey };
@@ -119,7 +119,8 @@ export type CoreBlock =
       t: "steps";
       variant?: "run";
       etikett?: string;
-      items: { h: string; p: string; art?: { crop: Img; label: string; h: string; p: string } }[];
+      /** `art.crop`: a decorative crop of a labelled sample; `art.draw: "flow"`: the course's own drawn four-node flow. */
+      items: { h: string; p: string; art?: { crop?: Img; draw?: "flow"; label: string; h: string; p: string } }[];
     })
   /** One task before and after (an example, labelled by `tag`). */
   | (SectionBase & { t: "compare"; tag?: string; before: { h: string; items: string[] }; after: { h: string; items: string[] } })
@@ -249,6 +250,34 @@ export type Faq = { label: string; h: string; aside?: string; items: { q: string
 /** The closing CTA band of a page. `pic`: a labelled picture fill behind the band. */
 export type Cta = { label: string; h: string; p: string; primary: Href; secondary?: Href; pic?: Picture };
 
+/**
+ * The drawn object on the right of an inner page hero (design review R2: one page-specific piece per hero, none
+ * repeated). Every kind is built from the existing Werkstatt components and carries its Etikett; its text is taken
+ * from the live copy of that page (or a labelled sample). `ariaLabel` repeats the visible text: the piece is one
+ * named image. `phone: false` hides a purely decorative piece below 960 px (the same text follows on the page).
+ */
+export type HeroObject = { etikett: string; ariaLabel: string; phone?: boolean } & (
+  | { kind: "fragebogen"; title: string; sub: string; q: string; options: { text: string; on?: boolean }[] }
+  | {
+      kind: "report";
+      title: string;
+      meta: string;
+      stamp: string;
+      h: string;
+      items: { b: string; more: string }[];
+      manualH: string;
+      manual: string;
+      recH: string;
+      rec: string;
+    }
+  | { kind: "vergleich"; title: string; sub: string; stamp: string; before: { h: string; items: string[] }; after: { h: string; items: string[] } }
+  | { kind: "gespraech"; bar: [string, string]; lines: { who: string; agent: boolean; text: string }[]; foot?: string }
+  | { kind: "liste"; title: string; sub: string; stamp: string; check?: boolean; items: { n?: string; text: string; note?: string }[] }
+  | { kind: "zeitplan"; title: string; sub: string; stamp: string; art: Extract<CourseArt, { kind: "zeitplan" }> }
+  | { kind: "bloecke"; title: string; sub: string; stamp: string; art: Extract<CourseArt, { kind: "bloecke" }> }
+  | { kind: "way"; labels: [string, string, string, string]; base: string }
+);
+
 export type PageDef = {
   key: PageKey;
   /** Title without the brand (the root template adds " | OpSolid"); home pages: the full title, brand first. */
@@ -267,14 +296,17 @@ export type PageDef = {
     secondary?: Href;
     /** "bench": the home hero with the drawn bench pieces (hero/HeroBench.tsx, data in `bench`). */
     art?: "bench";
-    /** Hero ground: light (default, paper with the mat) or ink. */
-    tone?: "light" | "ink";
+    /** Hero ground: light (default, paper with the mat), ink, or charcoal (Produkte, decision 77). */
+    tone?: "light" | "ink" | "char";
     /** Labelled picture in the right column (bleeds to the edge); takes precedence over `media`. */
     picture?: Picture;
     /** Jump pills to sections of the page. */
     jump?: { label: string; links: Href[] };
-    /** Linked index rows under the hero (Produkte: name, kind and status chip per product). */
-    index?: { k: string; name: string; chip: Chip; to: Href }[];
+    /**
+     * Index cells under the hero (Produkte: name, kind and status chip per product). A cell with `to` links to its
+     * section; a cell without `to` is the product's only appearance on the page and carries the anchor `id`.
+     */
+    index?: { k: string; name: string; chip: Chip; to?: Href; id?: string }[];
     /** Mono line under the fact strip or the fact line (the price note); wins over the automatic SITE_STR.priceNote. */
     stripNote?: string;
     bench?: HomeBench;
@@ -287,6 +319,8 @@ export type PageDef = {
     strip?: [string, string][];
     /** Right-hand figure. */
     media?: Media;
+    /** The page's own drawn bench object in the right column (design review R2); takes precedence over `media`. */
+    object?: HeroObject;
   };
   blocks: Block[];
   faq?: Faq;

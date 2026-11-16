@@ -4,6 +4,7 @@
  * No price is published ("Preis nach dem KI-Check, schriftlich"). German is the source; EN and TR are transcreations.
  */
 import type { PageDef, PageSet } from "../types";
+import { gespraech } from "../hero-objects";
 
 const de: PageDef = {
   key: "agenten",
@@ -21,14 +22,6 @@ const de: PageDef = {
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Szenario ansehen", to: "agenten", hash: "demo" },
     facts: ["Hinweis auf den KI-Assistenten zu Beginn jedes Gesprächs", "Datenschutzprüfung vor dem Start", "Pilot zum Festpreis, vorab schriftlich"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Anliegen, Regeln, Antwort, Übergabe",
-      caption: "Vom Anliegen zur Übergabe: Am Ende steht immer ein Mensch.",
-      fig: "0.1",
-      labels: ["Anliegen", "Regeln", "Antwort", "Übergabe"],
-    },
   },
   blocks: [
     {
@@ -219,14 +212,6 @@ const en: PageDef = {
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See the scenario", to: "agenten", hash: "demo" },
     facts: ["Callers are told it is an AI assistant at the start of every conversation", "Data protection review before go-live", "Pilot at a fixed price, in writing beforehand"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: request, rules, reply, handover",
-      caption: "From request to handover: a person always has the last word.",
-      fig: "0.1",
-      labels: ["Request", "Rules", "Reply", "Handover"],
-    },
   },
   blocks: [
     {
@@ -417,14 +402,6 @@ const tr: PageDef = {
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Senaryoyu izleyin", to: "agenten", hash: "demo" },
     facts: ["Her görüşmenin başında YZ asistanı olduğu söylenir", "Canlıya geçmeden önce veri koruma incelemesi", "Pilot sabit fiyatla, önceden yazılı"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: talep, kurallar, yanıt, aktarım",
-      caption: "Talepten aktarıma: Son sözü her zaman bir insan söyler.",
-      fig: "0.1",
-      labels: ["Talep", "Kurallar", "Yanıt", "Aktarım"],
-    },
   },
   blocks: [
     {
@@ -598,5 +575,10 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the page's own scripted demo call in a UI window. */
+de.hero.object = gespraech(de, "demo", "Beispiel · Musterdaten");
+en.hero.object = gespraech(en, "demo", "Example · sample data");
+tr.hero.object = gespraech(tr, "demo", "Örnek · örnek veriler");
 
 export const page: PageSet = { de, en, tr };

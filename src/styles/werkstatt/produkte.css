@@ -190,3 +190,23 @@ html[data-v4] .wk-gallery-etikett { margin-top: 6px; }
   html[data-v4] .wk-prod-pic img { aspect-ratio: 16 / 9; object-position: 50% 78%; }
   html[data-v4] .wk-why-doors { max-width: 560px; }
 }
+
+/* ---------- R2: the OpSo page hero puts its phone on the charcoal mat of the Produkte family ---------- */
+html[data-v4] .v7[data-door="produkte"] .wk-page-hero.is-light .wk-hero-media .wk-media > :first-child {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 36px calc((100% - min(240px, 62%)) / 2);
+  border-radius: var(--wk-r-3);
+  overflow: hidden;
+  background-color: var(--wk-char);
+  background-image:
+    linear-gradient(to right, rgba(243, 240, 234, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 240, 234, 0.08) 1px, transparent 1px),
+    linear-gradient(to right, rgba(243, 240, 234, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 240, 234, 0.035) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: 50% 0;
+  box-shadow: 0 40px 70px -44px rgba(20, 23, 27, 0.7);
+}

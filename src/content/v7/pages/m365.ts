@@ -4,6 +4,7 @@
  * No prices on the page except the published KI-Check "990 €" (fixed price since 2026-11-04) and the Copilot-Praxistag "ab 2.900 €" (FAQ).
  */
 import type { PageDef, PageSet } from "../types";
+import { blockOf, firstSentence, liste } from "../hero-objects";
 
 const de: PageDef = {
   key: "m365",
@@ -21,14 +22,6 @@ const de: PageDef = {
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zum Copilot-Praxistag", to: "copilot" },
     facts: ["Läuft in Ihrem Tenant", "Lizenzprüfung vor jedem Kauf", "Dokumentation für Ihre IT"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Tenant, Flow, Copilot, Übergabe",
-      caption: "Vom Tenant-Check zur Übergabe, in Ihrer eigenen Umgebung.",
-      fig: "0.1",
-      labels: ["Tenant", "Flow", "Copilot", "Übergabe"],
-    },
   },
   blocks: [
     {
@@ -207,14 +200,6 @@ const en: PageDef = {
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See the Copilot workshop", to: "copilot" },
     facts: ["Runs in your tenant", "Licence check before any purchase", "Documentation for your IT"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: tenant, flow, copilot, handover",
-      caption: "From tenant check to handover, inside your own environment.",
-      fig: "0.1",
-      labels: ["Tenant", "Flow", "Copilot", "Handover"],
-    },
   },
   blocks: [
     {
@@ -393,14 +378,6 @@ const tr: PageDef = {
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Copilot Uygulama Gününe bakın", to: "copilot" },
     facts: ["Tenant'ınızda çalışır", "Her satın almadan önce lisans incelemesi", "BT biriminiz için dokümantasyon"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: tenant, flow, copilot, teslim",
-      caption: "Tenant incelemesinden teslime, kendi ortamınızda.",
-      fig: "0.1",
-      labels: ["Tenant", "Flow", "Copilot", "Teslim"],
-    },
   },
   blocks: [
     {
@@ -562,5 +539,15 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the page's own start requirements as a checklist sheet. */
+for (const [d, etikett, stamp] of [
+  [de, "Muster · Checkliste", "Muster"],
+  [en, "Sample · checklist", "Sample"],
+  [tr, "Örnek · kontrol listesi", "Örnek"],
+] as const) {
+  const b = blockOf(d, "spec", "voraussetzungen");
+  d.hero.object = liste(etikett, { title: b.h, sub: b.label, stamp }, b.rows.map(([k, v]) => ({ text: k, note: firstSentence(v) })), { check: true });
+}
 
 export const page: PageSet = { de, en, tr };

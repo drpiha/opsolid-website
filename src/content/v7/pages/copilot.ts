@@ -4,6 +4,9 @@
  * ("nach Angaben von Microsoft"), no guarantees, no legal advice.
  */
 import type { PageDef, PageSet } from "../types";
+import { page as hub } from "./schulungen";
+import { kursBlatt } from "../hero-objects";
+import type { L3 } from "../types";
 
 const de: PageDef = {
   key: "copilot",
@@ -21,14 +24,6 @@ const de: PageDef = {
     primary: { label: "Praxistag anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Tagesablauf ansehen", to: "copilot", hash: "ablauf" },
     facts: ["Ab 2.900 € netto pro Team", "1 Tag · 10 Personen inklusive, bis 12", "Copilot-Lizenzen sind Voraussetzung"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Aufgabe, Anweisung, Entwurf, Prüfung",
-      caption: "Von der Aufgabe zur Prüfung, im Alltag Ihres Teams.",
-      fig: "0.1",
-      labels: ["Aufgabe", "Anweisung", "Entwurf", "Prüfung"],
-    },
   },
   blocks: [
     {
@@ -206,14 +201,6 @@ const en: PageDef = {
     primary: { label: "Request the workshop", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the day plan", to: "copilot", hash: "ablauf" },
     facts: ["From €2,900 net per team", "1 day · 10 people included, up to 12", "Copilot licences required"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: task, prompt, draft, review",
-      caption: "From task to review, in your team's daily work.",
-      fig: "0.1",
-      labels: ["Task", "Prompt", "Draft", "Review"],
-    },
   },
   blocks: [
     {
@@ -391,14 +378,6 @@ const tr: PageDef = {
     primary: { label: "Uygulama gününü talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Gün planına bakın", to: "copilot", hash: "ablauf" },
     facts: ["Ekip başına 2.900 €'dan itibaren (net)", "1 gün · 10 kişi dahil, en fazla 12", "Copilot lisansı gerekir"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: görev, komut, taslak, kontrol",
-      caption: "Görevden kontrole, ekibinizin günlük işinde.",
-      fig: "0.1",
-      labels: ["Görev", "Komut", "Taslak", "Kontrol"],
-    },
   },
   blocks: [
     {
@@ -559,5 +538,18 @@ const tr: PageDef = {
     ],
   },
 };
+
+/* R2: the hero object, the day in six blocks from the hub catalog card on a sheet of its own. */
+const SCHEMA: Record<L3, [string, string]> = {
+  de: ["Schema", "Schema · der Tag in sechs Blöcken"],
+  en: ["Schema", "Schema · the day in six blocks"],
+  tr: ["Şema", "Şema · altı blokta bir gün"],
+};
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as [L3, PageDef][]) {
+  const cat = hub[loc].blocks.find((b) => b.t === "catalog");
+  const item = cat && cat.t === "catalog" ? cat.items.find((it) => it.id === "copilot") : undefined;
+  if (!item) throw new Error("copilot: no catalog card on the hub");
+  d.hero.object = kursBlatt(item.art, item.name, item.facts[0], SCHEMA[loc][0], SCHEMA[loc][1]);
+}
 
 export const page: PageSet = { de, en, tr };
