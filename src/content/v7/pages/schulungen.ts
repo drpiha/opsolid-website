@@ -331,7 +331,7 @@ const de: PageDef = {
       },
       {
         q: "Gilt der Preis pro Person?",
-        a: "Nein, pro Team: bei KI-Kompetenz Basis 10 Personen inklusive (jede weitere 90 €, bis 15), beim Copilot-Praxistag 10 inklusive (jede weitere 150 €, bis 12), bei der KI-Agenten-Schulung 8 inklusive (jede weitere 290 €, bis 10). Rechnerisch sind das bei 10 Personen 179 € pro Person (KI-Kompetenz Basis) und 290 € pro Person (Copilot-Praxistag). Für größere Teams sprechen Sie uns an.",
+        a: "Nein, pro Team: bei KI-Kompetenz Basis 10 Personen inklusive (jede weitere 90 €, bis 15), beim Copilot-Praxistag 10 inklusive (jede weitere 150 €, bis 12), bei der KI-Agenten-Schulung 8 inklusive (jede weitere 290 €, bis 10). Rechnerisch 179 € pro Person bei 10 Personen (KI-Kompetenz Basis), rechnerisch 290 € pro Person bei 10 Personen (Copilot-Praxistag). Für mehrere Gruppen sprechen Sie uns an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Wer hält die Schulung?",
@@ -603,7 +603,7 @@ const en: PageDef = {
       },
       {
         q: "Is the price per person?",
-        a: "No, per team: AI literacy basics includes 10 people (each additional €90, up to 15), the Copilot workshop 10 (each additional €150, up to 12), the AI agents course 8 (each additional €290, up to 10). With 10 people that works out at €179 per person (AI literacy basics) and €290 per person (Copilot workshop). For larger teams, please get in touch.",
+        a: "No, per team: AI literacy basics includes 10 people (each additional €90, up to 15), the Copilot workshop 10 (each additional €150, up to 12), the AI agents course 8 (each additional €290, up to 10). Works out at €179 per person with 10 people (AI literacy basics) and €290 per person with 10 people (Copilot workshop). For several groups, please get in touch. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Who teaches the course?",
@@ -875,7 +875,7 @@ const tr: PageDef = {
       },
       {
         q: "Fiyat kişi başına mı?",
-        a: "Hayır, ekip başına: YZ Yetkinliği Temel'de 10 kişi dahil (her ek kişi 90 €, en fazla 15), Copilot Uygulama Günü'nde 10 kişi dahil (her ek kişi 150 €, en fazla 12), YZ Ajanları'nda 8 kişi dahil (her ek kişi 290 €, en fazla 10). 10 kişilik bir ekipte bu, kişi başı 179 € (YZ Yetkinliği Temel) ve 290 € (Copilot Uygulama Günü) eder. Daha büyük ekipler için bize yazın.",
+        a: "Hayır, ekip başına: YZ Yetkinliği Temel'de 10 kişi dahil (her ek kişi 90 €, en fazla 15), Copilot Uygulama Günü'nde 10 kişi dahil (her ek kişi 150 €, en fazla 12), YZ Ajanları'nda 8 kişi dahil (her ek kişi 290 €, en fazla 10). Hesaben 10 kişide kişi başı 179 € (YZ Yetkinliği Temel) ve 10 kişide kişi başı 290 € (Copilot Uygulama Günü). Birden fazla grup için bize yazın. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Eğitimi kim veriyor?",

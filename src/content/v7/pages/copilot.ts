@@ -343,7 +343,7 @@ const en: PageDef = {
       },
       {
         q: "What does “from €2,900” mean?",
-        a: "The price covers one day with 10 people, which works out at €290 per person; each additional person is €150 (up to 12). If your scope differs, we name the price before you book. All prices net of VAT, businesses only.",
+        a: "The price covers one day with 10 people, which works out at €290 per person; each additional person is €150 (up to 12). If your scope differs, we name the price before you book. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Will you change our Microsoft 365 settings?",
@@ -528,7 +528,7 @@ const tr: PageDef = {
       },
       {
         q: "“2.900 €'dan itibaren” ne demek?",
-        a: "Fiyat, 10 kişilik bir gün için geçerlidir; bu, kişi başı 290 € eder. Her ek kişi 150 €'dur (en fazla 12 kişi). Kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
+        a: "Fiyat, 10 kişilik bir gün için geçerlidir; bu, kişi başı 290 € eder. Her ek kişi 150 €'dur (en fazla 12 kişi). Kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Microsoft 365 ayarlarımızı değiştirir misiniz?",

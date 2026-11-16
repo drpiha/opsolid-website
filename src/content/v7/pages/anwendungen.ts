@@ -162,7 +162,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet ein Anwendungsfall?",
-        a: "Der KI-Check kostet 990 € netto als Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für die Umsetzung als Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Der KI-Check kostet 990 € netto als Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Für die Umsetzung als Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -520,7 +520,7 @@ const tr: PageDef = {
       },
       {
         q: "Bir kullanım örneği ne kadar tutar?",
-        a: "YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot olarak uygulama için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+        a: "YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot olarak uygulama için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
     ],
   },

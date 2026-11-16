@@ -46,12 +46,12 @@ Abgrenzung / disambiguation: "OpSolid" (${SITE_CONFIG.url}) ist nicht "TopSolid"
 
 ## Angebot und Preise
 
-Alle Preise netto, zzgl. USt., nur für Unternehmen. Das sind die einzigen veröffentlichten Preise für Unternehmen.
+Alle Preise netto zzgl. USt., nur für Unternehmen. Das sind die einzigen veröffentlichten Preise für Unternehmen.
 - KI-Kompetenz Basis: ab 1.790 € netto pro Team, halber Tag (3,5 Stunden inklusive Pause) online und live, 10 Personen inklusive, jede weitere Person 90 € (bis 15); rechnerisch bei 10 Personen 179 € pro Person. Mit Teilnahmebescheinigung.
 - Copilot-Praxistag: ab 2.900 € netto pro Team, 1 Tag (6 Stunden inklusive Pausen, auf Wunsch an zwei halben Tagen), 10 Personen inklusive, jede weitere Person 150 € (bis 12); rechnerisch bei 10 Personen 290 € pro Person.
 - KI-Agenten & Workflow-Automatisierung: ab 5.900 € netto pro Team, 2 Tage, 8 Personen inklusive, jede weitere Person 290 € (bis 10).
 - Schulungen finden ausschließlich live statt, im Microsoft Teams des Kunden (auf Wunsch Zoom), als geschlossener Termin pro Team; keine Aufzeichnungen, keine Selbstlernkurse. Nach der Schulung stellt OpSolid eine eigene Teilnahmebescheinigung aus (Datum, Dauer, Themen, Trainer); sie ist kein Zertifikat einer Behörde, Kammer oder eines Verbands.
-- KI-Check: 990 € netto, Festpreis, schriftlich: ein Fragebogen von etwa 20 Minuten und ein Bericht mit drei priorisierten Ideen, Risiken, Datenschutzhinweisen und einer Schulungsempfehlung für das Team, in der Regel 10 Werktage nach Eingang des Fragebogens; auf Wunsch 30 Minuten Besprechung per Video (mittwochs oder freitags, 18:30-20:00 Uhr). NDA vor der Analyse, Bericht auch ohne Empfehlung. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen wird der Betrag voll angerechnet.
+- KI-Check: 990 € netto, Festpreis, schriftlich: ein Fragebogen von etwa 20 Minuten und ein Bericht mit drei priorisierten Ideen, Risiken, Datenschutzhinweisen und einer Schulungsempfehlung für das Team, in der Regel 10 Werktage nach Eingang des Fragebogens; auf Wunsch 30 Minuten Besprechung per Video (mittwochs oder freitags, 18:30-20:00 Uhr). NDA vor der Analyse, Bericht auch ohne Empfehlung. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.
 - Pilot zum Festpreis: der Preis wird vor dem Start schriftlich festgelegt; kein veröffentlichter Preis.
 - Betrieb und Ausbau: monatlich nach Vereinbarung; kein veröffentlichter Preis.
 - OpSo NFC-Karte: in Vorbereitung, noch nicht bestellbar. Die OpSo-App ist kostenlos: fürs iPhone im App Store (https://apps.apple.com/app/id6826541629), für Android bei Google Play (https://play.google.com/store/apps/details?id=de.opsolid.verso); noch nicht in den USA und der Türkei (Stand: 09.11.2026); aktueller Stand: ${absUrl("opso", "de")}
@@ -60,12 +60,12 @@ Förderung: Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt.
 
 ## Offer and prices (English)
 
-All prices net, plus VAT, for businesses only. These are the only published business prices.
+All prices are net of VAT and for businesses only. These are the only published business prices.
 - AI literacy basics (KI-Kompetenz Basis): from €1,790 net per team, half a day (3.5 hours including a break) online and live, 10 people included, each additional person €90 (up to 15); with 10 people that works out at €179 per person. With a participation record.
 - Copilot practice day: from €2,900 net per team, 1 day (6 hours including breaks, on request over two half days), 10 people included, each additional person €150 (up to 12); with 10 people that works out at €290 per person.
 - AI agents and workflow automation course: from €5,900 net per team, 2 days, 8 people included, each additional person €290 (up to 10).
 - Training is live only, in the client's Microsoft Teams (Zoom on request), as a closed session per team; no recordings, no self-paced courses. After the course OpSolid issues its own participation record (date, duration, topics, trainer); it is not a certificate of an authority, chamber or association.
-- AI check (KI-Check): €990 net, fixed price, in writing: a questionnaire of about 20 minutes and a report with three prioritised ideas, risks, data protection notes and a training recommendation for the team, usually 10 working days after we receive the questionnaire; a 30-minute video call if you wish (Wednesday or Friday, 18:30-20:00 German time). NDA before the analysis, report even without a recommendation. Credited in full against a course or pilot within 60 days.
+- AI check (KI-Check): €990 net, fixed price, in writing: a questionnaire of about 20 minutes and a report with three prioritised ideas, risks, data protection notes and a training recommendation for the team, usually 10 working days after we receive the questionnaire; a 30-minute video call if you wish (Wednesday or Friday, 18:30-20:00 German time). NDA before the analysis, report even without a recommendation. Credited in full against a follow-up order within 60 days.
 - Pilot at a fixed price: fixed in writing before the start; no published price. Operation and extension: monthly by agreement; no published price.
 - OpSo NFC card: in preparation, not yet orderable. The OpSo app is free: on iPhone in the App Store (https://apps.apple.com/app/id6826541629), on Android on Google Play (https://play.google.com/store/apps/details?id=de.opsolid.verso); not yet in the USA and Turkey (as of 9 Nov 2026); current status: ${absUrl("opso", "en")}
 

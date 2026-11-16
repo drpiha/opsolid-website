@@ -49,7 +49,7 @@ html[data-v4] .wk-app-lede { color: var(--wk-text); }
 html[data-v4] .wk-app-free { font-stretch: 112%; font-weight: 660; font-size: var(--wk-fs-4); letter-spacing: -0.015em; line-height: 1.1; }
 html[data-v4] .wk-app-stores { width: 100%; border-top: 1px solid var(--wk-line-2); }
 html[data-v4] .wk-app-stores li { display: grid; justify-items: start; padding: 4px 0 12px; border-bottom: 1px solid var(--wk-line); }
-html[data-v4] .wk-app-shown { font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.4; color: var(--wk-muted); overflow-wrap: anywhere; margin-top: -4px; }
+html[data-v4] .wk-app-shown { font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.4; color: var(--wk-muted); overflow-wrap: anywhere; margin-top: 0; }
 html[data-v4] .wk-app-note { font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.5; color: var(--wk-muted); max-width: 40em; }
 html[data-v4] .wk-app-more { margin-top: -4px; }
 html[data-v4] .wk-app-phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 22px; align-items: start; min-width: 0; }

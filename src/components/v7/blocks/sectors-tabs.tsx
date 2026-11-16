@@ -1,17 +1,29 @@
 "use client";
 
-import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import type { BlockOf } from "@/content/v7/types";
 import type { L3 } from "@/lib/v7-routes";
 
 const STAYS: Record<L3, string> = { de: "Bleibt beim Menschen", en: "Stays with people", tr: "İnsanda kalır" };
 
-/** Tabs as outlined pills from 961 px (roving tabindex, arrows, Home/End), the panel on a sheet; stacked sheets on phones. */
+/**
+ * Tabs as outlined pills from 961 px (roving tabindex, arrows, Home/End), the panel on a sheet; stacked sheets on phones.
+ * Below 961 px the tablist is hidden by CSS, so the sheets drop the tabpanel role and their tab stop there (plain
+ * sections); the server renders the tab pattern and the effect switches after hydration.
+ */
 export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; locale: L3 }) {
   const uid = useId();
   const [sel, setSel] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const n = block.items.length;
+  const [wide, setWide] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 961px)");
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   const go = (i: number) => {
     const k = (i + n) % n;
@@ -55,10 +67,10 @@ export function SectorTabs({ block, locale }: { block: BlockOf<"sectors">; local
         {block.items.map((s, i) => (
           <div
             key={s.name}
-            role="tabpanel"
+            role={wide ? "tabpanel" : undefined}
             id={`${uid}-p${i}`}
-            aria-labelledby={`${uid}-t${i}`}
-            tabIndex={0}
+            aria-labelledby={wide ? `${uid}-t${i}` : undefined}
+            tabIndex={wide ? 0 : undefined}
             className={`wk-card wk-sector-panel${sel === i ? " is-on" : ""}`}
           >
             <p className="wk-ledger-no wk-sector-name">{s.name}</p>

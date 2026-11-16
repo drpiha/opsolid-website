@@ -297,7 +297,7 @@ const en: PageDef = {
       },
       {
         q: "Is the price per person?",
-        a: "No, per team: from €1,790 net, 10 people included, each additional person €90 (up to 15). With 10 people that works out at €179 per person. All prices net of VAT, businesses only.",
+        a: "No, per team: from €1,790 net, 10 people included, each additional person €90 (up to 15). With 10 people that works out at €179 per person. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Can you adapt the examples to our team?",
@@ -459,7 +459,7 @@ const tr: PageDef = {
       },
       {
         q: "Fiyat kişi başına mı?",
-        a: "Hayır, ekip başına: 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi). 10 kişilik bir ekipte bu, kişi başı 179 € eder. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
+        a: "Hayır, ekip başına: 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi). 10 kişilik bir ekipte bu, kişi başı 179 € eder. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Örnekleri ekibimize uyarlayabilir misiniz?",

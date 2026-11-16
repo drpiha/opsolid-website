@@ -71,7 +71,7 @@ const de: PageDef = {
         },
         {
           h: "Angebot: Schulung oder KI-Check",
-          p: "Für eine Schulung erhalten Sie ein Angebot pro Team mit Termin, Trainerin oder Trainer und Preis. Wenn erst ein KI-Check sinnvoll ist, ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse.",
+          p: "Für eine Schulung erhalten Sie ein Angebot pro Team mit Termin, Trainerin oder Trainer und Preis. Wenn erst ein KI-Check sinnvoll ist, ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
         },
       ],
     },
@@ -116,7 +116,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet der Einstieg?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Schulungen buchen Sie pro Team, ab 1.790 € netto für einen halben Tag. Der KI-Check kostet 990 € netto zzgl. USt. als Festpreis, nur für Unternehmen: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Schulungen buchen Sie pro Team, ab 1.790 € netto für einen halben Tag. Der KI-Check kostet 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Wann sind Termine möglich?",
@@ -127,7 +127,7 @@ const de: PageDef = {
   cta: {
     label: "KI-Check",
     h: "Lieber erst die Abläufe prüfen lassen?",
-    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt. Er kostet 990 € netto.",
+    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt: schriftlich, mit Fragebogen und Bericht.",
     primary: { label: "Zum KI-Check", to: "check" },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -138,7 +138,7 @@ const en: PageDef = {
   meta: {
     title: "Contact: request training or an AI check",
     description:
-      "Write to OpSolid by form or email: a course for your team or a workflow that costs you time. We reply within 2 working days.",
+      "Write to OpSolid by form or email about a course for your team or a workflow that costs you time. The intro is free. We reply within 2 working days.",
   },
   crumbs: [],
   crumb: "Contact",
@@ -194,7 +194,7 @@ const en: PageDef = {
         },
         {
           h: "A quote: training or AI check",
-          p: "For training you receive a quote per team with date, trainer and price. If an AI check makes sense first, a quote for €990 net, a fixed price: a questionnaire and a written report with a training recommendation, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis.",
+          p: "For training you receive a quote per team with date, trainer and price. If an AI check makes sense first, a quote for €990 net, a fixed price: a questionnaire and a written report with a training recommendation, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis. Credited in full against a follow-up order within 60 days.",
         },
       ],
     },
@@ -239,7 +239,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost to get started?",
-        a: "The intro is free and without obligation. Training is booked per team, from €1,790 net for a half day. The AI check costs €990 net of VAT, a fixed price, for businesses only: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a course or pilot within 60 days. You receive the report even if we do not recommend any automation.",
+        a: "The intro is free and without obligation. Training is booked per team, from €1,790 net for a half day. The AI check costs €990 net, fixed price: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days. You receive the report even if we do not recommend any automation. All prices are net of VAT and for businesses only.",
       },
       {
         q: "When can we talk?",
@@ -250,7 +250,7 @@ const en: PageDef = {
   cta: {
     label: "AI check",
     h: "Would you rather have your workflows checked first?",
-    p: "The AI check shows where automation pays off for you. It costs €990 net.",
+    p: "The AI check shows where automation pays off for you: in writing, with a questionnaire and a report.",
     primary: { label: "To the AI check", to: "check" },
     secondary: { label: "To AI consulting", to: "beratung" },
   },
@@ -261,7 +261,7 @@ const tr: PageDef = {
   meta: {
     title: "İletişim: eğitim ya da YZ Kontrolü isteyin",
     description:
-      "OpSolid'e form ya da e-postayla yazın: ekibiniz için bir eğitim ya da zaman kaybettiren bir iş akışı. 2 iş günü içinde yanıt veririz.",
+      "OpSolid'e form ya da e-postayla yazın: ekibiniz için bir eğitim ya da zaman kaybettiren bir iş akışı. Tanışma ücretsizdir. 2 iş günü içinde yanıt veririz.",
   },
   crumbs: [],
   crumb: "İletişim",
@@ -317,7 +317,7 @@ const tr: PageDef = {
         },
         {
           h: "Teklif: eğitim ya da YZ Kontrolü",
-          p: "Eğitim için tarih, eğitmen ve fiyat içeren, ekip başına bir teklif alırsınız. Önce bir YZ Kontrolü anlamlıysa 990 € (net, sabit fiyat) tutarında bir teklif: soru formu ve eğitim önerisi içeren yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız.",
+          p: "Eğitim için tarih, eğitmen ve fiyat içeren, ekip başına bir teklif alırsınız. Önce bir YZ Kontrolü anlamlıysa 990 € (net, sabit fiyat) tutarında bir teklif: soru formu ve eğitim önerisi içeren yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
         },
       ],
     },
@@ -362,7 +362,7 @@ const tr: PageDef = {
       },
       {
         q: "Başlamak ne kadar tutar?",
-        a: "Tanışma ücretsizdir ve bağlayıcı değildir. Eğitimler ekip başına rezerve edilir, yarım gün için 1.790 €'dan (net) itibaren. YZ Kontrolü 990 € (net, KDV hariç, sabit fiyat, yalnızca şirketler için): soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. Eğitimler ekip başına rezerve edilir, yarım gün için 1.790 €'dan (net) itibaren. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Ne zaman görüşebiliriz?",
@@ -373,7 +373,7 @@ const tr: PageDef = {
   cta: {
     label: "YZ Kontrolü",
     h: "Önce iş akışlarınıza mı bakalım?",
-    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir. Ücreti 990 € (net).",
+    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini yazılı olarak, soru formu ve raporla gösterir.",
     primary: { label: "YZ Kontrolüne", to: "check" },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },

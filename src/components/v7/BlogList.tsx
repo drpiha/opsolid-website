@@ -52,7 +52,7 @@ export const BLOG_T: Record<
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
-      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Den KI-Check ansehen", to: "check" },
     },
@@ -82,7 +82,7 @@ export const BLOG_T: Record<
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
-      p: "In a free intro, without obligation, we clarify whether an AI check makes sense. The AI check costs €990 net and is credited in full against a follow-up order within 60 days.",
+      p: "In a free intro, without obligation, we clarify whether an AI check makes sense. The AI check costs €990 net, fixed price. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "See the AI check", to: "check" },
     },
@@ -112,7 +112,7 @@ export const BLOG_T: Record<
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
-      p: "Ücretsiz ve bağlayıcı olmayan tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolünün ücreti 990 € (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+      p: "Ücretsiz ve bağlayıcı olmayan tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolünün ücreti 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolünü görün", to: "check" },
     },

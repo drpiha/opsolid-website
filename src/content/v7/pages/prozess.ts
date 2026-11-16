@@ -20,7 +20,8 @@ const de: PageDef = {
     lede: "Wir automatisieren wiederkehrende Abläufe zwischen E-Mail, Excel, CRM und ERP: erst messen, wie der Ablauf heute läuft, dann ein Pilot zum Festpreis, dann die Übergabe.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zu den internen Werkzeugen", to: "prozess", hash: "interne-tools" },
-    facts: ["KI-Check 990 € netto", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
+    stripNote: "Alle Preise netto zzgl. USt., nur für Unternehmen. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
+    facts: ["KI-Check 990 € netto, Festpreis", "Pilot zum Festpreis, vorab schriftlich", "Übergabe mit Dokumentation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -81,7 +82,7 @@ const de: PageDef = {
         {
           name: "Messen",
           h: "Ablauf aufnehmen und messen",
-          p: "Workshop mit den Menschen, die die Arbeit machen. Wir halten fest, wie der Ablauf wirklich läuft: Übergaben, Werkzeuge, Daten und Ausnahmen.",
+          p: "Per Fragebogen beschreiben die Menschen, die die Arbeit machen, wie der Ablauf wirklich läuft: Übergaben, Werkzeuge, Daten und Ausnahmen. Wir halten es schriftlich fest.",
           result: "Eine Ausgangslage, die Ihr Team prüfen kann, und die Entscheidung, was automatisiert wird und was bewusst manuell bleibt.",
           meta: "im KI-Check",
         },
@@ -170,7 +171,7 @@ const de: PageDef = {
         {
           tag: "Eigene Arbeit",
           h: "OpSo",
-          p: "Für OpSo, unser eigenes Produkt mit iPhone-App im App Store, haben wir Dashboard, Onboarding und Admin-Konsole selbst entwickelt.",
+          p: "Für OpSo, unser eigenes Produkt mit Apps für iPhone und Android, haben wir Dashboard, Onboarding und Admin-Konsole selbst entwickelt.",
           href: { label: "Zu OpSo", to: "opso" },
         },
       ],
@@ -186,7 +187,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet das?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Was, wenn sich der Ablauf später ändert?",
@@ -234,7 +235,8 @@ const en: PageDef = {
     lede: "We automate recurring workflows between email, Excel, CRM and ERP: first measure how the workflow runs today, then a pilot at a fixed price, then the handover.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "On to internal tools", to: "prozess", hash: "interne-tools" },
-    facts: ["AI check €990 net", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
+    stripNote: "All prices are net of VAT and for businesses only. Credited in full against a follow-up order within 60 days.",
+    facts: ["AI check €990 net, fixed price", "Pilot at a fixed price, agreed in writing beforehand", "Handover with documentation"],
     media: {
       kind: "svg",
       name: "flow",
@@ -295,7 +297,7 @@ const en: PageDef = {
         {
           name: "Measure",
           h: "Map and measure the workflow",
-          p: "A workshop with the people who do the work. We record how the workflow really runs: handovers, tools, data and exceptions.",
+          p: "In a questionnaire, the people who do the work describe how the workflow really runs: handovers, tools, data and exceptions. We record it in writing.",
           result: "A baseline your team can verify, and a decision on what gets automated and what deliberately stays manual.",
           meta: "in the AI check",
         },
@@ -384,7 +386,7 @@ const en: PageDef = {
         {
           tag: "Our own work",
           h: "OpSo",
-          p: "For OpSo, our own product with an iPhone app in the App Store, we built the dashboard, onboarding and admin console ourselves.",
+          p: "For OpSo, our own product with apps for iPhone and Android, we built the dashboard, onboarding and admin console ourselves.",
           href: { label: "About OpSo", to: "opso" },
         },
       ],
@@ -400,7 +402,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost?",
-        a: "The intro is free and non-binding. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "The intro is free and non-binding. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
       {
         q: "What if the workflow changes later?",
@@ -448,7 +450,8 @@ const tr: PageDef = {
     lede: "E-posta, Excel, CRM ve ERP arasında tekrar eden iş akışlarını otomatikleştiriyoruz: önce iş akışının bugün nasıl işlediğini ölçüyor, sonra sabit fiyatlı bir pilot kuruyor, ardından teslim ediyoruz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Şirket içi araçlara geçin", to: "prozess", hash: "interne-tools" },
-    facts: ["YZ Kontrolü 990 € (net)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
+    stripNote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+    facts: ["YZ Kontrolü 990 € (net, sabit fiyat)", "Sabit fiyatlı pilot, önceden yazılı", "Dokümantasyonla teslim"],
     media: {
       kind: "svg",
       name: "flow",
@@ -509,7 +512,7 @@ const tr: PageDef = {
         {
           name: "Ölçme",
           h: "İş akışını kayda almak ve ölçmek",
-          p: "İşi yapan kişilerle bir atölye. İş akışının gerçekte nasıl işlediğini kaydediyoruz: devir noktaları, araçlar, veriler ve istisnalar.",
+          p: "İşi yapan kişiler, iş akışının gerçekte nasıl işlediğini bir soru formunda anlatır: devir noktaları, araçlar, veriler ve istisnalar. Bunu yazılı olarak kaydederiz.",
           result: "Ekibinizin kontrol edebileceği bir başlangıç durumu ve nelerin otomatikleştiri\u00ADleceğine, nelerin bilerek elle kalacağına dair karar.",
           meta: "YZ Kontrolü içinde",
         },
@@ -598,7 +601,7 @@ const tr: PageDef = {
         {
           tag: "Kendi çalışmamız",
           h: "OpSo",
-          p: "iPhone uygulaması App Store'da olan kendi ürünümüz OpSo için dashboard'u, ilk kurulum akışını ve yönetim konsolunu kendimiz geliştirdik.",
+          p: "iPhone ve Android uygulamaları olan kendi ürünümüz OpSo için dashboard'u, ilk kurulum akışını ve yönetim konsolunu kendimiz geliştirdik.",
           href: { label: "OpSo'yu inceleyin", to: "opso" },
         },
       ],
@@ -614,7 +617,7 @@ const tr: PageDef = {
       },
       {
         q: "Ücreti ne kadar?",
-        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "İş akışı sonradan değişirse ne olur?",

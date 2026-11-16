@@ -138,14 +138,14 @@ const de: PageDef = {
   meta: {
     title: "Produkte: OpSo, OpSo NFC-Karte und Kutasia",
     description:
-      "OpSo ist die digitale Visitenkarte von OpSolid, kostenlos für iPhone und Android. Die OpSo NFC-Karte ist in Vorbereitung, Kutasia in Entwicklung.",
+      "OpSo, die digitale Visitenkarte von OpSolid, ist kostenlos für iPhone und Android. NFC-Karte in Vorbereitung, Kutasia in Entwicklung, noch nicht erhältlich.",
   },
   crumbs: [],
   crumb: "Produkte",
   hero: {
     eyebrow: "Eigene Produkte",
     h1: ["Was wir selbst ", "bauen", " und betreiben"],
-    lede: "Drei eigene Produkte und ihr Stand: OpSo ist live, die OpSo NFC-Karte in Vorbereitung, Kutasia in Entwicklung.",
+    lede: "Drei eigene Produkte und ihr Stand: OpSo ist live, die OpSo NFC-Karte in Vorbereitung, Kutasia in Entwicklung und noch nicht erhältlich.",
     tone: "ink",
     picture: heroPic(
       "Vier OpSo NFC-Karten in mattem Schwarz: zwei mit dem OpSolid-Zeichen in Kupfer, zwei mit QR-Code und Beispielnamen",
@@ -266,14 +266,14 @@ const en: PageDef = {
   meta: {
     title: "Products: OpSo, OpSo NFC card and Kutasia",
     description:
-      "OpSo is the digital business card from OpSolid, free for iPhone and Android. The OpSo NFC card is in preparation, and Kutasia is in development.",
+      "OpSo, the digital business card from OpSolid, is free for iPhone and Android. The NFC card is in preparation; Kutasia is in development, not yet available.",
   },
   crumbs: [],
   crumb: "Products",
   hero: {
     eyebrow: "Our own products",
     h1: ["What we ", "build", " and run ourselves"],
-    lede: "Three products of our own and where they stand: OpSo is live, the OpSo NFC card is in preparation, Kutasia is in development.",
+    lede: "Three products of our own and where they stand: OpSo is live, the OpSo NFC card is in preparation, Kutasia is in development and not yet available.",
     tone: "ink",
     picture: heroPic(
       "Four OpSo NFC cards in matte black: two with the OpSolid mark in copper, two with a QR code and sample names",
@@ -394,14 +394,14 @@ const tr: PageDef = {
   meta: {
     title: "Ürünler: OpSo, OpSo NFC kartı ve Kutasia",
     description:
-      "OpSo, OpSolid'in dijital kartvizitidir ve iPhone ile Android için ücretsizdir. OpSo NFC kartı hazırlanıyor, Kutasia ise geliştirme aşamasındadır.",
+      "OpSo, OpSolid'in dijital kartvizitidir; iPhone ve Android için ücretsiz. NFC kartı hazırlanıyor, Kutasia geliştiriliyor ve henüz satışta değil.",
   },
   crumbs: [],
   crumb: "Ürünler",
   hero: {
     eyebrow: "Kendi ürünlerimiz",
     h1: ["Kendimiz ", "geliştirip", " işlettiklerimiz"],
-    lede: "Kendi üç ürünümüz ve durumları: OpSo yayında, OpSo NFC kartı hazırlanıyor, Kutasia geliştiriliyor.",
+    lede: "Kendi üç ürünümüz ve durumları: OpSo yayında, OpSo NFC kartı hazırlanıyor, Kutasia geliştiriliyor ve henüz satışta değil.",
     tone: "ink",
     picture: heroPic(
       "Mat siyah dört OpSo NFC kartı: ikisinde bakır renkli OpSolid işareti, ikisinde karekod ve örnek isimler",

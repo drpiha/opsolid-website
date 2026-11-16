@@ -1,16 +1,21 @@
 import Image from "next/image";
 import type { BlockProps } from "@/content/v7/types";
+import { SITE_STR } from "@/content/v7/site";
 import { Reveal } from "../Reveal";
 import { Section } from "../Section";
 import { Etikett } from "../werkstatt/Etikett";
+
+const EURO = /€/;
 
 /**
  * Plain numbered steps as a ledger (.wk-run): 40 px copper-deep squares on a 2 px top rule. `variant: "run"` (hub and
  * course page) adds an art card per step: a decorative crop of a labelled sample (alt ""), the "Sie erhalten" Etikett,
  * a short heading and the result; one Etikett line under the list names all crops. The default variant is unchanged.
+ * Rule 1: when a step names a euro amount, the price note follows the steps (as in the process and rows blocks).
  */
 export function StepsBlock({ block: b, locale, num }: BlockProps<"steps">) {
   const run = b.variant === "run";
+  const priced = b.items.some((it) => [it.h, it.p, it.art?.h, it.art?.p].some((x) => x && EURO.test(x)));
   return (
     <Section id={b.id} num={num} label={b.label} note={b.note} h={b.h} lede={b.lede} cta={b.cta} ground={b.ground} mat={b.mat} locale={locale} airy={b.airy}>
       <ol className="wk-run">
@@ -47,6 +52,7 @@ export function StepsBlock({ block: b, locale, num }: BlockProps<"steps">) {
           {b.etikett}
         </Etikett>
       )}
+      {priced && <p className="wk-foot-note wk-steps-price">{SITE_STR[locale].priceNote}</p>}
     </Section>
   );
 }

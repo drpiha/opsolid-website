@@ -31,7 +31,7 @@ const de: PageDef = {
   meta: {
     title: "OpSo: Karte, Kontakte und Follow-up an einem Ort",
     description:
-      "OpSo: kostenlose digitale Visitenkarte mit Kontaktliste und Follow-up. iPhone: App Store. Android: Google Play. Ohne App für Empfänger.",
+      "OpSo: kostenlose digitale Visitenkarte mit Kontaktliste und Follow-up. iPhone: App Store. Android: Google Play. Empfänger brauchen keine App. Von OpSolid.",
   },
   crumbs: ["produkte"],
   crumb: "OpSo",

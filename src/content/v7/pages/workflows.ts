@@ -75,7 +75,7 @@ const de: PageDef = {
       items: [
         {
           h: "Erst analysieren, dann schulen",
-          p: "Der schriftliche KI-Check (990 € netto, Festpreis) zeigt per Fragebogen und Bericht, wo KI in Ihrem Alltag sinnvoll ist, und endet mit einer Schulungsempfehlung für Ihr Team. Buchen Sie innerhalb von 60 Tagen eine Schulung, rechnen wir den Betrag voll an.",
+          p: "Der schriftliche KI-Check (990 € netto, Festpreis) zeigt per Fragebogen und Bericht, wo KI in Ihrem Alltag sinnvoll ist, und endet mit einer Schulungsempfehlung für Ihr Team. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
           href: { label: "Zum KI-Check", to: "check" },
         },
         {
@@ -173,7 +173,7 @@ const en: PageDef = {
       items: [
         {
           h: "Analyse first, then train",
-          p: "The written AI check (€990 net, fixed price) shows with a questionnaire and a report where AI makes sense in your daily work, and ends with a training recommendation for your team. Book a course within 60 days and we credit the amount in full.",
+          p: "The written AI check (€990 net, fixed price) shows with a questionnaire and a report where AI makes sense in your daily work, and ends with a training recommendation for your team. Credited in full against a follow-up order within 60 days.",
           href: { label: "To the AI check", to: "check" },
         },
         {
@@ -271,7 +271,7 @@ const tr: PageDef = {
       items: [
         {
           h: "Önce analiz, sonra eğitim",
-          p: "Yazılı YZ Kontrolü (990 €, net, sabit fiyat) soru formu ve raporla günlük işinizde YZ'nin nerede anlamlı olduğunu gösterir ve ekibiniz için bir eğitim önerisiyle biter. 60 gün içinde bir eğitim rezervasyonu yaparsanız tutarın tamamını mahsup ederiz.",
+          p: "Yazılı YZ Kontrolü (990 €, net, sabit fiyat) soru formu ve raporla günlük işinizde YZ'nin nerede anlamlı olduğunu gösterir ve ekibiniz için bir eğitim önerisiyle biter. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
           href: { label: "YZ Kontrolü'ne gidin", to: "check" },
         },
         {

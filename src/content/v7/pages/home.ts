@@ -178,7 +178,7 @@ const de: PageDef = {
           tone: "produkte",
           etikett: "Produkte",
           h: "Eigene Software, selbst betrieben",
-          p: "OpSo ist live, Kutasia in Entwicklung.",
+          p: "OpSo ist live, Kutasia in Entwicklung und noch nicht erhältlich.",
           chip: { kind: "live", text: "OpSo · kostenlos" },
           link: { label: "Alle Produkte", to: "produkte" },
           art: {
@@ -408,7 +408,7 @@ const de: PageDef = {
       },
       {
         q: "Wie finden wir die passende Schulung?",
-        a: "Mit einer kurzen Anfrage: Wir empfehlen die passende Schulung kostenlos. Ist offen, wo KI in Ihrem Betrieb sinnvoll ist, beginnen Sie mit dem KI-Check: 990 € netto als Festpreis, schriftlich per Fragebogen und Bericht, NDA vor der Analyse. Der Bericht endet mit einer Schulungsempfehlung. Buchen Sie innerhalb von 60 Tagen eine Schulung oder einen Pilot, rechnen wir den Betrag voll an.",
+        a: "Mit einer kurzen Anfrage: Wir empfehlen die passende Schulung kostenlos. Ist offen, wo KI in Ihrem Betrieb sinnvoll ist, beginnen Sie mit dem KI-Check: 990 € netto, Festpreis, schriftlich per Fragebogen und Bericht, NDA vor der Analyse. Der Bericht endet mit einer Schulungsempfehlung. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Brauchen wir dafür überhaupt KI?",
@@ -585,7 +585,7 @@ const en: PageDef = {
           tone: "produkte",
           etikett: "Products",
           h: "Our own software, run by us",
-          p: "OpSo is live, Kutasia is in development.",
+          p: "OpSo is live, Kutasia is in development and not yet available.",
           chip: { kind: "live", text: "OpSo · free" },
           link: { label: "All products", to: "produkte" },
           art: {
@@ -627,7 +627,7 @@ const en: PageDef = {
         link: { label: "Register interest", to: "home", hash: "kontakt", query: { anliegen: "vormerken" } },
       },
       footnote:
-        "All prices net of VAT, businesses only. Companies that use AI take measures to support their staff's AI literacy (Article 4 of the EU AI Act); a course with a participation record is one traceable measure. This is not legal advice.",
+        "All prices are net of VAT and for businesses only. Companies that use AI take measures to support their staff's AI literacy (Article 4 of the EU AI Act); a course with a participation record is one traceable measure. This is not legal advice.",
     },
     {
       t: "process",
@@ -815,7 +815,7 @@ const en: PageDef = {
       },
       {
         q: "How do we find the right course?",
-        a: "With a short enquiry: we recommend the right course free of charge. If it is open where AI makes sense in your business, start with the AI check: €990 net, a fixed price, in writing with a questionnaire and a report, NDA before the analysis. The report ends with a training recommendation. Book a course or a pilot within 60 days and we credit the amount in full.",
+        a: "With a short enquiry: we recommend the right course free of charge. If it is open where AI makes sense in your business, start with the AI check: €990 net, fixed price, in writing with a questionnaire and a report, NDA before the analysis. The report ends with a training recommendation. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Do we need AI for this at all?",
@@ -992,7 +992,7 @@ const tr: PageDef = {
           tone: "produkte",
           etikett: "Ürünler",
           h: "Kendi yazılımımız, kendimiz işletiyoruz",
-          p: "OpSo yayında, Kutasia geliştiriliyor.",
+          p: "OpSo yayında, Kutasia geliştiriliyor ve henüz satışta değil.",
           chip: { kind: "live", text: "OpSo · ücretsiz" },
           link: { label: "Tüm ürünler", to: "produkte" },
           art: {
@@ -1034,7 +1034,7 @@ const tr: PageDef = {
         link: { label: "İlginizi bildirin", to: "home", hash: "kontakt", query: { anliegen: "vormerken" } },
       },
       footnote:
-        "Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir. Yapay zekâ kullanan şirketler, çalışanlarının yapay zekâ okuryazarlığını desteklemek için önlemler alır (AB Yapay Zekâ Tüzüğü Madde 4); katılım belgeli bir eğitim izlenebilir bir önlemdir. Hukuki danışmanlık değildir.",
+        "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. Yapay zekâ kullanan şirketler, çalışanlarının yapay zekâ okuryazarlığını desteklemek için önlemler alır (AB Yapay Zekâ Tüzüğü Madde 4); katılım belgeli bir eğitim izlenebilir bir önlemdir. Hukuki danışmanlık değildir.",
     },
     {
       t: "process",
@@ -1206,7 +1206,7 @@ const tr: PageDef = {
     items: [
       {
         q: "Fiyat kişi başına mı?",
-        a: "Hayır, ekip başına: YZ Yetkinliği Temel'de 10 kişi dahil (her ek kişi 90 €, en fazla 15), Copilot Uygulama Günü'nde 10 (her ek kişi 150 €, en fazla 12), YZ Ajanları eğitiminde 8 (her ek kişi 290 €, en fazla 10). 10 kişide bu, kişi başı 179 € (YZ Yetkinliği Temel) ve 290 € (Copilot Uygulama Günü) eder. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+        a: "Hayır, ekip başına: YZ Yetkinliği Temel'de 10 kişi dahil (her ek kişi 90 €, en fazla 15), Copilot Uygulama Günü'nde 10 (her ek kişi 150 €, en fazla 12), YZ Ajanları eğitiminde 8 (her ek kişi 290 €, en fazla 10). 10 kişide bu, kişi başı 179 € (YZ Yetkinliği Temel) ve 290 € (Copilot Uygulama Günü) eder. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Eğitim nerede ve nasıl yapılır?",
@@ -1222,7 +1222,7 @@ const tr: PageDef = {
       },
       {
         q: "Uygun eğitimi nasıl buluruz?",
-        a: "Kısa bir talep yeter: uygun eğitimi ücretsiz öneririz. Yapay zekânın işletmenizde nerede anlamlı olduğu belli değilse YZ Kontrolü ile başlayın: 990 € (net), sabit fiyat, soru formu ve raporla yazılı, analizden önce NDA. Rapor bir eğitim önerisiyle biter. 60 gün içinde bir eğitim ya da pilot rezervasyonu yaparsanız tutarın tamamını mahsup ederiz.",
+        a: "Kısa bir talep yeter: uygun eğitimi ücretsiz öneririz. Yapay zekânın işletmenizde nerede anlamlı olduğu belli değilse YZ Kontrolü ile başlayın: 990 € (net, sabit fiyat), soru formu ve raporla yazılı, analizden önce NDA. Rapor bir eğitim önerisiyle biter. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Bunun için gerçekten yapay zekâya ihtiyacımız var mı?",

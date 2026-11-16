@@ -12,10 +12,12 @@ const CLOSE_DELAY = 300;
  * - Desktop (>= 961 px): mouse hover opens a panel after 150 ms, leaving closes after 300 ms unless pinned; the
  *   chevron toggles a pinned panel; ArrowDown on it opens and focuses the first link; focus leaving the item, an
  *   outside click or a link click closes. One panel at a time; .is-open on the li and aria-expanded are the state.
+ *   A closed panel is inert at once, so focus cannot land in it while its fade-out still shows it.
  * - Escape closes the phone menu (focus back to the toggle) or the open panel (focus back to its chevron).
  * - Phone menu: toggle, body lock, one group open at a time, inert page behind it, any link click closes.
- * - Call bar (<= 960 px): shows after the first touch, wheel or key once past 0.9 viewport heights, never over
- *   #kontakt or the footer.
+ * - Call bar (<= 960 px): shows after the first touch, wheel or key once past 0.9 viewport heights, never on the
+ *   contact page (it would advertise the page the visitor is on and cover its form), never over #kontakt, a form
+ *   in main or the footer.
  * - Active top item and aria-current follow client navigation; every route change closes panels and the menu.
  */
 export function HeaderBehavior() {
@@ -46,6 +48,7 @@ export function HeaderBehavior() {
     const chev = (li: HTMLElement) => li.querySelector<HTMLButtonElement>(".wk-nav-chev");
     const set = (li: HTMLElement, open: boolean) => {
       li.classList.toggle("is-open", open);
+      li.querySelector(".wk-mega")?.toggleAttribute("inert", !open);
       chev(li)?.setAttribute("aria-expanded", String(open));
     };
     const clear = () => {
@@ -148,8 +151,12 @@ export function HeaderBehavior() {
     const onScroll = () => {
       if (!bar) return;
       const vh = window.innerHeight;
-      let hide = window.scrollY < vh * 0.9 || !root.classList.contains("is-touched");
-      for (const el of [document.getElementById("kontakt"), document.querySelector(".wk-footer")]) {
+      let hide =
+        window.scrollY < vh * 0.9 ||
+        !root.classList.contains("is-touched") ||
+        keyForPublicPath(window.location.pathname)?.key === "kontakt";
+      const zones = [document.getElementById("kontakt"), document.querySelector(".wk-footer"), ...Array.from(document.querySelectorAll("main form"))];
+      for (const el of zones) {
         const r = el?.getBoundingClientRect();
         if (r && r.top < vh && r.bottom > 0) hide = true;
       }

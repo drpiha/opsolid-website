@@ -48,7 +48,7 @@ const de: PageDef = {
         {
           tag: "2 · Beratung",
           h: "KI-Beratung und KI-Automatisierung",
-          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, der mit einer Schulungsempfehlung endet. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
+          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, der mit einer Schulungsempfehlung endet. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
           href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
@@ -155,7 +155,7 @@ const de: PageDef = {
       },
       {
         q: "Wie beginnt die Zusammenarbeit, und was kostet der Einstieg?",
-        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen, per E-Mail oder kurz per Video. Auf Wunsch folgt der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen, per E-Mail oder kurz per Video. Auf Wunsch folgt der KI-Check für 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -210,7 +210,7 @@ const en: PageDef = {
         {
           tag: "2 · Consulting",
           h: "AI consulting and AI automation",
-          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net: a questionnaire and a written report that ends with a training recommendation. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
+          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net, fixed price: a questionnaire and a written report that ends with a training recommendation. Credited in full against a follow-up order within 60 days. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
           href: { label: "To AI consulting", to: "beratung" },
         },
         {
@@ -317,7 +317,7 @@ const en: PageDef = {
       },
       {
         q: "How does working together begin, and what does the entry point cost?",
-        a: "With a free intro, by email or a short video call, without obligation. If you wish, the AI check follows for €990 net: a questionnaire and a written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
+        a: "With a free intro, by email or a short video call, without obligation. If you wish, the AI check follows for €990 net, fixed price: a questionnaire and a written report, with an NDA before the analysis. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       },
     ],
   },
@@ -372,7 +372,7 @@ const tr: PageDef = {
         {
           tag: "2 · Danışmanlık",
           h: "Yapay zeka danışmanlığı ve otomasyonu",
-          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net) tutarındaki YZ Kontrolüdür: soru formu ve eğitim önerisiyle biten yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
+          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net, sabit fiyat) tutarındaki YZ Kontrolüdür: soru formu ve eğitim önerisiyle biten yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
           href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
@@ -479,7 +479,7 @@ const tr: PageDef = {
       },
       {
         q: "İş birliği nasıl başlar, giriş ne kadar tutar?",
-        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla; e-postayla ya da kısa bir görüntülü görüşmeyle. İsterseniz ardından YZ Kontrolü gelir, 990 € (net): soru formu ve yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
+        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla; e-postayla ya da kısa bir görüntülü görüşmeyle. İsterseniz ardından YZ Kontrolü gelir, 990 € (net, sabit fiyat): soru formu ve yazılı rapor, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
     ],
   },

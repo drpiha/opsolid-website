@@ -166,11 +166,11 @@ const de: PageDef = {
       },
       {
         q: "Was kostet das?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Der KI-Check kostet 990 € netto als Festpreis: Fragebogen und schriftlicher Bericht, auf Wunsch 30 Minuten Besprechung per Video, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Für den Pilot legen wir Umfang und Festpreis vorab schriftlich fest. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Wie hängt das mit dem Copilot-Praxistag zusammen?",
-        a: "Der Copilot-Praxistag ist eine Schulung für Ihr Team: 1 Tag, ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen). Die Einrichtung in Ihrem Tenant gehört zur Beratung.",
+        a: "Der Copilot-Praxistag ist eine Schulung für Ihr Team: 1 Tag, ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen). Alle Preise netto zzgl. USt., nur für Unternehmen. Die Einrichtung in Ihrem Tenant gehört zur Beratung.",
       },
     ],
   },
@@ -352,11 +352,11 @@ const en: PageDef = {
       },
       {
         q: "What does it cost?",
-        a: "The intro is free and non-binding. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices net of VAT, businesses only.",
+        a: "The intro is free and non-binding. The AI check costs €990 net, a fixed price: a questionnaire and a written report, a 30-minute video call if you wish, and an NDA before the analysis. Credited in full against a follow-up order within 60 days. For the pilot we agree scope and a fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
       {
         q: "How does this relate to the Copilot workshop?",
-        a: "The Copilot workshop is a training for your team: one day, from €2,900 net per team, 10 people included, each additional person €150 (up to 12). Setting things up in your tenant is part of the consulting.",
+        a: "The Copilot workshop is a training for your team: one day, from €2,900 net per team, 10 people included, each additional person €150 (up to 12). All prices are net of VAT and for businesses only. Setting things up in your tenant is part of the consulting.",
       },
     ],
   },
@@ -538,11 +538,11 @@ const tr: PageDef = {
       },
       {
         q: "Ücreti ne kadar?",
-        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Pilot için kapsamı ve sabit fiyatı önceden yazılı olarak belirleriz. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Bunun Copilot Uygulama Günüyle ilişkisi nedir?",
-        a: "Copilot Uygulama Günü ekibiniz için bir eğitimdir: 1 gün, ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi). Tenant'ınızdaki kurulum danışmanlığın parçasıdır.",
+        a: "Copilot Uygulama Günü ekibiniz için bir eğitimdir: 1 gün, ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi). Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. Tenant'ınızdaki kurulum danışmanlığın parçasıdır.",
       },
     ],
   },

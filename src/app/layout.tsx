@@ -5,9 +5,12 @@ import { subsetFontVariables } from "./fonts/subset-families";
 import { isV4Path } from "@/lib/v4";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
-import "./globals.css";
-// Marketing CSS, one import chain (src/styles/werkstatt/index.css): the v7 base and motion, then Werkstatt
-// (design C, owner decision 81). Loaded after globals.css (which pulls in the legacy v4 CSS) so it wins at equal specificity.
+// Marketing CSS: the marketing Tailwind sheet, then one import chain (src/styles/werkstatt/index.css) with the v7 base
+// and motion and Werkstatt (design C, owner decision 81). The app-surface sheet (./globals.css: Tailwind over every
+// app file, opsolid-tokens.css, opsolid-v4.css) is not loaded here: every app surface imports it from its own layout
+// (the APP_FIRST_SEGMENTS folders of src/lib/v4.ts plus admin, c, dev and voice; scripts/tests/app-css.test.mts checks
+// that), so it no longer render-blocks marketing pages.
+import "../styles/marketing.css";
 import "../styles/werkstatt/index.css";
 
 // Werkstatt (design C): Archivo (display + body, variable width axis) and IBM Plex Mono (labels) serve the

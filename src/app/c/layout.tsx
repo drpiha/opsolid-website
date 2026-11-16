@@ -1,3 +1,4 @@
+import "@/app/globals.css";
 import { ContentProvider } from "@/context/ContentProvider";
 
 /** Public card pages live outside [locale]; they render with the default locale's content. */
