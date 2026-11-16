@@ -183,7 +183,7 @@ html[data-v4] .wk-foot-col h2 { padding-bottom: 10px; border-bottom: 1px solid v
 html[data-v4] .wk-foot-col a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--wk-text); font-size: var(--wk-fs-1); line-height: 1.5; gap: 2px 8px; flex-wrap: wrap; transition: color var(--wk-t-micro); }
 html[data-v4] .wk-foot-col a:hover { color: var(--wk-copper-deep); }
 html[data-v4] .wk-foot-col a:hover span { text-decoration: underline; text-underline-offset: 4px; }
-html[data-v4] .wk-foot-col a small { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); white-space: nowrap; }
+html[data-v4] .wk-foot-col a small { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
 html[data-v4] .wk-foot-bottom { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--wk-line-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; align-items: center; }
 html[data-v4] .wk-foot-note { color: var(--wk-muted); }
 html[data-v4] .wk-foot-legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; }
@@ -277,7 +277,7 @@ html[data-v4] .wk-callbar { display: none; }
   html[data-v4] .wk-footer { padding-block: 40px 28px; }
   html[data-v4] .wk-foot-top { gap: 24px; }
   html[data-v4] .wk-foot-brand { gap: 8px; }
-  html[data-v4] .wk-foot-nav { grid-template-columns: 1fr 1fr; gap: 22px 20px; }
+  html[data-v4] .wk-foot-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 20px; }
   /* a link that wraps to two lines keeps clear space to its neighbours (the 44 px minimum alone leaves none) */
   html[data-v4] .wk-foot-col a { padding-block: 8px; line-height: 1.35; }
   html[data-v4] .wk-foot-bottom { margin-top: 20px; padding-top: 12px; flex-direction: column; align-items: flex-start; gap: 8px; }
