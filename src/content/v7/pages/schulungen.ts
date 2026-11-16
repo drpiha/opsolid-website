@@ -21,7 +21,7 @@ export const RUN_STEPS: Record<L3, Block> = {
     h: "Von der Anfrage zur Bescheinigung",
     lede: "Sie wissen in jedem Schritt, was als Nächstes passiert.",
     ground: "bench",
-    etikett: "Ausschnitte · Preisliste, Muster-Agenda, Schema, Muster-Bescheinigung",
+    etikett: "Ausschnitte · Katalog, Muster-Agenda, Schema, Muster-Bescheinigung",
     items: [
       {
         h: "Anfrage",
@@ -53,7 +53,7 @@ export const RUN_STEPS: Record<L3, Block> = {
     h: "From enquiry to participation record",
     lede: "At every step you know what comes next.",
     ground: "bench",
-    etikett: "Cut-outs · price list, sample agenda, schema, sample record",
+    etikett: "Cut-outs · catalogue, sample agenda, schema, sample record",
     items: [
       {
         h: "Enquiry",
@@ -85,7 +85,7 @@ export const RUN_STEPS: Record<L3, Block> = {
     h: "Talepten katılım belgesine",
     lede: "Her adımda sırada ne olduğunu bilirsiniz.",
     ground: "bench",
-    etikett: "Kesitler · fiyat listesi, örnek program, şema, örnek belge",
+    etikett: "Kesitler · katalog, örnek program, şema, örnek belge",
     items: [
       {
         h: "Talep",

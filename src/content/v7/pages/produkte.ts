@@ -151,7 +151,7 @@ const de: PageDef = {
       {
         k: "Posteingang mit KI-Antwortvorschlägen",
         name: "Kutasia",
-        chip: { kind: "plan", text: "noch nicht erhältlich" },
+        chip: { kind: "plan", text: "in Entwicklung, noch nicht erhältlich" },
         id: "kutasia",
       },
     ],
@@ -266,7 +266,7 @@ const en: PageDef = {
       {
         k: "Inbox with AI reply suggestions",
         name: "Kutasia",
-        chip: { kind: "plan", text: "not yet available" },
+        chip: { kind: "plan", text: "in development, not yet available" },
         id: "kutasia",
       },
     ],
@@ -379,9 +379,9 @@ const tr: PageDef = {
         to: { label: "OpSo NFC kartı", to: "produkte", hash: "nfc-karte" },
       },
       {
-        k: "YZ yanıt önerili gelen kutusu",
+        k: "YZ yanıt önerileri sunan gelen kutusu",
         name: "Kutasia",
-        chip: { kind: "plan", text: "henüz satışta değil" },
+        chip: { kind: "plan", text: "geliştiriliyor, henüz satışta değil" },
         id: "kutasia",
       },
     ],

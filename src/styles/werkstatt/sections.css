@@ -292,6 +292,25 @@ html[data-v4] .wk-hero-sheet .wk-blocks li { padding: 9px 10px 10px; font-size: 
 html[data-v4] .wk-hero-way { padding: 28px 18px 18px; }
 html[data-v4] .wk-hero-obj.is-way { --obj-a: -0.8deg; }
 
+/* flow (R3): the KI-Agenten four-node flow on a sheet, one filled row under the nodes. The row runs in four columns
+   under the nodes when the sheet is wide enough for the longest word (TR "sınıflandırır"); on narrower sheets it turns
+   two by two and each cell names its node (a container query on the sheet, so 961-1180 px and phones both fit). */
+html[data-v4] .wk-hero-flow { width: min(100%, 440px); margin-left: auto; padding: 22px 18px 18px; container-type: inline-size; }
+html[data-v4] .wk-hero-flow svg { display: block; margin-top: 6px; }
+html[data-v4] .wk-hero-flow-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 4px; border-top: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-hero-flow-row li { padding: 10px 8px 8px; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.4; color: var(--wk-text); hyphens: manual; }
+html[data-v4] .wk-hero-flow-row li:nth-child(even) { border-left: 1px dashed var(--wk-line); }
+html[data-v4] .wk-hero-flow-row li:nth-child(n + 3) { border-top: 1px dashed var(--wk-line); }
+html[data-v4] .wk-hero-flow-k { display: block; margin-bottom: 2px; color: var(--wk-muted); }
+@container (min-width: 400px) {
+  html[data-v4] .wk-hero-flow-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  html[data-v4] .wk-hero-flow-row li { padding: 10px 3px 2px; font-size: 0.6875rem; text-align: center; }
+  html[data-v4] .wk-hero-flow-row li + li { border-left: 1px dashed var(--wk-line); }
+  html[data-v4] .wk-hero-flow-row li:nth-child(n + 3) { border-top: 0; }
+  html[data-v4] .wk-hero-flow-k { display: none; }
+}
+html[data-v4] .wk-hero-obj.is-flow { --obj-a: -1deg; }
+
 /* ---------- R2: door marks on inner pages (decision 77) ---------- */
 /* Beratung pages: the copper graphics (squares, nodes, ticks, stamps, figure strokes, the closing band) turn slate.
    Text in these tokens keeps AA: slate-deep on paper and slate, #9fb7c4 on ink and charcoal. Header and footer sit
@@ -300,6 +319,37 @@ html[data-v4] .v7[data-door="beratung"] {
   --wk-copper: var(--wk-slate-deep);
   --wk-copper-deep: var(--wk-slate-deep);
   --wk-copper-lite: var(--wk-line-beratung-d);
+}
+/* R3: Produkte pages mark in charcoal, Unternehmen pages (About, Trainer, Journal, Kontakt) in ink, the same token swap
+   as Beratung (design review R3 fix 3, rules audit S4). Charcoal and ink as text pass AA on paper, sheet and bench. */
+html[data-v4] .v7[data-door="produkte"] {
+  --wk-copper: var(--wk-line-produkte);
+  --wk-copper-deep: var(--wk-line-produkte);
+  --wk-copper-lite: var(--wk-line-produkte-d);
+  --wk-copper-rgb: var(--wk-char-rgb);
+  --wk-copper-deep-rgb: var(--wk-char-rgb);
+  --wk-copper-lite-rgb: 201 194 184;
+}
+html[data-v4] .v7[data-door="unternehmen"] {
+  --wk-copper: var(--wk-line-unternehmen);
+  --wk-copper-deep: var(--wk-line-unternehmen);
+  --wk-copper-lite: var(--wk-line-unternehmen-d);
+  --wk-copper-rgb: var(--wk-ink-rgb);
+  --wk-copper-deep-rgb: var(--wk-ink-rgb);
+  --wk-copper-lite-rgb: var(--wk-text-d-rgb);
+}
+/* on the dark grounds of these pages (the charcoal Produkte hero, ink sections) a charcoal or ink mark would vanish:
+   there the graphic marks take the light door tone */
+html[data-v4] .v7[data-door="produkte"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-produkte-d); --wk-copper-rgb: 201 194 184; }
+html[data-v4] .v7[data-door="unternehmen"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-unternehmen-d); --wk-copper-rgb: var(--wk-text-d-rgb); }
+/* kept in copper: the closing CTA band (the Schulungen action) and the Schulungen card of the Produkte "why" section */
+html[data-v4] .v7:is([data-door="produkte"], [data-door="unternehmen"]) :is(.wk-cta-band, .wk-why-door.wk-on-ink) {
+  --wk-copper: #b5623a;
+  --wk-copper-deep: #93481f;
+  --wk-copper-lite: #e59c72;
+  --wk-copper-rgb: 181 98 58;
+  --wk-copper-deep-rgb: 147 72 31;
+  --wk-copper-lite-rgb: 229 156 114;
 }
 /* Produkte hero ground: charcoal, not ink (the ink rule above has the same weight, so it is restated here). */
 html[data-v4] .wk-page-hero.wk-on-char { background: var(--wk-char); }

@@ -50,12 +50,12 @@ const de: PageDef = {
       t: "process",
       id: "ablauf",
       label: "Ablauf",
-      h: "Vom Vorgespräch zur Entscheidung",
+      h: "Vom Kennenlernen zur Entscheidung",
       lede: "Nach jedem Schritt wissen Sie, woran Sie sind.",
       steps: [
         {
           name: "Vorbereitung",
-          h: "Vorgespräch und NDA",
+          h: "Kennenlernen und NDA",
           p: "Wir klären kurz Ziele und Abläufe, per E-Mail oder in 15 bis 30 Minuten per Video am Mittwoch- oder Freitagabend. Danach unterzeichnen wir die NDA.",
           result: "Umfang und Festpreis stehen schriftlich fest.",
           meta: "kostenlos, vor der Analyse",
@@ -186,7 +186,7 @@ const de: PageDef = {
         {
           h: "Schulungsempfehlung",
           items: [
-            "KI-Kompetenz Basis für das Team im Mieterservice, halber Tag, online: Regeln für KI-Werkzeuge, Datenschutz bei Mieterdaten, Umgang mit Antwortentwürfen. Der KI-Check wird bei Buchung innerhalb von 60 Tagen voll angerechnet.",
+            `KI-Kompetenz Basis für das Team im Mieterservice, halber Tag, online: Regeln für KI-Werkzeuge, Datenschutz bei Mieterdaten, Umgang mit Antwortentwürfen. Zum KI-Check: ${CHECK.de.credit}`,
           ],
         },
       ],
@@ -227,7 +227,7 @@ const de: PageDef = {
         {
           h: "Ihr Team schulen",
           tag: "Weg 1",
-          p: "Sie buchen die empfohlene Schulung: online, live in Ihrem Microsoft Teams, pro Team. Innerhalb von 60 Tagen rechnen wir den KI-Check voll an.",
+          p: `Sie buchen die empfohlene Schulung: online, live in Ihrem Microsoft Teams, pro Team. ${CHECK.de.credit}`,
           href: { label: "Zu den KI-Schulungen", to: "schulungen" },
         },
         {
@@ -279,7 +279,7 @@ const de: PageDef = {
       },
       {
         q: "Wann können wir sprechen?",
-        a: "Das Vorgespräch und die Besprechung des Berichts finden per Video statt, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Alles andere klären wir per E-Mail.",
+        a: "Das Kennenlernen und die Besprechung des Berichts finden per Video statt, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Alles andere klären wir per E-Mail.",
       },
     ],
   },
@@ -306,7 +306,7 @@ const en: PageDef = {
   meta: {
     title: "AI check for €990 net: analyse first, then train",
     description:
-      "The written AI check shows where AI makes sense in your daily work: a questionnaire, then a report with three ideas, risks and a training recommendation. €990.",
+      "The written AI check shows where AI makes sense in your work: a questionnaire, then a report with three ideas, risks and a training recommendation. €990 net.",
   },
   crumbs: ["beratung"],
   crumb: "AI check",
@@ -474,7 +474,7 @@ const en: PageDef = {
         {
           h: "Training recommendation",
           items: [
-            "AI literacy basics for the tenant-service team, half day, online: rules for AI tools, data protection with tenant data, handling draft replies. The AI check is credited in full when booked within 60 days.",
+            `AI literacy basics for the tenant-service team, half day, online: rules for AI tools, data protection with tenant data, handling draft replies. On the AI check: ${CHECK.en.credit}`,
           ],
         },
       ],
@@ -515,7 +515,7 @@ const en: PageDef = {
         {
           h: "Train your team",
           tag: "Way 1",
-          p: "You book the recommended course: online, live in your Microsoft Teams, per team. Within 60 days we credit the AI check in full.",
+          p: `You book the recommended course: online, live in your Microsoft Teams, per team. ${CHECK.en.credit}`,
           href: { label: "To the AI training", to: "schulungen" },
         },
         {
@@ -594,7 +594,7 @@ const tr: PageDef = {
   meta: {
     title: "YZ Kontrolü 990 € (net): önce analiz, sonra eğitim",
     description:
-      "Yazılı YZ Kontrolü, günlük işinizde YZ'nin nerede anlamlı olduğunu gösterir: soru formu, ardından üç fikir, riskler ve eğitim önerisi içeren rapor. 990 €.",
+      "Yazılı YZ Kontrolü, işinizde YZ'nin nerede anlamlı olduğunu gösterir: soru formu, ardından üç fikir, riskler ve eğitim önerisi içeren rapor. 990 € (net).",
   },
   crumbs: ["beratung"],
   crumb: "YZ Kontrolü",
@@ -762,7 +762,7 @@ const tr: PageDef = {
         {
           h: "Eğitim önerisi",
           items: [
-            "Kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi: YZ araçları için kurallar, kiracı verilerinde veri koruma, yanıt taslaklarıyla çalışma. 60 gün içinde rezervasyonda YZ Kontrolü tamamen mahsup edilir.",
+            `Kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi: YZ araçları için kurallar, kiracı verilerinde veri koruma, yanıt taslaklarıyla çalışma. YZ Kontrolü: ${CHECK.tr.credit}`,
           ],
         },
       ],
@@ -803,7 +803,7 @@ const tr: PageDef = {
         {
           h: "Ekibinizi eğittirin",
           tag: "Yol 1",
-          p: "Önerilen eğitimi rezerve edersiniz: çevrimiçi, kendi Microsoft Teams'inizde canlı, ekip başına. 60 gün içinde YZ Kontrolü'nü tamamen mahsup ederiz.",
+          p: `Önerilen eğitimi rezerve edersiniz: çevrimiçi, kendi Microsoft Teams'inizde canlı, ekip başına. ${CHECK.tr.credit}`,
           href: { label: "YZ eğitimlerine gidin", to: "schulungen" },
         },
         {

@@ -119,8 +119,12 @@ export type CoreBlock =
       t: "steps";
       variant?: "run";
       etikett?: string;
-      /** `art.crop`: a decorative crop of a labelled sample; `art.draw: "flow"`: the course's own drawn four-node flow. */
-      items: { h: string; p: string; art?: { crop?: Img; draw?: "flow"; label: string; h: string; p: string } }[];
+      /**
+       * `art.crop`: a decorative crop of a labelled sample; `art.draw`: a crop drawn in SVG instead (design review R3):
+       * "katalog" = the catalog cut on one course row (`lines`: column head, then the course name in up to two lines),
+       * "angebot" = a sample offer sheet (`lines`: its title).
+       */
+      items: { h: string; p: string; art?: { crop?: Img; draw?: "katalog" | "angebot"; lines?: string[]; label: string; h: string; p: string } }[];
     })
   /** One task before and after (an example, labelled by `tag`). */
   | (SectionBase & { t: "compare"; tag?: string; before: { h: string; items: string[] }; after: { h: string; items: string[] } })
@@ -276,6 +280,8 @@ export type HeroObject = { etikett: string; ariaLabel: string; phone?: boolean }
   | { kind: "zeitplan"; title: string; sub: string; stamp: string; art: Extract<CourseArt, { kind: "zeitplan" }> }
   | { kind: "bloecke"; title: string; sub: string; stamp: string; art: Extract<CourseArt, { kind: "bloecke" }> }
   | { kind: "way"; labels: [string, string, string, string]; base: string }
+  /** The KI-Agenten course's four-node flow on a sheet, with one filled row (what happens at each node) under it. */
+  | { kind: "flow"; title: string; sub: string; stamp: string; labels: [string, string, string, string]; row: [string, string, string, string] }
 );
 
 export type PageDef = {

@@ -329,6 +329,11 @@ html[data-v4] .wk-facts-dl dd { font-weight: 540; }
   /* auto hyphenation only for words of 10+ letters: "assistant" moves to the next line instead of "as-sistant" */
   html[data-v4] .wk-d1,
   html[data-v4] .wk-d2 { font-stretch: 108%; hyphens: auto; hyphenate-limit-chars: 10 4 4; }
+  /* design review R3: section h2s and every h3 break only at spaces, hard hyphens and their soft hyphens (soft() stems,
+     &shy;): auto hyphenation set "Bewer-/bungsdaten" and "praxis-/nah?". npm run audit:headings guards h1/h2 fit. */
+  html[data-v4] .wk-d2,
+  html[data-v4] .v7 h2,
+  html[data-v4] .v7 h3 { hyphens: manual; }
   html[data-v4] .wk-d1 { font-size: 2.75rem; }
   html[data-v4] .wk-d2 { font-size: 1.75rem; }
   html[data-v4] .wk-h3 { font-size: 1.3125rem; }

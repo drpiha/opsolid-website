@@ -3,6 +3,7 @@
  * key parity. Published price: ab 2.900 EUR netto (1 day, 10 included, each additional 150 EUR, up to 12). Data-protection wording stays neutral
  * ("nach Angaben von Microsoft"), no guarantees, no legal advice.
  */
+import { SITE_STR } from "../site";
 import type { PageDef, PageSet } from "../types";
 import { page as hub } from "./schulungen";
 import { kursBlatt } from "../hero-objects";
@@ -32,13 +33,14 @@ const de: PageDef = {
       label: "Eckdaten",
       h: "Was der Praxistag umfasst",
       rows: [
-        ["Preis", "Ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen), zzgl. USt., nur für Unternehmen. Den Preis für Ihren Umfang nennen wir vorab."],
+        ["Preis", "Ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen). Den Preis für Ihren Umfang nennen wir vorab."],
         ["Umfang", "1 Tag (6 Stunden inklusive Pausen, auf Wunsch an zwei halben Tagen), 10 Personen inklusive, bis zu 12 Personen"],
         ["Voraussetzung", "Microsoft 365 Copilot-Lizenz und Microsoft-365-Anmeldung für jede teilnehmende Person"],
-        ["Durchführung", "Online live auf Deutsch oder Englisch, per Microsoft Teams oder Zoom; geschlossener Termin für Ihr Team nach Vereinbarung"],
+        ["Durchführung", "Live in Ihrem eigenen Microsoft Teams, auf Wunsch per Zoom. Keine Aufzeichnung, kein Selbstlernkurs. Ein geschlossener Termin nur für Ihr Team, auf Deutsch oder Englisch."],
         ["Leitung", "Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich."],
         ["Nachweis", "Teilnahmebescheinigung von OpSolid"],
       ],
+      footnote: SITE_STR.de.priceNote,
     },
     {
       t: "situations",
@@ -209,13 +211,14 @@ const en: PageDef = {
       label: "Key facts",
       h: "What the workshop covers",
       rows: [
-        ["Price", "From €2,900 net per team, 10 people included, each additional person €150 (up to 12), plus VAT, businesses only. We name the price for your scope up front."],
+        ["Price", "From €2,900 net per team, 10 people included, each additional person €150 (up to 12). We name the price for your scope up front."],
         ["Scope", "1 day (6 hours including breaks, on request split over two half days), 10 people included, up to 12 people"],
         ["Prerequisite", "A Microsoft 365 Copilot licence and a Microsoft 365 sign-in for every participant"],
-        ["Delivery", "Live online in English or German, via Microsoft Teams or Zoom; a closed session for your team, by agreement"],
+        ["Delivery", "Live in your own Microsoft Teams, via Zoom if you prefer. No recording, no self-paced course. A closed session for your team only, in English or German."],
         ["Led by", "We name the trainer to you before you book."],
         ["Proof", "Participation record from OpSolid"],
       ],
+      footnote: SITE_STR.en.priceNote,
     },
     {
       t: "situations",
@@ -386,13 +389,14 @@ const tr: PageDef = {
       label: "Temel bilgiler",
       h: "Uygulama günü neleri kapsar?",
       rows: [
-        ["Fiyat", "Ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi), KDV hariç; yalnızca işletmeler için. Kapsamınıza göre fiyatı önceden bildiririz."],
+        ["Fiyat", "Ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi). Kapsamınıza göre fiyatı önceden bildiririz."],
         ["Kapsam", "1 gün (molalar dahil 6 saat; isterseniz iki yarım güne bölünür), 10 kişi dahil, en fazla 12 kişi"],
         ["Ön koşul", "Her katılımcı için Microsoft 365 Copilot lisansı ve Microsoft 365 girişi"],
-        ["Uygulama", "Almanca veya İngilizce canlı çevrimiçi; anlaşmaya göre Microsoft Teams veya Zoom; ekibinize özel kapalı oturum"],
+        ["Uygulama", "Kendi Microsoft Teams'inizde canlı; isterseniz Zoom ile. Kayıt yok, kendi kendine öğrenme kursu yok. Yalnızca ekibinize özel kapalı bir oturum, Almanca veya İngilizce."],
         ["Yürüten", "Eğitmeni rezervasyondan önce size adıyla bildiririz."],
         ["Belge", "OpSolid katılım belgesi"],
       ],
+      footnote: SITE_STR.tr.priceNote,
     },
     {
       t: "situations",

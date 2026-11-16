@@ -1,4 +1,5 @@
 import type { HeroObject as Obj } from "@/content/v7/types";
+import { Flow } from "../figures/Flow";
 import { Etikett } from "../werkstatt/Etikett";
 import { MiniBlatt } from "../werkstatt/MiniBlatt";
 import { Stamp } from "../werkstatt/Stamp";
@@ -78,6 +79,24 @@ function Piece({ o }: { o: Obj }) {
           <div aria-hidden="true">
             <Head title={o.title} sub={o.sub} stamp={o.stamp} />
             {o.kind === "zeitplan" ? <Zeitplan art={o.art} /> : <BloeckeGrid art={o.art} />}
+          </div>
+        </div>
+      );
+    case "flow":
+      // The labels are given, so Flow's locale (its default labels) is not used.
+      return (
+        <div role="img" aria-label={o.ariaLabel} className="wk-blatt wk-hero-flow">
+          <div aria-hidden="true">
+            <Head title={o.title} sub={o.sub} stamp={o.stamp} />
+            <Flow alt="" locale="de" labels={o.labels} />
+            <ol className="wk-hero-flow-row">
+              {o.row.map((r, i) => (
+                <li key={o.labels[i]}>
+                  <span className="wk-hero-flow-k">{o.labels[i]}</span>
+                  {r}
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       );

@@ -2,6 +2,7 @@ import { content as de } from "@/content/de";
 import { content as en } from "@/content/en";
 import { content as tr } from "@/content/tr";
 import { getReadMinutes } from "@/content/blog";
+import { PILLAR } from "@/content/v7/menu";
 import { LABEL, SITE_STR } from "@/content/v7/site";
 import type { Cta, Href } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
@@ -32,8 +33,8 @@ export const BLOG_T: Record<
     min: string;
     more: Href;
     cat: Record<string, string>;
-    /** Etikett of the hero sheet with the three newest titles (design review R2). */
-    neu: string;
+    /** The hero sheet (design review R3): its Etikett, title and sub line; one row per topic with its newest date. */
+    themen: { etikett: string; title: string; sub: string };
     /** CTA under posts outside the "training" category (the list page itself ends with the training CTA). */
     cta: Cta;
     /** Posts in the "training" category, and the list page, end with a link to the training hub and the training CTA. */
@@ -52,7 +53,7 @@ export const BLOG_T: Record<
     min: "Min.",
     more: { label: "Zu den KI-Schulungen", to: "schulungen" },
     cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb", training: "Schulung" },
-    neu: "Neu im Journal",
+    themen: { etikett: "Übersicht · Themen im Journal", title: "Themen", sub: "Neuester Beitrag je Thema" },
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
@@ -83,7 +84,7 @@ export const BLOG_T: Record<
     min: "min",
     more: { label: "To AI training", to: "schulungen" },
     cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations", training: "Training" },
-    neu: "New in the journal",
+    themen: { etikett: "Overview · topics in the journal", title: "Topics", sub: "Newest entry per topic" },
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
@@ -114,7 +115,7 @@ export const BLOG_T: Record<
     min: "dk",
     more: { label: "YZ eğitimlerine", to: "schulungen" },
     cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "İşletme", training: "Eğitim" },
-    neu: "Notlar'da yeni",
+    themen: { etikett: "Genel bakış · Notlar'daki konular", title: "Konular", sub: "Her konuda en yeni yazı" },
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
@@ -144,12 +145,15 @@ export function fmtDate(d: string, locale: L3): string {
 export function BlogList({ locale }: { locale: L3 }) {
   const t = BLOG_T[locale];
   const posts = [...BLOG[locale].posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+  // one row per category, in the order of its newest post (posts are sorted newest first)
+  const topics = posts.filter((p, i) => posts.findIndex((q) => q.category === p.category) === i);
   const crumbs: Crumb[] = [
     { name: LABEL[locale].home, path: href("home", locale), key: "home" },
     { name: LABEL[locale].blog, path: href("blog", locale), key: "blog" },
   ];
   return (
-    <div className="v7">
+    // data-door: the Journal sits under Unternehmen (decision 77: ink marks)
+    <div className="v7" data-door={PILLAR.blog}>
       <PlainHero
         eyebrow={t.eyebrow}
         h1={`${t.h1[0]} ${t.h1[1]}`}
@@ -157,12 +161,13 @@ export function BlogList({ locale }: { locale: L3 }) {
         crumbs={crumbs}
         locale={locale}
         aside={
-          // The three newest real titles on a sheet (design review R2); decorative, hidden on phones (the list follows).
+          // The topics of the journal with the date of their newest post (design review R3: the titles themselves start
+          // right below); real data only, decorative, hidden on phones (the list follows).
           <HeroObject
             o={liste(
-              t.neu,
-              { title: t.frame, sub: t.frameNote, stamp: t.eyebrow },
-              posts.slice(0, 3).map((p) => ({ text: p.title, note: `${fmtDate(p.date, locale)} · ${t.cat[p.category] ?? p.category}` })),
+              t.themen.etikett,
+              { title: t.themen.title, sub: t.themen.sub, stamp: t.eyebrow },
+              topics.map((c) => ({ text: t.cat[c.category] ?? c.category, note: fmtDate(c.date, locale) })),
               { phone: false },
             )}
           />

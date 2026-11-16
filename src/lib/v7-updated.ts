@@ -14,6 +14,8 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // prozess without "geprüft".
   // 2026-11-16 (design review R2): Produkte names Kutasia only in the hero index (no section); the KI-Agenten course page
   // has its own Ablauf and answers the price question for this course only.
+  // 2026-11-16 (R3): KI-Kompetenz and Copilot spec groups with the price note and the live format sentence; the
+  // KI-Check page uses the credit sentence verbatim and "Kennenlernen".
   produkte: "2026-11-16",
   workflows: "2026-11-16",
   // 2026-11-09: OpSo Android app public on Google Play (EU/EEA, Switzerland, UK), links and status updated; before that
@@ -27,13 +29,13 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // About and Contact lead with training, the hero says "live an Ihren Aufgaben" instead of "in Ihrem Teams".
   home: "2026-11-15",
   schulungen: "2026-11-15",
-  check: "2026-11-15",
+  check: "2026-11-16",
   beratung: "2026-11-15",
   ueber: "2026-11-15",
   kontakt: "2026-11-15",
   // 2026-11-06: per-person arithmetic in the price answers and the hours of a half day and a day
-  kompetenz: "2026-11-06",
-  copilot: "2026-11-15",
+  kompetenz: "2026-11-16",
+  copilot: "2026-11-16",
   // 2026-11-04: written, meeting-free KI-Check at a fixed 990 € (questionnaire, report, optional evening call)
   prozess: "2026-11-15",
   m365: "2026-11-04",

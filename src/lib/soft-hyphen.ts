@@ -5,7 +5,7 @@
  * `npm run audit:headings` fails if any h1/h2 still needs a mid-word break.
  */
 const STEMS =
-  /(automatisierung|potenzial|vereinbarung|verordnung|kompetenz|kommunikation|integration|unternehmen|dokumentation|schulung|beratung|steuerung|werkzeug|anbindung|plattform|einführung|sicherheit|architektur|angebot|projekt|lösung|entwicklung|verbindung|datenschutz|anwendung|analyse|bewertung|verwaltung|abrechnung|beschaffung|software|grundlage|prozess|geschäft)/gi;
+  /(automatisierung|potenzial|vereinbarung|verordnung|kompetenz|kommunikation|integration|unternehmen|dokumentation|schulung|beratung|steuerung|werkzeug|anbindung|plattform|einführung|sicherheit|architektur|angebot|projekt|lösung|entwicklung|verbindung|datenschutz|anwendung|analyse|bewertung|verwaltung|abrechnung|beschaffung|software|grundlage|prozess|geschäft|bescheinigung|daten)/gi;
 
 export function soft(text: string): string {
   return text.replace(/[A-Za-zÄÖÜäöüßÇçĞğİıŞş]{12,}/g, (word) =>

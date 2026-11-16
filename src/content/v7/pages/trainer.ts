@@ -17,7 +17,7 @@ const de: PageDef = {
     description:
       "OpSolid sucht freiberufliche KI-Trainerinnen und -Trainer für Online-Schulungen auf Deutsch und Englisch. Auswahl im Gespräch, Rahmenvertrag, freie Methodik.",
   },
-  crumbs: ["schulungen"],
+  crumbs: [],
   crumb: "Trainer werden",
   hero: {
     eyebrow: "Trainer werden · freiberuflich · online",
@@ -170,7 +170,7 @@ const en: PageDef = {
     description:
       "OpSolid is looking for freelance AI trainers for online courses in English and German. Selection by conversation, framework contract, freedom in method.",
   },
-  crumbs: ["schulungen"],
+  crumbs: [],
   crumb: "Become a trainer",
   hero: {
     eyebrow: "Become a trainer · freelance · online",
@@ -322,7 +322,7 @@ const tr: PageDef = {
     description:
       "OpSolid, Almanca ve İngilizce çevrimiçi eğitimler için serbest çalışan YZ eğitmenleri arıyor. Görüşmeyle seçim, çerçeve sözleşme, yöntemde özgürlük.",
   },
-  crumbs: ["schulungen"],
+  crumbs: [],
   crumb: "Eğitmen olun",
   hero: {
     eyebrow: "Eğitmen olun · serbest çalışan · çevrimiçi",
@@ -400,7 +400,7 @@ const tr: PageDef = {
       id: "ablauf",
       label: "Süreç",
       note: "Beş adım.",
-      h: "Profilinizden ilk tarihe",
+      h: "Profilinizden ilk eğitime",
       lede: "Her adımdan sonra birlikte devam edip etmeyeceğimize karar veririz.",
       items: [
         { h: "Kısa profil", p: "Bize kısa bir profil gönderirsiniz: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },

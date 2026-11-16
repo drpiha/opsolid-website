@@ -124,6 +124,30 @@ export function firstSentence(text: string): string {
   return m ? m[0] : text;
 }
 
+/**
+ * The KI-Agenten course's four-node flow on a sheet (design review R3): the page's own flow labels, one filled row
+ * under the nodes (each a verbatim part of the flow's live description, `media.alt`), the course name as the title and
+ * a part of the lede as the sub line. The page keeps its `media` as data; the object takes precedence in the hero.
+ */
+export function ablauf(d: PageDef, stamp: string, sub: string, row: [string, string, string, string]): HeroObject {
+  const m = d.hero.media;
+  if (!m || m.kind !== "svg" || m.name !== "flow" || !m.labels || m.labels.length !== 4) throw new Error(`hero object: no four-node flow on ${d.key}`);
+  const labels = m.labels as [string, string, string, string];
+  const etikett = m.caption ?? "Schema";
+  const title = d.hero.h1[0].replace(/:\s*$/, "");
+  const cells = row.map((r) => frag(m.alt, r)) as [string, string, string, string];
+  return {
+    kind: "flow",
+    etikett,
+    title,
+    sub: frag(d.hero.lede, sub),
+    stamp,
+    labels,
+    row: cells,
+    ariaLabel: aria(etikett, [title, sub, ...labels.map((l, i) => `${l}: ${cells[i]}`)]),
+  };
+}
+
 /** A hub catalog piece (Zeitplan or six blocks) on a sheet of its own, under the course name and duration. */
 export function kursBlatt(art: CourseArt, title: string, sub: string, stamp: string, etikett?: string): HeroObject {
   if (art.kind === "zeitplan") {

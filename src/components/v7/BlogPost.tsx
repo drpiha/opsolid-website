@@ -1,4 +1,5 @@
 import { getPostContent, getReadMinutes } from "@/content/blog";
+import { PILLAR } from "@/content/v7/menu";
 import { LABEL } from "@/content/v7/site";
 import { SITE_CONFIG } from "@/lib/constants";
 import { shareImage } from "@/lib/seo-v7";
@@ -82,7 +83,8 @@ export function BlogPost({ locale, slug }: { locale: L3; slug: string }) {
   const mins = getReadMinutes(slug, locale);
   const end = post.category === "training" ? t.training : t;
   return (
-    <div className="v7">
+    // data-door: the Journal sits under Unternehmen (decision 77: ink marks)
+    <div className="v7" data-door={PILLAR.blog}>
       <PlainHero
         small
         crumbs={crumbs}

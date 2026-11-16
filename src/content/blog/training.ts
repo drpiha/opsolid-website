@@ -37,7 +37,7 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <li><strong>Dauer:</strong> Ein halber Tag Grundlagen kostet weniger als ein ganzer Praxistag oder eine zweitägige Schulung, in der Ihr Team eigene Workflows aufbaut.</li>
 <li><strong>Gruppengröße:</strong> Bei Teampreisen ist eine bestimmte Zahl an Plätzen enthalten, darüber zahlen Sie pro Person. Achten Sie auch auf die Höchstzahl: Wer übt, braucht Zeit für Fragen.</li>
 <li><strong>Inhalt:</strong> Grundlagen für alle Beschäftigten sind anders aufgebaut als eine Schulung zu einem Werkzeug wie Microsoft 365 Copilot.</li>
-<li><strong>Vorbereitung:</strong> Übungen mit Aufgaben aus Ihrem Alltag brauchen ein Vorgespräch und Vorbereitung. Ein Standardkurs braucht beides nicht.</li>
+<li><strong>Vorbereitung:</strong> Übungen mit Aufgaben aus Ihrem Alltag brauchen eine Abstimmung vorab und Vorbereitung. Ein Standardkurs braucht beides nicht.</li>
 <li><strong>Format:</strong> Online live oder als Aufzeichnung. Live-Termine lassen Raum für Fragen, eine Aufzeichnung nicht.</li>
 </ul>
 

@@ -358,9 +358,9 @@ const tr: PageDef = {
 
 /* R2: the hero object, the live "Was nach Ihrer Nachricht passiert" steps as a schema sheet (verbatim notes). */
 const KONTAKT_NOTES: Record<"de" | "en" | "tr", [string, string, string]> = {
-  de: ["Vieles klären wir schon schriftlich.", "15 bis 30 Minuten per Video", "Angebot pro Team"],
-  en: ["Much of it we settle in writing.", "15 to 30-minute video call", "a quote per team"],
-  tr: ["Çoğu konuyu yazılı olarak netleştiririz.", "15-30 dakikalık görüntülü görüşme", "ekip başına bir teklif"],
+  de: ["Vieles klären wir schon schriftlich.", "15 bis 30 Minuten per Video", "Die NDA unterzeichnen wir vor der Analyse."],
+  en: ["Much of it we settle in writing.", "15 to 30-minute video call", "We sign the NDA before the analysis."],
+  tr: ["Çoğu konuyu yazılı olarak netleştiririz.", "15-30 dakikalık görüntülü görüşme", "NDA'yı analizden önce imzalarız."],
 };
 for (const [loc, d, etikett, stamp] of [
   ["de", de, "Schema · nach Ihrer Anfrage", "Schema"],

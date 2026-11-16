@@ -9,6 +9,7 @@
  * Team, live online, Deutsch oder Englisch, agenda agreed with the team beforehand. No hours, no topic list and no
  * per-person figure (rule 1). German is the source; EN and TR are transcreations.
  */
+import { ablauf } from "../hero-objects";
 import { SITE_STR } from "../site";
 import { page as hub } from "./schulungen";
 import type { Block, L3, PageDef, PageSet } from "../types";
@@ -19,7 +20,8 @@ const crop = (n: string) => ({ src: `${CROP}/crop-${n}.webp`, w: 288, h: 224, al
 /**
  * The Ablauf of this course (design review R2): not the hub's run, which shows the KI-Kompetenz agenda. Four steps from
  * the live facts of this page (agenda agreed with the team beforehand, two days live in Microsoft Teams, the
- * Teilnahmebescheinigung); the second step shows the course's own drawn flow instead of an agenda crop.
+ * Teilnahmebescheinigung). Design review R3: the first step shows the catalog cut on this course (drawn), the second a
+ * drawn sample offer; the four-node flow stays in the hero only.
  */
 const RUN: Record<L3, Block> = {
   de: {
@@ -30,17 +32,17 @@ const RUN: Record<L3, Block> = {
     h: "Von der Anfrage zu den zwei Tagen",
     lede: "Die Agenda der zwei Tage stimmen wir vorab mit Ihrem Team ab.",
     ground: "bench",
-    etikett: "Ausschnitte · Preisliste, zwei Schemas, Muster-Bescheinigung",
+    etikett: "Ausschnitte · Katalog, Muster-Angebot, Schema, Muster-Bescheinigung",
     items: [
       {
         h: "Anfrage",
         p: "Sie schildern uns per Formular Team, Abläufe und Sprache. Drei Sätze genügen.",
-        art: { crop: crop("katalog"), label: "Sie erhalten", h: "Unsere Empfehlung", p: "Wir empfehlen die passende Schulung und nennen den Preis pro Team." },
+        art: { draw: "katalog", lines: ["Schulung", "KI-Agenten & Workflow-", "Automatisierung"], label: "Sie erhalten", h: "Unsere Empfehlung", p: "Wir empfehlen die passende Schulung und nennen den Preis pro Team." },
       },
       {
         h: "Agenda abstimmen",
         p: "Die Agenda der zwei Tage stimmen wir vorab mit Ihrem Team ab, an Abläufen aus Ihrem Alltag. Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich.",
-        art: { draw: "flow", label: "Sie erhalten", h: "Schriftliches Angebot", p: "Ein schriftliches Angebot pro Team. Vertrag und Rechnung laufen über OpSolid." },
+        art: { draw: "angebot", lines: ["Angebot"], label: "Sie erhalten", h: "Schriftliches Angebot", p: "Ein schriftliches Angebot pro Team. Vertrag und Rechnung laufen über OpSolid." },
       },
       {
         h: "Zwei Tage live",
@@ -62,17 +64,17 @@ const RUN: Record<L3, Block> = {
     h: "From enquiry to the two days",
     lede: "We agree the agenda for the two days with your team beforehand.",
     ground: "bench",
-    etikett: "Cut-outs · price list, two schemas, sample record",
+    etikett: "Cut-outs · catalogue, sample offer, schema, sample record",
     items: [
       {
         h: "Enquiry",
         p: "Tell us via the form about your team, workflows and language. Three sentences are enough.",
-        art: { crop: crop("katalog"), label: "You receive", h: "Our recommendation", p: "We recommend the right course and name the price per team." },
+        art: { draw: "katalog", lines: ["Course", "AI agents & workflow", "automation"], label: "You receive", h: "Our recommendation", p: "We recommend the right course and name the price per team." },
       },
       {
         h: "Agree the agenda",
         p: "We agree the agenda for the two days with your team beforehand, based on workflows from your daily work. We name the trainer to you before you book.",
-        art: { draw: "flow", label: "You receive", h: "Written offer", p: "A written offer per team. Contract and invoice run through OpSolid." },
+        art: { draw: "angebot", lines: ["Offer"], label: "You receive", h: "Written offer", p: "A written offer per team. Contract and invoice run through OpSolid." },
       },
       {
         h: "Two days live",
@@ -94,17 +96,17 @@ const RUN: Record<L3, Block> = {
     h: "Talepten iki güne",
     lede: "İki günün programını ekibinizle önceden birlikte belirleriz.",
     ground: "bench",
-    etikett: "Kesitler · fiyat listesi, iki şema, örnek belge",
+    etikett: "Kesitler · katalog, örnek teklif, şema, örnek belge",
     items: [
       {
         h: "Talep",
         p: "Formla ekibinizi, iş akışlarınızı ve dili anlatırsınız. Üç cümle yeter.",
-        art: { crop: crop("katalog"), label: "Alacağınız", h: "Önerimiz", p: "Size uygun eğitimi önerir ve ekip başına fiyatı bildiririz." },
+        art: { draw: "katalog", lines: ["Eğitim", "YZ Ajanları ve İş Akışı", "Otomasyonu"], label: "Alacağınız", h: "Önerimiz", p: "Size uygun eğitimi önerir ve ekip başına fiyatı bildiririz." },
       },
       {
         h: "Programı belirleme",
         p: "İki günün programını, günlük işinizden iş akışlarıyla ekibinizle önceden birlikte belirleriz. Eğitmeni rezervasyondan önce size adıyla bildiririz.",
-        art: { draw: "flow", label: "Alacağınız", h: "Yazılı teklif", p: "Ekip başına yazılı bir teklif. Sözleşme ve fatura OpSolid üzerinden yürür." },
+        art: { draw: "angebot", lines: ["Teklif"], label: "Alacağınız", h: "Yazılı teklif", p: "Ekip başına yazılı bir teklif. Sözleşme ve fatura OpSolid üzerinden yürür." },
       },
       {
         h: "İki gün canlı",
@@ -414,5 +416,10 @@ const tr: PageDef = {
     ],
   },
 };
+
+/* R3: the hero object, the page's own four-node flow on a sheet with one filled row from the flow's live description. */
+de.hero.object = ablauf(de, "Beispiel", "geübt an Abläufen aus Ihrem Alltag", ["Anfrage geht ein", "sortiert und entwirft", "prüft und gibt frei", "Ergebnis wird abgelegt"]);
+en.hero.object = ablauf(en, "Example", "practised on processes from your daily work", ["request comes in", "sorts it and drafts a reply", "checks and approves", "result is filed"]);
+tr.hero.object = ablauf(tr, "Örnek", "günlük işinizdeki süreçler üzerinde uygulamalı", ["bir talep gelir", "sınıflandırır ve bir taslak hazırlar", "kontrol edip onaylar", "sonuç arşivlenir"]);
 
 export const page: PageSet = { de, en, tr };
