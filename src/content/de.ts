@@ -121,7 +121,7 @@ export const content: Content = {
         title: "Was kostet eine KI-Schulung oder Copilot-Schulung für Ihr Team?",
         seoTitle: "Was kostet eine KI- oder Copilot-Schulung?",
         excerpt:
-          "Was eine KI-Schulung für Mitarbeiter kostet: Preis pro Person oder Team, wovon der Betrag abhängt und was unsere Schulungen ab 1.790 € netto pro Team kosten.",
+          "Was eine KI-Schulung für Mitarbeiter kostet: Preis pro Person oder pro Team, wovon der Betrag abhängt und wie wir unsere Schulungen pro Team berechnen.",
         category: "training",
         date: "2026-11-14",
         // 2026-11-15: format and price-model wording without on-site training or "Festpreis" (site rules 1 and 2)

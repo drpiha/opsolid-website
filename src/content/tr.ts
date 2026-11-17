@@ -118,7 +118,7 @@ export const content: Content = {
         title: "Ekibiniz için yapay zeka veya Copilot eğitimi ne kadar tutar?",
         seoTitle: "Yapay zeka veya Copilot eğitimi ne kadar tutar?",
         excerpt:
-          "Çalışanlar için yapay zeka eğitiminin maliyeti: kişi başı ya da ekip başı fiyat, tutarı neyin belirlediği ve 1.790 €'dan (net) başlayan ekip fiyatlarımız.",
+          "Çalışanlar için yapay zeka eğitiminin maliyeti: kişi ya da ekip başına fiyat, tutarı neyin belirlediği ve eğitimlerimizi ekip başına nasıl fiyatlandırdığımız.",
         category: "training",
         date: "2026-11-14",
         // 2026-11-15: format and price-model wording without on-site training or "Festpreis" (site rules 1 and 2)

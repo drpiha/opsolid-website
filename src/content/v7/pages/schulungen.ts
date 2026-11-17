@@ -116,7 +116,7 @@ const de: PageDef = {
   meta: {
     title: "KI-Schulungen für Mitarbeiter: live, pro Team",
     description:
-      "KI-Schulungen für Mitarbeitende, live in Microsoft Teams: KI-Kompetenz Basis ab 1.790 €, Copilot-Praxistag ab 2.900 € netto pro Team. Mit Bescheinigung.",
+      "KI-Schulungen für Mitarbeitende, live in Microsoft Teams: KI-Kompetenz Basis, Copilot-Praxistag und KI-Agenten. Preis pro Team, mit Teilnahmebescheinigung.",
   },  crumbs: [],
   crumb: "KI-Schulungen",
   hero: {
@@ -388,7 +388,7 @@ const en: PageDef = {
   meta: {
     title: "AI training for teams: live online, priced per team",
     description:
-      "AI training for your team, live in your Microsoft Teams: AI literacy basics from €1,790, Copilot workshop from €2,900 net per team. With a participation record.",
+      "AI training for your team, live in your Microsoft Teams: AI literacy basics, Copilot workshop and AI agents. One price per team, with a participation record.",
   },  crumbs: [],
   crumb: "AI training",
   hero: {
@@ -660,7 +660,7 @@ const tr: PageDef = {
   meta: {
     title: "YZ eğitimleri: Microsoft Teams'te canlı, ekip başına",
     description:
-      "Microsoft Teams'te canlı YZ eğitimleri: Temel 1.790 €'dan, Copilot Uygulama Günü 2.900 €'dan itibaren, ekip başına (net). Katılım belgesiyle.",
+      "Ekibiniz için Microsoft Teams'te canlı YZ eğitimleri: YZ Yetkinliği Temel, Copilot Uygulama Günü ve YZ Ajanları. Ekip başına fiyat, katılım belgesiyle.",
   },  crumbs: [],
   crumb: "YZ eğitimleri",
   hero: {

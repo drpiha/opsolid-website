@@ -66,7 +66,7 @@ const de: PageDef = {
   meta: {
     title: "OpSolid: KI-Schulungen, KI-Beratung und eigene Software",
     description:
-      "KI-Schulungen für Ihr Team: online, live in Ihrem Microsoft Teams, pro Team ab 1.790 € netto, mit Teilnahmebescheinigung. Dazu der KI-Check, 990 € netto.",
+      "KI-Schulungen für Ihr Team: online, live in Ihrem Microsoft Teams, mit Teilnahmebescheinigung und Preis pro Team. Dazu der schriftliche KI-Check für Abläufe.",
   },
   crumbs: [],
   crumb: "Start",
@@ -473,7 +473,7 @@ const en: PageDef = {
   meta: {
     title: "OpSolid: AI training, AI consulting and our own software",
     description:
-      "Live online AI training for your team in your own Microsoft Teams, from €1,790 net per team, with a participation record. Plus the AI check, €990 net.",
+      "Live AI training for your team in your own Microsoft Teams, with a participation record and one price per team. Plus the written AI check for your workflows.",
   },
   crumbs: [],
   crumb: "Home",
@@ -880,7 +880,7 @@ const tr: PageDef = {
   meta: {
     title: "OpSolid: YZ eğitimleri, YZ danışmanlığı ve kendi yazılımımız",
     description:
-      "Ekibiniz için kendi Microsoft Teams'inizde canlı YZ eğitimleri, ekip başına 1.790 €'dan itibaren (net), katılım belgesiyle. Ayrıca YZ Kontrolü, 990 € (net).",
+      "Ekibiniz için kendi Microsoft Teams'inizde canlı YZ eğitimleri: katılım belgesiyle, ekip başına tek fiyatla. Ayrıca iş akışlarınız için yazılı YZ Kontrolü.",
   },
   crumbs: [],
   crumb: "Ana sayfa",

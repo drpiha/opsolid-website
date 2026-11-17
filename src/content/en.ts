@@ -121,7 +121,7 @@ export const content = {
         title: "What Does AI Training or Copilot Training Cost for Your Team?",
         seoTitle: "What Does AI or Copilot Training Cost?",
         excerpt:
-          "What AI training for employees costs: price per person or per team, what drives the amount, and what our courses cost, from €1,790 net per team.",
+          "What AI training for employees costs: price per person or per team, what drives the amount, and how we price our live online courses per team.",
         category: "training",
         date: "2026-11-14",
         // 2026-11-15: format and price-model wording without on-site training or "Festpreis" (site rules 1 and 2)

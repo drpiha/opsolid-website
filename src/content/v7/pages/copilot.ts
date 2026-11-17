@@ -14,7 +14,7 @@ const de: PageDef = {
   meta: {
     title: "Microsoft 365 Copilot Schulung für Mitarbeiter",
     description:
-      "Copilot-Schulung für Mitarbeitende: 1 Tag, online live, ab 2.900 € netto pro Team (10 Personen inklusive, bis 12). Copilot in Outlook, Teams, Word, Excel.",
+      "Copilot-Schulung für Mitarbeitende: 1 Tag, online live, Preis pro Team (10 Personen inklusive, bis 12). Copilot in Outlook, Teams, Word, Excel und PowerPoint.",
   },
   crumbs: ["schulungen"],
   crumb: "Copilot-Praxistag",
@@ -192,7 +192,7 @@ const en: PageDef = {
   meta: {
     title: "Microsoft 365 Copilot workshop for teams",
     description:
-      "Microsoft 365 Copilot workshop: 1 day, live online, from €2,900 net per team (10 people included, up to 12). Copilot in Outlook, Teams, Word, Excel, PowerPoint.",
+      "Microsoft 365 Copilot workshop: 1 day, live online, one price per team (10 people included, up to 12). Copilot in Outlook, Teams, Word, Excel, PowerPoint.",
   },
   crumbs: ["schulungen"],
   crumb: "Copilot workshop",
@@ -370,7 +370,7 @@ const tr: PageDef = {
   meta: {
     title: "Microsoft 365 Copilot Uygulama Günü: ekipler için",
     description:
-      "Copilot Uygulama Günü: 1 gün, canlı çevrimiçi, ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil (en fazla 12). Outlook, Teams, Word, Excel, PowerPoint'te.",
+      "Copilot Uygulama Günü: 1 gün, canlı çevrimiçi, ekip başına fiyat, 10 kişi dahil (en fazla 12). Outlook, Teams, Word, Excel ve PowerPoint'te Copilot.",
   },
   crumbs: ["schulungen"],
   crumb: "Copilot Uygulama Günü",

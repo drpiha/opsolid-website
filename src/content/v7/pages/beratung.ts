@@ -13,7 +13,7 @@ const de: PageDef = {
   meta: {
     title: "KI-Beratung und KI-Automatisierung für Unternehmen",
     description:
-      "KI-Beratung, die bei Ihren Abläufen beginnt: KI-Check für 990 € netto, Pilot zum Festpreis, Betrieb nach Vereinbarung. Unabhängig, ohne Lizenzverkauf.",
+      "KI-Beratung, die bei Ihren Abläufen beginnt: schriftlicher KI-Check, Pilot zum Festpreis, Betrieb nach Vereinbarung. Unabhängig, ohne Lizenzverkauf.",
   },
   crumbs: [],
   crumb: "KI-Beratung",
@@ -263,7 +263,7 @@ const en: PageDef = {
   meta: {
     title: "AI automation consulting for companies",
     description:
-      "AI automation consulting that starts with your workflows: AI check for €990 net, pilot at a fixed price, operation by agreement. Independent, no licence sales.",
+      "AI automation consulting that starts with your workflows: a written AI check, a pilot at a fixed price, operation by agreement. Independent, no licence sales.",
   },
   crumbs: [],
   crumb: "AI consulting",
@@ -513,7 +513,7 @@ const tr: PageDef = {
   meta: {
     title: "Şirketler için YZ danışmanlığı ve otomasyon",
     description:
-      "İş akışlarınızdan başlayan yapay zeka danışmanlığı: YZ Kontrolü 990 € (net), sabit fiyatlı pilot, anlaşmaya göre işletme. Bağımsız, lisans satışı yok.",
+      "İş akışlarınızdan başlayan yapay zeka danışmanlığı: yazılı YZ Kontrolü, sabit fiyatlı pilot, anlaşmaya göre işletme. Bağımsız, lisans satışı yok.",
   },
   crumbs: [],
   crumb: "YZ danışmanlığı",

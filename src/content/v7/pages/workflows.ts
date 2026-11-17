@@ -125,7 +125,7 @@ const de: PageDef = {
   meta: {
     title: "KI-Agenten-Schulung: Workflows automatisieren im Team",
     description:
-      "KI-Agenten und Workflows aufbauen: zwei Tage live in Ihrem Microsoft Teams, 8 Personen inklusive, ab 5.900 € netto pro Team, mit Teilnahmebescheinigung.",
+      "KI-Agenten und Workflows aufbauen: zwei Tage live in Ihrem Microsoft Teams, 8 Personen inklusive, ein Preis pro Team, mit Teilnahmebescheinigung.",
   },
   crumbs: ["schulungen"],
   // Short crumb: the three-part trail stays on one line at 360 to 412 px in Plex Mono and in its fallback (no CLS).
@@ -224,7 +224,7 @@ const en: PageDef = {
   meta: {
     title: "AI agents training: automate workflows as a team",
     description:
-      "Build AI agents and workflows: two days live in your own Microsoft Teams, 8 people included, from €5,900 net per team, with a participation record.",
+      "Build AI agents and workflows: two days live in your own Microsoft Teams, 8 people included, one price per team, with a participation record.",
   },
   crumbs: ["schulungen"],
   crumb: "AI agents & workflows",
@@ -322,7 +322,7 @@ const tr: PageDef = {
   meta: {
     title: "YZ ajanları eğitimi: iş akışlarını ekipçe otomatikleştirin",
     description:
-      "YZ ajanları ve iş akışları kurun: kendi Microsoft Teams'inizde iki gün canlı, 8 kişi dahil, ekip başına 5.900 €'dan itibaren (net), katılım belgesiyle.",
+      "YZ ajanları ve iş akışları kurun: kendi Microsoft Teams'inizde iki gün canlı eğitim, 8 kişi dahil, ekip başına tek fiyat, katılım belgesiyle.",
   },
   crumbs: ["schulungen"],
   crumb: "YZ Ajanları ve İş Akışları",
