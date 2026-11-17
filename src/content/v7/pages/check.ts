@@ -16,9 +16,9 @@ import { report } from "../hero-objects";
 const de: PageDef = {
   key: "check",
   meta: {
-    title: "KI-Check für 990 € netto: erst analysieren, dann schulen",
+    title: "Schriftlicher KI-Check: erst analysieren, dann schulen",
     description:
-      "Der schriftliche KI-Check zeigt, wo KI im Alltag sinnvoll ist: Fragebogen, Bericht mit drei Ideen, Risiken, Datenschutz und Schulungsempfehlung. 990 € netto.",
+      "Der schriftliche KI-Check zeigt, wo KI im Alltag sinnvoll ist: Fragebogen, Bericht mit drei Ideen, Risiken, Datenschutz und Schulungsempfehlung. Festpreis.",
   },
   crumbs: ["beratung"],
   crumb: "KI-Check",
@@ -304,9 +304,9 @@ const de: PageDef = {
 const en: PageDef = {
   key: "check",
   meta: {
-    title: "AI check for €990 net: analyse first, then train",
+    title: "Written AI check: analyse first, then train",
     description:
-      "The written AI check shows where AI makes sense in your work: a questionnaire, then a report with three ideas, risks and a training recommendation. €990 net.",
+      "The written AI check shows where AI makes sense in your work: a questionnaire, then a report with three ideas, risks and a training recommendation. Fixed price.",
   },
   crumbs: ["beratung"],
   crumb: "AI check",
@@ -592,9 +592,9 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "check",
   meta: {
-    title: "YZ Kontrolü 990 € (net): önce analiz, sonra eğitim",
+    title: "Yazılı YZ Kontrolü: önce analiz, sonra eğitim",
     description:
-      "Yazılı YZ Kontrolü, işinizde YZ'nin nerede anlamlı olduğunu gösterir: soru formu, ardından üç fikir, riskler ve eğitim önerisi içeren rapor. 990 € (net).",
+      "Yazılı YZ Kontrolü, işinizde YZ'nin nerede anlamlı olduğunu gösterir: soru formu, ardından üç fikir, riskler ve eğitim önerisi içeren rapor. Sabit fiyat.",
   },
   crumbs: ["beratung"],
   crumb: "YZ Kontrolü",

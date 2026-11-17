@@ -11,7 +11,7 @@ const de: PageDef = {
   meta: {
     title: "Prozessautomatisierung: Daten nur einmal erfassen",
     description:
-      "Prozessautomatisierung für Unternehmen: Wir messen den Ablauf, bauen einen Pilot zum Festpreis und übergeben ihn mit Dokumentation. KI-Check für 990 € netto.",
+      "Prozessautomatisierung für Unternehmen: Wir messen den Ablauf, bauen einen Pilot zum Festpreis und übergeben ihn mit Dokumentation. Zuerst kommt der KI-Check.",
   },
   crumbs: ["beratung"],
   crumb: "Prozessautomatisierung",
@@ -218,7 +218,7 @@ const en: PageDef = {
   meta: {
     title: "Process automation: enter your data only once",
     description:
-      "Process automation for companies: we measure the workflow, build a pilot at a fixed price and hand it over with documentation. AI check for €990 net.",
+      "Process automation for companies: we measure the workflow, build a pilot at a fixed price and hand it over with documentation. It starts with the AI check.",
   },
   crumbs: ["beratung"],
   crumb: "Process automation",
@@ -425,7 +425,7 @@ const tr: PageDef = {
   meta: {
     title: "Süreç otomasyonu: veriyi yalnızca bir kez girin",
     description:
-      "Şirketler için süreç otomasyonu: iş akışını ölçer, sabit fiyatlı bir pilot kurar ve dokümantasyonla teslim ederiz. YZ Kontrolü sabit fiyatla 990 € (net).",
+      "Şirketler için süreç otomasyonu: iş akışını ölçer, sabit fiyatlı bir pilot kurar ve dokümantasyonla teslim ederiz. İlk adım yazılı YZ Kontrolü'dür.",
   },
   crumbs: ["beratung"],
   crumb: "Süreç otomasyonu",

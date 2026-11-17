@@ -11,6 +11,10 @@ import { join, relative, sep } from "node:path";
 import test from "node:test";
 import ts from "typescript";
 import * as offersMod from "../../src/content/v7/offers.ts";
+import * as pagesMod from "../../src/content/v7/pages/index.ts";
+import * as deMod from "../../src/content/de.ts";
+import * as enMod from "../../src/content/en.ts";
+import * as trMod from "../../src/content/tr.ts";
 
 const O = ((offersMod as any).PLANNED ? offersMod : (offersMod as any).default) as typeof import("../../src/content/v7/offers.ts");
 
@@ -165,4 +169,21 @@ test("rule 5: NIS2 and GEO courses are not shown", () => {
 
 test("rule 6: no en or em dashes in copy (hyphens only)", () => {
   assert.deepEqual(hits(/[–—]/), []);
+});
+
+// Owner decision 2026-11-17 ("ücretler görünmese iyi olur"): search snippets name no price. Page titles, meta
+// descriptions (also Open Graph and Twitter, which reuse them) and the journal excerpts (a post's meta description)
+// carry no amount; the prices stay on the pages, in the price notes and in the Service/Course offers JSON-LD.
+test("search snippets name no price (titles, meta descriptions, journal excerpts)", () => {
+  const pick = (m: any, k: string) => m[k] ?? m.default?.[k];
+  const AMOUNT = /€|\bEUR\b|\bEuro\b/;
+  const bad: string[] = [];
+  for (const ps of pick(pagesMod, "PAGE_SETS") as any[])
+    for (const l of ["de", "en", "tr"]) {
+      const m = ps[l]?.meta;
+      if (m && AMOUNT.test(m.title + " " + m.description)) bad.push(`${ps[l].key ?? "?"} ${l}`);
+    }
+  for (const [l, mod] of [["de", deMod], ["en", enMod], ["tr", trMod]] as const)
+    for (const post of pick(mod, "content").blog.posts) if (AMOUNT.test(post.excerpt + " " + (post.seoTitle ?? post.title))) bad.push(`blog ${l} ${post.slug}`);
+  assert.deepEqual(bad, []);
 });

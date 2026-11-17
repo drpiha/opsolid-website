@@ -14,7 +14,7 @@ const de: PageDef = {
   meta: {
     title: "KI-Schulung für Mitarbeiter: KI-Kompetenz Basis",
     description:
-      "KI-Schulung für Mitarbeitende: halber Tag, online live, ab 1.790 € netto pro Team (10 Personen inklusive, bis 15). Grundlagen, Risiken, Datenschutz.",
+      "KI-Schulung für Mitarbeitende: halber Tag, online live, Preis pro Team (10 Personen inklusive, bis 15). Grundlagen, Risiken, Datenschutz, mit Bescheinigung.",
   },
   crumbs: ["schulungen"],
   crumb: "KI-Kompetenz",
@@ -169,7 +169,7 @@ const en: PageDef = {
   meta: {
     title: "AI literacy training: basics for your team",
     description:
-      "AI literacy basics: half day, live online, from €1,790 net per team (10 people included, up to 15). Basics, risks, data protection, with a participation record.",
+      "AI literacy basics: half day, live online, one price per team (10 people included, up to 15). Basics, risks, data protection, with a participation record.",
   },
   crumbs: ["schulungen"],
   crumb: "AI literacy",
@@ -324,7 +324,7 @@ const tr: PageDef = {
   meta: {
     title: "YZ Yetkinliği eğitimi: ekip için temel",
     description:
-      "YZ Yetkinliği Temel: yarım gün, çevrimiçi, ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil (en fazla 15). Temeller, riskler, veri koruma; belgeli.",
+      "YZ Yetkinliği Temel: yarım gün, canlı çevrimiçi, ekip başına fiyat, 10 kişi dahil (en fazla 15). Temeller, riskler, veri koruma; katılım belgesiyle.",
   },
   crumbs: ["schulungen"],
   crumb: "YZ Yetkinliği",
