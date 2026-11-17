@@ -44,7 +44,7 @@ export const ACK_TEXT: Record<AckLocale, { subject: string; eyebrow: string; hea
     headline: ["Ihre Bewerbung ist ", "eingegangen"],
     lines: [
       "Guten Tag,",
-      "vielen Dank für Ihre Bewerbung. Sie ist bei uns eingegangen. Wir antworten innerhalb von sieben Tagen.",
+      "vielen Dank für Ihre Bewerbung. Sie ist bei uns eingegangen. Unser Trainerpool ist bis Januar 2027 voll; Ihr Profil steht auf der Warteliste.",
       "Einsätze entstehen aus Kundenanfragen; wir melden uns, sobald eine Anfrage zu Ihrem Thema passt.",
       "Ihre Angaben verwenden wir nur für die Auswahl von Trainerinnen und Trainern und löschen sie auf Wunsch.",
       "Freundliche Grüße",
@@ -55,7 +55,7 @@ export const ACK_TEXT: Record<AckLocale, { subject: string; eyebrow: string; hea
     eyebrow: "CONFIRMATION OF RECEIPT",
     headline: ["We have received ", "your application"],
     lines: [
-      "Hello, thank you for your application. We have received it and will reply within seven days.",
+      "Hello, thank you for your application. We have received it. Our trainer pool is full until January 2027, so your profile is on the waiting list.",
       "Assignments come from client requests; we will contact you when a request fits your topic.",
       "We use your details only to select trainers and delete them on request.",
       "Kind regards,",
@@ -66,7 +66,7 @@ export const ACK_TEXT: Record<AckLocale, { subject: string; eyebrow: string; hea
     eyebrow: "ALINDI BİLDİRİMİ",
     headline: ["Başvurunuz ", "bize ulaştı"],
     lines: [
-      "Merhaba, başvurunuz için teşekkür ederiz. Başvurunuz bize ulaştı; yedi gün içinde yanıt vereceğiz.",
+      "Merhaba, başvurunuz için teşekkür ederiz. Başvurunuz bize ulaştı. Eğitmen havuzumuz Ocak 2027'ye kadar dolu; profiliniz bekleme listesinde.",
       "Eğitim görevleri müşteri taleplerinden doğar; konunuza uygun bir talep olduğunda size döneriz.",
       "Bilgilerinizi yalnızca eğitmen seçimi için kullanır, talep üzerine sileriz.",
       "Saygılarımızla",
