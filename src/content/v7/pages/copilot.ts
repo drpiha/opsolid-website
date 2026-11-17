@@ -3,7 +3,11 @@
  * key parity. Published price: ab 2.900 EUR netto (1 day, 10 included, each additional 150 EUR, up to 12). Data-protection wording stays neutral
  * ("nach Angaben von Microsoft"), no guarantees, no legal advice.
  */
+import { SITE_STR } from "../site";
 import type { PageDef, PageSet } from "../types";
+import { page as hub } from "./schulungen";
+import { kursBlatt } from "../hero-objects";
+import type { L3 } from "../types";
 
 const de: PageDef = {
   key: "copilot",
@@ -21,14 +25,6 @@ const de: PageDef = {
     primary: { label: "Praxistag anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Tagesablauf ansehen", to: "copilot", hash: "ablauf" },
     facts: ["Ab 2.900 € netto pro Team", "1 Tag · 10 Personen inklusive, bis 12", "Copilot-Lizenzen sind Voraussetzung"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Aufgabe, Anweisung, Entwurf, Prüfung",
-      caption: "Von der Aufgabe zur Prüfung, im Alltag Ihres Teams.",
-      fig: "0.1",
-      labels: ["Aufgabe", "Anweisung", "Entwurf", "Prüfung"],
-    },
   },
   blocks: [
     {
@@ -37,13 +33,14 @@ const de: PageDef = {
       label: "Eckdaten",
       h: "Was der Praxistag umfasst",
       rows: [
-        ["Preis", "Ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen), zzgl. USt., nur für Unternehmen. Den Preis für Ihren Umfang nennen wir vorab."],
+        ["Preis", "Ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 € (bis 12 Personen). Den Preis für Ihren Umfang nennen wir vorab."],
         ["Umfang", "1 Tag (6 Stunden inklusive Pausen, auf Wunsch an zwei halben Tagen), 10 Personen inklusive, bis zu 12 Personen"],
         ["Voraussetzung", "Microsoft 365 Copilot-Lizenz und Microsoft-365-Anmeldung für jede teilnehmende Person"],
-        ["Durchführung", "Online live auf Deutsch oder Englisch, per Microsoft Teams oder Zoom; geschlossener Termin für Ihr Team nach Vereinbarung"],
+        ["Durchführung", "Live in Ihrem eigenen Microsoft Teams, auf Wunsch per Zoom. Keine Aufzeichnung, kein Selbstlernkurs. Ein geschlossener Termin nur für Ihr Team, auf Deutsch oder Englisch."],
         ["Leitung", "Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich."],
         ["Nachweis", "Teilnahmebescheinigung von OpSolid"],
       ],
+      footnote: SITE_STR.de.priceNote,
     },
     {
       t: "situations",
@@ -116,7 +113,7 @@ const de: PageDef = {
           h: "Auswertungen vorbereiten",
           before: "Formeln und Auswertungen entstehen mühsam von Hand.",
           after: "Copilot erklärt Daten, schlägt Formeln vor und bereitet Auswertungen vor.",
-          human: "Ergebnisse werden gegen die Quelldaten geprüft.",
+          human: "Ergebnisse werden gegen die Quelldaten kontrolliert.",
         },
       ],
     },
@@ -206,14 +203,6 @@ const en: PageDef = {
     primary: { label: "Request the workshop", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the day plan", to: "copilot", hash: "ablauf" },
     facts: ["From €2,900 net per team", "1 day · 10 people included, up to 12", "Copilot licences required"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: task, prompt, draft, review",
-      caption: "From task to review, in your team's daily work.",
-      fig: "0.1",
-      labels: ["Task", "Prompt", "Draft", "Review"],
-    },
   },
   blocks: [
     {
@@ -222,13 +211,14 @@ const en: PageDef = {
       label: "Key facts",
       h: "What the workshop covers",
       rows: [
-        ["Price", "From €2,900 net per team, 10 people included, each additional person €150 (up to 12), plus VAT, businesses only. We name the price for your scope up front."],
+        ["Price", "From €2,900 net per team, 10 people included, each additional person €150 (up to 12). We name the price for your scope up front."],
         ["Scope", "1 day (6 hours including breaks, on request split over two half days), 10 people included, up to 12 people"],
         ["Prerequisite", "A Microsoft 365 Copilot licence and a Microsoft 365 sign-in for every participant"],
-        ["Delivery", "Live online in English or German, via Microsoft Teams or Zoom; a closed session for your team, by agreement"],
+        ["Delivery", "Live in your own Microsoft Teams, via Zoom if you prefer. No recording, no self-paced course. A closed session for your team only, in English or German."],
         ["Led by", "We name the trainer to you before you book."],
         ["Proof", "Participation record from OpSolid"],
       ],
+      footnote: SITE_STR.en.priceNote,
     },
     {
       t: "situations",
@@ -343,7 +333,7 @@ const en: PageDef = {
       },
       {
         q: "What does “from €2,900” mean?",
-        a: "The price covers one day with 10 people, which works out at €290 per person; each additional person is €150 (up to 12). If your scope differs, we name the price before you book. All prices net of VAT, businesses only.",
+        a: "The price covers one day with 10 people, which works out at €290 per person; each additional person is €150 (up to 12). If your scope differs, we name the price before you book. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Will you change our Microsoft 365 settings?",
@@ -391,14 +381,6 @@ const tr: PageDef = {
     primary: { label: "Uygulama gününü talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Gün planına bakın", to: "copilot", hash: "ablauf" },
     facts: ["Ekip başına 2.900 €'dan itibaren (net)", "1 gün · 10 kişi dahil, en fazla 12", "Copilot lisansı gerekir"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: görev, komut, taslak, kontrol",
-      caption: "Görevden kontrole, ekibinizin günlük işinde.",
-      fig: "0.1",
-      labels: ["Görev", "Komut", "Taslak", "Kontrol"],
-    },
   },
   blocks: [
     {
@@ -407,13 +389,14 @@ const tr: PageDef = {
       label: "Temel bilgiler",
       h: "Uygulama günü neleri kapsar?",
       rows: [
-        ["Fiyat", "Ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi), KDV hariç; yalnızca işletmeler için. Kapsamınıza göre fiyatı önceden bildiririz."],
+        ["Fiyat", "Ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 € (en fazla 12 kişi). Kapsamınıza göre fiyatı önceden bildiririz."],
         ["Kapsam", "1 gün (molalar dahil 6 saat; isterseniz iki yarım güne bölünür), 10 kişi dahil, en fazla 12 kişi"],
         ["Ön koşul", "Her katılımcı için Microsoft 365 Copilot lisansı ve Microsoft 365 girişi"],
-        ["Uygulama", "Almanca veya İngilizce canlı çevrimiçi; anlaşmaya göre Microsoft Teams veya Zoom; ekibinize özel kapalı oturum"],
+        ["Uygulama", "Kendi Microsoft Teams'inizde canlı; isterseniz Zoom ile. Kayıt yok, kendi kendine öğrenme kursu yok. Yalnızca ekibinize özel kapalı bir oturum, Almanca veya İngilizce."],
         ["Yürüten", "Eğitmeni rezervasyondan önce size adıyla bildiririz."],
         ["Belge", "OpSolid katılım belgesi"],
       ],
+      footnote: SITE_STR.tr.priceNote,
     },
     {
       t: "situations",
@@ -528,7 +511,7 @@ const tr: PageDef = {
       },
       {
         q: "“2.900 €'dan itibaren” ne demek?",
-        a: "Fiyat, 10 kişilik bir gün için geçerlidir; bu, kişi başı 290 € eder. Her ek kişi 150 €'dur (en fazla 12 kişi). Kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
+        a: "Fiyat, 10 kişilik bir gün için geçerlidir; bu, kişi başı 290 € eder. Her ek kişi 150 €'dur (en fazla 12 kişi). Kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Microsoft 365 ayarlarımızı değiştirir misiniz?",
@@ -559,5 +542,18 @@ const tr: PageDef = {
     ],
   },
 };
+
+/* R2: the hero object, the day in six blocks from the hub catalog card on a sheet of its own. */
+const SCHEMA: Record<L3, [string, string]> = {
+  de: ["Schema", "Schema · der Tag in sechs Blöcken"],
+  en: ["Schema", "Schema · the day in six blocks"],
+  tr: ["Şema", "Şema · altı blokta bir gün"],
+};
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as [L3, PageDef][]) {
+  const cat = hub[loc].blocks.find((b) => b.t === "catalog");
+  const item = cat && cat.t === "catalog" ? cat.items.find((it) => it.id === "copilot") : undefined;
+  if (!item) throw new Error("copilot: no catalog card on the hub");
+  d.hero.object = kursBlatt(item.art, item.name, item.facts[0], SCHEMA[loc][0], SCHEMA[loc][1]);
+}
 
 export const page: PageSet = { de, en, tr };

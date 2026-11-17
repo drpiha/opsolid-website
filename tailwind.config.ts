@@ -125,6 +125,34 @@ const config: Config = {
         "v2-motion": {
           trace: "#14B8A6",
         },
+
+        // Werkstatt (design C) marketing colours: `bg-wk-paper`, `text-wk-muted`, `border-wk-line`, ...
+        // Values live in src/styles/werkstatt/tokens.css (scoped to html[data-v4]); the RGB channel
+        // variables make opacity modifiers work (`decoration-wk-copper/40`). Lines are fixed rgba values.
+        wk: {
+          ink: "rgb(var(--wk-ink-rgb) / <alpha-value>)",
+          "ink-2": "rgb(var(--wk-ink-2-rgb) / <alpha-value>)",
+          "ink-3": "rgb(var(--wk-ink-3-rgb) / <alpha-value>)",
+          char: "rgb(var(--wk-char-rgb) / <alpha-value>)",
+          paper: "rgb(var(--wk-paper-rgb) / <alpha-value>)",
+          "paper-2": "rgb(var(--wk-paper-2-rgb) / <alpha-value>)",
+          sheet: "rgb(var(--wk-sheet-rgb) / <alpha-value>)",
+          slate: "rgb(var(--wk-slate-rgb) / <alpha-value>)",
+          "slate-deep": "rgb(var(--wk-slate-deep-rgb) / <alpha-value>)",
+          copper: "rgb(var(--wk-copper-rgb) / <alpha-value>)",
+          "copper-deep": "rgb(var(--wk-copper-deep-rgb) / <alpha-value>)",
+          "copper-lite": "rgb(var(--wk-copper-lite-rgb) / <alpha-value>)",
+          text: "rgb(var(--wk-text-rgb) / <alpha-value>)",
+          muted: "rgb(var(--wk-muted-rgb) / <alpha-value>)",
+          "text-d": "rgb(var(--wk-text-d-rgb) / <alpha-value>)",
+          "muted-d": "rgb(var(--wk-muted-d-rgb) / <alpha-value>)",
+          control: "rgb(var(--wk-control-rgb) / <alpha-value>)",
+          error: "rgb(var(--wk-error-rgb) / <alpha-value>)",
+          line: "rgba(20, 23, 27, 0.14)",
+          "line-2": "rgba(20, 23, 27, 0.34)",
+          "line-d": "rgba(243, 240, 234, 0.14)",
+          "line-d2": "rgba(243, 240, 234, 0.3)",
+        },
       },
       fontFamily: {
         sans: [

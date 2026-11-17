@@ -1,0 +1,77 @@
+/* Font-family variables and their metric-adjusted fallback faces, imported once by the marketing sheet
+   (src/styles/marketing.css), which the root layout loads on every route, app surfaces included. The per-subset
+   faces themselves are declared by next/font in src/app/fonts/subset-families.ts; these lines join them into one
+   variable per family. */
+
+/* Inter is two self-hosted faces (src/app/layout.tsx): the Turkish supplement comes first and only covers Ğ ğ İ Ş ş
+   by unicode-range, every other character falls through to the latin face. (Tailwind's font-sans, so the html
+   element's family on every page; marketing text itself is Archivo.) */
+:root {
+  --font-inter: var(--font-inter-tr), var(--font-inter-latin);
+}
+
+/* App-surface families, self-hosted per subset (src/app/fonts/subset-families.ts). Each line lists the
+   subsets of one family in the order that keeps Google's precedence where ranges overlap (its later
+   @font-face wins, so latin comes first here), then the family's fallback face. The fallback faces carry the
+   metric overrides the Google loader used to generate, so text keeps its size while a font file loads. */
+:root {
+  --font-plex-mono: var(--font-plex-mono-latin), var(--font-plex-mono-latin-ext), var(--font-plex-mono-vietnamese), var(--font-plex-mono-cyrillic), var(--font-plex-mono-cyrillic-ext), "IBM Plex Mono Fallback";
+  --font-v2-body: var(--font-v2-body-latin), var(--font-v2-body-latin-ext), var(--font-v2-body-vietnamese), var(--font-v2-body-cyrillic-ext), "Plus Jakarta Sans Fallback";
+  --font-v2-mono: var(--font-v2-mono-latin), var(--font-v2-mono-latin-ext), var(--font-v2-mono-symbols2), var(--font-v2-mono-greek), var(--font-v2-mono-greek-ext), var(--font-v2-mono-cyrillic), var(--font-v2-mono-cyrillic-ext), "Fira Code Fallback";
+  --font-instrument-serif: var(--font-instrument-serif-latin), var(--font-instrument-serif-latin-ext), "Instrument Serif Fallback";
+  --font-jetbrains-mono: var(--font-jetbrains-mono-latin), var(--font-jetbrains-mono-latin-ext), var(--font-jetbrains-mono-vietnamese), var(--font-jetbrains-mono-greek), var(--font-jetbrains-mono-cyrillic), var(--font-jetbrains-mono-cyrillic-ext), "JetBrains Mono Fallback";
+}
+@font-face {
+  font-family: "IBM Plex Mono Fallback";
+  src: local("Arial");
+  ascent-override: 76.16%;
+  descent-override: 20.43%;
+  line-gap-override: 0.00%;
+  size-adjust: 134.59%;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans Fallback";
+  src: local("Arial");
+  ascent-override: 98.88%;
+  descent-override: 21.15%;
+  line-gap-override: 0.00%;
+  size-adjust: 104.98%;
+}
+@font-face {
+  font-family: "Fira Code Fallback";
+  src: local("Arial");
+  ascent-override: 73.56%;
+  descent-override: 23.92%;
+  line-gap-override: 0.00%;
+  size-adjust: 134.59%;
+}
+@font-face {
+  font-family: "Instrument Serif Fallback";
+  src: local("Times New Roman");
+  ascent-override: 117.94%;
+  descent-override: 36.93%;
+  line-gap-override: 0.00%;
+  size-adjust: 83.94%;
+}
+@font-face {
+  font-family: "JetBrains Mono Fallback";
+  src: local("Arial");
+  ascent-override: 75.79%;
+  descent-override: 22.29%;
+  line-gap-override: 0.00%;
+  size-adjust: 134.59%;
+}
+
+/* Archivo's fallback while the file loads (src/app/layout.tsx names it). Archivo is a width-axis font set from 100 %
+   (body) to 116 % (display); Arial has one width, so each face below is Arial at the size that matches Archivo's
+   average advance width for that font-stretch range (measured over the copy of eight marketing pages: about 0.96 for
+   regular body text at 100 %, 1.08 at 104-108 %, 1.15 at 110-112 %, 1.19-1.20 at 114-116 %), then checked on eleven
+   pages in de, en and tr at 390, 412 and 1440 px against the loaded font. The browser picks the face by the element's
+   font-stretch, so headings and the lede mostly wrap into the same lines before and after the swap (with next/font's
+   single Arial face the home h1 set in two lines instead of three and the hero moved by 42 px: CLS 0.29 under
+   applied throttling). Every face scales ascent and descent so the line metrics stay those next/font generated for
+   Arial (the overrides are multiplied by size-adjust). */
+@font-face { font-family: "Archivo Fallback"; src: local("Arial"); font-stretch: 100% 103%; size-adjust: 101%; ascent-override: 86.93%; descent-override: 20.79%; line-gap-override: 0%; }
+@font-face { font-family: "Archivo Fallback"; src: local("Arial"); font-stretch: 104% 109%; size-adjust: 110.5%; ascent-override: 79.46%; descent-override: 19.01%; line-gap-override: 0%; }
+@font-face { font-family: "Archivo Fallback"; src: local("Arial"); font-stretch: 110% 113%; size-adjust: 118.2%; ascent-override: 74.28%; descent-override: 17.77%; line-gap-override: 0%; }
+@font-face { font-family: "Archivo Fallback"; src: local("Arial"); font-stretch: 114% 118%; size-adjust: 122.8%; ascent-override: 71.5%; descent-override: 17.1%; line-gap-override: 0%; }

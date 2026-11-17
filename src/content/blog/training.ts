@@ -21,15 +21,15 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
   [COST]: {
     de: `<p><em>Preise: Stand 14. November 2026. Alle Preise netto zzgl. USt., nur für Unternehmen.</em></p>
 
-<p>Eine KI-Schulung für Mitarbeiter wird entweder pro Person oder als Festpreis pro Team berechnet. Was sie kostet, hängt vor allem von Dauer, Gruppengröße und Inhalt ab. Bei uns kostet ein halber Tag KI-Kompetenz Basis ab 1.790 € netto für ein Team mit 10 Personen, rechnerisch 179 € pro Person. Der Microsoft 365 Copilot Praxistag kostet ab 2.900 € netto für 10 Personen, rechnerisch 290 € pro Person. Hier lesen Sie, wovon der Preis abhängt, was bei Copilot hinzukommt und wie Sie Angebote vergleichen.</p>
+<p>Eine KI-Schulung für Mitarbeiter wird entweder pro Person oder als Preis pro Team berechnet. Was sie kostet, hängt vor allem von Dauer, Gruppengröße und Inhalt ab. Bei uns kostet ein halber Tag KI-Kompetenz Basis ab 1.790 € netto für ein Team mit 10 Personen, rechnerisch 179 € pro Person. Der Microsoft 365 Copilot Praxistag kostet ab 2.900 € netto für 10 Personen, rechnerisch 290 € pro Person. Hier lesen Sie, wovon der Preis abhängt, was bei Copilot hinzukommt und wie Sie Angebote vergleichen.</p>
 
 <h2>Welche Preismodelle gibt es?</h2>
-<p>Zwei Modelle sind verbreitet: ein Preis pro Person und ein Festpreis pro Team.</p>
+<p>Zwei Modelle sind verbreitet: ein Preis pro Person und ein Preis pro Team.</p>
 <ul>
 <li><strong>Preis pro Person:</strong> Das ist üblich bei offenen Seminaren und Online-Kursen, in denen Menschen aus verschiedenen Unternehmen zusammen lernen. Es passt, wenn nur zwei oder drei Personen teilnehmen sollen. Für ein ganzes Team wächst die Summe mit jeder Person.</li>
-<li><strong>Preis pro Team:</strong> Das ist üblich bei geschlossenen Terminen nur für Ihr Unternehmen, oft Inhouse-Schulung genannt. Ein Festbetrag deckt eine bestimmte Zahl an Plätzen, für jede weitere Person kommt ein Aufschlag hinzu. Die Übungen können sich an den Aufgaben Ihres Teams orientieren.</li>
+<li><strong>Preis pro Team:</strong> Das ist üblich bei geschlossenen Terminen nur für Ihr Unternehmen. Der Teampreis deckt eine bestimmte Zahl an Plätzen, für jede weitere Person kommt ein Aufschlag hinzu. Die Übungen können sich an den Aufgaben Ihres Teams orientieren.</li>
 </ul>
-<p>Manche Anbieter rechnen nach Tagessatz und berechnen Vorbereitung, Unterlagen oder Reisekosten getrennt. Fragen Sie deshalb immer, was im Preis enthalten ist.</p>
+<p>Manche Anbieter rechnen nach Tagessatz und berechnen Vorbereitung oder Unterlagen getrennt. Fragen Sie deshalb immer, was im Preis enthalten ist.</p>
 
 <h2>Wovon hängt der Preis ab?</h2>
 <p>Fünf Punkte entscheiden über den Betrag.</p>
@@ -37,18 +37,18 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <li><strong>Dauer:</strong> Ein halber Tag Grundlagen kostet weniger als ein ganzer Praxistag oder eine zweitägige Schulung, in der Ihr Team eigene Workflows aufbaut.</li>
 <li><strong>Gruppengröße:</strong> Bei Teampreisen ist eine bestimmte Zahl an Plätzen enthalten, darüber zahlen Sie pro Person. Achten Sie auch auf die Höchstzahl: Wer übt, braucht Zeit für Fragen.</li>
 <li><strong>Inhalt:</strong> Grundlagen für alle Beschäftigten sind anders aufgebaut als eine Schulung zu einem Werkzeug wie Microsoft 365 Copilot.</li>
-<li><strong>Vorbereitung:</strong> Übungen mit Aufgaben aus Ihrem Alltag brauchen ein Vorgespräch und Vorbereitung. Ein Standardkurs braucht beides nicht.</li>
-<li><strong>Format:</strong> Online live, vor Ort oder als Aufzeichnung. Bei Terminen vor Ort können Reisekosten hinzukommen.</li>
+<li><strong>Vorbereitung:</strong> Übungen mit Aufgaben aus Ihrem Alltag brauchen eine Abstimmung vorab und Vorbereitung. Ein Standardkurs braucht beides nicht.</li>
+<li><strong>Format:</strong> Online live oder als Aufzeichnung. Live-Termine lassen Raum für Fragen, eine Aufzeichnung nicht.</li>
 </ul>
 
 <h2>Was kosten unsere KI-Schulungen?</h2>
 <p>Wir bieten Schulungen als Teampakete an. Alle Termine finden online und live statt, als geschlossener Termin nur für Ihr Team, auf Deutsch oder Englisch. Nach jeder Schulung erhält Ihr Team unsere Teilnahmebescheinigung.</p>
 <ul>
-<li><strong>KI-Kompetenz Basis:</strong> halber Tag (3,5 Stunden), ab 1.790 € netto, 10 Personen inklusive, jede weitere Person 90 €, bis 15 Personen. Rechnerisch 179 € pro Person bei 10 Personen.</li>
-<li><strong>Microsoft 365 Copilot Praxistag:</strong> 1 Tag (6 Stunden), ab 2.900 € netto, 10 Personen inklusive, jede weitere Person 150 €, bis 12 Personen. Rechnerisch 290 € pro Person bei 10 Personen.</li>
-<li><strong>KI-Agenten &amp; Workflow-Automatisierung:</strong> 2 Tage, ab 5.900 € netto, 8 Personen inklusive, jede weitere Person 290 €, bis 10 Personen.</li>
+<li><strong>KI-Kompetenz Basis:</strong> halber Tag (3,5 Stunden), ab 1.790 € netto pro Team, 10 Personen inklusive, jede weitere Person 90 €, bis 15 Personen. Rechnerisch 179 € pro Person bei 10 Personen.</li>
+<li><strong>Microsoft 365 Copilot Praxistag:</strong> 1 Tag (6 Stunden), ab 2.900 € netto pro Team, 10 Personen inklusive, jede weitere Person 150 €, bis 12 Personen. Rechnerisch 290 € pro Person bei 10 Personen.</li>
+<li><strong>KI-Agenten &amp; Workflow-Automatisierung:</strong> 2 Tage, ab 5.900 € netto pro Team, 8 Personen inklusive, jede weitere Person 290 €, bis 10 Personen.</li>
 </ul>
-<p>„Ab“ heißt: Der Preis gilt für den beschriebenen Umfang. Weicht Ihr Umfang ab, nennen wir Ihnen den Preis vor der Buchung. Auch die Trainerin oder den Trainer nennen wir vor der Buchung namentlich. Vertrag und Rechnung laufen über OpSolid.</p>
+<p>„Ab“ heißt: Der Preis gilt für den beschriebenen Umfang. Weicht Ihr Umfang ab, nennen wir Ihnen den Preis vor der Buchung. Auch die Trainerin oder den Trainer nennen wir vor der Buchung namentlich. Vertrag und Rechnung laufen über OpSolid. Alle Preise netto zzgl. USt., nur für Unternehmen.</p>
 
 <h2>Was kommt bei einer Copilot-Schulung hinzu?</h2>
 <p>Für eine Microsoft 365 Copilot Schulung braucht jede teilnehmende Person eine Copilot-Lizenz und eine Anmeldung in Microsoft 365. Die Lizenzen sind ein eigener Kostenpunkt. Wir verkaufen keine Lizenzen; Sie beziehen sie über Microsoft oder Ihren Microsoft-Partner.</p>
@@ -74,34 +74,34 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <p>Hat Ihr Team Microsoft 365 Copilot bereits und soll es im Alltag nutzen, passt der Praxistag: Ihr Team wendet Copilot in Outlook, Teams, Word, Excel und PowerPoint an eigenen Aufgaben an. Ablauf, Voraussetzungen und Preis stehen auf der Seite <a href="${href("copilot", "de")}">Microsoft 365 Copilot Praxistag</a>. Für die Grundlagen im ganzen Team ist KI-Kompetenz Basis gedacht.</p>
 <p>Dieser Beitrag ist keine Rechtsberatung.</p>`,
 
-    en: `<p><em>Prices as of 14 November 2026. All prices net of VAT, businesses only.</em></p>
+    en: `<p><em>Prices as of 14 November 2026. All prices are net of VAT and for businesses only.</em></p>
 
-<p>AI training for employees is priced either per person or as a fixed price per team. What it costs depends mainly on length, group size and content. With us, a half day of AI literacy basics costs from €1,790 net for a team of 10, which works out at €179 per person. The Microsoft 365 Copilot workshop costs from €2,900 net for 10 people, €290 per person. Here is what drives the price, what Copilot adds and how to compare offers.</p>
+<p>AI training for employees is priced either per person or per team. What it costs depends mainly on length, group size and content. With us, a half day of AI literacy basics costs from €1,790 net for a team of 10, which works out at €179 per person. The Microsoft 365 Copilot workshop costs from €2,900 net for 10 people, €290 per person. Here is what drives the price, what Copilot adds and how to compare offers.</p>
 
 <h2>Which pricing models are there?</h2>
 <ul>
 <li><strong>Price per person:</strong> common for open seminars and online courses where people from different companies learn together. It suits two or three participants; for a whole team, the total grows with every person.</li>
-<li><strong>Price per team:</strong> common for closed sessions for your company only, often called in-house training. A fixed amount covers a set number of seats, with a surcharge for each additional person, and the exercises can follow your team's tasks.</li>
+<li><strong>Price per team:</strong> common for closed sessions for your company only. The team price covers a set number of seats, with a surcharge for each additional person, and the exercises can follow your team's tasks.</li>
 </ul>
-<p>Some providers charge a day rate and bill preparation, materials or travel separately. Always ask what the price includes.</p>
+<p>Some providers charge a day rate and bill preparation or materials separately. Always ask what the price includes.</p>
 
 <h2>What drives the price?</h2>
-<p>Length; group size and the maximum number of participants; content, from basics for everyone to a tool such as Microsoft 365 Copilot; preparation with your own tasks; and format: live online, on site or recorded. On-site sessions can add travel costs.</p>
+<p>Length; group size and the maximum number of participants; content, from basics for everyone to a tool such as Microsoft 365 Copilot; preparation with your own tasks; and format: live online or recorded. Live sessions leave room for questions; a recording does not.</p>
 
 <h2>What do our AI training courses cost?</h2>
 <p>We offer training as team packages, always live online, as a closed session for your team, in English or German. After each course your team receives our participation record.</p>
 <ul>
-<li><strong>AI literacy basics:</strong> half day (3.5 hours), from €1,790 net, 10 people included, each additional person €90, up to 15. €179 per person with 10 people.</li>
-<li><strong>Microsoft 365 Copilot workshop:</strong> 1 day (6 hours), from €2,900 net, 10 people included, each additional person €150, up to 12. €290 per person with 10 people.</li>
-<li><strong>AI agents &amp; workflow automation:</strong> 2 days, from €5,900 net, 8 people included, each additional person €290, up to 10.</li>
+<li><strong>AI literacy basics:</strong> half day (3.5 hours), from €1,790 net per team, 10 people included, each additional person €90, up to 15. Works out at €179 per person with 10 people.</li>
+<li><strong>Microsoft 365 Copilot workshop:</strong> 1 day (6 hours), from €2,900 net per team, 10 people included, each additional person €150, up to 12. Works out at €290 per person with 10 people.</li>
+<li><strong>AI agents &amp; workflow automation:</strong> 2 days, from €5,900 net per team, 8 people included, each additional person €290, up to 10.</li>
 </ul>
-<p>"From" means the price applies to the scope described; if yours differs, we name the price before booking. We also name the trainer before booking. Contract and invoice run through OpSolid.</p>
+<p>"From" means the price applies to the scope described; if yours differs, we name the price before booking. We also name the trainer before booking. Contract and invoice run through OpSolid. All prices are net of VAT and for businesses only.</p>
 
 <h2>What does Copilot training add?</h2>
 <p>Every participant needs a Microsoft 365 Copilot licence and a Microsoft 365 sign-in. Licences are a separate cost; we do not sell them, you get them from Microsoft or your Microsoft partner. Clean permissions in SharePoint, Teams and OneDrive come first, because whoever may see too much can also find it through Copilot. And a workshop day takes one working day per participant.</p>
 
 <h2>Does it have to be external training?</h2>
-<p>No. According to the European Commission, there is no obligation for external training or external certification (<a href="${SD_FAQ}">AI Act Service Desk</a>). Article 4 of the AI Act requires companies that use AI to take measures for their staff's AI literacy; which measures is up to you. More in <a href="${post(ART4, "en")}">Is AI training mandatory?</a> External training makes sense when nobody in-house has the time or experience, or when a whole team should reach the same level.</p>
+<p>No. According to the European Commission, there is no obligation for external training or external certification (<a href="${SD_FAQ}">AI Act Service Desk</a>). Article 4 of the AI Act requires companies that use AI to take measures for their staff's AI literacy; which measures is up to you. More in <a href="${post(ART4, "en")}">Is AI training mandatory?</a> External training makes sense when nobody in the company has the time or experience, or when a whole team should reach the same level.</p>
 
 <h2>How do you compare offers?</h2>
 <ol>
@@ -115,28 +115,28 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 </ol>
 <p>If your team already has Copilot and should use it in daily work, the <a href="${href("copilot", "en")}">Microsoft 365 Copilot workshop</a> fits. For the basics across a team, AI literacy basics is the course. This article is not legal advice.</p>`,
 
-    tr: `<p><em>Fiyatlar: 14 Kasım 2026 itibarıyla. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.</em></p>
+    tr: `<p><em>Fiyatlar: 14 Kasım 2026 itibarıyla. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.</em></p>
 
-<p>Çalışanlar için bir yapay zeka eğitimi ya kişi başına ya da ekip başına sabit fiyatla ücretlendirilir. Maliyeti en çok süreye, grup büyüklüğüne ve içeriğe bağlıdır. Bizde yarım günlük YZ Yetkinliği Temel eğitimi 10 kişilik bir ekip için 1.790 €'dan itibaren (net) başlar; bu, hesaben kişi başı 179 € eder. Microsoft 365 Copilot Uygulama Günü 10 kişi için 2.900 €'dan itibaren (net), hesaben kişi başı 290 €'dur. Aşağıda fiyatı neyin belirlediğini, Copilot'ta neyin eklendiğini ve teklifleri nasıl karşılaştıracağınızı bulabilirsiniz.</p>
+<p>Çalışanlar için bir yapay zeka eğitimi ya kişi başına ya da ekip başına ücretlendirilir. Maliyeti en çok süreye, grup büyüklüğüne ve içeriğe bağlıdır. Bizde yarım günlük YZ Yetkinliği Temel eğitimi 10 kişilik bir ekip için 1.790 €'dan itibaren (net) başlar; bu, hesaben kişi başı 179 € eder. Microsoft 365 Copilot Uygulama Günü 10 kişi için 2.900 €'dan itibaren (net), hesaben kişi başı 290 €'dur. Aşağıda fiyatı neyin belirlediğini, Copilot'ta neyin eklendiğini ve teklifleri nasıl karşılaştıracağınızı bulabilirsiniz.</p>
 
 <h2>Hangi fiyat modelleri var?</h2>
 <ul>
 <li><strong>Kişi başı fiyat:</strong> Farklı şirketlerden kişilerin birlikte öğrendiği açık seminerlerde ve çevrimiçi kurslarda yaygındır. İki üç kişi katılacaksa uygundur; tüm ekip için toplam her kişiyle artar.</li>
-<li><strong>Ekip başı fiyat:</strong> Yalnızca şirketinize özel kapalı oturumlarda yaygındır. Sabit bir tutar belirli sayıda kişiyi kapsar, her ek kişi için ek ücret alınır; alıştırmalar ekibinizin görevlerine göre kurulabilir.</li>
+<li><strong>Ekip başı fiyat:</strong> Yalnızca şirketinize özel kapalı oturumlarda yaygındır. Ekip fiyatı belirli sayıda kişiyi kapsar, her ek kişi için ek ücret alınır; alıştırmalar ekibinizin görevlerine göre kurulabilir.</li>
 </ul>
-<p>Bazı sağlayıcılar günlük ücretle çalışır ve hazırlık, materyal ya da yol masrafını ayrıca faturalar. Fiyata neyin dahil olduğunu mutlaka sorun.</p>
+<p>Bazı sağlayıcılar günlük ücretle çalışır ve hazırlık ya da materyali ayrıca faturalar. Fiyata neyin dahil olduğunu mutlaka sorun.</p>
 
 <h2>Fiyatı ne belirler?</h2>
-<p>Süre; grup büyüklüğü ve azami katılımcı sayısı; herkes için temellerden Microsoft 365 Copilot gibi bir araca kadar içerik; kendi görevlerinizle hazırlık; ve biçim: canlı çevrimiçi, yerinde ya da kayıt. Yerinde oturumlarda yol masrafı eklenebilir.</p>
+<p>Süre; grup büyüklüğü ve azami katılımcı sayısı; herkes için temellerden Microsoft 365 Copilot gibi bir araca kadar içerik; kendi görevlerinizle hazırlık; ve biçim: canlı çevrimiçi ya da kayıt. Canlı oturumlar sorulara yer bırakır, kayıt bırakmaz.</p>
 
 <h2>Eğitimlerimiz ne kadar?</h2>
 <p>Eğitimleri ekip paketi olarak sunuyoruz: her zaman çevrimiçi ve canlı, yalnızca ekibinize özel, Almanca veya İngilizce. Her eğitimden sonra ekibiniz katılım belgemizi alır.</p>
 <ul>
-<li><strong>YZ Yetkinliği Temel:</strong> yarım gün (3,5 saat), 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 €, en fazla 15 kişi. 10 kişide hesaben kişi başı 179 €.</li>
-<li><strong>Microsoft 365 Copilot Uygulama Günü:</strong> 1 gün (6 saat), 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 €, en fazla 12 kişi. 10 kişide hesaben kişi başı 290 €.</li>
-<li><strong>YZ Ajanları ve İş Akışı Otomasyonu:</strong> 2 gün, 5.900 €'dan itibaren (net), 8 kişi dahil, her ek kişi 290 €, en fazla 10 kişi.</li>
+<li><strong>YZ Yetkinliği Temel:</strong> yarım gün (3,5 saat), ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 €, en fazla 15 kişi. 10 kişide hesaben kişi başı 179 €.</li>
+<li><strong>Microsoft 365 Copilot Uygulama Günü:</strong> 1 gün (6 saat), ekip başına 2.900 €'dan itibaren (net), 10 kişi dahil, her ek kişi 150 €, en fazla 12 kişi. 10 kişide hesaben kişi başı 290 €.</li>
+<li><strong>YZ Ajanları ve İş Akışı Otomasyonu:</strong> 2 gün, ekip başına 5.900 €'dan itibaren (net), 8 kişi dahil, her ek kişi 290 €, en fazla 10 kişi.</li>
 </ul>
-<p>"İtibaren", fiyatın tanımlanan kapsam için geçerli olduğu anlamına gelir; kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Eğitmeni de rezervasyondan önce adıyla bildiririz. Sözleşme ve fatura OpSolid üzerinden yürür.</p>
+<p>"İtibaren", fiyatın tanımlanan kapsam için geçerli olduğu anlamına gelir; kapsamınız farklıysa fiyatı rezervasyondan önce bildiririz. Eğitmeni de rezervasyondan önce adıyla bildiririz. Sözleşme ve fatura OpSolid üzerinden yürür. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.</p>
 
 <h2>Copilot eğitiminde ne eklenir?</h2>
 <p>Her katılımcının bir Microsoft 365 Copilot lisansına ve Microsoft 365 girişine ihtiyacı vardır. Lisanslar ayrı bir maliyettir; lisans satmıyoruz, onları Microsoft'tan ya da Microsoft iş ortağınızdan alırsınız. SharePoint, Teams ve OneDrive'da düzenli yetkiler temeldir: Çok fazlasını görebilen kişi, onu Copilot üzerinden de bulabilir. Bir uygulama günü de her katılımcının bir iş gününü alır.</p>
@@ -191,7 +191,7 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <p>Nach unseren Schulungen erhalten alle Teilnehmenden eine Teilnahmebescheinigung von OpSolid mit Datum, Dauer, Themen und Trainer. Sie belegt die Teilnahme und kann Ihre interne Dokumentation ergänzen. Sie ist kein Zertifikat einer Behörde, einer Kammer oder eines Verbands.</p>
 
 <h2>Wie kann eine Schulung dabei helfen?</h2>
-<p>Eine Schulung bringt viele Beschäftigte auf einmal auf denselben Stand. Dafür ist KI-Kompetenz Basis gedacht: ein halber Tag, online und live nur für Ihr Team, mit Grundlagen, guten Anfragen, Fehlererkennung, Datenschutz im Alltag, Regeln für Ihr Team und menschlicher Kontrolle. Sie kostet ab 1.790 € netto pro Team, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen).</p>
+<p>Eine Schulung bringt viele Beschäftigte auf einmal auf denselben Stand. Dafür ist KI-Kompetenz Basis gedacht: ein halber Tag, online und live nur für Ihr Team, mit Grundlagen, guten Anfragen, Fehlererkennung, Datenschutz im Alltag, Regeln für Ihr Team und menschlicher Kontrolle. Sie kostet ab 1.790 € netto pro Team, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen). Alle Preise netto zzgl. USt., nur für Unternehmen.</p>
 <p>Die Schulung ist eine Maßnahme von mehreren, kein vollständiger Nachweis und kein Versprechen, dass Ihr Unternehmen damit alle Pflichten erfüllt. Ablauf und Themen stehen auf der Seite <a href="${href("kompetenz", "de")}">KI-Kompetenz Basis</a>. Was Schulungen allgemein kosten, lesen Sie im Beitrag <a href="${post(COST, "de")}">Was kostet eine KI-Schulung?</a></p>
 <p>Dieser Beitrag ist keine Rechtsberatung. Für Ihren eigenen Fall fragen Sie bitte Ihre Rechtsberatung.</p>
 
@@ -224,7 +224,7 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <p>No. According to the Commission, no certificate is needed and there is no obligation for external training or certification; companies can keep an internal record of training and other measures. After our courses every participant receives an OpSolid participation record with date, duration, topics and trainer. It records attendance and can add to your internal documentation; it is not a certificate from an authority, a chamber or an association.</p>
 
 <h2>How can training help?</h2>
-<p>Training brings many people to the same level at once. <a href="${href("kompetenz", "en")}">AI literacy basics</a> is a half day, live online for your team only, covering the basics, good requests, spotting errors, data protection in daily work, rules for your team and human oversight. It costs from €1,790 net per team, 10 people included, each additional person €90 (up to 15). It is one measure among several, not complete proof and no promise that your company meets every obligation. What training costs in general: <a href="${post(COST, "en")}">What does AI training cost?</a></p>
+<p>Training brings many people to the same level at once. <a href="${href("kompetenz", "en")}">AI literacy basics</a> is a half day, live online for your team only, covering the basics, good requests, spotting errors, data protection in daily work, rules for your team and human oversight. It costs from €1,790 net per team, 10 people included, each additional person €90 (up to 15). All prices are net of VAT and for businesses only. It is one measure among several, not complete proof and no promise that your company meets every obligation. What training costs in general: <a href="${post(COST, "en")}">What does AI training cost?</a></p>
 <p>This article is not legal advice. For your own case, please ask your legal adviser.</p>
 
 <h2>Sources</h2>
@@ -256,7 +256,7 @@ export const trainingArticles: Record<string, Record<L3, string>> = {
 <p>Hayır. Komisyon'a göre sertifika gerekmez, dış eğitim ya da dış sertifika zorunluluğu da yoktur; şirketler eğitimleri ve diğer önlemleri şirket içinde kayıt altına alabilir. Eğitimlerimizden sonra her katılımcı tarih, süre, konular ve eğitmen bilgisini içeren bir OpSolid katılım belgesi alır. Belge katılımı gösterir ve şirket içi belgelerinizi tamamlayabilir; bir kamu kurumunun, odanın ya da derneğin sertifikası değildir.</p>
 
 <h2>Bir eğitim nasıl yardımcı olabilir?</h2>
-<p>Bir eğitim birçok çalışanı aynı anda aynı seviyeye getirir. <a href="${href("kompetenz", "tr")}">YZ Yetkinliği Temel</a> yarım gündür; yalnızca ekibinize özel, çevrimiçi ve canlıdır; temelleri, iyi istek yazmayı, hataları fark etmeyi, günlük işte veri korumayı, ekip kurallarını ve insan kontrolünü kapsar. Ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 €, en fazla 15 kişi. Birçok önlemden biridir; eksiksiz bir kanıt ve şirketinizin tüm yükümlülükleri yerine getirdiğine dair bir vaat değildir. Eğitimlerin genel maliyeti: <a href="${post(COST, "tr")}">Yapay zeka eğitimi ne kadar tutar?</a></p>
+<p>Bir eğitim birçok çalışanı aynı anda aynı seviyeye getirir. <a href="${href("kompetenz", "tr")}">YZ Yetkinliği Temel</a> yarım gündür; yalnızca ekibinize özel, çevrimiçi ve canlıdır; temelleri, iyi istek yazmayı, hataları fark etmeyi, günlük işte veri korumayı, ekip kurallarını ve insan kontrolünü kapsar. Ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 €, en fazla 15 kişi. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. Birçok önlemden biridir; eksiksiz bir kanıt ve şirketinizin tüm yükümlülükleri yerine getirdiğine dair bir vaat değildir. Eğitimlerin genel maliyeti: <a href="${post(COST, "tr")}">Yapay zeka eğitimi ne kadar tutar?</a></p>
 <p>Bu yazı hukuki danışmanlık değildir. Kendi durumunuz için lütfen hukuk danışmanınıza başvurun.</p>
 
 <h2>Kaynaklar</h2>

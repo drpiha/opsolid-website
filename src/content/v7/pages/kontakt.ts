@@ -1,10 +1,12 @@
 /**
  * Contact page (v7). Form (POST /api/contact), next steps, direct contact from SITE_CONFIG, NDA note.
- * Response times: inquiries "in der Regel innerhalb weniger Arbeitstage"; trainer applications "innerhalb von
- * sieben Tagen" (FAQ, trainer page, form). The form pre-selects a topic from ?anliegen=<value>.
+ * Response times: inquiries "innerhalb von 2 Werktagen" (owner decision 79, 2026-11-15); trainer applications
+ * "innerhalb von sieben Tagen" (FAQ, trainer page, form). The form pre-selects a topic from ?anliegen=<value>
+ * (`vormerken`: interest in one of the planned courses).
  */
 import { SITE_CONFIG } from "@/lib/constants";
 import type { PageDef, PageSet } from "../types";
+import { blockOf, frag, liste } from "../hero-objects";
 
 const MAIL = SITE_CONFIG.email;
 const ADDRESS = `${SITE_CONFIG.address.street}, ${SITE_CONFIG.address.postalCode} ${SITE_CONFIG.address.city}`;
@@ -14,25 +16,17 @@ const de: PageDef = {
   meta: {
     title: "Kontakt: Schulung oder KI-Check anfragen",
     description:
-      "Schreiben Sie uns per Formular oder E-Mail: eine Schulung für Ihr Team oder ein Ablauf, der Zeit kostet. Wir antworten in der Regel in wenigen Arbeitstagen.",
+      "Schreiben Sie uns per Formular oder E-Mail: eine Schulung für Ihr Team oder ein Ablauf, der Zeit kostet. Wir antworten innerhalb von 2 Werktagen.",
   },
   crumbs: [],
   crumb: "Kontakt",
   hero: {
     eyebrow: "Kontakt",
     h1: ["Schulung oder Ablauf: Erzählen Sie uns,", "worum es geht", ""],
-    lede: "Drei Sätze genügen: Welches Team soll geschult werden, oder welcher Ablauf kostet Zeit? Wir antworten persönlich per E‑Mail, in der Regel innerhalb weniger Arbeitstage.",
+    lede: "Drei Sätze genügen: Welches Team soll geschult werden, oder welcher Ablauf kostet Zeit? Wir antworten persönlich per E‑Mail, innerhalb von 2 Werktagen.",
     primary: { label: "Nachricht schreiben", to: "kontakt", hash: "formular" },
     secondary: { label: "Schulungen ansehen", to: "schulungen" },
     facts: ["NDA vor der Analyse", "Kennenlernen kostenlos und unverbindlich"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Nachricht, Antwort, Gespräch, Angebot",
-      caption: "Von Ihrer Nachricht zum Angebot: Nach jedem Schritt entscheiden Sie.",
-      fig: "0.1",
-      labels: ["Nachricht", "Antwort", "Gespräch", "Angebot"],
-    },
   },
   blocks: [
     {
@@ -44,6 +38,7 @@ const de: PageDef = {
       lede: "Thema wählen, Ablauf kurz beschreiben: Das genügt für eine erste Antwort.",
       topics: [
         { value: "schulung", label: "KI-Schulung für mein Team" },
+        { value: "vormerken", label: "Interesse an einer geplanten Schulung vormerken" },
         { value: "ki-check", label: "KI-Check" },
         { value: "beratung", label: "KI-Beratung und KI-Automatisierung" },
         { value: "trainer", label: "Trainerin oder Trainer werden" },
@@ -69,7 +64,7 @@ const de: PageDef = {
         },
         {
           h: "Angebot: Schulung oder KI-Check",
-          p: "Für eine Schulung erhalten Sie ein Angebot pro Team mit Termin, Trainerin oder Trainer und Preis. Wenn erst ein KI-Check sinnvoll ist, ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse.",
+          p: "Für eine Schulung erhalten Sie ein Angebot pro Team mit Termin, Trainerin oder Trainer und Preis. Wenn erst ein KI-Check sinnvoll ist, ein Angebot über 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, in der Regel 10 Werktage nach Eingang des Fragebogens. Die NDA unterzeichnen wir vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
         },
       ],
     },
@@ -102,7 +97,7 @@ const de: PageDef = {
     items: [
       {
         q: "Wie schnell antworten Sie?",
-        a: "In der Regel innerhalb weniger Arbeitstage, persönlich per E-Mail. Bewerbungen als Trainerin oder Trainer beantworten wir innerhalb von sieben Tagen.",
+        a: "Innerhalb von 2 Werktagen, persönlich per E-Mail. Bewerbungen als Trainerin oder Trainer beantworten wir innerhalb von sieben Tagen.",
       },
       {
         q: "Muss ich schon genau wissen, was ich brauche?",
@@ -114,7 +109,7 @@ const de: PageDef = {
       },
       {
         q: "Was kostet der Einstieg?",
-        a: "Das Kennenlernen ist kostenlos und unverbindlich. Schulungen buchen Sie pro Team, ab 1.790 € netto für einen halben Tag. Der KI-Check kostet 990 € netto zzgl. USt. als Festpreis, nur für Unternehmen: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen.",
+        a: "Das Kennenlernen ist kostenlos und unverbindlich. Schulungen buchen Sie pro Team, ab 1.790 € netto für einen halben Tag. Der KI-Check kostet 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Den Bericht erhalten Sie auch dann, wenn wir keine Automatisierung empfehlen. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Wann sind Termine möglich?",
@@ -125,7 +120,7 @@ const de: PageDef = {
   cta: {
     label: "KI-Check",
     h: "Lieber erst die Abläufe prüfen lassen?",
-    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt. Er kostet 990 € netto.",
+    p: "Der KI-Check zeigt, wo sich Automatisierung bei Ihnen lohnt: schriftlich, mit Fragebogen und Bericht.",
     primary: { label: "Zum KI-Check", to: "check" },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -136,25 +131,17 @@ const en: PageDef = {
   meta: {
     title: "Contact: request training or an AI check",
     description:
-      "Write to OpSolid by form or email: a course for your team or a workflow that costs you time. We usually reply within a few working days.",
+      "Write to OpSolid by form or email about a course for your team or a workflow that costs you time. The intro is free. We reply within 2 working days.",
   },
   crumbs: [],
   crumb: "Contact",
   hero: {
     eyebrow: "Contact",
     h1: ["A course or a workflow: tell us", "what you need", ""],
-    lede: "Three sentences are enough: which team needs training, or which workflow costs you time? We reply personally by email, usually within a few working days.",
+    lede: "Three sentences are enough: which team needs training, or which workflow costs you time? We reply personally by email, within 2 working days.",
     primary: { label: "Write a message", to: "kontakt", hash: "formular" },
     secondary: { label: "See the courses", to: "schulungen" },
     facts: ["NDA before the analysis", "Introductory call free and without obligation"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: message, reply, call, quote",
-      caption: "From your message to a quote: you decide after every step.",
-      fig: "0.1",
-      labels: ["Message", "Reply", "Call", "Quote"],
-    },
   },
   blocks: [
     {
@@ -166,6 +153,7 @@ const en: PageDef = {
       lede: "Choose a topic, describe your workflow briefly: that is enough for a first reply.",
       topics: [
         { value: "schulung", label: "AI training for my team" },
+        { value: "vormerken", label: "Register interest in a planned course" },
         { value: "ki-check", label: "AI check" },
         { value: "beratung", label: "AI consulting and AI automation" },
         { value: "trainer", label: "Becoming a trainer" },
@@ -191,7 +179,7 @@ const en: PageDef = {
         },
         {
           h: "A quote: training or AI check",
-          p: "For training you receive a quote per team with date, trainer and price. If an AI check makes sense first, a quote for €990 net, a fixed price: a questionnaire and a written report with a training recommendation, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis.",
+          p: "For training you receive a quote per team with date, trainer and price. If an AI check makes sense first, a quote for €990 net, a fixed price: a questionnaire and a written report with a training recommendation, usually 10 working days after we receive the questionnaire. We sign the NDA before the analysis. Credited in full against a follow-up order within 60 days.",
         },
       ],
     },
@@ -224,7 +212,7 @@ const en: PageDef = {
     items: [
       {
         q: "How quickly do you reply?",
-        a: "Usually within a few working days, personally by email. We reply to trainer applications within seven days.",
+        a: "Within 2 working days, personally by email. We reply to trainer applications within seven days.",
       },
       {
         q: "Do I need to know exactly what I need?",
@@ -236,7 +224,7 @@ const en: PageDef = {
       },
       {
         q: "What does it cost to get started?",
-        a: "The intro is free and without obligation. Training is booked per team, from €1,790 net for a half day. The AI check costs €990 net of VAT, a fixed price, for businesses only: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a course or pilot within 60 days. You receive the report even if we do not recommend any automation.",
+        a: "The intro is free and without obligation. Training is booked per team, from €1,790 net for a half day. The AI check costs €990 net, fixed price: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days. You receive the report even if we do not recommend any automation. All prices are net of VAT and for businesses only.",
       },
       {
         q: "When can we talk?",
@@ -247,7 +235,7 @@ const en: PageDef = {
   cta: {
     label: "AI check",
     h: "Would you rather have your workflows checked first?",
-    p: "The AI check shows where automation pays off for you. It costs €990 net.",
+    p: "The AI check shows where automation pays off for you: in writing, with a questionnaire and a report.",
     primary: { label: "To the AI check", to: "check" },
     secondary: { label: "To AI consulting", to: "beratung" },
   },
@@ -258,25 +246,17 @@ const tr: PageDef = {
   meta: {
     title: "İletişim: eğitim ya da YZ Kontrolü isteyin",
     description:
-      "OpSolid'e form ya da e-postayla yazın: ekibiniz için bir eğitim ya da zaman kaybettiren bir iş akışı. Genellikle birkaç iş günü içinde yanıt veririz.",
+      "OpSolid'e form ya da e-postayla yazın: ekibiniz için bir eğitim ya da zaman kaybettiren bir iş akışı. Tanışma ücretsizdir. 2 iş günü içinde yanıt veririz.",
   },
   crumbs: [],
   crumb: "İletişim",
   hero: {
     eyebrow: "İletişim",
     h1: ["Eğitim mi, iş akışı mı:", "neye ihtiyacınız", "olduğunu anlatın"],
-    lede: "Üç cümle yeter: hangi ekip eğitim alacak ya da hangi iş akışı zaman kaybettiriyor? Size e‑postayla bizzat yanıt veririz; genellikle birkaç iş günü içinde.",
+    lede: "Üç cümle yeter: hangi ekip eğitim alacak ya da hangi iş akışı zaman kaybettiriyor? Size e‑postayla bizzat yanıt veririz; 2 iş günü içinde.",
     primary: { label: "Mesaj yazın", to: "kontakt", hash: "formular" },
     secondary: { label: "Eğitimlere bakın", to: "schulungen" },
     facts: ["Analizden önce NDA", "Tanışma görüşmesi ücretsiz ve bağlayıcı değil"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: mesaj, yanıt, görüşme, teklif",
-      caption: "Mesajınızdan teklife: Her adımdan sonra siz karar verirsiniz.",
-      fig: "0.1",
-      labels: ["Mesaj", "Yanıt", "Görüşme", "Teklif"],
-    },
   },
   blocks: [
     {
@@ -288,6 +268,7 @@ const tr: PageDef = {
       lede: "Konuyu seçin, iş akışınızı kısaca anlatın: ilk yanıt için bu yeterli.",
       topics: [
         { value: "schulung", label: "Ekibim için YZ eğitimi" },
+        { value: "vormerken", label: "Planlanan bir eğitime ilgimi bildirmek istiyorum" },
         { value: "ki-check", label: "YZ Kontrolü" },
         { value: "beratung", label: "Yapay zeka danışmanlığı ve otomasyonu" },
         { value: "trainer", label: "Eğitmen olmak" },
@@ -313,7 +294,7 @@ const tr: PageDef = {
         },
         {
           h: "Teklif: eğitim ya da YZ Kontrolü",
-          p: "Eğitim için tarih, eğitmen ve fiyat içeren, ekip başına bir teklif alırsınız. Önce bir YZ Kontrolü anlamlıysa 990 € (net, sabit fiyat) tutarında bir teklif: soru formu ve eğitim önerisi içeren yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız.",
+          p: "Eğitim için tarih, eğitmen ve fiyat içeren, ekip başına bir teklif alırsınız. Önce bir YZ Kontrolü anlamlıysa 990 € (net, sabit fiyat) tutarında bir teklif: soru formu ve eğitim önerisi içeren yazılı rapor; rapor genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde gelir. NDA'yı analizden önce imzalarız. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
         },
       ],
     },
@@ -346,7 +327,7 @@ const tr: PageDef = {
     items: [
       {
         q: "Ne kadar hızlı yanıt veriyorsunuz?",
-        a: "Genellikle birkaç iş günü içinde, e-postayla ve kişisel olarak. Eğitmen başvurularını yedi gün içinde yanıtlıyoruz.",
+        a: "2 iş günü içinde, e-postayla ve kişisel olarak. Eğitmen başvurularını yedi gün içinde yanıtlıyoruz.",
       },
       {
         q: "Ne istediğimi tam olarak bilmem gerekiyor mu?",
@@ -358,7 +339,7 @@ const tr: PageDef = {
       },
       {
         q: "Başlamak ne kadar tutar?",
-        a: "Tanışma ücretsizdir ve bağlayıcı değildir. Eğitimler ekip başına rezerve edilir, yarım gün için 1.790 €'dan (net) itibaren. YZ Kontrolü 990 € (net, KDV hariç, sabit fiyat, yalnızca şirketler için): soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız.",
+        a: "Tanışma ücretsizdir ve bağlayıcı değildir. Eğitimler ekip başına rezerve edilir, yarım gün için 1.790 €'dan (net) itibaren. YZ Kontrolü 990 € (net, sabit fiyat): soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomasyon önermesek de raporu alırsınız. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Ne zaman görüşebiliriz?",
@@ -369,10 +350,26 @@ const tr: PageDef = {
   cta: {
     label: "YZ Kontrolü",
     h: "Önce iş akışlarınıza mı bakalım?",
-    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir. Ücreti 990 € (net).",
+    p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini yazılı olarak, soru formu ve raporla gösterir.",
     primary: { label: "YZ Kontrolüne", to: "check" },
     secondary: { label: "Yapay zeka danışmanlığına", to: "beratung" },
   },
 };
+
+/* R2: the hero object, the live "Was nach Ihrer Nachricht passiert" steps as a schema sheet (verbatim notes). */
+const KONTAKT_NOTES: Record<"de" | "en" | "tr", [string, string, string]> = {
+  de: ["Vieles klären wir schon schriftlich.", "15 bis 30 Minuten per Video", "Die NDA unterzeichnen wir vor der Analyse."],
+  en: ["Much of it we settle in writing.", "15 to 30-minute video call", "We sign the NDA before the analysis."],
+  tr: ["Çoğu konuyu yazılı olarak netleştiririz.", "15-30 dakikalık görüntülü görüşme", "NDA'yı analizden önce imzalarız."],
+};
+for (const [loc, d, etikett, stamp] of [
+  ["de", de, "Schema · nach Ihrer Anfrage", "Schema"],
+  ["en", en, "Schema · after your enquiry", "Schema"],
+  ["tr", tr, "Şema · talebinizden sonra", "Şema"],
+] as const) {
+  const b = blockOf(d, "steps", "ablauf");
+  const notes = KONTAKT_NOTES[loc];
+  d.hero.object = liste(etikett, { title: b.h, sub: b.note ?? b.label, stamp }, b.items.map((it, i) => ({ text: it.h, note: frag(it.p, notes[i]) })), { numbered: true });
+}
 
 export const page: PageSet = { de, en, tr };

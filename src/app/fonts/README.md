@@ -2,8 +2,10 @@
 
 Every font the site uses is a file in this folder (or in the `geist` npm package). The build does not contact Google Fonts.
 
-- Marketing faces (Fraunces, Inter, Geist Mono) and Archivo: declared in `src/app/layout.tsx`, where each file's origin is described.
+- Archivo, Inter, Fraunces and Geist Mono: declared in `src/app/layout.tsx`, where each file's origin is described.
 - App-surface families (IBM Plex Mono, Plus Jakarta Sans, Fira Code, Instrument Serif, JetBrains Mono): declared per subset in `subset-families.ts`, joined in `src/app/globals.css`.
+
+Since the Werkstatt port (design C, owner decision 81, 2026-11-15) the marketing pages use two faces: **Archivo** (`archivo-v4.woff2`, display and body, wght 400 to 800, wdth 100 to 118 %, the only preloaded file) and **IBM Plex Mono** 400 (labels, the existing latin and latin-ext subset files, read through `--font-plex-mono`). No font file was added and no licence changed. Inter, Fraunces and Geist Mono stay for app surfaces, the OG card renderer and templates, none of them preloaded.
 
 ## App-surface families: where each file came from
 

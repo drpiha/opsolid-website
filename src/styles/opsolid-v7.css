@@ -1,40 +1,29 @@
-/* OpSolid v7 (relaunch 2026-10-29, direction A "Klarheit").
-   Tokens and base styles for the marketing surface. Scoped to html[data-v4] (internal flag name, kept);
-   app surfaces keep their own theme. Components use Tailwind utilities with the hex values below;
-   this file owns the page ground, fonts, focus, the skip link and the few things utilities cannot do. */
+/* OpSolid marketing surface: page-level helpers (skip link, hero entrance, text floor, video slot, the old
+   phone menu dialog, legacy element scope). Since the Werkstatt port (design C, owner decision 81) the tokens,
+   fonts, type roles, focus and the page ground live in src/styles/werkstatt/ (tokens.css, base.css), loaded
+   after this file. The A variables below are aliases of the Werkstatt tokens, so code that still reads them
+   gets the C colours. Scoped to html[data-v4] (internal flag name, kept). */
 
 html[data-v4],
 html[data-v4][data-theme] {
-  --porcelain: #f6f2ec;
-  --paper: #ffffff;
-  --ink: #16191d;
-  --stone: #6b665f;
-  --copper: #b5623a;
-  --copper-deep: #8a4524;
-  --line: #e3dcd1;
-  --v7-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --v7-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --v7-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --porcelain: var(--wk-paper);
+  --paper: var(--wk-sheet);
+  --ink: var(--wk-ink);
+  --stone: var(--wk-muted);
+  --copper: var(--wk-copper);
+  --copper-deep: var(--wk-copper-deep);
+  --line: var(--wk-line);
+  --v7-display: var(--wk-sans);
+  --v7-body: var(--wk-sans);
+  --v7-mono: var(--wk-mono);
   color-scheme: light;
-  background: var(--porcelain);
-  scroll-padding-top: calc(88px + env(safe-area-inset-top, 0px));
-  scroll-padding-bottom: 16px;
+  background: var(--wk-paper);
 }
 
 html[data-v4] body {
-  background: var(--porcelain);
-  color: var(--ink);
-  font-family: var(--v7-body);
-  font-size: 17px;
-  line-height: 1.6;
-  font-stretch: 100%;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   hyphens: manual;
-  overflow-x: clip;
-}
-@media (min-width: 768px) {
-  html[data-v4] body { font-size: 18px; }
 }
 @media (max-width: 639px) {
   /* Phones: automatic hyphenation only for long words, with at least 4 letters on each side of the break
@@ -44,29 +33,6 @@ html[data-v4] body {
 /* Hero ledes are never auto-hyphenated (explicit soft hyphens only, for long German compounds). */
 html[data-v4] .v7-lede { hyphens: manual; }
 html[data-v4] body.grain::before { display: none; }
-
-html[data-v4] .f-display {
-  font-family: var(--v7-display);
-  /* Static pre-instanced Fraunces (weight 300, SOFT 50, WONK 0, opsz 72): no variation settings apply. */
-  font-weight: 300;
-  font-synthesis: none;
-  font-stretch: 100%;
-}
-html[data-v4] .f-mono {
-  font-family: var(--v7-mono);
-  letter-spacing: 0.02em;
-  font-stretch: 100%;
-  /* mono fact lines and captions: no auto-hyphenation ("Analy-se") */
-  hyphens: manual;
-}
-
-html[data-v4] ::selection { background: #e9cdbb; color: var(--ink); }
-html[data-v4] :focus-visible {
-  outline: 2px solid var(--copper-deep);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-html[data-v4] .on-ink :focus-visible { outline-color: #e8b99e; }
 
 html[data-v4] h1,
 html[data-v4] h2,
@@ -81,12 +47,13 @@ html[data-v4] .v7 a { text-underline-offset: 6px; }
   position: fixed;
   left: 12px;
   top: -80px;
-  z-index: 100;
-  background: #16191d;
-  color: #f6f2ec;
-  padding: 12px 18px;
-  border-radius: 14px;
-  font-weight: 500;
+  z-index: 200;
+  background: var(--wk-sheet);
+  color: var(--wk-text);
+  padding: 12px 16px;
+  border-radius: var(--wk-r-2);
+  font-weight: 600;
+  box-shadow: 0 0 0 1.5px var(--wk-ink);
   transition: top 0.15s;
 }
 .v7-skip:focus { top: 12px; }
@@ -115,21 +82,11 @@ html[data-v4] [class*="before:text-[11px]"]::before { font-size: 12px; }
   .v7-ar { aspect-ratio: var(--arp, var(--ar)); }
 }
 
-/* Full-screen mobile menu: a native modal <dialog>. */
-.v7-menu { margin: 0; padding: 0; border: 0; width: 100%; max-width: none; height: 100%; max-height: none; background: #f6f2ec; color: #16191d; }
-.v7-menu::backdrop { background: rgba(22, 25, 29, 0.4); }
-.v7-menu:not([open]) { display: none; }
-.v7-menu[open] { display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; }
-html:has(.v7-menu[open]) { overflow: hidden; }
-
 /* A hero with the fact strip hands over to its first section sooner on phones: the strip already carries the
    offer, so the section hairline follows at 64 px instead of 112 px. Desktop keeps the section rhythm. */
 @media (max-width: 767px) {
   html[data-v4] .v7-hero-strip + .v7-still > section { margin-top: 3rem; }
 }
-
-/* Header ground: opaque porcelain, no glass. */
-.v7-header { background: #f6f2ec; padding-top: env(safe-area-inset-top, 0px); }
 
 /* Legacy element rules (tokens.css) colour h1-h4 and p with --ink-*. Inside v7 they inherit instead, so
    text on the ink panel stays light. Zero-specificity scope: same weight as the element rules, loaded later. */

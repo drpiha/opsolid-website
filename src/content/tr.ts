@@ -121,6 +121,8 @@ export const content: Content = {
           "Çalışanlar için yapay zeka eğitiminin maliyeti: kişi başı ya da ekip başı fiyat, tutarı neyin belirlediği ve 1.790 €'dan (net) başlayan ekip fiyatlarımız.",
         category: "training",
         date: "2026-11-14",
+        // 2026-11-15: format and price-model wording without on-site training or "Festpreis" (site rules 1 and 2)
+        modified: "2026-11-15",
       },
       {
         slug: "yapay-zeka-egitimi-zorunlu-mu-ai-act-madde-4",

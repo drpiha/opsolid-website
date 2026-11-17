@@ -15,13 +15,14 @@ const KIND_TAG: Record<string, string> = {
   "ki-check": "KI-Check",
   beratung: "Beratung",
   schulung: "Schulung",
+  vormerken: "Vormerken",
   trainer: "Trainer",
   opso: "OpSo",
   sonstiges: "Sonstiges",
 };
 const TRAINER_TOPIC_LABEL = {
   copilot: "Microsoft 365 Copilot",
-  alltag: "KI im Arbeitsalltag",
+  alltag: "Generative KI im Büro",
   automatisierung: "Workflow-Automatisierung",
   grundlagen: "KI-Kompetenz, Datenschutz und Regeln",
 } as const;

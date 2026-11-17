@@ -5,6 +5,7 @@
  * disambiguation is one FAQ item (plus JSON-LD), not a section; OpSo is one row without status dates.
  */
 import type { PageDef, PageSet } from "../types";
+import { WAY } from "../menu";
 
 const de: PageDef = {
   key: "ueber",
@@ -22,14 +23,6 @@ const de: PageDef = {
     primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "KI-Check ansehen", to: "check" },
     facts: ["Unabhängig von KI-Anbietern", "Trainer vor der Buchung namentlich genannt", "Umfang und Preis vorab schriftlich"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Aufnahme, Messung, Pilot, Übergabe",
-      caption: "Aufnehmen, messen, pilotieren, übergeben.",
-      fig: "0.1",
-      labels: ["Aufnahme", "Messung", "Pilot", "Übergabe"],
-    },
   },
   blocks: [
     {
@@ -48,11 +41,11 @@ const de: PageDef = {
         {
           tag: "2 · Beratung",
           h: "KI-Beratung und KI-Automatisierung",
-          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, der mit einer Schulungsempfehlung endet. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
+          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, der mit einer Schulungsempfehlung endet. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
           href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
-          tag: "3 · Eigenes Produkt",
+          tag: "3 · Eigene Produkte",
           h: "OpSo, unsere digitale Visitenkarte",
           p: "Unsere eigene App für digitale Visitenkarten, getrennt von Schulung und Beratung: kostenlos im App Store und bei Google Play, in der EU, der Schweiz und Großbritannien. App, Webkarten und Verwaltung haben wir selbst entwickelt.",
           href: { label: "Zu OpSo", to: "opso" },
@@ -155,7 +148,7 @@ const de: PageDef = {
       },
       {
         q: "Wie beginnt die Zusammenarbeit, und was kostet der Einstieg?",
-        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen, per E-Mail oder kurz per Video. Auf Wunsch folgt der KI-Check für 990 € netto: Fragebogen und schriftlicher Bericht, NDA vor der Analyse. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen, per E-Mail oder kurz per Video. Auf Wunsch folgt der KI-Check für 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -184,14 +177,6 @@ const en: PageDef = {
     primary: { label: "Request a course", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the AI check", to: "check" },
     facts: ["Independent of AI vendors", "Trainer named before you book", "Scope and price in writing first"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: intake, baseline, pilot, handover",
-      caption: "Map, measure, pilot, hand over.",
-      fig: "0.1",
-      labels: ["Intake", "Baseline", "Pilot", "Handover"],
-    },
   },
   blocks: [
     {
@@ -210,11 +195,11 @@ const en: PageDef = {
         {
           tag: "2 · Consulting",
           h: "AI consulting and AI automation",
-          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net: a questionnaire and a written report that ends with a training recommendation. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
+          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net, fixed price: a questionnaire and a written report that ends with a training recommendation. Credited in full against a follow-up order within 60 days. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
           href: { label: "To AI consulting", to: "beratung" },
         },
         {
-          tag: "3 · Our own product",
+          tag: "3 · Our own products",
           h: "OpSo, our digital business card",
           p: "Our own app for digital business cards, separate from training and consulting: free in the App Store and on Google Play in the EU, Switzerland and the UK. We built the app, the web cards and the admin tools ourselves.",
           href: { label: "To OpSo", to: "opso" },
@@ -317,7 +302,7 @@ const en: PageDef = {
       },
       {
         q: "How does working together begin, and what does the entry point cost?",
-        a: "With a free intro, by email or a short video call, without obligation. If you wish, the AI check follows for €990 net: a questionnaire and a written report, with an NDA before the analysis. All prices are net of VAT and for businesses only.",
+        a: "With a free intro, by email or a short video call, without obligation. If you wish, the AI check follows for €990 net, fixed price: a questionnaire and a written report, with an NDA before the analysis. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       },
     ],
   },
@@ -346,14 +331,6 @@ const tr: PageDef = {
     primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "YZ Kontrolünü görün", to: "check" },
     facts: ["YZ sağlayıcılarından bağımsız", "Eğitmen rezervasyondan önce adıyla bildirilir", "Kapsam ve fiyat önceden yazılı"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: kayıt, ölçüm, pilot, teslim",
-      caption: "Kaydet, ölç, pilotla, teslim et.",
-      fig: "0.1",
-      labels: ["Kayıt", "Ölçüm", "Pilot", "Teslim"],
-    },
   },
   blocks: [
     {
@@ -372,11 +349,11 @@ const tr: PageDef = {
         {
           tag: "2 · Danışmanlık",
           h: "Yapay zeka danışmanlığı ve otomasyonu",
-          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net) tutarındaki YZ Kontrolüdür: soru formu ve eğitim önerisiyle biten yazılı rapor. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
+          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net, sabit fiyat) tutarındaki YZ Kontrolüdür: soru formu ve eğitim önerisiyle biten yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
           href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
-          tag: "3 · Kendi ürünümüz",
+          tag: "3 · Kendi ürünlerimiz",
           h: "OpSo, dijital kartvizitimiz",
           p: "Eğitim ve danışmanlıktan ayrı, dijital kartvizit için kendi uygulamamız: AB, İsviçre ve Birleşik Krallık'ta App Store ve Google Play'de ücretsiz. Uygulamayı, web kartlarını ve yönetim araçlarını kendimiz geliştirdik.",
           href: { label: "OpSo'ya", to: "opso" },
@@ -479,7 +456,7 @@ const tr: PageDef = {
       },
       {
         q: "İş birliği nasıl başlar, giriş ne kadar tutar?",
-        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla; e-postayla ya da kısa bir görüntülü görüşmeyle. İsterseniz ardından YZ Kontrolü gelir, 990 € (net): soru formu ve yazılı rapor, analizden önce NDA. Tüm fiyatlar net, KDV hariçtir ve yalnızca şirketler içindir.",
+        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla; e-postayla ya da kısa bir görüntülü görüşmeyle. İsterseniz ardından YZ Kontrolü gelir, 990 € (net, sabit fiyat): soru formu ve yazılı rapor, analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
     ],
   },
@@ -491,5 +468,11 @@ const tr: PageDef = {
     secondary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
   },
 };
+
+/* R2: the hero object, the "Arbeitsweise" way schema of the Unternehmen card. */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as const) {
+  const w = WAY[loc];
+  d.hero.object = { kind: "way", labels: w.labels, base: w.base, ariaLabel: w.ariaLabel, etikett: w.etikett };
+}
 
 export const page: PageSet = { de, en, tr };

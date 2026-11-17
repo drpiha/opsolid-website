@@ -19,6 +19,44 @@ test("href: German home is the domain root, other homes carry the locale", () =>
   assert.equal(R.href("home", "de", { sub: "/x" }), "/de/x");
 });
 
+test("decisions 72 and 73: Produkte page, KI-Agenten course page, consulting page at ki-assistenten", () => {
+  assert.equal(R.href("workflows", "de"), "/de/ki-schulungen/ki-agenten");
+  assert.equal(R.href("workflows", "en"), "/en/ai-training/ai-agents");
+  assert.equal(R.href("workflows", "tr"), "/tr/yapay-zeka-egitimleri/yz-ajanlari");
+  assert.equal(R.href("produkte", "de"), "/de/produkte");
+  assert.equal(R.href("produkte", "en"), "/en/our-products");
+  assert.equal(R.href("produkte", "tr"), "/tr/urunler");
+  assert.equal(R.href("agenten", "de"), "/de/ki-beratung/ki-assistenten");
+  assert.equal(R.href("agenten", "en"), "/en/ai-automation-consulting/ai-assistants");
+  assert.equal(R.href("agenten", "tr"), "/tr/yapay-zeka-danismanligi/yz-asistanlari");
+  // decision 80: German slugs for contact and privacy; EN and TR keep theirs
+  assert.equal(R.href("kontakt", "de"), "/de/kontakt");
+  assert.equal(R.href("kontakt", "en"), "/en/contact");
+  assert.equal(R.href("kontakt", "tr"), "/tr/iletisim");
+  assert.equal(R.href("privacy", "de"), "/de/datenschutz");
+  assert.equal(R.href("privacy", "en"), "/en/privacy");
+  assert.equal(R.href("privacy", "tr"), "/tr/privacy");
+  assert.equal(R.alternates("kontakt").de, "https://opsolid.de/de/kontakt");
+  assert.equal(R.alternates("kontakt")["x-default"], "https://opsolid.de/de/kontakt");
+  assert.equal(R.keyForPublicPath("/de/kontakt")?.key, "kontakt");
+  assert.equal(R.keyForPublicPath("/de/datenschutz")?.key, "privacy");
+  assert.equal(R.publicToInternal("en", "/our-products"), "/produkte");
+  assert.equal(R.publicToInternal("tr", "/urunler"), "/produkte");
+  assert.equal(R.publicToInternal("de", "/produkte"), null);
+  assert.equal(R.publicToInternal("en", "/ai-training/ai-agents"), "/ki-schulungen/ki-agenten");
+  assert.equal(R.publicToInternal("en", "/ai-automation-consulting/ai-assistants"), "/ki-beratung/ki-assistenten");
+  assert.equal(R.keyForPublicPath("/en/our-products")?.key, "produkte");
+  assert.equal(R.keyForPublicPath("/tr/urunler")?.key, "produkte");
+  assert.equal(R.keyForPublicPath("/de/ki-schulungen/ki-agenten")?.key, "workflows");
+  assert.equal(R.keyForPublicPath("/en/ai-training/ai-agents")?.key, "workflows");
+  assert.equal(R.keyForPublicPath("/de/ki-beratung/ki-assistenten")?.key, "agenten");
+  // the old consulting slugs are no own page any more (they 301, see redirects.test.mts); the prefix match only sees
+  // them as a child path of the consulting hub
+  assert.notEqual(R.keyForPublicPath("/de/ki-beratung/ki-agenten")?.key, "agenten");
+  assert.notEqual(R.keyForPublicPath("/en/ai-automation-consulting/ai-agents")?.key, "agenten");
+  for (const p of ["/de/produkte", "/en/our-products", "/tr/urunler", "/produkte", "/our-products", "/urunler"]) assert.equal(V4.isV4Path(p), true, p);
+});
+
 test("absUrl and alternates use public URLs, x-default is German", () => {
   assert.equal(R.absUrl("home", "de"), "https://opsolid.de/");
   assert.equal(R.absUrl("home", "en"), "https://opsolid.de/en");
@@ -47,12 +85,15 @@ test("publicToInternal: EN/TR slugs rewrite to the German route folder, own fold
   assert.equal(R.publicToInternal("en", "/ai-automation-consulting/"), "/ki-beratung");
   assert.equal(R.publicToInternal("tr", "/yapay-zeka-danismanligi/yz-kontrolu"), "/ki-beratung/ki-check");
   assert.equal(R.publicToInternal("en", "/about"), "/ueber-uns");
-  assert.equal(R.publicToInternal("tr", "/iletisim"), "/contact");
+  assert.equal(R.publicToInternal("tr", "/iletisim"), "/kontakt");
   assert.equal(R.publicToInternal("en", "/ai-training/ai-literacy"), "/ki-schulungen/ki-kompetenz");
   // same slug in every locale → no rewrite
   assert.equal(R.publicToInternal("en", "/opso"), null);
   assert.equal(R.publicToInternal("en", "/blog"), null);
-  assert.equal(R.publicToInternal("en", "/contact"), null);
+  // decision 80: the German folder is /kontakt, so the EN slug /contact rewrites to it
+  assert.equal(R.publicToInternal("en", "/contact"), "/kontakt");
+  assert.equal(R.publicToInternal("en", "/privacy"), "/datenschutz");
+  assert.equal(R.publicToInternal("de", "/kontakt"), null);
   assert.equal(R.publicToInternal("de", "/ki-beratung"), null);
   // children of identical slugs and unknown paths pass through
   assert.equal(R.publicToInternal("en", "/blog/post"), null);
@@ -66,7 +107,11 @@ test("foreignSlugTarget: another locale's slug or the German folder 301s to the 
   assert.equal(R.foreignSlugTarget("tr", "/ai-training"), "/yapay-zeka-egitimleri");
   assert.equal(R.foreignSlugTarget("de", "/about"), "/ueber-uns");
   assert.equal(R.foreignSlugTarget("tr", "/contact"), "/iletisim");
-  assert.equal(R.foreignSlugTarget("de", "/iletisim"), "/contact");
+  assert.equal(R.foreignSlugTarget("de", "/iletisim"), "/kontakt");
+  assert.equal(R.foreignSlugTarget("de", "/contact"), "/kontakt");
+  assert.equal(R.foreignSlugTarget("de", "/privacy"), "/datenschutz");
+  assert.equal(R.foreignSlugTarget("en", "/kontakt"), "/contact");
+  assert.equal(R.foreignSlugTarget("en", "/datenschutz"), "/privacy");
   assert.equal(R.foreignSlugTarget("en", "/ueber-uns"), "/about");
   assert.equal(R.foreignSlugTarget("en", "/ki-beratung/ki-check/"), "/ai-automation-consulting/ai-check");
   // own slugs, shared slugs, unknown paths and the home do not redirect
@@ -133,7 +178,7 @@ test("isV4Path knows every public marketing first segment and still excludes app
   const marketing = [
     "/", "/de", "/en", "/de/ki-beratung", "/en/ai-automation-consulting/ai-check", "/tr/yapay-zeka-danismanligi",
     "/en/ai-training", "/tr/yapay-zeka-egitimleri", "/en/projects", "/tr/projeler", "/en/about", "/tr/hakkimizda",
-    "/tr/iletisim", "/de/ueber-uns", "/en/contact", "/en/blog/x", "/de/impressum", "/en/opso",
+    "/tr/iletisim", "/de/ueber-uns", "/en/contact", "/de/kontakt", "/de/datenschutz", "/en/privacy", "/tr/privacy", "/en/blog/x", "/de/impressum", "/en/opso",
     "/en/no-such-page",
   ];
   for (const p of marketing) assert.equal(V4.isV4Path(p), true, p);
@@ -158,8 +203,12 @@ test("every opsolid.de URL in llms.txt is a current public page or journal post"
   for (const l of R.L3_LOCALES) for (const p of contents[l].blog.posts) valid.add(R.absUrl("blog", l, `/${p.slug}`));
   const urls = (txt.match(/https:\/\/opsolid\.de[^\s)\]>,]*/g) ?? []).map((u) => u.replace(/[.;:]+$/, ""));
   const pageUrls = urls.map((u) => (u === "https://opsolid.de" ? "https://opsolid.de/" : u)).filter((u) => !/\.(txt|xml|png|jpg|svg|ico)$/.test(u));
-  // 14 sitemap pages and 3 journal posts per locale since the 2026-11-14 clean-up, plus a few inline links
-  assert.ok(pageUrls.length > 50);
+  // 16 PageDef pages and 3 journal posts per locale since the C port (2026-11-15), plus a few inline links
+  assert.ok(pageUrls.length > 56);
+  for (const l of R.L3_LOCALES) {
+    assert.ok(pageUrls.includes(R.absUrl("produkte", l)), `llms.txt lists the ${l} Produkte page`);
+    assert.ok(pageUrls.includes(R.absUrl("workflows", l)), `llms.txt lists the ${l} KI-Agenten course page`);
+  }
   for (const u of pageUrls) assert.ok(valid.has(u), `llms.txt links a URL that is not a public page: ${u}`);
 });
 
@@ -169,9 +218,12 @@ test("llms.txt follows the llmstxt.org shape and states only the published price
   for (const h of ["## Seiten (Deutsch)", "## Pages (English)", "## Sayfalar (Türkçe)", "## Journal", "## Optional"]) assert.ok(txt.includes(`\n${h}\n`), h);
   // every page entry is a Markdown link with a note
   const links = txt.split("\n").filter((l) => l.startsWith("- [") && l.includes("](https://opsolid.de"));
-  assert.ok(links.length >= 42 + 9, `${links.length} link lines`);
+  assert.ok(links.length >= 48 + 9, `${links.length} link lines`);
   for (const l of links) assert.match(l, /^- \[[^\]]+\]\(https:\/\/opsolid\.de[^)]*\)(: .+)?$/);
   assert.ok(!/[–—]/.test(txt), "no en or em dash");
-  for (const p of ["990 €", "1.790 €", "2.900 €", "5.900 €", "€990", "€1,790", "€2,900", "€5,900", "24,90 €"]) assert.ok(txt.includes(p), p);
+  for (const p of ["990 €", "1.790 €", "2.900 €", "5.900 €", "€990", "€1,790", "€2,900", "€5,900"]) assert.ok(txt.includes(p), p);
   assert.ok(!/490 €|€490/.test(txt), "the old KI-Check price must not come back");
+  // decision 78: the OpSo NFC card has no price anywhere; rule 3: no "Einzelunternehmen"
+  assert.ok(!/24[.,]90/.test(txt), "no NFC card price");
+  assert.ok(!txt.includes("Einzelunternehmen"), "no Einzelunternehmen");
 });

@@ -1,18 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { FORM } from "@/content/v7/form";
+import type { FormText } from "@/content/v7/form";
 import type { BlockOf } from "@/content/v7/types";
 import { href, type L3 } from "@/lib/v7-routes";
 import { sendFailure, type SendFailure } from "@/lib/contact-feedback";
 
-const mono = "font-[family-name:var(--font-geist-mono),ui-monospace,monospace] tracking-[0.02em]";
-const label = `${mono} mb-2 block text-[12px] uppercase text-[#6B665F]`;
-// Control and chip borders are #8F877C: 3.5:1 on paper and 3.2:1 on porcelain (WCAG 1.4.11 needs 3:1).
-const control =
-  "block min-h-[52px] w-full rounded-[16px] border border-[#8F877C] bg-white px-4 py-3 text-[17px] text-[#16191D] placeholder:text-[#6B665F] aria-[invalid=true]:border-[#A12A1B]";
+// C form (design "Werkstatt"): a sheet card (.wk-form), fields from src/styles/werkstatt/blocks.css (.wk-field). Control
+// and chip borders use --wk-control (#7d7a74: 4.28:1 on white, 4.13:1 on sheet; WCAG 1.4.11 needs 3:1).
 const chip =
-  "inline-flex min-h-[44px] items-center rounded-full border border-[#8F877C] bg-white px-4 text-[16px] transition-colors peer-checked:border-[#16191D] peer-checked:bg-[#16191D] peer-checked:text-[#F6F2EC] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#8A4524]";
+  "inline-flex min-h-[44px] items-center rounded-[10px] border-[1.5px] border-wk-control bg-white px-4 text-[15px] font-[540] text-wk-ink transition-colors hover:border-wk-ink peer-checked:border-wk-ink peer-checked:bg-wk-ink peer-checked:text-wk-text-d peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-wk-copper-deep";
 
 type Field = "name" | "email" | "message" | "ttopics" | "languages" | "region" | "link" | "consent";
 // Page order, so focus goes to the first invalid field the visitor sees.
@@ -30,8 +27,8 @@ const EMAIL = /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][
 const isValid = (k: Field, v: string) =>
   k === "email" ? EMAIL.test(v.trim()) : k === "link" ? v.trim() === "" || LINK.test(normLink(v.trim())) : v.trim().length > 0;
 
-export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale: L3 }) {
-  const t = FORM[locale];
+/** `t` is the form copy of this locale, passed by the server block (FormBlock) so the client bundle carries no copy. */
+export function ContactForm({ block, locale, t }: { block: BlockOf<"form">; locale: L3; t: FormText }) {
   const tt = t.trainer;
   const [topics, setTopics] = useState<Set<string>>(new Set());
   const [tTopics, setTTopics] = useState<Set<string>>(new Set());
@@ -198,7 +195,7 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
     return (
       <>
         {before}
-        <a className="font-medium text-[#8A4524] underline underline-offset-4" href={`mailto:${t.mail}`}>
+        <a className="font-semibold underline underline-offset-4" href={`mailto:${t.mail}`}>
           {t.mail}
         </a>
         {after}
@@ -212,21 +209,21 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
   });
   const err = (k: Field) =>
     errs[k] ? (
-      <p className="mt-2 text-[15px] font-medium text-[#A12A1B]" id={`f-${k}-err`}>
+      <p className="wk-field-error" id={`f-${k}-err`}>
         {errText[k]}
       </p>
     ) : null;
   const help = (id: string, text: string) => (
-    <p id={id} className="mt-2 text-[14px] leading-[1.5] text-[#6B665F]">
+    <p id={id} className="wk-field-hint">
       {text}
     </p>
   );
 
   if (state === "ok") {
     return (
-      <div ref={okRef} tabIndex={-1} role="status" className="mt-10 rounded-[24px] border border-[#8A4524] bg-white p-6 md:mt-14 md:p-8">
-        <p className={`${mono} text-[12px] uppercase text-[#8A4524]`}>{sentTrainer ? tt.okH : t.okH}</p>
-        <p className="mt-3 max-w-[52ch] text-[18px]">{sentTrainer ? tt.ok : t.ok}</p>
+      <div ref={okRef} tabIndex={-1} role="status" className="wk-form wk-form-ok">
+        <p className="wk-etikett is-solid">{sentTrainer ? tt.okH : t.okH}</p>
+        <p className="mt-4 max-w-[52ch] text-[18px] leading-[1.5]">{sentTrainer ? tt.ok : t.ok}</p>
       </div>
     );
   }
@@ -234,117 +231,103 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
   // noValidate: the checks above replace the browser bubbles (which follow the browser language, not the page).
   // The trainer blocks stay mounted and are only hidden, so typed values survive switching the topic back and forth.
   return (
-    <form onSubmit={submit} onInput={recheck} noValidate className="mt-10 max-w-[720px] space-y-7 md:mt-14">
-      {block.intro && <p className="text-[#16191D]">{block.intro}</p>}
-      <div>
-        <label htmlFor="f-name" className={label}>
-          {t.name}
-        </label>
-        <input id="f-name" name="name" type="text" autoComplete="name" required maxLength={120} className={control} {...mark("name", "f-name-h")} />
-        {help("f-name-h", t.nameHelp)}
-        {err("name")}
-      </div>
-      <div>
-        <label htmlFor="f-email" className={label}>
-          {t.email}
-        </label>
-        <input id="f-email" name="email" type="email" autoComplete="email" inputMode="email" required maxLength={254} className={control} {...mark("email", "f-email-h")} />
-        {help("f-email-h", t.emailHelp)}
-        {err("email")}
-      </div>
-      <div>
-        <label htmlFor="f-company" className={label}>
-          {t.company}
-        </label>
-        <input id="f-company" name="company" type="text" autoComplete="organization" maxLength={160} className={control} />
-      </div>
-      <fieldset className="m-0 border-0 p-0" aria-describedby="f-topics-h">
-        <legend className={label}>{t.topics}</legend>
-        <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
-          {block.topics.map((x) => (
-            <li key={x.value}>
-              <label className="relative inline-flex">
-                <input type="checkbox" checked={topics.has(x.value)} onChange={() => toggle(x.value)} className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0" />
-                <span className={chip}>{x.label}</span>
-              </label>
-            </li>
-          ))}
-        </ul>
-        {help("f-topics-h", isTrainer ? tt.alone : t.topicsHelp)}
-      </fieldset>
-      {/* For an application the copper rule spans the trainer fields and the Kurzprofil, so the whole application
-          reads as one section; for an inquiry the wrapper is plain and the message field looks as before. */}
-      <div
-        role={isTrainer ? "group" : undefined}
-        aria-labelledby={isTrainer ? "f-trainer-h" : undefined}
-        className={isTrainer ? "space-y-7 border-l-2 border-[#B5623A] pl-5 md:pl-7" : "space-y-7"}
-      >
-        <div hidden={!isTrainer} className="space-y-7" data-testid="trainer-fields">
-          <p id="f-trainer-h" className={`${mono} text-[12px] uppercase text-[#8A4524]`}>
-            {tt.group}
-          </p>
-          <fieldset className="m-0 border-0 p-0" aria-describedby={errs.ttopics ? "f-ttopics-h f-ttopics-err" : "f-ttopics-h"}>
-            <legend className={label}>{tt.legend}</legend>
-            <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
-              {tt.topics.map(([k, text], i) => (
-                <li key={k}>
-                  <label className="relative inline-flex">
-                    <input
-                      id={i === 0 ? "f-ttopics" : undefined}
-                      type="checkbox"
-                      checked={tTopics.has(k)}
-                      onChange={() => toggleT(k)}
-                      aria-invalid={errs.ttopics ? true : undefined}
-                      aria-describedby={errs.ttopics ? "f-ttopics-err" : undefined}
-                      className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                    />
-                    <span className={chip}>{text}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-            {help("f-ttopics-h", tt.topicsHelp)}
-            {err("ttopics")}
-          </fieldset>
-          <div>
-            <label htmlFor="f-languages" className={label}>
-              {tt.languages}
-            </label>
-            <input id="f-languages" name="languages" type="text" required maxLength={160} className={control} {...mark("languages", "f-languages-h")} />
-            {help("f-languages-h", tt.languagesHelp)}
-            {err("languages")}
-          </div>
-          <div>
-            <label htmlFor="f-region" className={label}>
-              {tt.region}
-            </label>
-            <input id="f-region" name="region" type="text" required maxLength={160} className={control} {...mark("region", "f-region-h")} />
-            {help("f-region-h", tt.regionHelp)}
-            {err("region")}
-          </div>
-          <div>
-            <label htmlFor="f-link" className={label}>
-              {tt.link}
-            </label>
-            <input id="f-link" name="link" type="url" inputMode="url" autoComplete="url" maxLength={300} placeholder="https://" className={control} {...mark("link", "f-link-h")} />
-            {help("f-link-h", tt.linkHelp)}
-            {err("link")}
-          </div>
-          <div>
-            <label htmlFor="f-rate" className={label}>
-              {tt.rate}
-            </label>
-            <input id="f-rate" name="rate" type="text" maxLength={160} className={control} aria-describedby="f-rate-h" />
-            {help("f-rate-h", tt.rateHelp)}
-          </div>
+    <form onSubmit={submit} onInput={recheck} noValidate className="wk-form">
+      {block.intro && <p className="wk-form-intro">{block.intro}</p>}
+      <div className="wk-form-grid">
+        <div className="wk-field">
+          <label htmlFor="f-name">{t.name}</label>
+          <input id="f-name" name="name" type="text" autoComplete="name" required maxLength={120} {...mark("name", "f-name-h")} />
+          {help("f-name-h", t.nameHelp)}
+          {err("name")}
         </div>
-        <div>
-          <label htmlFor="f-message" className={label}>
-            {isTrainer ? tt.message : t.message}
-          </label>
-          <textarea id="f-message" name="message" required maxLength={10000} rows={6} className={`${control} min-h-[160px]`} {...mark("message", "f-message-h")} />
-          {help("f-message-h", isTrainer ? tt.messageHelp : t.messageHelp)}
-          {err("message")}
+        <div className="wk-field">
+          <label htmlFor="f-email">{t.email}</label>
+          <input id="f-email" name="email" type="email" autoComplete="email" inputMode="email" required maxLength={254} {...mark("email", "f-email-h")} />
+          {help("f-email-h", t.emailHelp)}
+          {err("email")}
+        </div>
+        <div className="wk-field is-wide">
+          <label htmlFor="f-company">{t.company}</label>
+          <input id="f-company" name="company" type="text" autoComplete="organization" maxLength={160} />
+        </div>
+        <fieldset className="wk-field is-wide m-0 border-0 p-0" aria-describedby="f-topics-h">
+          <legend>{t.topics}</legend>
+          <ul className="m-0 mt-1 flex list-none flex-wrap gap-2 p-0">
+            {block.topics.map((x) => (
+              <li key={x.value}>
+                <label className="relative inline-flex">
+                  <input type="checkbox" checked={topics.has(x.value)} onChange={() => toggle(x.value)} className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+                  <span className={chip}>{x.label}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+          {help("f-topics-h", isTrainer ? tt.alone : t.topicsHelp)}
+        </fieldset>
+        {/* For an application a copper rule spans the trainer fields and the Kurzprofil, so the whole application
+            reads as one section; for an inquiry the wrapper is plain and the message field looks as before. */}
+        <div
+          role={isTrainer ? "group" : undefined}
+          aria-labelledby={isTrainer ? "f-trainer-h" : undefined}
+          className={`col-span-full grid gap-[18px] ${isTrainer ? "border-l-2 border-wk-copper pl-5 md:pl-7" : ""}`}
+        >
+          <div hidden={!isTrainer} className="grid gap-[18px] [&[hidden]]:hidden" data-testid="trainer-fields">
+            <p id="f-trainer-h" className="wk-etikett is-solid">
+              {tt.group}
+            </p>
+            <fieldset className="wk-field m-0 border-0 p-0" aria-describedby={errs.ttopics ? "f-ttopics-h f-ttopics-err" : "f-ttopics-h"}>
+              <legend>{tt.legend}</legend>
+              <ul className="m-0 mt-1 flex list-none flex-wrap gap-2 p-0">
+                {tt.topics.map(([k, text], i) => (
+                  <li key={k}>
+                    <label className="relative inline-flex">
+                      <input
+                        id={i === 0 ? "f-ttopics" : undefined}
+                        type="checkbox"
+                        checked={tTopics.has(k)}
+                        onChange={() => toggleT(k)}
+                        aria-invalid={errs.ttopics ? true : undefined}
+                        aria-describedby={errs.ttopics ? "f-ttopics-err" : undefined}
+                        className="peer absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                      />
+                      <span className={chip}>{text}</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              {help("f-ttopics-h", tt.topicsHelp)}
+              {err("ttopics")}
+            </fieldset>
+            <div className="wk-field">
+              <label htmlFor="f-languages">{tt.languages}</label>
+              <input id="f-languages" name="languages" type="text" required maxLength={160} {...mark("languages", "f-languages-h")} />
+              {help("f-languages-h", tt.languagesHelp)}
+              {err("languages")}
+            </div>
+            <div className="wk-field">
+              <label htmlFor="f-region">{tt.region}</label>
+              <input id="f-region" name="region" type="text" required maxLength={160} {...mark("region", "f-region-h")} />
+              {help("f-region-h", tt.regionHelp)}
+              {err("region")}
+            </div>
+            <div className="wk-field">
+              <label htmlFor="f-link">{tt.link}</label>
+              <input id="f-link" name="link" type="url" inputMode="url" autoComplete="url" maxLength={300} placeholder="https://" {...mark("link", "f-link-h")} />
+              {help("f-link-h", tt.linkHelp)}
+              {err("link")}
+            </div>
+            <div className="wk-field">
+              <label htmlFor="f-rate">{tt.rate}</label>
+              <input id="f-rate" name="rate" type="text" maxLength={160} aria-describedby="f-rate-h" />
+              {help("f-rate-h", tt.rateHelp)}
+            </div>
+          </div>
+          <div className="wk-field">
+            <label htmlFor="f-message">{isTrainer ? tt.message : t.message}</label>
+            <textarea id="f-message" name="message" required maxLength={10000} rows={6} className="min-h-[160px]" {...mark("message", "f-message-h")} />
+            {help("f-message-h", isTrainer ? tt.messageHelp : t.messageHelp)}
+            {err("message")}
+          </div>
         </div>
       </div>
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
@@ -353,19 +336,19 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
         <label htmlFor="f-hp">{t.honeypot}</label>
         <input id="f-hp" name="hp_blank" type="text" tabIndex={-1} autoComplete="off" data-1p-ignore="true" data-lpignore="true" data-form-type="other" />
       </div>
-      <div hidden={!isTrainer}>
-        <label className="flex min-h-[44px] cursor-pointer items-start gap-3 py-[10px] text-[16px] leading-[1.5] text-[#16191D]">
+      <div hidden={!isTrainer} className="mt-5">
+        <label className="wk-check min-h-[44px] cursor-pointer py-[10px] text-[16px] leading-[1.5]">
           <input
             type="checkbox"
             name="consent"
             required
             aria-invalid={errs.consent ? true : undefined}
             aria-describedby={errs.consent ? "f-consent-err" : undefined}
-            className="mt-[3px] h-5 w-5 shrink-0 cursor-pointer accent-[#16191D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8A4524]"
+            className="cursor-pointer"
           />
           <span>
             {tt.consent}{" "}
-            <a className="whitespace-nowrap text-[#8A4524] underline underline-offset-4" href={href("privacy", locale, { hash: "bewerbungen" })} target="_blank" rel="noopener">
+            <a className="whitespace-nowrap text-wk-copper-deep underline underline-offset-4" href={href("privacy", locale, { hash: "bewerbungen" })} target="_blank" rel="noopener">
               {tt.consentLink}
               <span className="sr-only"> {tt.newTab}</span>
             </a>
@@ -373,29 +356,27 @@ export function ContactForm({ block, locale }: { block: BlockOf<"form">; locale:
         </label>
         {err("consent")}
       </div>
-      <div className="flex flex-col gap-4">
-        <div>
-          <button
-            type="submit"
-            aria-disabled={state === "sending" || undefined}
-            className="inline-flex min-h-[52px] items-center justify-center rounded-[16px] bg-[#16191D] px-7 text-[16px] font-medium text-[#F6F2EC] transition-colors duration-150 hover:bg-[#8A4524] aria-disabled:opacity-70"
-          >
-            {state === "sending" ? t.sending : isTrainer ? tt.send : t.send}
-          </button>
-        </div>
-        {/* Always mounted, so screen readers announce the notice when it appears. */}
-        <div role="alert">
-          {state === "err" ? (
-            <div ref={failRef} className="scroll-mb-6 rounded-[24px] border border-[#A12A1B] bg-white p-5 md:p-8">
-              <p className={`${mono} text-[12px] uppercase text-[#A12A1B]`}>{t.failH}</p>
-              <p className="mt-3 max-w-[62ch] text-[17px] leading-[1.6] text-[#16191D] [text-wrap:pretty] md:text-[18px]">{failText()}</p>
-            </div>
-          ) : null}
-        </div>
+      <div className="wk-form-foot">
+        {/* Decision 79: the reply promise sits right above the send button (trainer applications keep their seven days). */}
+        <p className="wk-form-reply" hidden={isTrainer || undefined}>
+          {t.reply}
+        </p>
+        <button type="submit" aria-disabled={state === "sending" || undefined} className="wk-btn wk-btn-ink">
+          {state === "sending" ? t.sending : isTrainer ? tt.send : t.send}
+        </button>
       </div>
-      <p className="text-[14px] leading-[1.6] text-[#6B665F]" hidden={isTrainer || undefined}>
+      {/* Always mounted, so screen readers announce the notice when it appears. */}
+      <div role="alert">
+        {state === "err" ? (
+          <div ref={failRef} className="wk-form-status is-error scroll-mb-6">
+            <p className="wk-etikett">{t.failH}</p>
+            <p className="mt-2 max-w-[62ch] text-[16px] leading-[1.55] [text-wrap:pretty]">{failText()}</p>
+          </div>
+        ) : null}
+      </div>
+      <p className="wk-form-consent" hidden={isTrainer || undefined}>
         {t.consent}{" "}
-        <a className="text-[#8A4524] underline underline-offset-4" href={href("privacy", locale)}>
+        <a className="text-wk-copper-deep underline underline-offset-4" href={href("privacy", locale)}>
           {t.privacy}
         </a>
         .

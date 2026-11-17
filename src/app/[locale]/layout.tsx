@@ -8,6 +8,8 @@ import { V4Sync } from "@/components/layout/V4Sync";
 import { ContentGate } from "@/components/layout/ContentGate";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 import { SITE_STR } from "@/content/v7/site";
+import { SiteHeader } from "@/components/v7/shell/SiteHeader";
+import { SiteFooter } from "@/components/v7/shell/SiteFooter";
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -54,7 +56,8 @@ export default function LocaleLayout({
   const publicPath = h.get("x-public-path") ?? h.get("x-pathname") ?? "/";
   const raw = h.get("x-opsolid-suggest");
   const suggest = raw === "en" || raw === "tr" ? raw : "";
-  const skip = SITE_STR[params.locale === "de" || params.locale === "tr" ? params.locale : "en"].skip;
+  const l3 = params.locale === "de" || params.locale === "tr" ? params.locale : "en";
+  const skip = SITE_STR[l3].skip;
 
   return (
     <ClientProviders initialLocale={params.locale}>
@@ -62,13 +65,14 @@ export default function LocaleLayout({
       <a href="#main" className="v7-skip">
         {skip}
       </a>
-      <Header publicPath={publicPath} suggest={suggest} />
+      {/* Marketing paths get the server-rendered Werkstatt shell as a slot; app surfaces keep their own chrome. */}
+      <Header marketing={<SiteHeader locale={l3} publicPath={publicPath} suggest={suggest} />} />
       <main id="main" className="flex-1 relative z-[2]">
         <ContentGate>
           {children}
         </ContentGate>
       </main>
-      <Footer />
+      <Footer marketing={<SiteFooter locale={l3} publicPath={publicPath} />} />
     </ClientProviders>
   );
 }

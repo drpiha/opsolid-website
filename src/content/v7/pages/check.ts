@@ -8,6 +8,10 @@
  * The sample report is a fictional company ("Hausverwaltung Kranich"), labelled as such, with no results.
  */
 import type { PageDef, PageSet } from "../types";
+import { CHECK } from "../offers";
+import { SITE_STR } from "../site";
+import { page as home } from "./home";
+import { report } from "../hero-objects";
 
 const de: PageDef = {
   key: "check",
@@ -25,14 +29,7 @@ const de: PageDef = {
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Ablauf ansehen", to: "check", hash: "ablauf" },
     facts: ["KI-Check 990 € netto, Festpreis", "Fragebogen und schriftlicher Bericht", "NDA vor der Analyse", "Endet mit einer Schulungsempfehlung"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Betrieb, Abläufe, Bericht, Schulung",
-      caption: "Vom ganzen Betrieb zum Bericht und zur passenden Schulung.",
-      fig: "0.1",
-      labels: ["Betrieb", "Abläufe", "Bericht", "Schulung"],
-    },
+    stripNote: `${SITE_STR.de.priceNote} ${CHECK.de.credit}`,
   },
   blocks: [
     {
@@ -44,7 +41,7 @@ const de: PageDef = {
         ["Format", "Schriftlich: Sie füllen einen Fragebogen aus (etwa 20 Minuten), wir schreiben den Bericht. Auf Wunsch 30 Minuten Besprechung per Video, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr"],
         ["Lieferzeit", "In der Regel 10 Werktage nach Eingang des Fragebogens"],
         ["Ergebnis", "Ein schriftlicher Bericht: drei Ideen nach Priorität, die Risiken, Hinweise zum Datenschutz und als nächster Schritt eine Schulungsempfehlung für Ihr Team"],
-        ["Preis", "990 € netto, Festpreis. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an. Erweiterter Umfang: Festpreis, vorab schriftlich"],
+        ["Preis", "990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Erweiterter Umfang: Festpreis, vorab schriftlich"],
         ["Vertraulichkeit", "Eine NDA unterzeichnen wir vor der Analyse"],
       ],
       footnote: "Alle Preise netto zzgl. USt., nur für Unternehmen.",
@@ -53,12 +50,12 @@ const de: PageDef = {
       t: "process",
       id: "ablauf",
       label: "Ablauf",
-      h: "Vom Vorgespräch zur Entscheidung",
+      h: "Vom Kennenlernen zur Entscheidung",
       lede: "Nach jedem Schritt wissen Sie, woran Sie sind.",
       steps: [
         {
           name: "Vorbereitung",
-          h: "Vorgespräch und NDA",
+          h: "Kennenlernen und NDA",
           p: "Wir klären kurz Ziele und Abläufe, per E-Mail oder in 15 bis 30 Minuten per Video am Mittwoch- oder Freitagabend. Danach unterzeichnen wir die NDA.",
           result: "Umfang und Festpreis stehen schriftlich fest.",
           meta: "kostenlos, vor der Analyse",
@@ -114,7 +111,7 @@ const de: PageDef = {
           name: "KI-Check",
           price: "990 € netto",
           unit: "Festpreis",
-          p: "Eine erste Einschätzung auf Basis Ihres Fragebogens. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+          p: "Eine erste Einschätzung auf Basis Ihres Fragebogens. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
           points: [
             "Fragebogen von etwa 20 Minuten",
             "Schriftlicher Bericht: drei Ideen, Risiken, Datenschutz",
@@ -189,7 +186,7 @@ const de: PageDef = {
         {
           h: "Schulungsempfehlung",
           items: [
-            "KI-Kompetenz Basis für das Team im Mieterservice, halber Tag, online: Regeln für KI-Werkzeuge, Datenschutz bei Mieterdaten, Umgang mit Antwortentwürfen. Der KI-Check wird bei Buchung innerhalb von 60 Tagen voll angerechnet.",
+            `KI-Kompetenz Basis für das Team im Mieterservice, halber Tag, online: Regeln für KI-Werkzeuge, Datenschutz bei Mieterdaten, Umgang mit Antwortentwürfen. Zum KI-Check: ${CHECK.de.credit}`,
           ],
         },
       ],
@@ -204,7 +201,7 @@ const de: PageDef = {
       items: [
         {
           h: "Sie suchen einen messbaren ersten Schritt",
-          p: "Statt eines großen Plattformprojekts wollen Sie wissen, welcher einzelne Ablauf sich zuerst lohnt.",
+          p: "Statt eines großen IT-Projekts wollen Sie wissen, welcher einzelne Ablauf sich zuerst lohnt.",
         },
         {
           h: "Ihr Team nutzt KI schon, ohne Regeln",
@@ -230,7 +227,7 @@ const de: PageDef = {
         {
           h: "Ihr Team schulen",
           tag: "Weg 1",
-          p: "Sie buchen die empfohlene Schulung: online, live in Ihrem Microsoft Teams, pro Team. Innerhalb von 60 Tagen rechnen wir den KI-Check voll an.",
+          p: `Sie buchen die empfohlene Schulung: online, live in Ihrem Microsoft Teams, pro Team. ${CHECK.de.credit}`,
           href: { label: "Zu den KI-Schulungen", to: "schulungen" },
         },
         {
@@ -258,11 +255,11 @@ const de: PageDef = {
     items: [
       {
         q: "Was kostet der KI-Check?",
-        a: "990 € netto als Festpreis: Fragebogen, schriftlicher Bericht und auf Wunsch 30 Minuten Besprechung per Video. Bei einer Schulung oder einem Pilot innerhalb von 60 Tagen rechnen wir den Betrag voll an. Für den erweiterten Umfang nennen wir den Festpreis vorab schriftlich. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "990 € netto als Festpreis: Fragebogen, schriftlicher Bericht und auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Für den erweiterten Umfang nennen wir den Festpreis vorab schriftlich. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Endet jeder Bericht mit einer Schulungsempfehlung?",
-        a: "Ja. Am Ende des Berichts steht, welche unserer Schulungen zu Ihrem Team passt und warum, oder dass derzeit keine nötig ist. Buchen Sie die Schulung innerhalb von 60 Tagen, rechnen wir die 990 € voll an.",
+        a: "Ja. Am Ende des Berichts steht, welche unserer Schulungen zu Ihrem Team passt und warum, oder dass derzeit keine nötig ist. Der KI-Check kostet 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Wird eine Vertraulichkeitsvereinbarung geschlossen?",
@@ -282,7 +279,7 @@ const de: PageDef = {
       },
       {
         q: "Wann können wir sprechen?",
-        a: "Das Vorgespräch und die Besprechung des Berichts finden per Video statt, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Alles andere klären wir per E-Mail.",
+        a: "Das Kennenlernen und die Besprechung des Berichts finden per Video statt, mittwochs oder freitags zwischen 18:30 und 20:00 Uhr. Alles andere klären wir per E-Mail.",
       },
     ],
   },
@@ -309,7 +306,7 @@ const en: PageDef = {
   meta: {
     title: "AI check for €990 net: analyse first, then train",
     description:
-      "The written AI check shows where AI makes sense in your daily work: a questionnaire, then a report with three ideas, risks and a training recommendation. €990.",
+      "The written AI check shows where AI makes sense in your work: a questionnaire, then a report with three ideas, risks and a training recommendation. €990 net.",
   },
   crumbs: ["beratung"],
   crumb: "AI check",
@@ -320,14 +317,7 @@ const en: PageDef = {
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See how it works", to: "check", hash: "ablauf" },
     facts: ["AI check €990 net, fixed price", "Questionnaire and written report", "NDA before the analysis", "Ends with a training recommendation"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: business, workflows, report, training",
-      caption: "From the whole business to the report and the right course.",
-      fig: "0.1",
-      labels: ["Business", "Workflows", "Report", "Training"],
-    },
+    stripNote: `${SITE_STR.en.priceNote} ${CHECK.en.credit}`,
   },
   blocks: [
     {
@@ -339,7 +329,7 @@ const en: PageDef = {
         ["Format", "In writing: you fill in a questionnaire (about 20 minutes) and we write the report. A 30-minute video call if you wish, on Wednesdays or Fridays between 18:30 and 20:00 German time"],
         ["Delivery", "Usually 10 working days after we receive the questionnaire"],
         ["Result", "A written report: three ideas by priority, the risks, data protection notes and, as the next step, a training recommendation for your team"],
-        ["Price", "€990 net, fixed price. Credited in full against a course or pilot within 60 days. Extended scope: fixed price, agreed in writing first"],
+        ["Price", "€990 net, fixed price. Credited in full against a follow-up order within 60 days. Extended scope: fixed price, agreed in writing first"],
         ["Confidentiality", "We sign an NDA before the analysis"],
       ],
       footnote: "All prices are net of VAT and for businesses only.",
@@ -348,12 +338,12 @@ const en: PageDef = {
       t: "process",
       id: "ablauf",
       label: "Process",
-      h: "From the preliminary call to a decision",
+      h: "From the intro to a decision",
       lede: "After each step you know where you stand.",
       steps: [
         {
           name: "Preparation",
-          h: "Preliminary call and NDA",
+          h: "Intro and NDA",
           p: "We briefly clarify goals and workflows, by email or in a 15 to 30-minute video call on a Wednesday or Friday evening. Then we sign the NDA.",
           result: "Scope and fixed price are set in writing.",
           meta: "free, before the analysis",
@@ -409,7 +399,7 @@ const en: PageDef = {
           name: "AI check",
           price: "€990 net",
           unit: "fixed price",
-          p: "A first assessment based on your questionnaire. Credited in full against a course or pilot within 60 days.",
+          p: "A first assessment based on your questionnaire. Credited in full against a follow-up order within 60 days.",
           points: [
             "Questionnaire of about 20 minutes",
             "Written report: three ideas, risks, data protection",
@@ -484,7 +474,7 @@ const en: PageDef = {
         {
           h: "Training recommendation",
           items: [
-            "AI literacy basics for the tenant-service team, half day, online: rules for AI tools, data protection with tenant data, handling draft replies. The AI check is credited in full when booked within 60 days.",
+            `AI literacy basics for the tenant-service team, half day, online: rules for AI tools, data protection with tenant data, handling draft replies. On the AI check: ${CHECK.en.credit}`,
           ],
         },
       ],
@@ -499,7 +489,7 @@ const en: PageDef = {
       items: [
         {
           h: "You want a measurable first step",
-          p: "Instead of a large platform project, you want to know which single workflow is worth doing first.",
+          p: "Instead of a large IT project, you want to know which single workflow is worth doing first.",
         },
         {
           h: "Your team already uses AI, without rules",
@@ -525,7 +515,7 @@ const en: PageDef = {
         {
           h: "Train your team",
           tag: "Way 1",
-          p: "You book the recommended course: online, live in your Microsoft Teams, per team. Within 60 days we credit the AI check in full.",
+          p: `You book the recommended course: online, live in your Microsoft Teams, per team. ${CHECK.en.credit}`,
           href: { label: "To the AI training", to: "schulungen" },
         },
         {
@@ -553,11 +543,11 @@ const en: PageDef = {
     items: [
       {
         q: "What does the AI check cost?",
-        a: "€990 net, a fixed price: a questionnaire, a written report and, if you wish, a 30-minute video call. Credited in full against a course or pilot within 60 days. For the extended scope we name the fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
+        a: "€990 net, a fixed price: a questionnaire, a written report and, if you wish, a 30-minute video call. Credited in full against a follow-up order within 60 days. For the extended scope we name the fixed price in writing beforehand. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Does every report end with a training recommendation?",
-        a: "Yes. The report closes with which of our courses fits your team and why, or with the note that none is needed right now. Book the course within 60 days and we credit the €990 in full.",
+        a: "Yes. The report closes with which of our courses fits your team and why, or with the note that none is needed right now. The AI check costs €990 net, fixed price. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Is a confidentiality agreement signed?",
@@ -577,7 +567,7 @@ const en: PageDef = {
       },
       {
         q: "When can we talk?",
-        a: "The preliminary call and the review of the report take place by video, on Wednesdays or Fridays between 18:30 and 20:00 German time. Everything else we settle by email.",
+        a: "The intro and the review of the report take place by video, on Wednesdays or Fridays between 18:30 and 20:00 German time. Everything else we settle by email.",
       },
     ],
   },
@@ -604,7 +594,7 @@ const tr: PageDef = {
   meta: {
     title: "YZ Kontrolü 990 € (net): önce analiz, sonra eğitim",
     description:
-      "Yazılı YZ Kontrolü, günlük işinizde YZ'nin nerede anlamlı olduğunu gösterir: soru formu, ardından üç fikir, riskler ve eğitim önerisi içeren rapor. 990 €.",
+      "Yazılı YZ Kontrolü, işinizde YZ'nin nerede anlamlı olduğunu gösterir: soru formu, ardından üç fikir, riskler ve eğitim önerisi içeren rapor. 990 € (net).",
   },
   crumbs: ["beratung"],
   crumb: "YZ Kontrolü",
@@ -615,14 +605,7 @@ const tr: PageDef = {
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Süreci görün", to: "check", hash: "ablauf" },
     facts: ["YZ Kontrolü 990 € (net), sabit fiyat", "Soru formu ve yazılı rapor", "Analizden önce NDA", "Bir eğitim önerisiyle biter"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: işletme, akışlar, rapor, eğitim",
-      caption: "Bütün işletmeden rapora ve uygun eğitime.",
-      fig: "0.1",
-      labels: ["İşletme", "Akışlar", "Rapor", "Eğitim"],
-    },
+    stripNote: `${SITE_STR.tr.priceNote} ${CHECK.tr.credit}`,
   },
   blocks: [
     {
@@ -634,21 +617,21 @@ const tr: PageDef = {
         ["Format", "Yazılı: siz yaklaşık 20 dakikalık bir soru formu doldurursunuz, raporu biz yazarız. İsterseniz çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında 30 dakikalık görüntülü görüşme"],
         ["Teslim", "Genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde"],
         ["Sonuç", "Yazılı bir rapor: öncelik sırasına göre üç fikir, riskler, veri koruma notları ve sonraki adım olarak ekibiniz için bir eğitim önerisi"],
-        ["Fiyat", "990 € (net), sabit fiyat. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir. Geniş kapsam: sabit fiyat, önceden yazılı"],
+        ["Fiyat", "990 € (net), sabit fiyat. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Geniş kapsam: sabit fiyat, önceden yazılı"],
         ["Gizlilik", "Analizden önce bir NDA imzalarız"],
       ],
-      footnote: "Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+      footnote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
     },
     {
       t: "process",
       id: "ablauf",
       label: "Süreç",
-      h: "Ön görüşmeden karara",
+      h: "Tanışmadan karara",
       lede: "Her adımdan sonra nerede olduğunuzu bilirsiniz.",
       steps: [
         {
           name: "Hazırlık",
-          h: "Ön görüşme ve NDA",
+          h: "Tanışma ve NDA",
           p: "Hedefleri ve iş akışlarını kısaca netleştiririz: e-postayla ya da çarşamba veya cuma akşamı 15-30 dakikalık görüntülü görüşmeyle. Ardından NDA'yı imzalarız.",
           result: "Kapsam ve sabit fiyat yazılı olarak belli.",
           meta: "ücretsiz, analizden önce",
@@ -704,7 +687,7 @@ const tr: PageDef = {
           name: "YZ Kontrolü",
           price: "990 € (net)",
           unit: "sabit fiyat",
-          p: "Soru formunuza dayanan ilk değerlendirme. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir.",
+          p: "Soru formunuza dayanan ilk değerlendirme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
           points: [
             "Yaklaşık 20 dakikalık soru formu",
             "Yazılı rapor: üç fikir, riskler, veri koruma",
@@ -728,7 +711,7 @@ const tr: PageDef = {
           href: { label: "Geniş kapsamı talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
         },
       ],
-      footnote: "Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir. Projenize hangi teşvikin uyduğunu sizinle birlikte değerlendiririz.",
+      footnote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir. Projenize hangi teşvikin uyduğunu sizinle birlikte değerlendiririz.",
     },
     {
       t: "statement",
@@ -779,7 +762,7 @@ const tr: PageDef = {
         {
           h: "Eğitim önerisi",
           items: [
-            "Kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi: YZ araçları için kurallar, kiracı verilerinde veri koruma, yanıt taslaklarıyla çalışma. 60 gün içinde rezervasyonda YZ Kontrolü tamamen mahsup edilir.",
+            `Kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi: YZ araçları için kurallar, kiracı verilerinde veri koruma, yanıt taslaklarıyla çalışma. YZ Kontrolü: ${CHECK.tr.credit}`,
           ],
         },
       ],
@@ -794,7 +777,7 @@ const tr: PageDef = {
       items: [
         {
           h: "Ölçülebilir bir ilk adım arıyorsunuz",
-          p: "Büyük bir platform projesi yerine, hangi tek iş akışının önce değdiğini bilmek istiyorsunuz.",
+          p: "Büyük bir BT projesi yerine, hangi tek iş akışının önce değdiğini bilmek istiyorsunuz.",
         },
         {
           h: "Ekibiniz YZ'yi kullanıyor, ama kural yok",
@@ -820,7 +803,7 @@ const tr: PageDef = {
         {
           h: "Ekibinizi eğittirin",
           tag: "Yol 1",
-          p: "Önerilen eğitimi rezerve edersiniz: çevrimiçi, kendi Microsoft Teams'inizde canlı, ekip başına. 60 gün içinde YZ Kontrolü'nü tamamen mahsup ederiz.",
+          p: `Önerilen eğitimi rezerve edersiniz: çevrimiçi, kendi Microsoft Teams'inizde canlı, ekip başına. ${CHECK.tr.credit}`,
           href: { label: "YZ eğitimlerine gidin", to: "schulungen" },
         },
         {
@@ -848,11 +831,11 @@ const tr: PageDef = {
     items: [
       {
         q: "YZ Kontrolü ne kadar tutar?",
-        a: "990 € (net), sabit fiyat: soru formu, yazılı rapor ve isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde bir eğitim ya da pilotta tutarın tamamı mahsup edilir. Geniş kapsam için sabit fiyatı önceden yazılı olarak bildiririz. Tüm fiyatlar net, KDV hariçtir ve yalnızca işletmeler içindir.",
+        a: "990 € (net), sabit fiyat: soru formu, yazılı rapor ve isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Geniş kapsam için sabit fiyatı önceden yazılı olarak bildiririz. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Her rapor bir eğitim önerisiyle mi biter?",
-        a: "Evet. Raporun sonunda hangi eğitimimizin ekibinize uyduğu ve neden uyduğu ya da şu an gerek olmadığı yazar. Eğitimi 60 gün içinde rezerve ederseniz 990 €'yu tamamen mahsup ederiz.",
+        a: "Evet. Raporun sonunda hangi eğitimimizin ekibinize uyduğu ve neden uyduğu ya da şu an gerek olmadığı yazar. YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Gizlilik sözleşmesi yapılıyor mu?",
@@ -872,7 +855,7 @@ const tr: PageDef = {
       },
       {
         q: "Ne zaman görüşebiliriz?",
-        a: "Ön görüşme ve raporun değerlendirilmesi görüntülü olarak, çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında yapılır. Diğer her şeyi e-postayla netleştiririz.",
+        a: "Tanışma ve raporun değerlendirilmesi görüntülü olarak, çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında yapılır. Diğer her şeyi e-postayla netleştiririz.",
       },
     ],
   },
@@ -893,5 +876,8 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the excerpt of the fictional sample report (the live sample company of the home check section). */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as const) d.hero.object = report(home[loc]);
 
 export const page: PageSet = { de, en, tr };

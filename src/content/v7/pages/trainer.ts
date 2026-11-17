@@ -8,6 +8,7 @@
  * sight; the first assignment is paid like any other.
  */
 import type { PageDef, PageSet } from "../types";
+import { blockOf, frag, liste } from "../hero-objects";
 
 const de: PageDef = {
   key: "trainer",
@@ -16,12 +17,13 @@ const de: PageDef = {
     description:
       "OpSolid sucht freiberufliche KI-Trainerinnen und -Trainer für Online-Schulungen auf Deutsch und Englisch. Auswahl im Gespräch, Rahmenvertrag, freie Methodik.",
   },
-  crumbs: ["schulungen"],
+  crumbs: [],
   crumb: "Trainer werden",
   hero: {
     eyebrow: "Trainer werden · freiberuflich · online",
-    h1: ["Freiberufliche ", "KI-Trainerinnen und -Trainer", " gesucht"],
-    lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah vermitteln, melden Sie sich.",
+    // "\u00A0-\u2060": "-Trainer" stays with "und" and its hyphen never ends a line (design review R2).
+    h1: ["Freiberufliche ", "KI-Trainerinnen und\u00A0-\u2060Trainer", " gesucht"],
+    lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah schulen, melden Sie sich.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
     facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Auswahl im Gespräch mit kurzer Live-Demo"],
@@ -43,7 +45,7 @@ const de: PageDef = {
         },
         {
           tag: "Alltag",
-          h: "KI im Arbeitsalltag",
+          h: "Generative KI im Büro",
           p: "ChatGPT, Claude und Gemini im Büro: Anfragen formulieren, Ergebnisse prüfen, eigene Abläufe entwickeln.",
         },
         {
@@ -67,7 +69,7 @@ const de: PageDef = {
       h: "Was wir von Ihnen erwarten",
       rows: [
         ["Fachwissen", "Eigene Praxis im gewählten Thema, die Sie live zeigen können"],
-        ["Vermittlung", "Erfahrung in Training oder Erwachsenenbildung; im Gespräch zeigen Sie eine kurze Live-Demo"],
+        ["Didaktik", "Erfahrung in Training oder Erwachsenenbildung; im Gespräch zeigen Sie eine kurze Live-Demo"],
         ["Sprache", "Deutsch oder Englisch auf hohem Niveau (etwa C1)"],
         ["Datenschutz", "Sie kennen die Grundsätze der DSGVO und gehen mit Kundendaten in KI-Werkzeugen sorgfältig um"],
         ["Selbstständigkeit", "Sie arbeiten freiberuflich oder als Gewerbetreibende, mit eigenem Auftritt"],
@@ -104,7 +106,7 @@ const de: PageDef = {
         },
         {
           h: "Gespräch mit Live-Demo",
-          p: "Sobald eine passende Kundenanfrage in Sicht ist, sprechen wir 30 Minuten online über Ihre Praxis und Ihre Art zu vermitteln. Sie zeigen uns in einer kurzen Live-Demo, wie Sie arbeiten.",
+          p: "Sobald eine passende Kundenanfrage in Sicht ist, sprechen wir 30 Minuten online über Ihre Praxis und Ihre Art zu schulen. Sie zeigen uns in einer kurzen Live-Demo, wie Sie arbeiten.",
         },
         {
           h: "Rahmenvertrag",
@@ -154,7 +156,7 @@ const de: PageDef = {
   },
   cta: {
     label: "Trainer werden",
-    h: "Sie vermitteln KI praxisnah? Schreiben Sie uns",
+    h: "Sie schulen KI praxisnah? Schreiben Sie uns",
     p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, nehmen wir Sie in unseren Trainerpool auf.",
     primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "KI-Check für Unternehmen", to: "check" },
@@ -168,7 +170,7 @@ const en: PageDef = {
     description:
       "OpSolid is looking for freelance AI trainers for online courses in English and German. Selection by conversation, framework contract, freedom in method.",
   },
-  crumbs: ["schulungen"],
+  crumbs: [],
   crumb: "Become a trainer",
   hero: {
     eyebrow: "Become a trainer · freelance · online",
@@ -195,7 +197,7 @@ const en: PageDef = {
         },
         {
           tag: "Daily work",
-          h: "AI in daily work",
+          h: "Generative AI in the office",
           p: "ChatGPT, Claude and Gemini in the office: asking well, checking results, developing your own workflows.",
         },
         {
@@ -320,7 +322,7 @@ const tr: PageDef = {
     description:
       "OpSolid, Almanca ve İngilizce çevrimiçi eğitimler için serbest çalışan YZ eğitmenleri arıyor. Görüşmeyle seçim, çerçeve sözleşme, yöntemde özgürlük.",
   },
-  crumbs: ["schulungen"],
+  crumbs: [],
   crumb: "Eğitmen olun",
   hero: {
     eyebrow: "Eğitmen olun · serbest çalışan · çevrimiçi",
@@ -347,7 +349,7 @@ const tr: PageDef = {
         },
         {
           tag: "Günlük iş",
-          h: "Günlük işte YZ",
+          h: "Ofiste üretken YZ",
           p: "Ofiste ChatGPT, Claude ve Gemini: iyi istek yazmak, sonuçları kontrol etmek, kendi iş akışlarını geliştirmek.",
         },
         {
@@ -371,7 +373,7 @@ const tr: PageDef = {
       h: "Sizden beklediklerimiz",
       rows: [
         ["Uzmanlık", "Seçtiğiniz konuda, canlı gösterebileceğiniz kendi uygulama deneyiminiz"],
-        ["Aktarım", "Eğitim veya yetişkin eğitimi deneyimi; görüşmede kısa bir canlı gösterim yaparsınız"],
+        ["Öğretim", "Eğitim veya yetişkin eğitimi deneyimi; görüşmede kısa bir canlı gösterim yaparsınız"],
         ["Dil", "Almanca veya İngilizce, yüksek düzeyde (yaklaşık C1)"],
         ["Veri koruma", "GDPR/DSGVO ilkelerini bilirsiniz ve YZ araçlarında müşteri verileriyle özenle çalışırsınız"],
         ["Serbest çalışma", "Serbest meslek sahibi ya da işletme sahibi olarak, kendi duruşunuzla çalışırsınız"],
@@ -398,7 +400,7 @@ const tr: PageDef = {
       id: "ablauf",
       label: "Süreç",
       note: "Beş adım.",
-      h: "Profilinizden ilk tarihe",
+      h: "Profilinizden ilk eğitime",
       lede: "Her adımdan sonra birlikte devam edip etmeyeceğimize karar veririz.",
       items: [
         { h: "Kısa profil", p: "Bize kısa bir profil gönderirsiniz: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },
@@ -464,5 +466,21 @@ const tr: PageDef = {
     secondary: { label: "İşletmeler için YZ Kontrolü", to: "check" },
   },
 };
+
+/* R2: the hero object, the page's own five steps as a schema sheet; every note is a verbatim part of the step text. */
+const TRAINER_NOTES: Record<"de" | "en" | "tr", [string, string, string, string, string]> = {
+  de: ["Eine Bewerbungsmappe brauchen wir nicht.", "Wir antworten innerhalb von sieben Tagen.", "30 Minuten online", "Jede Schulung vereinbaren wir danach einzeln", "Den ersten Einsatz vergüten wir wie jeden weiteren."],
+  en: ["We do not need a full application pack.", "We reply within seven days.", "online for 30 minutes", "we agree each course individually", "Your first assignment is paid like any other."],
+  tr: ["Tam bir başvuru dosyasına gerek yok.", "Yedi gün içinde yanıt veririz.", "30 dakika çevrimiçi", "her eğitimi ayrı ayrı kararlaştırırız", "İlk görevinizin ücretini diğer görevler gibi öderiz."],
+};
+for (const [loc, d, etikett, stamp] of [
+  ["de", de, "Schema · so arbeiten wir mit Trainerinnen und Trainern", "Schema"],
+  ["en", en, "Schema · how we work with trainers", "Schema"],
+  ["tr", tr, "Şema · eğitmenlerle nasıl çalışıyoruz", "Şema"],
+] as const) {
+  const b = blockOf(d, "steps", "ablauf");
+  const notes = TRAINER_NOTES[loc];
+  d.hero.object = liste(etikett, { title: b.h, sub: b.note ?? b.label, stamp }, b.items.map((it, i) => ({ text: it.h, note: frag(it.p, notes[i]) })), { numbered: true });
+}
 
 export const page: PageSet = { de, en, tr };

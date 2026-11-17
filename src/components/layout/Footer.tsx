@@ -1,127 +1,16 @@
 "use client";
 
-import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { useLocaleBase as useLocale } from "@/context/LocaleContext";
-import { FxToggle } from "@/components/layout/FxToggle";
-import { SITE_CONFIG, formatStand } from "@/lib/constants";
-import { Logo } from "@/components/v7/Logo";
-import { V7Footer } from "@/components/v7/Footer";
+import type { ReactNode } from "react";
 import { isV4Path } from "@/lib/v4";
 
-type L3 = { de: string; en: string; tr: string };
-const L = (de: string, en: string, tr: string): L3 => ({ de, en, tr });
+// The app-surface footer (FxToggle, LocaleLink) is its own chunk, fetched only where it renders.
+const AppFooter = dynamic(() => import("./AppFooter").then((m) => m.AppFooter), { ssr: true });
 
-const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
-  {
-    h: L("Angebote", "Offers", "Teklifler"),
-    items: [
-      { href: "/agents", label: L("KI-Agenten", "AI agents", "YZ asistanları") },
-      { href: "/websites", label: L("Websites", "Websites", "Web siteleri") },
-      { href: "/ai-automation-check", label: L("KI-Check", "AI Check", "YZ Kontrolü") },
-      { href: "/ki-schulungen", label: L("KI-Schulungen", "AI training", "YZ eğitimleri") },
-      { href: "/opso", label: L("OpSo", "OpSo", "OpSo") },
-    ],
-  },
-  {
-    h: L("Leistungen", "Services", "Hizmetler"),
-    items: [
-      { href: "/ki-beratung", label: L("KI-Beratung", "AI consulting", "YZ danışmanlığı") },
-      { href: "/prozessautomatisierung", label: L("Prozessautomatisierung", "Process automation", "Süreç otomasyonu") },
-      { href: "/microsoft-365-automatisierung", label: L("Microsoft 365", "Microsoft 365", "Microsoft 365") },
-      { href: "/interne-tools", label: L("Interne Tools", "Internal tools", "Şirket içi araçlar") },
-      { href: "/leistungen", label: L("Alle Leistungen", "All services", "Tüm hizmetler") },
-    ],
-  },
-  {
-    h: L("Unternehmen", "Company", "Kurumsal"),
-    items: [
-      { href: "/ueber-uns", label: L("Über OpSolid", "About", "Hakkımızda") },
-      { href: "/blog", label: L("Notizen", "Notes", "Notlar") },
-      { href: "/contact", label: L("Kontakt", "Contact", "İletişim") },
-    ],
-  },
-  {
-    h: L("Rechtliches", "Legal", "Yasal"),
-    items: [
-      { href: "/impressum", label: L("Impressum", "Legal notice", "Yasal bildirim") },
-      { href: "/privacy", label: L("Datenschutz", "Privacy", "Gizlilik") },
-    ],
-  },
-];
-
-const TAGLINE = L(
-  "KI-Agenten, Websites und Automatisierung, die kleinen und mittleren Betrieben Routinearbeit abnehmen.",
-  "AI agents, websites and automation that take routine work off small and mid-sized businesses.",
-  "Küçük ve orta ölçekli işletmelerin rutin işlerini üstlenen YZ asistanları, web siteleri ve otomasyon.",
-);
-const NOT_TOPSOLID = L(
-  "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",
-  "OpSolid is not TopSolid (CAD/CAM) and has no connection to it.",
-  "OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur.",
-);
-const STAND = L("Stand", "Updated", "Güncelleme");
-
-function AppFooter() {
+/** Marketing paths render the `marketing` slot (components/v7/shell/SiteFooter, server-rendered); app surfaces keep the old one. */
+export function Footer({ marketing }: { marketing?: ReactNode }) {
   const pathname = usePathname();
-  const { locale } = useLocale();
-  const loc: keyof L3 = locale === "de" || locale === "tr" ? locale : "en";
-  const year = new Date().getFullYear();
-
-  if (pathname && /\/card\/edit\//.test(pathname)) return null;
-
-  return (
-    <footer className="v4-footer">
-      <div className="v4-footer-in">
-        <div className="v4-footer-top">
-          <div className="v4-footer-brand">
-            <Logo className="v4-footer-logo" />
-            <p className="v4-footer-tag">{TAGLINE[loc]}</p>
-            <p className="v4-footer-contact">
-              <a className="v4-footer-mail" href={`mailto:${SITE_CONFIG.email}`}>
-                {SITE_CONFIG.email}
-              </a>
-            </p>
-          </div>
-          <div className="v4-footer-cols">
-            {COLS.map((c) => (
-              <nav key={c.h.en} aria-label={c.h[loc]} className="v4-footer-col">
-                <h2>{c.h[loc]}</h2>
-                <ul>
-                  {c.items.map((i) => (
-                    <li key={i.href}>
-                      <Link href={i.href}>{i.label[loc]}</Link>
-                    </li>
-                  ))}
-                  {c.h.en === "Legal" && (
-                    <li>
-                      <a href="/llms.txt">llms.txt</a>
-                    </li>
-                  )}
-                </ul>
-              </nav>
-            ))}
-          </div>
-        </div>
-        <div className="v4-footer-base">
-          <span className="v4-tb">© {year} OpSolid</span>
-          <span className="v4-tb">
-            {STAND[loc]}: {formatStand(locale)}
-          </span>
-          <span className="v4-tb is-fx">
-            <FxToggle />
-          </span>
-        </div>
-        <p className="v4-footer-note">{NOT_TOPSOLID[loc]}</p>
-      </div>
-    </footer>
-  );
-}
-
-/** Marketing paths render the v7 footer on ink; app surfaces keep the old one. */
-export function Footer() {
-  const pathname = usePathname();
-  const { locale } = useLocale();
-  if (isV4Path(pathname)) return <V7Footer locale={locale === "de" || locale === "tr" ? locale : "en"} />;
+  if (isV4Path(pathname) && marketing) return <>{marketing}</>;
   return <AppFooter />;
 }

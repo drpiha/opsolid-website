@@ -1,3 +1,4 @@
+import "@/app/globals.css";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export default function AuthLayout({

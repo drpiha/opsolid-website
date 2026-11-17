@@ -1,0 +1,10 @@
+/* Marketing Tailwind sheet (Werkstatt pages; loaded by the root layout, src/app/layout.tsx).
+   The app-surface sheet src/app/globals.css (Tailwind over every app file, opsolid-tokens.css, opsolid-v4.css) was
+   global until 2026-11-15 and render-blocked every marketing page with about 36 kB gz, almost all of it unused there.
+   It now loads only on app surfaces (their layouts import it). This sheet builds Tailwind from the marketing sources
+   alone (tailwind.marketing.config.ts), so it holds the preflight and the few utilities those files use. Element
+   defaults the app sheets used to give marketing pages are kept in src/styles/werkstatt/compat.css. */
+@config "../../tailwind.marketing.config.ts";
+@tailwind base;
+@tailwind utilities;
+@import "./font-vars.css";

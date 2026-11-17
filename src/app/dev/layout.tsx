@@ -1,3 +1,4 @@
+import "@/app/globals.css";
 import "@/styles/legacy.css";
 
 /** Legacy surface: loads the legacy stylesheet bundle that v4 marketing routes skip. */

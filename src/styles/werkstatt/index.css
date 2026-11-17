@@ -1,0 +1,15 @@
+/* Marketing stylesheet chain (one import, so the build emits it as one render-blocking file instead of two):
+   the element defaults marketing pages kept from the app sheets (compat.css), the v7 base and motion files, then
+   Werkstatt (design C, owner decision 81) tokens, base, shell, sections, blocks and the page files. Loaded after the
+   marketing Tailwind sheet (src/styles/marketing.css, src/app/layout.tsx), so these rules win at equal specificity. */
+@import "./compat.css";
+@import "../opsolid-v7.css";
+@import "../opsolid-v7-motion.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./shell.css";
+@import "./sections.css";
+@import "./blocks.css";
+@import "./home.css";
+@import "./hub.css";
+@import "./produkte.css";

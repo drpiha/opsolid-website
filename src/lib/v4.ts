@@ -11,18 +11,24 @@ const V4_FIRST_SEGMENTS = new Set([
   // German route folders (also the DE public slugs)
   "ki-beratung",
   "ki-schulungen",
+  "produkte",
   "opso",
   "ueber-uns",
-  "contact",
+  "kontakt",
   "blog",
   "impressum",
+  "datenschutz",
+  // EN / TR public slugs (middleware rewrites them to the folders above); "contact" and "privacy" were the
+  // German folders before decision 80 and stay the EN slugs (TR keeps "privacy")
+  "contact",
   "privacy",
-  // EN / TR public slugs (middleware rewrites them to the folders above)
   "ai-automation-consulting",
   "ai-training",
+  "our-products",
   "about",
   "yapay-zeka-danismanligi",
   "yapay-zeka-egitimleri",
+  "urunler",
   "hakkimizda",
   "iletisim",
   // Retired v4 paths: they 301 in middleware, listed so a stray render still gets the marketing shell

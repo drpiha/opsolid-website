@@ -1,0 +1,370 @@
+/* Werkstatt base: page ground, type roles, focus, the layout frame and the signature pieces (Etikett, chip,
+   stamp, Werkbank mat, ruler, Blatt, UI snippets, buttons, links, fact strip). Ported from the prototype
+   styles.css (base, type, buttons, signatures, facts; third pass merged in), every class prefixed wk- (the
+   app stylesheet opsolid-tokens.css already owns global .btn, .chip, .field, .panel) and scoped to
+   html[data-v4]. Tokens: tokens.css. Breakpoints: 1180 and 960 (the JS uses 960/961 too). */
+
+/* ---------- page ---------- */
+html[data-v4],
+html[data-v4][data-theme] {
+  font-synthesis: none;
+  scroll-padding-top: calc(var(--wk-header-h) + 16px + env(safe-area-inset-top, 0px));
+  scroll-padding-bottom: 16px;
+}
+/* the phone call bar must never cover a focused element (WCAG 2.4.11) */
+html[data-v4]:has(.wk-callbar.is-on) { scroll-padding-bottom: 96px; }
+
+html[data-v4] body {
+  background: var(--wk-paper);
+  color: var(--wk-text);
+  font-family: var(--wk-sans);
+  font-size: var(--wk-fs-2);
+  line-height: 1.55;
+  font-stretch: 100%;
+  font-weight: 400;
+  /* clip, not hidden: sticky elements keep working; bleeding pictures use --wk-bleed */
+  overflow-x: clip;
+}
+
+html[data-v4] ::selection { background: color-mix(in srgb, var(--wk-copper-lite) 40%, transparent); color: var(--wk-text); }
+
+/* focus: copper-deep on light grounds, copper-lite on dark ones */
+html[data-v4] :focus-visible { outline: 2px solid var(--wk-copper-deep); outline-offset: 3px; border-radius: 3px; }
+html[data-v4] .wk-on-ink :focus-visible,
+html[data-v4] .wk-on-char :focus-visible,
+html[data-v4] .wk-header :focus-visible,
+html[data-v4] .on-ink :focus-visible { outline-color: var(--wk-copper-lite); }
+html[data-v4] .wk-mega :focus-visible { outline-color: var(--wk-copper-deep); }
+
+/* ---------- type roles ---------- */
+/* The app token sheet (opsolid-tokens.css) sets every h1 to h4 in Geist with an app ink colour. Marketing headings
+   are Archivo and take the colour of their ground, so Geist (70 kB) is never fetched on a marketing page. The
+   selector weighs exactly one element (0,0,1): it beats the app rule by source order (this file loads after
+   globals.css) and every class rule or utility still wins over it. */
+:where(html[data-v4]) :is(h1, h2, h3, h4, h5, h6) { font-family: var(--wk-sans); color: inherit; }
+/* Display face: Archivo, one upright variable file (wght 400-800, wdth 100-118 %). Sizes come from the role
+   classes below or from the component. No italic and no light weight exist. */
+html[data-v4] .f-display,
+html[data-v4] .wk-d1,
+html[data-v4] .wk-d2 {
+  font-family: var(--wk-sans);
+  font-style: normal;
+  font-stretch: 116%;
+  font-weight: 640;
+  font-synthesis: none;
+  text-wrap: balance;
+  hyphens: manual;
+}
+html[data-v4] .wk-d1 { font-size: clamp(3.25rem, 6.111vw, 5.5rem); line-height: 0.9545; letter-spacing: -0.03em; }
+html[data-v4] .wk-d2 { font-size: clamp(1.875rem, 3.4vw, 2.875rem); font-weight: 660; line-height: 1.02; letter-spacing: -0.022em; }
+html[data-v4] .wk-h3 { font-family: var(--wk-sans); font-stretch: 112%; font-weight: 660; font-size: var(--wk-fs-4); line-height: 1.08; letter-spacing: -0.015em; text-wrap: balance; }
+html[data-v4] .wk-lede { font-size: var(--wk-fs-3); line-height: 1.45; max-width: 34em; }
+
+/* Mono: IBM Plex Mono 400, sentence case, no tracking. */
+html[data-v4] .f-mono,
+html[data-v4] .wk-mono {
+  font-family: var(--wk-mono);
+  font-weight: 400;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  hyphens: manual;
+}
+html[data-v4] .wk-mono { font-size: var(--wk-fs-0); line-height: 1.45; }
+
+html[data-v4] .wk-num { font-variant-numeric: tabular-nums lining-nums; }
+html[data-v4] .wk-muted { color: var(--wk-muted); }
+html[data-v4] .wk-on-ink .wk-muted,
+html[data-v4] .wk-on-char .wk-muted { color: var(--wk-muted-d); }
+html[data-v4] .wk-nb { white-space: nowrap; }
+html[data-v4] .wk-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* price figure; the "ab" sits small and raised. Width ceiling of the font file is 118 %. */
+html[data-v4] .wk-price-fig {
+  font-family: var(--wk-sans);
+  font-stretch: 116%;
+  font-weight: 640;
+  font-size: clamp(2.75rem, 4.444vw, 4rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+html[data-v4] .wk-price-fig small { font-size: 0.42em; font-weight: 560; letter-spacing: 0; font-stretch: 100%; margin-right: 0.35em; vertical-align: 0.5em; color: var(--wk-muted); }
+html[data-v4] .wk-on-ink .wk-price-fig small,
+html[data-v4] .wk-on-char .wk-price-fig small { color: var(--wk-muted-d); }
+
+/* ---------- frame ---------- */
+html[data-v4] .wk-wrap { width: 100%; max-width: calc(var(--wk-wrap) + 2 * var(--wk-gut)); margin-inline: auto; padding-inline: var(--wk-gut); }
+html[data-v4] .wk-sec { padding-block: var(--wk-sec); position: relative; }
+
+/* grounds (Section data-ground): paper, sheet, bench, slate light; ink, char dark */
+html[data-v4] .wk-on-paper { background: var(--wk-paper); color: var(--wk-text); }
+html[data-v4] .wk-on-sheet { background: var(--wk-sheet); color: var(--wk-text); }
+html[data-v4] .wk-on-bench { background: var(--wk-paper-2); color: var(--wk-text); }
+html[data-v4] .wk-on-slate { background: var(--wk-slate); color: var(--wk-text); }
+html[data-v4] .wk-on-ink { background: var(--wk-ink); color: var(--wk-text-d); }
+html[data-v4] .wk-on-char { background: var(--wk-char); color: var(--wk-text-d); }
+
+/* section head: Etikett and H2 left, lede right, aligned to the bottom */
+html[data-v4] .wk-sec-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px 48px; align-items: end; margin-bottom: 56px; }
+html[data-v4] .wk-sec-head-main { display: grid; gap: 18px; justify-items: start; align-content: end; }
+html[data-v4] .wk-sec-head .wk-lede,
+html[data-v4] .wk-sec-head-lede { color: var(--wk-muted); font-size: var(--wk-fs-2); line-height: 1.5; }
+html[data-v4] .wk-on-ink .wk-sec-head .wk-lede,
+html[data-v4] .wk-on-char .wk-sec-head .wk-lede,
+html[data-v4] .wk-on-ink .wk-sec-head-lede,
+html[data-v4] .wk-on-char .wk-sec-head-lede { color: var(--wk-muted-d); }
+html[data-v4] .wk-sec-head.is-stack { grid-template-columns: 1fr; max-width: 46rem; align-items: start; }
+html[data-v4] .wk-sec-note { color: var(--wk-muted); font-size: var(--wk-fs-1); }
+html[data-v4] .wk-on-ink .wk-sec-note,
+html[data-v4] .wk-on-char .wk-sec-note { color: var(--wk-muted-d); }
+
+/* ---------- signature 1: the Etikett (every piece says what it is) ---------- */
+html[data-v4] .wk-etikett { display: inline-flex; align-items: center; gap: 8px; font-family: var(--wk-mono); font-weight: 400; font-size: var(--wk-fs-0); line-height: 1.3; letter-spacing: 0; color: var(--wk-muted); }
+html[data-v4] .wk-etikett::before { content: ""; width: 9px; height: 9px; border-radius: 2.5px; border: 1.5px solid currentColor; flex: none; }
+html[data-v4] .wk-etikett.is-solid::before { background: var(--wk-copper); border-color: var(--wk-copper); }
+html[data-v4] .wk-on-ink .wk-etikett,
+html[data-v4] .wk-on-char .wk-etikett { color: var(--wk-muted-d); }
+html[data-v4] .wk-on-ink .wk-etikett.is-solid::before,
+html[data-v4] .wk-on-char .wk-etikett.is-solid::before { background: var(--wk-copper-lite); border-color: var(--wk-copper-lite); }
+html[data-v4] .wk-on-slate .wk-etikett { color: var(--wk-slate-deep); }
+
+/* chips: live (copper square), plan (dashed), note (no square) */
+html[data-v4] .wk-chip { display: inline-flex; align-items: center; gap: 7px; font-family: var(--wk-mono); font-weight: 400; font-size: 0.75rem; line-height: 1; letter-spacing: 0; padding: 6px 9px 6px 8px; border-radius: var(--wk-r-1); border: 1px solid var(--wk-line-2); color: var(--wk-text); white-space: nowrap; background: transparent; }
+html[data-v4] .wk-chip::before { content: ""; width: 7px; height: 7px; border-radius: 2px; border: 1.5px solid var(--wk-muted); flex: none; }
+html[data-v4] .wk-chip.is-live { border-color: color-mix(in srgb, var(--wk-copper-deep) 55%, transparent); }
+html[data-v4] .wk-chip.is-live::before { background: var(--wk-copper); border-color: var(--wk-copper); }
+html[data-v4] .wk-chip.is-plan { border-style: dashed; color: var(--wk-muted); }
+html[data-v4] .wk-chip.is-note { padding-left: 9px; color: var(--wk-muted); }
+html[data-v4] .wk-chip.is-note::before { display: none; }
+html[data-v4] .wk-chip.is-wrap { white-space: normal; line-height: 1.25; }
+html[data-v4] .wk-on-ink .wk-chip,
+html[data-v4] .wk-on-char .wk-chip { border-color: var(--wk-line-d2); color: var(--wk-text-d); }
+html[data-v4] .wk-on-ink .wk-chip.is-plan,
+html[data-v4] .wk-on-char .wk-chip.is-plan,
+html[data-v4] .wk-on-ink .wk-chip.is-note,
+html[data-v4] .wk-on-char .wk-chip.is-note { color: var(--wk-muted-d); }
+html[data-v4] .wk-on-ink .wk-chip::before,
+html[data-v4] .wk-on-char .wk-chip::before { border-color: var(--wk-muted-d); }
+html[data-v4] .wk-on-ink .wk-chip.is-live::before,
+html[data-v4] .wk-on-char .wk-chip.is-live::before { background: var(--wk-copper-lite); border-color: var(--wk-copper-lite); }
+
+/* the stamp on drawn documents ("Muster") */
+html[data-v4] .wk-stamp { display: inline-block; font-family: var(--wk-mono); font-weight: 400; font-size: 0.8125rem; line-height: 1.2; letter-spacing: 0.22em; text-transform: uppercase; color: var(--wk-copper-deep); border: 1.5px solid var(--wk-copper-deep); border-radius: 3px; padding: 5px 8px 5px 11px; transform: rotate(-7deg); opacity: 0.92; background: color-mix(in srgb, var(--wk-sheet) 70%, transparent); }
+
+/* ---------- signature 2: the Werkbank (cutting-mat ground with register marks) ---------- */
+html[data-v4] .wk-mat { position: relative; isolation: isolate; }
+html[data-v4] .wk-mat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--mat-major, rgba(243, 240, 234, 0.075)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--mat-major, rgba(243, 240, 234, 0.075)) 1px, transparent 1px),
+    linear-gradient(to right, var(--mat-minor, rgba(243, 240, 234, 0.03)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--mat-minor, rgba(243, 240, 234, 0.03)) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: calc(50% + 20px) 0;
+  -webkit-mask-image: var(--mat-mask, linear-gradient(100deg, transparent 22%, #000 62%));
+  mask-image: var(--mat-mask, linear-gradient(100deg, transparent 22%, #000 62%));
+}
+/* on light grounds the grid is drawn in ink */
+html[data-v4] .wk-mat.is-light,
+html[data-v4] .wk-mat.wk-on-paper,
+html[data-v4] .wk-mat.wk-on-sheet,
+html[data-v4] .wk-mat.wk-on-bench,
+html[data-v4] .wk-mat.wk-on-slate { --mat-major: rgba(20, 23, 27, 0.075); --mat-minor: rgba(20, 23, 27, 0.032); }
+
+html[data-v4] .wk-reg { position: absolute; width: 18px; height: 18px; pointer-events: none; color: var(--wk-copper-lite); opacity: 0.9; }
+html[data-v4] .wk-reg::before,
+html[data-v4] .wk-reg::after { content: ""; position: absolute; left: 0; top: 0; background: currentColor; }
+html[data-v4] .wk-reg::before { width: 100%; height: 1.5px; }
+html[data-v4] .wk-reg::after { width: 1.5px; height: 100%; }
+html[data-v4] .wk-reg.tr { transform: scaleX(-1); }
+html[data-v4] .wk-reg.bl { transform: scaleY(-1); }
+html[data-v4] .wk-reg.br { transform: scale(-1); }
+html[data-v4] .is-light .wk-reg,
+html[data-v4] .wk-on-paper .wk-reg,
+html[data-v4] .wk-on-sheet .wk-reg,
+html[data-v4] .wk-on-bench .wk-reg,
+html[data-v4] .wk-on-slate .wk-reg { color: var(--wk-copper-deep); }
+
+html[data-v4] .wk-ruler {
+  height: 14px;
+  background-image: linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to right, currentColor 1px, transparent 1px);
+  background-size: 120px 14px, 12px 6px;
+  background-repeat: repeat-x;
+  background-position: 0 100%, 0 100%;
+  opacity: 0.38;
+}
+
+/* ---------- buttons and text links ---------- */
+html[data-v4] .wk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 24px;
+  border-radius: var(--wk-r-2);
+  border: 1.5px solid transparent;
+  font-family: var(--wk-sans);
+  font-weight: 600;
+  font-size: var(--wk-fs-2);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform var(--wk-t-micro) var(--wk-ease-out), background-color var(--wk-t-micro), color var(--wk-t-micro), border-color var(--wk-t-micro);
+}
+html[data-v4] .wk-btn:active { transform: translateY(1px); }
+html[data-v4] .wk-btn-ink { background: var(--wk-ink); color: var(--wk-text-d); }
+html[data-v4] .wk-btn-ink:hover { background: var(--wk-copper-deep); }
+html[data-v4] .wk-btn-light { background: var(--wk-paper); color: var(--wk-ink); }
+html[data-v4] .wk-btn-light:hover { background: var(--wk-copper-lite); }
+html[data-v4] .wk-btn-sm { min-height: 44px; padding: 0 18px; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-btn[disabled],
+html[data-v4] .wk-btn[aria-disabled="true"] { cursor: default; opacity: 0.6; }
+
+html[data-v4] .wk-tlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 560;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: currentColor;
+  transition: text-decoration-color var(--wk-t-micro), color var(--wk-t-micro);
+}
+html[data-v4] .wk-tlink:hover { color: var(--wk-copper-deep); }
+html[data-v4] .wk-on-ink .wk-tlink:hover,
+html[data-v4] .wk-on-char .wk-tlink:hover { color: var(--wk-copper-lite); }
+
+/* ---------- signature 3: the Blatt (documents drawn in CSS, always labelled) ---------- */
+html[data-v4] .wk-blatt { position: relative; background: var(--wk-sheet); color: var(--wk-text); border-radius: 3px; box-shadow: var(--wk-shadow-sheet); padding: 26px 26px 22px; font-size: var(--wk-fs-1); line-height: 1.45; }
+html[data-v4] .wk-on-ink .wk-blatt,
+html[data-v4] .wk-on-char .wk-blatt { box-shadow: var(--wk-shadow-sheet-d); }
+html[data-v4] .wk-blatt-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--wk-line); margin-bottom: 14px; }
+html[data-v4] .wk-blatt-head .wk-stamp { flex: none; margin: 2px -4px 0 0; }
+html[data-v4] .wk-blatt-logo,
+html[data-v4] .wk-blatt-logo svg { height: 13px; width: auto; color: var(--wk-text); }
+html[data-v4] .wk-blatt-title { font-stretch: 112%; font-weight: 660; font-size: 1.125rem; line-height: 1.15; letter-spacing: -0.01em; }
+html[data-v4] .wk-blatt-sub { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); margin-top: 4px; }
+html[data-v4] .wk-blatt dl { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; row-gap: 7px; font-size: 0.8125rem; }
+html[data-v4] .wk-blatt dt { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); padding-top: 1px; }
+html[data-v4] .wk-blatt dd { font-weight: 500; }
+html[data-v4] .wk-blatt-foot { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--wk-line); font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); line-height: 1.4; }
+
+/* ---------- UI snippets (always labelled Beispiel or Schema) ---------- */
+html[data-v4] .wk-ui { background: var(--wk-sheet); color: var(--wk-text); border-radius: 12px; box-shadow: var(--wk-shadow-sheet-d); overflow: hidden; font-size: 0.8125rem; line-height: 1.45; border: 1px solid rgba(20, 23, 27, 0.08); }
+html[data-v4] .wk-ui-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; background: var(--wk-paper-2); border-bottom: 1px solid var(--wk-line); font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+html[data-v4] .wk-ui-bar b { color: var(--wk-text); font-weight: 400; }
+html[data-v4] .wk-ui-dots { display: inline-flex; gap: 5px; margin-right: 10px; }
+html[data-v4] .wk-ui-dots i { display: block; width: 8px; height: 8px; border-radius: 2.5px; background: var(--wk-line-2); }
+html[data-v4] .wk-ui-body { padding: 14px; display: grid; gap: 12px; }
+html[data-v4] .wk-ui-label { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+html[data-v4] .wk-ui-label::before { content: ""; width: 7px; height: 7px; border-radius: 2px; border: 1.5px solid var(--wk-muted); }
+html[data-v4] .wk-ui-label.is-ai::before { background: var(--wk-copper); border-color: var(--wk-copper); }
+html[data-v4] .wk-ui-foot { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 10px 14px; border-top: 1px solid var(--wk-line); font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+html[data-v4] .wk-ui-foot b { color: var(--wk-text); font-weight: 400; }
+html[data-v4] .wk-mail { border: 1px solid var(--wk-line); border-radius: 8px; padding: 10px 12px; background: #fff; }
+html[data-v4] .wk-mail-from { display: flex; align-items: center; gap: 9px; font-weight: 600; }
+html[data-v4] .wk-mail-sub { font-weight: 600; margin-top: 7px; }
+html[data-v4] .wk-mail p { color: var(--wk-muted); margin-top: 2px; }
+html[data-v4] .wk-ava { width: 26px; height: 26px; border-radius: 7px; background: var(--wk-slate); color: var(--wk-slate-deep); font-family: var(--wk-mono); font-size: 0.75rem; font-weight: 400; display: grid; place-items: center; flex: none; }
+html[data-v4] .wk-prompt { font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.5; background: var(--wk-ink); color: var(--wk-text-d); border-radius: 8px; padding: 9px 12px; }
+html[data-v4] .wk-prompt span { color: var(--wk-copper-lite); }
+html[data-v4] .wk-draft { border: 1px solid color-mix(in srgb, var(--wk-copper) 45%, transparent); border-radius: 8px; padding: 10px 12px; background: color-mix(in srgb, var(--wk-copper) 5%, #fff); }
+html[data-v4] .wk-draft mark { background: transparent; color: inherit; border-bottom: 2px solid var(--wk-copper); padding-bottom: 1px; }
+
+/* a phone screen: the unedited app screen, cut to the device */
+html[data-v4] .wk-ph { display: block; aspect-ratio: 346 / 752; border-radius: 28px; overflow: hidden; background: #10141a; box-shadow: 0 30px 50px -28px rgba(20, 23, 27, 0.6), 0 0 0 1px var(--wk-ink); }
+html[data-v4] .wk-on-ink .wk-ph,
+html[data-v4] .wk-on-char .wk-ph { box-shadow: 0 0 0 1px rgba(243, 240, 234, 0.12), 0 30px 60px -20px rgba(0, 0, 0, 0.8); }
+html[data-v4] .wk-ph img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- tick list (square bullets) ---------- */
+html[data-v4] .wk-ticks { display: grid; gap: 10px; }
+html[data-v4] .wk-ticks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+html[data-v4] .wk-ticks li::before { content: ""; width: 12px; height: 12px; margin-top: 7px; border-radius: 3px; background: var(--wk-copper-deep); }
+html[data-v4] .wk-on-slate .wk-ticks li::before { background: var(--wk-slate-deep); }
+html[data-v4] .wk-on-ink .wk-ticks li::before,
+html[data-v4] .wk-on-char .wk-ticks li::before { background: var(--wk-copper-lite); }
+
+/* ---------- fact strip with a ruler (hero edge). Default dark ground; .is-light on light grounds ---------- */
+html[data-v4] .wk-facts { position: relative; z-index: 1; color: var(--wk-text-d); }
+html[data-v4] .wk-facts .wk-ruler { color: currentColor; }
+html[data-v4] .wk-facts-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--wk-line-d2); }
+html[data-v4] .wk-facts-row.is-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+html[data-v4] .wk-fact { padding: 22px 24px 30px 0; display: grid; gap: 6px; align-content: start; }
+html[data-v4] .wk-fact + .wk-fact { padding-left: 24px; border-left: 1px solid var(--wk-line-d); }
+html[data-v4] .wk-fact-k { font-size: var(--wk-fs-0); font-stretch: 110%; font-weight: 540; color: var(--wk-muted-d); }
+/* fact values break at their own soft hyphens only ("Eigene / Teilnahme- / bescheinigung", not "Teil- / nahmebeschei- / gung") */
+html[data-v4] .wk-fact-v { font-weight: 600; font-size: 1.1875rem; line-height: 1.25; font-stretch: 106%; hyphens: manual; }
+html[data-v4] .wk-fact a { display: grid; gap: 8px; justify-items: start; text-decoration: none; }
+html[data-v4] .wk-fact a .wk-fact-v { font-size: 1.5rem; font-stretch: 114%; font-weight: 660; letter-spacing: -0.015em; }
+html[data-v4] .wk-fact a:hover .wk-fact-v { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--wk-copper-lite); }
+html[data-v4] .wk-facts-note { color: var(--wk-muted-d); font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; padding-bottom: 22px; margin-top: -8px; }
+html[data-v4] .wk-facts.is-light { color: var(--wk-text); }
+html[data-v4] .wk-facts.is-light .wk-facts-row { border-top-color: var(--wk-line-2); }
+html[data-v4] .wk-facts.is-light .wk-fact + .wk-fact { border-left-color: var(--wk-line); }
+html[data-v4] .wk-facts.is-light .wk-fact-k,
+html[data-v4] .wk-facts.is-light .wk-facts-note { color: var(--wk-muted); }
+html[data-v4] .wk-facts.is-light .wk-fact a:hover .wk-fact-v { text-decoration-color: var(--wk-copper); }
+
+/* key/value list (About facts) */
+html[data-v4] .wk-facts-dl { width: 100%; display: grid; grid-template-columns: 11.5rem 1fr; border-top: 1px solid var(--wk-line-2); }
+html[data-v4] .wk-facts-dl dt,
+html[data-v4] .wk-facts-dl dd { padding: 11px 0; border-bottom: 1px solid var(--wk-line); }
+html[data-v4] .wk-facts-dl dt { font-family: var(--wk-mono); font-size: var(--wk-fs-0); color: var(--wk-muted); padding-top: 14px; }
+html[data-v4] .wk-facts-dl dd { font-weight: 540; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  html[data-v4] body { font-size: 1rem; }
+  /* auto hyphenation only for words of 10+ letters: "assistant" moves to the next line instead of "as-sistant" */
+  html[data-v4] .wk-d1,
+  html[data-v4] .wk-d2 { font-stretch: 108%; hyphens: auto; hyphenate-limit-chars: 10 4 4; }
+  /* design review R3: section h2s and every h3 break only at spaces, hard hyphens and their soft hyphens (soft() stems,
+     &shy;): auto hyphenation set "Bewer-/bungsdaten" and "praxis-/nah?". npm run audit:headings guards h1/h2 fit. */
+  html[data-v4] .wk-d2,
+  html[data-v4] .v7 h2,
+  html[data-v4] .v7 h3 { hyphens: manual; }
+  html[data-v4] .wk-d1 { font-size: 2.75rem; }
+  html[data-v4] .wk-d2 { font-size: 1.75rem; }
+  html[data-v4] .wk-h3 { font-size: 1.3125rem; }
+  html[data-v4] .wk-price-fig { font-size: 2rem; letter-spacing: -0.03em; }
+  html[data-v4] .wk-sec-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 32px; }
+  html[data-v4] .wk-mat::before {
+    -webkit-mask-image: linear-gradient(180deg, transparent 30%, #000 70%);
+    mask-image: linear-gradient(180deg, transparent 30%, #000 70%);
+  }
+  html[data-v4] .wk-facts-row { grid-template-columns: 1fr 1fr; }
+  html[data-v4] .wk-fact { padding: 14px 12px 16px 0; }
+  html[data-v4] .wk-fact + .wk-fact { padding-left: 0; border-left: 0; }
+  html[data-v4] .wk-fact:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--wk-line-d); }
+  html[data-v4] .wk-fact:nth-child(n + 3) { border-top: 1px solid var(--wk-line-d); }
+  html[data-v4] .wk-facts.is-light .wk-fact:nth-child(even) { border-left-color: var(--wk-line); }
+  html[data-v4] .wk-facts.is-light .wk-fact:nth-child(n + 3) { border-top-color: var(--wk-line); }
+  html[data-v4] .wk-fact-v { font-size: 1rem; }
+  html[data-v4] .wk-facts-note { padding-bottom: 18px; margin-top: 0; }
+  html[data-v4] .wk-facts-row.is-3 { grid-template-columns: 1fr; }
+  html[data-v4] .wk-facts-row.is-3 .wk-fact { padding: 14px 0 16px; border-left: 0; border-top: 1px solid var(--wk-line-d); }
+  html[data-v4] .wk-facts.is-light .wk-facts-row.is-3 .wk-fact { border-top-color: var(--wk-line); }
+  html[data-v4] .wk-facts-row.is-3 .wk-fact:first-child { border-top: 0; }
+  html[data-v4] .wk-fact a { grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; }
+  html[data-v4] .wk-fact a .wk-fact-k { grid-column: 1 / -1; }
+  html[data-v4] .wk-fact a .wk-fact-v { font-size: 1.25rem; }
+  html[data-v4] .wk-facts-dl { grid-template-columns: 8.6rem 1fr; font-size: 0.9375rem; }
+}
+
+/* reduced motion: everything rests in its final state */
+@media (prefers-reduced-motion: reduce) {
+  html[data-v4] *,
+  html[data-v4] *::before,
+  html[data-v4] *::after { animation: none !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

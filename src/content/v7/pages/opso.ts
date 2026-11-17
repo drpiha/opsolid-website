@@ -4,14 +4,14 @@
  * "du" voice of the previous OpSo page (PR #53); the rest of the site uses "Sie". Only features that exist now.
  * Images: the app screens are the real screens (demo data) cropped to the screen area from public/img/opso/<locale>/;
  * the four example cards are captures of fictional profiles with AI-generated portraits; the NFC card render is our
- * own 3D concept render (not AI-generated). The planned card price is shown exactly as on the previous page, with its label.
+ * own 3D concept render (not AI-generated). The NFC card shows no price anywhere (owner decision 78, 2026-11-15).
  */
 import type { L3, PageDef, PageSet } from "../types";
 
-/** Public App Store listing (storefronts: EU/EEA, Switzerland, UK). */
-const APP_STORE = "https://apps.apple.com/app/id6826541629" as const;
-/** Public Google Play listing (live since 2026-11-09: EU/EEA, Switzerland, UK; more countries in Google review). */
-const PLAY = "https://play.google.com/store/apps/details?id=de.opsolid.verso" as const;
+/** Public App Store listing (storefronts: EU/EEA, Switzerland, UK). Reused by the Produkte page. */
+export const APP_STORE = "https://apps.apple.com/app/id6826541629" as const;
+/** Public Google Play listing (live since 2026-11-09: EU/EEA, Switzerland, UK; more countries in Google review). Reused by the Produkte page. */
+export const PLAY = "https://play.google.com/store/apps/details?id=de.opsolid.verso" as const;
 
 const APP = (loc: L3, n: string) => `/img/v7/opso/app/${loc}-${n}.webp`;
 const SCREEN = { w: 328, h: 710 } as const;
@@ -31,9 +31,9 @@ const de: PageDef = {
   meta: {
     title: "OpSo: Karte, Kontakte und Follow-up an einem Ort",
     description:
-      "OpSo: kostenlose digitale Visitenkarte mit Kontaktliste und Follow-up. iPhone: App Store. Android: Google Play. Ohne App für Empfänger.",
+      "OpSo: kostenlose digitale Visitenkarte mit Kontaktliste und Follow-up. iPhone: App Store. Android: Google Play. Empfänger brauchen keine App. Von OpSolid.",
   },
-  crumbs: [],
+  crumbs: ["produkte"],
   crumb: "OpSo",
   hero: {
     eyebrow: "OpSo · by OpSolid",
@@ -62,7 +62,7 @@ const de: PageDef = {
         { h: "Messebesucher", p: "Viele Gespräche an einem Tag, und später weißt du noch, wer was wollte." },
         { h: "Kleine Aussteller", p: "Karte teilen, Kontakt festhalten, nach der Messe nachfassen." },
         { h: "Freiberufler und Berater", p: "Eine Karte, die du überall zeigst, und eine Liste, die mitwächst." },
-        { h: "Handwerker und lokale Betriebe", p: "Ein Link und ein QR-Code statt Stapel von Papierkarten." },
+        { h: "Selbstständige, Dienstleister und lokale Betriebe", p: "Ein Link und ein QR-Code statt Stapel von Papierkarten." },
         { h: "Veranstalter und Community-Organisatoren", p: "Wer vieles organisiert, trifft viele und braucht einen Ort für alle Kontakte." },
       ],
     },
@@ -94,7 +94,7 @@ const de: PageDef = {
       h: "Die App, Bildschirm für Bildschirm",
       lede: "Das sind echte Bildschirme aus der Android-App. Die gezeigten Personen und Firmen sind fiktive Demodaten.",
       frame: "phone",
-      tag: "Demodaten",
+      tag: "App-Screens · unbearbeitet, Demodaten",
       items: screens(
         "de",
         [
@@ -155,7 +155,7 @@ const de: PageDef = {
       h: "Deine Webkarte, in deinem Stil",
       lede: "Eine veröffentlichte Karte öffnet sich im Browser des Empfängers. NFC setzt ein kompatibles Smartphone und einen passenden Tag voraus.",
       frame: "phone",
-      tag: "Beispiele · KI-generierte Porträts",
+      tag: "Beispiel · Musterkarten, Porträts KI-generiert, Namen erfunden",
       items: cards(
         [
           "Beispielkarte Clara Weber, Architektin, in hellen Steintönen, mit KI-generiertem Porträt",
@@ -174,19 +174,19 @@ const de: PageDef = {
     {
       t: "product",
       id: "nfc-karte",
+      ground: "char",
       label: "NFC-Karte",
       note: "Noch nicht bestellbar.",
       h: "Die physische NFC-Karte: ein Konzept",
       lede: "Eine Karte, die dein OpSo-Profil per Berührung öffnet.",
       name: "Physische NFC-Karte",
+      chip: { kind: "plan", text: "in Vorbereitung" },
       status:
-        "Konzept. Preis, Druckausführung und Verfügbarkeit werden nach dem Produktionstest bestätigt.",
+        "Konzept. Druckausführung und Verfügbarkeit werden nach dem Produktionstest bestätigt.",
       p: "Die geplante mattschwarze Karte öffnet dein OpSo-Profil per Berührung. Ein gedruckter QR-Code ist als Alternative vorgesehen.",
       points: [
         "Mattschwarze Karte im Standardformat",
-        "Separater Einmalkauf, kein Abonnement",
       ],
-      price: { label: "Geplanter Einführungspreis", value: "24,90 € inklusive MwSt., Versand wird separat berechnet" },
       href: { label: "NFC-Karte anfragen", to: "kontakt", query: { anliegen: "opso" } },
       media: {
         kind: "image",
@@ -196,7 +196,7 @@ const de: PageDef = {
           h: 1200,
           alt: "Konzept-Render einer mattschwarzen NFC-Visitenkarte mit kupferfarbener Folienprägung, vorne das Logo, hinten QR-Code und Beispielname",
         },
-        caption: "Konzept-Render. Die endgültige Karte kann abweichen.",
+        caption: "Render · Konzept, die endgültige Karte kann abweichen",
         fig: "6.1",
       },
     },
@@ -292,7 +292,7 @@ const en: PageDef = {
     description:
       "OpSo is the free digital business card with contacts and follow-up. iPhone: App Store. Android: Google Play. Recipients need no app. By OpSolid.",
   },
-  crumbs: [],
+  crumbs: ["produkte"],
   crumb: "OpSo",
   hero: {
     eyebrow: "OpSo · by OpSolid",
@@ -321,7 +321,7 @@ const en: PageDef = {
         { h: "Trade fair visitors", p: "Many conversations in one day, and later you still know who wanted what." },
         { h: "Small exhibitors", p: "Share your card, keep the contact, follow up after the fair." },
         { h: "Freelancers and consultants", p: "One card you can show anywhere, and a list that grows with you." },
-        { h: "Tradespeople and local businesses", p: "A link and a QR code instead of stacks of paper cards." },
+        { h: "Self-employed people, service providers and local businesses", p: "A link and a QR code instead of stacks of paper cards." },
         { h: "Community and event organisers", p: "If you organise a lot, you meet a lot, and need one place for all contacts." },
       ],
     },
@@ -353,7 +353,7 @@ const en: PageDef = {
       h: "The app, screen by screen",
       lede: "These are real screens from the Android app. The people and companies shown are fictional demo data.",
       frame: "phone",
-      tag: "Demo data",
+      tag: "App screens · unedited, demo data",
       items: screens(
         "en",
         [
@@ -414,7 +414,7 @@ const en: PageDef = {
       h: "Your web card, in your own style",
       lede: "A published card opens in the recipient’s browser. NFC requires a compatible phone and tag.",
       frame: "phone",
-      tag: "Examples · AI-generated portraits",
+      tag: "Example · sample cards, AI-generated portraits, invented names",
       items: cards(
         [
           "Example card of Clara Weber, architect, in light stone tones, with an AI-generated portrait",
@@ -433,19 +433,19 @@ const en: PageDef = {
     {
       t: "product",
       id: "nfc-karte",
+      ground: "char",
       label: "NFC card",
       note: "Cannot be ordered yet.",
       h: "The physical NFC card: a concept",
       lede: "A card that opens your OpSo profile with a tap.",
       name: "Physical NFC card",
+      chip: { kind: "plan", text: "in preparation" },
       status:
-        "Concept. Price, print finish and availability will be confirmed after the production trial.",
+        "Concept. Print finish and availability will be confirmed after the production trial.",
       p: "The planned matte-black card opens your OpSo profile with a tap. A printed QR code is intended as a fallback.",
       points: [
         "Matte-black, standard-size card",
-        "Separate one-time purchase, not a subscription",
       ],
-      price: { label: "Planned launch price", value: "€24.90 including VAT, shipping charged separately" },
       href: { label: "Ask about the NFC card", to: "kontakt", query: { anliegen: "opso" } },
       media: {
         kind: "image",
@@ -455,7 +455,7 @@ const en: PageDef = {
           h: 1200,
           alt: "Concept render of a matte-black NFC business card with copper foil, logo on the front, QR code and sample name on the back",
         },
-        caption: "Concept render. The final card may differ.",
+        caption: "Render · concept, the final card may differ",
         fig: "6.1",
       },
     },
@@ -548,7 +548,7 @@ const tr: PageDef = {
     description:
       "OpSo, kişi listesi ve takip özelliği olan ücretsiz dijital kartvizit. iPhone: App Store. Android: Google Play. Karşı tarafın uygulaması gerekmez.",
   },
-  crumbs: [],
+  crumbs: ["produkte"],
   crumb: "OpSo",
   hero: {
     eyebrow: "OpSo · OpSolid’den",
@@ -577,7 +577,7 @@ const tr: PageDef = {
         { h: "Fuar ziyaretçileri", p: "Bir günde çok sohbet edersin; sonra kimin ne istediğini hâlâ bilirsin." },
         { h: "Küçük fuar katılımcıları", p: "Kartını paylaş, kişiyi kaydet, fuardan sonra takip et." },
         { h: "Serbest çalışanlar ve danışmanlar", p: "Her yerde gösterebileceğin tek bir kart ve seninle büyüyen bir liste." },
-        { h: "Esnaf ve yerel işletmeler", p: "Kâğıt kart destelerinin yerine bir bağlantı ve bir karekod." },
+        { h: "Serbest çalışanlar, hizmet sağlayıcılar ve yerel işletmeler", p: "Kâğıt kart destelerinin yerine bir bağlantı ve bir karekod." },
         { h: "Topluluk ve etkinlik organizatörleri", p: "Çok şey organize eden çok insanla tanışır; tüm kişiler için tek bir yer gerekir." },
       ],
     },
@@ -609,7 +609,7 @@ const tr: PageDef = {
       h: "Uygulama, ekran ekran",
       lede: "Bunlar Android uygulamasından gerçek ekranlar. Görünen kişiler ve şirketler kurgusal demo verisidir.",
       frame: "phone",
-      tag: "Demo veri",
+      tag: "Uygulama ekranları · düzenlenmemiş, demo veri",
       items: screens(
         "tr",
         [
@@ -674,7 +674,7 @@ const tr: PageDef = {
       h: "Web kartın, kendi tarzında",
       lede: "Yayınlanan bir kart, alıcının tarayıcısında açılır. NFC için uyumlu bir telefon ve etiket gerekir.",
       frame: "phone",
-      tag: "Örnekler · yapay zeka ile üretilmiş portreler",
+      tag: "Örnek · örnek kartlar, portreler yapay zeka ile üretildi, isimler kurgusal",
       items: cards(
         [
           "Mimar Clara Weber’in açık taş tonlarındaki örnek kartı, yapay zeka ile üretilmiş portreyle",
@@ -693,19 +693,19 @@ const tr: PageDef = {
     {
       t: "product",
       id: "nfc-karte",
+      ground: "char",
       label: "NFC kart",
       note: "Henüz sipariş verilemiyor.",
       h: "Fiziksel NFC kart: bir konsept",
       lede: "Tek dokunuşla OpSo profilini açan bir kart.",
       name: "Fiziksel NFC kart",
+      chip: { kind: "plan", text: "hazırlanıyor" },
       status:
-        "Konsept. Fiyat, baskı özellikleri ve satış tarihi üretim denemesinden sonra kesinleşecek.",
+        "Konsept. Baskı özellikleri ve satış tarihi üretim denemesinden sonra kesinleşecek.",
       p: "Planlanan mat siyah kart, tek dokunuşla OpSo profilini açacak. Basılı karekodun alternatif olarak kullanılması planlanıyor.",
       points: [
         "Standart ölçülerde mat siyah kart",
-        "Abonelikten ayrı, tek seferlik satın alma",
       ],
-      price: { label: "Planlanan tanıtım fiyatı", value: "24,90 €, KDV dahil, kargo ayrıca ücretlendirilir" },
       href: { label: "NFC kart hakkında bilgi al", to: "kontakt", query: { anliegen: "opso" } },
       media: {
         kind: "image",
@@ -715,7 +715,7 @@ const tr: PageDef = {
           h: 1200,
           alt: "Bakır folyolu mat siyah bir NFC kartvizitin konsept görseli: önde logo, arkada karekod ve örnek ad",
         },
-        caption: "Konsept görsel. Nihai kart farklılık gösterebilir.",
+        caption: "Render · konsept, nihai kart farklılık gösterebilir",
         fig: "6.1",
       },
     },
@@ -802,3 +802,11 @@ const tr: PageDef = {
 };
 
 export const page: PageSet = { de, en, tr };
+
+type Software = NonNullable<NonNullable<PageDef["schema"]>["software"]>;
+function software(d: PageDef): Software {
+  if (!d.schema?.software) throw new Error("opso: schema.software missing");
+  return d.schema.software;
+}
+/** The OpSo SoftwareApplication markup per locale, reused on the Produkte page (PLAN 6.4). */
+export const OPSO_SOFTWARE: Record<L3, Software> = { de: software(de), en: software(en), tr: software(tr) };

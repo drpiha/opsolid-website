@@ -1,0 +1,34 @@
+/* Element defaults the app sheets (src/app/globals.css with opsolid-tokens.css and opsolid-v4.css) gave marketing
+   pages while they were global. Since 2026-11-15 those sheets load only on app surfaces; these few rules keep the
+   marketing pages exactly as they were. Same weight as the originals (one element, or the v4 html[data-v4] scope)
+   and the same place in the cascade (after Tailwind, before the v7 and Werkstatt files), so every class rule and
+   every later Werkstatt rule still wins. */
+
+/* globals.css base */
+:where(html[data-v4]),
+:where(html[data-v4]) body { overflow-x: clip; max-width: 100%; }
+:where(html[data-v4]) body { font-feature-settings: "ss02", "cv11"; }
+@media (prefers-reduced-motion: reduce) {
+  :where(html[data-v4]) *,
+  :where(html[data-v4]) *::before,
+  :where(html[data-v4]) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* opsolid-tokens.css type defaults (the v4 sheet mapped --ink-200 to #2e2a25 on marketing pages); family and
+   colour of headings come from Werkstatt base.css */
+:where(html[data-v4]) p { margin: 0; color: #2e2a25; }
+:where(html[data-v4]) :is(h1, h2) { font-weight: 600; letter-spacing: -0.028em; line-height: 1.02; }
+:where(html[data-v4]) h1 { font-size: clamp(2.25rem, 5.5vw, 4rem); }
+:where(html[data-v4]) h2 { font-size: clamp(1.75rem, 3.6vw, 2.75rem); letter-spacing: -0.024em; line-height: 1.06; }
+:where(html[data-v4]) h3 { font-size: clamp(1.25rem, 2.4vw, 1.625rem); font-weight: 500; letter-spacing: -0.018em; line-height: 1.2; }
+:where(html[data-v4]) h4 { font-size: 1.125rem; font-weight: 500; letter-spacing: -0.01em; line-height: 1.3; }
+
+/* opsolid-v4.css */
+html[data-v4] a { text-underline-offset: 3px; }
+html[data-v4] main { position: relative; z-index: 2; }
+:where(html[data-v4]) .v4-logo { display: block; flex: none; aspect-ratio: 1259 / 300; fill: currentColor; color: #15130f; }

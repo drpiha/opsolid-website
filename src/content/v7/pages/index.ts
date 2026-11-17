@@ -10,13 +10,32 @@ import { page as kompetenz } from "./kompetenz";
 import { page as kontakt } from "./kontakt";
 import { page as m365 } from "./m365";
 import { page as opso } from "./opso";
+import { page as produkte } from "./produkte";
 import { page as prozess } from "./prozess";
 import { page as schulungen } from "./schulungen";
 import { page as trainer } from "./trainer";
 import { page as ueber } from "./ueber";
+import { page as workflows } from "./workflows";
 
-/** Every v7 page with a PageDef, in nav order (trainings, consulting, product, company). For llms.txt and share cards. */
-export const PAGE_SETS: PageSet[] = [home, schulungen, kompetenz, copilot, trainer, beratung, check, prozess, m365, agenten, anwendungen, opso, ueber, kontakt];
+/** Every v7 page with a PageDef, in nav order (Schulungen, Beratung, Produkte, Unternehmen). For llms.txt and share cards. */
+export const PAGE_SETS: PageSet[] = [
+  home,
+  schulungen,
+  kompetenz,
+  copilot,
+  workflows,
+  trainer,
+  beratung,
+  check,
+  prozess,
+  m365,
+  agenten,
+  anwendungen,
+  produkte,
+  opso,
+  ueber,
+  kontakt,
+];
 
 export function pageSet(key: PageKey): PageSet | undefined {
   return PAGE_SETS.find((set) => set.de.key === key);

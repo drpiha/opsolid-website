@@ -77,14 +77,13 @@ const nextConfig = {
       { source: "/site.webmanifest", headers: publicAssetCache },
     ];
   },
-  // Locale-conventional aliases for the privacy page so direct URL hits work
-  // for users who type the German/Turkish convention (datenschutz / gizlilik).
-  // Internal links should continue to use /[locale]/privacy.
+  // Locale-conventional aliases for the privacy page so direct URL hits work for users who type the
+  // Turkish convention (gizlilik). /de/datenschutz is the live German slug since decision 80 (2026-11-15),
+  // so it has no alias here; locale-less /datenschutz goes straight to it.
   async redirects() {
     return [
-      { source: "/de/datenschutz", destination: "/de/privacy", permanent: true },
       { source: "/tr/gizlilik", destination: "/tr/privacy", permanent: true },
-      { source: "/datenschutz", destination: "/de/privacy", permanent: true },
+      { source: "/datenschutz", destination: "/de/datenschutz", permanent: true },
       { source: "/gizlilik", destination: "/tr/privacy", permanent: true },
     ];
   },

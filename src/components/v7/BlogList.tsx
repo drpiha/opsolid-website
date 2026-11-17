@@ -1,18 +1,19 @@
-import Link from "next/link";
 import { content as de } from "@/content/de";
 import { content as en } from "@/content/en";
 import { content as tr } from "@/content/tr";
 import { getReadMinutes } from "@/content/blog";
-import { LABEL } from "@/content/v7/site";
-import type { Href, PageDef } from "@/content/v7/types";
+import { PILLAR } from "@/content/v7/menu";
+import { LABEL, SITE_STR } from "@/content/v7/site";
+import type { Cta, Href } from "@/content/v7/types";
 import { soft } from "@/lib/soft-hyphen";
 import { href, type L3 } from "@/lib/v7-routes";
-import { Breadcrumbs, type Crumb } from "./Breadcrumbs";
+import type { Crumb } from "./Breadcrumbs";
 import { CtaBand } from "./CtaBand";
+import { HeroObject } from "./hero/HeroObject";
+import { liste } from "@/content/v7/hero-objects";
 import { JsonLdGraph, sharedNodes, webPageNodes } from "./JsonLd";
 import { Frame, PlainHero } from "./LegalPage";
 import { LinkTo } from "./LinkTo";
-import { MotionRoot } from "./MotionRoot";
 import { Reveal } from "./Reveal";
 import { linkDeep } from "./ui";
 
@@ -32,10 +33,12 @@ export const BLOG_T: Record<
     min: string;
     more: Href;
     cat: Record<string, string>;
+    /** The hero sheet (design review R3): its Etikett, title and sub line; one row per topic with its newest date. */
+    themen: { etikett: string; title: string; sub: string };
     /** CTA under posts outside the "training" category (the list page itself ends with the training CTA). */
-    cta: PageDef["cta"];
+    cta: Cta;
     /** Posts in the "training" category, and the list page, end with a link to the training hub and the training CTA. */
-    training: { more: Href; cta: PageDef["cta"] };
+    training: { more: Href; cta: Cta };
   }
 > = {
   de: {
@@ -50,10 +53,11 @@ export const BLOG_T: Record<
     min: "Min.",
     more: { label: "Zu den KI-Schulungen", to: "schulungen" },
     cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb", training: "Schulung" },
+    themen: { etikett: "Übersicht · Themen im Journal", title: "Themen", sub: "Neuester Beitrag je Thema" },
     cta: {
       label: "KI-Check",
       h: "Welcher Ablauf kostet Sie heute die meiste Zeit?",
-      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet 990 € netto. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an.",
+      p: "Im Kennenlernen klären wir, ob ein KI-Check sinnvoll ist, kostenlos und unverbindlich. Der KI-Check kostet 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Den KI-Check ansehen", to: "check" },
     },
@@ -80,10 +84,11 @@ export const BLOG_T: Record<
     min: "min",
     more: { label: "To AI training", to: "schulungen" },
     cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations", training: "Training" },
+    themen: { etikett: "Overview · topics in the journal", title: "Topics", sub: "Newest entry per topic" },
     cta: {
       label: "AI check",
       h: "Which workflow costs you the most time today?",
-      p: "In a free intro, without obligation, we clarify whether an AI check makes sense. The AI check costs €990 net and is credited in full against a follow-up order within 60 days.",
+      p: "In a free intro, without obligation, we clarify whether an AI check makes sense. The AI check costs €990 net, fixed price. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "See the AI check", to: "check" },
     },
@@ -110,10 +115,11 @@ export const BLOG_T: Record<
     min: "dk",
     more: { label: "YZ eğitimlerine", to: "schulungen" },
     cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "İşletme", training: "Eğitim" },
+    themen: { etikett: "Genel bakış · Notlar'daki konular", title: "Konular", sub: "Her konuda en yeni yazı" },
     cta: {
       label: "YZ Kontrolü",
       h: "Bugün en çok zamanınızı hangi iş akışı alıyor?",
-      p: "Ücretsiz ve bağlayıcı olmayan tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolünün ücreti 990 € (net). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+      p: "Ücretsiz ve bağlayıcı olmayan tanışmada bir YZ Kontrolünün anlamlı olup olmadığını netleştiririz. YZ Kontrolünün ücreti 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolünü görün", to: "check" },
     },
@@ -139,51 +145,71 @@ export function fmtDate(d: string, locale: L3): string {
 export function BlogList({ locale }: { locale: L3 }) {
   const t = BLOG_T[locale];
   const posts = [...BLOG[locale].posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+  // one row per category, in the order of its newest post (posts are sorted newest first)
+  const topics = posts.filter((p, i) => posts.findIndex((q) => q.category === p.category) === i);
   const crumbs: Crumb[] = [
     { name: LABEL[locale].home, path: href("home", locale), key: "home" },
     { name: LABEL[locale].blog, path: href("blog", locale), key: "blog" },
   ];
   return (
-    <MotionRoot>
-      <div className="v7">
-        <Breadcrumbs crumbs={crumbs} locale={locale} />
-        <PlainHero eyebrow={t.eyebrow} h1={<>{t.h1[0]} <em className="font-light italic text-[#8A4524]">{t.h1[1]}</em></>} lede={t.lede} />
-        <section id="beitraege" aria-label={t.frame} className="mt-20 scroll-mt-20 md:mt-32">
-          <Frame label={t.frame} note={t.frameNote}>
-            <ul className="border-t border-[#16191D]">
-              {posts.map((p, i) => (
-                <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-[#E3DCD1] py-8 md:grid-cols-9 md:py-10">
-                  <p className="f-mono text-[12px] uppercase leading-[1.7] text-[#6B665F] md:col-span-3">
-                    <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
-                    <span className="mt-1 block text-[#8A4524]">
-                      {t.cat[p.category] ?? p.category} <span className="text-[#8A4524]">·</span> {getReadMinutes(p.slug, locale)} {t.min}
-                    </span>
+    // data-door: the Journal sits under Unternehmen (decision 77: ink marks)
+    <div className="v7" data-door={PILLAR.blog}>
+      <PlainHero
+        eyebrow={t.eyebrow}
+        h1={`${t.h1[0]} ${t.h1[1]}`}
+        lede={t.lede}
+        crumbs={crumbs}
+        locale={locale}
+        aside={
+          // The topics of the journal with the date of their newest post (design review R3: the titles themselves start
+          // right below); real data only, decorative, hidden on phones (the list follows).
+          <HeroObject
+            o={liste(
+              t.themen.etikett,
+              { title: t.themen.title, sub: t.themen.sub, stamp: t.eyebrow },
+              topics.map((c) => ({ text: t.cat[c.category] ?? c.category, note: fmtDate(c.date, locale) })),
+              { phone: false },
+            )}
+          />
+        }
+      />
+      <section id="beitraege" aria-label={t.frame} className="wk-sec">
+        <Frame label={t.frame} note={t.frameNote}>
+          <ul>
+            {posts.map((p, i) => (
+              <Reveal as="li" key={p.slug} delay={i * 0.04} className="relative grid gap-x-8 gap-y-3 border-b border-wk-line-2 py-8 transition-colors hover:bg-[color-mix(in_srgb,var(--wk-copper)_6%,transparent)] md:grid-cols-[11rem_minmax(0,1fr)] md:py-10">
+                <p className="f-mono text-[13px] leading-[1.6] text-wk-muted">
+                  <time dateTime={p.date}>{fmtDate(p.date, locale)}</time>
+                  <span className="mt-1 block text-wk-copper-deep">
+                    {t.cat[p.category] ?? p.category} · {getReadMinutes(p.slug, locale)} {t.min}
+                  </span>
+                </p>
+                <div className="min-w-0">
+                  <h2 className="wk-h3 md:text-[1.875rem]">
+                    <a href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
+                      {soft(p.title)}
+                    </a>
+                  </h2>
+                  <p className="mt-3 max-w-[60ch] text-wk-muted">{p.excerpt}</p>
+                  <p aria-hidden="true" className="mt-3 text-[16px] font-semibold text-wk-copper-deep">
+                    {t.read} →
                   </p>
-                  <div className="md:col-span-6">
-                    <h2 className="f-display text-[1.5rem] leading-[1.15] md:text-[1.875rem]">
-                      <Link href={href("blog", locale, { sub: `/${p.slug}` })} className="after:absolute after:inset-0 after:content-['']">
-                        {soft(p.title)}
-                      </Link>
-                    </h2>
-                    <p className="mt-3 text-[#16191D]">{p.excerpt}</p>
-                    <p aria-hidden="true" className="mt-3 text-[16px] font-medium text-[#8A4524]">
-                      {t.read} →
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </ul>
-            <div className="mt-10">
-              <LinkTo link={t.more} locale={locale} className={linkDeep}>
-                {t.more.label}
-                <span aria-hidden="true">→</span>
-              </LinkTo>
-            </div>
-          </Frame>
-        </section>
-        <CtaBand cta={t.training.cta} locale={locale} />
-        <JsonLdGraph nodes={[...sharedNodes(locale), ...webPageNodes({ key: "blog", locale, name: t.title, description: t.desc, crumbs })]} />
-      </div>
-    </MotionRoot>
+                </div>
+              </Reveal>
+            ))}
+          </ul>
+          {/* Rule 1: an excerpt that names a price gets the price note on the list page (the excerpt itself stays the post's meta description). */}
+          {posts.some((p) => p.excerpt.includes("€")) && <p className="wk-foot-note mt-6">{SITE_STR[locale].priceNote}</p>}
+          <div className="mt-10">
+            <LinkTo link={t.more} locale={locale} className={`${linkDeep} v7-link`}>
+              {t.more.label}
+              <span aria-hidden="true">→</span>
+            </LinkTo>
+          </div>
+        </Frame>
+      </section>
+      <CtaBand cta={t.training.cta} locale={locale} />
+      <JsonLdGraph nodes={[...sharedNodes(locale), ...webPageNodes({ key: "blog", locale, name: t.title, description: t.desc, crumbs })]} />
+    </div>
   );
 }

@@ -3,8 +3,8 @@
 // Update these values to customize the brand identity
 // =============================================================================
 
-/** Date of the last substantive content update; drives the visible "Stand:" line (2026-11-14: site clean-up, projects page retired). */
-export const SITE_UPDATED_ISO = "2026-11-14";
+/** Date of the last substantive content update; drives the visible "Stand:" line (2026-11-15: design C "Werkstatt"; 2026-11-14: site clean-up, projects page retired). */
+export const SITE_UPDATED_ISO = "2026-11-17";
 
 /** "Oktober 2026" / "October 2026" / "Ekim 2026". */
 export function formatStand(locale: string): string {

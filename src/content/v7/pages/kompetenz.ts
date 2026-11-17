@@ -3,7 +3,11 @@
  * Published price: ab 1.790 EUR netto pro Team (half day, 10 included, each additional 90 EUR, up to 15). Art. 4 only in the safe wording of
  * trainings.md section 1. The sample certificate is labelled "Muster" and carries placeholders only.
  */
+import { SITE_STR } from "../site";
 import type { PageDef, PageSet } from "../types";
+import { page as hub } from "./schulungen";
+import { kursBlatt } from "../hero-objects";
+import type { L3 } from "../types";
 
 const de: PageDef = {
   key: "kompetenz",
@@ -21,14 +25,6 @@ const de: PageDef = {
     primary: { label: "Schulung anfragen", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Agenda ansehen", to: "kompetenz", hash: "agenda" },
     facts: ["Ab 1.790 € netto pro Team", "Halber Tag · 10 Personen inklusive, bis 15", "Deutsch oder Englisch"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Skizze: ineinander liegende abgerundete Quadrate über einem Ablauf in vier Stationen: Grundlagen, Grenzen, Regeln, Nachweis",
-      caption: "Von den Grundlagen über die Grenzen zu den Regeln.",
-      fig: "0.1",
-      labels: ["Grundlagen", "Grenzen", "Regeln", "Nachweis"],
-    },
   },
   blocks: [
     {
@@ -37,12 +33,13 @@ const de: PageDef = {
       label: "Eckdaten",
       h: "Was die Schulung umfasst",
       rows: [
-        ["Preis", "Ab 1.790 € netto pro Team, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen), zzgl. USt., nur für Unternehmen"],
+        ["Preis", "Ab 1.790 € netto pro Team, 10 Personen inklusive, jede weitere Person 90 € (bis 15 Personen)"],
         ["Umfang", "Halber Tag (3,5 Stunden inklusive Pause), 10 Personen inklusive, bis zu 15 Personen"],
-        ["Durchführung", "Online live auf Deutsch oder Englisch, per Microsoft Teams oder Zoom; geschlossener Termin für Ihr Team nach Vereinbarung"],
+        ["Durchführung", "Live in Ihrem eigenen Microsoft Teams, auf Wunsch per Zoom. Keine Aufzeichnung, kein Selbstlernkurs. Ein geschlossener Termin nur für Ihr Team, auf Deutsch oder Englisch."],
         ["Leitung", "Die Trainerin oder den Trainer nennen wir Ihnen vor der Buchung namentlich."],
         ["Nachweis", "Teilnahmebescheinigung von OpSolid"],
       ],
+      footnote: SITE_STR.de.priceNote,
     },
     {
       t: "situations",
@@ -183,14 +180,6 @@ const en: PageDef = {
     primary: { label: "Request training", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "See the agenda", to: "kompetenz", hash: "agenda" },
     facts: ["From €1,790 net per team", "Half day · 10 people included, up to 15", "English or German"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Sketch: nested rounded squares above a workflow in four stations: basics, limits, rules, record",
-      caption: "From the basics, through the limits, to the rules.",
-      fig: "0.1",
-      labels: ["Basics", "Limits", "Rules", "Record"],
-    },
   },
   blocks: [
     {
@@ -199,12 +188,13 @@ const en: PageDef = {
       label: "Key facts",
       h: "What the course covers",
       rows: [
-        ["Price", "From €1,790 net per team, 10 people included, each additional person €90 (up to 15), plus VAT, businesses only"],
+        ["Price", "From €1,790 net per team, 10 people included, each additional person €90 (up to 15)"],
         ["Scope", "Half day (3.5 hours including a break), 10 people included, up to 15 people"],
-        ["Delivery", "Live online in English or German, via Microsoft Teams or Zoom; a closed session for your team, by agreement"],
+        ["Delivery", "Live in your own Microsoft Teams, via Zoom if you prefer. No recording, no self-paced course. A closed session for your team only, in English or German."],
         ["Led by", "We name the trainer to you before you book."],
         ["Proof", "Participation record from OpSolid"],
       ],
+      footnote: SITE_STR.en.priceNote,
     },
     {
       t: "situations",
@@ -297,7 +287,7 @@ const en: PageDef = {
       },
       {
         q: "Is the price per person?",
-        a: "No, per team: from €1,790 net, 10 people included, each additional person €90 (up to 15). With 10 people that works out at €179 per person. All prices net of VAT, businesses only.",
+        a: "No, per team: from €1,790 net, 10 people included, each additional person €90 (up to 15). With 10 people that works out at €179 per person. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Can you adapt the examples to our team?",
@@ -345,14 +335,6 @@ const tr: PageDef = {
     primary: { label: "Eğitim talep edin", to: "kontakt", query: { anliegen: "schulung" } },
     secondary: { label: "Programa bakın", to: "kompetenz", hash: "agenda" },
     facts: ["Ekip başına 1.790 €'dan itibaren (net)", "Yarım gün · 10 kişi dahil, en fazla 15", "Almanca veya İngilizce"],
-    media: {
-      kind: "svg",
-      name: "squares",
-      alt: "Çizim: iç içe yuvarlatılmış kareler ve dört istasyonlu bir akış: temeller, sınırlar, kurallar, belge",
-      caption: "Temellerden sınırlara, oradan kurallara.",
-      fig: "0.1",
-      labels: ["Temeller", "Sınırlar", "Kurallar", "Belge"],
-    },
   },
   blocks: [
     {
@@ -361,12 +343,13 @@ const tr: PageDef = {
       label: "Temel bilgiler",
       h: "Eğitim neleri kapsar?",
       rows: [
-        ["Fiyat", "Ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi), KDV hariç; yalnızca işletmeler için"],
+        ["Fiyat", "Ekip başına 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi)"],
         ["Kapsam", "Yarım gün (mola dahil 3,5 saat), 10 kişi dahil, en fazla 15 kişi"],
-        ["Uygulama", "Almanca veya İngilizce canlı çevrimiçi; anlaşmaya göre Microsoft Teams veya Zoom; ekibinize özel kapalı oturum"],
+        ["Uygulama", "Kendi Microsoft Teams'inizde canlı; isterseniz Zoom ile. Kayıt yok, kendi kendine öğrenme kursu yok. Yalnızca ekibinize özel kapalı bir oturum, Almanca veya İngilizce."],
         ["Yürüten", "Eğitmeni rezervasyondan önce size adıyla bildiririz."],
         ["Belge", "OpSolid katılım belgesi"],
       ],
+      footnote: SITE_STR.tr.priceNote,
     },
     {
       t: "situations",
@@ -459,7 +442,7 @@ const tr: PageDef = {
       },
       {
         q: "Fiyat kişi başına mı?",
-        a: "Hayır, ekip başına: 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi). 10 kişilik bir ekipte bu, kişi başı 179 € eder. Tüm fiyatlar net, KDV hariç; yalnızca işletmeler için.",
+        a: "Hayır, ekip başına: 1.790 €'dan itibaren (net), 10 kişi dahil, her ek kişi 90 € (en fazla 15 kişi). 10 kişilik bir ekipte bu, kişi başı 179 € eder. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Örnekleri ekibimize uyarlayabilir misiniz?",
@@ -490,5 +473,13 @@ const tr: PageDef = {
     ],
   },
 };
+
+/* R2: the hero object, the sample timetable of the hub catalog card on a sheet of its own. */
+for (const [loc, d] of [["de", de], ["en", en], ["tr", tr]] as [L3, PageDef][]) {
+  const cat = hub[loc].blocks.find((b) => b.t === "catalog");
+  const item = cat && cat.t === "catalog" ? cat.items.find((it) => it.id === "grundlagen") : undefined;
+  if (!item) throw new Error("kompetenz: no catalog card on the hub");
+  d.hero.object = kursBlatt(item.art, item.name, item.facts[0], item.art.etikett.split(" · ")[0]);
+}
 
 export const page: PageSet = { de, en, tr };

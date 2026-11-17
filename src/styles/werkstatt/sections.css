@@ -1,0 +1,376 @@
+/* Werkstatt sections: the parts of the page frame every marketing page shares (inner page hero with
+   breadcrumbs, jump pills and the bleeding picture, the statement band, the FAQ, the closing copper band,
+   the language hint). Ported from the prototype styles.css (Schulungen page base, faq, cta band; third
+   pass merged into single rules), prefixed wk- and scoped to html[data-v4]. The home bench hero lives in
+   home.css (P1); the Produkte hero in produkte.css (P3). */
+
+/* ---------- inner page hero ---------- */
+html[data-v4] .wk-page-hero { position: relative; overflow: clip; background: var(--wk-paper); color: var(--wk-text); }
+html[data-v4] .wk-page-hero.wk-mat { --mat-mask: linear-gradient(100deg, transparent 0%, #000 46%); }
+html[data-v4] .wk-page-hero.wk-on-ink { background: var(--wk-ink); color: var(--wk-text-d); }
+html[data-v4] .wk-page-hero-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: center; padding-block: 44px 52px; }
+html[data-v4] .wk-page-hero-copy { display: grid; gap: 24px; justify-items: start; min-width: 0; }
+html[data-v4] .wk-page-hero .wk-d1 { font-size: clamp(2.75rem, 4.3vw, 3.875rem); line-height: 0.98; letter-spacing: -0.026em; }
+html[data-v4] .wk-page-hero .wk-lede { color: var(--wk-muted); }
+html[data-v4] .wk-page-hero.wk-on-ink .wk-lede,
+html[data-v4] .wk-page-hero.wk-on-ink .wk-crumbs { color: var(--wk-muted-d); }
+html[data-v4] .wk-page-hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; }
+html[data-v4] .wk-page-hero .wk-facts { position: relative; }
+
+/* breadcrumbs: mono, "/" separators, 44 px targets */
+html[data-v4] .wk-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 0 8px; font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.3; color: var(--wk-muted); }
+html[data-v4] .wk-crumbs li { display: inline-flex; align-items: center; gap: 8px; }
+html[data-v4] .wk-crumbs li + li::before { content: "/"; color: var(--wk-muted); }
+html[data-v4] .wk-on-ink .wk-crumbs li + li::before { color: var(--wk-muted-d); }
+/* crumb links are underlined as in the prototype (the current page is plain text); hover darkens them */
+html[data-v4] .wk-crumbs a { min-height: 44px; display: inline-flex; align-items: center; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+html[data-v4] .wk-crumbs a:hover { color: var(--wk-text); }
+html[data-v4] .wk-on-ink .wk-crumbs a:hover { color: var(--wk-text-d); }
+html[data-v4] .wk-crumbs [aria-current] { color: var(--wk-text); }
+html[data-v4] .wk-on-ink .wk-crumbs [aria-current] { color: var(--wk-text-d); }
+
+/* jump pills (in-page links under the hero copy) */
+html[data-v4] .wk-jump { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+html[data-v4] .wk-jump a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: var(--wk-r-2); border: 1.5px solid var(--wk-line-2); text-decoration: none; font-size: var(--wk-fs-1); font-weight: 540; transition: border-color var(--wk-t-micro), background-color var(--wk-t-micro); }
+html[data-v4] .wk-jump a:hover { border-color: var(--wk-text); background: var(--wk-sheet); }
+html[data-v4] .wk-on-ink .wk-jump a { border-color: var(--wk-line-d2); }
+html[data-v4] .wk-on-ink .wk-jump a:hover { border-color: var(--wk-text-d); background: var(--wk-ink-2); }
+
+/* the hero picture bleeds out of the wrap to the right edge (the hero clips the overflow) */
+html[data-v4] .wk-hero-pic { margin: 0; margin-right: calc(-1 * var(--wk-bleed)); max-width: calc(100% + var(--wk-bleed)); display: grid; gap: 12px; min-width: 0; }
+html[data-v4] .wk-hero-pic picture { display: block; }
+html[data-v4] .wk-hero-pic img { display: block; width: 100%; height: clamp(440px, 36vw, 660px); object-fit: cover; object-position: 100% 100%; border-radius: var(--wk-r-3) 0 0 var(--wk-r-3); background: var(--wk-paper-2); box-shadow: 0 40px 70px -44px rgba(20, 23, 27, 0.7); }
+html[data-v4] .wk-hero-media { min-width: 0; }
+
+/* ---------- statement band (ink, mat) ---------- */
+html[data-v4] .wk-statement { background: var(--wk-ink); color: var(--wk-text-d); padding-block: var(--wk-sec); }
+html[data-v4] .wk-statement-s { font-family: var(--wk-sans); font-stretch: 116%; font-weight: 660; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.024em; max-width: 22ch; text-wrap: balance; }
+html[data-v4] .wk-statement-note { display: flex; align-items: flex-start; gap: 10px; margin-top: 36px; max-width: 56ch; font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.5; color: var(--wk-muted-d); }
+html[data-v4] .wk-statement-note::before { content: ""; flex: none; width: 9px; height: 9px; margin-top: 5px; border-radius: 2.5px; background: var(--wk-copper-lite); }
+
+/* ---------- FAQ: sticky side column, plus/minus squares ---------- */
+html[data-v4] .wk-faq-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; align-items: start; }
+html[data-v4] .wk-faq-side { position: sticky; top: calc(var(--wk-header-h) + 32px); display: grid; gap: 18px; justify-items: start; }
+html[data-v4] .wk-faq-side p { color: var(--wk-muted); font-size: var(--wk-fs-1); max-width: 26em; }
+html[data-v4] .wk-faq { border-top: 2px solid var(--wk-text); }
+html[data-v4] .wk-faq details { border-bottom: 1px solid var(--wk-line-2); }
+html[data-v4] .wk-faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr 28px; gap: 16px; align-items: center; min-height: 68px; padding: 14px 0; font-weight: 620; font-size: var(--wk-fs-3); line-height: 1.25; font-stretch: 106%; transition: color var(--wk-t-micro); }
+html[data-v4] .wk-faq summary::-webkit-details-marker { display: none; }
+html[data-v4] .wk-faq summary::after {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1.5px solid var(--wk-line-2);
+  background:
+    linear-gradient(var(--wk-text), var(--wk-text)) center / 12px 1.5px no-repeat,
+    linear-gradient(var(--wk-text), var(--wk-text)) center / 1.5px 12px no-repeat;
+  transition: background-size var(--wk-t-ui) var(--wk-ease-out), border-color var(--wk-t-ui);
+}
+html[data-v4] .wk-faq details[open] summary::after { background-size: 12px 1.5px, 1.5px 0; border-color: var(--wk-copper-deep); }
+html[data-v4] .wk-faq summary:hover { color: var(--wk-copper-deep); }
+html[data-v4] .wk-faq-a { padding: 0 44px 24px 0; color: var(--wk-muted); max-width: 44em; }
+html[data-v4] .wk-faq-a p + p { margin-top: 0.75em; }
+
+/* ---------- closing copper band ---------- */
+html[data-v4] .wk-cta-band { position: relative; overflow: clip; background: var(--wk-copper-deep); color: var(--wk-text-d); padding-block: 88px; }
+html[data-v4] .wk-cta-band.wk-mat { --mat-major: rgba(20, 23, 27, 0.16); --mat-minor: rgba(20, 23, 27, 0.07); --mat-mask: linear-gradient(90deg, transparent 30%, #000 100%); }
+html[data-v4] .wk-cta-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 48px; align-items: end; }
+html[data-v4] .wk-cta-grid p { margin-top: 18px; max-width: 34em; color: var(--wk-text-d); }
+html[data-v4] .wk-cta-actions { display: grid; gap: 8px; justify-items: end; }
+/* band text is paper only: muted-d and copper-lite fail AA on copper-deep */
+html[data-v4] .wk-cta-band .wk-etikett { color: var(--wk-text-d); }
+html[data-v4] .wk-cta-band .wk-tlink:hover { color: #fff; text-decoration-thickness: 2px; }
+html[data-v4] .wk-cta-band :focus-visible { outline-color: var(--wk-text-d); }
+/* with a picture: the render is the band, a gradient keeps the copy on copper */
+html[data-v4] .wk-cta-band.has-pic { padding-block: 104px; }
+html[data-v4] .wk-cta-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 46%; }
+html[data-v4] .wk-cta-band.has-pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #8a431c 0%, #8a431c 38%, rgba(138, 67, 28, 0.86) 52%, rgba(138, 67, 28, 0) 78%); }
+html[data-v4] .wk-cta-band.has-pic .wk-cta-grid { grid-template-columns: minmax(0, 6.2fr) minmax(0, 5.8fr); align-items: start; }
+html[data-v4] .wk-cta-band.has-pic .wk-cta-actions { grid-column: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; justify-items: start; }
+html[data-v4] .wk-cta-cap { position: absolute; z-index: 1; right: var(--wk-bleed); bottom: 16px; padding: 5px 8px; border-radius: 3px; background: rgba(20, 23, 27, 0.8); font-size: 0.75rem; }
+html[data-v4] .wk-cta-band .wk-etikett.wk-cta-cap { color: var(--wk-text-d); }
+
+/* ---------- language hint (German home, suggested en/tr) ---------- */
+html[data-v4] .wk-langhint { background: var(--wk-paper-2); color: var(--wk-text); border-bottom: 1px solid var(--wk-line); font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; }
+html[data-v4] .wk-langhint-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; }
+html[data-v4] .wk-langhint a { text-decoration: underline; text-underline-offset: 4px; }
+html[data-v4] .wk-langhint button { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: var(--wk-r-2); background: transparent; color: var(--wk-text); }
+html[data-v4] .wk-langhint button:hover { background: var(--wk-sheet); }
+
+/* ---------- frame additions (package Fb2) ---------- */
+/* section frame: more air for a dense section after a dense one; the closing link; a full-width H2 */
+html[data-v4] .wk-sec.is-airy { padding-top: calc(var(--wk-sec) + 24px); }
+html[data-v4] .wk-sec-cta { margin-top: 40px; }
+html[data-v4] .wk-sec-head.is-wide { max-width: none; }
+html[data-v4] .wk-sec-head.is-stack .wk-sec-head-lede { max-width: 40em; }
+html[data-v4] .wk-sec-head-main .wk-d2 { max-width: 22ch; }
+html[data-v4] .wk-sec-head-main .wk-sec-note { margin-top: -10px; }
+html[data-v4] .wk-faq-side .wk-d2 { font-size: clamp(1.75rem, 2.6vw, 2.375rem); }
+html[data-v4] .wk-sec-head.is-wide .wk-sec-head-main .wk-d2 { max-width: none; }
+
+/* page hero variants: the picture hero draws its mat on the left (under the copy), the text hero on the right */
+html[data-v4] .wk-page-hero.has-pic.wk-mat { --mat-mask: linear-gradient(100deg, #000 0%, transparent 46%); }
+html[data-v4] .wk-page-hero.is-light { border-bottom: 1px solid var(--wk-line); }
+html[data-v4] .wk-page-hero.is-light.has-strip { border-bottom: 0; }
+html[data-v4] .wk-page-hero.is-text .wk-page-hero-grid { grid-template-columns: minmax(0, 1fr); padding-block: 44px 64px; }
+html[data-v4] .wk-page-hero.is-text .wk-page-hero-copy { max-width: 52rem; }
+html[data-v4] .wk-page-hero .wk-lede { max-width: 36em; }
+html[data-v4] .wk-page-hero-copy > .wk-etikett { margin-top: -4px; }
+html[data-v4] .wk-page-hero.is-plain.is-small .wk-d1 { font-size: clamp(2.25rem, 3.6vw, 3.25rem); line-height: 1.02; }
+html[data-v4] .wk-page-hero-grid:has(.wk-hero-pic) { padding-bottom: 40px; }
+html[data-v4] .wk-hero-pic figcaption { justify-self: start; }
+html[data-v4] .wk-hero-media { justify-self: end; width: 100%; max-width: 460px; }
+html[data-v4] .wk-media { margin: 0; display: grid; gap: 12px; min-width: 0; }
+html[data-v4] .wk-media-cap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+
+/* the mono fact line under a hero without a strip: a ruler and square-marked facts */
+html[data-v4] .wk-hero-facts { display: flex; flex-wrap: wrap; gap: 10px 28px; padding: 18px 0 30px; border-top: 1px solid var(--wk-line-2); font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; color: var(--wk-muted); }
+html[data-v4] .wk-hero-facts li { display: inline-flex; align-items: flex-start; gap: 9px; }
+html[data-v4] .wk-hero-facts li::before { content: ""; flex: none; width: 7px; height: 7px; margin-top: 5px; border-radius: 2px; background: var(--wk-copper); }
+html[data-v4] .wk-hero-facts.has-note { padding-bottom: 8px; }
+html[data-v4] .wk-hero-facts-note { font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1.45; color: var(--wk-muted); padding: 0 0 30px 16px; }
+html[data-v4] .wk-on-ink .wk-hero-facts-note { color: var(--wk-muted-d); }
+html[data-v4] .wk-on-ink .wk-hero-facts { border-top-color: var(--wk-line-d2); color: var(--wk-muted-d); }
+html[data-v4] .wk-on-ink .wk-hero-facts li::before { background: var(--wk-copper-lite); }
+html[data-v4] .wk-page-hero.is-text:has(.wk-hero-facts) .wk-page-hero-grid { padding-bottom: 44px; }
+
+/* index rows under the hero (Produkte): kind, name, status chip, arrow; refined by produkte.css */
+html[data-v4] .wk-hero-index { border-top: 2px solid currentColor; margin-bottom: 40px; }
+html[data-v4] .wk-hero-index-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 5fr) auto 24px; gap: 16px; align-items: center; min-height: 64px; padding: 12px 0; border-bottom: 1px solid var(--wk-line-2); text-decoration: none; }
+html[data-v4] .wk-on-ink .wk-hero-index-row { border-bottom-color: var(--wk-line-d2); }
+html[data-v4] .wk-hero-index-k { font-family: var(--wk-mono); font-size: var(--wk-fs-0); color: var(--wk-muted); }
+html[data-v4] .wk-on-ink .wk-hero-index-k { color: var(--wk-muted-d); }
+html[data-v4] .wk-hero-index-name { font-stretch: 112%; font-weight: 660; font-size: var(--wk-fs-3); line-height: 1.15; }
+html[data-v4] .wk-hero-index-row:hover .wk-hero-index-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+/* long-form frame (journal, legal): label column over a 2 px rule */
+html[data-v4] .wk-frame { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 24px 48px; padding-top: 22px; border-top: 2px solid var(--wk-text); }
+
+/* FAQ question inside the summary keeps the summary type */
+html[data-v4] .wk-faq-q { font: inherit; letter-spacing: inherit; margin: 0; overflow-wrap: break-word; }
+html[data-v4] .wk-on-ink .wk-faq { border-top-color: var(--wk-text-d); }
+html[data-v4] .wk-on-ink .wk-faq details { border-bottom-color: var(--wk-line-d2); }
+html[data-v4] .wk-on-ink .wk-faq-a,
+html[data-v4] .wk-on-ink .wk-faq-side p { color: var(--wk-muted-d); }
+
+/* CTA band: the solid Etikett square in paper (copper on copper-deep is not visible) */
+html[data-v4] .wk-cta-band .wk-etikett.is-solid::before { background: var(--wk-text-d); border-color: var(--wk-text-d); }
+html[data-v4] .wk-cta-band .wk-tlink { color: var(--wk-text-d); }
+html[data-v4] .wk-cta-band .wk-d2 { max-width: 20ch; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  /* phone hero: the picture comes after the copy and before the jump pills, so the first screen shows it */
+  html[data-v4] .wk-page-hero-grid { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding-block: 16px 28px; }
+  html[data-v4] .wk-page-hero-grid .wk-page-hero-copy { display: contents; }
+  html[data-v4] .wk-page-hero-grid .wk-page-hero-copy > * + * { margin-top: 18px; }
+  html[data-v4] .wk-page-hero-grid .wk-hero-pic,
+  html[data-v4] .wk-page-hero-grid .wk-hero-media { order: 2; margin-top: 22px; }
+  html[data-v4] .wk-page-hero-grid .wk-jump { order: 3; margin-top: 20px; }
+  html[data-v4] .wk-page-hero .wk-d1 { font-size: 2.5rem; line-height: 0.98; }
+  html[data-v4] .wk-page-hero-cta { gap: 4px 24px; }
+  html[data-v4] .wk-page-hero-cta .wk-btn { width: 100%; }
+  html[data-v4] .wk-jump a { font-size: 0.875rem; padding: 0 12px; }
+  html[data-v4] .wk-hero-pic { margin-inline: calc(-1 * var(--wk-gut)); max-width: none; gap: 10px; }
+  html[data-v4] .wk-hero-pic img { height: auto; border-radius: 0; box-shadow: none; }
+  html[data-v4] .wk-hero-pic .wk-etikett { margin-inline: var(--wk-gut); }
+
+  html[data-v4] .wk-statement-note { margin-top: 24px; }
+
+  html[data-v4] .wk-faq-grid { grid-template-columns: 1fr; gap: 32px; }
+  html[data-v4] .wk-faq-side { position: static; }
+  html[data-v4] .wk-faq summary { font-size: 1.0625rem; min-height: 60px; }
+  html[data-v4] .wk-faq-a { padding-right: 0; font-size: 0.9375rem; }
+
+  html[data-v4] .wk-cta-band { padding-block: 56px; }
+  html[data-v4] .wk-cta-grid { grid-template-columns: 1fr; gap: 24px; }
+  html[data-v4] .wk-cta-actions { justify-items: stretch; }
+  html[data-v4] .wk-cta-actions .wk-btn { width: 100%; }
+  html[data-v4] .wk-cta-actions .wk-tlink { justify-content: center; }
+  html[data-v4] .wk-cta-band.has-pic { padding-block: 0 44px; }
+  html[data-v4] .wk-cta-band.has-pic::after { display: none; }
+  html[data-v4] .wk-cta-pic img { position: static; height: 236px; object-position: 50% 50%; margin-bottom: 36px; }
+  html[data-v4] .wk-cta-cap { right: auto; left: var(--wk-gut); top: 196px; bottom: auto; }
+  html[data-v4] .wk-cta-band.has-pic .wk-cta-grid { grid-template-columns: 1fr; }
+  html[data-v4] .wk-cta-band.has-pic .wk-cta-actions { display: grid; justify-items: stretch; }
+}
+/* tablets: the hero picture keeps its phone cut but does not grow to the full width */
+@media (min-width: 600px) and (max-width: 960px) {
+  html[data-v4] .wk-page-hero-grid .wk-hero-pic { align-self: flex-end; width: 560px; margin-left: 0; }
+  html[data-v4] .wk-page-hero-grid .wk-hero-pic img { border-radius: var(--wk-r-3) 0 0 var(--wk-r-3); }
+}
+
+@media (max-width: 960px) {
+  html[data-v4] .wk-sec.is-airy { padding-top: calc(var(--wk-sec) + 12px); }
+  html[data-v4] .wk-sec-cta { margin-top: 28px; }
+  html[data-v4] .wk-page-hero.is-text .wk-page-hero-grid { padding-block: 16px 32px; }
+  html[data-v4] .wk-page-hero.is-plain.is-small .wk-d1 { font-size: 2rem; }
+  /* phones: the drawn figure takes the text width (its mono stage labels stay at 10 px or more at 390) */
+  html[data-v4] .wk-hero-media { width: 100%; max-width: 420px; align-self: center; }
+  html[data-v4] .wk-hero-facts { flex-direction: column; gap: 8px; padding: 14px 0 22px; }
+  html[data-v4] .wk-hero-facts.has-note { padding-bottom: 8px; }
+  html[data-v4] .wk-hero-facts-note { padding-bottom: 22px; }
+  html[data-v4] .wk-hero-index-row { grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; }
+  html[data-v4] .wk-hero-index-k { grid-column: 1 / -1; }
+  html[data-v4] .wk-hero-index-go { display: none; }
+  html[data-v4] .wk-frame { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ---------- R2: the page's own object in the hero (HeroObject) ---------- */
+/* One drawn piece per inner page, lying on the mat at a small angle, two register marks, its Etikett under it. */
+html[data-v4] .wk-hero-obj { position: relative; justify-self: end; width: 100%; max-width: 468px; margin: 0; display: grid; gap: 16px; padding: 14px 6px 0 18px; }
+html[data-v4] .wk-hero-obj figcaption { justify-self: start; }
+html[data-v4] .wk-hero-obj .wk-reg.tr { right: -10px; top: -4px; }
+html[data-v4] .wk-hero-obj .wk-reg.bl { left: 2px; bottom: 30px; }
+html[data-v4] .wk-hero-obj-piece { position: relative; min-width: 0; transform: rotate(var(--obj-a, -1.2deg)); }
+html[data-v4] .wk-hero-obj .wk-blatt { box-shadow: var(--wk-shadow-sheet); }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-v4] .wk-hero-obj-piece { animation: wk-obj-lay var(--wk-t-scene) var(--wk-ease-out) 120ms both; }
+}
+@keyframes wk-obj-lay { from { opacity: 0; transform: translate(18px, -10px) rotate(2.5deg); } to { opacity: 1; transform: rotate(var(--obj-a, -1.2deg)); } }
+
+/* fragebogen: the home door sheet, here at reading size */
+html[data-v4] .wk-hero-obj .wk-bogen { position: relative; left: auto; top: auto; width: min(100%, 380px); margin-left: auto; padding: 24px 26px 34px; transform: none; }
+html[data-v4] .wk-hero-obj .wk-bogen .wk-blatt-title { font-size: 1.25rem; }
+html[data-v4] .wk-hero-obj .wk-bogen .wk-blatt-sub { font-size: 0.75rem; }
+html[data-v4] .wk-hero-obj .wk-bogen-q { margin-top: 16px; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-hero-obj .wk-bogen-a { gap: 10px; margin-top: 14px; font-size: var(--wk-fs-1); }
+html[data-v4] .wk-hero-obj .wk-bogen-a li { grid-template-columns: 15px 1fr; }
+html[data-v4] .wk-hero-obj .wk-bogen-a li::before { width: 14px; height: 14px; }
+html[data-v4] .wk-hero-obj.is-fragebogen { --obj-a: 2deg; }
+
+/* report: the sample KI-Check report excerpt with the blank sheet behind it */
+html[data-v4] .wk-hero-obj .wk-report { position: relative; padding: 8px 0 0 22px; }
+html[data-v4] .wk-hero-obj .wk-report-sheet { width: 100%; padding: 24px 26px 20px; transform: none; }
+html[data-v4] .wk-hero-obj .wk-report-back { top: 22px; }
+html[data-v4] .wk-hero-obj.is-report { --obj-a: 1.2deg; }
+
+/* vergleich: one sample workflow by hand and automated, numbered rows side by side */
+html[data-v4] .wk-vgl { padding: 22px 22px 20px; font-size: 0.8125rem; line-height: 1.38; }
+html[data-v4] .wk-vgl .wk-blatt-sub { line-height: 1.4; }
+html[data-v4] .wk-vgl-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+html[data-v4] .wk-vgl-h { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); padding-bottom: 6px; margin-bottom: 8px; border-bottom: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-vgl-cols .is-after .wk-vgl-h { color: var(--wk-copper-deep); border-bottom-style: solid; border-bottom-color: var(--wk-copper-deep); }
+html[data-v4] .wk-vgl ol { display: grid; gap: 8px; counter-reset: wk-v; }
+html[data-v4] .wk-vgl li { counter-increment: wk-v; display: grid; grid-template-columns: 16px 1fr; gap: 4px; }
+html[data-v4] .wk-vgl li::before { content: counter(wk-v); font-family: var(--wk-mono); font-size: 0.6875rem; color: var(--wk-muted); padding-top: 2px; }
+html[data-v4] .wk-vgl .is-after li { font-weight: 540; }
+html[data-v4] .wk-vgl .is-after li::before { color: var(--wk-copper-deep); }
+
+/* gespraech: a UI window with the scripted sample conversation */
+html[data-v4] .wk-talk { width: min(100%, 440px); margin-left: auto; }
+html[data-v4] .wk-talk .wk-ui-bar > span:first-child b { margin-right: 6px; }
+html[data-v4] .wk-talk .wk-ui-body { gap: 10px; }
+html[data-v4] .wk-talk-line { max-width: 88%; padding: 9px 12px 10px; border-radius: 8px; border: 1px solid var(--wk-line); background: var(--wk-paper); }
+html[data-v4] .wk-talk-line .wk-ui-label { margin-bottom: 4px; }
+html[data-v4] .wk-talk-line.is-ai { border-color: color-mix(in srgb, var(--wk-copper) 45%, transparent); background: color-mix(in srgb, var(--wk-copper) 5%, #fff); }
+html[data-v4] .wk-talk-line:not(.is-ai) { justify-self: end; }
+html[data-v4] .wk-talk-foot { font-family: var(--wk-mono); font-size: 0.75rem; color: var(--wk-muted); }
+
+/* liste: a small sheet with numbered or ticked lines (checklist, steps, titles) */
+html[data-v4] .wk-hero-obj .wk-hero-list { width: min(100%, 420px); margin-left: auto; padding: 22px 24px 24px; font-size: 0.9375rem; }
+html[data-v4] .wk-hero-list .wk-blatt-title { font-size: 1.125rem; }
+html[data-v4] .wk-hero-list .wk-blatt-sub { font-size: 0.75rem; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list { gap: 0; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list li { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px dashed var(--wk-line); line-height: 1.35; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list li:has(> .wk-mini-blatt-time) { grid-template-columns: 26px minmax(0, 1fr); }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list li:last-child { border-bottom: 0; padding-bottom: 0; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-time { font-size: 0.75rem; color: var(--wk-copper-deep); padding-top: 2px; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list b { display: block; font-weight: 600; }
+html[data-v4] .wk-hero-list .wk-mini-blatt-list small { display: block; margin-top: 2px; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.4; color: var(--wk-muted); }
+html[data-v4] .wk-hero-list.is-check .wk-mini-blatt-list li { grid-template-columns: 16px 1fr; gap: 12px; }
+html[data-v4] .wk-hero-list.is-check .wk-mini-blatt-list li::before { content: ""; width: 14px; height: 14px; margin-top: 3px; border-radius: 3px; border: 1.5px solid var(--wk-copper-deep); background: linear-gradient(var(--wk-copper-deep), var(--wk-copper-deep)) center / 6px 6px no-repeat; }
+html[data-v4] .wk-hero-obj.is-liste { --obj-a: 1.4deg; }
+
+/* zeitplan and bloecke: the hub catalog pieces on a sheet of their own */
+html[data-v4] .wk-hero-sheet { padding: 22px 22px 20px; }
+html[data-v4] .wk-hero-sheet .wk-plan-list { font-size: 0.875rem; }
+html[data-v4] .wk-hero-sheet .wk-blocks li { padding: 9px 10px 10px; font-size: 0.8125rem; }
+
+/* way: the drawn way schema on a sheet */
+html[data-v4] .wk-hero-way { padding: 28px 18px 18px; }
+html[data-v4] .wk-hero-obj.is-way { --obj-a: -0.8deg; }
+
+/* flow (R3): the KI-Agenten four-node flow on a sheet, one filled row under the nodes. The row runs in four columns
+   under the nodes when the sheet is wide enough for the longest word (TR "sınıflandırır"); on narrower sheets it turns
+   two by two and each cell names its node (a container query on the sheet, so 961-1180 px and phones both fit). */
+html[data-v4] .wk-hero-flow { width: min(100%, 440px); margin-left: auto; padding: 22px 18px 18px; container-type: inline-size; }
+html[data-v4] .wk-hero-flow svg { display: block; margin-top: 6px; }
+html[data-v4] .wk-hero-flow-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 4px; border-top: 1px dashed var(--wk-line-2); }
+html[data-v4] .wk-hero-flow-row li { padding: 10px 8px 8px; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.4; color: var(--wk-text); hyphens: manual; }
+html[data-v4] .wk-hero-flow-row li:nth-child(even) { border-left: 1px dashed var(--wk-line); }
+html[data-v4] .wk-hero-flow-row li:nth-child(n + 3) { border-top: 1px dashed var(--wk-line); }
+html[data-v4] .wk-hero-flow-k { display: block; margin-bottom: 2px; color: var(--wk-muted); }
+/* R4: in the two-by-two row each cell names its node, so the labels under the dots would say it twice */
+html[data-v4] .wk-hero-flow svg text { display: none; }
+@container (min-width: 400px) {
+  html[data-v4] .wk-hero-flow svg text { display: inline; }
+  html[data-v4] .wk-hero-flow-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  html[data-v4] .wk-hero-flow-row li { padding: 10px 3px 2px; font-size: 0.6875rem; text-align: center; }
+  html[data-v4] .wk-hero-flow-row li + li { border-left: 1px dashed var(--wk-line); }
+  html[data-v4] .wk-hero-flow-row li:nth-child(n + 3) { border-top: 0; }
+  html[data-v4] .wk-hero-flow-k { display: none; }
+}
+html[data-v4] .wk-hero-obj.is-flow { --obj-a: -1deg; }
+
+/* ---------- R2: door marks on inner pages (decision 77) ---------- */
+/* Beratung pages: the copper graphics (squares, nodes, ticks, stamps, figure strokes, the closing band) turn slate.
+   Text in these tokens keeps AA: slate-deep on paper and slate, #9fb7c4 on ink and charcoal. Header and footer sit
+   outside .v7 and keep their own marks. */
+html[data-v4] .v7[data-door="beratung"] {
+  --wk-copper: var(--wk-slate-deep);
+  --wk-copper-deep: var(--wk-slate-deep);
+  --wk-copper-lite: var(--wk-line-beratung-d);
+  --wk-copper-rgb: var(--wk-slate-deep-rgb);
+  --wk-copper-deep-rgb: var(--wk-slate-deep-rgb);
+  --wk-copper-lite-rgb: 159 183 196;
+}
+/* R3: Produkte pages mark in charcoal, Unternehmen pages (About, Trainer, Journal, Kontakt) in ink, the same token swap
+   as Beratung (design review R3 fix 3, rules audit S4). Charcoal and ink as text pass AA on paper, sheet and bench. */
+html[data-v4] .v7[data-door="produkte"] {
+  --wk-copper: var(--wk-line-produkte);
+  --wk-copper-deep: var(--wk-line-produkte);
+  --wk-copper-lite: var(--wk-line-produkte-d);
+  --wk-copper-rgb: var(--wk-char-rgb);
+  --wk-copper-deep-rgb: var(--wk-char-rgb);
+  --wk-copper-lite-rgb: 201 194 184;
+}
+html[data-v4] .v7[data-door="unternehmen"] {
+  --wk-copper: var(--wk-line-unternehmen);
+  --wk-copper-deep: var(--wk-line-unternehmen);
+  --wk-copper-lite: var(--wk-line-unternehmen-d);
+  --wk-copper-rgb: var(--wk-ink-rgb);
+  --wk-copper-deep-rgb: var(--wk-ink-rgb);
+  --wk-copper-lite-rgb: var(--wk-text-d-rgb);
+}
+/* on the dark grounds of these pages (the charcoal Produkte hero, ink sections) a charcoal or ink mark would vanish:
+   there the graphic marks take the light door tone */
+html[data-v4] .v7[data-door="beratung"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-beratung-d); --wk-copper-rgb: 159 183 196; }
+html[data-v4] .v7[data-door="produkte"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-produkte-d); --wk-copper-rgb: 201 194 184; }
+html[data-v4] .v7[data-door="unternehmen"] :is(.wk-on-ink, .wk-on-char) { --wk-copper: var(--wk-line-unternehmen-d); --wk-copper-rgb: var(--wk-text-d-rgb); }
+/* kept in copper: the closing CTA band (the Schulungen action) and the Schulungen card of the Produkte "why" section */
+html[data-v4] .v7:is([data-door="produkte"], [data-door="unternehmen"]) :is(.wk-cta-band, .wk-why-door.wk-on-ink) {
+  --wk-copper: #b5623a;
+  --wk-copper-deep: #93481f;
+  --wk-copper-lite: #e59c72;
+  --wk-copper-rgb: 181 98 58;
+  --wk-copper-deep-rgb: 147 72 31;
+  --wk-copper-lite-rgb: 229 156 114;
+}
+/* Produkte hero ground: charcoal, not ink (the ink rule above has the same weight, so it is restated here). */
+html[data-v4] .wk-page-hero.wk-on-char { background: var(--wk-char); }
+/* the cell that is a product's only line on the page (Kutasia) is an anchor under the sticky header */
+html[data-v4] .wk-hero-index > li[id] { scroll-margin-top: calc(var(--wk-header-h) + 24px); }
+
+@media (max-width: 960px) {
+  html[data-v4] .wk-page-hero-grid .wk-hero-obj { order: 2; margin-top: 26px; align-self: center; max-width: 420px; padding: 10px 4px 0 10px; }
+  html[data-v4] .wk-page-hero-grid .wk-hero-obj.is-deco { display: none; }
+  /* page h1s break only at spaces, hard hyphens and their soft() stems: auto hyphenation set "Unterneh-/men" although
+     the word fits the line (npm run audit:headings guards against overflow). Section h2s keep auto hyphenation: a
+     long compound such as "Teilnahmebescheinigung" does not fit 360 px without it. */
+  html[data-v4] .wk-page-hero .wk-d1 { hyphens: manual; }
+  html[data-v4] .wk-hero-obj .wk-reg.tr { right: -4px; }
+  html[data-v4] .wk-vgl-cols { gap: 12px; }
+  html[data-v4] .wk-hero-obj .wk-report-sheet { padding: 20px 18px 16px; }
+}

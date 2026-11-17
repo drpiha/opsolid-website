@@ -31,7 +31,7 @@ export const content: Content = {
         "Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE462227107",
       responsibleContent:
         "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (Medienstaatsvertrag, vormals § 55 RStV)",
-      disputeResolution: "Verbraucherstreitbeilegung",
+      disputeResolution: "Verbraucher\u00ADstreit\u00ADbeilegung",
       disputeResolutionText:
         "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).",
       liabilityContent: "Haftung für Inhalte",
@@ -121,9 +121,11 @@ export const content: Content = {
         title: "Was kostet eine KI-Schulung oder Copilot-Schulung für Ihr Team?",
         seoTitle: "Was kostet eine KI- oder Copilot-Schulung?",
         excerpt:
-          "Was eine KI-Schulung für Mitarbeiter kostet: Preis pro Person oder pro Team, wovon der Betrag abhängt und was unsere Schulungen ab 1.790 € netto kosten.",
+          "Was eine KI-Schulung für Mitarbeiter kostet: Preis pro Person oder Team, wovon der Betrag abhängt und was unsere Schulungen ab 1.790 € netto pro Team kosten.",
         category: "training",
         date: "2026-11-14",
+        // 2026-11-15: format and price-model wording without on-site training or "Festpreis" (site rules 1 and 2)
+        modified: "2026-11-15",
       },
       {
         slug: "ki-schulung-pflicht-ai-act-artikel-4",

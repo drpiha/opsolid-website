@@ -6,6 +6,7 @@
 // Renders DashboardChrome (sticky topbar) + children below it.
 // =============================================================================
 
+import "@/app/globals.css";
 import { redirect } from "next/navigation";
 import { cookies, headers } from "next/headers";
 import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";

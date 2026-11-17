@@ -54,6 +54,8 @@ export type FormText = {
   sending: string;
   ok: string;
   okH: string;
+  /** The reply promise shown above the send button (owner decision 79). Trainer applications keep their seven days. */
+  reply: string;
   /**
    * Shown when a send fails (src/lib/contact-feedback.ts picks one). `{mail}` becomes the mailto link to `mail`,
    * `{wait}` the wait from `waitMinutes`. Typed values stay in the form after any failure.
@@ -87,7 +89,7 @@ export const FORM: Record<L3, FormText> = {
     topicsHelp: "Mindestens ein Thema, Mehrfachauswahl möglich.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
-      ["alltag", "KI im Arbeitsalltag"],
+      ["alltag", "Generative KI im Büro"],
       ["automatisierung", "Workflow-Automatisierung"],
       ["grundlagen", "KI-Kompetenz, Datenschutz und Regeln"],
     ],
@@ -126,7 +128,8 @@ export const FORM: Record<L3, FormText> = {
     send: "Nachricht senden",
     sending: "Wird gesendet …",
     okH: "Nachricht angekommen",
-    ok: "Danke, Ihre Nachricht ist angekommen. Wir antworten in der Regel innerhalb weniger Arbeitstage.",
+    ok: "Danke, Ihre Nachricht ist angekommen. Wir antworten innerhalb von 2 Werktagen.",
+    reply: "Antwort innerhalb von 2 Werktagen.",
     failH: "Nicht gesendet",
     failBusy:
       "Gerade kamen viele Nachrichten kurz hintereinander an. Zum Schutz vor Spam nimmt das Formular für kurze Zeit keine weiteren an. Ihre Eingaben bleiben erhalten. Bitte senden Sie in {wait} erneut oder schreiben Sie direkt an {mail}.",
@@ -153,7 +156,7 @@ export const FORM: Record<L3, FormText> = {
     topicsHelp: "Pick at least one; more than one is fine.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
-      ["alltag", "AI in daily work"],
+      ["alltag", "Generative AI in the office"],
       ["automatisierung", "Workflow automation"],
       ["grundlagen", "AI literacy, data protection and rules"],
     ],
@@ -192,7 +195,8 @@ export const FORM: Record<L3, FormText> = {
     send: "Send message",
     sending: "Sending …",
     okH: "Message received",
-    ok: "Thank you, your message has arrived. We usually reply within a few working days.",
+    ok: "Thank you, your message has arrived. We reply within 2 working days.",
+    reply: "Reply within 2 working days.",
     failH: "Not sent",
     failBusy:
       "Many messages arrived in a short time, so the form is pausing briefly to keep out spam. Nothing you typed has been lost. Please send again in {wait} or write directly to {mail}.",
@@ -219,7 +223,7 @@ export const FORM: Record<L3, FormText> = {
     topicsHelp: "En az bir konu seçin; birden fazla seçebilirsiniz.",
     topics: [
       ["copilot", "Microsoft 365 Copilot"],
-      ["alltag", "Günlük işte YZ"],
+      ["alltag", "Ofiste üretken YZ"],
       ["automatisierung", "İş akışı otomasyonu"],
       ["grundlagen", "YZ yetkinliği, veri koruma ve kurallar"],
     ],
@@ -258,7 +262,8 @@ export const FORM: Record<L3, FormText> = {
     send: "Mesajı gönder",
     sending: "Gönderiliyor …",
     okH: "Mesajınız ulaştı",
-    ok: "Teşekkürler, mesajınız ulaştı. Genellikle birkaç iş günü içinde yanıt veriyoruz.",
+    ok: "Teşekkürler, mesajınız ulaştı. 2 iş günü içinde yanıt veriyoruz.",
+    reply: "2 iş günü içinde yanıt.",
     failH: "Gönderilmedi",
     failBusy:
       "Kısa sürede çok sayıda mesaj geldi; form, spama karşı koruma için kısa bir süre yeni mesaj almıyor. Girdiğiniz bilgiler korundu. Lütfen {wait} sonra yeniden gönderin ya da doğrudan {mail} adresine yazın.",

@@ -8,6 +8,7 @@
 // =============================================================================
 
 import type { Metadata } from "next";
+import "@/app/globals.css";
 
 // robots: null drops the root layout's "index, follow"; Next adds the single
 // <meta name="robots" content="noindex"> to every 404 itself.

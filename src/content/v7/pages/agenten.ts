@@ -1,9 +1,10 @@
 /**
- * KI-Assistenten für Telefon und Chat (key "agenten", /ki-beratung/ki-agenten). One kind of automation that the
+ * KI-Assistenten für Telefon und Chat (key "agenten", /ki-beratung/ki-assistenten). One kind of automation that the
  * consulting delivers, not a product line. Scripted demo (ported from the v4 agents demo), no audio, no provider.
  * No price is published ("Preis nach dem KI-Check, schriftlich"). German is the source; EN and TR are transcreations.
  */
 import type { PageDef, PageSet } from "../types";
+import { gespraech } from "../hero-objects";
 
 const de: PageDef = {
   key: "agenten",
@@ -21,14 +22,6 @@ const de: PageDef = {
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Szenario ansehen", to: "agenten", hash: "demo" },
     facts: ["Hinweis auf den KI-Assistenten zu Beginn jedes Gesprächs", "Datenschutzprüfung vor dem Start", "Pilot zum Festpreis, vorab schriftlich"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Skizze eines Ablaufs in vier Stationen: Anliegen, Regeln, Antwort, Übergabe",
-      caption: "Vom Anliegen zur Übergabe: Am Ende steht immer ein Mensch.",
-      fig: "0.1",
-      labels: ["Anliegen", "Regeln", "Antwort", "Übergabe"],
-    },
   },
   blocks: [
     {
@@ -116,8 +109,7 @@ const de: PageDef = {
           name: "Klären",
           h: "Aufgaben und Grenzen",
           p: "Im KI-Check klären wir, ob ein Assistent zu Ihrem Ablauf passt, was er beantworten soll und was er nicht entscheiden darf.",
-          result: "Ein schriftlicher Bericht mit Aufgaben, Grenzen und dem Punkt, an dem übergeben wird.",
-          meta: "KI-Check 990 € netto",
+          result: "Ein schriftlicher Bericht mit Aufgaben, Grenzen und dem Punkt, an dem übergeben wird. KI-Check 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
         },
         {
           name: "Datenschutz",
@@ -152,7 +144,7 @@ const de: PageDef = {
         ["Wissen", "Ihre eigenen Unterlagen: Leistungen, Öffnungszeiten, häufige Fragen."],
         ["Anbindung", "Kalender, CRM oder Postfach, damit Termine und Anliegen dort landen, wo Ihr Team arbeitet."],
         ["Übergabe", "An eine Person Ihres Teams, per Rückruf, Weiterleitung oder als Vorgang."],
-        ["Preis", "KI-Check 990 € netto, danach Pilot zum Festpreis. Einen Listenpreis gibt es nicht."],
+        ["Preis", "KI-Check 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Danach Pilot zum Festpreis. Einen Listenpreis gibt es nicht."],
       ],
       footnote: "Alle Preise netto zzgl. USt., nur für Unternehmen.",
     },
@@ -163,11 +155,11 @@ const de: PageDef = {
     items: [
       {
         q: "Was ist ein KI-Telefonassistent?",
-        a: "Ein KI-Telefonassistent nimmt Anliegen am Telefon auf und beantwortet Standardfragen auf Basis Ihrer Unterlagen. Er sagt von Beginn an, dass er eine KI ist, und übergibt bei Beschwerden, Sonderfällen und Unsicherheit an eine Person Ihres Teams. Einen Listenpreis gibt es nicht: Es beginnt mit dem KI-Check für 990 € netto, danach folgt ein Pilot zum Festpreis, den wir vorab schriftlich vereinbaren.",
+        a: "Ein KI-Telefonassistent nimmt Anliegen am Telefon auf und beantwortet Standardfragen auf Basis Ihrer Unterlagen. Er sagt von Beginn an, dass er eine KI ist, und übergibt bei Beschwerden, Sonderfällen und Unsicherheit an eine Person Ihres Teams. Einen Listenpreis gibt es nicht: Es beginnt mit dem KI-Check für 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Danach folgt ein Pilot zum Festpreis, den wir vorab schriftlich vereinbaren. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Was kostet ein KI-Assistent?",
-        a: "Einen Listenpreis gibt es nicht. Der Pilot hat einen Festpreis, den wir vorab schriftlich nennen; er hängt von Aufgaben, Anbindungen und Gesprächsaufkommen ab. Der KI-Check davor kostet 990 € netto (bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir den Betrag voll an), Betrieb und Ausbau danach rechnen wir monatlich nach Vereinbarung ab. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Einen Listenpreis gibt es nicht. Der Pilot hat einen Festpreis, den wir vorab schriftlich nennen; er hängt von Aufgaben, Anbindungen und Gesprächsaufkommen ab. Der KI-Check davor kostet 990 € netto, Festpreis. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Betrieb und Ausbau danach rechnen wir monatlich nach Vereinbarung ab. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Merken Anrufer, dass sie mit einer KI sprechen?",
@@ -183,14 +175,14 @@ const de: PageDef = {
       },
       {
         q: "Wie starten wir?",
-        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen und dann mit dem KI-Check: Fragebogen und schriftlicher Bericht für 990 € netto, mit NDA vor der Analyse. Den Bericht erhalten Sie auch ohne Empfehlung.",
+        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen und dann mit dem KI-Check: Fragebogen und schriftlicher Bericht für 990 € netto, Festpreis, mit NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Den Bericht erhalten Sie auch ohne Empfehlung. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
   cta: {
     label: "KI-Check",
     h: "Prüfen, ob ein Assistent zu Ihrem Ablauf passt",
-    p: "Im KI-Check (990 € netto) klären wir, ob ein Assistent passt, bevor etwas gebaut wird.",
+    p: "Im KI-Check klären wir schriftlich, ob ein Assistent passt, bevor etwas gebaut wird.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Zur KI-Beratung", to: "beratung" },
   },
@@ -220,14 +212,6 @@ const en: PageDef = {
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "See the scenario", to: "agenten", hash: "demo" },
     facts: ["Callers are told it is an AI assistant at the start of every conversation", "Data protection review before go-live", "Pilot at a fixed price, in writing beforehand"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Sketch of a workflow in four stations: request, rules, reply, handover",
-      caption: "From request to handover: a person always has the last word.",
-      fig: "0.1",
-      labels: ["Request", "Rules", "Reply", "Handover"],
-    },
   },
   blocks: [
     {
@@ -315,8 +299,7 @@ const en: PageDef = {
           name: "Clarify",
           h: "Tasks and limits",
           p: "In the AI check we clarify whether an assistant fits your workflow, what it should answer and what it must not decide.",
-          result: "A written report with tasks, limits and the point at which it hands over.",
-          meta: "AI check €990 net",
+          result: "A written report with tasks, limits and the point at which it hands over. AI check €990 net, fixed price. Credited in full against a follow-up order within 60 days.",
         },
         {
           name: "Data protection",
@@ -351,9 +334,9 @@ const en: PageDef = {
         ["Knowledge", "Your own documents: services, opening hours, frequent questions."],
         ["Connections", "Calendar, CRM or mailbox, so appointments and requests land where your team works."],
         ["Handover", "To a person on your team, by callback, transfer or as a case."],
-        ["Price", "AI check €990 net, then a pilot at a fixed price. There is no list price."],
+        ["Price", "AI check €990 net, fixed price. Credited in full against a follow-up order within 60 days. Then a pilot at a fixed price. There is no list price."],
       ],
-      footnote: "All prices net of VAT, businesses only.",
+      footnote: "All prices are net of VAT and for businesses only.",
     },
   ],
   faq: {
@@ -362,11 +345,11 @@ const en: PageDef = {
     items: [
       {
         q: "What is an AI phone assistant?",
-        a: "An AI phone assistant takes requests on the phone and answers standard questions from your own documents. It says from the start that it is an AI and hands over to a person on your team for complaints, special cases and uncertainty. There is no list price: it starts with the AI check for €990 net, followed by a pilot at a fixed price that we agree in writing beforehand.",
+        a: "An AI phone assistant takes requests on the phone and answers standard questions from your own documents. It says from the start that it is an AI and hands over to a person on your team for complaints, special cases and uncertainty. There is no list price: it starts with the AI check for €990 net, fixed price. Credited in full against a follow-up order within 60 days. Then a pilot at a fixed price follows, agreed in writing beforehand. All prices are net of VAT and for businesses only.",
       },
       {
         q: "What does an AI assistant cost?",
-        a: "There is no list price. The pilot has a fixed price that we name in writing beforehand; it depends on tasks, connections and call volume. The AI check before it costs €990 net (credited in full against a follow-up order within 60 days), and operation and expansion afterwards are billed monthly by agreement. All prices net of VAT, businesses only.",
+        a: "There is no list price. The pilot has a fixed price that we name in writing beforehand; it depends on tasks, connections and call volume. The AI check before it costs €990 net, fixed price. Credited in full against a follow-up order within 60 days. Operation and expansion afterwards are billed monthly by agreement. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Do callers notice they are talking to an AI?",
@@ -382,14 +365,14 @@ const en: PageDef = {
       },
       {
         q: "How do we start?",
-        a: "With a free, non-binding intro, then the AI check: a questionnaire and a written report for €990 net, with an NDA before the analysis. You receive the report even without a recommendation.",
+        a: "With a free, non-binding intro, then the AI check: a questionnaire and a written report for €990 net, fixed price, with an NDA before the analysis. Credited in full against a follow-up order within 60 days. You receive the report even without a recommendation. All prices are net of VAT and for businesses only.",
       },
     ],
   },
   cta: {
     label: "AI check",
     h: "Check whether an assistant fits your workflow",
-    p: "In the AI check (€990 net) we clarify whether an assistant fits before anything is built.",
+    p: "In the AI check we clarify in writing whether an assistant fits before anything is built.",
     primary: { label: "Request an AI check", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Back to AI automation consulting", to: "beratung" },
   },
@@ -419,14 +402,6 @@ const tr: PageDef = {
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Senaryoyu izleyin", to: "agenten", hash: "demo" },
     facts: ["Her görüşmenin başında YZ asistanı olduğu söylenir", "Canlıya geçmeden önce veri koruma incelemesi", "Pilot sabit fiyatla, önceden yazılı"],
-    media: {
-      kind: "svg",
-      name: "flow",
-      alt: "Dört istasyonlu bir iş akışı çizimi: talep, kurallar, yanıt, aktarım",
-      caption: "Talepten aktarıma: Son sözü her zaman bir insan söyler.",
-      fig: "0.1",
-      labels: ["Talep", "Kurallar", "Yanıt", "Aktarım"],
-    },
   },
   blocks: [
     {
@@ -514,8 +489,7 @@ const tr: PageDef = {
           name: "Netleştirme",
           h: "Görevler ve sınırlar",
           p: "YZ Kontrolünde bir asistanın iş akışınıza uyup uymadığını, neyi yanıtlaması gerektiğini ve neye karar veremeyeceğini netleştiriyoruz.",
-          result: "Görevleri, sınırları ve devrettiği noktayı içeren yazılı bir rapor.",
-          meta: "YZ Kontrolü 990 € (net)",
+          result: "Görevleri, sınırları ve devrettiği noktayı içeren yazılı bir rapor. YZ Kontrolü 990 € (net), sabit fiyat. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
         },
         {
           name: "Veri koruma",
@@ -550,9 +524,9 @@ const tr: PageDef = {
         ["Bilgi", "Kendi belgeleriniz: hizmetler, çalışma saatleri, sık sorulan sorular."],
         ["Bağlantılar", "Takvim, CRM veya posta kutusu; randevular ve talepler ekibinizin çalıştığı yere düşsün."],
         ["Devir", "Ekibinizden bir kişiye; geri arama, aktarma veya kayıt olarak."],
-        ["Fiyat", "YZ Kontrolü 990 € (net), ardından sabit fiyatlı pilot. Liste fiyatı yoktur."],
+        ["Fiyat", "YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Ardından sabit fiyatlı pilot. Liste fiyatı yoktur."],
       ],
-      footnote: "Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+      footnote: "Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
     },
   ],
   faq: {
@@ -561,11 +535,11 @@ const tr: PageDef = {
     items: [
       {
         q: "Yapay zeka telefon asistanı nedir?",
-        a: "Yapay zeka telefon asistanı, telefondaki talepleri alır ve standart soruları kendi belgelerinize dayanarak yanıtlar. En başta yapay zeka olduğunu söyler; şikâyet, özel durum ve belirsizlikte ekibinizden bir kişiye devreder. Liste fiyatı yoktur: 990 € (net) tutarındaki YZ Kontrolü ile başlar, ardından önceden yazılı olarak kararlaştırdığımız sabit fiyatlı bir pilot gelir.",
+        a: "Yapay zeka telefon asistanı, telefondaki talepleri alır ve standart soruları kendi belgelerinize dayanarak yanıtlar. En başta yapay zeka olduğunu söyler; şikâyet, özel durum ve belirsizlikte ekibinizden bir kişiye devreder. Liste fiyatı yoktur: 990 € (net, sabit fiyat) tutarındaki YZ Kontrolü ile başlar. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Ardından önceden yazılı olarak kararlaştırdığımız sabit fiyatlı bir pilot gelir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Bir YZ asistanının maliyeti nedir?",
-        a: "Liste fiyatı yoktur. Pilotun sabit bir fiyatı vardır ve bunu önceden yazılı olarak bildiririz; fiyat görevlere, bağlantılara ve arama hacmine bağlıdır. Öncesindeki YZ Kontrolünün ücreti 990 € (net) (60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir), sonrasındaki işletme ve geliştirme anlaşmaya göre aylık faturalandırılır. Tüm fiyatlar net olup KDV hariçtir; yalnızca işletmeler içindir.",
+        a: "Liste fiyatı yoktur. Pilotun sabit bir fiyatı vardır ve bunu önceden yazılı olarak bildiririz; fiyat görevlere, bağlantılara ve arama hacmine bağlıdır. Öncesindeki YZ Kontrolünün ücreti 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Sonrasındaki işletme ve geliştirme anlaşmaya göre aylık faturalandırılır. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Arayanlar bir YZ ile konuştuklarını fark eder mi?",
@@ -581,14 +555,14 @@ const tr: PageDef = {
       },
       {
         q: "Nasıl başlarız?",
-        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla, ardından YZ Kontrolüyle: soru formu ve yazılı rapor, 990 € (net), analizden önce NDA. Öneri çıkmasa da raporu alırsınız.",
+        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla, ardından YZ Kontrolüyle: soru formu ve yazılı rapor, 990 € (net, sabit fiyat), analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Öneri çıkmasa da raporu alırsınız. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
     ],
   },
   cta: {
     label: "YZ Kontrolü",
     h: "Asistanın iş akışınıza uyup uymadığına birlikte bakalım",
-    p: "YZ Kontrolünde (990 €, net) hiçbir şey kurulmadan önce asistanın uyup uymadığını netleştiririz.",
+    p: "YZ Kontrolünde hiçbir şey kurulmadan önce asistanın uyup uymadığını yazılı olarak netleştiririz.",
     primary: { label: "YZ Kontrolü talep edin", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "YZ danışmanlığına dönün", to: "beratung" },
   },
@@ -601,5 +575,10 @@ const tr: PageDef = {
     },
   },
 };
+
+/* R2: the hero object, the page's own scripted demo call in a UI window. */
+de.hero.object = gespraech(de, "demo", "Beispiel · Musterdaten");
+en.hero.object = gespraech(en, "demo", "Example · sample data");
+tr.hero.object = gespraech(tr, "demo", "Örnek · örnek veriler");
 
 export const page: PageSet = { de, en, tr };

@@ -5,13 +5,14 @@ import { useEffect } from "react";
  * After hydration every Reveal that is still below the fold is hidden and released once it scrolls into view
  * (once: it never hides again, so full-page captures and scrolling back up stay complete). Elements that
  * are already on screen at load are never touched, reduced motion skips all of it, and without JS the page
- * simply stays fully visible.
+ * simply stays fully visible. The drawn figures (.wk-draw-view: Flow) are held the same way, so their line draws
+ * when they scroll in (CSS in opsolid-v7-motion.css).
  */
 export function RevealObserver() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const els = Array.from(document.querySelectorAll<HTMLElement>(".v7-reveal")).filter((el) => {
+    const els = Array.from(document.querySelectorAll<Element>(".v7-reveal, .wk-draw-view")).filter((el) => {
       if (el.closest(".v7-still")) return false;
       const r = el.getBoundingClientRect();
       return r.top > window.innerHeight * 0.94;

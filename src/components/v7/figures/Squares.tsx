@@ -1,9 +1,13 @@
-"use client";
-import { motion, useReducedMotion } from "framer-motion";
+import type { CSSProperties } from "react";
 import type { L3 } from "@/lib/v7-routes";
 import { placeLabels } from "./fit";
 
-const COPPER = "#B5623A";
+// C strokes: copper-deep lines, sheet nodes with an ink ring, the last node filled in copper; labels in Plex Mono.
+const LINE = "var(--wk-copper-deep)";
+const NODE = "var(--wk-sheet)";
+const RING = "var(--wk-ink)";
+const LAST = "var(--wk-copper)";
+const LABEL = "var(--wk-muted)";
 const LABELS: Record<L3, readonly string[]> = {
   de: ["Anfrage", "Prüfung", "Entwurf", "Freigabe"],
   en: ["Request", "Review", "Draft", "Approval"],
@@ -11,13 +15,14 @@ const LABELS: Record<L3, readonly string[]> = {
 };
 const XS = [40, 146, 254, 360];
 
-/** Nested rounded squares (the mark) over a hairline workflow with four stage labels (per page via `labels`). Draws itself once; reduced motion shows the end state. */
+/** Nested rounded squares (the mark) over a hairline workflow with four stage labels (per page via `labels`). Draws itself once on
+ * load: a CSS draw (.wk-draw.is-fade in opsolid-v7-motion.css), so it needs no JS and no framer-motion. Reduced motion
+ * shows the end state. */
 export function Squares({ alt, locale, labels: custom }: { alt: string; locale: L3; labels?: readonly string[] }) {
-  const reduce = useReducedMotion();
   const draw = (i: number) => ({
-    initial: { pathLength: 0, opacity: 0 },
-    animate: { pathLength: 1, opacity: 1 },
-    transition: reduce ? { duration: 0 } : { duration: 1.4, delay: 0.25 + i * 0.18, ease: [0.22, 1, 0.36, 1] as const },
+    pathLength: 1,
+    className: "wk-draw is-fade",
+    style: { stroke: LINE, ["--dur" as string]: "1.4s", ["--delay" as string]: `${(0.25 + i * 0.18).toFixed(2)}s` } as CSSProperties,
   });
   const squares = [
     { inset: 0, rx: 84, o: 1 },
@@ -29,7 +34,7 @@ export function Squares({ alt, locale, labels: custom }: { alt: string; locale: 
   return (
     <svg viewBox="0 0 400 440" className="h-auto w-full" role="img" aria-label={alt}>
       {squares.map((s, i) => (
-        <motion.rect
+        <rect
           key={i}
           x={40 + s.inset}
           y={10 + s.inset}
@@ -37,17 +42,16 @@ export function Squares({ alt, locale, labels: custom }: { alt: string; locale: 
           height={320 - s.inset * 2}
           rx={s.rx}
           fill="none"
-          stroke={COPPER}
           strokeWidth={1}
           strokeOpacity={s.o}
           {...draw(i)}
         />
       ))}
-      <motion.path d="M52 392H348" stroke={COPPER} strokeWidth="1" fill="none" {...draw(4)} />
+      <path d="M52 392H348" strokeWidth="1" fill="none" {...draw(4)} />
       {XS.map((x, i) => (
         <g key={x}>
-          <rect x={x - 8} y={384} width={16} height={16} rx={5} fill={i === 3 ? COPPER : "#F6F2EC"} stroke={COPPER} strokeWidth="1" />
-          <text x={labels[i].x} y={426} textAnchor="middle" fill="#6B665F" fontSize={labels[i].fs} style={{ fontFamily: "var(--font-geist-mono), monospace", letterSpacing: "0.02em" }}>
+          <rect x={x - 8} y={384} width={16} height={16} rx={5} strokeWidth="1.25" style={{ fill: i === 3 ? LAST : NODE, stroke: i === 3 ? LAST : RING }} />
+          <text x={labels[i].x} y={426} textAnchor="middle" fontSize={labels[i].fs} style={{ fill: LABEL, fontFamily: "var(--wk-mono)" }}>
             {labels[i].text}
           </text>
         </g>
