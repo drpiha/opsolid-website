@@ -1,7 +1,7 @@
 /**
  * Contact page (v7). Form (POST /api/contact), next steps, direct contact from SITE_CONFIG, NDA note.
  * Response times: inquiries "innerhalb von 2 Werktagen" (owner decision 79, 2026-11-15); trainer applications
- * "innerhalb von sieben Tagen" (FAQ, trainer page, form). The form pre-selects a topic from ?anliegen=<value>
+ * go on a waiting list until January 2027 (plan 2026-11-17; FAQ, trainer page, form). The form pre-selects a topic from ?anliegen=<value>
  * (`vormerken`: interest in one of the planned courses).
  */
 import { SITE_CONFIG } from "@/lib/constants";
@@ -97,7 +97,7 @@ const de: PageDef = {
     items: [
       {
         q: "Wie schnell antworten Sie?",
-        a: "Innerhalb von 2 Werktagen, persönlich per E-Mail. Bewerbungen als Trainerin oder Trainer beantworten wir innerhalb von sieben Tagen.",
+        a: "Innerhalb von 2 Werktagen, persönlich per E-Mail. Bewerbungen als Trainerin oder Trainer kommen bis Januar 2027 auf eine Warteliste; wir melden uns, wenn eine Kundenanfrage zum Profil passt.",
       },
       {
         q: "Muss ich schon genau wissen, was ich brauche?",
@@ -212,7 +212,7 @@ const en: PageDef = {
     items: [
       {
         q: "How quickly do you reply?",
-        a: "Within 2 working days, personally by email. We reply to trainer applications within seven days.",
+        a: "Within 2 working days, personally by email. Trainer applications go on a waiting list until January 2027; we get in touch when a client request matches the profile.",
       },
       {
         q: "Do I need to know exactly what I need?",
@@ -327,7 +327,7 @@ const tr: PageDef = {
     items: [
       {
         q: "Ne kadar hızlı yanıt veriyorsunuz?",
-        a: "2 iş günü içinde, e-postayla ve kişisel olarak. Eğitmen başvurularını yedi gün içinde yanıtlıyoruz.",
+        a: "2 iş günü içinde, e-postayla ve kişisel olarak. Eğitmen başvuruları Ocak 2027'ye kadar bekleme listesine alınır; profile uyan bir müşteri talebi gelince döneriz.",
       },
       {
         q: "Ne istediğimi tam olarak bilmem gerekiyor mu?",

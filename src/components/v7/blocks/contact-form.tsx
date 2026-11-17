@@ -357,7 +357,7 @@ export function ContactForm({ block, locale, t }: { block: BlockOf<"form">; loca
         {err("consent")}
       </div>
       <div className="wk-form-foot">
-        {/* Decision 79: the reply promise sits right above the send button (trainer applications keep their seven days). */}
+        {/* Decision 79: the reply promise sits right above the send button (trainer applications: waiting list, see form.ts). */}
         <p className="wk-form-reply" hidden={isTrainer || undefined}>
           {t.reply}
         </p>

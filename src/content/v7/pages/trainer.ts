@@ -6,6 +6,8 @@
  * Selection (owner decision 2026-11-06): no separate trial session, paid or unpaid. Reply within seven days,
  * trainer pool, then a 30-minute conversation with a short live demo once a matching client request is in
  * sight; the first assignment is paid like any other.
+ * Waitlist since 2026-11-17 (owner plan, "Evet, uygula"): the pool is full until January 2027; no reply
+ * promise any more, a personal reply only when a client request matches the profile.
  */
 import type { PageDef, PageSet } from "../types";
 import { blockOf, frag, liste } from "../hero-objects";
@@ -13,18 +15,18 @@ import { blockOf, frag, liste } from "../hero-objects";
 const de: PageDef = {
   key: "trainer",
   meta: {
-    title: "Trainer werden: freiberufliche KI-Trainer gesucht",
+    title: "Trainerpool für freiberufliche KI-Trainer: Warteliste",
     description:
-      "OpSolid sucht freiberufliche KI-Trainerinnen und -Trainer für Online-Schulungen auf Deutsch und Englisch. Auswahl im Gespräch, Rahmenvertrag, freie Methodik.",
+      "Der Trainerpool von OpSolid ist bis Januar 2027 voll. Freiberufliche KI-Trainerinnen und -Trainer können ein Kurzprofil für die Warteliste senden.",
   },
   crumbs: [],
   crumb: "Trainer werden",
   hero: {
-    eyebrow: "Trainer werden · freiberuflich · online",
+    eyebrow: "Trainerpool · Warteliste bis Januar 2027",
     // "\u00A0-\u2060": "-Trainer" stays with "und" and its hyphen never ends a line (design review R2).
-    h1: ["Freiberufliche ", "KI-Trainerinnen und\u00A0-\u2060Trainer", " gesucht"],
-    lede: "Wir suchen freiberufliche KI-Trainerinnen und -Trainer für Schulungen auf Deutsch und Englisch, online und live. Wenn Sie KI praxisnah schulen, melden Sie sich.",
-    primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
+    h1: ["Trainerpool für ", "KI-Trainerinnen und\u00A0-\u2060Trainer", ": Warteliste"],
+    lede: "Unser Trainerpool ist bis Januar 2027 voll. Wenn Sie KI praxisnah schulen, auf Deutsch oder Englisch, online und live, können Sie uns trotzdem ein Kurzprofil für die Warteliste schicken.",
+    primary: { label: "Kurzprofil für die Warteliste", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
     facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Auswahl im Gespräch mit kurzer Live-Demo"],
   },
@@ -101,8 +103,8 @@ const de: PageDef = {
       items: [
         { h: "Kurzprofil", p: "Sie schicken uns ein kurzes Profil: Themen, Erfahrung, Sprachen und Ihre Selbstständigkeit. Eine Bewerbungsmappe brauchen wir nicht." },
         {
-          h: "Rückmeldung und Trainerpool",
-          p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, nehmen wir Sie in unseren Trainerpool auf. Eine Zusage für Einsätze ist damit nicht verbunden.",
+          h: "Warteliste und Trainerpool",
+          p: "Bis Januar 2027 kommt Ihr Profil auf die Warteliste. Eine persönliche Antwort erhalten Sie, wenn eine Kundenanfrage zu Ihrem Profil passt. Eine Zusage für Einsätze ist damit nicht verbunden.",
         },
         {
           h: "Gespräch mit Live-Demo",
@@ -156,9 +158,9 @@ const de: PageDef = {
   },
   cta: {
     label: "Trainer werden",
-    h: "Sie schulen KI praxisnah? Schreiben Sie uns",
-    p: "Wir antworten innerhalb von sieben Tagen. Passt Ihr Profil zu unseren Themen, nehmen wir Sie in unseren Trainerpool auf.",
-    primary: { label: "Kurzprofil senden", to: "kontakt", query: { anliegen: "trainer" } },
+    h: "Sie schulen KI praxisnah? Tragen Sie sich ein",
+    p: "Unser Trainerpool ist bis Januar 2027 voll. Wir nehmen Ihr Kurzprofil auf die Warteliste und melden uns, wenn eine Kundenanfrage zu Ihrem Profil passt.",
+    primary: { label: "Kurzprofil für die Warteliste", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "KI-Check für Unternehmen", to: "check" },
   },
 };
@@ -166,17 +168,17 @@ const de: PageDef = {
 const en: PageDef = {
   key: "trainer",
   meta: {
-    title: "Become a trainer: freelance AI trainers wanted",
+    title: "Trainer pool for freelance AI trainers: waiting list",
     description:
       "OpSolid is looking for freelance AI trainers for online courses in English and German. Selection by conversation, framework contract, freedom in method.",
   },
   crumbs: [],
   crumb: "Become a trainer",
   hero: {
-    eyebrow: "Become a trainer · freelance · online",
-    h1: ["Freelance ", "AI trainers", " wanted"],
-    lede: "We are looking for freelance AI trainers for courses in English and German, online and live. If you teach AI in a practical way, get in touch.",
-    primary: { label: "Send a short profile", to: "kontakt", query: { anliegen: "trainer" } },
+    eyebrow: "Trainer pool · waiting list until January 2027",
+    h1: ["Trainer pool for ", "AI trainers", ": waiting list"],
+    lede: "Our trainer pool is full until January 2027. If you teach AI in a practical way, in English or German, online and live, you can still send us a short profile for the waiting list.",
+    primary: { label: "Join the waiting list", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "How it works", to: "trainer", hash: "ablauf" },
     facts: ["Freelance", "Online · English and German", "Selection in a conversation with a short live demo"],
   },
@@ -253,8 +255,8 @@ const en: PageDef = {
       items: [
         { h: "Short profile", p: "You send us a short profile: topics, experience, languages and your self-employment. We do not need a full application pack." },
         {
-          h: "Reply and trainer pool",
-          p: "We reply within seven days. If your profile fits our topics, we add you to our trainer pool. This does not promise any assignments.",
+          h: "Waiting list and trainer pool",
+          p: "Until January 2027 your profile goes on the waiting list. You receive a personal reply when a client request matches your profile. This does not promise any assignments.",
         },
         {
           h: "Conversation with a live demo",
@@ -308,9 +310,9 @@ const en: PageDef = {
   },
   cta: {
     label: "Become a trainer",
-    h: "Do you teach AI in a practical way? Write to us",
-    p: "We reply within seven days. If your profile fits our topics, we add you to our trainer pool.",
-    primary: { label: "Send a short profile", to: "kontakt", query: { anliegen: "trainer" } },
+    h: "Do you teach AI in a practical way? Join the list",
+    p: "Our trainer pool is full until January 2027. We put your short profile on the waiting list and get in touch when a client request matches it.",
+    primary: { label: "Join the waiting list", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "AI check for companies", to: "check" },
   },
 };
@@ -318,17 +320,17 @@ const en: PageDef = {
 const tr: PageDef = {
   key: "trainer",
   meta: {
-    title: "Eğitmen olun: serbest YZ eğitmenleri aranıyor",
+    title: "Serbest YZ eğitmenleri için havuz: bekleme listesi",
     description:
       "OpSolid, Almanca ve İngilizce çevrimiçi eğitimler için serbest çalışan YZ eğitmenleri arıyor. Görüşmeyle seçim, çerçeve sözleşme, yöntemde özgürlük.",
   },
   crumbs: [],
   crumb: "Eğitmen olun",
   hero: {
-    eyebrow: "Eğitmen olun · serbest çalışan · çevrimiçi",
-    h1: ["Serbest çalışan ", "YZ eğitmenleri", " aranıyor"],
-    lede: "Almanca ve İngilizce, çevrimiçi ve canlı eğitimler için serbest çalışan YZ eğitmenleri arıyoruz. YZ'yi uygulamalı anlatıyorsanız bize yazın.",
-    primary: { label: "Kısa profil gönderin", to: "kontakt", query: { anliegen: "trainer" } },
+    eyebrow: "Eğitmen havuzu · Ocak 2027'ye kadar bekleme listesi",
+    h1: ["Eğitmen havuzu: ", "YZ eğitmenleri", " için bekleme listesi"],
+    lede: "Eğitmen havuzumuz Ocak 2027'ye kadar dolu. YZ'yi Almanca ya da İngilizce, çevrimiçi ve canlı olarak uygulamalı anlatıyorsanız, bekleme listesi için yine de kısa bir profil gönderebilirsiniz.",
+    primary: { label: "Bekleme listesine yazılın", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "Süreç nasıl işler", to: "trainer", hash: "ablauf" },
     facts: ["Serbest çalışan", "Çevrimiçi · Almanca ve İngilizce", "Kısa canlı gösterimli bir görüşmeyle seçim"],
   },
@@ -405,8 +407,8 @@ const tr: PageDef = {
       items: [
         { h: "Kısa profil", p: "Bize kısa bir profil gönderirsiniz: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },
         {
-          h: "Yanıt ve eğitmen havuzu",
-          p: "Yedi gün içinde yanıt veririz. Profiliniz konularımıza uyuyorsa sizi eğitmen havuzumuza alırız. Bu, görev verileceği anlamına gelmez.",
+          h: "Bekleme listesi ve eğitmen havuzu",
+          p: "Ocak 2027'ye kadar profiliniz bekleme listesine alınır. Profilinize uyan bir müşteri talebi gelince size kişisel olarak yanıt veririz. Bu, görev verileceği anlamına gelmez.",
         },
         {
           h: "Canlı gösterimli görüşme",
@@ -460,18 +462,18 @@ const tr: PageDef = {
   },
   cta: {
     label: "Eğitmen olun",
-    h: "YZ'yi uygulamalı mı anlatıyorsunuz? Bize yazın",
-    p: "Yedi gün içinde yanıt veriyoruz. Profiliniz konularımıza uyuyorsa sizi eğitmen havuzumuza alırız.",
-    primary: { label: "Kısa profil gönderin", to: "kontakt", query: { anliegen: "trainer" } },
+    h: "YZ'yi uygulamalı mı anlatıyorsunuz? Listeye yazılın",
+    p: "Eğitmen havuzumuz Ocak 2027'ye kadar dolu. Kısa profilinizi bekleme listesine alır, profilinize uyan bir müşteri talebi gelince size döneriz.",
+    primary: { label: "Bekleme listesine yazılın", to: "kontakt", query: { anliegen: "trainer" } },
     secondary: { label: "İşletmeler için YZ Kontrolü", to: "check" },
   },
 };
 
 /* R2: the hero object, the page's own five steps as a schema sheet; every note is a verbatim part of the step text. */
 const TRAINER_NOTES: Record<"de" | "en" | "tr", [string, string, string, string, string]> = {
-  de: ["Eine Bewerbungsmappe brauchen wir nicht.", "Wir antworten innerhalb von sieben Tagen.", "30 Minuten online", "Jede Schulung vereinbaren wir danach einzeln", "Den ersten Einsatz vergüten wir wie jeden weiteren."],
-  en: ["We do not need a full application pack.", "We reply within seven days.", "online for 30 minutes", "we agree each course individually", "Your first assignment is paid like any other."],
-  tr: ["Tam bir başvuru dosyasına gerek yok.", "Yedi gün içinde yanıt veririz.", "30 dakika çevrimiçi", "her eğitimi ayrı ayrı kararlaştırırız", "İlk görevinizin ücretini diğer görevler gibi öderiz."],
+  de: ["Eine Bewerbungsmappe brauchen wir nicht.", "Eine persönliche Antwort erhalten Sie, wenn eine Kundenanfrage zu Ihrem Profil passt.", "30 Minuten online", "Jede Schulung vereinbaren wir danach einzeln", "Den ersten Einsatz vergüten wir wie jeden weiteren."],
+  en: ["We do not need a full application pack.", "You receive a personal reply when a client request matches your profile.", "online for 30 minutes", "we agree each course individually", "Your first assignment is paid like any other."],
+  tr: ["Tam bir başvuru dosyasına gerek yok.", "Profilinize uyan bir müşteri talebi gelince size kişisel olarak yanıt veririz.", "30 dakika çevrimiçi", "her eğitimi ayrı ayrı kararlaştırırız", "İlk görevinizin ücretini diğer görevler gibi öderiz."],
 };
 for (const [loc, d, etikett, stamp] of [
   ["de", de, "Schema · so arbeiten wir mit Trainerinnen und Trainern", "Schema"],

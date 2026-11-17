@@ -54,7 +54,7 @@ export type FormText = {
   sending: string;
   ok: string;
   okH: string;
-  /** The reply promise shown above the send button (owner decision 79). Trainer applications keep their seven days. */
+  /** The reply promise shown above the send button (owner decision 79). Trainer applications go on a waiting list until January 2027 (plan 2026-11-17). */
   reply: string;
   /**
    * Shown when a send fails (src/lib/contact-feedback.ts picks one). `{mail}` becomes the mailto link to `mail`,
@@ -114,7 +114,7 @@ export const FORM: Record<L3, FormText> = {
     errRegion: "Bitte nennen Sie Land und Zeitzone.",
     errLink: "Bitte geben Sie einen Link an, der mit https:// beginnt, oder lassen Sie das Feld leer.",
     errConsent: "Bitte bestätigen Sie den Hinweis zur Datenverarbeitung.",
-    ok: "Danke, Ihre Bewerbung ist angekommen. Wir antworten innerhalb von sieben Tagen.",
+    ok: "Danke, Ihre Bewerbung ist angekommen. Ihr Profil steht auf unserer Warteliste.",
   },
     name: "Name",
     nameHelp: "Vor- und Nachname",
@@ -181,7 +181,7 @@ export const FORM: Record<L3, FormText> = {
     errRegion: "Please tell us your country and time zone.",
     errLink: "Please enter a link starting with https:// or leave the field empty.",
     errConsent: "Please confirm the notice on data processing.",
-    ok: "Thank you, your application has arrived. We reply within seven days.",
+    ok: "Thank you, your application has arrived. Your profile is on our waiting list.",
   },
     name: "Name",
     nameHelp: "First and last name",
@@ -248,7 +248,7 @@ export const FORM: Record<L3, FormText> = {
     errRegion: "Lütfen ülke ve saat diliminizi yazın.",
     errLink: "Lütfen https:// ile başlayan bir bağlantı girin veya alanı boş bırakın.",
     errConsent: "Lütfen veri işleme bilgilendirmesini onaylayın.",
-    ok: "Teşekkürler, başvurunuz ulaştı. Yedi gün içinde yanıt veriyoruz.",
+    ok: "Teşekkürler, başvurunuz ulaştı. Profiliniz bekleme listemizde.",
   },
     name: "Ad",
     nameHelp: "Ad ve soyad",
