@@ -136,7 +136,37 @@ html[data-v4] .wk-gallery figure { margin: 0; display: grid; gap: 14px; }
 html[data-v4] .wk-gallery figcaption { font-size: var(--wk-fs-1); font-weight: 580; line-height: 1.3; }
 html[data-v4] .wk-gallery .wk-ph img { display: block; height: 100%; }
 html[data-v4] .wk-gallery-img { display: block; width: 100%; height: auto; border-radius: var(--wk-r-2); border: 1px solid var(--wk-line); }
-html[data-v4] .wk-gallery-etikett { margin-top: 6px; }
+html[data-v4] .wk-gallery-etikett { margin-top: 6px; hyphens: manual; }
+html[data-v4] .wk-gallery-sub { display: block; margin-top: 4px; font-family: var(--wk-mono); font-size: var(--wk-fs-0); font-weight: 400; line-height: 1.35; color: var(--wk-muted); }
+/* linked items (OpSo example cards): the phone lifts a little, the cue line turns copper; the cue row is shared */
+html[data-v4] .wk-gallery-row > li { display: flex; }
+html[data-v4] .wk-gallery-row > li > figure,
+html[data-v4] .wk-gallery-card { flex: 1; }
+html[data-v4] .wk-gallery-card { display: block; color: inherit; text-decoration: none; border-radius: 30px; }
+html[data-v4] .wk-gallery-card:focus-visible { outline-offset: 6px; border-radius: 18px; }
+html[data-v4] .wk-gallery.is-fit .wk-gallery-scroll { padding-top: 12px; }
+html[data-v4] .wk-gallery-card figure { height: 100%; grid-template-rows: auto 1fr auto; }
+html[data-v4] .wk-gallery-card .wk-ph { transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1); }
+html[data-v4] .wk-gallery-go {
+  display: block;
+  font-weight: 520;
+  color: var(--wk-copper-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--wk-line);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 180ms ease;
+}
+html[data-v4] .wk-gallery-card:hover .wk-ph { transform: translateY(-4px); }
+html[data-v4] .wk-gallery-card:hover .wk-gallery-go,
+html[data-v4] .wk-gallery-card:focus-visible .wk-gallery-go { text-decoration-color: currentColor; }
+@media (min-width: 961px) {
+  html[data-v4] .wk-gallery.is-fit .wk-gallery-row { width: auto; justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-v4] .wk-gallery-card .wk-ph { transition: none; }
+  html[data-v4] .wk-gallery-card:hover .wk-ph { transform: none; }
+}
 
 @media (max-width: 1180px) {
   html[data-v4] .wk-app-grid,
@@ -181,7 +211,9 @@ html[data-v4] .wk-gallery-etikett { margin-top: 6px; }
 
   html[data-v4] .wk-gallery-row { gap: 14px; }
   html[data-v4] .wk-gallery-row > li { width: 150px; }
-  html[data-v4] .wk-gallery figcaption { font-size: 0.8125rem; }
+  html[data-v4] .wk-gallery figcaption,
+  html[data-v4] .wk-gallery-go { font-size: 0.8125rem; }
+  html[data-v4] .wk-gallery-sub { font-size: 0.75rem; }
 }
 
 /* tablets in the one-column layout: the phones and the NFC render must not grow to the full width */

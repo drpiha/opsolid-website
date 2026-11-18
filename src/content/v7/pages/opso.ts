@@ -22,8 +22,14 @@ const CARD_FILES = ["clara-weber", "james-bennett", "maya-collins", "felix-berge
 function screens(loc: L3, alts: string[], captions: string[]) {
   return SCREEN_KEYS.map((k, i) => ({ img: { src: APP(loc, k), ...SCREEN, alt: alts[i] }, caption: captions[i] }));
 }
-function cards(alts: string[], captions: string[]) {
-  return CARD_FILES.map((f, i) => ({ img: { src: `/img/v7/opso/cards/${f}.webp`, ...CARD, alt: alts[i] }, caption: captions[i] }));
+/** Each example card is a real published card (noindex, .example e-mail) at opso.cc/opso-demo-<name>; the link is the proof. */
+function cards(alts: string[], captions: [string, string][], live: string) {
+  return CARD_FILES.map((f, i) => ({
+    img: { src: `/img/v7/opso/cards/${f}.webp`, ...CARD, alt: alts[i] },
+    caption: captions[i][0],
+    sub: captions[i][1],
+    link: { label: live, href: `https://opso.cc/opso-demo-${f}` as const },
+  }));
 }
 
 const de: PageDef = {
@@ -51,6 +57,30 @@ const de: PageDef = {
     },
   },
   blocks: [
+    {
+      t: "gallery",
+      id: "beispielkarten",
+      label: "Beispielkarten",
+      h: "Deine Webkarte, in deinem Stil",
+      lede: "Vier Beispiele, gebaut mit Layouts und Farben, die du im Karteneditor der App wählst. Mit deinem Foto und deinen Angaben wird daraus deine Karte. Jedes Beispiel ist live und öffnet sich im Browser, so wie beim Empfänger.",
+      frame: "phone",
+      tag: "Beispiel · Musterkarten, Porträts KI-\u2060generiert, Namen erfunden",
+      items: cards(
+        [
+          "Beispielkarte Clara Weber, Architektin, in hellen Steintönen, mit KI-generiertem Porträt",
+          "Beispielkarte James Bennett, Unternehmensberater, in klassischem Navy, mit KI-generiertem Porträt",
+          "Beispielkarte Maya Collins, Markendesignerin, in Koralle und Violett, mit KI-generiertem Porträt",
+          "Beispielkarte Felix Berger, Produktdesigner, in frischem Mint, mit KI-generiertem Porträt",
+        ],
+        [
+          ["Clara Weber, Architektin", "Helle Steintöne"],
+          ["James Bennett, Unternehmensberater", "Klassisches Navy"],
+          ["Maya Collins, Markendesignerin", "Koralle & Violett"],
+          ["Felix Berger, Produktdesigner", "Frisches Mint"],
+        ],
+        "Live-Karte ansehen",
+      ),
+    },
     {
       t: "situations",
       id: "zielgruppe",
@@ -127,7 +157,7 @@ const de: PageDef = {
       lede: "Nur Funktionen, die es in der App jetzt gibt. Nichts davon ist ein Versprechen für später.",
       items: [
         { tag: "Teilen", h: "Webkarte ohne App", p: "Deine Karte liegt unter opso.cc/deinname und öffnet sich in jedem Browser." },
-        { tag: "Teilen", h: "QR, NFC-Tag und Antippen", p: "Teile per QR-Code, mit einem kompatiblen NFC-Tag oder auf Android durch Aneinanderhalten der Handys." },
+        { tag: "Teilen", h: "QR, NFC-Tag und Antippen", p: "Teile per QR-Code, mit einem kompatiblen NFC-Tag oder auf Android durch Aneinanderhalten der Handys. NFC setzt ein kompatibles Smartphone voraus." },
         { tag: "Erfassen", h: "Visitenkarten-Scan", p: "Fotografiere eine Papierkarte und füge die Person deinen Kontakten hinzu." },
         {
           tag: "Kontakte",
@@ -147,29 +177,6 @@ const de: PageDef = {
           p: "Speichere einen Kontakt direkt im Adressbuch deines Handys oder exportiere deine Kontakte als CSV oder vCard.",
         },
       ],
-    },
-    {
-      t: "gallery",
-      id: "beispielkarten",
-      label: "Beispielkarten",
-      h: "Deine Webkarte, in deinem Stil",
-      lede: "Eine veröffentlichte Karte öffnet sich im Browser des Empfängers. NFC setzt ein kompatibles Smartphone und einen passenden Tag voraus.",
-      frame: "phone",
-      tag: "Beispiel · Musterkarten, Porträts KI-generiert, Namen erfunden",
-      items: cards(
-        [
-          "Beispielkarte Clara Weber, Architektin, in hellen Steintönen, mit KI-generiertem Porträt",
-          "Beispielkarte James Bennett, Unternehmensberater, in klassischem Navy, mit KI-generiertem Porträt",
-          "Beispielkarte Maya Collins, Markendesignerin, in Koralle und Violett, mit KI-generiertem Porträt",
-          "Beispielkarte Felix Berger, Produktdesigner, in frischem Mint, mit KI-generiertem Porträt",
-        ],
-        [
-          "Clara Weber, Architektin · Helle Steintöne",
-          "James Bennett, Unternehmensberater · Klassisches Navy",
-          "Maya Collins, Markendesignerin · Koralle & Violett",
-          "Felix Berger, Produktdesigner · Frisches Mint",
-        ],
-      ),
     },
     {
       t: "product",
@@ -311,6 +318,30 @@ const en: PageDef = {
   },
   blocks: [
     {
+      t: "gallery",
+      id: "beispielkarten",
+      label: "Example cards",
+      h: "Your web card, in your own style",
+      lede: "Four examples, built with layouts and colours you pick in the app’s card editor. Add your photo and details and it becomes your card. Each example is live and opens in the browser, just as it does for a recipient.",
+      frame: "phone",
+      tag: "Example · sample cards, AI-\u2060generated portraits, invented names",
+      items: cards(
+        [
+          "Example card of Clara Weber, architect, in light stone tones, with an AI-generated portrait",
+          "Example card of James Bennett, business consultant, in classic navy, with an AI-generated portrait",
+          "Example card of Maya Collins, brand designer, in coral and violet, with an AI-generated portrait",
+          "Example card of Felix Berger, product designer, in fresh mint, with an AI-generated portrait",
+        ],
+        [
+          ["Clara Weber, architect", "Light stone"],
+          ["James Bennett, business consultant", "Corporate navy"],
+          ["Maya Collins, brand designer", "Coral & violet"],
+          ["Felix Berger, product designer", "Fresh mint"],
+        ],
+        "View the live card",
+      ),
+    },
+    {
       t: "situations",
       id: "zielgruppe",
       label: "Audience",
@@ -386,7 +417,7 @@ const en: PageDef = {
       lede: "Only features that exist in the app now. Nothing here is a promise for later.",
       items: [
         { tag: "Sharing", h: "Web card, no app needed", p: "Your card lives at opso.cc/yourname and opens in any browser." },
-        { tag: "Sharing", h: "QR, NFC tag and tap", p: "Share with a QR code, a compatible NFC tag or, on Android, by tapping phones together." },
+        { tag: "Sharing", h: "QR, NFC tag and tap", p: "Share with a QR code, a compatible NFC tag or, on Android, by tapping phones together. NFC requires a compatible phone." },
         { tag: "Capture", h: "Business card scan", p: "Photograph a paper card and add the person to your contacts." },
         {
           tag: "Contacts",
@@ -406,29 +437,6 @@ const en: PageDef = {
           p: "Save a contact straight into your phone’s address book, or export your contacts as CSV or vCard.",
         },
       ],
-    },
-    {
-      t: "gallery",
-      id: "beispielkarten",
-      label: "Example cards",
-      h: "Your web card, in your own style",
-      lede: "A published card opens in the recipient’s browser. NFC requires a compatible phone and tag.",
-      frame: "phone",
-      tag: "Example · sample cards, AI-generated portraits, invented names",
-      items: cards(
-        [
-          "Example card of Clara Weber, architect, in light stone tones, with an AI-generated portrait",
-          "Example card of James Bennett, business consultant, in classic navy, with an AI-generated portrait",
-          "Example card of Maya Collins, brand designer, in coral and violet, with an AI-generated portrait",
-          "Example card of Felix Berger, product designer, in fresh mint, with an AI-generated portrait",
-        ],
-        [
-          "Clara Weber, architect · Light stone",
-          "James Bennett, business consultant · Corporate navy",
-          "Maya Collins, brand designer · Coral & violet",
-          "Felix Berger, product designer · Fresh mint",
-        ],
-      ),
     },
     {
       t: "product",
@@ -567,6 +575,30 @@ const tr: PageDef = {
   },
   blocks: [
     {
+      t: "gallery",
+      id: "beispielkarten",
+      label: "Örnek kartlar",
+      h: "Web kartın, kendi tarzında",
+      lede: "Uygulamanın kart düzenleyicisinde seçtiğin düzen ve renklerle hazırlanmış dört örnek. Fotoğrafını ve bilgilerini eklediğinde senin kartın olur. Her örnek canlı; alıcıda olduğu gibi tarayıcıda açılır.",
+      frame: "phone",
+      tag: "Örnek · tanıtım kartları, portreler yapay zeka ile üretildi, isimler kurgusal",
+      items: cards(
+        [
+          "Mimar Clara Weber’in açık taş tonlarındaki örnek kartı, yapay zeka ile üretilmiş portreyle",
+          "Danışman James Bennett’in klasik lacivert örnek kartı, yapay zeka ile üretilmiş portreyle",
+          "Marka tasarımcısı Maya Collins’in mercan ve mor örnek kartı, yapay zeka ile üretilmiş portreyle",
+          "Ürün tasarımcısı Felix Berger’in ferah nane yeşili örnek kartı, yapay zeka ile üretilmiş portreyle",
+        ],
+        [
+          ["Clara Weber, mimar", "Açık taş tonları"],
+          ["James Bennett, danışman", "Klasik lacivert"],
+          ["Maya Collins, marka tasarımcısı", "Mercan ve mor"],
+          ["Felix Berger, ürün tasarımcısı", "Ferah nane"],
+        ],
+        "Canlı kartı aç",
+      ),
+    },
+    {
       t: "situations",
       id: "zielgruppe",
       label: "Kimler için",
@@ -645,7 +677,7 @@ const tr: PageDef = {
         {
           tag: "Paylaşma",
           h: "Karekod, NFC etiketi ve dokun",
-          p: "Karekodla, uyumlu bir NFC etiketiyle ya da Android’de telefonları dokundurarak paylaş.",
+          p: "Karekodla, uyumlu bir NFC etiketiyle ya da Android’de telefonları dokundurarak paylaş. NFC için uyumlu bir telefon gerekir.",
         },
         { tag: "Kaydetme", h: "Kartvizit tarama", p: "Kâğıt kartı fotoğrafla, kişiyi listene ekle." },
         {
@@ -666,29 +698,6 @@ const tr: PageDef = {
           p: "Bir kişiyi doğrudan telefonunun rehberine kaydet ya da kişilerini CSV veya vCard olarak dışa aktar.",
         },
       ],
-    },
-    {
-      t: "gallery",
-      id: "beispielkarten",
-      label: "Örnek kartlar",
-      h: "Web kartın, kendi tarzında",
-      lede: "Yayınlanan bir kart, alıcının tarayıcısında açılır. NFC için uyumlu bir telefon ve etiket gerekir.",
-      frame: "phone",
-      tag: "Örnek · örnek kartlar, portreler yapay zeka ile üretildi, isimler kurgusal",
-      items: cards(
-        [
-          "Mimar Clara Weber’in açık taş tonlarındaki örnek kartı, yapay zeka ile üretilmiş portreyle",
-          "Danışman James Bennett’in klasik lacivert örnek kartı, yapay zeka ile üretilmiş portreyle",
-          "Marka tasarımcısı Maya Collins’in mercan ve mor örnek kartı, yapay zeka ile üretilmiş portreyle",
-          "Ürün tasarımcısı Felix Berger’in ferah nane yeşili örnek kartı, yapay zeka ile üretilmiş portreyle",
-        ],
-        [
-          "Clara Weber, mimar · Açık taş tonları",
-          "James Bennett, danışman · Klasik lacivert",
-          "Maya Collins, marka tasarımcısı · Mercan ve mor",
-          "Felix Berger, ürün tasarımcısı · Ferah nane",
-        ],
-      ),
     },
     {
       t: "product",
