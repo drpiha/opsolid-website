@@ -204,8 +204,11 @@ export type CoreBlock =
       compact?: boolean;
       href?: Href;
     })
-  /** Gallery of real screens with captions. */
-  | (SectionBase & { t: "gallery"; frame: Frame; tag?: string; items: { img: Img; caption: string }[] })
+  /**
+   * Gallery of real screens with captions. `sub`: a quiet second caption line (the card's colour theme).
+   * `link`: the item opens its live original (OpSo example cards). Four items or fewer fill the row on desktop.
+   */
+  | (SectionBase & { t: "gallery"; frame: Frame; tag?: string; items: { img: Img; caption: string; sub?: string; link?: Href }[] })
   /** A full-width figure band (video or image). */
   | (SectionBase & { t: "media"; media: Media })
   /** About block: paragraphs and a fact list (place, way of working, languages). */
