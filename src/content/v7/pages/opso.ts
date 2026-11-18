@@ -581,7 +581,7 @@ const tr: PageDef = {
       h: "Web kartın, kendi tarzında",
       lede: "Uygulamanın kart düzenleyicisinde seçtiğin düzen ve renklerle hazırlanmış dört örnek. Fotoğrafını ve bilgilerini eklediğinde senin kartın olur. Her örnek canlı; alıcıda olduğu gibi tarayıcıda açılır.",
       frame: "phone",
-      tag: "Örnek · örnek kartlar, portreler yapay zeka ile üretildi, isimler kurgusal",
+      tag: "Örnek · tanıtım kartları, portreler yapay zeka ile üretildi, isimler kurgusal",
       items: cards(
         [
           "Mimar Clara Weber’in açık taş tonlarındaki örnek kartı, yapay zeka ile üretilmiş portreyle",
