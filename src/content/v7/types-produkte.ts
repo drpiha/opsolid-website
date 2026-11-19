@@ -66,5 +66,20 @@ export type StudioText = {
   /** One price, with its status beside it at the same size (legal check of 2026-11-19). */
   price: { label: string; value: string; status: string; note: string };
   /** `consentLink`: the words of `consent` that link to the privacy page. */
-  interest: { open: string; email: string; consent: string; consentLink: string; send: string; pending: string };
+  /**
+   * "Vormerken" (double opt-in through the OpSo API). `consent` is the sentence the click agrees to; its wording per
+   * language is archived in `docs/consent/` under the version id the OpSo API stores with each registration.
+   */
+  interest: {
+    open: string;
+    email: string;
+    consent: string;
+    consentLink: string;
+    send: string;
+    sending: string;
+    sentState: string;
+    sent: string;
+    errors: { email: string; name: string; busy: string; down: string };
+    trap: string;
+  };
 };

@@ -6,6 +6,7 @@ import type { L3 } from "@/lib/v7-routes";
 
 type Design = "onyx" | "linea" | "monolith";
 type Side = "front" | "back";
+type Reg = "idle" | "sending" | "sent" | "email" | "name" | "busy" | "down";
 type Preview = {
   design: Design;
   orientation: "landscape" | "portrait";
@@ -73,9 +74,12 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
   const [issue, setIssue] = useState<Preview | null>(null);
   const [down, setDown] = useState(false);
   const [open, setOpen] = useState(false);
-  const [pending, setPending] = useState(false);
+  /** The e-mail step: idle, sending, sent (confirmation mail on its way), or the reason it did not go through. */
+  const [reg, setReg] = useState<Reg>("idle");
   const first = useRef(true);
   const mail = useRef<HTMLInputElement>(null);
+  const trap = useRef<HTMLInputElement>(null);
+  const sentNote = useRef<HTMLParagraphElement>(null);
   const own = f.name.trim().length >= 2;
 
   useEffect(() => {
@@ -115,6 +119,42 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
   useEffect(() => {
     if (open) mail.current?.focus();
   }, [open]);
+  // The step is replaced by the note; focus follows it so that it is read out and the keyboard position is kept.
+  useEffect(() => {
+    if (reg === "sent") sentNote.current?.focus();
+  }, [reg]);
+
+  /**
+   * "Vormerken". Consent is the click on this button (or Enter in the e-mail field), so the form itself never
+   * submits: Enter in a card field must not register anyone.
+   */
+  const register = async () => {
+    if (reg === "sending" || reg === "sent") return;
+    if (!own) return setReg("name");
+    const email = mail.current?.value.trim() ?? "";
+    if (!email || !mail.current?.checkValidity()) {
+      mail.current?.focus();
+      return setReg("email");
+    }
+    setReg("sending");
+    try {
+      const r = await fetch("/api/opso/card-reservation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          consent: true,
+          draft: { design, name: f.name, title: f.title, org: f.org, lines: [f.line1, f.line2].filter((line) => line.trim()) },
+          locale,
+          hp_blank: trap.current?.value ?? "",
+        }),
+      });
+      setReg(r.ok ? "sent" : r.status === 422 ? "name" : r.status === 400 ? "email" : r.status === 429 ? "busy" : "down");
+    } catch {
+      setReg("down");
+    }
+  };
+  const regError = reg === "email" || reg === "name" || reg === "busy" || reg === "down" ? t.interest.errors[reg] : null;
 
   const set = (key: keyof typeof f) => (e: { target: { value: string } }) => setF((prev) => ({ ...prev, [key]: e.target.value }));
   const portrait = pv ? pv.orientation === "portrait" : false;
@@ -152,10 +192,7 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
     <form
       className="wk-studio"
       noValidate
-      onSubmit={(e) => {
-        e.preventDefault();
-        setPending(true);
-      }}
+      onSubmit={(e) => e.preventDefault()}
     >
       <div className="wk-studio-copy">{head}</div>
 
@@ -254,28 +291,55 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
         </p>
         <p className="wk-price-note">{t.price.note}</p>
         <div className="wk-interest">
-          <button type="button" className="wk-btn wk-btn-ink" aria-expanded={open} aria-controls={`${uid}-interest`} onClick={() => setOpen((v) => !v)}>
-            {t.interest.open}
-          </button>
-          <div id={`${uid}-interest`} className="wk-interest-step" hidden={!open}>
-            <div className="wk-tfield is-wide">
-              <label htmlFor={`${uid}-mail`}>{t.interest.email}</label>
-              <input ref={mail} id={`${uid}-mail`} type="email" autoComplete="email" inputMode="email" maxLength={254} required aria-describedby={`${uid}-consent`} />
-            </div>
-            <p className="wk-ticket-hint" id={`${uid}-consent`}>
-              {consent.before}
-              {consent.link && <a href={privacyHref}>{consent.link}</a>}
-              {consent.after}
+          {reg === "sent" ? (
+            <p ref={sentNote} tabIndex={-1} className="wk-interest-sent" role="status">
+              <span className="wk-price-status">{t.interest.sentState}</span>
+              <span>{t.interest.sent}</span>
             </p>
-            <button type="submit" className="wk-btn wk-btn-ink wk-btn-sm">
-              {t.interest.send}
-            </button>
-            {pending && (
-              <p className="wk-form-status" role="status">
-                {t.interest.pending}
-              </p>
-            )}
-          </div>
+          ) : (
+            <>
+              <button type="button" className="wk-btn wk-btn-ink" aria-expanded={open} aria-controls={`${uid}-interest`} onClick={() => setOpen((v) => !v)}>
+                {t.interest.open}
+              </button>
+              <div id={`${uid}-interest`} className="wk-interest-step" hidden={!open}>
+                <div className="wk-tfield is-wide">
+                  <label htmlFor={`${uid}-mail`}>{t.interest.email}</label>
+                  <input
+                    ref={mail}
+                    id={`${uid}-mail`}
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    maxLength={254}
+                    required
+                    aria-invalid={reg === "email" || undefined}
+                    aria-describedby={`${uid}-consent${regError ? ` ${uid}-regerr` : ""}`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") void register();
+                    }}
+                  />
+                </div>
+                <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
+                  {/* Spam trap; its name is no word browser autofill knows (see the contact form). */}
+                  <label htmlFor={`${uid}-hp`}>{t.interest.trap}</label>
+                  <input ref={trap} id={`${uid}-hp`} name="hp_blank" type="text" tabIndex={-1} autoComplete="off" data-1p-ignore="true" data-lpignore="true" data-form-type="other" />
+                </div>
+                <p className="wk-ticket-hint" id={`${uid}-consent`}>
+                  {consent.before}
+                  {consent.link && <a href={privacyHref}>{consent.link}</a>}
+                  {consent.after}
+                </p>
+                <button type="button" className="wk-btn wk-btn-ink wk-btn-sm" aria-disabled={reg === "sending" || undefined} onClick={() => void register()}>
+                  {reg === "sending" ? t.interest.sending : t.interest.send}
+                </button>
+                {regError && (
+                  <p id={`${uid}-regerr`} className="wk-form-status is-error" role="alert">
+                    {regError}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </form>

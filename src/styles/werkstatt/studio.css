@@ -92,6 +92,11 @@ html[data-v4] .wk-interest-step[hidden] { display: none; }
 html[data-v4] .wk-interest-step .wk-ticket-hint { margin-top: 0; }
 html[data-v4] .wk-interest-step .wk-ticket-hint a { color: var(--wk-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 html[data-v4] .wk-interest-step .wk-tfield { justify-self: stretch; width: 100%; }
+/* after "Vormerken": the state line (the price status' square) and what happens next; it takes the focus when it appears */
+html[data-v4] .wk-interest-sent { display: grid; gap: 6px; width: 100%; margin: 0; padding-top: 14px; border-top: 1px solid var(--wk-line); font-size: var(--wk-fs-1); line-height: 1.5; color: var(--wk-muted); }
+html[data-v4] .wk-interest-sent .wk-price-status { font-size: var(--wk-fs-3); font-weight: 500; line-height: 1.25; color: var(--wk-text); }
+/* focused by script so that it is read out; it is a note, not a control, so it shows no focus ring */
+html[data-v4] .wk-interest-sent:focus { outline: 0; }
 
 @media (max-width: 960px) {
   html[data-v4] .wk-studio-hero > .wk-wrap:first-child { padding-top: 10px; }

@@ -1,0 +1,24 @@
+{
+  "version": "card-studio-2026-11-19",
+  "recorded": "2026-11-19",
+  "page": "opsoKarte (/opso/nfc-karte, /en/opso/nfc-card, /tr/opso/nfc-kart)",
+  "action": "A click on the button below the sentence (or Enter in the e-mail field). The sentence links to the privacy policy.",
+  "storedBy": "OpSo API, POST /public/card-studio/reservations; the API stores this version id with each registration.",
+  "texts": {
+    "de": {
+      "button": "Vormerken",
+      "sentence": "Mit Klick auf „Vormerken“ willigst du ein, dass OpSolid deine E-Mail-Adresse und deinen Kartenentwurf speichert und dir nach Bestätigung deiner Adresse einmalig eine E-Mail zum Bestellstart der OpSo Karte schickt; du kannst jederzeit widerrufen, mehr in der Datenschutzerklärung.",
+      "link": "Datenschutzerklärung"
+    },
+    "en": {
+      "button": "Register interest",
+      "sentence": "By clicking \"Register interest\" you agree that OpSolid stores your e-mail address and your card draft and, once you confirm your address, sends you one e-mail when ordering for the OpSo card opens; you can withdraw at any time, see our privacy policy.",
+      "link": "privacy policy"
+    },
+    "tr": {
+      "button": "Ön kayıt yaptır",
+      "sentence": "\"Ön kayıt yaptır\"a tıklayarak OpSolid'in e-posta adresini ve kart taslağını saklamasını ve adresini onayladıktan sonra OpSo kart siparişleri açıldığında sana tek bir e-posta göndermesini kabul edersin; onayını istediğin zaman geri alabilirsin, ayrıntılar gizlilik politikasında.",
+      "link": "gizlilik politikasında"
+    }
+  }
+}

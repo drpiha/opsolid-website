@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import test from "node:test";
+import * as studioMod from "../../src/lib/opso-web/card-studio.ts";
+import * as karteMod from "../../src/content/v7/pages/opso-karte.ts";
 
 // The only prices opsolid.de may state (repo CLAUDE.md, "Published offers"): KI-Check 990 (fixed price), KI-Kompetenz
 // 1.790 (+90), Copilot-Praxistag 2.900 (+150), KI-Agenten & Workflow-Automatisierung 5.900 (+290), all net.
@@ -56,4 +58,25 @@ test("the OpSo card's planned price stays in the studio's price block", () => {
     assert.ok(src.includes(`status: "${status}"`), `missing status ${status}`);
   }
   assert.ok(!/inkl\. MwSt|incl\. VAT|KDV dahil|zzgl\. USt/i.test(src), "no VAT wording until the VAT status is settled");
+});
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const pick = <T,>(m: any, key: string): T => (m[key] ? m : m.default) as T;
+
+test("the card studio's consent wording equals its archived version", () => {
+  const { CARD_STUDIO_CONSENT_VERSION: version } = pick<typeof import("../../src/lib/opso-web/card-studio.ts")>(studioMod, "CARD_STUDIO_CONSENT_VERSION");
+  const { page } = pick<typeof import("../../src/content/v7/pages/opso-karte.ts")>(karteMod, "page");
+  const archive = JSON.parse(readFileSync(`docs/consent/${version}.json`, "utf8")) as {
+    version: string;
+    texts: Record<string, { button: string; sentence: string; link: string }>;
+  };
+  assert.equal(archive.version, version);
+  for (const locale of ["de", "en", "tr"] as const) {
+    const live = page[locale].hero.studio?.interest;
+    assert.ok(live, `no studio text for ${locale}`);
+    // A changed wording is a new consent version: new id, new archive file, and the OpSo API must store the new id.
+    assert.deepEqual({ button: live.send, sentence: live.consent, link: live.consentLink }, archive.texts[locale], `consent wording (${locale}) differs from docs/consent/${version}.json`);
+    assert.ok(live.consent.includes(live.send), `the sentence names the button (${locale})`);
+    assert.ok(live.consent.includes(live.consentLink), `the sentence carries the privacy link (${locale})`);
+  }
 });
