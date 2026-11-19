@@ -17,6 +17,18 @@ type Preview = {
   back: string | null;
 };
 const DESIGNS: readonly Design[] = ["onyx", "linea", "monolith"];
+/** "E-Mail" never breaks after its hyphen. A span does it, so the archived consent wording stays character for character. */
+const NO_BREAK = /(E-Mail-Adresse|E-Mail|e-mail|e-posta)/g;
+const nb = (text: string): ReactNode[] =>
+  text.split(NO_BREAK).map((part, i) =>
+    i % 2 ? (
+      <span key={i} className="wk-nb">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
 /** Static sample faces (Onyx, the sample person) shown until the first live preview arrives, and without JS. */
 const SAMPLE_IMG = { front: "/img/v7/opso/studio/sample-onyx-front.svg", back: "/img/v7/opso/studio/sample-onyx-back.svg" } as const;
 
@@ -123,6 +135,15 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
   useEffect(() => {
     if (reg === "sent") sentNote.current?.focus();
   }, [reg]);
+  // The "name first" note goes as soon as there is a name.
+  useEffect(() => {
+    if (own) setReg((now) => (now === "name" ? "idle" : now));
+  }, [own]);
+  const toName = () => {
+    const input = document.getElementById(`${uid}-name`);
+    input?.focus({ preventScroll: true });
+    input?.scrollIntoView({ block: "center" });
+  };
 
   /**
    * "Vormerken". Consent is the click on this button (or Enter in the e-mail field), so the form itself never
@@ -292,9 +313,9 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
         <p className="wk-price-note">{t.price.note}</p>
         <div className="wk-interest">
           {reg === "sent" ? (
-            <p ref={sentNote} tabIndex={-1} className="wk-interest-sent" role="status">
+            <p ref={sentNote} tabIndex={-1} className="wk-interest-sent">
               <span className="wk-price-status">{t.interest.sentState}</span>
-              <span>{t.interest.sent}</span>
+              <span>{nb(t.interest.sent)}</span>
             </p>
           ) : (
             <>
@@ -314,6 +335,9 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
                     required
                     aria-invalid={reg === "email" || undefined}
                     aria-describedby={`${uid}-consent${regError ? ` ${uid}-regerr` : ""}`}
+                    onInput={() => {
+                      if (reg === "email") setReg("idle");
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") void register();
                     }}
@@ -325,9 +349,14 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
                   <input ref={trap} id={`${uid}-hp`} name="hp_blank" type="text" tabIndex={-1} autoComplete="off" data-1p-ignore="true" data-lpignore="true" data-form-type="other" />
                 </div>
                 <p className="wk-ticket-hint" id={`${uid}-consent`}>
-                  {consent.before}
-                  {consent.link && <a href={privacyHref}>{consent.link}</a>}
-                  {consent.after}
+                  {nb(consent.before)}
+                  {/* a new tab, so the draft typed above is not lost */}
+                  {consent.link && (
+                    <a href={privacyHref} target="_blank" rel="noopener noreferrer">
+                      {consent.link}
+                    </a>
+                  )}
+                  {nb(consent.after)}
                 </p>
                 <button type="button" className="wk-btn wk-btn-ink wk-btn-sm" aria-disabled={reg === "sending" || undefined} onClick={() => void register()}>
                   {reg === "sending" ? t.interest.sending : t.interest.send}
@@ -335,6 +364,14 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
                 {regError && (
                   <p id={`${uid}-regerr`} className="wk-form-status is-error" role="alert">
                     {regError}
+                    {reg === "name" && (
+                      <>
+                        {" "}
+                        <button type="button" className="wk-tlink" onClick={toName}>
+                          {t.interest.toName}
+                        </button>
+                      </>
+                    )}
                   </p>
                 )}
               </div>

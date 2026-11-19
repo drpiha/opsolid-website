@@ -3,21 +3,30 @@
   "recorded": "2026-11-19",
   "page": "opsoKarte (/opso/nfc-karte, /en/opso/nfc-card, /tr/opso/nfc-kart)",
   "action": "A click on the button below the sentence (or Enter in the e-mail field). The sentence links to the privacy policy.",
-  "storedBy": "OpSo API, POST /public/card-studio/reservations; the API stores this version id with each registration.",
+  "placement": "The step opens with the button \"Für den Bestellstart vormerken\" under the price line. Inside it: the e-mail field, then this sentence in the body face and text colour, then the button it names, directly below it. No checkbox, nothing pre-set; the form itself never submits, so Enter in a card field registers nobody.",
+  "storedBy": "OpSo API, POST /public/card-studio/reservations; the API stores this version id and the times of registration and confirmation with each registration.",
+  "confirmation": "Double opt-in: the OpSo API sends one fixed confirmation mail (DE/EN/TR, no visitor text); its templates and their version live in the OpSo repository (Project_VERSO).",
+  "history": "Wording after the legal check of 2026-11-19. An earlier wording of the same day was never released and no registration carries it, so the id was kept. After the first release every change of wording gets a new id and a new file.",
+  "release": {
+    "date": null,
+    "commit": null,
+    "privacyTextDate": null,
+    "screenshots": null
+  },
   "texts": {
     "de": {
       "button": "Vormerken",
-      "sentence": "Mit Klick auf „Vormerken“ willigst du ein, dass OpSolid deine E-Mail-Adresse und deinen Kartenentwurf speichert und dir nach Bestätigung deiner Adresse einmalig eine E-Mail zum Bestellstart der OpSo Karte schickt; du kannst jederzeit widerrufen, mehr in der Datenschutzerklärung.",
+      "sentence": "Mit Klick auf „Vormerken“ willigst du ein, dass OpSolid deine E-Mail-Adresse und deinen Kartenentwurf speichert, um dir nach Bestätigung deiner Adresse einmalig eine E-Mail zum Bestellstart der OpSo NFC-Karte zu schicken und deinen Entwurf dafür bereitzuhalten. Du kannst jederzeit widerrufen, auch über den Link in jeder unserer E-Mails; mehr in der Datenschutzerklärung.",
       "link": "Datenschutzerklärung"
     },
     "en": {
       "button": "Register interest",
-      "sentence": "By clicking \"Register interest\" you agree that OpSolid stores your e-mail address and your card draft and, once you confirm your address, sends you one e-mail when ordering for the OpSo card opens; you can withdraw at any time, see our privacy policy.",
+      "sentence": "By clicking “Register interest” you agree that OpSolid stores your e-mail address and your card draft in order to send you one e-mail when ordering for the OpSo NFC card opens, once you have confirmed your address, and to keep your draft ready for that. You can withdraw at any time, also with the link in each of our e-mails; see our privacy policy.",
       "link": "privacy policy"
     },
     "tr": {
       "button": "Ön kayıt yaptır",
-      "sentence": "\"Ön kayıt yaptır\"a tıklayarak OpSolid'in e-posta adresini ve kart taslağını saklamasını ve adresini onayladıktan sonra OpSo kart siparişleri açıldığında sana tek bir e-posta göndermesini kabul edersin; onayını istediğin zaman geri alabilirsin, ayrıntılar gizlilik politikasında.",
+      "sentence": "“Ön kayıt yaptır”a tıklayarak OpSolid'in, adresini onayladıktan sonra OpSo NFC kart siparişleri açıldığında sana tek bir e-posta göndermek ve taslağını bunun için hazır tutmak amacıyla e-posta adresini ve kart taslağını saklamasını kabul edersin; onayını istediğin zaman, e-postalarımızdaki bağlantıyla da geri alabilirsin, ayrıntılar gizlilik politikasında.",
       "link": "gizlilik politikasında"
     }
   }

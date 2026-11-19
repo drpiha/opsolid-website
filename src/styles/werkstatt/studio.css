@@ -80,23 +80,41 @@ html[data-v4] .wk-layout:has(input:focus-visible) { outline: 2px solid var(--wk-
 html[data-v4] .wk-layout-name { font-weight: 640; font-size: var(--wk-fs-1); line-height: 1.2; }
 html[data-v4] .wk-layout-note { min-height: 2.7em; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.35; color: var(--wk-muted); }
 html[data-v4] .wk-ticket-live .wk-form-status { margin-top: 14px; }
-html[data-v4] .wk-ticket-live .wk-tlink { border: 0; padding: 0; background: none; font: inherit; cursor: pointer; }
+/* notes on the ticket are ruled lines like everything else on it, never filled boxes (design review R3) */
+html[data-v4] .wk-ticket .wk-form-status,
+html[data-v4] .wk-ticket .wk-form-status.is-error { padding: 2px 0 2px 12px; border: 0; border-left: 2px solid currentColor; border-radius: 0; background: none; }
+html[data-v4] .wk-ticket .wk-form-status .wk-tlink { border: 0; padding: 0; background: none; font: inherit; cursor: pointer; }
+html[data-v4] .wk-interest-step .wk-form-status .wk-tlink { display: flex; }
 
 /* the price stub: the planned price and its status share one row and one size (legal check of 2026-11-19) */
 html[data-v4] .wk-price-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; margin: 8px 0 0; font-size: var(--wk-fs-3); font-weight: 500; line-height: 1.25; }
 html[data-v4] .wk-price-status::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 9px; border: 1.5px solid currentColor; border-radius: 2.5px; transform: translateY(-1px); }
 html[data-v4] .wk-price-note { margin: 8px 0 0; font-size: var(--wk-fs-1); line-height: 1.5; color: var(--wk-muted); }
-html[data-v4] .wk-interest { display: grid; gap: 4px; justify-items: start; margin-top: 18px; }
+html[data-v4] .wk-interest { display: grid; gap: 10px; justify-items: start; margin-top: 18px; }
+/* once the step is open its opener steps back to a ticket key with the status square, so the step has one ink button */
+html[data-v4] .wk-interest > .wk-btn[aria-expanded="true"] { gap: 0; min-height: 44px; padding: 0; border: 0; border-radius: 0; background: none; color: var(--wk-text); font-family: var(--wk-mono); font-size: var(--wk-fs-0); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+html[data-v4] .wk-interest > .wk-btn[aria-expanded="true"]::before { content: ""; flex: none; width: 9px; height: 9px; margin-right: 9px; border: 1.5px solid currentColor; border-radius: 2.5px; }
 html[data-v4] .wk-interest-step { display: grid; gap: 12px; justify-items: start; width: 100%; }
 html[data-v4] .wk-interest-step[hidden] { display: none; }
-html[data-v4] .wk-interest-step .wk-ticket-hint { margin-top: 0; }
+html[data-v4] .wk-interest-step:not([hidden]),
+html[data-v4] .wk-interest-sent { animation: wk-step-in var(--wk-t-ui) var(--wk-ease-out); }
+@keyframes wk-step-in { from { opacity: 0; transform: translateY(8px); } }
+/* the consent sentence is what the click agrees to: body face, size and colour, never fine print (legal check of 2026-11-19) */
+html[data-v4] .wk-interest-step .wk-ticket-hint { max-width: 62ch; margin-top: 0; font-family: var(--wk-sans); font-size: var(--wk-fs-1); line-height: 1.55; color: var(--wk-text); hyphens: manual; }
+html[data-v4] .wk-nb { white-space: nowrap; }
 html[data-v4] .wk-interest-step .wk-ticket-hint a { color: var(--wk-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-html[data-v4] .wk-interest-step .wk-tfield { justify-self: stretch; width: 100%; }
-/* after "Vormerken": the state line (the price status' square) and what happens next; it takes the focus when it appears */
-html[data-v4] .wk-interest-sent { display: grid; gap: 6px; width: 100%; margin: 0; padding-top: 14px; border-top: 1px solid var(--wk-line); font-size: var(--wk-fs-1); line-height: 1.5; color: var(--wk-muted); }
+html[data-v4] .wk-interest-step .wk-tfield { justify-self: stretch; width: 100%; padding-top: 2px; }
+/* sending: the button keeps its ink and shows a running rule; nothing on this site dims by opacity */
+html[data-v4] .wk-interest-step .wk-btn[aria-disabled="true"] { position: relative; background: var(--wk-ink); opacity: 1; cursor: progress; }
+html[data-v4] .wk-interest-step .wk-btn[aria-disabled="true"]::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 8px; height: 2px; background: linear-gradient(currentColor 0 0) no-repeat; background-size: 40% 100%; animation: wk-sending 900ms linear infinite; }
+@keyframes wk-sending { from { background-position: -60% 0; } to { background-position: 160% 0; } }
+/* after "Vormerken": the state line and what happens next; it takes the focus when it appears. The squares are one
+   small system: empty = not yet, half = waiting for the visitor's confirmation (full is the confirm page's). */
+html[data-v4] .wk-interest-sent { display: grid; gap: 6px; width: 100%; margin: 0; padding-top: 14px; border-top: 1px solid var(--wk-line); font-size: var(--wk-fs-1); line-height: 1.5; color: var(--wk-muted); hyphens: manual; }
 html[data-v4] .wk-interest-sent .wk-price-status { font-size: var(--wk-fs-3); font-weight: 500; line-height: 1.25; color: var(--wk-text); }
+html[data-v4] .wk-interest-sent .wk-price-status::before { background: linear-gradient(135deg, currentColor 50%, transparent 50%); }
 /* focused by script so that it is read out; it is a note, not a control, so it shows no focus ring */
-html[data-v4] .wk-interest-sent:focus { outline: 0; }
+html[data-v4] .wk-interest-sent:is(:focus, :focus-visible) { outline: none; border-radius: 0; box-shadow: none; }
 
 @media (max-width: 960px) {
   html[data-v4] .wk-studio-hero > .wk-wrap:first-child { padding-top: 10px; }
@@ -122,7 +140,8 @@ html[data-v4] .wk-interest-sent:focus { outline: 0; }
   html[data-v4] .wk-ticket { padding: 18px 18px 22px; }
   html[data-v4] .wk-ticket.is-a { margin-top: 16px; }
   html[data-v4] .wk-ticket-grid { grid-template-columns: minmax(0, 1fr); }
-  html[data-v4] .wk-tfield { scroll-margin-top: calc(var(--wk-header-h) + 180px); }
+  html[data-v4] .wk-tfield,
+  html[data-v4] .wk-tfield input { scroll-margin-top: calc(var(--wk-header-h) + 180px); }
   html[data-v4] .wk-layouts { gap: 8px; }
   html[data-v4] .wk-layout { padding: 8px; }
   html[data-v4] .wk-studio-flag { display: none; }
@@ -142,4 +161,7 @@ html[data-v4] .wk-interest-sent:focus { outline: 0; }
   html[data-v4] .wk-seg button,
   html[data-v4] .wk-layout,
   html[data-v4] .wk-tfield input { transition: none; }
+  html[data-v4] .wk-interest-step:not([hidden]),
+  html[data-v4] .wk-interest-sent { animation: none; }
+  html[data-v4] .wk-interest-step .wk-btn[aria-disabled="true"]::after { background-size: 100% 100%; animation: none; }
 }

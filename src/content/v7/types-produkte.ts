@@ -80,6 +80,8 @@ export type StudioText = {
     sentState: string;
     sent: string;
     errors: { email: string; name: string; busy: string; down: string };
+    /** Text link beside the "name first" note; it puts the cursor into the name field. */
+    toName: string;
     trap: string;
   };
 };
