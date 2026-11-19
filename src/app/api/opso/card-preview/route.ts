@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { OPSO_API } from "@/lib/opso-web/gateway";
+import { OPSO_API, OPSO_CARD_PREVIEW_PATH } from "@/lib/opso-web/gateway";
 import { appendedClientIp } from "@/lib/opso-web/auth-ip-proof";
 
 /**
@@ -77,7 +77,7 @@ export async function POST(request: Request) {
 
   let response: Response;
   try {
-    response = await fetch(`${base()}/public/card-preview`, {
+    response = await fetch(`${base()}${OPSO_CARD_PREVIEW_PATH}`, {
       method: "POST",
       cache: "no-store",
       redirect: "error",

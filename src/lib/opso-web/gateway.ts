@@ -6,6 +6,11 @@ import { appendedClientIp, authClientIpHeaders } from "./auth-ip-proof";
 
 // This is deliberately a fixed contract adapter, never a general-purpose proxy.
 export const OPSO_API = "https://card.opsolid.de/api";
+/**
+ * Path of the card-preview endpoint under OPSO_API (card studio, `src/app/api/opso/card-preview/route.ts`). A working
+ * assumption until the OpSo API ships it: the implementing session confirms the final path and fields; change it here only.
+ */
+export const OPSO_CARD_PREVIEW_PATH = "/public/card-preview";
 const idSchema = z.string().regex(/^[A-Za-z0-9_-]{1,128}$/);
 const emailSchema = z.string().trim().toLowerCase().email().max(254);
 const identitySchema = z.object({ id: idSchema, email: emailSchema, name: z.string().max(300).nullable().optional(), workspaceId: idSchema });
