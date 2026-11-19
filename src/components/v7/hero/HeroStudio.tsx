@@ -25,7 +25,7 @@ export function HeroStudio({ hero, studio, locale, crumbs }: { hero: PageDef["he
         <StudioClient
           t={studio}
           locale={locale}
-          privacyHref={href("privacy", locale)}
+          privacyHref={href("privacy", locale, { hash: "kartenstudio" })}
           head={
             <>
               <Etikett solid as="p">
