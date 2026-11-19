@@ -54,7 +54,7 @@ Alle Preise netto zzgl. USt., nur für Unternehmen. Das sind die einzigen veröf
 - KI-Check: 990 € netto, Festpreis, schriftlich: ein Fragebogen von etwa 20 Minuten und ein Bericht mit drei priorisierten Ideen, Risiken, Datenschutzhinweisen und einer Schulungsempfehlung für das Team, in der Regel 10 Werktage nach Eingang des Fragebogens; auf Wunsch 30 Minuten Besprechung per Video (mittwochs oder freitags, 18:30-20:00 Uhr). NDA vor der Analyse, Bericht auch ohne Empfehlung. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.
 - Pilot zum Festpreis: der Preis wird vor dem Start schriftlich festgelegt; kein veröffentlichter Preis.
 - Betrieb und Ausbau: monatlich nach Vereinbarung; kein veröffentlichter Preis.
-- OpSo NFC-Karte: in Vorbereitung, noch nicht bestellbar. Die OpSo-App ist kostenlos: fürs iPhone im App Store (https://apps.apple.com/app/id6826541629), für Android bei Google Play (https://play.google.com/store/apps/details?id=de.opsolid.verso); noch nicht in den USA und der Türkei (Stand: 09.11.2026); aktueller Stand: ${absUrl("opso", "de")}
+- OpSo NFC-Karte: in Vorbereitung, noch nicht bestellbar; Vorschau mit eigenem Namen im Kartenstudio: ${absUrl("opsoKarte", "de")}. Die OpSo-App ist kostenlos: fürs iPhone im App Store (https://apps.apple.com/app/id6826541629), für Android bei Google Play (https://play.google.com/store/apps/details?id=de.opsolid.verso); noch nicht in den USA und der Türkei (Stand: 09.11.2026); aktueller Stand: ${absUrl("opso", "de")}
 
 Förderung: Wir prüfen mit Ihnen, welche Förderung zu Ihrem Vorhaben passt.
 
@@ -67,7 +67,7 @@ All prices are net of VAT and for businesses only. These are the only published 
 - Training is live only, in the client's Microsoft Teams (Zoom on request), as a closed session per team; no recordings, no self-paced courses. After the course OpSolid issues its own participation record (date, duration, topics, trainer); it is not a certificate of an authority, chamber or association.
 - AI check (KI-Check): €990 net, fixed price, in writing: a questionnaire of about 20 minutes and a report with three prioritised ideas, risks, data protection notes and a training recommendation for the team, usually 10 working days after we receive the questionnaire; a 30-minute video call if you wish (Wednesday or Friday, 18:30-20:00 German time). NDA before the analysis, report even without a recommendation. Credited in full against a follow-up order within 60 days.
 - Pilot at a fixed price: fixed in writing before the start; no published price. Operation and extension: monthly by agreement; no published price.
-- OpSo NFC card: in preparation, not yet orderable. The OpSo app is free: on iPhone in the App Store (https://apps.apple.com/app/id6826541629), on Android on Google Play (https://play.google.com/store/apps/details?id=de.opsolid.verso); not yet in the USA and Turkey (as of 9 Nov 2026); current status: ${absUrl("opso", "en")}
+- OpSo NFC card: in preparation, not yet orderable; preview with your own name in the card studio: ${absUrl("opsoKarte", "en")}. The OpSo app is free: on iPhone in the App Store (https://apps.apple.com/app/id6826541629), on Android on Google Play (https://play.google.com/store/apps/details?id=de.opsolid.verso); not yet in the USA and Turkey (as of 9 Nov 2026); current status: ${absUrl("opso", "en")}
 
 ## Methode und Rechtsrahmen
 - Methode: Ablauf aufnehmen, Ausgangslage messen, klein pilotieren, ausrollen, übergeben (Dokumentation und Zugänge gehören dem Kunden, bei Automatisierungen und internen Tools auch der Quellcode).
