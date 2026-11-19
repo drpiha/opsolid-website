@@ -42,6 +42,8 @@ export type StudioText = {
     short: string;
     caption: string;
     unavailable: string;
+    /** Etikett on the mat while the typed text does not fit the chosen layout (the card keeps the last version that fits). */
+    tight: string;
   };
   docket: {
     /** Head of the job line; the layout name and the shown face follow ("Auftrag · Entwurf · Layout Onyx · Rückseite"). */
@@ -63,5 +65,6 @@ export type StudioText = {
   sample: { name: string; title: string; org: string; line: string };
   /** One price, with its status beside it at the same size (legal check of 2026-11-19). */
   price: { label: string; value: string; status: string; note: string };
-  interest: { open: string; email: string; consent: string; send: string; pending: string };
+  /** `consentLink`: the words of `consent` that link to the privacy page. */
+  interest: { open: string; email: string; consent: string; consentLink: string; send: string; pending: string };
 };

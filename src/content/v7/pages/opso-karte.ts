@@ -27,9 +27,9 @@ const de: PageDef = {
     h1: ["Sieh deine NFC-Karte", "vor dem Druck", ""],
     lede: "Trag ein, was auf deiner Karte stehen soll. Die Vorschau entsteht aus derselben Zeichnung wie später die Druckdatei. Bestellbar ist die Karte noch nicht.",
     facts: [
-      "Vorschau aus der Druckdatei",
+      "Gleiche Zeichnung wie später der Druck",
       "QR-Code und Link auf der Rückseite",
-      "Öffnet ohne App auf iPhone und Android",
+      "Öffnet ohne App, per NFC oder QR-Code",
       "Noch nicht bestellbar",
     ],
     studio: {
@@ -45,7 +45,8 @@ const de: PageDef = {
         caption:
           "Vorschau: Material und Details können sich bis zum Bestellstart noch ändern. Der QR-Code zeigt einen Beispielcode.",
         unavailable:
-          "Die Vorschau ist gerade nicht erreichbar. Deine Eingaben bleiben erhalten.",
+          "Die Vorschau ist gerade nicht erreichbar. Deine Eingaben bleiben im Formular stehen.",
+        tight: "Passt so nicht · letzter Stand",
       },
       docket: {
         title: "Auftrag · Entwurf",
@@ -76,15 +77,16 @@ const de: PageDef = {
       },
       price: {
         label: "Geplanter Endpreis",
-        value: "29 €",
+        value: "29 € inkl. Versand",
         status: "Noch nicht bestellbar",
-        note: "Inkl. Versand, Lieferung nur innerhalb Deutschlands. Du kannst dich unverbindlich vormerken lassen.",
+        note: "Lieferung nur innerhalb Deutschlands. Du kannst dich aber unverbindlich vormerken lassen.",
       },
       interest: {
-        open: "Für den Start vormerken",
+        open: "Für den Bestellstart vormerken",
         email: "E-Mail-Adresse",
         consent:
           "Mit Klick auf „Vormerken“ willigst du ein, dass OpSolid dir nach Bestätigung deiner Adresse einmalig eine E-Mail zum Bestellstart der OpSo Karte schickt; du kannst jederzeit widerrufen, mehr in der Datenschutzerklärung.",
+        consentLink: "Datenschutzerklärung",
         send: "Vormerken",
         pending: "Das Vormerken ist noch nicht freigeschaltet.",
       },
@@ -107,8 +109,8 @@ const de: PageDef = {
           p: "Du hinterlässt deine E-Mail-Adresse und bestätigst sie. Wir schreiben dir einmal, sobald die Karte bestellbar ist.",
         },
         {
-          h: "Prüfen und bestellen",
-          p: "Zum Start siehst du deine Angaben noch einmal in der Druckvorschau. Gedruckt wird erst, wenn du sie freigibst.",
+          h: "Später: prüfen und bestellen",
+          p: "Wenn die Bestellung öffnet, prüfst du deine Angaben noch einmal. Gedruckt wird erst nach deiner Freigabe.",
         },
       ],
     },
@@ -131,7 +133,7 @@ const de: PageDef = {
         ],
         [
           "Antippen",
-          "Ans Handy halten, die Karte öffnet sich im Browser. iPhone und Android, ohne App, ohne Batterie.",
+          "Ans NFC-fähige Handy halten, die Karte öffnet sich im Browser. iPhone und Android, ohne App, ohne Batterie.",
         ],
       ],
     },
@@ -157,7 +159,7 @@ const de: PageDef = {
   cta: {
     label: "OpSo",
     h: "Die digitale Karte gibt es schon",
-    p: "OpSo ist kostenlos im App Store und bei Google Play. Die NFC-Karte öffnet später genau diese Karte.",
+    p: "OpSo ist kostenlos im App Store und bei Google Play, noch nicht in den USA und der Türkei. Die NFC-Karte öffnet später genau diese Karte.",
     primary: { label: "Zur OpSo App", to: "opso" },
   },
 };
@@ -176,9 +178,9 @@ const en: PageDef = {
     h1: ["See your NFC card", "before it is printed", ""],
     lede: "Enter what your card should say. The preview comes from the same drawing as the later print file. The card is not available to order yet.",
     facts: [
-      "Preview from the print drawing",
+      "Same drawing as the later print",
       "QR code and link on the back",
-      "Opens without an app on iPhone and Android",
+      "Opens without an app, by NFC or QR code",
       "Not available to order yet",
     ],
     studio: {
@@ -194,10 +196,11 @@ const en: PageDef = {
         caption:
           "Preview: material and details may still change before ordering opens. The QR code shows a sample code.",
         unavailable:
-          "The preview cannot be reached right now. Your entries are kept.",
+          "The preview cannot be reached right now. Your entries stay in the form.",
+        tight: "Does not fit · last version",
       },
       docket: {
-        title: "Job · draft",
+        title: "Card job · draft",
         name: "Name",
         title2: "Role",
         org: "Company",
@@ -225,15 +228,16 @@ const en: PageDef = {
       },
       price: {
         label: "Planned final price",
-        value: "€29",
+        value: "€29 incl. shipping",
         status: "Not available to order yet",
-        note: "Including shipping, delivery within Germany only. You can register your interest without obligation.",
+        note: "Delivery within Germany only. You can, however, register your interest without obligation.",
       },
       interest: {
-        open: "Register interest for the start",
+        open: "Register for the order start",
         email: "E-mail address",
         consent:
           'By clicking "Register interest" you agree that, once you confirm your address, OpSolid will send you one e-mail when ordering for the OpSo card opens; you can withdraw at any time, see our privacy policy.',
+        consentLink: "privacy policy",
         send: "Register interest",
         pending: "Registering interest is not switched on yet.",
       },
@@ -256,8 +260,8 @@ const en: PageDef = {
           p: "You leave your e-mail address and confirm it. We write to you once, as soon as the card can be ordered.",
         },
         {
-          h: "Check and order",
-          p: "At the start you see your details once more in the print preview. Printing only begins when you approve it.",
+          h: "Later: check and order",
+          p: "When ordering opens, you check your details once more. Printing only begins after your approval.",
         },
       ],
     },
@@ -280,7 +284,7 @@ const en: PageDef = {
         ],
         [
           "Tap",
-          "Hold it to a phone and the card opens in the browser. iPhone and Android, no app, no battery.",
+          "Hold it to an NFC phone and the card opens in the browser. iPhone and Android, no app, no battery.",
         ],
       ],
     },
@@ -306,7 +310,7 @@ const en: PageDef = {
   cta: {
     label: "OpSo",
     h: "The digital card is already here",
-    p: "OpSo is free in the App Store and on Google Play. The NFC card will open exactly that card.",
+    p: "OpSo is free in the App Store and on Google Play, not yet in the USA and Turkey. The NFC card will open exactly that card.",
     primary: { label: "To the OpSo app", to: "opso" },
   },
 };
@@ -325,9 +329,9 @@ const tr: PageDef = {
     h1: ["NFC kartını", "basılmadan önce gör", ""],
     lede: "Kartında ne yazacağını gir. Önizleme, sonradan baskı dosyasına dönüşen aynı çizimden gelir. Kart henüz sipariş edilemiyor.",
     facts: [
-      "Önizleme baskı çiziminden",
+      "Sonraki baskıyla aynı çizim",
       "Arka yüzde QR kod ve bağlantı",
-      "iPhone ve Android'de uygulamasız açılır",
+      "Uygulamasız açılır, NFC ya da QR kodla",
       "Henüz sipariş verilemiyor",
     ],
     studio: {
@@ -342,10 +346,12 @@ const tr: PageDef = {
         short: "54 mm",
         caption:
           "Önizleme: malzeme ve ayrıntılar sipariş açılana kadar değişebilir. QR kod örnek bir kod gösterir.",
-        unavailable: "Önizlemeye şu anda ulaşılamıyor. Yazdıkların duruyor.",
+        unavailable:
+          "Önizlemeye şu anda ulaşılamıyor. Yazdıkların formda duruyor.",
+        tight: "Sığmıyor · son hâli",
       },
       docket: {
-        title: "İş · taslak",
+        title: "Kart taslağı",
         name: "Ad soyad",
         title2: "Unvan",
         org: "Şirket",
@@ -354,34 +360,35 @@ const tr: PageDef = {
         lineHint: "Örneğin e-posta adresi ya da telefon numarası.",
         linkNote:
           "QR kodu ve bağlantıyı biz ekleriz. Dijital kartını sonradan değiştirsen de bağlantı aynı kalır.",
-        layout: "Yerleşim",
+        layout: "Düzen",
         layouts: {
           onyx: { name: "Onyx", note: "yatay, QR kod solda" },
           linea: { name: "Linea", note: "yatay, QR kod sağ altta" },
           monolith: { name: "Monolith", note: "dikey" },
         },
         tight:
-          "Bu yerleşimde karta sığmıyor. Bir satırı kısalt ya da yerleşimi değiştir.",
+          "Bu düzende karta sığmıyor. Bir satırı kısalt ya da düzeni değiştir.",
         useOnyx: "Onyx'i seç, orada daha çok yer var",
         glyphs: "Kart yazı tipi şu karakterleri basamıyor:",
       },
       sample: {
         name: "Clara Weber",
-        title: "Architect",
+        title: "Mimar",
         org: "Atelier Weber",
         line: "hello@clara-weber.example",
       },
       price: {
         label: "Planlanan nihai fiyat",
-        value: "29 €",
+        value: "29 €, kargo dahil",
         status: "Henüz sipariş verilemiyor",
-        note: "Kargo dahil, teslimat yalnızca Almanya içinde. Bağlayıcı olmadan ön kayıt yaptırabilirsin.",
+        note: "Teslimat yalnızca Almanya içinde. Ama bağlayıcı olmadan ön kayıt yaptırabilirsin.",
       },
       interest: {
-        open: "Başlangıç için ön kayıt",
+        open: "Sipariş açılışı için ön kayıt",
         email: "E-posta adresi",
         consent:
           '"Ön kayıt yaptır"a tıklayarak, adresini onayladıktan sonra OpSolid\'in OpSo kart siparişleri açıldığında sana tek bir e-posta göndermesini kabul edersin; onayını istediğin zaman geri alabilirsin, ayrıntılar gizlilik politikasında.',
+        consentLink: "gizlilik politikasında",
         send: "Ön kayıt yaptır",
         pending: "Ön kayıt henüz açılmadı.",
       },
@@ -393,19 +400,19 @@ const tr: PageDef = {
       id: "ablauf",
       label: "Nasıl işler",
       h: "Taslaktan karta üç adım",
-      lede: "Önce kartını görürsün, sonra karar verirsin. Sen sipariş vermeden hiçbir şey basılmaz ve ücret alınmaz.",
+      lede: "Önce kartını görürsün, sonra karar verirsin. Sipariş vermeden hiçbir şey basılmaz ve ücret alınmaz.",
       items: [
         {
           h: "Tasarla",
-          p: "Adını, unvanını, şirketini ve en çok iki iletişim satırını yazar, üç yerleşimden birini seçersin.",
+          p: "Adını, unvanını, şirketini ve en çok iki iletişim satırını yazar, üç düzenden birini seçersin.",
         },
         {
           h: "Ön kayıt yaptır",
           p: "E-posta adresini bırakır ve onaylarsın. Kart sipariş edilebilir olduğunda sana bir kez yazarız.",
         },
         {
-          h: "Kontrol et ve sipariş ver",
-          p: "Başlangıçta bilgilerini baskı önizlemesinde bir kez daha görürsün. Baskı ancak sen onaylayınca başlar.",
+          h: "Sonra: kontrol et ve sipariş ver",
+          p: "Sipariş açıldığında bilgilerini bir kez daha kontrol edersin. Baskı ancak senin onayından sonra başlar.",
         },
       ],
     },
@@ -427,8 +434,8 @@ const tr: PageDef = {
           "Dijital kartını değiştirsen de karttaki bağlantı aynı kalır.",
         ],
         [
-          "Dokundurma",
-          "Telefona tutunca kart tarayıcıda açılır. iPhone ve Android, uygulama yok, pil yok.",
+          "Dokundur",
+          "NFC'li telefona tutunca kart tarayıcıda açılır. iPhone ve Android, uygulama yok, pil yok.",
         ],
       ],
     },
@@ -447,14 +454,14 @@ const tr: PageDef = {
       },
       {
         q: "Bilgilerime ne oluyor?",
-        a: "Önizleme için yazdıkların sunucumuza gider ve orada saklanmaz. Yalnızca ön kayıtta e-posta adresini ve taslağını, sipariş başlangıcı için sana yazana kadar, en fazla 12 ay saklarız.",
+        a: "Önizleme için yazdıkların sunucumuza gider ve orada saklanmaz. Yalnızca ön kayıtta e-posta adresini ve taslağını, sipariş açıldığında sana yazana kadar, en fazla 12 ay saklarız.",
       },
     ],
   },
   cta: {
     label: "OpSo",
     h: "Dijital kart zaten var",
-    p: "OpSo, App Store'da ve Google Play'de ücretsiz. NFC kart ileride tam olarak bu kartı açacak.",
+    p: "OpSo, App Store'da ve Google Play'de ücretsiz; henüz ABD'de ve Türkiye'de yok. NFC kart ileride tam olarak bu kartı açacak.",
     primary: { label: "OpSo uygulamasına git", to: "opso" },
   },
 };

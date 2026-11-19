@@ -63,12 +63,14 @@ function LayoutMark({ design }: { design: Design }) {
  * other. One form; the ticket is torn in two (fields and layouts, then price and interest) so that on phones the
  * sticky card strip ends where the fields end.
  */
-export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; head: ReactNode }) {
+export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; locale: L3; head: ReactNode; privacyHref: string }) {
   const uid = useId();
   const [f, setF] = useState({ name: "", title: "", org: "", line1: "", line2: "" });
   const [design, setDesign] = useState<Design>("onyx");
   const [side, setSide] = useState<Side>("back");
   const [pv, setPv] = useState<Preview | null>(null);
+  /** The latest answer when it does not fit or names unprintable characters; the card keeps the last version that fits. */
+  const [issue, setIssue] = useState<Preview | null>(null);
   const [down, setDown] = useState(false);
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -92,7 +94,11 @@ export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; h
             signal: ctl.signal,
           });
           if (!r.ok) return setDown(r.status !== 422);
-          setPv((await r.json()) as Preview);
+          const next = (await r.json()) as Preview;
+          const bad = !next.fits || Boolean(next.unsupported);
+          setIssue(bad ? next : null);
+          // A layout change always shows the new layout; within one layout a draft that does not fit leaves the card as it was.
+          setPv((prev) => (bad && prev && prev.design === next.design && prev.back ? prev : next));
           setDown(false);
         } catch {
           if (!ctl.signal.aborted) setDown(true);
@@ -115,6 +121,13 @@ export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; h
   const etikett = own ? t.stage.own : t.stage.sample;
   const cut = etikett.indexOf(" · ");
   const label = cut < 0 ? { pre: "", rest: etikett } : { pre: etikett.slice(0, cut + 3), rest: etikett.slice(cut + 3) };
+  const jobCut = t.docket.title.indexOf(" · ");
+  const job = jobCut < 0 ? { pre: "", rest: t.docket.title } : { pre: t.docket.title.slice(0, jobCut + 3), rest: t.docket.title.slice(jobCut + 3) };
+  const linkAt = t.interest.consent.indexOf(t.interest.consentLink);
+  const consent =
+    linkAt < 0
+      ? { before: t.interest.consent, link: "", after: "" }
+      : { before: t.interest.consent.slice(0, linkAt), link: t.interest.consentLink, after: t.interest.consent.slice(linkAt + t.interest.consentLink.length) };
   const shown = own ? [f.name, f.title, f.org, f.line1, f.line2] : [t.sample.name, t.sample.title, t.sample.org, t.sample.line];
   const alt = `${t.stage.alt.replace("{side}", side === "front" ? t.stage.front : t.stage.back)}${side === "back" ? `: ${shown.filter((v) => v.trim()).join(", ")}` : ""}`;
   const face = (which: Side) => {
@@ -163,6 +176,7 @@ export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; h
             </div>
           </div>
           <div className={`wk-studio-mat${portrait ? " is-portrait" : ""}`}>
+            {own && issue && !down && <span className="wk-etikett wk-studio-flag">{t.stage.tight}</span>}
             <div className="wk-card-wrap">
               {/* rulers along the card's own edges: they always span the rendered card, in either orientation */}
               <span className="wk-rule is-x" aria-hidden="true">
@@ -183,7 +197,9 @@ export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; h
         <div className="wk-ticket is-a">
           <div className="wk-ticket-head">
             <span className="wk-etikett is-solid">
-              {t.docket.title} · {t.docket.layout} {t.docket.layouts[design].name} · {t.stage[side]}
+              <span className="wk-job-long">{job.pre}</span>
+              {job.rest} · <span className="wk-job-long">{t.docket.layout} </span>
+              {t.docket.layouts[design].name} · {t.stage[side]}
             </span>
           </div>
           <div className="wk-ticket-grid">
@@ -211,15 +227,15 @@ export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; h
 
           <div className="wk-ticket-live" aria-live="polite">
             {down && <p className="wk-form-status">{t.stage.unavailable}</p>}
-            {!down && own && pv && pv.unsupported && (
+            {!down && own && issue && issue.unsupported && (
               <p className="wk-form-status is-error">
-                {t.docket.glyphs} {pv.unsupported}
+                {t.docket.glyphs} {issue.unsupported}
               </p>
             )}
-            {!down && own && pv && !pv.fits && !pv.unsupported && (
+            {!down && own && issue && !issue.unsupported && (
               <p className="wk-form-status is-error">
                 {t.docket.tight}{" "}
-                {pv.suggestedDesign === "onyx" && (
+                {issue.suggestedDesign === "onyx" && (
                   <button type="button" className="wk-tlink" onClick={() => setDesign("onyx")}>
                     {t.docket.useOnyx}
                   </button>
@@ -247,7 +263,9 @@ export function StudioClient({ t, locale, head }: { t: StudioText; locale: L3; h
               <input ref={mail} id={`${uid}-mail`} type="email" autoComplete="email" inputMode="email" maxLength={254} required aria-describedby={`${uid}-consent`} />
             </div>
             <p className="wk-ticket-hint" id={`${uid}-consent`}>
-              {t.interest.consent}
+              {consent.before}
+              {consent.link && <a href={privacyHref}>{consent.link}</a>}
+              {consent.after}
             </p>
             <button type="submit" className="wk-btn wk-btn-ink wk-btn-sm">
               {t.interest.send}

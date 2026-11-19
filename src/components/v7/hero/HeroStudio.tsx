@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import type { PageDef } from "@/content/v7/types";
 import type { StudioText } from "@/content/v7/types-produkte";
-import type { L3 } from "@/lib/v7-routes";
+import { href, type L3 } from "@/lib/v7-routes";
 import { soft } from "@/lib/soft-hyphen";
 import { Breadcrumbs, type Crumb } from "../Breadcrumbs";
 import { wrap } from "../ui";
@@ -25,6 +25,7 @@ export function HeroStudio({ hero, studio, locale, crumbs }: { hero: PageDef["he
         <StudioClient
           t={studio}
           locale={locale}
+          privacyHref={href("privacy", locale)}
           head={
             <>
               <Etikett solid as="p">
