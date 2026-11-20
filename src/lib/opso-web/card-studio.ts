@@ -45,11 +45,36 @@ export function limiter(max: number, windowMs: number): (key: string, now: numbe
   };
 }
 
-/** Reads a small JSON body; `null` when it is too large or not JSON. */
+/**
+ * Reads a small JSON body; `null` when it is too large or not JSON. The size is checked while reading, never
+ * after: a declared length over the limit is refused at once, and a body that grows past the limit is cancelled,
+ * so nobody can make these open routes hold a large upload in memory.
+ */
 export async function smallJson(request: Request, max = 4096): Promise<unknown | null> {
+  const declared = Number(request.headers.get("content-length") ?? "0");
+  if (Number.isFinite(declared) && declared > max) return null;
+  const reader = request.body?.getReader();
+  if (!reader) return null;
   try {
-    const body = await request.text();
-    return body.length > max ? null : (JSON.parse(body) as unknown);
+    const chunks: Uint8Array[] = [];
+    let size = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > max) {
+        await reader.cancel();
+        return null;
+      }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(size);
+    let at = 0;
+    for (const chunk of chunks) {
+      bytes.set(chunk, at);
+      at += chunk.byteLength;
+    }
+    return JSON.parse(new TextDecoder().decode(bytes)) as unknown;
   } catch {
     return null;
   }
