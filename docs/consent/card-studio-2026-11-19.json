@@ -9,10 +9,10 @@
   "history": "Wording after the legal check of 2026-11-19. An earlier wording of the same day was never released and no registration carries it, so the id was kept. After the first release every change of wording gets a new id and a new file.",
   "proofAfterLaunchMail": "Owner decision of 2026-11-20: for addresses the launch mail was sent to, the OpSo API keeps only a keyed check value of the address (own stable key), this version id (it identifies the consent wording and the confirmation mail) and the times of registration, confirmation and sending, for three years after sending; everything else is deleted. Unconfirmed and withdrawn registrations leave nothing. The privacy texts (site subsection `kartenstudio`, OpSo section 3.22) announce this at collection.",
   "release": {
-    "date": null,
-    "commit": null,
-    "privacyTextDate": null,
-    "screenshots": null
+    "date": "2026-11-20",
+    "commit": "Not known when this block was written: it is the squash commit on main of the pull request that released the studio. Find it with git log -S'\"privacyTextDate\": \"2026-11-20\"' -- docs/consent/card-studio-2026-11-19.json",
+    "privacyTextDate": "2026-11-20",
+    "screenshots": "State screenshots of the step (onkayit-*.jpg) are kept outside this repository, in the owner's project folder growth/opso/2026-11-18-nfc-kart-magaza/ornekler/."
   },
   "texts": {
     "de": {

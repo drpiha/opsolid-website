@@ -54,7 +54,7 @@ export const content = {
     subtitle: "Datenschutzerklärung · Aydınlatma Metni",
     notice:
       "Translation of the binding German text. This policy informs you under Arts. 13 and 14 GDPR about the processing of personal data when you visit opsolid.de and use its forms and account areas. The OpSo app and card pages have their own policy at https://card.opsolid.de/privacy. The texts were prepared carefully but have not been reviewed by a lawyer.",
-    lastUpdated: "Last updated: 4 November 2026",
+    lastUpdated: "Last updated: 20 November 2026",
     // Explicit shape: not every locale uses every field (TR adds a KVKK subsection).
     sections: ([
       {

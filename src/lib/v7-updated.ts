@@ -21,7 +21,10 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // 2026-11-09: OpSo Android app public on Google Play (EU/EEA, Switzerland, UK), links and status updated; before that
   // 2026-11-07: iPhone app in the App Store; the status changed on the OpSo page and on Home, About and Projekte.
   opso: "2026-11-15",
-  opsoKarte: "2026-11-19",
+  // 2026-11-20: card studio released (preview and "Vormerken" with double opt-in); the privacy policy gained the
+  // subsection "kartenstudio" (what is stored, the confirmation mail, the proof of consent kept for three years).
+  opsoKarte: "2026-11-20",
+  privacy: "2026-11-20",
   // 2026-11-06 (evening): trainings lead. Home opens with the training ledger (team price, per-person arithmetic,
   // hours), the Schulungen hub names the organiser model and live-only delivery, the KI-Check is framed
   // "Erst analysieren, dann schulen" and its report ends with a training recommendation; the 60-day credit applies
