@@ -17,8 +17,11 @@ type Reg = "idle" | "sending" | "sent" | "email" | "name" | "busy" | "down";
  */
 const PREVIEW_PAUSE_MS = 450;
 const PREVIEW_STEADY_MS = 900;
-/** When the limit is reached all the same, the current state is drawn again after these waits. */
-const PREVIEW_RETRY_MS = [4_000, 12_000, 30_000];
+/**
+ * When the limit is reached all the same, the current state is drawn again after these waits. Together they are
+ * longer than the server's one-minute window, so the last try always falls into a fresh window.
+ */
+const PREVIEW_RETRY_MS = [5_000, 20_000, 45_000];
 type Preview = {
   design: Design;
   orientation: "landscape" | "portrait";
@@ -147,7 +150,12 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
         setPv((prev) => (bad && prev && prev.design === next.design && prev.back ? prev : next));
         setDown(false);
       } catch {
-        if (mine >= drawn.current) setDown(true);
+        // A failed request counts as handled too: an older answer arriving after it must not put outdated
+        // content on the card and hide that the latest state could not be drawn.
+        if (mine >= drawn.current) {
+          drawn.current = mine;
+          setDown(true);
+        }
       }
     };
     // Draw when typing pauses, and during steady typing at most once per PREVIEW_STEADY_MS.
