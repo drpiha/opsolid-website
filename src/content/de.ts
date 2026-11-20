@@ -55,7 +55,7 @@ export const content: Content = {
     subtitle: "Privacy Policy · Aydınlatma Metni",
     notice:
       "November 2026. Diese Erklärung informiert nach Art. 13 und 14 DSGVO über die Verarbeitung personenbezogener Daten beim Besuch von opsolid.de und bei der Nutzung der dort angebotenen Formulare und Bereiche. Für die App und die Kartenseiten „OpSo“ gilt die eigene Erklärung unter https://card.opsolid.de/privacy. Die deutsche Fassung ist verbindlich; Englisch und Türkisch sind Übersetzungen. Die Texte wurden sorgfältig erstellt, aber nicht anwaltlich geprüft.",
-    lastUpdated: "Stand: 20. November 2026",
+    lastUpdated: "Stand: 21. November 2026",
     sections: [
       {
         title: "1. Verantwortlicher",

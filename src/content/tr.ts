@@ -55,7 +55,7 @@ export const content: Content = {
     subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
       "Bağlayıcı Almanca metnin çevirisidir. Bu metin, opsolid.de’yi ziyaret ettiğinizde ve formlarını ile hesap alanlarını kullandığınızda kişisel verilerinizin işlenmesi hakkında GDPR m. 13-14 ve 6698 sayılı KVKK m. 10 uyarınca bilgi verir. OpSo uygulaması ve kart sayfaları için https://card.opsolid.de/privacy adresindeki ayrı metin geçerlidir. Metinler özenle hazırlanmıştır ancak bir avukat tarafından incelenmemiştir.",
-    lastUpdated: "Son güncelleme: 20 Kasım 2026",
+    lastUpdated: "Son güncelleme: 21 Kasım 2026",
     sections: [
       {
         title: "1. Veri sorumlusu",
