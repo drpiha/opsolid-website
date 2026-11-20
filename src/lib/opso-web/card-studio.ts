@@ -18,7 +18,9 @@ export const CARD_FIELDS = {
  * Version of the "Vormerken" consent wording. The OpSo API stores this id with each registration; the wording per
  * language is archived in `docs/consent/<id>.json` (the proof of what was agreed to). A changed sentence, button label
  * or link text needs a new id, a new archive file and a note to the OpSo session, so that the API stores the new id
- * (`scripts/tests/published-prices.test.mts` compares the live text with the archive).
+ * (`scripts/tests/published-prices.test.mts` compares the live text with the archive). The same id stands for the
+ * confirmation mail on the OpSo side (`CARD_RESERVATION_CONSENT_VERSION`), because the proof of consent kept after the
+ * launch mail stores only this id: when that mail's text changes, the id changes there and here, with a new archive file.
  */
 export const CARD_STUDIO_CONSENT_VERSION = "card-studio-2026-11-19";
 
