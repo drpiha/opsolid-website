@@ -31,8 +31,13 @@ const upstream = z.object({
   sampleCode: z.string().regex(/^[0-9a-z]{8}$/).optional(),
 });
 
-/** 90 previews a minute per client address: typing with a 160 ms debounce stays far below it. */
-const limited = limiter(90, 60_000);
+/**
+ * 180 previews a minute per client address. The studio draws when typing pauses (450 ms) and at most about once
+ * a second during steady typing, so one visitor cannot ask more than 133 times a minute and usually needs a few
+ * dozen per card; the room above that is for people sharing a connection. The OpSo API allows 600 a minute for
+ * this whole site, so this stays well below.
+ */
+const limited = limiter(180, 60_000);
 
 export async function POST(request: Request) {
   if (limited(appendedClientIp(request.headers) ?? "unknown", Date.now())) return json({ error: "rate_limited" }, 429, { "Retry-After": "30" });

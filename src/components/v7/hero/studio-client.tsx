@@ -7,6 +7,21 @@ import type { L3 } from "@/lib/v7-routes";
 type Design = "onyx" | "linea" | "monolith";
 type Side = "front" | "back";
 type Reg = "idle" | "sending" | "sent" | "email" | "name" | "busy" | "down";
+
+/**
+ * How often the card is redrawn while someone types. It is drawn when typing pauses for PREVIEW_PAUSE_MS, and
+ * during steady typing once per PREVIEW_STEADY_MS. Before, a 160 ms pause was enough, so nearly every keystroke
+ * asked for a drawing: a full card typed on a phone (about 100 characters) passed the limit of previews a minute
+ * and the last words were never drawn (measured on the live page on the release day). With these two values even
+ * the slowest typing cannot ask more than 133 times a minute, and fast typing asks about once a second.
+ */
+const PREVIEW_PAUSE_MS = 450;
+const PREVIEW_STEADY_MS = 900;
+/**
+ * When the limit is reached all the same, the current state is drawn again after these waits. Together they are
+ * longer than the server's one-minute window, so the last try always falls into a fresh window.
+ */
+const PREVIEW_RETRY_MS = [5_000, 20_000, 45_000];
 type Preview = {
   design: Design;
   orientation: "landscape" | "portrait";
@@ -89,42 +104,70 @@ export function StudioClient({ t, locale, head, privacyHref }: { t: StudioText; 
   /** The e-mail step: idle, sending, sent (confirmation mail on its way), or the reason it did not go through. */
   const [reg, setReg] = useState<Reg>("idle");
   const first = useRef(true);
+  /** Time of the last preview request, its number, and the number of the newest request already drawn. */
+  const asked = useRef(0);
+  const sent = useRef(0);
+  const drawn = useRef(0);
   const mail = useRef<HTMLInputElement>(null);
   const trap = useRef<HTMLInputElement>(null);
   const sentNote = useRef<HTMLParagraphElement>(null);
   const own = f.name.trim().length >= 2;
 
   useEffect(() => {
-    const ctl = new AbortController();
+    let left = false;
+    let retry: ReturnType<typeof setTimeout> | undefined;
     const card = own
       ? { name: f.name, title: f.title, org: f.org, lines: [f.line1, f.line2].filter((line) => line.trim()) }
       : { name: t.sample.name, title: t.sample.title, org: t.sample.org, lines: [t.sample.line] };
-    const timer = setTimeout(
-      async () => {
-        first.current = false;
-        try {
-          const r = await fetch("/api/opso/card-preview", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ design, locale, ...card }),
-            signal: ctl.signal,
-          });
-          if (!r.ok) return setDown(r.status !== 422);
-          const next = (await r.json()) as Preview;
-          const bad = !next.fits || Boolean(next.unsupported);
-          setIssue(bad ? next : null);
-          // A layout change always shows the new layout; within one layout a draft that does not fit leaves the card as it was.
-          setPv((prev) => (bad && prev && prev.design === next.design && prev.back ? prev : next));
-          setDown(false);
-        } catch {
-          if (!ctl.signal.aborted) setDown(true);
+    const draw = async (attempt: number) => {
+      const mine = ++sent.current;
+      asked.current = Date.now();
+      try {
+        const r = await fetch("/api/opso/card-preview", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ design, locale, ...card }),
+        });
+        if (r.status === 429 && attempt < PREVIEW_RETRY_MS.length) {
+          // Too many previews in a minute (many people behind one connection): draw this state a little later
+          // instead of leaving the card one sentence behind. The card shown stays as it is meanwhile.
+          if (!left) retry = setTimeout(() => void draw(attempt + 1), PREVIEW_RETRY_MS[attempt]);
+          return;
         }
-      },
-      first.current ? 0 : 160,
-    );
+        // An answer that arrives after a newer one is dropped; an older one that arrives first is still drawn,
+        // so the card follows slow typing step by step instead of waiting for the very last letter.
+        if (mine < drawn.current) return;
+        if (!r.ok) {
+          drawn.current = mine;
+          return setDown(r.status !== 422);
+        }
+        const next = (await r.json()) as Preview;
+        if (mine < drawn.current) return;
+        drawn.current = mine;
+        const bad = !next.fits || Boolean(next.unsupported);
+        setIssue(bad ? next : null);
+        // A layout change always shows the new layout; within one layout a draft that does not fit leaves the card as it was.
+        setPv((prev) => (bad && prev && prev.design === next.design && prev.back ? prev : next));
+        setDown(false);
+      } catch {
+        // A failed request counts as handled too: an older answer arriving after it must not put outdated
+        // content on the card and hide that the latest state could not be drawn.
+        if (mine >= drawn.current) {
+          drawn.current = mine;
+          setDown(true);
+        }
+      }
+    };
+    // Draw when typing pauses, and during steady typing at most once per PREVIEW_STEADY_MS.
+    const wait = first.current ? 0 : Math.min(PREVIEW_PAUSE_MS, Math.max(0, PREVIEW_STEADY_MS - (Date.now() - asked.current)));
+    const timer = setTimeout(() => {
+      first.current = false;
+      void draw(0);
+    }, wait);
     return () => {
+      left = true;
       clearTimeout(timer);
-      ctl.abort();
+      clearTimeout(retry);
     };
   }, [f, design, locale, own, t.sample]);
 
