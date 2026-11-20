@@ -1,0 +1,34 @@
+{
+  "version": "card-studio-2026-11-19",
+  "recorded": "2026-11-19",
+  "page": "opsoKarte (/opso/nfc-karte, /en/opso/nfc-card, /tr/opso/nfc-kart)",
+  "action": "A click on the button below the sentence (or Enter in the e-mail field). The sentence links to the privacy policy.",
+  "placement": "The step opens with the button \"Für den Bestellstart vormerken\" under the price line. Inside it: the e-mail field, then this sentence in the body face and text colour, then the button it names, directly below it. No checkbox, nothing pre-set; the form itself never submits, so Enter in a card field registers nobody.",
+  "storedBy": "OpSo API, POST /public/card-studio/reservations; the API stores this version id and the times of registration and confirmation with each registration.",
+  "confirmation": "Double opt-in: the OpSo API sends one fixed confirmation mail (DE/EN/TR, no visitor text). The mail has no version id of its own: this id also stands for the mail's text (`CARD_RESERVATION_CONSENT_VERSION` in the OpSo API), so a change of the consent wording or of the mail's text gets a new id on both sides. The mail's text is `cardReservationEmail` in apps/api/src/mail/templates.ts of the OpSo repository (Project_VERSO), first at commit 484f3e9b (PR #257).",
+  "history": "Wording after the legal check of 2026-11-19. An earlier wording of the same day was never released and no registration carries it, so the id was kept. After the first release every change of wording gets a new id and a new file.",
+  "proofAfterLaunchMail": "Owner decision of 2026-11-20: for addresses the launch mail was sent to, the OpSo API keeps only a keyed check value of the address (own stable key), this version id (it identifies the consent wording and the confirmation mail) and the times of registration, confirmation and sending, for three years after sending; everything else is deleted. Unconfirmed and withdrawn registrations leave nothing. The privacy texts (site subsection `kartenstudio`, OpSo section 3.22) announce this at collection.",
+  "release": {
+    "date": "2026-11-20",
+    "commit": "Not known when this block was written: it is the squash commit on main of the pull request that released the studio. Find it with git log -S'\"privacyTextDate\": \"2026-11-20\"' -- docs/consent/card-studio-2026-11-19.json",
+    "privacyTextDate": "2026-11-20",
+    "screenshots": "State screenshots of the step (onkayit-*.jpg) are kept outside this repository, in the owner's project folder growth/opso/2026-11-18-nfc-kart-magaza/ornekler/."
+  },
+  "texts": {
+    "de": {
+      "button": "Vormerken",
+      "sentence": "Mit Klick auf „Vormerken“ willigst du ein, dass OpSolid deine E-Mail-Adresse und deinen Kartenentwurf speichert, um dir nach Bestätigung deiner Adresse einmalig eine E-Mail zum Bestellstart der OpSo NFC-Karte zu schicken und deinen Entwurf dafür bereitzuhalten. Du kannst jederzeit widerrufen, auch über den Link in jeder unserer E-Mails; mehr in der Datenschutzerklärung.",
+      "link": "Datenschutzerklärung"
+    },
+    "en": {
+      "button": "Register interest",
+      "sentence": "By clicking “Register interest” you agree that OpSolid stores your e-mail address and your card draft in order to send you one e-mail when ordering for the OpSo NFC card opens, once you have confirmed your address, and to keep your draft ready for that. You can withdraw at any time, also with the link in each of our e-mails; see our privacy policy.",
+      "link": "privacy policy"
+    },
+    "tr": {
+      "button": "Ön kayıt yaptır",
+      "sentence": "“Ön kayıt yaptır”a tıklayarak OpSolid'in, adresini onayladıktan sonra OpSo NFC kart siparişleri açıldığında sana tek bir e-posta göndermek ve taslağını bunun için hazır tutmak amacıyla e-posta adresini ve kart taslağını saklamasını kabul edersin; onayını istediğin zaman, e-postalarımızdaki bağlantıyla da geri alabilirsin, ayrıntılar gizlilik politikasında.",
+      "link": "gizlilik politikasında"
+    }
+  }
+}

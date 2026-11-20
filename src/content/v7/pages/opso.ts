@@ -194,7 +194,7 @@ const de: PageDef = {
       points: [
         "Mattschwarze Karte im Standardformat",
       ],
-      href: { label: "NFC-Karte anfragen", to: "kontakt", query: { anliegen: "opso" } },
+      href: { label: "NFC-Karte gestalten", to: "opsoKarte" },
       media: {
         kind: "image",
         img: {
@@ -454,7 +454,7 @@ const en: PageDef = {
       points: [
         "Matte-black, standard-size card",
       ],
-      href: { label: "Ask about the NFC card", to: "kontakt", query: { anliegen: "opso" } },
+      href: { label: "Design your NFC card", to: "opsoKarte" },
       media: {
         kind: "image",
         img: {
@@ -715,7 +715,7 @@ const tr: PageDef = {
       points: [
         "Standart ölçülerde mat siyah kart",
       ],
-      href: { label: "NFC kart hakkında bilgi al", to: "kontakt", query: { anliegen: "opso" } },
+      href: { label: "NFC kartını tasarla", to: "opsoKarte" },
       media: {
         kind: "image",
         img: {

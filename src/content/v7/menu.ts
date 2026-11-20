@@ -713,6 +713,7 @@ export const PILLAR: Partial<Record<PageKey, MenuGroupKey>> = {
   anwendungen: "beratung",
   produkte: "produkte",
   opso: "produkte",
+  opsoKarte: "produkte",
   ueber: "unternehmen",
   trainer: "unternehmen",
   blog: "unternehmen",

@@ -29,6 +29,7 @@ export type PageKey =
   | "trainer"
   | "produkte"
   | "opso"
+  | "opsoKarte"
   | "ueber"
   | "kontakt"
   | "blog"
@@ -53,6 +54,8 @@ export const ROUTE: Record<PageKey, string> = {
   trainer: "/ki-schulungen/trainer",
   produkte: "/produkte",
   opso: "/opso",
+  // The card studio of the OpSo NFC card (owner plan of 2026-11-19).
+  opsoKarte: "/opso/nfc-karte",
   ueber: "/ueber-uns",
   // Decision 80 (2026-11-15): German slugs; the old /de/contact and /de/privacy 301 via foreignSlugTarget.
   kontakt: "/kontakt",
@@ -90,6 +93,7 @@ export const SLUG: Record<PageKey, Record<L3, string>> = {
   // EN "/products" is taken by the app area (src/app/[locale]/products) and is a retired exact-only key.
   produkte: { de: "/produkte", en: "/our-products", tr: "/urunler" },
   opso: { de: "/opso", en: "/opso", tr: "/opso" },
+  opsoKarte: { de: "/opso/nfc-karte", en: "/opso/nfc-card", tr: "/opso/nfc-kart" },
   ueber: { de: "/ueber-uns", en: "/about", tr: "/hakkimizda" },
   kontakt: { de: "/kontakt", en: "/contact", tr: "/iletisim" },
   blog: { de: "/blog", en: "/blog", tr: "/blog" },

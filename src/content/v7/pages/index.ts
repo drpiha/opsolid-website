@@ -10,6 +10,7 @@ import { page as kompetenz } from "./kompetenz";
 import { page as kontakt } from "./kontakt";
 import { page as m365 } from "./m365";
 import { page as opso } from "./opso";
+import { page as opsoKarte } from "./opso-karte";
 import { page as produkte } from "./produkte";
 import { page as prozess } from "./prozess";
 import { page as schulungen } from "./schulungen";
@@ -33,6 +34,7 @@ export const PAGE_SETS: PageSet[] = [
   anwendungen,
   produkte,
   opso,
+  opsoKarte,
   ueber,
   kontakt,
 ];

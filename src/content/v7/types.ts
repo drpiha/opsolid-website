@@ -9,7 +9,7 @@
 import type { L3, PageKey } from "@/lib/v7-routes";
 import type { HomeBench, HomeBlock } from "./types-home";
 import type { CourseArt, HubBlock } from "./types-hub";
-import type { ProdukteBlock } from "./types-produkte";
+import type { ProdukteBlock, StudioText } from "./types-produkte";
 
 export type { L3, PageKey };
 
@@ -330,6 +330,8 @@ export type PageDef = {
     media?: Media;
     /** The page's own drawn bench object in the right column (design review R2); takes precedence over `media`. */
     object?: HeroObject;
+    /** The card studio as the hero (page `opsoKarte`): the live card is the hero object, the job ticket sits under the copy. */
+    studio?: StudioText;
   };
   blocks: Block[];
   faq?: Faq;

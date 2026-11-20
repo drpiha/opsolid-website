@@ -1,0 +1,167 @@
+/* Card studio (OpSo NFC card, plan of 2026-11-19; design review R1): the studio is the page hero. The card lies flat
+   on a sheet-coloured mat with rulers along its own edges (the hero object); the copy and the job ticket share the
+   other column. The ticket is a Blatt torn in two: fields and layouts, then the price stub. CSS only: the flip is a
+   class change, no pointer effects. Scoped like the rest of Werkstatt. */
+
+html[data-v4] .wk-studio-hero > .wk-wrap:first-child { padding-top: 26px; }
+html[data-v4] .wk-studio { display: grid; grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); column-gap: 56px; align-items: start; padding-block: 14px 60px; }
+html[data-v4] .wk-studio-copy { grid-column: 1; grid-row: 1; display: grid; gap: 20px; justify-items: start; min-width: 0; padding-bottom: 34px; }
+html[data-v4] .wk-studio-hero .wk-d1 { font-size: clamp(2.5rem, 3.5vw, 3.125rem); line-height: 1; letter-spacing: -0.024em; text-wrap: balance; }
+/* desktop: the wrapper dissolves, so the stage can stay in view next to both ticket parts */
+html[data-v4] .wk-studio-work { display: contents; }
+html[data-v4] .wk-ticket.is-a { grid-column: 1; grid-row: 2; }
+html[data-v4] .wk-ticket.is-b { grid-column: 1; grid-row: 3; }
+
+/* stage */
+html[data-v4] .wk-studio-stage { grid-column: 2; grid-row: 1 / span 3; position: sticky; top: calc(var(--wk-header-h) + 22px); display: grid; gap: 14px; min-width: 0; }
+html[data-v4] .wk-studio-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+html[data-v4] .wk-seg { display: inline-flex; padding: 3px; border: 1px solid var(--wk-control); border-radius: 999px; background: var(--wk-sheet); }
+html[data-v4] .wk-seg button { min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: transparent; color: var(--wk-muted); font-family: var(--wk-mono); font-size: var(--wk-fs-0); cursor: pointer; transition: background-color var(--wk-t-micro) var(--wk-ease-out), color var(--wk-t-micro) var(--wk-ease-out); }
+html[data-v4] .wk-seg button:hover { color: var(--wk-text); }
+html[data-v4] .wk-seg button[aria-pressed="true"] { background: var(--wk-ink); color: var(--wk-text-d); }
+html[data-v4] .wk-seg button:focus-visible { outline: 2px solid var(--wk-copper-deep); outline-offset: 2px; }
+
+/* the mat: a sheet on the bench; the padding on the top and left holds the rulers */
+html[data-v4] .wk-studio-mat { position: relative; display: grid; place-items: center; padding: 62px 42px 46px 62px; border: 1px solid var(--wk-line); border-radius: 6px; background: var(--wk-sheet); }
+html[data-v4] .wk-card-wrap { --wmm: 85.6; --hmm: 53.98; position: relative; width: 100%; max-width: 620px; aspect-ratio: 85.6 / 53.98; perspective: 1700px; }
+html[data-v4] .wk-studio-mat.is-portrait .wk-card-wrap { --wmm: 53.98; --hmm: 85.6; width: auto; height: min(540px, 60vh); aspect-ratio: 53.98 / 85.6; }
+html[data-v4] .wk-card-wrap::before { content: ""; position: absolute; inset: 0; border-radius: 3.7% / 5.9%; box-shadow: 0 24px 40px -20px rgb(20 23 27 / 0.35), 0 3px 6px -2px rgb(20 23 27 / 0.22); }
+html[data-v4] .wk-studio-mat.is-portrait .wk-card-wrap::before { border-radius: 5.9% / 3.7%; }
+html[data-v4] .wk-card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform var(--wk-t-scene) var(--wk-ease-io); }
+html[data-v4] .wk-card.is-front { transform: rotateY(180deg); }
+html[data-v4] .wk-card-face { position: absolute; inset: 0; overflow: hidden; border-radius: 3.7% / 5.9%; background: #121213; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+html[data-v4] .wk-studio-mat.is-portrait .wk-card-face { border-radius: 5.9% / 3.7%; }
+html[data-v4] .wk-card-face.is-front { transform: rotateY(180deg); }
+html[data-v4] .wk-card-face > svg,
+html[data-v4] .wk-card-face > img { display: block; width: 100%; height: 100%; }
+/* matte stock: a soft light from the upper left and a hairline edge, nothing glossy */
+html[data-v4] .wk-card-face::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; background: linear-gradient(120deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 30%, rgba(255, 255, 255, 0) 55%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07); }
+
+/* rulers on the card's own edges, to its scale: a long tick every 10 mm, a short one every 5 mm */
+html[data-v4] .wk-rule { position: absolute; pointer-events: none; font-family: var(--wk-mono); font-size: var(--wk-fs-0); line-height: 1; color: var(--wk-muted); }
+html[data-v4] .wk-rule.is-x { left: 0; right: 0; bottom: calc(100% + 12px); height: 9px; border-bottom: 1px solid var(--wk-line-2); border-inline: 1px solid var(--wk-line-2); background: repeating-linear-gradient(90deg, var(--wk-line-2) 0 1px, transparent 1px calc(100% * 10 / var(--wmm))) 0 100% / 100% 9px no-repeat, repeating-linear-gradient(90deg, var(--wk-line-2) 0 1px, transparent 1px calc(100% * 5 / var(--wmm))) 0 100% / 100% 5px no-repeat; }
+html[data-v4] .wk-rule.is-y { top: 0; bottom: 0; right: calc(100% + 12px); width: 9px; border-right: 1px solid var(--wk-line-2); border-block: 1px solid var(--wk-line-2); background: repeating-linear-gradient(180deg, var(--wk-line-2) 0 1px, transparent 1px calc(100% * 10 / var(--hmm))) 100% 0 / 9px 100% no-repeat, repeating-linear-gradient(180deg, var(--wk-line-2) 0 1px, transparent 1px calc(100% * 5 / var(--hmm))) 100% 0 / 5px 100% no-repeat; }
+html[data-v4] .wk-rule span { position: absolute; white-space: nowrap; }
+html[data-v4] .wk-rule.is-x span { left: 50%; bottom: 15px; transform: translateX(-50%); }
+html[data-v4] .wk-rule.is-y span { right: 15px; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); }
+/* the mat's own note while the typed text does not fit */
+html[data-v4] .wk-studio-flag { position: absolute; right: 14px; bottom: 12px; color: var(--wk-error); }
+html[data-v4] .wk-studio-caption { margin: 0; max-width: 62ch; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.5; color: var(--wk-muted); }
+
+/* the job ticket: a Blatt with mono keys and ruled lines, torn above the price stub */
+html[data-v4] .wk-ticket { position: relative; padding: 22px 28px 26px; background: var(--wk-sheet); color: var(--wk-text); box-shadow: var(--wk-shadow-sheet); }
+html[data-v4] .wk-ticket.is-a { border-radius: 4px 4px 0 0; }
+html[data-v4] .wk-ticket.is-b { border-radius: 0 0 4px 4px; border-top: 1.5px dashed var(--wk-line-2); padding-top: 22px; }
+html[data-v4] .wk-ticket.is-b::before,
+html[data-v4] .wk-ticket.is-b::after { content: ""; position: absolute; top: -9px; width: 16px; height: 16px; border-radius: 50%; background: var(--wk-paper); }
+html[data-v4] .wk-ticket.is-b::before { left: -8px; }
+html[data-v4] .wk-ticket.is-b::after { right: -8px; }
+html[data-v4] .wk-ticket .wk-etikett { color: var(--wk-muted); }
+html[data-v4] .wk-ticket-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; padding-bottom: 14px; border-bottom: 1px solid var(--wk-line-2); }
+html[data-v4] .wk-ticket-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 22px; }
+html[data-v4] .wk-tfield { display: grid; min-width: 0; padding-top: 14px; }
+html[data-v4] .wk-tfield.is-wide { grid-column: 1 / -1; }
+html[data-v4] .wk-tfield label,
+html[data-v4] .wk-layouts legend,
+html[data-v4] .wk-ticket-key { font-family: var(--wk-mono); font-size: var(--wk-fs-0); font-weight: 400; line-height: 1.2; letter-spacing: 0.05em; text-transform: uppercase; color: var(--wk-muted); }
+html[data-v4] .wk-tfield input { width: 100%; min-height: 44px; margin: 0; padding: 7px 0 5px; border: 0; border-bottom: 1px solid var(--wk-control); border-radius: 0; background: transparent; color: var(--wk-text); font: inherit; font-size: var(--wk-fs-2); font-weight: 540; transition: border-color var(--wk-t-micro) var(--wk-ease-out); }
+html[data-v4] .wk-tfield input:hover { border-bottom-color: var(--wk-text); }
+html[data-v4] .wk-tfield input:focus-visible { outline: 0; border-bottom-color: var(--wk-copper-deep); box-shadow: 0 1px 0 0 var(--wk-copper-deep); }
+html[data-v4] .wk-ticket-hint { grid-column: 1 / -1; margin: 10px 0 0; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.5; color: var(--wk-muted); }
+
+html[data-v4] .wk-layouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0 0; padding: 0; border: 0; min-width: 0; }
+html[data-v4] .wk-layouts legend { grid-column: 1 / -1; padding: 0; margin-bottom: 9px; }
+html[data-v4] .wk-layout { position: relative; display: grid; align-content: start; gap: 2px; padding: 10px 10px 10px; border: 1px solid var(--wk-control); border-radius: var(--wk-r-1); background: var(--wk-paper); cursor: pointer; transition: border-color var(--wk-t-micro) var(--wk-ease-out), background-color var(--wk-t-micro) var(--wk-ease-out); }
+html[data-v4] .wk-layout:hover { border-color: var(--wk-text); }
+html[data-v4] .wk-layout input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+html[data-v4] .wk-layout svg { width: 100%; max-width: 120px; height: auto; margin-bottom: 8px; }
+html[data-v4] .wk-layout:has(input:checked) { border-color: var(--wk-ink); background: var(--wk-sheet); box-shadow: inset 0 0 0 1px var(--wk-ink); }
+html[data-v4] .wk-layout:has(input:focus-visible) { outline: 2px solid var(--wk-copper-deep); outline-offset: 2px; }
+html[data-v4] .wk-layout-name { font-weight: 640; font-size: var(--wk-fs-1); line-height: 1.2; }
+html[data-v4] .wk-layout-note { min-height: 2.7em; font-family: var(--wk-mono); font-size: 0.75rem; line-height: 1.35; color: var(--wk-muted); }
+html[data-v4] .wk-ticket-live .wk-form-status { margin-top: 14px; }
+/* notes on the ticket are ruled lines like everything else on it, never filled boxes (design review R3) */
+html[data-v4] .wk-ticket .wk-form-status,
+html[data-v4] .wk-ticket .wk-form-status.is-error { padding: 2px 0 2px 12px; border: 0; border-left: 2px solid currentColor; border-radius: 0; background: none; }
+html[data-v4] .wk-ticket .wk-form-status .wk-tlink { border: 0; padding: 0; background: none; font: inherit; cursor: pointer; }
+html[data-v4] .wk-interest-step .wk-form-status .wk-tlink { display: flex; }
+
+/* the price stub: the planned price and its status share one row and one size (legal check of 2026-11-19) */
+html[data-v4] .wk-price-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; margin: 8px 0 0; font-size: var(--wk-fs-3); font-weight: 500; line-height: 1.25; }
+html[data-v4] .wk-price-status::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 9px; border: 1.5px solid currentColor; border-radius: 2.5px; transform: translateY(-1px); }
+html[data-v4] .wk-price-note { margin: 8px 0 0; font-size: var(--wk-fs-1); line-height: 1.5; color: var(--wk-muted); }
+html[data-v4] .wk-interest { display: grid; gap: 10px; justify-items: start; margin-top: 18px; }
+/* once the step is open its opener steps back to a ticket key with the status square, so the step has one ink button */
+html[data-v4] .wk-interest > .wk-btn[aria-expanded="true"] { gap: 0; min-height: 44px; padding: 0; border: 0; border-radius: 0; background: none; color: var(--wk-text); font-family: var(--wk-mono); font-size: var(--wk-fs-0); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+html[data-v4] .wk-interest > .wk-btn[aria-expanded="true"]::before { content: ""; flex: none; width: 9px; height: 9px; margin-right: 9px; border: 1.5px solid currentColor; border-radius: 2.5px; }
+html[data-v4] .wk-interest-step { display: grid; gap: 12px; justify-items: start; width: 100%; }
+html[data-v4] .wk-interest-step[hidden] { display: none; }
+html[data-v4] .wk-interest-step:not([hidden]),
+html[data-v4] .wk-interest-sent { animation: wk-step-in var(--wk-t-ui) var(--wk-ease-out); }
+@keyframes wk-step-in { from { opacity: 0; transform: translateY(8px); } }
+/* the consent sentence is what the click agrees to: body face, size and colour, never fine print (legal check of 2026-11-19) */
+html[data-v4] .wk-interest-step .wk-ticket-hint { max-width: 62ch; margin-top: 0; font-family: var(--wk-sans); font-size: var(--wk-fs-1); line-height: 1.55; color: var(--wk-text); hyphens: manual; }
+html[data-v4] .wk-nb { white-space: nowrap; }
+html[data-v4] .wk-interest-step .wk-ticket-hint a { color: var(--wk-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+html[data-v4] .wk-interest-step .wk-tfield { justify-self: stretch; width: 100%; padding-top: 2px; }
+/* sending: the button keeps its ink and shows a running rule; nothing on this site dims by opacity */
+html[data-v4] .wk-interest-step .wk-btn[aria-disabled="true"] { position: relative; background: var(--wk-ink); opacity: 1; cursor: progress; }
+html[data-v4] .wk-interest-step .wk-btn[aria-disabled="true"]::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 8px; height: 2px; background: linear-gradient(currentColor 0 0) no-repeat; background-size: 40% 100%; animation: wk-sending 900ms linear infinite; }
+@keyframes wk-sending { from { background-position: -60% 0; } to { background-position: 160% 0; } }
+/* after "Vormerken": the state line and what happens next; it takes the focus when it appears. The squares are one
+   small system: empty = not yet, half = waiting for the visitor's confirmation (full is the confirm page's). */
+html[data-v4] .wk-interest-sent { display: grid; gap: 6px; width: 100%; margin: 0; padding-top: 14px; border-top: 1px solid var(--wk-line); font-size: var(--wk-fs-1); line-height: 1.5; color: var(--wk-muted); hyphens: manual; }
+html[data-v4] .wk-interest-sent .wk-price-status { font-size: var(--wk-fs-3); font-weight: 500; line-height: 1.25; color: var(--wk-text); }
+html[data-v4] .wk-interest-sent .wk-price-status::before { background: linear-gradient(135deg, currentColor 50%, transparent 50%); }
+/* focused by script so that it is read out; it is a note, not a control, so it shows no focus ring */
+html[data-v4] .wk-interest-sent:is(:focus, :focus-visible) { outline: none; border-radius: 0; box-shadow: none; }
+
+@media (max-width: 960px) {
+  html[data-v4] .wk-studio-hero > .wk-wrap:first-child { padding-top: 10px; }
+  html[data-v4] .wk-studio { grid-template-columns: minmax(0, 1fr); padding-block: 6px 30px; }
+  html[data-v4] .wk-studio-copy { padding-bottom: 22px; gap: 16px; }
+  html[data-v4] .wk-studio-hero .wk-d1 { font-size: 2.375rem; }
+  html[data-v4] .wk-studio-work { display: block; }
+  html[data-v4] .wk-ticket.is-a,
+  html[data-v4] .wk-ticket.is-b { grid-column: 1; grid-row: auto; }
+  /* the card strip: 164 px high, the small card on the left, label and face switch beside it; it stays under
+     the header while the fields and layouts scroll and ends with them (the price stub scrolls free) */
+  html[data-v4] .wk-studio-stage { top: var(--wk-header-h); z-index: 3; grid-template-columns: auto minmax(0, 1fr); gap: 0 14px; align-items: center; height: 164px; margin-inline: calc(-1 * var(--wk-gut)); padding: 12px var(--wk-gut); overflow: hidden; background: var(--wk-paper-2); border-block: 1px solid var(--wk-line); }
+  html[data-v4] .wk-studio-mat { grid-column: 1; grid-row: 1; width: 218px; height: 138px; padding: 0; border: 0; border-radius: 0; background: none; }
+  html[data-v4] .wk-studio-mat.is-portrait .wk-card-wrap { height: 138px; }
+  html[data-v4] .wk-card-wrap::before { box-shadow: 0 12px 18px -12px rgb(20 23 27 / 0.4), 0 2px 4px -2px rgb(20 23 27 / 0.25); }
+  html[data-v4] .wk-rule,
+  html[data-v4] .wk-studio-caption,
+  html[data-v4] .wk-studio-pre { display: none; }
+  html[data-v4] .wk-studio-top { grid-column: 2; grid-row: 1; flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: center; gap: 8px; min-width: 0; }
+  html[data-v4] .wk-seg { flex-direction: column; border-radius: 12px; }
+  html[data-v4] .wk-seg button { width: 100%; border-radius: 9px; padding: 0 6px; font-size: 0.75rem; white-space: nowrap; hyphens: none; }
+  html[data-v4] .wk-studio-top .wk-etikett { font-size: 0.75rem; white-space: nowrap; hyphens: none; }
+  html[data-v4] .wk-ticket { padding: 18px 18px 22px; }
+  html[data-v4] .wk-ticket.is-a { margin-top: 16px; }
+  html[data-v4] .wk-ticket-grid { grid-template-columns: minmax(0, 1fr); }
+  html[data-v4] .wk-tfield,
+  html[data-v4] .wk-tfield input { scroll-margin-top: calc(var(--wk-header-h) + 180px); }
+  html[data-v4] .wk-layouts { gap: 8px; }
+  html[data-v4] .wk-layout { padding: 8px; }
+  html[data-v4] .wk-studio-flag { display: none; }
+}
+/* small phones: the job line in its short form, the layout tiles by name only */
+@media (max-width: 480px) {
+  html[data-v4] .wk-job-long,
+  html[data-v4] .wk-layout-note { display: none; }
+}
+/* very short viewports: no sticky strip */
+@media (max-width: 960px) and (max-height: 619px) {
+  html[data-v4] .wk-studio-stage { position: static; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-v4] .wk-card,
+  html[data-v4] .wk-seg button,
+  html[data-v4] .wk-layout,
+  html[data-v4] .wk-tfield input { transition: none; }
+  html[data-v4] .wk-interest-step:not([hidden]),
+  html[data-v4] .wk-interest-sent { animation: none; }
+  html[data-v4] .wk-interest-step .wk-btn[aria-disabled="true"]::after { background-size: 100% 100%; animation: none; }
+}
