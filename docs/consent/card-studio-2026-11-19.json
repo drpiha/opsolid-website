@@ -7,6 +7,7 @@
   "storedBy": "OpSo API, POST /public/card-studio/reservations; the API stores this version id and the times of registration and confirmation with each registration.",
   "confirmation": "Double opt-in: the OpSo API sends one fixed confirmation mail (DE/EN/TR, no visitor text). The mail has no version id of its own; its text is `cardReservationEmail` in apps/api/src/mail/templates.ts of the OpSo repository (Project_VERSO), first at commit 484f3e9b (PR #257).",
   "history": "Wording after the legal check of 2026-11-19. An earlier wording of the same day was never released and no registration carries it, so the id was kept. After the first release every change of wording gets a new id and a new file.",
+  "proofAfterLaunchMail": "Owner decision of 2026-11-20: for addresses the launch mail was sent to, the OpSo API keeps only a keyed check value of the address (own stable key), this version id, the version of the confirmation mail and the times of registration, confirmation and sending, for three years after sending; everything else is deleted. Unconfirmed and withdrawn registrations leave nothing. The privacy texts (site subsection `kartenstudio`, OpSo section 3.22) announce this at collection.",
   "release": {
     "date": null,
     "commit": null,

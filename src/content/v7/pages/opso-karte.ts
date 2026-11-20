@@ -162,7 +162,7 @@ const de: PageDef = {
       },
       {
         q: "Was passiert mit meinen Angaben?",
-        a: "Für die Vorschau gehen deine Eingaben an unseren Server und werden dort nicht gespeichert. Erst beim Vormerken speichern wir deine E-Mail-Adresse und deinen Entwurf, bis wir dir zum Bestellstart geschrieben haben, längstens 12 Monate.",
+        a: "Für die Vorschau gehen deine Eingaben an unseren Server und werden dort nicht gespeichert. Erst beim Vormerken speichern wir deine E-Mail-Adresse und deinen Entwurf, bis wir dir zum Bestellstart geschrieben haben, längstens 12 Monate. Danach behalten wir nur einen Nachweis deiner Einwilligung, drei Jahre lang.",
       },
     ],
   },
@@ -323,7 +323,7 @@ const en: PageDef = {
       },
       {
         q: "What happens to my details?",
-        a: "For the preview your entries go to our server and are not stored there. Only when you register interest do we store your e-mail address and your draft, until we have written to you about the start of ordering, for 12 months at most.",
+        a: "For the preview your entries go to our server and are not stored there. Only when you register interest do we store your e-mail address and your draft, until we have written to you about the start of ordering, for 12 months at most. After that we keep only proof of your consent, for three years.",
       },
     ],
   },
@@ -484,7 +484,7 @@ const tr: PageDef = {
       },
       {
         q: "Bilgilerime ne oluyor?",
-        a: "Önizleme için yazdıkların sunucumuza gider ve orada saklanmaz. Yalnızca ön kayıtta e-posta adresini ve taslağını, sipariş açıldığında sana yazana kadar, en fazla 12 ay saklarız.",
+        a: "Önizleme için yazdıkların sunucumuza gider ve orada saklanmaz. Yalnızca ön kayıtta e-posta adresini ve taslağını, sipariş açıldığında sana yazana kadar, en fazla 12 ay saklarız. Sonrasında yalnızca rızanın kanıtını üç yıl saklarız.",
       },
     ],
   },
