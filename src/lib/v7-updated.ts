@@ -24,7 +24,9 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // 2026-11-20: card studio released (preview and "Vormerken" with double opt-in); the privacy policy gained the
   // subsection "kartenstudio" (what is stored, the confirmation mail, the proof of consent kept for three years).
   opsoKarte: "2026-11-20",
-  privacy: "2026-11-20",
+  // 2026-11-21: the subsection "kartenstudio" says that Brevo, which sends the confirmation mails, counts opens
+  // and clicks (same sentence as the OpSo privacy policy).
+  privacy: "2026-11-21",
   // 2026-11-06 (evening): trainings lead. Home opens with the training ledger (team price, per-person arithmetic,
   // hours), the Schulungen hub names the organiser model and live-only delivery, the KI-Check is framed
   // "Erst analysieren, dann schulen" and its report ends with a training recommendation; the 60-day credit applies
