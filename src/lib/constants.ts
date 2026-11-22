@@ -17,7 +17,7 @@ export const SITE_CONFIG = {
   name: "OpSolid",
   tagline: "KI-Schulungen und KI-Beratung für Unternehmen",
   description:
-    "OpSolid organisiert KI-Schulungen für Teams, online und live in Ihrem Microsoft Teams, und berät Unternehmen bei KI-Automatisierung: vom KI-Check mit Schulungsempfehlung über den Pilot zum Festpreis bis zum Betrieb. Dazu OpSo, unser digitales Kartenprodukt.",
+    "OpSolid organisiert KI-Schulungen für Teams, online und live in Ihrem Microsoft Teams, und berät Unternehmen bei KI-Automatisierung: vom KI-Check mit Handlungsempfehlung über den Pilot zum Festpreis bis zum Betrieb. Dazu OpSo, unser digitales Kartenprodukt.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   /**

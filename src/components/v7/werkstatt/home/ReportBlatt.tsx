@@ -5,7 +5,7 @@ type Report = Extract<HomeBlock, { t: "check" }>["report"];
 
 /**
  * The excerpt of the sample KI-Check report on the home check section: three ideas by priority (the first sentence
- * bold, the rest hidden on phones), "Bewusst manuell" and the training recommendation. A second blank sheet lies
+ * bold, the rest hidden on phones), "Bewusst manuell" and the closing recommendation ("Handlungsempfehlung"). A second blank sheet lies
  * behind it (decorative). Stamped and named as a sample; the caller adds the Etikett.
  */
 export function ReportBlatt({ r }: { r: Report }) {

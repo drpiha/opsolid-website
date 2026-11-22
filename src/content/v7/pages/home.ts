@@ -273,13 +273,13 @@ const de: PageDef = {
       ground: "slate",
       etikett: "Beratung · der Einstieg",
       h: "Nicht sicher, wo Sie anfangen? Der KI-Check",
-      lede: "Sie füllen einen Fragebogen aus, wir schreiben den Bericht. Er endet mit einer Schulungsempfehlung, auch dann, wenn sich nichts zu automatisieren lohnt.",
+      lede: "Sie füllen einen Fragebogen aus, wir schreiben den Bericht. Er endet mit einer Handlungsempfehlung: umsetzen, schulen oder vorerst nichts tun.",
       price: "990 €",
       terms: ["netto, Festpreis", CHECK.de.credit],
       points: [
         { b: "Fragebogen", rest: " von etwa 20 Minuten" },
         { b: "Schriftlicher Bericht", rest: ": drei Ideen, Risiken, Datenschutz" },
-        { b: "Schulungsempfehlung", rest: " für Ihr Team am Ende des Berichts" },
+        { b: "Handlungsempfehlung", rest: " am Ende, auch zur Frage, ob Ihr Team eine Schulung braucht" },
       ],
       primary: { label: "KI-Check anfragen", to: "home", hash: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "Zum KI-Check", to: "check" },
@@ -297,8 +297,8 @@ const de: PageDef = {
         ],
         manualH: "Bewusst manuell",
         manual: "Beschwerden und Konflikte mit Mietern.",
-        recH: "Schulungsempfehlung",
-        rec: "KI-Kompetenz Basis für das Team im Mieterservice, halber Tag, online.",
+        recH: "Handlungsempfehlung",
+        rec: "Idee 1 als Pilot. Schulung: KI-Kompetenz Basis für den Mieterservice, halber Tag, online.",
         etikett: "Beispiel, fiktiv",
       },
     },
@@ -408,7 +408,7 @@ const de: PageDef = {
       },
       {
         q: "Wie finden wir die passende Schulung?",
-        a: "Mit einer kurzen Anfrage: Wir empfehlen die passende Schulung kostenlos. Ist offen, wo KI in Ihrem Betrieb sinnvoll ist, beginnen Sie mit dem KI-Check: 990 € netto, Festpreis, schriftlich per Fragebogen und Bericht, NDA vor der Analyse. Der Bericht endet mit einer Schulungsempfehlung. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Mit einer kurzen Anfrage: Wir empfehlen die passende Schulung kostenlos. Ist offen, wo KI in Ihrem Betrieb sinnvoll ist, beginnen Sie mit dem KI-Check: 990 € netto, Festpreis, schriftlich per Fragebogen und Bericht, NDA vor der Analyse. Der Bericht endet mit einer Handlungsempfehlung und sagt auch, ob eine Schulung sinnvoll ist. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
       {
         q: "Brauchen wir dafür überhaupt KI?",
@@ -439,7 +439,7 @@ const de: PageDef = {
     service: {
       name: "KI-Schulungen und KI-Beratung",
       serviceType: "KI-Schulungen",
-      description: "KI-Schulungen für Teams (online, live, pro Team) und KI-Beratung für Unternehmen: KI-Check mit Schulungsempfehlung, Pilot zum Festpreis, Betrieb und Ausbau.",
+      description: "KI-Schulungen für Teams (online, live, pro Team) und KI-Beratung für Unternehmen: KI-Check mit Handlungsempfehlung, Pilot zum Festpreis, Betrieb und Ausbau.",
       offers: [{ name: "KI-Check", price: 990 }],
     },
     courses: [
@@ -680,13 +680,13 @@ const en: PageDef = {
       ground: "slate",
       etikett: "Consulting · the starting point",
       h: "Not sure where to start? The AI check",
-      lede: "You fill in a questionnaire and we write the report. It ends with a training recommendation, even if nothing is worth automating.",
+      lede: "You fill in a questionnaire and we write the report. It ends with a clear recommendation: implement, train or do nothing for now.",
       price: "€990",
       terms: ["net, fixed price", CHECK.en.credit],
       points: [
         { b: "Questionnaire", rest: " of about 20 minutes" },
         { b: "Written report", rest: ": three ideas, risks, data protection" },
-        { b: "Training recommendation", rest: " for your team at the end of the report" },
+        { b: "A clear recommendation", rest: " at the end, including whether your team needs training" },
       ],
       primary: { label: "Request the AI check", to: "home", hash: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "To the AI check", to: "check" },
@@ -704,8 +704,8 @@ const en: PageDef = {
         ],
         manualH: "Deliberately manual",
         manual: "Complaints and disputes with tenants.",
-        recH: "Training recommendation",
-        rec: "AI literacy basics for the tenant-service team, half day, online.",
+        recH: "Recommendation",
+        rec: "Idea 1 as a pilot. Training: AI literacy basics for the tenant-service team, half day, online.",
         etikett: "Example, fictional",
       },
     },
@@ -815,7 +815,7 @@ const en: PageDef = {
       },
       {
         q: "How do we find the right course?",
-        a: "With a short enquiry: we recommend the right course free of charge. If it is open where AI makes sense in your business, start with the AI check: €990 net, fixed price, in writing with a questionnaire and a report, NDA before the analysis. The report ends with a training recommendation. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
+        a: "With a short enquiry: we recommend the right course free of charge. If it is open where AI makes sense in your business, start with the AI check: €990 net, fixed price, in writing with a questionnaire and a report, NDA before the analysis. The report ends with a clear recommendation and also says whether training makes sense. Credited in full against a follow-up order within 60 days. All prices are net of VAT and for businesses only.",
       },
       {
         q: "Do we need AI for this at all?",
@@ -846,7 +846,7 @@ const en: PageDef = {
     service: {
       name: "AI training and AI consulting",
       serviceType: "AI training",
-      description: "AI training for teams (online, live, per team) and AI consulting for companies: AI check with a training recommendation, pilot at a fixed price, operation and expansion.",
+      description: "AI training for teams (online, live, per team) and AI consulting for companies: AI check with a clear recommendation, pilot at a fixed price, operation and expansion.",
       offers: [{ name: "AI check", price: 990 }],
     },
     courses: [
@@ -1087,13 +1087,13 @@ const tr: PageDef = {
       ground: "slate",
       etikett: "Danışmanlık · giriş adımı",
       h: "Nereden başlayacağınızdan emin değil misiniz? YZ Kontrolü",
-      lede: "Siz bir soru formu doldurursunuz, raporu biz yazarız. Rapor bir eğitim önerisiyle biter; otomatikleştirmeye değer bir şey çıkmasa bile.",
+      lede: "Siz bir soru formu doldurursunuz, raporu biz yazarız. Rapor net bir öneriyle biter: uygulayın, ekibinizi eğitin ya da şimdilik hiçbir şey yapmayın.",
       price: "990 €",
       terms: ["net, sabit fiyat", CHECK.tr.credit],
       points: [
         { b: "Soru formu", rest: ", yaklaşık 20 dakika" },
         { b: "Yazılı rapor", rest: ": üç fikir, riskler, veri koruma" },
-        { b: "Eğitim önerisi", rest: ", raporun sonunda ekibiniz için" },
+        { b: "Net bir öneri", rest: " raporun sonunda; ekibinizin eğitime ihtiyacı olup olmadığı da yazar" },
       ],
       primary: { label: "YZ Kontrolü talep edin", to: "home", hash: "kontakt", query: { anliegen: "ki-check" } },
       secondary: { label: "YZ Kontrolü'ne gidin", to: "check" },
@@ -1111,8 +1111,8 @@ const tr: PageDef = {
         ],
         manualH: "Bilerek manuel",
         manual: "Şikâyetler ve kiracılarla anlaşmazlıklar.",
-        recH: "Eğitim önerisi",
-        rec: "Kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi.",
+        recH: "Öneri",
+        rec: "1. fikir pilot olarak. Eğitim: kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi.",
         etikett: "Örnek, kurgusal",
       },
     },
@@ -1222,7 +1222,7 @@ const tr: PageDef = {
       },
       {
         q: "Uygun eğitimi nasıl buluruz?",
-        a: "Kısa bir talep yeter: uygun eğitimi ücretsiz öneririz. Yapay zekânın işletmenizde nerede anlamlı olduğu belli değilse YZ Kontrolü ile başlayın: 990 € (net, sabit fiyat), soru formu ve raporla yazılı, analizden önce NDA. Rapor bir eğitim önerisiyle biter. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
+        a: "Kısa bir talep yeter: uygun eğitimi ücretsiz öneririz. Yapay zekânın işletmenizde nerede anlamlı olduğu belli değilse YZ Kontrolü ile başlayın: 990 € (net, sabit fiyat), soru formu ve raporla yazılı, analizden önce NDA. Rapor net bir öneriyle biter ve eğitimin anlamlı olup olmadığını da söyler. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Bunun için gerçekten yapay zekâya ihtiyacımız var mı?",
@@ -1253,7 +1253,7 @@ const tr: PageDef = {
     service: {
       name: "YZ eğitimleri ve YZ danışmanlığı",
       serviceType: "Yapay zekâ eğitimleri",
-      description: "Ekipler için YZ eğitimleri (çevrimiçi, canlı, ekip başına) ve şirketler için YZ danışmanlığı: eğitim önerisiyle biten YZ Kontrolü, sabit fiyatlı pilot, işletme ve geliştirme.",
+      description: "Ekipler için YZ eğitimleri (çevrimiçi, canlı, ekip başına) ve şirketler için YZ danışmanlığı: net bir öneriyle biten YZ Kontrolü, sabit fiyatlı pilot, işletme ve geliştirme.",
       offers: [{ name: "YZ Kontrolü", price: 990 }],
     },
     courses: [

@@ -41,7 +41,7 @@ const de: PageDef = {
         {
           tag: "2 · Beratung",
           h: "KI-Beratung und KI-Automatisierung",
-          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, der mit einer Schulungsempfehlung endet. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
+          p: "Wir finden mit Ihnen die Abläufe, bei denen sich Automatisierung lohnt, und setzen die erste Lösung um. Einstieg ist der KI-Check für 990 € netto, Festpreis: Fragebogen und schriftlicher Bericht, der mit einer Handlungsempfehlung endet. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Auf Wunsch folgt ein Pilot zum Festpreis, vorab schriftlich, danach der Betrieb monatlich nach Vereinbarung.",
           href: { label: "Zur KI-Beratung", to: "beratung" },
         },
         {
@@ -56,13 +56,13 @@ const de: PageDef = {
       t: "steps",
       id: "methode",
       label: "Methode",
-      note: "Fünf Schritte vom Gespräch bis zur Übergabe.",
+      note: "Fünf Schritte vom Fragebogen bis zur Übergabe.",
       h: "So arbeiten wir in der Beratung",
       lede: "Jeder Schritt hat ein Ergebnis, und nach jedem entscheiden Sie neu.",
       items: [
         {
           h: "Ablauf aufnehmen",
-          p: "Wir sprechen mit den Menschen, die die Arbeit machen, und halten fest, wie der Ablauf heute tatsächlich läuft.",
+          p: "Die Menschen, die die Arbeit machen, beschreiben per Fragebogen, wie der Ablauf heute tatsächlich läuft. Rückfragen klären wir per E-Mail oder kurz per Video.",
         },
         {
           h: "Ausgangslage messen",
@@ -121,7 +121,7 @@ const de: PageDef = {
       h: "Woher unsere Methode kommt",
       lede: "Unsere Methode stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen.",
       paras: [
-        "Wir arbeiten mit Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n und Python, binden CRM und ERP an und hosten bei Bedarf in der EU.",
+        "Wir planen mit dem, was bei Ihnen schon läuft, etwa Microsoft 365 mit Outlook, Teams, SharePoint und Power Automate, und ergänzen nur, wo es nötig ist, zum Beispiel mit Make, n8n oder Python. Den KI-Check schreiben wir selbst. Wer einen Pilot baut oder eine Schulung hält, nennen wir Ihnen vor dem Auftrag.",
       ],
       facts: [
         ["Sitz", "Arnsberg, Sauerland, NRW"],
@@ -195,7 +195,7 @@ const en: PageDef = {
         {
           tag: "2 · Consulting",
           h: "AI consulting and AI automation",
-          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net, fixed price: a questionnaire and a written report that ends with a training recommendation. Credited in full against a follow-up order within 60 days. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
+          p: "With you, we find the workflows where automation pays off, and we build the first solution. The way in is the AI check for €990 net, fixed price: a questionnaire and a written report that ends with a clear recommendation. Credited in full against a follow-up order within 60 days. If you wish, a pilot at a fixed price follows, agreed in writing beforehand, then operation, monthly by agreement.",
           href: { label: "To AI consulting", to: "beratung" },
         },
         {
@@ -210,13 +210,13 @@ const en: PageDef = {
       t: "steps",
       id: "methode",
       label: "Method",
-      note: "Five steps from the first call to handover.",
+      note: "Five steps from the questionnaire to handover.",
       h: "How we work in consulting",
       lede: "Every step has a result, and after each one you decide again.",
       items: [
         {
           h: "Map the workflow",
-          p: "We talk to the people who do the work and record how the workflow actually runs today.",
+          p: "The people who do the work describe in a questionnaire how the workflow actually runs today. We settle follow-up questions by email or in a short video call.",
         },
         {
           h: "Measure the starting point",
@@ -275,7 +275,7 @@ const en: PageDef = {
       h: "Where our method comes from",
       lede: "Our method comes from IT project management, digitalisation and process optimisation in the day-to-day operations of companies.",
       paras: [
-        "We work with Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n and Python, connect CRM and ERP systems, and host in the EU where needed.",
+        "We plan with what already runs at your company, such as Microsoft 365 with Outlook, Teams, SharePoint and Power Automate, and add only where needed, for example with Make, n8n or Python. We write the AI check ourselves, and before you order we tell you who builds a pilot or delivers a course.",
       ],
       facts: [
         ["Based in", "Arnsberg, Sauerland, North Rhine-Westphalia"],
@@ -349,7 +349,7 @@ const tr: PageDef = {
         {
           tag: "2 · Danışmanlık",
           h: "Yapay zeka danışmanlığı ve otomasyonu",
-          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net, sabit fiyat) tutarındaki YZ Kontrolüdür: soru formu ve eğitim önerisiyle biten yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
+          p: "Sizinle birlikte otomasyonun karşılığını vereceği iş akışlarını buluruz ve ilk çözümü kurarız. Giriş noktası 990 € (net, sabit fiyat) tutarındaki YZ Kontrolüdür: soru formu ve net bir öneriyle biten yazılı rapor. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. İsterseniz ardından sabit fiyatlı bir pilot gelir, fiyat önceden yazılı olarak belirlenir; sonra aylık, anlaşmaya göre işletme.",
           href: { label: "Yapay zeka danışmanlığına", to: "beratung" },
         },
         {
@@ -364,13 +364,13 @@ const tr: PageDef = {
       t: "steps",
       id: "methode",
       label: "Yöntem",
-      note: "İlk görüşmeden teslime beş adım.",
+      note: "Soru formundan teslime beş adım.",
       h: "Danışmanlıkta nasıl çalışırız?",
       lede: "Her adımın bir sonucu vardır; her adımdan sonra yeniden siz karar verirsiniz.",
       items: [
         {
           h: "İş akışını kayda almak",
-          p: "İşi yapan kişilerle konuşur ve iş akışının bugün gerçekte nasıl yürüdüğünü not ederiz.",
+          p: "İşi yapan kişiler, iş akışının bugün gerçekte nasıl yürüdüğünü soru formunda anlatır. Ek soruları e-postayla ya da kısa bir görüntülü görüşmeyle netleştiririz.",
         },
         {
           h: "Başlangıç durumunu ölçmek",
@@ -429,7 +429,7 @@ const tr: PageDef = {
       h: "Yöntemimiz nereden geliyor?",
       lede: "Yöntemimiz, şirketlerin günlük işleyişi içinde yürütülen BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından doğdu.",
       paras: [
-        "Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n ve Python ile çalışır, CRM ve ERP sistemlerini bağlar, gerektiğinde AB'de barındırırız.",
+        "Sizde zaten işleyen sistemlerle planlarız; örneğin Outlook, Teams, SharePoint ve Power Automate ile Microsoft 365. Yalnızca gerektiği yerde ekleme yaparız, örneğin Make, n8n ya da Python ile. YZ Kontrolünü kendimiz yazarız; pilotu kimin kuracağını ya da eğitimi kimin vereceğini siparişten önce size bildiririz.",
       ],
       facts: [
         ["Merkez", "Arnsberg, Sauerland, Kuzey Ren-Vestfalya"],
