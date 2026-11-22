@@ -192,7 +192,7 @@ const de: PageDef = {
       },
       {
         q: "Wer macht die Arbeit?",
-        a: "Den KI-Check schreibt OpSolid selbst, ohne Subunternehmer. Einen Pilot bauen wir selbst oder mit einer freiberuflichen Fachkraft, die wir für den Auftrag auswählen und Ihnen vorher namentlich nennen. Schulungen halten freiberufliche Trainerinnen und Trainer, die wir auswählen. Vertrag, Verantwortung und Rechnung bleiben bei OpSolid.",
+        a: "Den KI-Check schreibt OpSolid selbst. Einen Pilot bauen wir selbst oder mit einer freiberuflichen Fachkraft, die wir für den Auftrag auswählen und Ihnen vorher namentlich nennen. Schulungen halten freiberufliche Trainerinnen und Trainer, die wir auswählen und Ihnen vor der Buchung namentlich nennen. Vertrag, Verantwortung und Rechnung bleiben bei OpSolid.",
       },
       {
         q: "Wo laufen die Automatisierungen?",
@@ -403,7 +403,7 @@ const en: PageDef = {
       },
       {
         q: "Who does the work?",
-        a: "OpSolid writes the AI check itself, without subcontractors. A pilot is built by us or with a freelance specialist whom we select for the job and name to you beforehand. Training is delivered by freelance trainers we select. Contract, responsibility and invoice stay with OpSolid.",
+        a: "OpSolid writes the AI check itself. A pilot is built by us or with a freelance specialist whom we select for the job and name to you beforehand. Training is delivered by freelance trainers we select and name to you before booking. Contract, responsibility and invoice stay with OpSolid.",
       },
       {
         q: "Where do the automations run?",
@@ -614,7 +614,7 @@ const tr: PageDef = {
       },
       {
         q: "İşi kim yapıyor?",
-        a: "YZ Kontrolünü OpSolid kendisi yazar, alt yüklenici olmadan. Pilotu biz kurarız ya da o iş için seçtiğimiz ve size önceden adını bildirdiğimiz serbest bir uzmanla birlikte kurarız. Eğitimleri bizim seçtiğimiz serbest eğitmenler verir. Sözleşme, sorumluluk ve fatura OpSolid'de kalır.",
+        a: "YZ Kontrolünü OpSolid'in kendisi yazar. Pilotu biz kurarız ya da o iş için seçtiğimiz ve size önceden adını bildirdiğimiz serbest bir uzmanla birlikte kurarız. Eğitimleri bizim seçtiğimiz ve rezervasyondan önce size adını bildirdiğimiz serbest eğitmenler verir. Sözleşme, sorumluluk ve fatura OpSolid'de kalır.",
       },
       {
         q: "Otomasyonlar nerede çalışır?",

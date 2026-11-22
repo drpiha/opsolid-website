@@ -121,7 +121,7 @@ const de: PageDef = {
       h: "Woher unsere Methode kommt",
       lede: "Unsere Methode stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung im laufenden Betrieb von Unternehmen.",
       paras: [
-        "Wir planen mit dem, was bei Ihnen schon läuft, etwa Microsoft 365 mit Outlook, Teams, SharePoint und Power Automate, und ergänzen nur, wo es nötig ist, zum Beispiel mit Make, n8n oder Python. Den KI-Check schreiben wir selbst; wer einen Pilot baut oder eine Schulung hält, nennen wir Ihnen vor dem Auftrag.",
+        "Wir planen mit dem, was bei Ihnen schon läuft, etwa Microsoft 365 mit Outlook, Teams, SharePoint und Power Automate, und ergänzen nur, wo es nötig ist, zum Beispiel mit Make, n8n oder Python. Den KI-Check schreiben wir selbst. Wer einen Pilot baut oder eine Schulung hält, nennen wir Ihnen vor dem Auftrag.",
       ],
       facts: [
         ["Sitz", "Arnsberg, Sauerland, NRW"],
@@ -275,7 +275,7 @@ const en: PageDef = {
       h: "Where our method comes from",
       lede: "Our method comes from IT project management, digitalisation and process optimisation in the day-to-day operations of companies.",
       paras: [
-        "We plan with what already runs at your company, such as Microsoft 365 with Outlook, Teams, SharePoint and Power Automate, and add only where needed, for example with Make, n8n or Python. We write the AI check ourselves; who builds a pilot or delivers a course, we tell you before the order.",
+        "We plan with what already runs at your company, such as Microsoft 365 with Outlook, Teams, SharePoint and Power Automate, and add only where needed, for example with Make, n8n or Python. We write the AI check ourselves, and before you order we tell you who builds a pilot or delivers a course.",
       ],
       facts: [
         ["Based in", "Arnsberg, Sauerland, North Rhine-Westphalia"],
@@ -429,7 +429,7 @@ const tr: PageDef = {
       h: "Yöntemimiz nereden geliyor?",
       lede: "Yöntemimiz, şirketlerin günlük işleyişi içinde yürütülen BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından doğdu.",
       paras: [
-        "Sizde zaten çalışanla planlarız; örneğin Outlook, Teams, SharePoint ve Power Automate ile Microsoft 365. Yalnızca gerektiği yerde ekleme yaparız, örneğin Make, n8n ya da Python ile. YZ Kontrolünü kendimiz yazarız; pilotu kimin kuracağını ya da eğitimi kimin vereceğini siparişten önce size bildiririz.",
+        "Sizde zaten işleyen sistemlerle planlarız; örneğin Outlook, Teams, SharePoint ve Power Automate ile Microsoft 365. Yalnızca gerektiği yerde ekleme yaparız, örneğin Make, n8n ya da Python ile. YZ Kontrolünü kendimiz yazarız; pilotu kimin kuracağını ya da eğitimi kimin vereceğini siparişten önce size bildiririz.",
       ],
       facts: [
         ["Merkez", "Arnsberg, Sauerland, Kuzey Ren-Vestfalya"],

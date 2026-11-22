@@ -26,7 +26,7 @@ const de: PageDef = {
   hero: {
     eyebrow: "KI-Check · der bezahlte Einstieg",
     h1: ["Erst analysieren,", "dann schulen", ""],
-    lede: "Der KI-Check zeigt, wo KI in Ihrem Alltag sinnvoll ist: welche Abläufe sich automatisieren lassen, welche besser bleiben, wie sie sind, und ob Ihr Team dafür eine Schulung braucht. Sie füllen einen Fragebogen aus, wir schreiben den Bericht. Er endet mit einer Handlungsempfehlung, und die kann auch lauten: vorerst nichts tun.",
+    lede: "Der KI-Check zeigt, welche Abläufe sich mit KI automatisieren lassen, welche besser so bleiben, wie sie sind, und ob Ihr Team eine Schulung braucht. Sie füllen einen Fragebogen aus, wir schreiben den Bericht. Er endet mit einer Handlungsempfehlung, und die kann auch lauten: vorerst nichts tun.",
     primary: { label: "KI-Check anfragen", to: "kontakt", query: { anliegen: "ki-check" } },
     secondary: { label: "Ablauf ansehen", to: "check", hash: "ablauf" },
     facts: ["KI-Check 990 € netto, Festpreis", "Fragebogen und schriftlicher Bericht", "NDA vor der Analyse", "Endet mit einer Handlungsempfehlung"],
@@ -142,7 +142,7 @@ const de: PageDef = {
       t: "statement",
       id: "leitsatz",
       label: "Leitsatz",
-      text: "Auch „vorerst nichts tun“ ist eine Empfehlung",
+      text: "Auch „vorerst nichts tun“ ist eine Empfehlung",
     },
     {
       t: "sample",
@@ -427,7 +427,7 @@ const en: PageDef = {
       t: "statement",
       id: "leitsatz",
       label: "Key point",
-      text: "“Do nothing for now” is a recommendation too",
+      text: "“Do nothing for now” is a recommendation too",
     },
     {
       t: "sample",
@@ -611,7 +611,7 @@ const tr: PageDef = {
       rows: [
         ["Format", "Yazılı: siz yaklaşık 20 dakikalık bir soru formu doldurursunuz, raporu biz yazarız. İsterseniz çarşamba veya cuma günleri Almanya saatiyle 18:30-20:00 arasında 30 dakikalık görüntülü görüşme"],
         ["Teslim", "Genellikle soru formu bize ulaştıktan sonra 10 iş günü içinde"],
-        ["Sonuç", "Yazılı bir rapor: öncelik sırasına göre üç fikir, riskler, veri koruma notları ve sonda net bir öneri: kendiniz uygulayın, pilot yapın, ekibi eğitin ya da şimdilik hiçbir şey yapmayın"],
+        ["Sonuç", "Yazılı bir rapor: öncelik sırasına göre üç fikir, riskler, veri koruma notları ve sonda net bir öneri: kendiniz uygulayın, pilot yapın, ekibinizi eğitin ya da şimdilik hiçbir şey yapmayın"],
         ["Fiyat", "990 € (net), sabit fiyat. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Geniş kapsam: sabit fiyat, önceden yazılı"],
         ["Gizlilik", "Analizden önce bir NDA imzalarız"],
       ],
@@ -712,7 +712,7 @@ const tr: PageDef = {
       t: "statement",
       id: "leitsatz",
       label: "Ana fikir",
-      text: "“Şimdilik hiçbir şey yapmayın” da bir öneridir",
+      text: "“Şimdilik hiçbir şey yapmayın” da bir öneridir",
     },
     {
       t: "sample",
@@ -754,7 +754,7 @@ const tr: PageDef = {
             "Uygulama: 1. fikir sabit fiyatlı pilot olarak (önceden yazılı) ya da BT hizmet sağlayıcınızla kendiniz.",
             `Eğitim: kiracı hizmetleri ekibi için YZ Yetkinliği Temel, yarım gün, çevrimiçi; çünkü yanıt taslakları ve kiracı verileri net kurallar ister. YZ Kontrolü: ${CHECK.tr.credit}`,
             "Bilerek manuel: şikâyetler ve kiracılarla anlaşmazlıklar.",
-            "Önerilmez: web sitesinde kendi sohbet robotunuz. Bu talep hacminde emeğini karşılamaz.",
+            "Önerilmez: web sitesinde kendi sohbet robotunuz. Bu talep hacminde zahmetine değmez.",
           ],
         },
       ],
@@ -827,7 +827,7 @@ const tr: PageDef = {
       },
       {
         q: "Sonda her zaman eğitim mi öneriyorsunuz?",
-        a: "Hayır. Rapor net bir öneriyle biter: kendiniz uygulayın, pilot yapın, ekibi eğitin ya da şimdilik hiçbir şey yapmayın. Eğitimi yalnızca ekibinizin sonraki adımlar için ona ihtiyacı varsa öneririz. YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
+        a: "Hayır. Rapor net bir öneriyle biter: kendiniz uygulayın, pilot yapın, ekibinizi eğitin ya da şimdilik hiçbir şey yapmayın. Eğitimi yalnızca ekibinizin sonraki adımlar için ona ihtiyacı varsa öneririz. YZ Kontrolü 990 € (net, sabit fiyat). 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
       {
         q: "Gizlilik sözleşmesi yapılıyor mu?",

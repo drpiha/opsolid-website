@@ -143,7 +143,7 @@ const de: PageDef = {
       id: "automatisieren",
       label: "Was wir automatisieren",
       h: "Was wir für Sie automatisieren",
-      lede: "Wir planen mit dem, was zu Ihnen passt, zuerst mit Ihren vorhandenen Systemen: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python sowie Anbindungen an Ihr CRM oder ERP.",
+      lede: "Wir planen mit dem, was zu Ihnen passt, und zuerst mit Ihren vorhandenen Systemen. Typisch sind Microsoft 365, Power Automate, SharePoint, n8n, Make, Python sowie Anbindungen an Ihr CRM oder ERP.",
       items: [
         {
           h: "Abläufe und Dokumente",
@@ -232,7 +232,7 @@ const de: PageDef = {
       },
       {
         q: "Wer macht die Arbeit?",
-        a: "Den KI-Check schreibt OpSolid selbst, ohne Subunternehmer. Einen Pilot bauen wir selbst oder mit einer freiberuflichen Fachkraft, die wir für den Auftrag auswählen und Ihnen vorher namentlich nennen. Schulungen halten freiberufliche Trainerinnen und Trainer, die wir auswählen. Vertrag, Verantwortung und Rechnung bleiben bei OpSolid.",
+        a: "Den KI-Check schreibt OpSolid selbst. Einen Pilot bauen wir selbst oder mit einer freiberuflichen Fachkraft, die wir für den Auftrag auswählen und Ihnen vorher namentlich nennen. Schulungen halten freiberufliche Trainerinnen und Trainer, die wir auswählen und Ihnen vor der Buchung namentlich nennen. Vertrag, Verantwortung und Rechnung bleiben bei OpSolid.",
       },
       {
         q: "Wie lange dauert es?",
@@ -397,7 +397,7 @@ const en: PageDef = {
       id: "automatisieren",
       label: "What we automate",
       h: "What we automate for you",
-      lede: "We plan with what fits you, starting with the systems you already have: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python and connections to your CRM or ERP.",
+      lede: "We plan with what fits you, and first with the systems you already have. Typical tools are Microsoft 365, Power Automate, SharePoint, n8n, Make, Python and connections to your CRM or ERP.",
       items: [
         {
           h: "Workflows and documents",
@@ -486,7 +486,7 @@ const en: PageDef = {
       },
       {
         q: "Who does the work?",
-        a: "OpSolid writes the AI check itself, without subcontractors. A pilot is built by us or with a freelance specialist whom we select for the job and name to you beforehand. Training is delivered by freelance trainers we select. Contract, responsibility and invoice stay with OpSolid.",
+        a: "OpSolid writes the AI check itself. A pilot is built by us or with a freelance specialist whom we select for the job and name to you beforehand. Training is delivered by freelance trainers we select and name to you before booking. Contract, responsibility and invoice stay with OpSolid.",
       },
       {
         q: "How long does it take?",
@@ -528,7 +528,7 @@ const tr: PageDef = {
   hero: {
     eyebrow: "YZ danışmanlığı · YZ otomasyonu",
     h1: ["İş akışlarınızdan ", "başlayan", " yapay zeka danışmanlığı"],
-    lede: "Ekibiniz teklifleri, raporları ya da Excel dökümlerini düzenli olarak elle mi hazırlıyor? OpSolid, hangi adımların mevcut sistemlerinizle sadeleşebileceğini yazılı olarak inceler ve değmeyen yeri de söyler.",
+    lede: "Ekibiniz teklifleri, raporları ya da Excel analizlerini düzenli olarak elle mi hazırlıyor? OpSolid, hangi adımların mevcut sistemlerinizle sadeleşebileceğini yazılı olarak inceler ve nerede değmeyeceğini de söyler.",
     primary: { label: "YZ Kontrolü'nü inceleyin", to: "check" },
     secondary: { label: "Tanışma planlayın", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["YZ Kontrolü 990 € (net, sabit fiyat)", "Sabit fiyatlı pilot, önceden yazılı", "Bağımsız, lisans satışı yok"],
@@ -617,7 +617,7 @@ const tr: PageDef = {
           name: "YZ Kontrolü",
           price: "990 € (net)",
           p: "Sabit fiyat: soru formu ve net bir öneri içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
-          points: ["Analizden önce NDA", "Hiçbir şey değmese de rapor", "Önce analiz, sonra eğitim ya da pilot"],
+          points: ["Analizden önce NDA", "Değer bir şey çıkmasa da rapor", "Önce analiz, sonra eğitim ya da pilot"],
           href: { label: "YZ Kontrolü'ne gidin", to: "check" },
           featured: true,
         },
@@ -651,7 +651,7 @@ const tr: PageDef = {
       id: "automatisieren",
       label: "Neyi otomatikleştiriyoruz",
       h: "Sizin için neyi otomatikleştiriyoruz?",
-      lede: "Size uyanla planlarız, önce mevcut sistemlerinizle: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python ve CRM ya da ERP bağlantıları.",
+      lede: "Size uyanla, önce de mevcut sistemlerinizle planlarız. Sık kullandıklarımız: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python ve CRM ya da ERP bağlantıları.",
       items: [
         {
           h: "İş akışları ve belgeler",
@@ -740,7 +740,7 @@ const tr: PageDef = {
       },
       {
         q: "İşi kim yapıyor?",
-        a: "YZ Kontrolünü OpSolid kendisi yazar, alt yüklenici olmadan. Pilotu biz kurarız ya da o iş için seçtiğimiz ve size önceden adını bildirdiğimiz serbest bir uzmanla birlikte kurarız. Eğitimleri bizim seçtiğimiz serbest eğitmenler verir. Sözleşme, sorumluluk ve fatura OpSolid'de kalır.",
+        a: "YZ Kontrolünü OpSolid'in kendisi yazar. Pilotu biz kurarız ya da o iş için seçtiğimiz ve size önceden adını bildirdiğimiz serbest bir uzmanla birlikte kurarız. Eğitimleri bizim seçtiğimiz ve rezervasyondan önce size adını bildirdiğimiz serbest eğitmenler verir. Sözleşme, sorumluluk ve fatura OpSolid'de kalır.",
       },
       {
         q: "Ne kadar sürer?",

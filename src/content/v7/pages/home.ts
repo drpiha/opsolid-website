@@ -1087,7 +1087,7 @@ const tr: PageDef = {
       ground: "slate",
       etikett: "Danışmanlık · giriş adımı",
       h: "Nereden başlayacağınızdan emin değil misiniz? YZ Kontrolü",
-      lede: "Siz bir soru formu doldurursunuz, raporu biz yazarız. Rapor net bir öneriyle biter: uygulayın, ekibi eğitin ya da şimdilik hiçbir şey yapmayın.",
+      lede: "Siz bir soru formu doldurursunuz, raporu biz yazarız. Rapor net bir öneriyle biter: uygulayın, ekibinizi eğitin ya da şimdilik hiçbir şey yapmayın.",
       price: "990 €",
       terms: ["net, sabit fiyat", CHECK.tr.credit],
       points: [
