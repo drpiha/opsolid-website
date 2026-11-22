@@ -113,7 +113,7 @@ const de: PageDef = {
       id: "werkzeuge",
       label: "Werkzeuge",
       h: "Werkzeuge, die zu Ihrem Ablauf passen",
-      lede: "Wir bauen mit dem, was bei Ihnen schon im Haus ist, und ergänzen nur, wo es nötig ist.",
+      lede: "Wir planen mit dem, was bei Ihnen schon im Haus ist, und ergänzen nur, wo es nötig ist.",
       rows: [
         ["Microsoft Power Automate", "Wenn Microsoft 365 im Haus ist: Freigaben, Dokumente und Postfach-Regeln."],
         ["Make", "Für Verbindungen zwischen Cloud-Diensten, wenn kein Standard-Connector reicht."],
@@ -189,6 +189,10 @@ const de: PageDef = {
       {
         q: "Ist es sicher, kritische Abläufe zu automatisieren?",
         a: "Wir planen für den Fehlerfall, nicht nur für den Idealfall: mit Protokoll, Fehlerbehandlung und manuellem Rückfall. Kritische Schritte, etwa Freigaben, bleiben bei einer Person.",
+      },
+      {
+        q: "Wer macht die Arbeit?",
+        a: "Den KI-Check schreibt OpSolid selbst, ohne Subunternehmer. Einen Pilot bauen wir selbst oder mit einer freiberuflichen Fachkraft, die wir für den Auftrag auswählen und Ihnen vorher namentlich nennen. Schulungen halten freiberufliche Trainerinnen und Trainer, die wir auswählen. Vertrag, Verantwortung und Rechnung bleiben bei OpSolid.",
       },
       {
         q: "Wo laufen die Automatisierungen?",
@@ -320,7 +324,7 @@ const en: PageDef = {
       id: "werkzeuge",
       label: "Tools",
       h: "Tools that fit your workflow",
-      lede: "We build with what you already have and add only where needed.",
+      lede: "We plan with what you already have and add only where needed.",
       rows: [
         ["Microsoft Power Automate", "Where Microsoft 365 is in place: approvals, documents and mailbox rules."],
         ["Make", "For connections between cloud services when no standard connector is enough."],
@@ -396,6 +400,10 @@ const en: PageDef = {
       {
         q: "Is it safe to automate critical workflows?",
         a: "We plan for failure, not only for the ideal case: with a log, error handling and a manual fallback. Critical steps, such as approvals, stay with a person.",
+      },
+      {
+        q: "Who does the work?",
+        a: "OpSolid writes the AI check itself, without subcontractors. A pilot is built by us or with a freelance specialist whom we select for the job and name to you beforehand. Training is delivered by freelance trainers we select. Contract, responsibility and invoice stay with OpSolid.",
       },
       {
         q: "Where do the automations run?",
@@ -527,7 +535,7 @@ const tr: PageDef = {
       id: "werkzeuge",
       label: "Araçlar",
       h: "İş akışınıza uyan araçlar",
-      lede: "Elinizde zaten olanla kuruyor, yalnızca gerektiği yerde ekleme yapıyoruz.",
+      lede: "Elinizde zaten olanla planlıyor, yalnızca gerektiği yerde ekleme yapıyoruz.",
       rows: [
         ["Microsoft Power Automate", "Microsoft 365 kullanılıyorsa: onaylar, belgeler ve e-posta kuralları."],
         ["Make", "Hazır bir bağlayıcı yetmediğinde bulut hizmetleri arasındaki bağlantılar için."],
@@ -603,6 +611,10 @@ const tr: PageDef = {
       {
         q: "Kritik iş akışlarını otomatikleştirmek güvenli mi?",
         a: "Yalnızca ideal durumu değil, hata durumunu da planlıyoruz: kayıt, hata yönetimi ve elle devam etme imkânıyla. Onay gibi kritik adımlar bir kişide kalır.",
+      },
+      {
+        q: "İşi kim yapıyor?",
+        a: "YZ Kontrolünü OpSolid kendisi yazar, alt yüklenici olmadan. Pilotu biz kurarız ya da o iş için seçtiğimiz ve size önceden adını bildirdiğimiz serbest bir uzmanla birlikte kurarız. Eğitimleri bizim seçtiğimiz serbest eğitmenler verir. Sözleşme, sorumluluk ve fatura OpSolid'de kalır.",
       },
       {
         q: "Otomasyonlar nerede çalışır?",

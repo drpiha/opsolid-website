@@ -33,17 +33,22 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // to a training or a pilot. About and Contact follow the new order.
   // 2026-11-14: site clean-up (owner): no OpSo or own-work section on Home, the projects page retired (301 to About),
   // About and Contact lead with training, the hero says "live an Ihren Aufgaben" instead of "in Ihrem Teams".
-  home: "2026-11-15",
+  // 2026-11-22: the KI-Check report closes with a neutral "Handlungsempfehlung" (implement, pilot, train or do nothing
+  // for now; it still says whether a course fits) instead of always a training recommendation; Beratung opens with the
+  // task, not the technology; Beratung, Prozess and About say who does the work (KI-Check by OpSolid itself, pilot and
+  // courses with named freelancers) and "planen" instead of "bauen/einsetzen" for the tools; the About method starts
+  // with the questionnaire, not with talks.
+  home: "2026-11-22",
   schulungen: "2026-11-15",
-  check: "2026-11-16",
-  beratung: "2026-11-15",
-  ueber: "2026-11-15",
+  check: "2026-11-22",
+  beratung: "2026-11-22",
+  ueber: "2026-11-22",
   kontakt: "2026-11-15",
   // 2026-11-06: per-person arithmetic in the price answers and the hours of a half day and a day
   kompetenz: "2026-11-16",
   copilot: "2026-11-16",
   // 2026-11-04: written, meeting-free KI-Check at a fixed 990 € (questionnaire, report, optional evening call)
-  prozess: "2026-11-15",
+  prozess: "2026-11-22",
   m365: "2026-11-04",
   agenten: "2026-11-15",
   anwendungen: "2026-11-04",

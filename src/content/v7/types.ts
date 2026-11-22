@@ -319,7 +319,7 @@ export type PageDef = {
     /** Mono line under the fact strip or the fact line (the price note); wins over the automatic SITE_STR.priceNote. */
     stripNote?: string;
     bench?: HomeBench;
-    /** Mono fact line under the hero ("KI-Check 990 € netto · NDA vor der Analyse · Bericht auch ohne Empfehlung"). */
+    /** Mono fact line under the hero ("KI-Check 990 € netto · NDA vor der Analyse · Endet mit einer Handlungsempfehlung"). */
     facts?: string[];
     /**
      * Fact strip instead of the fact line: label over value, four columns on desktop and two by two on phones

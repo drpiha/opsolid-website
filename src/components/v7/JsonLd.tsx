@@ -10,9 +10,9 @@ const SITE = `${SITE_CONFIG.url}/#website`;
 const LOGO = { url: `${SITE_CONFIG.url}/img/v7/logo-jsonld.png`, width: 1400, height: 400 };
 
 const ORG_DESC: Record<L3, string> = {
-  de: "OpSolid organisiert KI-Schulungen für Teams, online und live, mit freiberuflichen Trainerinnen und Trainern im eigenen Namen, und berät Unternehmen unabhängig bei KI-Automatisierung: KI-Check mit Schulungsempfehlung, Pilot zum Festpreis, Betrieb. Sitz in Arnsberg (NRW).",
-  en: "OpSolid organises AI training for teams, online and live, with freelance trainers in its own name, and gives companies independent AI automation consulting: AI check with a training recommendation, pilot at a fixed price, operation. Based in Arnsberg, Germany.",
-  tr: "OpSolid, ekipler için çevrimiçi ve canlı YZ eğitimlerini serbest eğitmenlerle kendi adına düzenler ve şirketlere YZ otomasyonunda bağımsız danışmanlık verir: eğitim önerili YZ Kontrolü, sabit fiyatlı pilot, işletme. Merkezi Almanya'nın Arnsberg şehrindedir.",
+  de: "OpSolid organisiert KI-Schulungen für Teams, online und live, mit freiberuflichen Trainerinnen und Trainern im eigenen Namen, und berät Unternehmen unabhängig bei KI-Automatisierung: KI-Check mit Handlungsempfehlung, Pilot zum Festpreis, Betrieb. Sitz in Arnsberg (NRW).",
+  en: "OpSolid organises AI training for teams, online and live, with freelance trainers in its own name, and gives companies independent AI automation consulting: AI check with a clear recommendation, pilot at a fixed price, operation. Based in Arnsberg, Germany.",
+  tr: "OpSolid, ekipler için çevrimiçi ve canlı YZ eğitimlerini serbest eğitmenlerle kendi adına düzenler ve şirketlere YZ otomasyonunda bağımsız danışmanlık verir: net bir öneriyle biten YZ Kontrolü, sabit fiyatlı pilot, işletme. Merkezi Almanya'nın Arnsberg şehrindedir.",
 };
 // Same wording as the footer trademark line (content trademarkText) and the About page section.
 const DISAMBIG: Record<L3, string> = {

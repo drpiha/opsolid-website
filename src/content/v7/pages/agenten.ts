@@ -175,7 +175,7 @@ const de: PageDef = {
       },
       {
         q: "Wie starten wir?",
-        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen und dann mit dem KI-Check: Fragebogen und schriftlicher Bericht für 990 € netto, Festpreis, mit NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Den Bericht erhalten Sie auch ohne Empfehlung. Alle Preise netto zzgl. USt., nur für Unternehmen.",
+        a: "Mit einem kostenlosen, unverbindlichen Kennenlernen und dann mit dem KI-Check: Fragebogen und schriftlicher Bericht für 990 € netto, Festpreis, mit NDA vor der Analyse. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an. Den Bericht erhalten Sie auch dann, wenn sich nichts zu automatisieren lohnt. Alle Preise netto zzgl. USt., nur für Unternehmen.",
       },
     ],
   },
@@ -365,7 +365,7 @@ const en: PageDef = {
       },
       {
         q: "How do we start?",
-        a: "With a free, non-binding intro, then the AI check: a questionnaire and a written report for €990 net, fixed price, with an NDA before the analysis. Credited in full against a follow-up order within 60 days. You receive the report even without a recommendation. All prices are net of VAT and for businesses only.",
+        a: "With a free, non-binding intro, then the AI check: a questionnaire and a written report for €990 net, fixed price, with an NDA before the analysis. Credited in full against a follow-up order within 60 days. You receive the report even if nothing is worth automating. All prices are net of VAT and for businesses only.",
       },
     ],
   },
@@ -555,7 +555,7 @@ const tr: PageDef = {
       },
       {
         q: "Nasıl başlarız?",
-        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla, ardından YZ Kontrolüyle: soru formu ve yazılı rapor, 990 € (net, sabit fiyat), analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Öneri çıkmasa da raporu alırsınız. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
+        a: "Ücretsiz ve bağlayıcı olmayan bir tanışmayla, ardından YZ Kontrolüyle: soru formu ve yazılı rapor, 990 € (net, sabit fiyat), analizden önce NDA. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir. Otomatikleştirmeye değer bir şey çıkmasa da raporu alırsınız. Tüm fiyatlar KDV hariçtir; yalnızca şirketler içindir.",
       },
     ],
   },

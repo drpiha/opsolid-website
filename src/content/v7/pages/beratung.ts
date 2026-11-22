@@ -1,6 +1,6 @@
 /**
  * KI-Beratung (pillar 2 since the owner decision of 2026-11-06: trainings lead, the KI-Check is the paid entry and ends
- * with a training recommendation). German is the source; EN and TR are transcreations.
+ * with a neutral closing recommendation, "Handlungsempfehlung"). German is the source; EN and TR are transcreations.
  * Offer ladder per owner decision 2026-10-29: Kennenlernen (free) → KI-Check 990 € netto (Festpreis since 2026-11-04) → Pilot zum
  * Festpreis (no number) → Betrieb und Ausbau (no number). The sample is a labelled "Muster", not a client report.
  */
@@ -20,7 +20,7 @@ const de: PageDef = {
   hero: {
     eyebrow: "KI-Beratung · KI-Automatisierung",
     h1: ["KI-Beratung, die bei Ihren ", "Abläufen", " beginnt"],
-    lede: "OpSolid berät Unternehmen bei der Automatisierung mit KI. Wir nehmen zuerst auf, wie die Arbeit heute läuft, entscheiden mit Ihnen, was sich lohnt, und bauen eine Lösung, die im Alltag läuft.",
+    lede: "Erstellt Ihr Team Angebote, Berichte oder Excel-Auswertungen regelmäßig von Hand? OpSolid prüft schriftlich, welche Schritte sich mit Ihren vorhandenen Systemen vereinfachen lassen, und sagt auch, wo es sich nicht lohnt.",
     primary: { label: "KI-Check ansehen", to: "check" },
     secondary: { label: "Kennenlernen vereinbaren", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["KI-Check 990 € netto, Festpreis", "Pilot zum Festpreis, vorab schriftlich", "Unabhängig, ohne Lizenzverkauf"],
@@ -108,8 +108,8 @@ const de: PageDef = {
         {
           name: "KI-Check",
           price: "990 € netto",
-          p: "Festpreis: Fragebogen und schriftlicher Bericht mit Schulungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
-          points: ["NDA vor der Analyse", "Bericht auch ohne Empfehlung", "Erst analysieren, dann schulen oder pilotieren"],
+          p: "Festpreis: Fragebogen und schriftlicher Bericht mit Handlungsempfehlung, auf Wunsch 30 Minuten Besprechung per Video. Bei einem Folgeauftrag innerhalb von 60 Tagen rechnen wir ihn voll an.",
+          points: ["NDA vor der Analyse", "Bericht auch, wenn sich nichts lohnt", "Erst analysieren, dann schulen oder pilotieren"],
           href: { label: "Zum KI-Check", to: "check" },
           featured: true,
         },
@@ -143,7 +143,7 @@ const de: PageDef = {
       id: "automatisieren",
       label: "Was wir automatisieren",
       h: "Was wir für Sie automatisieren",
-      lede: "Wir setzen ein, was zu Ihnen passt: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python sowie Anbindungen an Ihr CRM oder ERP.",
+      lede: "Wir planen mit dem, was zu Ihnen passt, zuerst mit Ihren vorhandenen Systemen: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python sowie Anbindungen an Ihr CRM oder ERP.",
       items: [
         {
           h: "Abläufe und Dokumente",
@@ -228,7 +228,11 @@ const de: PageDef = {
       },
       {
         q: "Was, wenn sich nichts lohnt?",
-        a: "Dann steht genau das im Bericht, mit Begründung. Sie erhalten ihn auch dann, samt der Schulungsempfehlung für Ihr Team, oder dem Hinweis, dass derzeit keine nötig ist.",
+        a: "Dann steht genau das im Bericht, mit Begründung. Sie erhalten ihn auch dann, mit einer Handlungsempfehlung, die auch lauten kann: vorerst nichts tun.",
+      },
+      {
+        q: "Wer macht die Arbeit?",
+        a: "Den KI-Check schreibt OpSolid selbst, ohne Subunternehmer. Einen Pilot bauen wir selbst oder mit einer freiberuflichen Fachkraft, die wir für den Auftrag auswählen und Ihnen vorher namentlich nennen. Schulungen halten freiberufliche Trainerinnen und Trainer, die wir auswählen. Vertrag, Verantwortung und Rechnung bleiben bei OpSolid.",
       },
       {
         q: "Wie lange dauert es?",
@@ -270,7 +274,7 @@ const en: PageDef = {
   hero: {
     eyebrow: "AI consulting · AI automation",
     h1: ["AI consulting that starts with your ", "workflows", ""],
-    lede: "OpSolid advises companies on automating work with AI. We first record how the work runs today, decide with you what is worth doing, and build a solution that runs day to day.",
+    lede: "Does your team prepare quotes, reports or Excel analyses by hand, again and again? OpSolid checks in writing which steps can be simplified with the systems you already have, and also says where it is not worth it.",
     primary: { label: "See the AI check", to: "check" },
     secondary: { label: "Arrange an intro", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["AI check €990 net, fixed price", "Pilot at a fixed price, in writing first", "Independent, no licence sales"],
@@ -358,8 +362,8 @@ const en: PageDef = {
         {
           name: "AI check",
           price: "€990 net",
-          p: "A fixed price: a questionnaire and a written report with a training recommendation, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days.",
-          points: ["NDA before the analysis", "Report even without a recommendation", "Analyse first, then train or pilot"],
+          p: "A fixed price: a questionnaire and a written report with a clear recommendation, with a 30-minute video call if you wish. Credited in full against a follow-up order within 60 days.",
+          points: ["NDA before the analysis", "A report even if nothing pays off", "Analyse first, then train or pilot"],
           href: { label: "To the AI check", to: "check" },
           featured: true,
         },
@@ -393,7 +397,7 @@ const en: PageDef = {
       id: "automatisieren",
       label: "What we automate",
       h: "What we automate for you",
-      lede: "We use what fits you: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python and connections to your CRM or ERP.",
+      lede: "We plan with what fits you, starting with the systems you already have: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python and connections to your CRM or ERP.",
       items: [
         {
           h: "Workflows and documents",
@@ -478,7 +482,11 @@ const en: PageDef = {
       },
       {
         q: "What if nothing is worth doing?",
-        a: "Then the report says exactly that, with reasons. You still get the report, with the training recommendation for your team, or the note that none is needed right now.",
+        a: "Then the report says exactly that, with reasons. You still get the report, with a recommendation that can also be: do nothing for now.",
+      },
+      {
+        q: "Who does the work?",
+        a: "OpSolid writes the AI check itself, without subcontractors. A pilot is built by us or with a freelance specialist whom we select for the job and name to you beforehand. Training is delivered by freelance trainers we select. Contract, responsibility and invoice stay with OpSolid.",
       },
       {
         q: "How long does it take?",
@@ -520,7 +528,7 @@ const tr: PageDef = {
   hero: {
     eyebrow: "YZ danışmanlığı · YZ otomasyonu",
     h1: ["İş akışlarınızdan ", "başlayan", " yapay zeka danışmanlığı"],
-    lede: "OpSolid, şirketlerin işlerini yapay zekayla otomatikleştirmesi için danışmanlık verir. Önce işin bugün nasıl yürüdüğünü kaydeder, neyin değer taşıdığına sizinle birlikte karar verir ve günlük işte çalışan bir çözüm kurarız.",
+    lede: "Ekibiniz teklifleri, raporları ya da Excel dökümlerini düzenli olarak elle mi hazırlıyor? OpSolid, hangi adımların mevcut sistemlerinizle sadeleşebileceğini yazılı olarak inceler ve değmeyen yeri de söyler.",
     primary: { label: "YZ Kontrolü'nü inceleyin", to: "check" },
     secondary: { label: "Tanışma planlayın", to: "kontakt", query: { anliegen: "beratung" } },
     facts: ["YZ Kontrolü 990 € (net, sabit fiyat)", "Sabit fiyatlı pilot, önceden yazılı", "Bağımsız, lisans satışı yok"],
@@ -608,8 +616,8 @@ const tr: PageDef = {
         {
           name: "YZ Kontrolü",
           price: "990 € (net)",
-          p: "Sabit fiyat: soru formu ve eğitim önerisi içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
-          points: ["Analizden önce NDA", "Öneri çıkmasa da rapor", "Önce analiz, sonra eğitim ya da pilot"],
+          p: "Sabit fiyat: soru formu ve net bir öneri içeren yazılı rapor, isterseniz 30 dakikalık görüntülü görüşme. 60 gün içinde verilen bir sonraki siparişte tutarın tamamı mahsup edilir.",
+          points: ["Analizden önce NDA", "Hiçbir şey değmese de rapor", "Önce analiz, sonra eğitim ya da pilot"],
           href: { label: "YZ Kontrolü'ne gidin", to: "check" },
           featured: true,
         },
@@ -643,7 +651,7 @@ const tr: PageDef = {
       id: "automatisieren",
       label: "Neyi otomatikleştiriyoruz",
       h: "Sizin için neyi otomatikleştiriyoruz?",
-      lede: "Size uyanı kullanırız: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python ve CRM ya da ERP bağlantıları.",
+      lede: "Size uyanla planlarız, önce mevcut sistemlerinizle: Microsoft 365, Power Automate, SharePoint, n8n, Make, Python ve CRM ya da ERP bağlantıları.",
       items: [
         {
           h: "İş akışları ve belgeler",
@@ -728,7 +736,11 @@ const tr: PageDef = {
       },
       {
         q: "Hiçbir şey değmezse ne olur?",
-        a: "O zaman rapor tam olarak bunu gerekçesiyle söyler. Raporu yine alırsınız; ekibiniz için eğitim önerisi ya da şu an gerek olmadığı notuyla birlikte.",
+        a: "O zaman rapor tam olarak bunu gerekçesiyle söyler. Raporu yine alırsınız; öneri şu da olabilir: şimdilik hiçbir şey yapmayın.",
+      },
+      {
+        q: "İşi kim yapıyor?",
+        a: "YZ Kontrolünü OpSolid kendisi yazar, alt yüklenici olmadan. Pilotu biz kurarız ya da o iş için seçtiğimiz ve size önceden adını bildirdiğimiz serbest bir uzmanla birlikte kurarız. Eğitimleri bizim seçtiğimiz serbest eğitmenler verir. Sözleşme, sorumluluk ve fatura OpSolid'de kalır.",
       },
       {
         q: "Ne kadar sürer?",
