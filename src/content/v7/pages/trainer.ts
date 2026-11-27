@@ -6,11 +6,11 @@
  * Selection (owner decision 2026-11-06): no separate trial session, paid or unpaid. Reply within seven days,
  * trainer pool, then a 30-minute conversation with a short live demo once a matching client request is in
  * sight; the first assignment is paid like any other.
- * Waitlist since 2026-11-17 (owner plan, "Evet, uygula"): the pool is full until January 2027; no reply
- * promise any more, a personal reply only when a client request matches the profile.
+ * Waitlist since 2026-11-17 (owner plan, "Evet, uygula"): the pool is full; no reply promise any more, a personal
+ * reply only when a client request matches the profile.
  * Closed since owner decision 107 B (2026-11-26, "Ocak'a kadar kapat"): no new applications and no link to the form
- * (the contact topic "trainer" is gone); profiles we already have stay on the waiting list. The reopening in January 2027
- * is stated once (hero lede) and is the owner's to confirm.
+ * (the contact topic "trainer" is gone); profiles we already have stay on the waiting list. No reopening date and no
+ * promise to reopen anywhere on the page (owner, 2026-11-27: "Ocakta yazmasın belki hiç açmayız").
  */
 import type { PageDef, PageSet } from "../types";
 import { blockOf, frag, liste } from "../hero-objects";
@@ -20,7 +20,7 @@ const de: PageDef = {
   meta: {
     title: "Trainerpool für freiberufliche KI-Trainer: pausiert",
     description:
-      "Der Trainerpool von OpSolid nimmt derzeit keine neuen Bewerbungen an. Hier steht, wen wir suchen und wie die Auswahl abläuft, sobald er wieder öffnet.",
+      "Der Trainerpool von OpSolid nimmt derzeit keine neuen Bewerbungen an. Hier steht, wen wir für Schulungen suchen und wie bei uns die Auswahl abläuft.",
   },
   crumbs: [],
   crumb: "Trainerpool",
@@ -28,7 +28,7 @@ const de: PageDef = {
     eyebrow: "Trainerpool · Bewerbungen derzeit geschlossen",
     // "\u00A0-\u2060": "-Trainer" stays with "und" and its hyphen never ends a line (design review R2).
     h1: ["Trainerpool für ", "KI-Trainerinnen und\u00A0-\u2060Trainer", ": pausiert"],
-    lede: "Wir nehmen derzeit keine neuen Bewerbungen an. Im Januar 2027 öffnen wir den Trainerpool wieder; wen wir suchen und wie die Auswahl abläuft, steht schon hier.",
+    lede: "Wir nehmen derzeit keine neuen Bewerbungen an. Wen wir suchen und wie die Auswahl abläuft, können Sie hier weiterhin nachlesen.",
     primary: { label: "So läuft es ab", to: "trainer", hash: "ablauf" },
     facts: ["Freiberuflich", "Online · Deutsch und Englisch", "Auswahl im Gespräch mit kurzer Live-Demo"],
   },
@@ -103,7 +103,7 @@ const de: PageDef = {
       h: "Von Ihrem Profil zum ersten Termin",
       lede: "Nach jedem Schritt entscheiden wir beide, ob es weitergeht.",
       items: [
-        { h: "Kurzprofil", p: "Sobald der Trainerpool wieder offen ist, schicken Sie uns ein kurzes Profil: Themen, Erfahrung, Sprachen und Ihre Selbstständigkeit. Eine Bewerbungsmappe brauchen wir nicht." },
+        { h: "Kurzprofil", p: "Ein kurzes Profil genügt: Themen, Erfahrung, Sprachen und Ihre Selbstständigkeit. Eine Bewerbungsmappe brauchen wir nicht." },
         {
           h: "Warteliste und Trainerpool",
           p: "Derzeit nehmen wir keine neuen Profile an. Profile, die schon bei uns sind, bleiben auf der Warteliste. Eine persönliche Antwort erhalten Sie, wenn eine Kundenanfrage zu Ihrem Profil passt. Eine Zusage für Einsätze ist damit nicht verbunden.",
@@ -172,14 +172,14 @@ const en: PageDef = {
   meta: {
     title: "Trainer pool for freelance AI trainers: paused",
     description:
-      "OpSolid's trainer pool is not accepting new applications at the moment. Here you can see who we look for and how selection works once it reopens.",
+      "OpSolid's trainer pool is not accepting new applications at the moment. Here you can still see who we look for and how our selection process works.",
   },
   crumbs: [],
   crumb: "Trainer pool",
   hero: {
     eyebrow: "Trainer pool · applications currently closed",
     h1: ["Trainer pool for ", "AI trainers", ": paused"],
-    lede: "We are not accepting new applications at the moment. We reopen the trainer pool in January 2027; this page already shows who we look for and how selection works.",
+    lede: "We are not accepting new applications at the moment. You can still read who we look for and how selection works.",
     primary: { label: "How it works", to: "trainer", hash: "ablauf" },
     facts: ["Freelance", "Online · English and German", "Selection in a conversation with a short live demo"],
   },
@@ -254,7 +254,7 @@ const en: PageDef = {
       h: "From your profile to the first date",
       lede: "After each step we both decide whether to continue.",
       items: [
-        { h: "Short profile", p: "Once the trainer pool is open again, you send us a short profile: topics, experience, languages and your self-employment. We do not need a full application pack." },
+        { h: "Short profile", p: "A short profile is enough: topics, experience, languages and your self-employment. We do not need a full application pack." },
         {
           h: "Waiting list and trainer pool",
           p: "We are not taking new profiles at the moment. Profiles we already have stay on the waiting list. You receive a personal reply when a client request matches your profile. This does not promise any assignments.",
@@ -323,14 +323,14 @@ const tr: PageDef = {
   meta: {
     title: "Serbest YZ eğitmenleri için havuz: başvurulara ara verdik",
     description:
-      "OpSolid eğitmen havuzu şu anda yeni başvuru almıyor. Kimi aradığımızı ve havuz yeniden açıldığında seçimin nasıl işlediğini burada okuyabilirsiniz.",
+      "OpSolid eğitmen havuzu şu anda yeni başvuru almıyor. Kimi aradığımızı ve eğitmen seçiminin nasıl işlediğini yine de bu sayfada okuyabilirsiniz.",
   },
   crumbs: [],
   crumb: "Eğitmen havuzu",
   hero: {
     eyebrow: "Eğitmen havuzu · başvurular şu anda kapalı",
     h1: ["Eğitmen havuzu: ", "YZ eğitmenleri", " için başvurulara ara verdik"],
-    lede: "Şu anda yeni başvuru almıyoruz. Eğitmen havuzunu Ocak 2027'de yeniden açıyoruz; kimi aradığımızı ve seçimin nasıl işlediğini bu sayfada bulabilirsiniz.",
+    lede: "Şu anda yeni başvuru almıyoruz. Kimi aradığımızı ve seçimin nasıl işlediğini yine de bu sayfada okuyabilirsiniz.",
     primary: { label: "Süreç nasıl işler", to: "trainer", hash: "ablauf" },
     facts: ["Serbest çalışan", "Çevrimiçi · Almanca ve İngilizce", "Kısa canlı gösterimli bir görüşmeyle seçim"],
   },
@@ -405,7 +405,7 @@ const tr: PageDef = {
       h: "Profilinizden ilk eğitime",
       lede: "Her adımdan sonra birlikte devam edip etmeyeceğimize karar veririz.",
       items: [
-        { h: "Kısa profil", p: "Havuz yeniden açıldığında bize kısa bir profil gönderirsiniz: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },
+        { h: "Kısa profil", p: "Kısa bir profil yeterli: konular, deneyim, diller ve serbest çalışma durumunuz. Tam bir başvuru dosyasına gerek yok." },
         {
           h: "Bekleme listesi ve eğitmen havuzu",
           p: "Şu anda yeni profil almıyoruz. Elimizdeki profiller bekleme listesinde kalır. Profilinize uyan bir müşteri talebi gelince size kişisel olarak yanıt veririz. Bu, görev verileceği anlamına gelmez.",
