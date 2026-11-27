@@ -369,7 +369,7 @@ const de: PageDef = {
       ],
       links: [
         { label: "Mehr über OpSolid", to: "ueber" },
-        { label: "Trainer werden", to: "trainer" },
+        { label: "Trainerpool", to: "trainer" },
       ],
       picture: {
         src: `${W}/desk/desk-docs-1300.webp`,
@@ -775,7 +775,7 @@ const en: PageDef = {
       ],
       links: [
         { label: "More about OpSolid", to: "ueber" },
-        { label: "Become a trainer", to: "trainer" },
+        { label: "Trainer pool", to: "trainer" },
       ],
       picture: {
         src: `${W}/desk/desk-docs-1300.webp`,
@@ -1181,7 +1181,7 @@ const tr: PageDef = {
       ],
       links: [
         { label: "OpSolid hakkında daha fazlası", to: "ueber" },
-        { label: "Eğitmen olun", to: "trainer" },
+        { label: "Eğitmen havuzu", to: "trainer" },
       ],
       picture: {
         src: `${W}/desk/desk-docs-1300.webp`,

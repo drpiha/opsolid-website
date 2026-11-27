@@ -1,5 +1,5 @@
 /**
- * "Trainer werden": recruiting page for freelance AI trainers. German is the source; EN and TR are
+ * "Trainerpool" (until 2026-11-27 "Trainer werden"): page for freelance AI trainers. German is the source; EN and TR are
  * transcreations in full key parity. Binding (trainer-roster.md section 5.4 and 4.2): no named trainers,
  * no "our trainers", no day-rate numbers, no employee-like control (freedom of method, own clients,
  * right to decline). No "network in progress" wording; a longer-term partnership is mentioned once.
