@@ -1,7 +1,7 @@
 /**
  * Contact page (v7). Form (POST /api/contact), next steps, direct contact from SITE_CONFIG, NDA note.
  * Response times: inquiries "innerhalb von 2 Werktagen" (owner decision 79, 2026-11-15); trainer applications
- * go on a waiting list until January 2027 (plan 2026-11-17; FAQ, trainer page, form). The form pre-selects a topic from ?anliegen=<value>
+ * are closed (owner decision 107 B, 2026-11-26: no "trainer" topic; FAQ and trainer page say so). The form pre-selects a topic from ?anliegen=<value>
  * (`vormerken`: interest in one of the planned courses).
  */
 import { SITE_CONFIG } from "@/lib/constants";
@@ -41,7 +41,6 @@ const de: PageDef = {
         { value: "vormerken", label: "Interesse an einer geplanten Schulung vormerken" },
         { value: "ki-check", label: "KI-Check" },
         { value: "beratung", label: "KI-Beratung und KI-Automatisierung" },
-        { value: "trainer", label: "Trainerin oder Trainer werden" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Sonstiges" },
       ],
@@ -97,7 +96,7 @@ const de: PageDef = {
     items: [
       {
         q: "Wie schnell antworten Sie?",
-        a: "Innerhalb von 2 Werktagen, persönlich per E-Mail. Bewerbungen als Trainerin oder Trainer kommen bis Januar 2027 auf eine Warteliste; wir melden uns, wenn eine Kundenanfrage zum Profil passt.",
+        a: "Innerhalb von 2 Werktagen, persönlich per E-Mail. Neue Bewerbungen als Trainerin oder Trainer nehmen wir derzeit nicht an.",
       },
       {
         q: "Muss ich schon genau wissen, was ich brauche?",
@@ -156,7 +155,6 @@ const en: PageDef = {
         { value: "vormerken", label: "Register interest in a planned course" },
         { value: "ki-check", label: "AI check" },
         { value: "beratung", label: "AI consulting and AI automation" },
-        { value: "trainer", label: "Becoming a trainer" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Something else" },
       ],
@@ -212,7 +210,7 @@ const en: PageDef = {
     items: [
       {
         q: "How quickly do you reply?",
-        a: "Within 2 working days, personally by email. Trainer applications go on a waiting list until January 2027; we get in touch when a client request matches the profile.",
+        a: "Within 2 working days, personally by email. We are not accepting new trainer applications at the moment.",
       },
       {
         q: "Do I need to know exactly what I need?",
@@ -271,7 +269,6 @@ const tr: PageDef = {
         { value: "vormerken", label: "Planlanan bir eğitime ilgimi bildirmek istiyorum" },
         { value: "ki-check", label: "YZ Kontrolü" },
         { value: "beratung", label: "Yapay zeka danışmanlığı ve otomasyonu" },
-        { value: "trainer", label: "Eğitmen olmak" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Diğer" },
       ],
@@ -327,7 +324,7 @@ const tr: PageDef = {
     items: [
       {
         q: "Ne kadar hızlı yanıt veriyorsunuz?",
-        a: "2 iş günü içinde, e-postayla ve kişisel olarak. Eğitmen başvuruları Ocak 2027'ye kadar bekleme listesine alınır; profile uyan bir müşteri talebi gelince döneriz.",
+        a: "2 iş günü içinde, e-postayla ve kişisel olarak. Şu anda yeni eğitmen başvurusu almıyoruz.",
       },
       {
         q: "Ne istediğimi tam olarak bilmem gerekiyor mu?",

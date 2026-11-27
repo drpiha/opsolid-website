@@ -54,7 +54,7 @@ export type FormText = {
   sending: string;
   ok: string;
   okH: string;
-  /** The reply promise shown above the send button (owner decision 79). Trainer applications go on a waiting list until January 2027 (plan 2026-11-17). */
+  /** The reply promise shown above the send button (owner decision 79). Trainer applications are closed (decision 107; the topic is no longer offered). */
   reply: string;
   /**
    * Shown when a send fails (src/lib/contact-feedback.ts picks one). `{mail}` becomes the mailto link to `mail`,

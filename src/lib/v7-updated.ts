@@ -38,12 +38,14 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // task, not the technology; Beratung, Prozess and About say who does the work (KI-Check by OpSolid itself, pilot and
   // courses with named freelancers) and "planen" instead of "bauen/einsetzen" for the tools; the About method starts
   // with the questionnaire, not with talks.
-  home: "2026-11-22",
+  // 2026-11-27 (decision 107): trainer applications closed; Home and Contact no longer offer the trainer topic in the
+  // form, the Contact FAQ says so, the trainer page has no form link and no reopening date.
+  home: "2026-11-27",
   schulungen: "2026-11-15",
   check: "2026-11-22",
   beratung: "2026-11-22",
   ueber: "2026-11-22",
-  kontakt: "2026-11-15",
+  kontakt: "2026-11-27",
   // 2026-11-06: per-person arithmetic in the price answers and the hours of a half day and a day
   kompetenz: "2026-11-16",
   copilot: "2026-11-16",
@@ -55,8 +57,9 @@ const PAGE_UPDATED: Partial<Record<PageKey, string>> = {
   // 2026-11-14: the first two training posts (cost, Art. 4) in the list, the six short posts of Feb-Mar 2026 retired and
   // the list framed around training; before that 2026-11-04: CTA KI-Check 990 € with the 60-day credit
   blog: "2026-11-14",
-  // 2026-11-15: no "vermitteln" (rule 6); 2026-11-06: no trial session (seven-day reply, trainer pool, live demo, first assignment paid)
-  trainer: "2026-11-15",
+  // 2026-11-27: applications closed (decision 107), no reopening date; 2026-11-15: no "vermitteln" (rule 6);
+  // 2026-11-06: no trial session (seven-day reply, trainer pool, live demo, first assignment paid)
+  trainer: "2026-11-27",
 };
 
 export function pageUpdated(key: PageKey): string {

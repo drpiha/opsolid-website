@@ -369,7 +369,7 @@ const de: PageDef = {
       ],
       links: [
         { label: "Mehr über OpSolid", to: "ueber" },
-        { label: "Trainer werden", to: "trainer" },
+        { label: "Trainerpool", to: "trainer" },
       ],
       picture: {
         src: `${W}/desk/desk-docs-1300.webp`,
@@ -426,7 +426,6 @@ const de: PageDef = {
         { value: "vormerken", label: "Interesse an einer geplanten Schulung vormerken" },
         { value: "ki-check", label: "KI-Check" },
         { value: "beratung", label: "KI-Beratung und KI-Automatisierung" },
-        { value: "trainer", label: "Trainerin oder Trainer werden" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Sonstiges" },
       ],
@@ -776,7 +775,7 @@ const en: PageDef = {
       ],
       links: [
         { label: "More about OpSolid", to: "ueber" },
-        { label: "Become a trainer", to: "trainer" },
+        { label: "Trainer pool", to: "trainer" },
       ],
       picture: {
         src: `${W}/desk/desk-docs-1300.webp`,
@@ -833,7 +832,6 @@ const en: PageDef = {
         { value: "vormerken", label: "Register interest in a planned course" },
         { value: "ki-check", label: "AI check" },
         { value: "beratung", label: "AI consulting and AI automation" },
-        { value: "trainer", label: "Becoming a trainer" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Something else" },
       ],
@@ -1183,7 +1181,7 @@ const tr: PageDef = {
       ],
       links: [
         { label: "OpSolid hakkında daha fazlası", to: "ueber" },
-        { label: "Eğitmen olun", to: "trainer" },
+        { label: "Eğitmen havuzu", to: "trainer" },
       ],
       picture: {
         src: `${W}/desk/desk-docs-1300.webp`,
@@ -1240,7 +1238,6 @@ const tr: PageDef = {
         { value: "vormerken", label: "Planlanan bir eğitime ilgimi bildirmek istiyorum" },
         { value: "ki-check", label: "YZ Kontrolü" },
         { value: "beratung", label: "Yapay zeka danışmanlığı ve otomasyonu" },
-        { value: "trainer", label: "Eğitmen olmak" },
         { value: "opso", label: "OpSo" },
         { value: "sonstiges", label: "Diğer" },
       ],
